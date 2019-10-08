@@ -1,0 +1,84 @@
+import 'package:cashflow/pages/account_page.dart';
+import 'package:cashflow/pages/master_page.dart';
+import 'package:cashflow/widgets/account_list.dart';
+import 'package:cashflow/widgets/category_list.dart';
+import 'package:flutter/material.dart';
+
+import 'category_page.dart';
+
+class HomePage extends StatefulWidget {
+
+  static const routeName = '/';
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  Widget body() {
+
+    switch(_selectedIndex){
+      case 0:
+        return AccountList();
+      case 1:
+        return CategoryList();
+      default:
+        return SizedBox();
+    }
+  }
+
+  void _addElement(BuildContext context) {
+      if (_selectedIndex == 0) {
+        Navigator.of(context).pushNamed(AccountPage.routeName);
+      } else if (_selectedIndex == 1) {
+        Navigator.of(context).pushNamed(CategoryPage.routeName);
+      } else if (_selectedIndex == 2) {
+        Navigator.of(context).pushNamed(MasterPage.routeName);
+      }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cashflow'),
+      ),
+      body: body(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Accounts'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Categories'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('Operations'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _addElement(context);
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
