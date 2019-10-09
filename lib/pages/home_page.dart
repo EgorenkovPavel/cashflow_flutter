@@ -3,7 +3,10 @@ import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/widgets/account_list.dart';
 import 'package:cashflow/widgets/category_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../database.dart';
+import '../model.dart';
 import 'category_page.dart';
 
 class HomePage extends StatefulWidget {

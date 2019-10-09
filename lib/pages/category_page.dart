@@ -28,9 +28,9 @@ class _CategoryPageState extends State<CategoryPage> {
           TextField(),
           Row(
             children: <Widget>[
-              Radio(value: OperationType.input, groupValue: _type, onChanged: _onTypeChanged,),
+              Radio(value: OperationType.INPUT, groupValue: _type, onChanged: _onTypeChanged,),
               Text('Input'),
-              Radio(value: OperationType.output, groupValue: _type, onChanged: _onTypeChanged,),
+              Radio(value: OperationType.OUTPUT, groupValue: _type, onChanged: _onTypeChanged,),
               Text('Output'),
             ],
           )

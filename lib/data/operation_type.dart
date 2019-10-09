@@ -1,3 +1,3 @@
 enum OperationType{
-  input, output, transfer
+  INPUT, OUTPUT, TRANSFER
 }

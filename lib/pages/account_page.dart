@@ -1,8 +1,8 @@
-import 'package:cashflow/data/account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../database.dart';
 import '../model.dart';
 
 class AccountPage extends StatelessWidget{
@@ -11,17 +11,24 @@ class AccountPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final Account args = ModalRoute.of(context).settings.arguments;
+    AccountData account = ModalRoute.of(context).settings.arguments;
 
-    final TextEditingController controller = TextEditingController();
+    final TextEditingController controller = TextEditingController(text: account == null ? '' : account.title);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text((args == null) ? 'Account' : args.title),
+        title: Text((account == null) ? 'New account' : 'Account'),
         actions: <Widget>[
           FlatButton(child: Text('Save'),
             onPressed: (){
-              Provider.of<Model>(context, listen: false).addAccount(Account(controller.text));
+              if(account == null){
+                account = AccountData(title: controller.text);
+                Provider.of<Model>(context, listen: false).insertAccount(account);
+              }else{
+                account = account.copyWith(title: controller.text);
+                Provider.of<Model>(context, listen: false).updateAccount(account);
+              }
+
               Navigator.pop(context);
             },)
         ],

@@ -19,15 +19,15 @@ class _MasterPageState extends State<MasterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Radio(
-                value: OperationType.input,
+                value: OperationType.INPUT,
               ),
               Text('Input'),
               Radio(
-                value: OperationType.output,
+                value: OperationType.OUTPUT,
               ),
               Text('Output'),
               Radio(
-                value: OperationType.transfer,
+                value: OperationType.TRANSFER,
               ),
               Text('Transfer'),
             ],
