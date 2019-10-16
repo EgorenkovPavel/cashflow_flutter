@@ -40,6 +40,18 @@ class OperationItem {
   DateTime get date => _operation.date;
   OperationType get type => _operation.operationType;
   int get sum => _operation.sum;
+
+  set date(DateTime value) {
+    _operation.copyWith(date: value);
+  }
+
+  set type(OperationType value) {
+    _operation.copyWith(operationType: value);
+  }
+
+  set sum(int value) {
+    _operation.copyWith(sum: value);
+  }
 }
 
 class OperationTypeConverter extends TypeConverter<OperationType, int> {
@@ -160,5 +172,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
    }
 
   Future insertOperationItem(OperationItem entity) => into(operation).insert(entity.operationData);
+  Future insertOperation(OperationData entity) => into(operation).insert(entity);
 
 }

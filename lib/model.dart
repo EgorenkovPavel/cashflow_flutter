@@ -26,4 +26,5 @@ class Model extends ChangeNotifier{
   Stream<List<OperationItem>> watchAllOperationItems() => db.operationDao.watchAllOperationItems();
 
   Future insertOperationItem(OperationItem entity) => db.operationDao.insertOperationItem(entity);
+  Future insertOperation(OperationData entity) => db.operationDao.insertOperation(entity);
 }

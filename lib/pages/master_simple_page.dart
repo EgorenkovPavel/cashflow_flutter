@@ -1,6 +1,7 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../model.dart';
@@ -12,11 +13,12 @@ class SimpleMasterPage extends StatefulWidget {
 
 class _SimpleMasterPageState extends State<SimpleMasterPage> {
 
-  OperationType _type;
-
+  OperationType _type = OperationType.INPUT;
   AccountData _account;
   CategoryData _category;
   AccountData _recAccount;
+
+  final TextEditingController controller = TextEditingController();
 
   List<AccountData> accountList;
   List<CategoryData> categoryInList;
@@ -137,16 +139,20 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
                 _type = newValue;
               });
             },
-            items: <OperationType>[
-              OperationType.INPUT,
-              OperationType.OUTPUT,
-              OperationType.TRANSFER
-            ].map<DropdownMenuItem<OperationType>>((OperationType value) {
-              return DropdownMenuItem<OperationType>(
-                value: value,
-                child: Text(value.toString()),
-              );
-            }).toList(),
+            items: [
+              DropdownMenuItem<OperationType>(
+                value: OperationType.INPUT,
+                child: Text('INPUT'),
+              ),
+              DropdownMenuItem<OperationType>(
+                value: OperationType.OUTPUT,
+                child: Text('OUTPUT'),
+              ),
+              DropdownMenuItem<OperationType>(
+                value: OperationType.TRANSFER,
+                child: Text('TRANSFER'),
+              ),
+            ],
           ),
           DropdownButton<AccountData>(
             value: _account,
@@ -170,7 +176,27 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
               );
             })?.toList(),
           ),
-          AnalyticMenu()
+          AnalyticMenu(),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          RaisedButton(
+            child: Text('SAVE'),
+            onPressed: (){
+              OperationData operation = OperationData(
+                date: DateTime.now(),
+                operationType: _type,
+                account: _account.id,
+                category: _category.id,
+                recAccount: _recAccount.id,
+                sum: int.parse(controller.text)
+              );
+              Provider.of<Model>(context).insertOperation(operation);
+            },
+          )
         ],
       ),
     );
