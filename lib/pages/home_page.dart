@@ -2,6 +2,7 @@ import 'package:cashflow/pages/account_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/widgets/account_list.dart';
 import 'package:cashflow/widgets/category_list.dart';
+import 'package:cashflow/widgets/operation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,8 @@ class _HomePageState extends State<HomePage> {
         return AccountList();
       case 1:
         return CategoryList();
+      case 2:
+        return OperationList();
       default:
         return SizedBox();
     }
