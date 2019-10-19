@@ -1,9 +1,23 @@
+import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../database.dart';
 import '../model.dart';
+
+IconData getOperationIcon(OperationType type){
+  switch(type){
+    case OperationType.INPUT:
+      return Icons.add;
+
+    case OperationType.OUTPUT:
+      return Icons.remove;
+
+    case OperationType.TRANSFER:
+      return Icons.redo;
+  }
+}
 
 class OperationList extends StatelessWidget {
   @override
@@ -21,16 +35,12 @@ class OperationList extends StatelessWidget {
             return Column(
               children: <Widget>[
                 ListTile(
-                  title: Column(
-                    children: <Widget>[
-                      Text(itemOperation.date.toString()),
-                      Text(itemOperation.type.toString()),
-                      Text(itemOperation.account.toString()),
-                      Text(itemOperation.category.toString()),
-                      Text(itemOperation.recAccount.toString()),
-                      Text(itemOperation.sum.toString()),
-                    ],
-                  ),
+                  title: Text(itemOperation.account.title),
+                  subtitle: itemOperation.type == OperationType.TRANSFER
+                      ? Text(itemOperation.recAccount.title)
+                      : Text(itemOperation.category.title),
+                  trailing: Text(itemOperation.sum.toString()),
+                  leading: Icon(getOperationIcon(itemOperation.type)),
 //                  onTap: () {
 //                    Navigator.pushNamed(context, AccountPage.routeName,
 //                        arguments: itemOperation);
