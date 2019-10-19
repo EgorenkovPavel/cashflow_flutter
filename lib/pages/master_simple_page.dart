@@ -99,6 +99,30 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
     }
   }
 
+  void _saveOperation(){
+    if(_type == OperationType.TRANSFER){
+      OperationData operation = OperationData(
+          date: DateTime.now(),
+          operationType: _type,
+          account: _account.id,
+          recAccount: _recAccount.id,
+          sum: int.parse(controller.text)
+      );
+
+      Provider.of<Model>(context).insertOperation(operation);
+    }else {
+      OperationData operation = OperationData(
+          date: DateTime.now(),
+          operationType: _type,
+          account: _account.id,
+          category: _category.id,
+          sum: int.parse(controller.text)
+      );
+
+      Provider.of<Model>(context).insertOperation(operation);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<Model>(context).watchAllAccounts().forEach((list){
@@ -177,26 +201,24 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
             })?.toList(),
           ),
           AnalyticMenu(),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-            ),
+          Row(
+            children: <Widget>[
+              FlatButton(
+                child: Text('MORE'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              FlatButton(
+                child: Text('NEXT'),
+                onPressed: _saveOperation,
+              )
+            ],
           ),
-          RaisedButton(
-            child: Text('SAVE'),
-            onPressed: (){
-              OperationData operation = OperationData(
-                date: DateTime.now(),
-                operationType: _type,
-                account: _account.id,
-                category: _category.id,
-                recAccount: _recAccount.id,
-                sum: int.parse(controller.text)
-              );
-              Provider.of<Model>(context).insertOperation(operation);
-            },
-          )
         ],
       ),
     );
