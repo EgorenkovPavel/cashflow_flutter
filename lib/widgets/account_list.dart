@@ -9,9 +9,9 @@ class AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    return StreamBuilder<List<AccountData>>(
-      stream: model.watchAllAccounts(),
-      builder: (context, AsyncSnapshot<List<AccountData>> snapshot) {
+    return StreamBuilder<List<AccountWithBalance>>(
+      stream: model.watchAllAccountsWithBalance(),
+      builder: (context, AsyncSnapshot<List<AccountWithBalance>> snapshot) {
         final accounts = snapshot.data ?? List();
 
         return ListView.builder(
@@ -21,7 +21,8 @@ class AccountList extends StatelessWidget {
             return Column(
               children: <Widget>[
                 ListTile(
-                  title: Text(itemAccount.title),
+                  title: Text(itemAccount.account.title),
+                  trailing: Text(itemAccount.sum.toString()),
                   onTap: () {
                     Navigator.pushNamed(context, AccountPage.routeName,
                         arguments: itemAccount);

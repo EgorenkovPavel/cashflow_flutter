@@ -5,40 +5,90 @@ part 'database.g.dart';
 
 class Account extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get title => text()();
 }
 
 class Category extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get title => text()();
-  IntColumn get operationType => integer().named('operation_type').map(const OperationTypeConverter())();
+
+  IntColumn get operationType =>
+      integer().named('operation_type').map(const OperationTypeConverter())();
 }
 
-class Operation extends Table{
+class Operation extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   DateTimeColumn get date => dateTime()();
-  IntColumn get operationType => integer().named('operation_type').map(const OperationTypeConverter())();
-  IntColumn get account => integer().customConstraint('NULL REFERENCES account(id)')();
-  IntColumn get category => integer().nullable().customConstraint('NULL REFERENCES category(id)')();
-  IntColumn get recAccount => integer().nullable().customConstraint('NULL REFERENCES account(id)')();
+
+  IntColumn get operationType =>
+      integer().named('operation_type').map(const OperationTypeConverter())();
+
+  IntColumn get account =>
+      integer().customConstraint('NULL REFERENCES account(id)')();
+
+  IntColumn get category =>
+      integer().nullable().customConstraint('NULL REFERENCES category(id)')();
+
+  IntColumn get recAccount =>
+      integer().nullable().customConstraint('NULL REFERENCES account(id)')();
+
   IntColumn get sum => integer()();
 }
 
-class OperationItem {
+class Balance extends Table {
+  IntColumn get id => integer().autoIncrement()();
 
+  DateTimeColumn get date => dateTime()();
+
+  IntColumn get operation =>
+      integer().customConstraint('NULL REFERENCES operation(id)')();
+
+  IntColumn get account =>
+      integer().customConstraint('NULL REFERENCES account(id)')();
+
+  IntColumn get sum => integer()();
+}
+
+class Cashflow extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  DateTimeColumn get date => dateTime()();
+
+  IntColumn get operation =>
+      integer().customConstraint('NULL REFERENCES operation(id)')();
+
+  IntColumn get category =>
+      integer().nullable().customConstraint('NULL REFERENCES category(id)')();
+
+  IntColumn get sum => integer()();
+}
+
+class AccountWithBalance{
+  AccountData account;
+  int sum;
+
+  AccountWithBalance(this.account, this.sum);
+
+}
+
+class OperationItem {
   OperationData _operation;
   AccountData account;
   CategoryData category;
   AccountData recAccount;
 
-  OperationItem(this._operation, this.account, this.category,
-      this.recAccount);
+  OperationItem(this._operation, this.account, this.category, this.recAccount);
 
-  OperationData get operationData =>
-      _operation.copyWith(account: account.id, category: category.id, recAccount: recAccount.id);
+  OperationData get operationData => _operation.copyWith(
+      account: account.id, category: category.id, recAccount: recAccount.id);
 
   DateTime get date => _operation.date;
+
   OperationType get type => _operation.operationType;
+
   int get sum => _operation.sum;
 
   set date(DateTime value) {
@@ -63,11 +113,15 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
       return null;
     }
 
-    switch (fromDb){
-      case 0: return OperationType.INPUT;
-      case 1: return OperationType.OUTPUT;
-      case 2: return OperationType.TRANSFER;
-      default: return null;
+    switch (fromDb) {
+      case 0:
+        return OperationType.INPUT;
+      case 1:
+        return OperationType.OUTPUT;
+      case 2:
+        return OperationType.TRANSFER;
+      default:
+        return null;
     }
   }
 
@@ -77,27 +131,32 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
       return null;
     }
 
-    switch(value){
-      case OperationType.INPUT: return 0;
-      case OperationType.OUTPUT: return 1;
-      case OperationType.TRANSFER: return 2;
-      default: return null;
+    switch (value) {
+      case OperationType.INPUT:
+        return 0;
+      case OperationType.OUTPUT:
+        return 1;
+      case OperationType.TRANSFER:
+        return 2;
+      default:
+        return null;
     }
   }
 }
 
-@UseMoor(tables: [Account, Category, Operation], daos: [AccountDao, CategoryDao, OperationDao])
-class Database extends _$Database{
-
-  Database() : super(FlutterQueryExecutor.inDatabaseFolder(
-      path: 'db.sqlite', logStatements: true));
+@UseMoor(
+    tables: [Account, Category, Operation, Balance, Cashflow],
+    daos: [AccountDao, CategoryDao, OperationDao])
+class Database extends _$Database {
+  Database()
+      : super(FlutterQueryExecutor.inDatabaseFolder(
+            path: 'db.sqlite', logStatements: true));
 
   @override
   int get schemaVersion => 1;
-
 }
 
-@UseDao(tables: [Account])
+@UseDao(tables: [Account, Balance])
 class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   final Database db;
 
@@ -105,11 +164,29 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   AccountDao(this.db) : super(db);
 
   Future<List<AccountData>> getAllTasks() => select(account).get();
+
   Stream<List<AccountData>> watchAllAccounts() => select(account).watch();
 
   Future insertAccount(AccountData entity) => into(account).insert(entity);
+
   Future updateAccount(AccountData entity) => update(account).replace(entity);
 //  Future deleteTask(Task task) => delete(tasks).delete(task);
+
+  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() {
+     return customSelectQuery(
+        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" FROM account c;',
+        readsFrom: {account, balance})
+        .watch()
+        .map((rows) {
+      return rows
+          .map((row) =>
+          AccountWithBalance(
+              AccountData.fromData(row.data, db), row.readInt('sum'))
+      )
+          .toList();
+    });
+  }
+
 }
 
 @UseDao(tables: [Category])
@@ -121,57 +198,122 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   //Future<List<Task>> getAllTasks() => select(tasks).get();
   Stream<List<CategoryData>> watchAllCategories() => select(category).watch();
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type) => (select(category)
-      ..where((cat) => cat.operationType.equals(OperationTypeConverter().mapToSql(type)))).watch();
+
+  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type) =>
+      (select(category)
+            ..where((cat) => cat.operationType
+                .equals(OperationTypeConverter().mapToSql(type))))
+          .watch();
 
   Future insertCategory(CategoryData entity) => into(category).insert(entity);
-  Future updateCategory(CategoryData entity) => update(category).replace(entity);
+
+  Future updateCategory(CategoryData entity) =>
+      update(category).replace(entity);
 //  Future deleteTask(Task task) => delete(tasks).delete(task);
 }
 
-@UseDao(tables: [Account, Category, Operation])
+@UseDao(tables: [Account, Category, Operation, Balance, Cashflow])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   final Database db;
 
   // Called by the AppDatabase class
   OperationDao(this.db) : super(db);
 
-  Stream<List<OperationItem>> watchAllOperationItems(){
-
+  Stream<List<OperationItem>> watchAllOperationItems() {
     final acc = alias(account, 'a');
     final rec = alias(account, 'rec');
 
-    return select(operation).join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operation.account),
-        ),
-        leftOuterJoin(
-          category,
-          category.id.equalsExp(operation.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operation.recAccount),
-        ),
-      ],
-    ).watch()
+    return select(operation)
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operation.account),
+            ),
+            leftOuterJoin(
+              category,
+              category.id.equalsExp(operation.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operation.recAccount),
+            ),
+          ],
+        )
+        .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          return OperationItem(
-            row.readTable(operation),
-            row.readTable(acc),
-            row.readTable(category),
-            row.readTable(rec)
-          );
-        },
-      ).toList(),
-    );
-   }
+              return OperationItem(row.readTable(operation), row.readTable(acc),
+                  row.readTable(category), row.readTable(rec));
+            },
+          ).toList(),
+        );
+  }
 
-  Future insertOperationItem(OperationItem entity) => into(operation).insert(entity.operationData);
-  Future insertOperation(OperationData entity) => into(operation).insert(entity);
+  Future insertOperationItem(OperationItem entity) {
+    return transaction(() async {
+      int id = await into(operation).insert(entity.operationData);
 
+      OperationData operationData = entity.operationData.copyWith(id: id);
+      _insertAnalytic(operationData);
+    });
+  }
+
+  Future insertOperation(OperationData entity){
+    return transaction(() async {
+      int id = await into(operation).insert(entity);
+
+      OperationData operationData = entity.copyWith(id: id);
+      _insertAnalytic(operationData);
+    });
+  }
+
+  Future _insertAnalytic(OperationData operation) async {
+
+    switch (operation.operationType) {
+      case OperationType.INPUT:
+        {
+          await into(balance).insert(BalanceData(
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: operation.sum));
+          await into(cashflow).insert(CashflowData(
+              date: operation.date,
+              operation: operation.id,
+              category: operation.category,
+              sum: operation.sum));
+          break;
+        }
+      case OperationType.OUTPUT:
+        {
+          await into(balance).insert(BalanceData(
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: -1 * operation.sum));
+          await into(cashflow).insert(CashflowData(
+              date: operation.date,
+              operation: operation.id,
+              category: operation.category,
+              sum: operation.sum));
+          break;
+        }
+      case OperationType.TRANSFER:
+        {
+          await into(balance).insert(BalanceData(
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: -1 * operation.sum));
+          await into(balance).insert(BalanceData(
+              date: operation.date,
+              operation: operation.id,
+              account: operation.recAccount,
+              sum: operation.sum));
+          break;
+        }
+    }
+  }
 }
