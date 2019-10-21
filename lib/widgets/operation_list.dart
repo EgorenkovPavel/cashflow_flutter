@@ -34,16 +34,26 @@ class OperationList extends StatelessWidget {
             final itemOperation = operations[index];
             return Column(
               children: <Widget>[
-                ListTile(
-                  title: Text(itemOperation.account.title),
-                  subtitle: itemOperation.type == OperationType.TRANSFER
-                      ? Text(itemOperation.recAccount.title)
-                      : Text(itemOperation.category.title),
-                  trailing: Text(itemOperation.sum.toString()),
-                  leading: Icon(getOperationIcon(itemOperation.type)),
+                Dismissible(
+                  key: Key(itemOperation.toString()),
+                  child: ListTile(
+                    title: Text(itemOperation.account.title),
+                    subtitle: itemOperation.type == OperationType.TRANSFER
+                        ? Text(itemOperation.recAccount.title)
+                        : Text(itemOperation.category.title),
+                    trailing: Text(itemOperation.sum.toString()),
+                    leading: Icon(getOperationIcon(itemOperation.type)),
 //                  onTap: () {
 //                    Navigator.pushNamed(context, AccountPage.routeName,
 //                        arguments: itemOperation);
+//                  },
+                  ),
+                  confirmDismiss: (_) async {
+                    await Provider.of<Model>(context, listen: false)
+                        .deleteOperation(itemOperation.operationData);
+                },
+//                  onDismissed: (direction){
+//
 //                  },
                 ),
                 Divider()

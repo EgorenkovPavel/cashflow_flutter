@@ -22,7 +22,7 @@ class AccountList extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   title: Text(itemAccount.account.title),
-                  trailing: Text(itemAccount.sum.toString()),
+                  trailing: Text((itemAccount.sum ?? 0).toString()),
                   onTap: () {
                     Navigator.pushNamed(context, AccountPage.routeName,
                         arguments: itemAccount);

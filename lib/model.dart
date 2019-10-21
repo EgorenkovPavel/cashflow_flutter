@@ -28,4 +28,6 @@ class Model extends ChangeNotifier{
 
   Future insertOperationItem(OperationItem entity) => db.operationDao.insertOperationItem(entity);
   Future insertOperation(OperationData entity) => db.operationDao.insertOperation(entity);
+
+  Future deleteOperation(OperationData entity) => db.operationDao.deleteOperation(entity);
 }
