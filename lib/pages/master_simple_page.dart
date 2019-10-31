@@ -1,5 +1,6 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/database.dart';
+import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,78 +28,41 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
   Widget AnalyticMenu() {
     switch (_type) {
       case OperationType.INPUT:
-        return Center(
-          child: Center(
-            child: DropdownButton<CategoryData>(
-              value: _category,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (CategoryData newValue) {
-                setState(() {
-                  _category = newValue;
-                });
-              },
-              items: categoryInList?.map((CategoryData value) {
-                return DropdownMenuItem<CategoryData>(
-                  value: value,
-                  child: Text(value.title),
-                );
-              })?.toList(),
-            ),
-          ),
-        );
+        return DropdownList<CategoryData>(
+            value: _category,
+            hint: 'Category',
+            onChange: (CategoryData newValue) {
+              setState(() {
+                _category = newValue;
+              });
+            },
+            items: categoryInList,
+            getListItem: (item) =>
+                ListTile(title: Text(item.title), trailing: Text('1000')));
       case OperationType.OUTPUT:
-        return DropdownButton<CategoryData>(
-          value: _category,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (CategoryData newValue) {
-            setState(() {
-              _category = newValue;
-            });
-          },
-          items: categoryOutList?.map((CategoryData value) {
-            return DropdownMenuItem<CategoryData>(
-              value: value,
-              child: Text(value.title),
-            );
-          })?.toList(),
-        );
+        return DropdownList<CategoryData>(
+            value: _category,
+            hint: 'Category',
+            onChange: (CategoryData newValue) {
+              setState(() {
+                _category = newValue;
+              });
+            },
+            items: categoryOutList,
+            getListItem: (item) =>
+                ListTile(title: Text(item.title), trailing: Text('1000')));
       case OperationType.TRANSFER:
-        return DropdownButton<AccountData>(
-          value: _recAccount,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (AccountData newValue) {
-            setState(() {
-              _recAccount = newValue;
-            });
-          },
-          items: accountList?.map((AccountData value) {
-            return DropdownMenuItem<AccountData>(
-              value: value,
-              child: Text(value.title),
-            );
-          })?.toList(),
-        );
+        return DropdownList<AccountData>(
+            value: _recAccount,
+            hint: 'Account',
+            onChange: (AccountData newValue) {
+              setState(() {
+                _recAccount = newValue;
+              });
+            },
+            items: accountList,
+            getListItem: (item) =>
+                ListTile(title: Text(item.title), trailing: Text('1000')));
       default:
         return SizedBox();
     }
@@ -127,28 +91,17 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
   }
 
   Widget AccountMenu() {
-    return DropdownButton<AccountData>(
-              value: _account,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (AccountData newValue) {
-                setState(() {
-                  _account = newValue;
-                });
-              },
-              items: accountList?.map((AccountData value) {
-                return DropdownMenuItem<AccountData>(
-                  value: value,
-                  child: Text(value.title),
-                );
-              })?.toList(),
-      );
+    return DropdownList<AccountData>(
+        value: _account,
+        hint: 'Account',
+        onChange: (AccountData newValue) {
+          setState(() {
+            _account = newValue;
+          });
+        },
+        items: accountList,
+        getListItem: (item) =>
+            ListTile(title: Text(item.title), trailing: Text('1000')));
   }
 
   void _addSum(int digit) {
@@ -186,11 +139,14 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          OperationTypeRadioButton(type: _type, onChange: (t){
-            setState(() {
-              _type = t;
-            });
-          },),
+          OperationTypeRadioButton(
+            type: _type,
+            onChange: (t) {
+              setState(() {
+                _type = t;
+              });
+            },
+          ),
           Expanded(child: AccountMenu()),
           Expanded(child: AnalyticMenu()),
           Text(_sum.toString()),

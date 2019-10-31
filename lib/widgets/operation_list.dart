@@ -42,7 +42,7 @@ class OperationList extends StatelessWidget {
                         ? Text(itemOperation.recAccount.title)
                         : Text(itemOperation.category.title),
                     trailing: Text(itemOperation.sum.toString()),
-                    leading: Icon(getOperationIcon(itemOperation.type)),
+                    leading: CircleAvatar(child: Icon(getOperationIcon(itemOperation.type)),),
 //                  onTap: () {
 //                    Navigator.pushNamed(context, AccountPage.routeName,
 //                        arguments: itemOperation);
