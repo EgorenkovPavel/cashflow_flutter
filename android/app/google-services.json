@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "764112372488",
+    "firebase_url": "https://cashflow-flutter.firebaseio.com",
+    "project_id": "cashflow-flutter",
+    "storage_bucket": "cashflow-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764112372488:android:1d88c564dedb10b5f262bd",
+        "android_client_info": {
+          "package_name": "ru.epipasha.cashflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "764112372488-bnndim7v32sjptrkpup61ula311jj51l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.epipasha.cashflow",
+            "certificate_hash": "535e364d7f070a5e9acee5933078af06418ffca2"
+          }
+        },
+        {
+          "client_id": "764112372488-k9duujaej6iic1p65lnl6saque7e96sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLVjuTtg0S9h00ufofyQhyeDN9LMPhMeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764112372488-k9duujaej6iic1p65lnl6saque7e96sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

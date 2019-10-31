@@ -1,9 +1,9 @@
 import 'package:cashflow/pages/account_page.dart';
+import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/pages/home_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_simple_page.dart';
-import 'package:cashflow/widgets/account_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           AccountPage.routeName: (BuildContext context) => AccountPage(),
           CategoryPage.routeName: (BuildContext context) => CategoryPage(),
           MasterPage.routeName: (BuildContext context) => SimpleMasterPage(),
+          BackupPage.routeName: (BuildContext context) => BackupPage(),
         },
       ),
     );

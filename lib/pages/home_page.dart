@@ -1,13 +1,11 @@
 import 'package:cashflow/pages/account_page.dart';
+import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/widgets/account_list.dart';
 import 'package:cashflow/widgets/category_list.dart';
 import 'package:cashflow/widgets/operation_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../database.dart';
-import '../model.dart';
 import 'category_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,6 +55,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cashflow'),
+        actions: <Widget>[
+          FlatButton(child: Text('BACKUP'), onPressed: (){
+            Navigator.of(context).pushNamed(BackupPage.routeName);
+          },)
+        ],
       ),
       body: body(),
       bottomNavigationBar: BottomNavigationBar(
