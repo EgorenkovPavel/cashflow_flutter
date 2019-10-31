@@ -1,5 +1,6 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/database.dart';
+import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,27 +27,31 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
   Widget AnalyticMenu() {
     switch (_type) {
       case OperationType.INPUT:
-        return DropdownButton<CategoryData>(
-          value: _category,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
+        return Center(
+          child: Center(
+            child: DropdownButton<CategoryData>(
+              value: _category,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (CategoryData newValue) {
+                setState(() {
+                  _category = newValue;
+                });
+              },
+              items: categoryInList?.map((CategoryData value) {
+                return DropdownMenuItem<CategoryData>(
+                  value: value,
+                  child: Text(value.title),
+                );
+              })?.toList(),
+            ),
           ),
-          onChanged: (CategoryData newValue) {
-            setState(() {
-              _category = newValue;
-            });
-          },
-          items: categoryInList?.map((CategoryData value) {
-            return DropdownMenuItem<CategoryData>(
-              value: value,
-              child: Text(value.title),
-            );
-          })?.toList(),
         );
       case OperationType.OUTPUT:
         return DropdownButton<CategoryData>(
@@ -121,39 +126,6 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
     }
   }
 
-  Widget OperationMenu() {
-    return DropdownButton<OperationType>(
-      value: _type,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (OperationType newValue) {
-        setState(() {
-          _type = newValue;
-        });
-      },
-      items: [
-        DropdownMenuItem<OperationType>(
-          value: OperationType.INPUT,
-          child: Text('INPUT'),
-        ),
-        DropdownMenuItem<OperationType>(
-          value: OperationType.OUTPUT,
-          child: Text('OUTPUT'),
-        ),
-        DropdownMenuItem<OperationType>(
-          value: OperationType.TRANSFER,
-          child: Text('TRANSFER'),
-        ),
-      ],
-    );
-  }
-
   Widget AccountMenu() {
     return DropdownButton<AccountData>(
               value: _account,
@@ -173,7 +145,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
               items: accountList?.map((AccountData value) {
                 return DropdownMenuItem<AccountData>(
                   value: value,
-                  child: ListTile(title: Text(value.title)),
+                  child: Text(value.title),
                 );
               })?.toList(),
       );
@@ -214,7 +186,11 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          OperationMenu(),
+          OperationTypeRadioButton(type: _type, onChange: (t){
+            setState(() {
+              _type = t;
+            });
+          },),
           Expanded(child: AccountMenu()),
           Expanded(child: AnalyticMenu()),
           Text(_sum.toString()),
