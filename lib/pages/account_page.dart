@@ -31,7 +31,15 @@ class AccountPage extends StatelessWidget{
             },)
         ],
       ),
-      body: TextField(controller: controller),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: TextField(controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Title',
+          ),
+        ),
+      ),
     );
   }
 }

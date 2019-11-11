@@ -148,6 +148,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
                 _type = t;
               });
             },
+            items: [OperationType.INPUT, OperationType.OUTPUT, OperationType.TRANSFER],
           ),
           Expanded(child: AccountMenu()),
           Expanded(child: AnalyticMenu()),

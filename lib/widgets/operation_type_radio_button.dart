@@ -6,8 +6,9 @@ class OperationTypeRadioButton extends StatelessWidget{
 
   final Function onChange;
   final OperationType type;
+  final List<OperationType> items;
 
-  const OperationTypeRadioButton({Key key, this.onChange, this.type}) : super(key: key);
+  const OperationTypeRadioButton({Key key, this.onChange, this.type, this.items}) : super(key: key);
 
   Widget RadioButton(OperationType _type, String title){
     return RaisedButton(
@@ -19,16 +20,25 @@ class OperationTypeRadioButton extends StatelessWidget{
     );
   }
 
+  String getTitle(OperationType _type){
+    switch(_type){
+      case OperationType.INPUT: return 'INPUT';
+      case OperationType.OUTPUT: return 'OUTPUT';
+      case OperationType.TRANSFER: return 'TRANSFER';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        RadioButton(OperationType.INPUT, 'INPUT'),
-        RadioButton(OperationType.OUTPUT, 'OUTPUT'),
-        RadioButton(OperationType.TRANSFER, 'TRANSFER'),
-      ],
+      children: items.map((item) => RadioButton(item, getTitle(item))).toList(),
+//      children: <Widget>[
+//        RadioButton(OperationType.INPUT, 'INPUT'),
+//        RadioButton(OperationType.OUTPUT, 'OUTPUT'),
+//        RadioButton(OperationType.TRANSFER, 'TRANSFER'),
+//      ],
     );
   }
 }

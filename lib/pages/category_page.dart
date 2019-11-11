@@ -1,4 +1,5 @@
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,10 +12,12 @@ class CategoryPage extends StatefulWidget {
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
+
 }
 
 class _CategoryPageState extends State<CategoryPage> {
 
+  bool loadedArgs = false;
   OperationType _type;
 
   final TextEditingController controller = TextEditingController();
@@ -29,10 +32,16 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    category = ModalRoute.of(context).settings.arguments;
-    controller.text = category == null ? '' : category.title;
-    _type = category == null ? OperationType.INPUT : category.operationType;
+    if(!loadedArgs) {
+      category = ModalRoute
+          .of(context)
+          .settings
+          .arguments;
+      controller.text = category == null ? '' : category.title;
+      _type = category == null ? OperationType.INPUT : category.operationType;
 
+      loadedArgs = true;
+    }
     return Scaffold(
       appBar: AppBar(title: Text('Category'),
       actions: <Widget>[
@@ -52,15 +61,20 @@ class _CategoryPageState extends State<CategoryPage> {
 
       body: Column(
         children: <Widget>[
-          TextField(controller: controller),
-          Row(
-            children: <Widget>[
-              Radio(value: OperationType.INPUT, groupValue: _type, onChanged: _onTypeChanged,),
-              Text('Input'),
-              Radio(value: OperationType.OUTPUT, groupValue: _type, onChanged: _onTypeChanged,),
-              Text('Output'),
-            ],
-          )
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(controller: controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Title',
+              ),
+            ),
+          ),
+          OperationTypeRadioButton(
+            type: _type,
+            onChange: _onTypeChanged,
+            items: [OperationType.INPUT, OperationType.OUTPUT],
+          ),
         ],
       ),
     );
