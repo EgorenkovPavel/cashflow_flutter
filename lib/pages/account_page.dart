@@ -11,9 +11,9 @@ class AccountPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    AccountData account = ModalRoute.of(context).settings.arguments;
+    AccountWithBalance account = ModalRoute.of(context).settings.arguments;
 
-    final TextEditingController controller = TextEditingController(text: account == null ? '' : account.title);
+    final TextEditingController controller = TextEditingController(text: account == null ? '' : account.account.title);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,11 +22,9 @@ class AccountPage extends StatelessWidget{
           FlatButton(child: Text('Save'),
             onPressed: (){
               if(account == null){
-                account = AccountData(title: controller.text);
-                Provider.of<Model>(context, listen: false).insertAccount(account);
+                Provider.of<Model>(context, listen: false).insertAccount(AccountData(title: controller.text));
               }else{
-                account = account.copyWith(title: controller.text);
-                Provider.of<Model>(context, listen: false).updateAccount(account);
+                Provider.of<Model>(context, listen: false).updateAccount(account.account.copyWith(title: controller.text));
               }
 
               Navigator.pop(context);
