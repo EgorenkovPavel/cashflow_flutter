@@ -24,7 +24,10 @@ class DropdownList<T> extends StatelessWidget {
       ),
       child: DropdownButton<T>(
         isExpanded: true,
-        hint: Text(hint),
+        hint: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(hint),
+        ),
         value: value,
         icon: Icon(Icons.keyboard_arrow_down),
         iconSize: 24,

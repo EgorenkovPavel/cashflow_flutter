@@ -4,6 +4,7 @@ import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
       case OperationType.INPUT:
         return DropdownList<CategoryData>(
             value: _category,
-            hint: 'Category',
+            hint: 'Choose Category',
             onChange: (CategoryData newValue) {
               setState(() {
                 _category = newValue;
@@ -42,7 +43,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
       case OperationType.OUTPUT:
         return DropdownList<CategoryData>(
             value: _category,
-            hint: 'Category',
+            hint: 'Choose Category',
             onChange: (CategoryData newValue) {
               setState(() {
                 _category = newValue;
@@ -54,7 +55,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
       case OperationType.TRANSFER:
         return DropdownList<AccountData>(
             value: _recAccount,
-            hint: 'Account',
+            hint: 'Choose Account',
             onChange: (AccountData newValue) {
               setState(() {
                 _recAccount = newValue;
@@ -93,7 +94,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
   Widget AccountMenu() {
     return DropdownList<AccountData>(
         value: _account,
-        hint: 'Account',
+        hint: 'Choose Account',
         onChange: (AccountData newValue) {
           setState(() {
             _account = newValue;
@@ -101,7 +102,8 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
         },
         items: accountList,
         getListItem: (item) =>
-            ListTile(title: Text(item.title), trailing: Text('1000')));
+            ListTile(title: Text(item.title), trailing: Text('1000'))
+    );
   }
 
   void _addSum(int digit) {
@@ -149,7 +151,7 @@ class _SimpleMasterPageState extends State<SimpleMasterPage> {
           ),
           Expanded(child: AccountMenu()),
           Expanded(child: AnalyticMenu()),
-          Text(_sum.toString()),
+          Text(_sum.toString(), style: Theme.of(context).textTheme.display1,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
