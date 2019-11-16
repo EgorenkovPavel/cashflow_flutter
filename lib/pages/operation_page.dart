@@ -180,11 +180,21 @@ class _OperationPageState extends State<OperationPage> {
             Row(
               children: <Widget>[
                 FlatButton(
-                  child: Text(DateFormat.yMMMd().format(_date)),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.calendar_today),
+                      Text(DateFormat.yMMMd().format(_date)),
+                    ],
+                  ),
                   onPressed: _selectDate,
                 ),
                 FlatButton(
-                  child: Text(_time.format(context)),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.access_time),
+                      Text(_time.format(context)),
+                    ],
+                  ),
                   onPressed: _selectTime,
                 ),
               ],

@@ -20,6 +20,19 @@ IconData getOperationIcon(OperationType type) {
   }
 }
 
+Color getOperationColor(OperationType type) {
+  switch (type) {
+    case OperationType.INPUT:
+      return Colors.green;
+
+    case OperationType.OUTPUT:
+      return Colors.red;
+
+    case OperationType.TRANSFER:
+      return Colors.blue;
+  }
+}
+
 class OperationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,6 +57,7 @@ class OperationList extends StatelessWidget {
                         : Text(itemOperation.category.title),
                     trailing: Text(itemOperation.sum.toString()),
                     leading: CircleAvatar(
+                      backgroundColor: getOperationColor(itemOperation.type),
                       child: Icon(getOperationIcon(itemOperation.type)),
                     ),
                     onTap: () {
