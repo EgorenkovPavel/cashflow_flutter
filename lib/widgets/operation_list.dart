@@ -65,9 +65,15 @@ class OperationList extends StatelessWidget {
                           arguments: itemOperation);
                     },
                   ),
-                  confirmDismiss: (_) async {
+                  secondaryBackground:
+                      dismissBackground(context, Alignment.centerRight),
+                  background: dismissBackground(context, Alignment.centerLeft),
+                  onDismissed: (_) async {
                     await Provider.of<Model>(context, listen: false)
                         .deleteOperation(itemOperation.operationData);
+
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text("Operation dismissed")));
                   },
                 ),
                 Divider()
@@ -76,6 +82,21 @@ class OperationList extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Container dismissBackground(BuildContext context, Alignment alignment) {
+    return Container(
+      color: Colors.red,
+      alignment: alignment,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          'DELETE',
+          style:
+              Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+        ),
+      ),
     );
   }
 }
