@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Cashflow',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
+          accentColor: Colors.deepOrangeAccent
         ),
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{

@@ -18,9 +18,13 @@ class DropdownList<T> extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(12.0),
       //padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.circular(3.0),
+      decoration:
+//      InputDecoration(
+//      border: OutlineInputBorder(),
+//      labelText: 'Title',
+      BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(4.0),
       ),
       child: DropdownButton<T>(
         isExpanded: true,

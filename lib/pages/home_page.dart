@@ -50,15 +50,31 @@ class _HomePageState extends State<HomePage> {
       }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cashflow'),
         actions: <Widget>[
-          FlatButton(child: Text('BACKUP'), onPressed: (){
-            Navigator.of(context).pushNamed(BackupPage.routeName);
-          },)
+          PopupMenuButton<AppMenu>(
+            child: Icon(Icons.more_vert),
+            itemBuilder: (context) => [
+              const PopupMenuItem<AppMenu>(
+                child: Text('BACKUP'),
+                value: AppMenu.BACKUP,
+              )
+            ],
+            onSelected: (value){
+              switch (value){
+                case AppMenu.BACKUP: {
+                  Navigator.of(context).pushNamed(BackupPage.routeName);
+                  break;
+                }
+              }
+            },
+          ),
         ],
       ),
       body: body(),
@@ -90,4 +106,8 @@ class _HomePageState extends State<HomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+enum AppMenu{
+  BACKUP
 }

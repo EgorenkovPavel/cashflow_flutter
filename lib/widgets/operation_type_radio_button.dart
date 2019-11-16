@@ -10,10 +10,12 @@ class OperationTypeRadioButton extends StatelessWidget{
 
   const OperationTypeRadioButton({Key key, this.onChange, this.type, this.items}) : super(key: key);
 
-  Widget RadioButton(OperationType _type, String title){
+  Widget RadioButton(BuildContext context, OperationType _type, String title){
+    final color = type == _type ? Theme.of(context).accentColor : Colors.transparent;
+
     return RaisedButton(
       child: Text(title),
-      color: type == _type ? Colors.deepOrangeAccent : Colors.black26,
+      color: color,
       onPressed: (){
         onChange(_type);
       },
@@ -33,7 +35,7 @@ class OperationTypeRadioButton extends StatelessWidget{
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: items.map((item) => RadioButton(item, getTitle(item))).toList(),
+      children: items.map((item) => RadioButton(context, item, getTitle(item))).toList(),
 //      children: <Widget>[
 //        RadioButton(OperationType.INPUT, 'INPUT'),
 //        RadioButton(OperationType.OUTPUT, 'OUTPUT'),
