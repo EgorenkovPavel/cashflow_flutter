@@ -186,7 +186,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   Stream<int> getTotalBalance(){
     return customSelectQuery(
       'SELECT SUM(sum) as sum FROM balance',)
-        .watchSingle().map((row) => row.readInt('sum'));
+        .watchSingle().map((row) => row.readInt('sum') ?? 0);
   }
 
   Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() {
