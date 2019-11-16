@@ -4,8 +4,8 @@ import 'package:cashflow/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../database.dart';
-import '../model.dart';
+import '../data/database.dart';
+import '../data/model.dart';
 
 IconData getOperationIcon(OperationType type) {
   switch (type) {

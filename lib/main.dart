@@ -8,7 +8,7 @@ import 'package:cashflow/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'model.dart';
+import 'data/model.dart';
 
 void main() => runApp(MyApp());
 

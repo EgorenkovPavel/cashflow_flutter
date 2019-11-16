@@ -16,6 +16,8 @@ class Model extends ChangeNotifier{
   Future insertAccount(AccountData entity) => db.accountDao.insertAccount(entity);
   Future updateAccount(AccountData entity) => db.accountDao.updateAccount(entity);
 
+  Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
+
   //Categories
   Stream<List<CategoryData>> watchAllCategories() => db.categoryDao.watchAllCategories();
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type) => db.categoryDao.watchAllCategoriesByType(type);

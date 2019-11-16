@@ -1,5 +1,5 @@
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/database.dart';
+import 'package:cashflow/data/database.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../model.dart';
+import '../data/model.dart';
 
 class SimpleMasterPage extends StatefulWidget {
   @override

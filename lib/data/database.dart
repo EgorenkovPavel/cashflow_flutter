@@ -183,6 +183,12 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
 //  Future deleteTask(Task task) => delete(tasks).delete(task);
 
+  Stream<int> getTotalBalance(){
+    return customSelectQuery(
+      'SELECT SUM(sum) as sum FROM balance',)
+        .watchSingle().map((row) => row.readInt('sum'));
+  }
+
   Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() {
     return customSelectQuery(
         'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" FROM account c;',

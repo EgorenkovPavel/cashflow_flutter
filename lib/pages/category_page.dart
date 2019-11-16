@@ -3,8 +3,8 @@ import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../database.dart';
-import '../model.dart';
+import '../data/database.dart';
+import '../data/model.dart';
 
 class CategoryPage extends StatefulWidget {
 
