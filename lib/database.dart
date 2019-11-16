@@ -282,13 +282,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
+  Future updateOperation(OperationData entity) {
+    return transaction(() async {
+      await deleteOperation(entity);
+      await insertOperation(entity);
+    });
+  }
+
   Future deleteOperation(OperationData entity) {
     return transaction(() async {
       await delete(operation).delete(entity);
-      await (delete(balance)..where((entry) =>
-          entry.operation.equals(entity.id))).go();
-      await (delete(cashflow)..where((entry) =>
-          entry.operation.equals(entity.id))).go();
+      await _deleteAnalytic(entity);
     });
   }
 
@@ -337,5 +341,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           break;
         }
     }
+  }
+
+  Future _deleteAnalytic(OperationData operation) async{
+    await (delete(balance)..where((entry) =>
+        entry.operation.equals(operation.id))).go();
+    await (delete(cashflow)..where((entry) =>
+        entry.operation.equals(operation.id))).go();
   }
 }

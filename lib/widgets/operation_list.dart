@@ -1,13 +1,14 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/account_page.dart';
+import 'package:cashflow/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../database.dart';
 import '../model.dart';
 
-IconData getOperationIcon(OperationType type){
-  switch(type){
+IconData getOperationIcon(OperationType type) {
+  switch (type) {
     case OperationType.INPUT:
       return Icons.add;
 
@@ -42,19 +43,18 @@ class OperationList extends StatelessWidget {
                         ? Text(itemOperation.recAccount.title)
                         : Text(itemOperation.category.title),
                     trailing: Text(itemOperation.sum.toString()),
-                    leading: CircleAvatar(child: Icon(getOperationIcon(itemOperation.type)),),
-//                  onTap: () {
-//                    Navigator.pushNamed(context, AccountPage.routeName,
-//                        arguments: itemOperation);
-//                  },
+                    leading: CircleAvatar(
+                      child: Icon(getOperationIcon(itemOperation.type)),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, OperationPage.routeName,
+                          arguments: itemOperation);
+                    },
                   ),
                   confirmDismiss: (_) async {
                     await Provider.of<Model>(context, listen: false)
                         .deleteOperation(itemOperation.operationData);
-                },
-//                  onDismissed: (direction){
-//
-//                  },
+                  },
                 ),
                 Divider()
               ],
