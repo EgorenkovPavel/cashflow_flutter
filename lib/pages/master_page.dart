@@ -66,17 +66,23 @@ class _MasterPageState extends State<MasterPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           title('Operation type'),
-          OperationTypeRadioButton(
-            type: _type,
-            onChange: (newValue) {
-              setState(() {
-                _type = newValue;
-              });
-            },
-            items: [
-              OperationType.INPUT,
-              OperationType.OUTPUT,
-              OperationType.TRANSFER
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              OperationTypeRadioButton(
+                type: _type,
+                onChange: (newValue) {
+                  setState(() {
+                    _type = newValue;
+                  });
+                },
+                items: [
+                  OperationType.INPUT,
+                  OperationType.OUTPUT,
+                  OperationType.TRANSFER
+                ],
+              ),
             ],
           ),
           title('Account'),
@@ -125,7 +131,35 @@ class _MasterPageState extends State<MasterPage> {
   }
 
   void _saveOperation(BuildContext context) {
+
+    if(_account == null){
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Choose account'),
+      ));
+      return;
+    }
+
+    if(_type == OperationType.TRANSFER && _recAccount == null){
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Choose recipient account'),
+      ));
+      return;
+    }
+
+    if(_type != OperationType.TRANSFER && (_category == null || _category.operationType != _type)){
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Choose category'),
+      ));
+      return;
+    }
+
     int sum = int.parse(_sumController.text);
+    if(sum == 0){
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Sum is empty'),
+      ));
+      return;
+    }
 
     if (_type == OperationType.TRANSFER) {
       OperationData operation = OperationData(
@@ -156,8 +190,8 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget title(String text) {
     return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: Text(text),
+      padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+      child: Text(text, style: Theme.of(context).textTheme.caption,),
     );
   }
 
@@ -165,7 +199,15 @@ class _MasterPageState extends State<MasterPage> {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, pos) {
-        return AccountItem(_accountList[pos]);
+        return AccountItem(_accountList[pos],
+            _accountList[pos] == _account,(account){
+          setState(() {
+            _account = account;
+            if(_account == _recAccount){
+              _recAccount = null;
+            }
+          });
+        });
       },
       itemCount: _accountList?.length ?? 0,
     );
@@ -177,8 +219,14 @@ class _MasterPageState extends State<MasterPage> {
         return ListView.builder(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, pos) {
-            return ListTile(
-              title: CategoryItem(_categoryInList[pos]),
+            return Column(
+              children: <Widget>[
+                Divider(height: 0.0,),
+                ListTile(
+                  title: CategoryItem(_categoryInList[pos]),
+                ),
+                Divider(height: 0.0,)
+              ],
             );
           },
           itemCount: _categoryInList?.length ?? 0,
@@ -187,19 +235,38 @@ class _MasterPageState extends State<MasterPage> {
         return ListView.builder(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, pos) {
-            return ListTile(
-              title: CategoryItem(_categoryOutList[pos]),
+            return Column(
+              children: <Widget>[
+                Divider(height: 0.0,),
+                ListTile(
+                  title: CategoryItem(_categoryOutList[pos]),
+                ),
+                Divider(height: 0.0,)
+              ],
             );
           },
           itemCount: _categoryOutList?.length ?? 0,
         );
       case OperationType.TRANSFER:
-        return accountList();
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, pos) {
+            return AccountItem(_accountList[pos],
+                _accountList[pos] == _recAccount,
+                    (account){
+              if(account != _account)
+              setState(() {
+                _recAccount = account;
+              });
+            });
+          },
+          itemCount: _accountList?.length ?? 0,
+        );
     }
   }
 
-  Widget AccountItem(AccountData account) {
-    Color color = _account == account ? Colors.green : Colors.black26;
+  Widget AccountItem(AccountData account, bool mark, Function onTap) {
+    Color color = mark ? Colors.green : Colors.black26;
 
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, right: 4.0),
@@ -212,11 +279,7 @@ class _MasterPageState extends State<MasterPage> {
           alignment: Alignment.center,
           child: Text(account.title),
         ),
-        onTap: () {
-          setState(() {
-            _account = account;
-          });
-        },
+        onTap: () => onTap(account),
       ),
     );
   }

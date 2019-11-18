@@ -169,8 +169,8 @@ class _OperationPageState extends State<OperationPage> {
         appBar: AppBar(
           title: Text(widget.operation == null ? 'New operation' : 'Operation'),
           actions: <Widget>[
-            FlatButton(
-              child: Text('Save'),
+            IconButton(
+              icon: Icon(Icons.save),
               onPressed: _saveOperation,
             )
           ],

@@ -45,7 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       appBar: AppBar(title: Text('Category'),
       actions: <Widget>[
-        FlatButton(child: Text('Save'),
+        IconButton(icon: Icon(Icons.save),
           onPressed: (){
             if(category == null){
               category = CategoryData(title: controller.text, operationType: _type);
@@ -59,23 +59,29 @@ class _CategoryPageState extends State<CategoryPage> {
           },)
       ],),
 
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(controller: controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Title',
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextField(controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Title',
+                ),
+
             ),
-          ),
-          OperationTypeRadioButton(
-            type: _type,
-            onChange: _onTypeChanged,
-            items: [OperationType.INPUT, OperationType.OUTPUT],
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+              child: Text('Type', style: Theme.of(context).textTheme.caption,),
+            ),
+            OperationTypeRadioButton(
+              type: _type,
+              onChange: _onTypeChanged,
+              items: [OperationType.INPUT, OperationType.OUTPUT],
+            ),
+          ],
+        ),
       ),
     );
   }

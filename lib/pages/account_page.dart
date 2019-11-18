@@ -19,7 +19,7 @@ class AccountPage extends StatelessWidget{
       appBar: AppBar(
         title: Text((account == null) ? 'New account' : 'Account'),
         actions: <Widget>[
-          FlatButton(child: Text('Save'),
+          IconButton(icon: Icon(Icons.save),
             onPressed: (){
               if(account == null){
                 Provider.of<Model>(context, listen: false).insertAccount(AccountData(title: controller.text));

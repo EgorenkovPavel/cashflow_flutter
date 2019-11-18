@@ -33,14 +33,16 @@ class OperationTypeRadioButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: items.map((item) => RadioButton(context, item, getTitle(item))).toList(),
+    return Container(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: items.map((item) => RadioButton(context, item, getTitle(item))).toList(),
 //      children: <Widget>[
 //        RadioButton(OperationType.INPUT, 'INPUT'),
 //        RadioButton(OperationType.OUTPUT, 'OUTPUT'),
 //        RadioButton(OperationType.TRANSFER, 'TRANSFER'),
 //      ],
+      ),
     );
   }
 }
