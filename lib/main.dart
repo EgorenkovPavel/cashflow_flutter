@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           AccountPage.routeName: (BuildContext context) => AccountPage(),
           CategoryPage.routeName: (BuildContext context) => CategoryPage(),
           //OperationPage.routeName: (BuildContext context) => OperationPage(),
-          MasterPage.routeName: (BuildContext context) => SimpleMasterPage(),
+          MasterPage.routeName: (BuildContext context) => MasterPage(),//SimpleMasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
         },
         onGenerateRoute: (settings){
