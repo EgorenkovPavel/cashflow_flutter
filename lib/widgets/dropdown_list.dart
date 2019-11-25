@@ -16,7 +16,7 @@ class DropdownList<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      //margin: EdgeInsets.all(12.0),
       //padding: EdgeInsets.all(12.0),
       decoration:
 //      InputDecoration(

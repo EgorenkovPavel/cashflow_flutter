@@ -30,9 +30,39 @@ class _OperationPageState extends State<OperationPage> {
   AccountData _recAccount;
   TextEditingController _sumController = TextEditingController();
 
+  Model model;
   List<AccountData> accountList;
   List<CategoryData> categoryInList;
   List<CategoryData> categoryOutList;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    model = Provider.of<Model>(context);
+
+    model.watchAllAccounts().forEach((list) {
+      setState(() {
+        accountList = list;
+      });
+    });
+
+    model
+        .watchAllCategoriesByType(OperationType.INPUT)
+        .forEach((list) {
+      setState(() {
+        categoryInList = list;
+      });
+    });
+
+    model
+        .watchAllCategoriesByType(OperationType.OUTPUT)
+        .forEach((list) {
+      setState(() {
+        categoryOutList = list;
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -143,28 +173,6 @@ class _OperationPageState extends State<OperationPage> {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<Model>(context).watchAllAccounts().forEach((list) {
-      setState(() {
-        accountList = list;
-      });
-    });
-
-    Provider.of<Model>(context)
-        .watchAllCategoriesByType(OperationType.INPUT)
-        .forEach((list) {
-      setState(() {
-        categoryInList = list;
-      });
-    });
-
-    Provider.of<Model>(context)
-        .watchAllCategoriesByType(OperationType.OUTPUT)
-        .forEach((list) {
-      setState(() {
-        categoryOutList = list;
-      });
-    });
-
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.operation == null ? 'New operation' : 'Operation'),
@@ -199,29 +207,41 @@ class _OperationPageState extends State<OperationPage> {
                 ),
               ],
             ),
-            OperationTypeRadioButton(
-              type: _type,
-              onChange: (newValue){
-                setState(() {
-                  _type = newValue;
-                  _category = null;
-                });
-              },
-              items: [OperationType.INPUT, OperationType.OUTPUT, OperationType.TRANSFER],
+            title('Type'),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: OperationTypeRadioButton(
+                type: _type,
+                onChange: (newValue){
+                  setState(() {
+                    _type = newValue;
+                    _category = null;
+                  });
+                },
+                items: [OperationType.INPUT, OperationType.OUTPUT, OperationType.TRANSFER],
+              ),
             ),
-            DropdownList(
-              value: _account,
-              hint: 'Account',
-              items: accountList,
-              onChange: (newValue){
-                setState(() {
-                  _account = newValue;
-                });
-              },
-              getListItem: (data)=>
-                ListTile(title: Text(data.title)),
+            title('Account'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: DropdownList(
+                value: _account,
+                hint: 'Account',
+                items: accountList,
+                onChange: (newValue){
+                  setState(() {
+                    _account = newValue;
+                  });
+                },
+                getListItem: (data)=>
+                  ListTile(title: Text(data.title)),
+              ),
             ),
-            AnalyticMenu(),
+            title('Analytic'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: AnalyticMenu(),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -235,5 +255,12 @@ class _OperationPageState extends State<OperationPage> {
           ],
         )
     );
+  }
+
+  Padding title(String text) {
+    return Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+           child: Text(text, style: Theme.of(context).textTheme.caption,),
+          );
   }
 }
