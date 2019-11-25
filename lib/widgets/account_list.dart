@@ -13,11 +13,11 @@ class AccountList extends StatelessWidget {
       children: <Widget>[
         Container(
           child: ListTile(
-            title: Text('Total'),
+            title: Text('Total sum', style: Theme.of(context).textTheme.title,),
             trailing: StreamBuilder<int>(
               stream: model.getTotalBalance(),
               initialData: 0,
-              builder: (_,  AsyncSnapshot<int> snapshot) => Text(snapshot.data.toString()),
+              builder: (_,  AsyncSnapshot<int> snapshot) => Text(snapshot.data.toString(), style: Theme.of(context).textTheme.title,),
             ),
           ),
           height: 44.0,//TODO hardcode
