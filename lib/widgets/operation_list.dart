@@ -55,7 +55,7 @@ class OperationList extends StatelessWidget {
                     subtitle: itemOperation.type == OperationType.TRANSFER
                         ? Text(itemOperation.recAccount.title)
                         : Text(itemOperation.category.title),
-                    trailing: Text(itemOperation.sum.toString()),
+                    trailing: Text(itemOperation.sum.toString(), style: Theme.of(context).textTheme.display1,),
                     leading: CircleAvatar(
                       backgroundColor: getOperationColor(itemOperation.type),
                       child: Icon(getOperationIcon(itemOperation.type)),
