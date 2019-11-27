@@ -20,7 +20,6 @@ class OperationPage extends StatefulWidget {
 }
 
 class _OperationPageState extends State<OperationPage> {
-
   int _id;
   OperationType _type;
   DateTime _date;
@@ -47,17 +46,13 @@ class _OperationPageState extends State<OperationPage> {
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.INPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.INPUT).forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.OUTPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.OUTPUT).forEach((list) {
       setState(() {
         categoryOutList = list;
       });
@@ -89,8 +84,7 @@ class _OperationPageState extends State<OperationPage> {
               });
             },
             items: categoryInList,
-            getListItem: (item) =>
-                ListTile(title: Text(item.title)));
+            getListItem: (item) => ListTile(title: Text(item.title)));
       case OperationType.OUTPUT:
         return DropdownList<CategoryData>(
             value: _category,
@@ -101,8 +95,7 @@ class _OperationPageState extends State<OperationPage> {
               });
             },
             items: categoryOutList,
-            getListItem: (item) =>
-                ListTile(title: Text(item.title)));
+            getListItem: (item) => ListTile(title: Text(item.title)));
       case OperationType.TRANSFER:
         return DropdownList<AccountData>(
             value: _recAccount,
@@ -113,18 +106,18 @@ class _OperationPageState extends State<OperationPage> {
               });
             },
             items: accountList,
-            getListItem: (item) =>
-                ListTile(title: Text(item.title)));
+            getListItem: (item) => ListTile(title: Text(item.title)));
       default:
         return SizedBox();
     }
   }
 
-  void _saveOperation(){
-    _date = DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
+  void _saveOperation() {
+    _date =
+        DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     if (_type == OperationType.TRANSFER) {
       OperationData operation = OperationData(
-        id: _id,
+          id: _id,
           date: _date,
           operationType: _type,
           account: _account.id,
@@ -148,31 +141,55 @@ class _OperationPageState extends State<OperationPage> {
 
   void _selectDate() async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _date,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101),
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
     );
     if (picked != null && picked != _date)
       setState(() {
         _date = picked;
       });
   }
-  
+
   void _selectTime() async {
-    final TimeOfDay picked = await showTimePicker(
-        context: context,
-        initialTime: _time
-    );
+    final TimeOfDay picked =
+        await showTimePicker(context: context, initialTime: _time);
     if (picked != null && picked != _time)
       setState(() {
         _time = picked;
       });
   }
 
+  Widget dateButtom(IconData icon, String text, Function() onPressed) {
+    final color = Theme.of(context).primaryColor;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+            side: BorderSide(color: color)),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.calendar_today,
+              color: color,
+            ),
+            Text(
+              DateFormat.yMMMd().format(_date),
+              style: TextStyle(color: color),
+            ),
+          ],
+        ),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.operation == null ? 'New operation' : 'Operation'),
@@ -187,39 +204,33 @@ class _OperationPageState extends State<OperationPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                FlatButton(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.calendar_today),
-                      Text(DateFormat.yMMMd().format(_date)),
-                    ],
-                  ),
-                  onPressed: _selectDate,
-                ),
-                FlatButton(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.access_time),
-                      Text(_time.format(context)),
-                    ],
-                  ),
-                  onPressed: _selectTime,
-                ),
+                dateButtom(Icons.calendar_today,
+                    DateFormat.yMMMd().format(_date), _selectDate),
+                dateButtom(
+                    Icons.access_time, _time.format(context), _selectTime),
               ],
             ),
             title('Type'),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: OperationTypeRadioButton(
-                type: _type,
-                onChange: (newValue){
-                  setState(() {
-                    _type = newValue;
-                    _category = null;
-                  });
-                },
-                items: [OperationType.INPUT, OperationType.OUTPUT, OperationType.TRANSFER],
-              ),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: OperationTypeRadioButton(
+                    type: _type,
+                    onChange: (newValue) {
+                      setState(() {
+                        _type = newValue;
+                        _category = null;
+                      });
+                    },
+                    items: [
+                      OperationType.INPUT,
+                      OperationType.OUTPUT,
+                      OperationType.TRANSFER
+                    ],
+                  ),
+                ),
+              ],
             ),
             title('Account'),
             Padding(
@@ -228,13 +239,12 @@ class _OperationPageState extends State<OperationPage> {
                 value: _account,
                 hint: 'Account',
                 items: accountList,
-                onChange: (newValue){
+                onChange: (newValue) {
                   setState(() {
                     _account = newValue;
                   });
                 },
-                getListItem: (data)=>
-                  ListTile(title: Text(data.title)),
+                getListItem: (data) => ListTile(title: Text(data.title)),
               ),
             ),
             title('Analytic'),
@@ -253,14 +263,16 @@ class _OperationPageState extends State<OperationPage> {
               ),
             )
           ],
-        )
-    );
+        ));
   }
 
   Padding title(String text) {
     return Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-           child: Text(text, style: Theme.of(context).textTheme.caption,),
-          );
+      padding: const EdgeInsets.only(left: 16.0, top: 8.0),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.caption,
+      ),
+    );
   }
 }

@@ -266,20 +266,19 @@ class _MasterPageState extends State<MasterPage> {
   }
 
   Widget AccountItem(AccountData account, bool mark, Function onTap) {
-    Color color = mark ? Theme.of(context).accentColor : Colors.black26;
+    Color color = mark ? Theme.of(context).primaryColor : Colors.black;
 
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, right: 4.0),
       child: GestureDetector(
         child: Container(
           decoration: BoxDecoration(
-            color: color,
               borderRadius: BorderRadius.all(Radius.circular(4.0)),
               border: Border.all(color: color),
           ),
           width: 150.0,
           alignment: Alignment.center,
-          child: Text(account.title),
+          child: Text(account.title, style: TextStyle(color: color),),
         ),
         onTap: () => onTap(account),
       ),
