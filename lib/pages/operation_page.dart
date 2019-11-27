@@ -165,7 +165,7 @@ class _OperationPageState extends State<OperationPage> {
     final color = Theme.of(context).primaryColor;
 
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+      padding: const EdgeInsets.only(left: 16.0),
       child: FlatButton(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
@@ -174,11 +174,11 @@ class _OperationPageState extends State<OperationPage> {
         child: Row(
           children: <Widget>[
             Icon(
-              Icons.calendar_today,
+              icon,
               color: color,
             ),
             Text(
-              DateFormat.yMMMd().format(_date),
+              text,
               style: TextStyle(color: color),
             ),
           ],
@@ -202,6 +202,7 @@ class _OperationPageState extends State<OperationPage> {
         ),
         body: ListView(
           children: <Widget>[
+            title('Date'),
             Row(
               children: <Widget>[
                 dateButtom(Icons.calendar_today,
