@@ -1,3 +1,4 @@
+import 'package:cashflow/pages/account_card.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +40,19 @@ class AccountList extends StatelessWidget {
                         title: Text(itemAccount.account.title),
                         trailing: Text((itemAccount.sum ?? 0).toString()),
                         onTap: () {
-                          Navigator.pushNamed(context, AccountPage.routeName,
-                              arguments: itemAccount);
+//                          Navigator.pushNamed(context, AccountPage.routeName,
+//                              arguments: itemAccount);
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                return Dialog(
+                                    child: AccountCard(
+                                      account: itemAccount,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(12))));
+                              });
                         },
                       ),
                       Divider()

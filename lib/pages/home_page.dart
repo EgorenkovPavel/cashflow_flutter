@@ -1,3 +1,5 @@
+import 'package:cashflow/data/database.dart';
+import 'package:cashflow/pages/account_card.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
@@ -6,10 +8,10 @@ import 'package:cashflow/widgets/category_list.dart';
 import 'package:cashflow/widgets/operation_list.dart';
 import 'package:flutter/material.dart';
 
+import 'category_card.dart';
 import 'category_page.dart';
 
 class HomePage extends StatefulWidget {
-
   static const routeName = '/';
 
   @override
@@ -17,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -27,8 +28,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget body() {
-
-    switch(_selectedIndex){
+    switch (_selectedIndex) {
       case 0:
         return AccountList();
       case 1:
@@ -41,16 +41,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _addElement(BuildContext context) {
-      if (_selectedIndex == 0) {
-        Navigator.of(context).pushNamed(AccountPage.routeName);
-      } else if (_selectedIndex == 1) {
-        Navigator.of(context).pushNamed(CategoryPage.routeName);
-      } else if (_selectedIndex == 2) {
-        Navigator.of(context).pushNamed(MasterPage.routeName);
-      }
+    if (_selectedIndex == 0) {
+      //Navigator.of(context).pushNamed(AccountPage.routeName);
+      showAccount();
+    } else if (_selectedIndex == 1) {
+      //Navigator.of(context).pushNamed(CategoryPage.routeName);
+      showCategory();
+    } else if (_selectedIndex == 2) {
+      Navigator.of(context).pushNamed(MasterPage.routeName);
+    }
   }
 
+  void showAccount({AccountWithBalance account}) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: AccountCard(
+                account: account,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
 
+  void showCategory([CategoryData category]) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: CategoryCard(
+                category: category,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +94,13 @@ class _HomePageState extends State<HomePage> {
                 value: AppMenu.BACKUP,
               )
             ],
-            onSelected: (value){
-              switch (value){
-                case AppMenu.BACKUP: {
-                  Navigator.of(context).pushNamed(BackupPage.routeName);
-                  break;
-                }
+            onSelected: (value) {
+              switch (value) {
+                case AppMenu.BACKUP:
+                  {
+                    Navigator.of(context).pushNamed(BackupPage.routeName);
+                    break;
+                  }
               }
             },
           ),
@@ -101,13 +130,12 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           _addElement(context);
         },
-        tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+
 }
 
-enum AppMenu{
-  BACKUP
-}
+enum AppMenu { BACKUP }

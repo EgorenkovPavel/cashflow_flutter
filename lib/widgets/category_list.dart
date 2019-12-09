@@ -1,3 +1,4 @@
+import 'package:cashflow/pages/category_card.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,8 +25,19 @@ class CategoryList extends StatelessWidget {
                 ListTile(
                   title: Text(itemCategory.title),
                   onTap: () {
-                    Navigator.pushNamed(context, CategoryPage.routeName,
-                        arguments: itemCategory);
+//                    Navigator.pushNamed(context, CategoryPage.routeName,
+//                        arguments: itemCategory);
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return Dialog(
+                              child: CategoryCard(
+                                category: itemCategory,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(12))));
+                        });
                   },
                 ),
                 Divider()
