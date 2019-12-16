@@ -50,7 +50,7 @@ class OperationList extends StatelessWidget {
             return Column(
               children: <Widget>[
                 Dismissible(
-                  key: Key(itemOperation.toString()),
+                  key: Key(itemOperation.operationData.id.toString()),
                   child: ListTile(
                     title: Text(itemOperation.account.title),
                     subtitle: itemOperation.type == OperationType.TRANSFER
