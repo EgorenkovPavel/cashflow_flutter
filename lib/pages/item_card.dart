@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ItemCard extends StatelessWidget{
-
+class ItemCard extends StatelessWidget {
   final String title;
   final Widget child;
   final Function onSave;
 
-  const ItemCard({Key key, this.title, @required this.child, this.onSave}) : super(key: key);
+  const ItemCard({Key key, this.title, @required this.child, this.onSave})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +17,26 @@ class ItemCard extends StatelessWidget{
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(title, style: Theme.of(context).textTheme.title,),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.title,
+            ),
           ),
           child,
-          ButtonBar(children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
             FlatButton(
               child: Text('Cancel'.toUpperCase()),
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             RaisedButton(
-              child: Text('Save'.toUpperCase(), style: TextStyle(color: Colors.white),),
+              child: Text(
+                'Save'.toUpperCase(),
+                style: TextStyle(color: Colors.white),
+              ),
               color: Theme.of(context).primaryColor,
-              onPressed: (){
+              onPressed: () {
                 onSave(context);
                 Navigator.pop(context);
               },
@@ -40,5 +46,4 @@ class ItemCard extends StatelessWidget{
       ),
     );
   }
-
 }
