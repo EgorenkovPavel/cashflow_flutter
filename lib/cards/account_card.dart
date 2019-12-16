@@ -1,6 +1,6 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
-import 'package:cashflow/pages/item_card.dart';
+import 'package:cashflow/cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

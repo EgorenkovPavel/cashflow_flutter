@@ -1,4 +1,4 @@
-import 'package:cashflow/pages/category_card.dart';
+import 'package:cashflow/cards/category_card.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

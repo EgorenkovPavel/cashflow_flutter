@@ -1,5 +1,6 @@
+import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/pages/account_card.dart';
+import 'package:cashflow/cards/account_card.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
@@ -8,7 +9,7 @@ import 'package:cashflow/widgets/category_list.dart';
 import 'package:cashflow/widgets/operation_list.dart';
 import 'package:flutter/material.dart';
 
-import 'category_card.dart';
+import '../cards/category_card.dart';
 import 'category_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,6 +50,7 @@ class _HomePageState extends State<HomePage> {
       showCategory();
     } else if (_selectedIndex == 2) {
       Navigator.of(context).pushNamed(MasterPage.routeName);
+//      showOperation();
     }
   }
 
@@ -74,6 +76,20 @@ class _HomePageState extends State<HomePage> {
           return Dialog(
               child: CategoryCard(
                 category: category,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
+
+  void showOperation([OperationItem operation]) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: OperationCard(
+                operation: operation,
               ),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12))));

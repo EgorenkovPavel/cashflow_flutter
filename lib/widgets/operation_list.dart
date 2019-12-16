@@ -1,3 +1,4 @@
+import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:cashflow/pages/operation_page.dart';
@@ -61,8 +62,19 @@ class OperationList extends StatelessWidget {
                       child: Icon(getOperationIcon(itemOperation.type)),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, OperationPage.routeName,
-                          arguments: itemOperation);
+//                      Navigator.pushNamed(context, OperationPage.routeName,
+//                          arguments: itemOperation);
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return Dialog(
+                                child: OperationCard(
+                                  operation: itemOperation,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12))));
+                          });
                     },
                   ),
                   secondaryBackground:

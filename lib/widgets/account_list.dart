@@ -1,4 +1,4 @@
-import 'package:cashflow/pages/account_card.dart';
+import 'package:cashflow/cards/account_card.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
