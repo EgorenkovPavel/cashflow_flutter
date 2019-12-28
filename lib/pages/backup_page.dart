@@ -113,7 +113,6 @@ class BackupPage extends StatelessWidget {
           var converter = OperationTypeConverter();
           if(d is Map<String, dynamic>){
             Map<String, dynamic> p = d;
-            print(p['category_budget']);
             var category = CategoryData(
                 title: p['category_title'],
                 id: int.parse(p['_id']),
@@ -124,6 +123,24 @@ class BackupPage extends StatelessWidget {
           }
         });
 
+      }else if(key == 'operation'){
+
+        value.forEach((dynamic d){
+          var converter = OperationTypeConverter();
+          if(d is Map<String, dynamic>){
+            Map<String, dynamic> p = d;
+            var operation = OperationData(
+                id: int.parse(p['_id']),
+                date: DateTime.fromMicrosecondsSinceEpoch(int.parse(p['operation_date'])),
+                operationType: converter.mapToDart(int.parse(p['operation_type'])),
+                account: int.parse(p['operation_account_id']),
+                category: int.parse(p['operation_category_id']),
+                recAccount: int.parse(p['operation_recipient_account_id']),
+                sum: int.parse(p['operation_sum'])
+            );
+            Provider.of<Model>(context).insertOperation(operation);
+          }
+        });
 
       }
     });
