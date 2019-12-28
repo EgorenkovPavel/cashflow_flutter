@@ -1,10 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:cashflow/data/stack.dart' as lib;
-import 'backup_page.dart';
+import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'backup_page.dart';
 
 class DriveDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
@@ -22,10 +24,11 @@ class _DriveDialogState extends State<DriveDialog> {
   void loadFolders() async {
     try {
       drive.FileList data = await drive.DriveApi(widget.httpClient).files.list(
-          orderBy: 'name',
+          orderBy: 'folder,name,modifiedTime',
           spaces: 'drive',
-//          q: "mimeType = 'application/vnd.google-apps.folder' and '${rootFolder.top()}' in parents");
-          q: "'${rootFolder.top()}' in parents");
+          q: "'${rootFolder.top()}' in parents and trashed = false", //(mimeType = 'application/vnd.google-apps.folder')
+        $fields: 'files(id,name,parents,mimeType,modifiedTime)'
+      );
 
       setState(() {
         folderList = data.files.toList();
@@ -77,22 +80,28 @@ class _DriveDialogState extends State<DriveDialog> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Google drive'),
+        ),
         body: Column(
           children: <Widget>[
             Expanded(
                 child: ListView(
+              padding: EdgeInsets.zero,
               children: folderList.map((f) {
+
                 bool isFolder =
                     f.mimeType == 'application/vnd.google-apps.folder';
                 return ListTile(
                   leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
                   title: Text(f.name),
+                  subtitle: Text('Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
+                  enabled: isFolder || f.mimeType == 'application/json' || f.mimeType == 'text/plain',
                   onTap: () {
-                    if(isFolder) {
+                    if (isFolder) {
                       rootFolder.push(f.id);
                       loadFolders();
-                    }else{
+                    } else {
                       Navigator.of(context).pop(f.id);
                     }
                   },
@@ -103,13 +112,15 @@ class _DriveDialogState extends State<DriveDialog> {
             ButtonBar(
               children: <Widget>[
                 FlatButton(
-                  child: Text('Cancel'),
+                  child: Text('Cancel'.toUpperCase()),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
-                FlatButton(
-                  child: Text('Choose'),
+                RaisedButton(
+                  child: Text('Choose'.toUpperCase(),
+                      style: TextStyle(color: Colors.white)),
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {
                     uploadFile();
                   },
