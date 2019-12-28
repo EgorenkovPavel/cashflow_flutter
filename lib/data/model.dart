@@ -9,6 +9,8 @@ class Model extends ChangeNotifier{
 
   Model() : db = Database();
 
+  Future deleteAll() => db.deleteAll();
+
   //Accounts
   Stream<List<AccountData>> watchAllAccounts() => db.accountDao.watchAllAccounts();
   Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() => db.accountDao.watchAllAccountsWithBalance();

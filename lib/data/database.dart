@@ -16,6 +16,8 @@ class Category extends Table {
 
   IntColumn get operationType =>
       integer().named('operation_type').map(const OperationTypeConverter())();
+
+  IntColumn get budget => integer()();
 }
 
 class Operation extends Table {
@@ -124,11 +126,11 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
     }
 
     switch (fromDb) {
-      case 0:
-        return OperationType.INPUT;
       case 1:
-        return OperationType.OUTPUT;
+        return OperationType.INPUT;
       case 2:
+        return OperationType.OUTPUT;
+      case 3:
         return OperationType.TRANSFER;
       default:
         return null;
@@ -143,11 +145,11 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
 
     switch (value) {
       case OperationType.INPUT:
-        return 0;
-      case OperationType.OUTPUT:
         return 1;
-      case OperationType.TRANSFER:
+      case OperationType.OUTPUT:
         return 2;
+      case OperationType.TRANSFER:
+        return 3;
       default:
         return null;
     }
@@ -164,6 +166,16 @@ class Database extends _$Database {
 
   @override
   int get schemaVersion => 1;
+
+  Future deleteAll(){
+    return transaction(() async{
+      await delete(balance).go();
+      await delete(cashflow).go();
+      await delete(operation).go();
+      await delete(account).go();
+      await delete(category).go();
+    });
+  }
 }
 
 @UseDao(tables: [Account, Balance])
