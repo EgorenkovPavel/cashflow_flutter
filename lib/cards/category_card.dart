@@ -21,12 +21,15 @@ class _CategoryCardState extends State<CategoryCard> {
 
   OperationType _type;
 
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController budgetController = TextEditingController();
 
   @override
   void initState() {
     if(widget.category != null){
-      controller.text = widget.category.title;
+      titleController.text = widget.category.title;
+      budgetController.text = widget.category.budget.toString();
+
       _type = widget.category.operationType;
     }
   }
@@ -39,13 +42,15 @@ class _CategoryCardState extends State<CategoryCard> {
 
   void saveCategory(BuildContext context){
     if(widget.category == null){
-      widget.category = CategoryData(title: controller.text, operationType: _type);
+      widget.category = CategoryData(title: titleController.text, operationType: _type, budget: int.parse(budgetController.text));
       Provider.of<Model>(context, listen: false).insertCategory(widget.category);
     }else{
-      widget.category = widget.category.copyWith(title: controller.text, operationType: _type);
+      widget.category = widget.category.copyWith(title: titleController.text, operationType: _type, budget: int.parse(budgetController.text));
       Provider.of<Model>(context, listen: false).updateCategory(widget.category);
     }
   }
+
+  //TODO fix on text input error
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +59,7 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextField(controller: controller,
+          TextField(controller: titleController,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Title',
@@ -68,6 +73,14 @@ class _CategoryCardState extends State<CategoryCard> {
             type: _type,
             onChange: _onTypeChanged,
             items: [OperationType.INPUT, OperationType.OUTPUT],
+          ),
+          SizedBox(height: 8.0,),
+          TextField(controller: budgetController,
+            keyboardType: TextInputType.numberWithOptions(),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Budget',
+            ),
           ),
         ],
       ),
