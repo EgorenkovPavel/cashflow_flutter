@@ -1,16 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:googleapis/drive/v3.dart'as drive;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/io_client.dart';
+import 'package:googleapis/drive/v3.dart'as drive;
 import 'package:http/http.dart';
+import 'package:http/io_client.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'drive_dialog.dart';
@@ -157,8 +155,14 @@ class BackupPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Text('Google drive'),
-          Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Google drive', style: Theme.of(context).textTheme.title,),
+          ),
+          Flex(
+            direction: Axis.horizontal,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
                 child: Text('BACKUP'),
