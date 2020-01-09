@@ -250,7 +250,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final acc = alias(account, 'a');
     final rec = alias(account, 'rec');
 
-    return select(operation)
+    return (select(operation)
+    ..orderBy([(t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)]))
         .join(
           [
             innerJoin(
