@@ -97,17 +97,17 @@ class BackupPage extends StatelessWidget {
     data.forEach((String key, dynamic value){
       if(key == 'account'){
 
-        value.forEach((dynamic d){
+        value.forEach((dynamic d) async {
           if(d is Map<String, dynamic>){
             Map<String, dynamic> p = d;
             var account = AccountData(title: p['account_title'], id: int.parse(p['_id']));
-            Provider.of<Model>(context).insertAccount(account);
+            await Provider.of<Model>(context).insertAccount(account);
           }
         });
 
       }else if(key == 'category'){
 
-        value.forEach((dynamic d){
+        value.forEach((dynamic d) async {
           var converter = OperationTypeConverter();
           if(d is Map<String, dynamic>){
             Map<String, dynamic> p = d;
@@ -117,34 +117,38 @@ class BackupPage extends StatelessWidget {
                 operationType: converter.mapToDart(int.parse(p['category_type'])),
                 budget: p['category_budget'] == '' ? 0 : int.parse(p['category_budget'])
             );
-            Provider.of<Model>(context).insertCategory(category);
+            await Provider.of<Model>(context).insertCategory(category);
           }
         });
 
       }else if(key == 'operation'){
 
-        value.forEach((dynamic d){
+        value.forEach((dynamic d) async {
           var converter = OperationTypeConverter();
           if(d is Map<String, dynamic>){
             Map<String, dynamic> p = d;
             var operation = OperationData(
                 id: int.parse(p['_id']),
-                date: DateTime.fromMicrosecondsSinceEpoch(int.parse(p['operation_date'])),
+                date: DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date'])),
                 operationType: converter.mapToDart(int.parse(p['operation_type'])),
                 account: int.parse(p['operation_account_id']),
-                category: int.parse(p['operation_category_id']),
-                recAccount: int.parse(p['operation_recipient_account_id']),
+                category: getId(p['operation_category_id']),
+                recAccount: getId(p['operation_recipient_account_id']),
                 sum: int.parse(p['operation_sum'])
             );
-            Provider.of<Model>(context).insertOperation(operation);
+            await Provider.of<Model>(context).insertOperation(operation);
           }
         });
-
       }
     });
+  }
 
-
-
+  int getId(String id){
+    if (id.isEmpty) {
+      return null;
+    }else{
+      return int.parse(id);
+    }
   }
 
   @override
