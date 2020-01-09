@@ -1,8 +1,7 @@
 import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/pages/account_page.dart';
-import 'package:cashflow/pages/operation_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database.dart';
@@ -56,7 +55,12 @@ class OperationList extends StatelessWidget {
                     subtitle: itemOperation.type == OperationType.TRANSFER
                         ? Text(itemOperation.recAccount.title)
                         : Text(itemOperation.category.title),
-                    trailing: Text(itemOperation.sum.toString(), style: Theme.of(context).textTheme.display1,),
+                    trailing: Column(
+                      children: <Widget>[
+                        Text(itemOperation.sum.toString(), style: Theme.of(context).textTheme.headline,),
+                        Text(DateFormat.yMMMd().format(itemOperation.date), style: Theme.of(context).textTheme.caption,)
+                      ],
+                    ),
                     leading: CircleAvatar(
                       backgroundColor: getOperationColor(itemOperation.type),
                       child: Icon(getOperationIcon(itemOperation.type)),
