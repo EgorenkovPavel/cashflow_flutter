@@ -18,7 +18,7 @@ class AccountList extends StatelessWidget {
             trailing: StreamBuilder<int>(
               stream: model.getTotalBalance(),
               initialData: 0,
-              builder: (_,  AsyncSnapshot<int> snapshot) => Text(snapshot.data.toString(), style: Theme.of(context).textTheme.title,),
+              builder: (_,  AsyncSnapshot<int> snapshot) => Text(snapshot.data.toString(), style: Theme.of(context).textTheme.headline,),
             ),
           ),
           height: 44.0,//TODO hardcode
@@ -38,7 +38,7 @@ class AccountList extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         title: Text(itemAccount.account.title),
-                        trailing: Text((itemAccount.sum ?? 0).toString()),
+                        trailing: Text((itemAccount.sum ?? 0).toString(), style: Theme.of(context).textTheme.title,),
                         onTap: () {
 //                          Navigator.pushNamed(context, AccountPage.routeName,
 //                              arguments: itemAccount);
