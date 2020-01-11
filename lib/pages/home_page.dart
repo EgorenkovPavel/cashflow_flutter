@@ -1,16 +1,14 @@
+import 'package:cashflow/cards/account_card.dart';
 import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/cards/account_card.dart';
-import 'package:cashflow/pages/account_page.dart';
-import 'package:cashflow/pages/backup_page.dart';
-import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/lists/account_list.dart';
 import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
+import 'package:cashflow/pages/backup_page.dart';
+import 'package:cashflow/pages/master_page.dart';
 import 'package:flutter/material.dart';
 
 import '../cards/category_card.dart';
-import 'category_page.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -102,23 +100,26 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Cashflow'),
         actions: <Widget>[
-          PopupMenuButton<AppMenu>(
-            child: Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-              const PopupMenuItem<AppMenu>(
-                child: Text('BACKUP'),
-                value: AppMenu.BACKUP,
-              )
-            ],
-            onSelected: (value) {
-              switch (value) {
-                case AppMenu.BACKUP:
-                  {
-                    Navigator.of(context).pushNamed(BackupPage.routeName);
-                    break;
-                  }
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: PopupMenuButton<AppMenu>(
+              child: Icon(Icons.more_vert),
+              itemBuilder: (context) => [
+                const PopupMenuItem<AppMenu>(
+                  child: Text('BACKUP'),
+                  value: AppMenu.BACKUP,
+                )
+              ],
+              onSelected: (value) {
+                switch (value) {
+                  case AppMenu.BACKUP:
+                    {
+                      Navigator.of(context).pushNamed(BackupPage.routeName);
+                      break;
+                    }
+                }
+              },
+            ),
           ),
         ],
       ),
