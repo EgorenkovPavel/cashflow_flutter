@@ -207,7 +207,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         readsFrom: {account, balance}).watch().map((rows) {
       return rows
           .map((row) => AccountWithBalance(
-              AccountData.fromData(row.data, db), row.readInt('sum')))
+              AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
           .toList();
     });
   }
