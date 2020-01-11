@@ -51,7 +51,10 @@ class CategoryList extends StatelessWidget {
     return StreamBuilder<List<CategoryData>>(
       stream: model.watchAllCategories(),
       builder: (context, AsyncSnapshot<List<CategoryData>> snapshot) {
-        if (!snapshot.hasData || snapshot.data.isEmpty) {
+
+        if (!snapshot.hasData){
+          return Center(child: CircularProgressIndicator());
+        }else if(snapshot.data.isEmpty) {
           return EmptyListHint('Add category');
         }
 

@@ -76,7 +76,9 @@ class OperationList extends StatelessWidget {
       stream: model.watchAllOperationItems(),
       builder: (context, AsyncSnapshot<List<OperationItem>> snapshot) {
 
-        if(!snapshot.hasData || snapshot.data.isEmpty){
+        if(!snapshot.hasData){
+          return Center(child: CircularProgressIndicator());
+        }else if(snapshot.data.isEmpty){
           return EmptyListHint('Add operation');
         }
 

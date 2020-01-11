@@ -73,11 +73,13 @@ class AccountList extends StatelessWidget {
 
     return StreamBuilder<List<AccountWithBalance>>(
       stream: model.watchAllAccountsWithBalance(),
-      initialData: [],
+
       builder: (BuildContext context,
           AsyncSnapshot<List<AccountWithBalance>> snapshot) {
 
-        if(!snapshot.hasData || snapshot.data.isEmpty){
+        if(!snapshot.hasData){
+          return Center(child: CircularProgressIndicator());
+        }else if(snapshot.data.isEmpty){
           return EmptyListHint('Add accounts');
         }
 
