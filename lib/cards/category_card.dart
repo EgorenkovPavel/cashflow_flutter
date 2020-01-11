@@ -62,6 +62,7 @@ class _CategoryCardState extends State<CategoryCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextField(controller: titleController,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Title',

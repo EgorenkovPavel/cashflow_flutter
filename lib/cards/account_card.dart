@@ -29,6 +29,7 @@ class AccountCard extends StatelessWidget {
       title: account == null ? 'New account' : 'Account',
       child: TextField(
         controller: controller,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Title',
