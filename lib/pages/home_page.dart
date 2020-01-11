@@ -4,9 +4,9 @@ import 'package:cashflow/cards/account_card.dart';
 import 'package:cashflow/pages/account_page.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
-import 'package:cashflow/widgets/account_list.dart';
-import 'package:cashflow/widgets/category_list.dart';
-import 'package:cashflow/widgets/operation_list.dart';
+import 'package:cashflow/lists/account_list.dart';
+import 'package:cashflow/lists/category_list.dart';
+import 'package:cashflow/lists/operation_list.dart';
 import 'package:flutter/material.dart';
 
 import '../cards/category_card.dart';

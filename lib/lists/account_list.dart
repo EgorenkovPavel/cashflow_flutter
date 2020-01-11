@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/account_card.dart';
+import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +8,7 @@ import '../data/model.dart';
 
 class AccountList extends StatelessWidget {
 
-  void accountOnTap(BuildContext context, AccountWithBalance itemAccount) {
+  void onTap(BuildContext context, AccountWithBalance itemAccount) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -34,7 +35,7 @@ class AccountList extends StatelessWidget {
                 (itemAccount.sum ?? 0).toString(),
                 style: Theme.of(context).textTheme.title,
               ),
-              onTap: () => accountOnTap(context, itemAccount),
+              onTap: () => onTap(context, itemAccount),
             ),
             Divider()
           ],
@@ -75,6 +76,11 @@ class AccountList extends StatelessWidget {
       initialData: [],
       builder: (BuildContext context,
           AsyncSnapshot<List<AccountWithBalance>> snapshot) {
+
+        if(!snapshot.hasData || snapshot.data.isEmpty){
+          return EmptyListHint('Add accounts');
+        }
+
         final accounts = snapshot.data ?? List();
 
         return Column(
