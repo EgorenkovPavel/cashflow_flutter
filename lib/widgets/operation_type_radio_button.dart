@@ -10,17 +10,6 @@ class OperationTypeRadioButton extends StatelessWidget {
       {Key key, this.onChange, this.type, this.items})
       : super(key: key);
 
-  String getTitle(OperationType _type) {
-    switch (_type) {
-      case OperationType.INPUT:
-        return 'INPUT';
-      case OperationType.OUTPUT:
-        return 'OUTPUT';
-      case OperationType.TRANSFER:
-        return 'TRANSFER';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
@@ -29,7 +18,7 @@ class OperationTypeRadioButton extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.center,
                 child: Text(
-                  getTitle(item),
+                  getOperationTitle(item).toUpperCase(),
                   style: TextStyle(
                       color: item == type ? Colors.white : Colors.black),
                 ),

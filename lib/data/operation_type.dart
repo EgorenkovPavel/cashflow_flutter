@@ -29,3 +29,14 @@ IconData getOperationIcon(OperationType type) {
       return Icons.redo;
   }
 }
+
+String getOperationTitle(OperationType _type) {
+  switch (_type) {
+    case OperationType.INPUT:
+      return 'Input';
+    case OperationType.OUTPUT:
+      return 'Output';
+    case OperationType.TRANSFER:
+      return 'Transfer';
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/category_card.dart';
+import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,6 @@ import '../data/database.dart';
 import '../data/model.dart';
 
 class CategoryList extends StatelessWidget {
-
   void onTap(BuildContext context, CategoryData itemCategory) {
     showDialog(
         context: context,
@@ -22,7 +22,7 @@ class CategoryList extends StatelessWidget {
         });
   }
 
-  Widget categoryList(BuildContext context, List<CategoryData> categories){
+  Widget categoryList(BuildContext context, List<CategoryData> categories) {
     return ListView.builder(
       itemCount: categories.length,
       itemBuilder: (_, index) {
@@ -31,6 +31,11 @@ class CategoryList extends StatelessWidget {
           children: <Widget>[
             ListTile(
               title: Text(itemCategory.title),
+              subtitle: Text(
+                getOperationTitle(itemCategory.operationType),
+                style: Theme.of(context).textTheme.caption.copyWith(
+                    color: getOperationColor(itemCategory.operationType)),
+              ),
               onTap: () => onTap(context, itemCategory),
             ),
             Divider()
@@ -42,13 +47,11 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final model = Provider.of<Model>(context);
     return StreamBuilder<List<CategoryData>>(
       stream: model.watchAllCategories(),
       builder: (context, AsyncSnapshot<List<CategoryData>> snapshot) {
-
-        if(!snapshot.hasData || snapshot.data.isEmpty){
+        if (!snapshot.hasData || snapshot.data.isEmpty) {
           return EmptyListHint('Add category');
         }
 
