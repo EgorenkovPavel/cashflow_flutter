@@ -26,13 +26,14 @@ class OperationTypeRadioButton extends StatelessWidget {
     return ToggleButtons(
       children: items
           .map((item) => Container(
-            alignment: Alignment.center,
-            child: Text(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: Text(
                   getTitle(item),
                   style: TextStyle(
                       color: item == type ? Colors.white : Colors.black),
                 ),
-          ))
+              ))
           .toList(),
       borderColor: Theme.of(context).primaryColor,
       borderWidth: 2.0,

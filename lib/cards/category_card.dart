@@ -31,6 +31,8 @@ class _CategoryCardState extends State<CategoryCard> {
       budgetController.text = widget.category.budget.toString();
 
       _type = widget.category.operationType;
+    }else{
+      _type = OperationType.INPUT;
     }
   }
 
