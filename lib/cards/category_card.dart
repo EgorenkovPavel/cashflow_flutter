@@ -7,18 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryCard extends StatefulWidget {
-
   CategoryData category;
 
   CategoryCard({this.category});
 
   @override
   _CategoryCardState createState() => _CategoryCardState();
-
 }
 
 class _CategoryCardState extends State<CategoryCard> {
-
   OperationType _type;
 
   final TextEditingController titleController = TextEditingController();
@@ -26,29 +23,37 @@ class _CategoryCardState extends State<CategoryCard> {
 
   @override
   void initState() {
-    if(widget.category != null){
+    if (widget.category != null) {
       titleController.text = widget.category.title;
       budgetController.text = widget.category.budget.toString();
 
       _type = widget.category.operationType;
-    }else{
+    } else {
       _type = OperationType.INPUT;
     }
   }
 
-  void _onTypeChanged(OperationType type){
+  void _onTypeChanged(OperationType type) {
     setState(() {
       _type = type;
     });
   }
 
-  void saveCategory(BuildContext context){
-    if(widget.category == null){
-      widget.category = CategoryData(title: titleController.text, operationType: _type, budget: int.parse(budgetController.text));
-      Provider.of<Model>(context, listen: false).insertCategory(widget.category);
-    }else{
-      widget.category = widget.category.copyWith(title: titleController.text, operationType: _type, budget: int.parse(budgetController.text));
-      Provider.of<Model>(context, listen: false).updateCategory(widget.category);
+  void saveCategory(BuildContext context) {
+    if (widget.category == null) {
+      widget.category = CategoryData(
+          title: titleController.text,
+          operationType: _type,
+          budget: int.parse(budgetController.text));
+      Provider.of<Model>(context, listen: false)
+          .insertCategory(widget.category);
+    } else {
+      widget.category = widget.category.copyWith(
+          title: titleController.text,
+          operationType: _type,
+          budget: int.parse(budgetController.text));
+      Provider.of<Model>(context, listen: false)
+          .updateCategory(widget.category);
     }
   }
 
@@ -61,33 +66,54 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextField(controller: titleController,
+          TextFormField(
+            controller: titleController,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Title',
             ),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Enter title';
+              }
+              return null;
+            },
           ),
           Padding(
             padding: const EdgeInsets.only(left: 12.0, top: 8.0),
-            child: Text('Type', style: Theme.of(context).textTheme.caption,),
+            child: Text(
+              'Type',
+              style: Theme.of(context).textTheme.caption,
+            ),
           ),
           OperationTypeRadioButton(
             type: _type,
             onChange: _onTypeChanged,
             items: [OperationType.INPUT, OperationType.OUTPUT],
           ),
-          SizedBox(height: 8.0,),
-          TextField(controller: budgetController,
+          SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: budgetController,
             keyboardType: TextInputType.numberWithOptions(),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Budget',
             ),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Enter budget';
+              }
+              return null;
+            },
           ),
         ],
       ),
-      onSave: (context){saveCategory(context);},
+      onSave: (context) {
+        saveCategory(context);
+      },
     );
   }
 }

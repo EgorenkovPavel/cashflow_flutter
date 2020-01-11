@@ -240,12 +240,18 @@ class _OperationCardState extends State<OperationCard> {
 
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: TextField(
+              child: TextFormField(
                 controller: _sumController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Sum',
                 ),
+                validator: (value){
+                  if(value.isEmpty){
+                    return 'Enter sum';
+                  }
+                  return null;
+                },
               ),
             )
           ]),

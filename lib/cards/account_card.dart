@@ -1,7 +1,6 @@
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
-import 'package:cashflow/cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,11 +14,13 @@ class AccountCard extends StatelessWidget {
     }
   }
 
-  void saveAccount(BuildContext context){
-    if(account == null){
-      Provider.of<Model>(context, listen: false).insertAccount(AccountData(title: controller.text));
-    }else{
-      Provider.of<Model>(context, listen: false).updateAccount(account.account.copyWith(title: controller.text));
+  void saveAccount(BuildContext context) {
+    if (account == null) {
+      Provider.of<Model>(context, listen: false)
+          .insertAccount(AccountData(title: controller.text));
+    } else {
+      Provider.of<Model>(context, listen: false)
+          .updateAccount(account.account.copyWith(title: controller.text));
     }
   }
 
@@ -27,15 +28,23 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ItemCard(
       title: account == null ? 'New account' : 'Account',
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Title',
         ),
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Enter title';
+          }
+          return null;
+        },
       ),
-      onSave: (context){saveAccount(context);},
+      onSave: (context) {
+        saveAccount(context);
+      },
     );
   }
 }
