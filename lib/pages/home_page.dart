@@ -6,6 +6,7 @@ import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../cards/category_card.dart';
@@ -105,8 +106,8 @@ class _HomePageState extends State<HomePage> {
             child: PopupMenuButton<AppMenu>(
               child: Icon(Icons.more_vert),
               itemBuilder: (context) => [
-                const PopupMenuItem<AppMenu>(
-                  child: Text('BACKUP'),
+                PopupMenuItem<AppMenu>(
+                  child: Text(AppLocalizations.of(context).itemMenuService),
                   value: AppMenu.BACKUP,
                 )
               ],
@@ -125,18 +126,18 @@ class _HomePageState extends State<HomePage> {
       ),
       body: body(),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet),
-            title: Text('Accounts'),
+            title: Text(AppLocalizations.of(context).itemBarAccounts),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.dns),
-            title: Text('Categories'),
+            title: Text(AppLocalizations.of(context).itemBarCategories),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.view_list),
-            title: Text('Operations'),
+            title: Text(AppLocalizations.of(context).itemBarOperations),
           ),
         ],
         currentIndex: _selectedIndex,

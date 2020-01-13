@@ -1,6 +1,7 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,12 +61,12 @@ class _MasterPageState extends State<MasterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Operation master'),
+        title: Text(AppLocalizations.of(context).titleMaster),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          title('Operation type'),
+          title(AppLocalizations.of(context).titleType),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -85,12 +86,12 @@ class _MasterPageState extends State<MasterPage> {
               ),
             ],
           ),
-          title('Account'),
+          title(AppLocalizations.of(context).titleAccount),
           Expanded(
             flex: 1,
             child: accountList(),
           ),
-          title('Category'),
+          title(AppLocalizations.of(context).titleCategory),
           Expanded(
             flex: _type == OperationType.TRANSFER ? 1 : 3,
             child: analyticList(),
@@ -102,7 +103,7 @@ class _MasterPageState extends State<MasterPage> {
           Builder(builder: (context) {
             return Row(children: <Widget>[
               FlatButton(
-                child: Text('More'.toUpperCase()),
+                child: Text(AppLocalizations.of(context).more.toUpperCase()),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -120,7 +121,7 @@ class _MasterPageState extends State<MasterPage> {
                 ),
               ),
               FlatButton(
-                child: Text('Next'.toUpperCase()),
+                child: Text(AppLocalizations.of(context).next.toUpperCase()),
                 onPressed: () => _saveOperation(context),
               )
             ]);
@@ -134,21 +135,21 @@ class _MasterPageState extends State<MasterPage> {
 
     if(_account == null){
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Choose account'),
+        content: Text(AppLocalizations.of(context).emptyAccountError),
       ));
       return;
     }
 
     if(_type == OperationType.TRANSFER && _recAccount == null){
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Choose recipient account'),
+        content: Text(AppLocalizations.of(context).emptyRecAccountError),
       ));
       return;
     }
 
     if(_type != OperationType.TRANSFER && (_category == null || _category.operationType != _type)){
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Choose category'),
+        content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));
       return;
     }
@@ -156,7 +157,7 @@ class _MasterPageState extends State<MasterPage> {
     int sum = int.parse(_sumController.text);
     if(sum == 0){
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Sum is empty'),
+        content: Text(AppLocalizations.of(context).emptySumError),
       ));
       return;
     }
@@ -182,7 +183,7 @@ class _MasterPageState extends State<MasterPage> {
     }
 
     Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text('Operation created'),
+      content: Text(AppLocalizations.of(context).mesOperationCreated),
     ));
 
     _sumController.text = '0';

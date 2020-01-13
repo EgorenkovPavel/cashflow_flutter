@@ -1,3 +1,4 @@
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 enum OperationType{
@@ -30,13 +31,13 @@ IconData getOperationIcon(OperationType type) {
   }
 }
 
-String getOperationTitle(OperationType _type) {
+String getOperationTitle(BuildContext context, OperationType _type) {
   switch (_type) {
     case OperationType.INPUT:
-      return 'Input';
+      return AppLocalizations.of(context).typeInput;
     case OperationType.OUTPUT:
-      return 'Output';
+      return AppLocalizations.of(context).typeOutput;
     case OperationType.TRANSFER:
-      return 'Transfer';
+      return AppLocalizations.of(context).typeTransfer;
   }
 }

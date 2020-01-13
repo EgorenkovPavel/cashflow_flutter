@@ -5,7 +5,9 @@ import 'package:cashflow/pages/home_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_simple_page.dart';
 import 'package:cashflow/pages/operation_page.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'data/model.dart';
@@ -26,6 +28,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           accentColor: Colors.deepOrangeAccent
         ),
+        localizationsDelegates: [
+          const AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en'),
+          const Locale('ru'),
+        ],
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
           HomePage.routeName: (BuildContext context) => HomePage(),

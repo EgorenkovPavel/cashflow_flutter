@@ -1,6 +1,7 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,17 +28,19 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ItemCard(
-      title: account == null ? 'New account' : 'Account',
+      title: account == null
+          ? AppLocalizations.of(context).newAccountCardTitle
+          : AppLocalizations.of(context).accountCardTitle,
       child: TextFormField(
         controller: controller,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'Title',
+          labelText: AppLocalizations.of(context).title,
         ),
         validator: (value) {
           if (value.isEmpty) {
-            return 'Enter title';
+            return AppLocalizations.of(context).emptyTitleError;
           }
           return null;
         },

@@ -1,5 +1,6 @@
 import 'package:cashflow/cards/category_card.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class CategoryList extends StatelessWidget {
             ListTile(
               title: Text(itemCategory.title),
               subtitle: Text(
-                getOperationTitle(itemCategory.operationType),
+                getOperationTitle(context, itemCategory.operationType),
                 style: Theme.of(context).textTheme.caption.copyWith(
                     color: getOperationColor(itemCategory.operationType)),
               ),
@@ -55,7 +56,7 @@ class CategoryList extends StatelessWidget {
         if (!snapshot.hasData){
           return Center(child: CircularProgressIndicator());
         }else if(snapshot.data.isEmpty) {
-          return EmptyListHint('Add category');
+          return EmptyListHint(AppLocalizations.of(context).hintEmptyListCategories);
         }
 
         final categories = snapshot.data ?? List();

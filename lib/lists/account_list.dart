@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/account_card.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class AccountList extends StatelessWidget {
     return Container(
       child: ListTile(
         title: Text(
-          'Total sum',
+          AppLocalizations.of(context).titleTotalSum,
           style: Theme.of(context).textTheme.title,
         ),
         trailing: Text(
@@ -80,7 +81,7 @@ class AccountList extends StatelessWidget {
         if(!snapshot.hasData){
           return Center(child: CircularProgressIndicator());
         }else if(snapshot.data.isEmpty){
-          return EmptyListHint('Add accounts');
+          return EmptyListHint(AppLocalizations.of(context).hintEmptyListAccounts);
         }
 
         final accounts = snapshot.data ?? List();

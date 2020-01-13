@@ -2,6 +2,7 @@ import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/cards/item_card.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,9 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return ItemCard(
-      title: widget.category == null ? 'New category' : 'Category',
+      title: widget.category == null
+          ? AppLocalizations.of(context).newCategoryCardTitle
+          : AppLocalizations.of(context).categoryCardTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -71,11 +74,11 @@ class _CategoryCardState extends State<CategoryCard> {
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Title',
+              labelText: AppLocalizations.of(context).title,
             ),
             validator: (value) {
               if (value.isEmpty) {
-                return 'Enter title';
+                return AppLocalizations.of(context).emptyTitleError;
               }
               return null;
             },
@@ -83,7 +86,7 @@ class _CategoryCardState extends State<CategoryCard> {
           Padding(
             padding: const EdgeInsets.only(left: 12.0, top: 8.0),
             child: Text(
-              'Type',
+              AppLocalizations.of(context).titleType,
               style: Theme.of(context).textTheme.caption,
             ),
           ),
@@ -100,11 +103,11 @@ class _CategoryCardState extends State<CategoryCard> {
             keyboardType: TextInputType.numberWithOptions(),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Budget',
+              labelText: AppLocalizations.of(context).titleBudget,
             ),
             validator: (value) {
               if (value.isEmpty) {
-                return 'Enter budget';
+                return AppLocalizations.of(context).emptyBudgetError;
               }
               return null;
             },

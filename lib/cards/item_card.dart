@@ -1,3 +1,4 @@
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
@@ -30,14 +31,14 @@ class ItemCard extends StatelessWidget {
             child,
             Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
               FlatButton(
-                child: Text('Cancel'.toUpperCase()),
+                child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               RaisedButton(
                 child: Text(
-                  'Save'.toUpperCase(),
+                  AppLocalizations.of(context).save.toUpperCase(),
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Theme.of(context).primaryColor,

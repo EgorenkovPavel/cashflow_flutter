@@ -2,6 +2,7 @@ import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class _OperationCardState extends State<OperationCard> {
       case OperationType.INPUT:
         return DropdownList<CategoryData>(
             value: _category,
-            hint: 'Choose Category',
+            hint: AppLocalizations.of(context).hintCategory,
             onChange: (CategoryData newValue) {
               setState(() {
                 _category = newValue;
@@ -88,7 +89,7 @@ class _OperationCardState extends State<OperationCard> {
       case OperationType.OUTPUT:
         return DropdownList<CategoryData>(
             value: _category,
-            hint: 'Choose Category',
+            hint: AppLocalizations.of(context).hintCategory,
             onChange: (CategoryData newValue) {
               setState(() {
                 _category = newValue;
@@ -99,7 +100,7 @@ class _OperationCardState extends State<OperationCard> {
       case OperationType.TRANSFER:
         return DropdownList<AccountData>(
             value: _recAccount,
-            hint: 'Choose Account',
+            hint: AppLocalizations.of(context).hintAccount,
             onChange: (AccountData newValue) {
               setState(() {
                 _recAccount = newValue;
@@ -164,91 +165,91 @@ class _OperationCardState extends State<OperationCard> {
     final color = Theme.of(context).primaryColor;
 
     return FlatButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
-            side: BorderSide(color: color)),
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        child: Row(
-          children: <Widget>[
-            Icon(
-              icon,
-              color: color,
-            ),
-            Text(
-              text,
-              style: TextStyle(color: color),
-            ),
-          ],
-        ),
-        onPressed: onPressed,
-
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+          side: BorderSide(color: color)),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      child: Row(
+        children: <Widget>[
+          Icon(
+            icon,
+            color: color,
+          ),
+          Text(
+            text,
+            style: TextStyle(color: color),
+          ),
+        ],
+      ),
+      onPressed: onPressed,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return ItemCard(
-      title: widget.operation == null ? 'New operation' : 'Operation',
+      title: widget.operation == null
+          ? AppLocalizations.of(context).newOperationCardTitle
+          : AppLocalizations.of(context).operationCardTitle,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            title('Date'),
+            title(AppLocalizations.of(context).titleDate),
             Row(
               children: <Widget>[
                 dateButtom(Icons.calendar_today,
                     DateFormat.yMMMd().format(_date), _selectDate),
-                SizedBox(width: 16.0,),
+                SizedBox(
+                  width: 16.0,
+                ),
                 dateButtom(
                     Icons.access_time, _time.format(context), _selectTime),
               ],
             ),
-            title('Type'),
+            title(AppLocalizations.of(context).titleType),
             Row(
               children: <Widget>[
                 OperationTypeRadioButton(
-                    type: _type,
-                    onChange: (newValue) {
-                      setState(() {
-                        _type = newValue;
-                        _category = null;
-                      });
-                    },
-                    items: [
-                      OperationType.INPUT,
-                      OperationType.OUTPUT,
-                      OperationType.TRANSFER
-                    ],
-                  ),
-
+                  type: _type,
+                  onChange: (newValue) {
+                    setState(() {
+                      _type = newValue;
+                      _category = null;
+                    });
+                  },
+                  items: [
+                    OperationType.INPUT,
+                    OperationType.OUTPUT,
+                    OperationType.TRANSFER
+                  ],
+                ),
               ],
             ),
-            title('Account'),
+            title(AppLocalizations.of(context).titleAccount),
             DropdownList(
-                value: _account,
-                hint: 'Account',
-                items: accountList,
-                onChange: (newValue) {
-                  setState(() {
-                    _account = newValue;
-                  });
-                },
-                getListItem: (data) => ListTile(title: Text(data.title)),
-              ),
-
-            title('Analytic'),
+              value: _account,
+              hint: AppLocalizations.of(context).hintAccount,
+              items: accountList,
+              onChange: (newValue) {
+                setState(() {
+                  _account = newValue;
+                });
+              },
+              getListItem: (data) => ListTile(title: Text(data.title)),
+            ),
+            title(AppLocalizations.of(context).titleAnalytic),
             AnalyticMenu(),
-
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: TextFormField(
                 controller: _sumController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Sum',
+                  labelText: AppLocalizations.of(context).titleSum,
                 ),
-                validator: (value){
-                  if(value.isEmpty){
-                    return 'Enter sum';
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return AppLocalizations.of(context).emptySumError;
                   }
                   return null;
                 },

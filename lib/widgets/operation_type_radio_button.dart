@@ -18,7 +18,7 @@ class OperationTypeRadioButton extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.center,
                 child: Text(
-                  getOperationTitle(item).toUpperCase(),
+                  getOperationTitle(context, item).toUpperCase(),
                   style: TextStyle(
                       color: item == type ? Colors.white : Colors.black),
                 ),

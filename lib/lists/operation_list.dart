@@ -1,5 +1,6 @@
 import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +59,7 @@ class OperationList extends StatelessWidget {
                     .deleteOperation(itemOperation.operationData);
 
                 Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text("Operation dismissed")));
+                    SnackBar(content: Text(AppLocalizations.of(context).mesOperationDeleted)));
               },
             ),
             Divider()
@@ -79,7 +80,7 @@ class OperationList extends StatelessWidget {
         if(!snapshot.hasData){
           return Center(child: CircularProgressIndicator());
         }else if(snapshot.data.isEmpty){
-          return EmptyListHint('Add operation');
+          return EmptyListHint(AppLocalizations.of(context).hintEmptyListOperations);
         }
 
         final operations = snapshot.data ?? List();
@@ -96,7 +97,7 @@ class OperationList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          'DELETE',
+          AppLocalizations.of(context).delete.toUpperCase(),
           style:
               Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
         ),
