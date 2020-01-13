@@ -61,6 +61,8 @@ class AppLocalizations {
       'delete': 'Delete',
       'next': 'Next',
       'more': 'More',
+      'backup': 'Backup',
+      'restore': 'Restore',
     },
     'ru': {
       'title': 'Имя',
@@ -112,6 +114,8 @@ class AppLocalizations {
       'delete': 'Удалить',
       'next': 'Далее',
       'more': 'Еще',
+      'backup': 'Сохранить',
+      'restore': 'Восстановить',
     },
   };
 
@@ -164,7 +168,8 @@ class AppLocalizations {
   String get delete => _localizedValues[locale.languageCode]['delete'];
   String get next => _localizedValues[locale.languageCode]['next'];
   String get more => _localizedValues[locale.languageCode]['more'];
-
+  String get backup => _localizedValues[locale.languageCode]['backup'];
+  String get restore => _localizedValues[locale.languageCode]['restore'];
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

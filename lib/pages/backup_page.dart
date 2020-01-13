@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart'as drive;
@@ -155,7 +156,7 @@ class BackupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Backup'),
+        title: Text(AppLocalizations.of(context).itemMenuService),
       ),
       body: Column(
         children: <Widget>[
@@ -169,11 +170,11 @@ class BackupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                child: Text('BACKUP'),
+                child: Text(AppLocalizations.of(context).backup.toUpperCase()),
                 onPressed: () => _backup(context),
               ),
               RaisedButton(
-                child: Text('RESTORE'),
+                child: Text(AppLocalizations.of(context).restore.toUpperCase()),
                 onPressed: () => _restore(context),
               )
             ],

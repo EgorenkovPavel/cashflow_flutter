@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(Icons.more_vert),
               itemBuilder: (context) => [
                 PopupMenuItem<AppMenu>(
-                  child: Text(AppLocalizations.of(context).itemMenuService),
+                  child: Text(AppLocalizations.of(context).itemMenuService.toUpperCase()),
                   value: AppMenu.BACKUP,
                 )
               ],
