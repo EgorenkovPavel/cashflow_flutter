@@ -198,7 +198,7 @@ class _OperationCardState extends State<OperationCard> {
             Row(
               children: <Widget>[
                 dateButtom(Icons.calendar_today,
-                    DateFormat.yMMMd().format(_date), _selectDate),
+                    DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(_date), _selectDate),
                 SizedBox(
                   width: 16.0,
                 ),

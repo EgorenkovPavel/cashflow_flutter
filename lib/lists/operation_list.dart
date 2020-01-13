@@ -42,7 +42,7 @@ class OperationList extends StatelessWidget {
                   trailing: Column(
                     children: <Widget>[
                       Text(itemOperation.sum.toString(), style: Theme.of(context).textTheme.headline,),
-                      Text(DateFormat.yMMMd().format(itemOperation.date), style: Theme.of(context).textTheme.caption,)
+                      Text(DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(itemOperation.date), style: Theme.of(context).textTheme.caption,)
                     ],
                   ),
                   leading: CircleAvatar(
