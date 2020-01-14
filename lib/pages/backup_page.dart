@@ -27,7 +27,7 @@ class BackupPage extends StatelessWidget {
           Flex(
             direction: Axis.horizontal,
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
                 child: Text(AppLocalizations.of(context).backup.toUpperCase()),
