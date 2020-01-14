@@ -63,6 +63,7 @@ class AppLocalizations {
       'more': 'More',
       'backup': 'Backup',
       'restore': 'Restore',
+      'choose': 'Choose',
     },
     'ru': {
       'title': 'Имя',
@@ -116,6 +117,7 @@ class AppLocalizations {
       'more': 'Еще',
       'backup': 'Сохранить',
       'restore': 'Восстановить',
+      'choose': 'Выбрать',
     },
   };
 
@@ -170,6 +172,7 @@ class AppLocalizations {
   String get more => _localizedValues[locale.languageCode]['more'];
   String get backup => _localizedValues[locale.languageCode]['backup'];
   String get restore => _localizedValues[locale.languageCode]['restore'];
+  String get choose => _localizedValues[locale.languageCode]['choose'];
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
