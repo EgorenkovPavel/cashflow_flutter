@@ -19,7 +19,7 @@ class _MasterPageState extends State<MasterPage> {
   AccountData _account;
   CategoryData _category;
   AccountData _recAccount;
-  TextEditingController _sumController = TextEditingController(text: '0');
+  TextEditingController _sumController = TextEditingController();
 
   Model model;
   List<AccountData> _accountList;
@@ -117,7 +117,7 @@ class _MasterPageState extends State<MasterPage> {
                   ),
                   keyboardType: TextInputType.number,
                   onEditingComplete: () => _saveOperation(context),
-                  inputFormatters: [TextInputFomatter()],
+                  inputFormatters: [TextFomatter()],
                 ),
               ),
               FlatButton(
@@ -186,7 +186,7 @@ class _MasterPageState extends State<MasterPage> {
       content: Text(AppLocalizations.of(context).mesOperationCreated),
     ));
 
-    _sumController.text = '0';
+    _sumController.text = '';
   }
 
   Widget title(String text) {
@@ -299,12 +299,12 @@ class _MasterPageState extends State<MasterPage> {
   }
 }
 
-class TextInputFomatter extends TextInputFormatter{
+class TextFomatter extends TextInputFormatter{
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String text = newValue.text;
     if(text.isEmpty || text == '0') {
-      String newText = '0';
+      String newText = '';
       TextSelection selection = newValue.selection.copyWith(baseOffset: newText.length, extentOffset: newText.length);
       return newValue.copyWith(text: newText, selection: selection);
     }else if (text.startsWith('0')){
