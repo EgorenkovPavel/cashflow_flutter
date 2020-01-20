@@ -6,6 +6,7 @@ import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/master_page.dart';
+import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       //Navigator.of(context).pushNamed(CategoryPage.routeName);
       showCategory();
     } else if (_selectedIndex == 2) {
-      Navigator.of(context).pushNamed(MasterPage.routeName);
+      Navigator.of(context).pushNamed(MasterPageNew.routeName);
 //      showOperation();
     }
   }

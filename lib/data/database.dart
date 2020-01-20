@@ -73,6 +73,17 @@ class AccountWithBalance {
   int sum;
 
   AccountWithBalance(this.account, this.sum);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is AccountWithBalance &&
+              runtimeType == other.runtimeType &&
+              account == other.account;
+
+  @override
+  int get hashCode => account.hashCode;
+
 }
 
 class OperationItem {

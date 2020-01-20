@@ -75,7 +75,7 @@ class AppLocalizations {
       'title_analytic': 'Аналитика',
       'title_sum': 'Сумма',
       'title_total_sum': 'Итого',
-      'title_master': 'Operation master',
+      'title_master': 'Мастер ввода',
 
       'empty_title_error': 'Введите имя',
       'empty_budget_error': 'Введите бюджет',
