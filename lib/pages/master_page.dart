@@ -315,5 +315,4 @@ class TextFomatter extends TextInputFormatter{
       return newValue;
     }
   }
-
 }
