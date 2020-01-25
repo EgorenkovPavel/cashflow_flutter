@@ -7,12 +7,14 @@ class Account extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
+  BoolColumn get archive => boolean().withDefault(const Constant(false))();
 }
 
 class Category extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
+  BoolColumn get archive => boolean().withDefault(const Constant(false))();
 
   IntColumn get operationType =>
       integer().named('operation_type').map(const OperationTypeConverter())();
@@ -204,21 +206,21 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Future updateAccount(AccountData entity) => update(account).replace(entity);
 
-//  Future deleteTask(Task task) => delete(tasks).delete(task);
-
   Stream<int> getTotalBalance() {
     return customSelectQuery(
       'SELECT SUM(sum) as sum FROM balance',
     ).watchSingle().map((row) => row.readInt('sum') ?? 0);
   }
 
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() {
+  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance({bool archive = false}) {
     return customSelectQuery(
         'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" FROM account c ORDER BY title;',
-        readsFrom: {account, balance}).watch().map((rows) {
+        readsFrom: {account, balance}).watch()
+        .map((rows) {
       return rows
           .map((row) => AccountWithBalance(
               AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
+          .where((a) => archive ? true : !a.account.archive)
           .toList();
     });
   }

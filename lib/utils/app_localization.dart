@@ -50,6 +50,8 @@ class AppLocalizations {
 
       'mes_operation_deleted': 'Operation deleted',
       'mes_operation_created': 'Operation created',
+      'mes_account_archived': 'Account archived',
+      'mes_category_archived': 'Category archived',
 
       'item_bar_accounts': 'Accounts',
       'item_bar_categories': 'Categories',
@@ -64,6 +66,7 @@ class AppLocalizations {
       'backup': 'Backup',
       'restore': 'Restore',
       'choose': 'Choose',
+      'archive': 'Archive',
     },
     'ru': {
       'title': 'Имя',
@@ -104,6 +107,8 @@ class AppLocalizations {
 
       'mes_operation_deleted': 'Операция удалена',
       'mes_operation_created': 'Операция создана',
+      'mes_account_archived': 'Счет добавлен в архив',
+      'mes_category_archived': 'Категория добавлена в архив',
 
       'item_bar_accounts': 'Счета',
       'item_bar_categories': 'Категории',
@@ -118,6 +123,7 @@ class AppLocalizations {
       'backup': 'Сохранить',
       'restore': 'Восстановить',
       'choose': 'Выбрать',
+      'archive': 'Архив',
     },
   };
 
@@ -159,6 +165,8 @@ class AppLocalizations {
 
   String get mesOperationDeleted => _localizedValues[locale.languageCode]['mes_operation_deleted'];
   String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];
+  String get mesAccountArchived => _localizedValues[locale.languageCode]['mes_account_archived'];
+  String get mesCategoryArchived => _localizedValues[locale.languageCode]['mes_category_archived'];
 
   String get itemBarAccounts => _localizedValues[locale.languageCode]['item_bar_accounts'];
   String get itemBarCategories => _localizedValues[locale.languageCode]['item_bar_categories'];
@@ -173,6 +181,7 @@ class AppLocalizations {
   String get backup => _localizedValues[locale.languageCode]['backup'];
   String get restore => _localizedValues[locale.languageCode]['restore'];
   String get choose => _localizedValues[locale.languageCode]['choose'];
+  String get archive => _localizedValues[locale.languageCode]['archive'];
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
