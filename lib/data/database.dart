@@ -72,7 +72,7 @@ class Cashflow extends Table {
   IntColumn get sum => integer()();
 }
 
-class Budget extends Table{
+class Budget extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get year => integer()();
@@ -83,6 +83,14 @@ class Budget extends Table{
       integer().customConstraint('NULL REFERENCES category(id)')();
 
   IntColumn get sum => integer()();
+}
+
+class MonthBudget {
+  int year;
+  int month;
+  int sum;
+
+  MonthBudget(this.year, this.month, this.sum);
 }
 
 class AccountWithBalance {
@@ -400,9 +408,32 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 }
 
 @UseDao(tables: [Budget])
-class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin{
+class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   final Database db;
 
   BudgetDao(this.db) : super(db);
 
+  Stream<List<BudgetData>> watchBudget(int year, int month) {
+    return (select(budget)
+          ..where((t) => budget.year.equals(year) & budget.month.equals(month)))
+        .watch();
+  }
+
+  Stream<List<MonthBudget>> watchMonthBudget() {
+//    return select(budget)
+//        .map((t) => MonthBudget(t.year, t.month, t.sum))
+//        .watch();
+    return customSelectQuery(
+        'SELECT year, month, SUM(sum) as sum FROM budget GROUP BY year, month ORDER BY year, month',
+        readsFrom: {budget}).watch().map((rows) {
+      return rows
+          .map((t) => MonthBudget(
+              t.readInt('year'), t.readInt('month'), t.readInt('sum')))
+          .toList();
+    });
+  }
+
+  Future<void> insertBudget(BudgetData entity) {
+    return into(budget).insert(entity);
+  }
 }

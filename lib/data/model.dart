@@ -41,4 +41,11 @@ class Model extends ChangeNotifier{
   }
 
   Future deleteOperation(OperationData entity) => db.operationDao.deleteOperation(entity);
+
+  //Budget
+
+  Stream<List<MonthBudget>> watchMonthBudget() => db.budgetDao.watchMonthBudget();
+
+  Future<void> insertBudget(BudgetData entity) => db.budgetDao.insertBudget(entity);
+
 }

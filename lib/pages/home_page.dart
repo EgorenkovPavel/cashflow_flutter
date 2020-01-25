@@ -45,12 +45,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Cashflow'),
         actions: <Widget>[
-//          IconButton(
-//            icon: Icon(Icons.filter_list, color: Colors.white,),
-//            onPressed: (){
-//              (body() as MainList).filterList();
-//            },
-//          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PopupMenuButton<AppMenu>(
