@@ -3,7 +3,6 @@ import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/home_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_page_new.dart';
-import 'package:cashflow/old/operation_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -42,17 +41,6 @@ class MyApp extends StatelessWidget {
           MasterPage.routeName: (BuildContext context) => MasterPage(),//SimpleMasterPage(),
           MasterPageNew.routeName: (BuildContext context) => MasterPageNew(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
-        },
-        onGenerateRoute: (settings){
-//          return null;
-          if (settings.name == OperationPage.routeName) {
-            final args = settings.arguments;
-            return MaterialPageRoute(
-              builder: (context) {
-                return OperationPage(operation: args,);
-              },
-            );
-          }
         },
       ),
     );

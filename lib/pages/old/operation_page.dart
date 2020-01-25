@@ -1,3 +1,4 @@
+import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../data/model.dart';
 
 class OperationPage extends StatefulWidget {
   static const routeName = '/operation';
