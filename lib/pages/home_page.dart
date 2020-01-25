@@ -57,7 +57,9 @@ class _HomePageState extends State<HomePage> {
               child: Icon(Icons.more_vert),
               itemBuilder: (context) => [
                 PopupMenuItem<AppMenu>(
-                  child: Text(AppLocalizations.of(context).itemMenuService.toUpperCase()),
+                  child: Text(AppLocalizations.of(context)
+                      .itemMenuService
+                      .toUpperCase()),
                   value: AppMenu.BACKUP,
                 )
               ],
@@ -99,12 +101,14 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          (body() as MainList).addItem(context);
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: _selectedIndex == 0
+          ? SizedBox()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                (body() as MainList).addItem(context);
+              },
+            ),
     );
   }
 }
