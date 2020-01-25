@@ -57,6 +57,7 @@ class AppLocalizations {
       'item_bar_categories': 'Categories',
       'item_bar_operations': 'Operations',
       'item_menu_service': 'Service',
+      'item_bar_main': 'Main',
 
       'cancel': 'Cancel',
       'save': 'Save',
@@ -114,6 +115,7 @@ class AppLocalizations {
       'item_bar_categories': 'Категории',
       'item_bar_operations': 'Операции',
       'item_menu_service': 'Сервис',
+      'item_bar_main': 'Главная',
 
       'cancel': 'Отмена',
       'save': 'Сохранить',
@@ -172,6 +174,7 @@ class AppLocalizations {
   String get itemBarCategories => _localizedValues[locale.languageCode]['item_bar_categories'];
   String get itemBarOperations => _localizedValues[locale.languageCode]['item_bar_operations'];
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
+  String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
 
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get save => _localizedValues[locale.languageCode]['save'];

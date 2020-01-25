@@ -2,6 +2,7 @@ import 'package:cashflow/lists/account_list.dart';
 import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
+import 'package:cashflow/pages/main_tab.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -23,33 +24,33 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  MainList body() {
+  Widget body() {
     switch (_selectedIndex) {
       case 0:
-        return AccountList();
+        return MainTab();
       case 1:
-        return CategoryList();
+        return AccountList();
       case 2:
+        return CategoryList();
+      case 3:
         return OperationList();
       default:
-        return null;
+        return SizedBox();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    MainList list = body();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Cashflow'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.filter_list, color: Colors.white,),
-            onPressed: (){
-              list.filterList();
-            },
-          ),
+//          IconButton(
+//            icon: Icon(Icons.filter_list, color: Colors.white,),
+//            onPressed: (){
+//              (body() as MainList).filterList();
+//            },
+//          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PopupMenuButton<AppMenu>(
@@ -77,6 +78,10 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text(AppLocalizations.of(context).itemBarMain),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet),
             title: Text(AppLocalizations.of(context).itemBarAccounts),
           ),
@@ -89,13 +94,14 @@ class _HomePageState extends State<HomePage> {
             title: Text(AppLocalizations.of(context).itemBarOperations),
           ),
         ],
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          list.addItem(context);
+          (body() as MainList).addItem(context);
         },
         child: Icon(Icons.add),
       ),
