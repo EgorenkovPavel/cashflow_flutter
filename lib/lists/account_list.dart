@@ -142,12 +142,19 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
         return Column(
           children: <Widget>[
             totalSum(context, accounts),
+            Row(
+              children: <Widget>[
+                ChoiceChip(
+                  label: Text(AppLocalizations.of(context).archive),
+                  selected: true,
+                  onSelected: (selected){},
+                )
+              ],
+            ),
             Expanded(child: accountList(context, accounts)),
           ],
         );
       },
     );
-
   }
-
 }
