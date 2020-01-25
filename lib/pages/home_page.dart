@@ -5,12 +5,12 @@ import 'package:cashflow/lists/account_list.dart';
 import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
-import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../cards/category_card.dart';
+import 'main_list.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget body() {
+  MainList body() {
     switch (_selectedIndex) {
       case 0:
         return AccountList();
@@ -37,71 +37,24 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return OperationList();
       default:
-        return SizedBox();
+        return null;
     }
-  }
-
-  void _addElement(BuildContext context) {
-    if (_selectedIndex == 0) {
-      //Navigator.of(context).pushNamed(AccountPage.routeName);
-      showAccount();
-    } else if (_selectedIndex == 1) {
-      //Navigator.of(context).pushNamed(CategoryPage.routeName);
-      showCategory();
-    } else if (_selectedIndex == 2) {
-      Navigator.of(context).pushNamed(MasterPageNew.routeName);
-//      showOperation();
-    }
-  }
-
-  void showAccount({AccountWithBalance account}) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: AccountCard(
-                account: account,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
-
-  void showCategory([CategoryData category]) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: CategoryCard(
-                category: category,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
-
-  void showOperation([OperationItem operation]) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: OperationCard(
-                operation: operation,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
   }
 
   @override
   Widget build(BuildContext context) {
+    MainList list = body();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Cashflow'),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.filter_list, color: Colors.white,),
+            onPressed: (){
+              list.filterList();
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PopupMenuButton<AppMenu>(
@@ -147,14 +100,12 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addElement(context);
+          list.addItem(context);
         },
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
-
-
 }
 
 enum AppMenu { BACKUP }

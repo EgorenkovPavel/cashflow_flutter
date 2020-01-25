@@ -1,5 +1,6 @@
 import 'package:cashflow/cards/category_card.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +9,7 @@ import 'package:provider/provider.dart';
 import '../data/database.dart';
 import '../data/model.dart';
 
-class CategoryList extends StatelessWidget {
-  void onTap(BuildContext context, CategoryData itemCategory) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: CategoryCard(
-                category: itemCategory,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
+class CategoryList extends StatelessWidget implements MainList<CategoryData>{
 
   Widget categoryList(BuildContext context, List<CategoryData> categories) {
     return ListView.builder(
@@ -39,7 +27,7 @@ class CategoryList extends StatelessWidget {
                   style: Theme.of(context).textTheme.caption.copyWith(
                       color: getOperationColor(itemCategory.operationType)),
                 ),
-                onTap: () => onTap(context, itemCategory),
+                onTap: () => onItemTap(context, itemCategory),
               ),
               Divider()
             ],
@@ -77,6 +65,39 @@ class CategoryList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void addItem(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: CategoryCard(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
+
+  @override
+  void filterList() {
+    // TODO: implement filterList
+  }
+
+  @override
+  void onItemTap(BuildContext context, CategoryData item) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: CategoryCard(
+                category: item,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
   }
 
   @override

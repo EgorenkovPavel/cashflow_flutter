@@ -1,5 +1,7 @@
 import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/pages/main_list.dart';
+import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
@@ -9,21 +11,7 @@ import 'package:provider/provider.dart';
 import '../data/database.dart';
 import '../data/model.dart';
 
-class OperationList extends StatelessWidget {
-
-  void onTap(BuildContext context, OperationItem itemOperation){
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: OperationCard(
-                operation: itemOperation,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
+class OperationList extends StatelessWidget implements MainList{
 
   Widget operationList(BuildContext context, List<OperationItem> operations){
     return ListView.builder(
@@ -49,7 +37,7 @@ class OperationList extends StatelessWidget {
                     backgroundColor: getOperationColor(itemOperation.type),
                     child: Icon(getOperationIcon(itemOperation.type)),
                   ),
-                  onTap: () => onTap(context, itemOperation)
+                  onTap: () => onItemTap(context, itemOperation)
               ),
               secondaryBackground:
               dismissBackground(context, Alignment.centerRight),
@@ -67,6 +55,46 @@ class OperationList extends StatelessWidget {
         );
       },
     );
+  }
+
+  Container dismissBackground(BuildContext context, Alignment alignment) {
+    return Container(
+      color: Colors.red,
+      alignment: alignment,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          AppLocalizations.of(context).delete.toUpperCase(),
+          style:
+          Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void addItem(BuildContext context) {
+    Navigator.of(context).pushNamed(MasterPageNew.routeName);
+  }
+
+  @override
+  void filterList() {
+    // TODO: implement filterList
+  }
+
+  @override
+  void onItemTap(BuildContext context, item) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: OperationCard(
+                operation: item,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
   }
 
   @override
@@ -90,18 +118,4 @@ class OperationList extends StatelessWidget {
     );
   }
 
-  Container dismissBackground(BuildContext context, Alignment alignment) {
-    return Container(
-      color: Colors.red,
-      alignment: alignment,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          AppLocalizations.of(context).delete.toUpperCase(),
-          style:
-              Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
-        ),
-      ),
-    );
-  }
 }
