@@ -210,9 +210,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   // Called by the AppDatabase class
   AccountDao(this.db) : super(db);
 
-  Future<List<AccountData>> getAllTasks() => select(account).get();
-
-  Stream<List<AccountData>> watchAllAccounts() =>
+  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) =>
       (select(account)..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 

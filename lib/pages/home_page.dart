@@ -1,15 +1,10 @@
-import 'package:cashflow/cards/account_card.dart';
-import 'package:cashflow/cards/operation_card.dart';
-import 'package:cashflow/data/database.dart';
 import 'package:cashflow/lists/account_list.dart';
 import 'package:cashflow/lists/category_list.dart';
 import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
-import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../cards/category_card.dart';
 import 'main_list.dart';
 
 class HomePage extends StatefulWidget {

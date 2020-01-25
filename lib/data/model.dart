@@ -12,8 +12,8 @@ class Model extends ChangeNotifier{
   Future deleteAll() => db.deleteAll();
 
   //Accounts
-  Stream<List<AccountData>> watchAllAccounts() => db.accountDao.watchAllAccounts();
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance() => db.accountDao.watchAllAccountsWithBalance();
+  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) => db.accountDao.watchAllAccounts(archive: archive);
+  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance({bool archive = false}) => db.accountDao.watchAllAccountsWithBalance(archive: archive);
 
   Future insertAccount(AccountData entity) => db.accountDao.insertAccount(entity);
   Future updateAccount(AccountData entity) => db.accountDao.updateAccount(entity);
@@ -21,8 +21,8 @@ class Model extends ChangeNotifier{
   Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
 
   //Categories
-  Stream<List<CategoryData>> watchAllCategories() => db.categoryDao.watchAllCategories();
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type) => db.categoryDao.watchAllCategoriesByType(type);
+  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) => db.categoryDao.watchAllCategories(archive: archive);
+  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type, {bool archive = false}) => db.categoryDao.watchAllCategoriesByType(type, archive: archive);
 
   Future insertCategory(CategoryData entity) => db.categoryDao.insertCategory(entity);
   Future updateCategory(CategoryData entity) => db.categoryDao.updateCategory(entity);

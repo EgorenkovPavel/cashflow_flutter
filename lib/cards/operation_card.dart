@@ -39,19 +39,19 @@ class _OperationCardState extends State<OperationCard> {
 
     model = Provider.of<Model>(context);
 
-    model.watchAllAccounts().forEach((list) {
+    model.watchAllAccounts(archive: true).forEach((list) {
       setState(() {
         accountList = list;
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.INPUT).forEach((list) {
+    model.watchAllCategoriesByType(OperationType.INPUT, archive: true).forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.OUTPUT).forEach((list) {
+    model.watchAllCategoriesByType(OperationType.OUTPUT, archive: true).forEach((list) {
       setState(() {
         categoryOutList = list;
       });
