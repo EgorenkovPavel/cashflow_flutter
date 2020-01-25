@@ -72,6 +72,19 @@ class Cashflow extends Table {
   IntColumn get sum => integer()();
 }
 
+class Budget extends Table{
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get year => integer()();
+
+  IntColumn get month => integer()();
+
+  IntColumn get category =>
+      integer().customConstraint('NULL REFERENCES category(id)')();
+
+  IntColumn get sum => integer()();
+}
+
 class AccountWithBalance {
   AccountData account;
   int sum;
@@ -169,8 +182,8 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
 }
 
 @UseMoor(
-    tables: [Account, Category, Operation, Balance, Cashflow],
-    daos: [AccountDao, CategoryDao, OperationDao])
+    tables: [Account, Category, Operation, Balance, Cashflow, Budget],
+    daos: [AccountDao, CategoryDao, OperationDao, BudgetDao])
 class Database extends _$Database {
   Database()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -386,4 +399,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ..where((entry) => entry.operation.equals(operation.id)))
         .go();
   }
+}
+
+@UseDao(tables: [Budget])
+class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin{
+  final Database db;
+
+  BudgetDao(this.db) : super(db);
+
 }
