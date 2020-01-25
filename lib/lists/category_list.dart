@@ -28,21 +28,54 @@ class CategoryList extends StatelessWidget {
       itemCount: categories.length,
       itemBuilder: (_, index) {
         final itemCategory = categories[index];
-        return Column(
-          children: <Widget>[
-            ListTile(
-              title: Text(itemCategory.title),
-              subtitle: Text(
-                getOperationTitle(context, itemCategory.operationType),
-                style: Theme.of(context).textTheme.caption.copyWith(
-                    color: getOperationColor(itemCategory.operationType)),
+        return Dismissible(
+          key: Key(itemCategory.id.toString()),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(itemCategory.title),
+                subtitle: Text(
+                  getOperationTitle(context, itemCategory.operationType),
+                  style: Theme.of(context).textTheme.caption.copyWith(
+                      color: getOperationColor(itemCategory.operationType)),
+                ),
+                onTap: () => onTap(context, itemCategory),
               ),
-              onTap: () => onTap(context, itemCategory),
-            ),
-            Divider()
-          ],
+              Divider()
+            ],
+          ),
+          secondaryBackground:
+          dismissBackground(context, Alignment.centerRight),
+          background: dismissBackground(context, Alignment.centerLeft),
+          onDismissed: (_) async {
+            await Provider.of<Model>(context, listen: false)
+                .updateCategory(itemCategory.copyWith(archive: true));
+
+            Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text(AppLocalizations.of(context).mesCategoryArchived)));
+          },
         );
       },
+    );
+  }
+
+  Container dismissBackground(BuildContext context, Alignment alignment) {
+    return Container(
+      color: Colors.grey,
+      alignment: alignment,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Icon(Icons.archive, color: Colors.white,),
+            Text(
+              AppLocalizations.of(context).archive.toUpperCase(),
+              style:
+              Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

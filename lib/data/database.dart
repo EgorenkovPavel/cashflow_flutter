@@ -7,6 +7,7 @@ class Account extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
+
   BoolColumn get archive => boolean().withDefault(const Constant(false))();
 }
 
@@ -14,6 +15,7 @@ class Category extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
+
   BoolColumn get archive => boolean().withDefault(const Constant(false))();
 
   IntColumn get operationType =>
@@ -79,13 +81,12 @@ class AccountWithBalance {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AccountWithBalance &&
-              runtimeType == other.runtimeType &&
-              account == other.account;
+      other is AccountWithBalance &&
+          runtimeType == other.runtimeType &&
+          account == other.account;
 
   @override
   int get hashCode => account.hashCode;
-
 }
 
 class OperationItem {
@@ -212,11 +213,11 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     ).watchSingle().map((row) => row.readInt('sum') ?? 0);
   }
 
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance({bool archive = false}) {
+  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance(
+      {bool archive = false}) {
     return customSelectQuery(
         'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" FROM account c ORDER BY title;',
-        readsFrom: {account, balance}).watch()
-        .map((rows) {
+        readsFrom: {account, balance}).watch().map((rows) {
       return rows
           .map((row) => AccountWithBalance(
               AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
@@ -234,12 +235,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   CategoryDao(this.db) : super(db);
 
   //Future<List<Task>> getAllTasks() => select(tasks).get();
-  Stream<List<CategoryData>> watchAllCategories() =>
-      (select(category)..orderBy([(t) => OrderingTerm(expression: t.title)]))
+  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
+      (select(category)
+            ..where((a) => a.archive.equals(false) | a.archive.equals(archive))
+            ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type) =>
+  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
+          {bool archive = false}) =>
       (select(category)
+            ..where((a) => a.archive.equals(false) | a.archive.equals(archive))
             ..where((cat) => cat.operationType
                 .equals(OperationTypeConverter().mapToSql(type)))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
@@ -264,7 +269,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(account, 'rec');
 
     return (select(operation)
-    ..orderBy([(t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)]))
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ]))
         .join(
           [
             innerJoin(
