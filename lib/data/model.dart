@@ -46,6 +46,8 @@ class Model extends ChangeNotifier{
 
   Stream<List<MonthBudget>> watchMonthBudget() => db.budgetDao.watchMonthBudget();
 
+  Stream<List<BudgetData>> watchBudget(DateTime date) => db.budgetDao.watchBudget(date);
+
   Future<void> insertBudget(BudgetData entity) => db.budgetDao.insertBudget(entity);
 
 }
