@@ -1,5 +1,6 @@
 
 import 'package:cashflow/pages/backup_page.dart';
+import 'package:cashflow/pages/budget_page.dart';
 import 'package:cashflow/pages/home_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_page_new.dart';
@@ -41,6 +42,17 @@ class MyApp extends StatelessWidget {
           MasterPage.routeName: (BuildContext context) => MasterPage(),//SimpleMasterPage(),
           MasterPageNew.routeName: (BuildContext context) => MasterPageNew(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
+          //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
+        },
+        onGenerateRoute: (settings){
+          if (settings.name == BudgetPage.routeName) {
+            final Map<String, DateTime> args = settings.arguments;
+            return MaterialPageRoute(
+              builder: (context) {
+                return BudgetPage(date: args['date']);
+              },
+            );
+          }
         },
       ),
     );

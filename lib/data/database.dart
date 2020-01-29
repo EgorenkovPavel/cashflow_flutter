@@ -75,9 +75,7 @@ class Cashflow extends Table {
 class Budget extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get year => integer()();
-
-  IntColumn get month => integer()();
+  DateTimeColumn get date => dateTime()();
 
   IntColumn get category =>
       integer().customConstraint('NULL REFERENCES category(id)')();
@@ -86,11 +84,10 @@ class Budget extends Table {
 }
 
 class MonthBudget {
-  int year;
-  int month;
+  DateTime date;
   int sum;
 
-  MonthBudget(this.year, this.month, this.sum);
+  MonthBudget(this.date, this.sum);
 }
 
 class AccountWithBalance {
@@ -413,9 +410,10 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   BudgetDao(this.db) : super(db);
 
-  Stream<List<BudgetData>> watchBudget(int year, int month) {
+  Stream<List<BudgetData>> watchBudget(DateTime date) {
+    DateTime monthStart = DateTime(date.year, date.month);
     return (select(budget)
-          ..where((t) => budget.year.equals(year) & budget.month.equals(month)))
+          ..where((t) => budget.date.equals(monthStart)))
         .watch();
   }
 
@@ -424,11 +422,11 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 //        .map((t) => MonthBudget(t.year, t.month, t.sum))
 //        .watch();
     return customSelectQuery(
-        'SELECT year, month, SUM(sum) as sum FROM budget GROUP BY year, month ORDER BY year, month',
+        'SELECT date, SUM(sum) as sum FROM budget GROUP BY date ORDER BY date',
         readsFrom: {budget}).watch().map((rows) {
       return rows
           .map((t) => MonthBudget(
-              t.readInt('year'), t.readInt('month'), t.readInt('sum')))
+              t.readDateTime('date'), t.readInt('sum')))
           .toList();
     });
   }
