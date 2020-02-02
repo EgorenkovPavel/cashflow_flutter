@@ -10,7 +10,7 @@ class DropdownList<T> extends StatelessWidget {
   final WidgetByItem<T> getListItem;
 
 
-  const DropdownList({Key key, this.value, this.hint, this.onChange, this.items, this.getListItem})
+  const DropdownList({Key key, this.value, this.hint = '', this.onChange, this.items, this.getListItem})
       : super(key: key);
 
   @override

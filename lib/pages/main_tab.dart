@@ -1,3 +1,4 @@
+import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/pages/budget_page.dart';
@@ -30,12 +31,16 @@ class MainTab extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text(DateFormat.yMMMM(Localizations.localeOf(context).languageCode).format(date),),
+                            Text(
+                              DateFormat.yMMMM(Localizations.localeOf(context)
+                                      .languageCode)
+                                  .format(date),
+                            ),
                             Text('${t.sum}'),
                           ],
                         ),
                       ),
-                      onTap: (){
+                      onTap: () {
                         Navigator.of(context).pushNamed(BudgetPage.routeName,
                             arguments: {'date': t.date});
                       },
@@ -48,8 +53,20 @@ class MainTab extends StatelessWidget {
         RaisedButton(
           child: Text('Add budget'),
           onPressed: () {
-            Provider.of<Model>(context, listen: false).insertBudget(
-                BudgetData(date: DateTime(2020, 2), category: 1, sum: 100));
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return Dialog(
+                  child: BudgetCard(),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                );
+              },
+            );
           },
         )
       ],

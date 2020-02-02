@@ -50,4 +50,6 @@ class Model extends ChangeNotifier{
 
   Future<void> insertBudget(BudgetData entity) => db.budgetDao.insertBudget(entity);
 
+  Future<void> updateBudget(BudgetData entity) => db.budgetDao.updateBudget(entity);
+
 }

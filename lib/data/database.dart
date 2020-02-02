@@ -73,12 +73,13 @@ class Cashflow extends Table {
 }
 
 class Budget extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
   DateTimeColumn get date => dateTime()();
 
   IntColumn get category =>
       integer().customConstraint('NULL REFERENCES category(id)')();
+
+  @override
+  Set<Column> get primaryKey =>{date, category};
 
   IntColumn get sum => integer()();
 }
@@ -433,5 +434,9 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Future<void> insertBudget(BudgetData entity) {
     return into(budget).insert(entity);
+  }
+
+  Future<void> updateBudget(BudgetData entity) {
+    return update(budget).replace(entity);
   }
 }
