@@ -31,6 +31,7 @@ class _TestWidgetState extends State<TestWidget> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     Provider.of<Model>(context).watchAllAccountsWithBalance().listen((list) {
       setState(() {
         accounts = list;

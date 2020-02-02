@@ -295,7 +295,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelectQuery(
       'SELECT *, '
-      '(SELECT SUM(sum) as sum FROM budget WHERE category = c.id AND date = ?) AS "budget", '
+      '(SELECT sum as sum FROM budget WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
       'FROM category c ORDER BY title;',
       variables: [
