@@ -65,7 +65,7 @@ class Backuper{
           if(d is Map<String, dynamic>){
             Map<String, dynamic> p = d;
             var account = AccountData(title: p['account_title'], id: int.parse(p['_id']));
-            await Provider.of<Model>(context).insertAccount(account);
+            await Provider.of<Model>(context, listen: false).insertAccount(account);
           }
         });
 
@@ -81,7 +81,7 @@ class Backuper{
                 operationType: converter.mapToDart(int.parse(p['category_type'])),
                 budget: p['category_budget'] == '' ? 0 : int.parse(p['category_budget'])
             );
-            await Provider.of<Model>(context).insertCategory(category);
+            await Provider.of<Model>(context, listen: false).insertCategory(category);
           }
         });
 
@@ -100,7 +100,7 @@ class Backuper{
                 recAccount: getId(p['operation_recipient_account_id']),
                 sum: int.parse(p['operation_sum'])
             );
-            await Provider.of<Model>(context).insertOperation(operation);
+            await Provider.of<Model>(context, listen: false).insertOperation(operation);
           }
         });
       }
