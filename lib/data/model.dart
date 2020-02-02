@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'database.dart';
 
-class Model extends ChangeNotifier{
-
+class Model extends ChangeNotifier {
   final db;
 
   Model() : db = Database();
@@ -12,44 +11,68 @@ class Model extends ChangeNotifier{
   Future deleteAll() => db.deleteAll();
 
   //Accounts
-  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) => db.accountDao.watchAllAccounts(archive: archive);
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance({bool archive = false}) => db.accountDao.watchAllAccountsWithBalance(archive: archive);
+  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) =>
+      db.accountDao.watchAllAccounts(archive: archive);
 
-  Future insertAccount(AccountData entity) => db.accountDao.insertAccount(entity);
-  Future updateAccount(AccountData entity) => db.accountDao.updateAccount(entity);
+  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance(
+          {bool archive = false}) =>
+      db.accountDao.watchAllAccountsWithBalance(archive: archive);
+
+  Future insertAccount(AccountData entity) =>
+      db.accountDao.insertAccount(entity);
+
+  Future updateAccount(AccountData entity) =>
+      db.accountDao.updateAccount(entity);
 
   Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
 
   //Categories
-  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) => db.categoryDao.watchAllCategories(archive: archive);
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type, {bool archive = false}) => db.categoryDao.watchAllCategoriesByType(type, archive: archive);
+  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
+      db.categoryDao.watchAllCategories(archive: archive);
 
-  Future insertCategory(CategoryData entity) => db.categoryDao.insertCategory(entity);
-  Future updateCategory(CategoryData entity) => db.categoryDao.updateCategory(entity);
+  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
+          {bool archive = false}) =>
+      db.categoryDao.watchAllCategoriesByType(type, archive: archive);
+
+  Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
+          DateTime date) =>
+      db.categoryDao.watchAllCategoryCashflowBudget(date);
+
+  Future insertCategory(CategoryData entity) =>
+      db.categoryDao.insertCategory(entity);
+
+  Future updateCategory(CategoryData entity) =>
+      db.categoryDao.updateCategory(entity);
 
   //Operations
-  Stream<List<OperationItem>> watchAllOperationItems() => db.operationDao.watchAllOperationItems();
+  Stream<List<OperationItem>> watchAllOperationItems() =>
+      db.operationDao.watchAllOperationItems();
 
-  Future insertOperationItem(OperationItem entity) => db.operationDao.insertOperationItem(entity);
+  Future insertOperationItem(OperationItem entity) =>
+      db.operationDao.insertOperationItem(entity);
+
   Future insertOperation(OperationData entity) {
-    if(entity.id == 0) {
+    if (entity.id == 0) {
       db.operationDao.insertOperation(entity);
-    }
-    else {
+    } else {
       db.operationDao.updateOperation(entity);
     }
   }
 
-  Future deleteOperation(OperationData entity) => db.operationDao.deleteOperation(entity);
+  Future deleteOperation(OperationData entity) =>
+      db.operationDao.deleteOperation(entity);
 
   //Budget
 
-  Stream<List<MonthBudget>> watchMonthBudget() => db.budgetDao.watchMonthBudget();
+  Stream<List<MonthBudget>> watchMonthBudget() =>
+      db.budgetDao.watchMonthBudget();
 
-  Stream<List<BudgetData>> watchBudget(DateTime date) => db.budgetDao.watchBudget(date);
+  Stream<List<BudgetData>> watchBudget(DateTime date) =>
+      db.budgetDao.watchBudget(date);
 
-  Future<void> insertBudget(BudgetData entity) => db.budgetDao.insertBudget(entity);
+  Future<void> insertBudget(BudgetData entity) =>
+      db.budgetDao.insertBudget(entity);
 
-  Future<void> updateBudget(BudgetData entity) => db.budgetDao.updateBudget(entity);
-
+  Future<void> updateBudget(BudgetData entity) =>
+      db.budgetDao.updateBudget(entity);
 }

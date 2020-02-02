@@ -79,7 +79,7 @@ class Budget extends Table {
       integer().customConstraint('NULL REFERENCES category(id)')();
 
   @override
-  Set<Column> get primaryKey =>{date, category};
+  Set<Column> get primaryKey => {date, category};
 
   IntColumn get sum => integer()();
 }
@@ -106,6 +106,24 @@ class AccountWithBalance {
 
   @override
   int get hashCode => account.hashCode;
+}
+
+class CategoryCashflowBudget {
+  CategoryData category;
+  int budget;
+  int cashflow;
+
+  CategoryCashflowBudget(this.category, this.budget, this.cashflow);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CategoryCashflowBudget &&
+          runtimeType == other.runtimeType &&
+          category == other.category;
+
+  @override
+  int get hashCode => category.hashCode;
 }
 
 class OperationItem {
@@ -203,6 +221,7 @@ class Database extends _$Database {
       await delete(balance).go();
       await delete(cashflow).go();
       await delete(operation).go();
+      await delete(budget).go();
       await delete(account).go();
       await delete(category).go();
     });
@@ -244,7 +263,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   }
 }
 
-@UseDao(tables: [Category])
+@UseDao(tables: [Category, Budget, Cashflow])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   final Database db;
 
@@ -266,6 +285,36 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                 .equals(OperationTypeConverter().mapToSql(type)))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
+
+  Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
+      DateTime date) {
+    DateTime monthStart = DateTime(date.year, date.month);
+    DateTime monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return customSelectQuery(
+      'SELECT *, '
+      '(SELECT SUM(sum) as sum FROM budget WHERE category = c.id AND date = ?) AS "budget", '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM category c ORDER BY title;',
+      variables: [
+        Variable.withDateTime(monthStart),
+        Variable.withDateTime(monthStart),
+        Variable.withDateTime(monthEnd)
+      ],
+      readsFrom: {category, cashflow, budget},
+    ).watch().map((rows) {
+      return rows
+          .map((row) => CategoryCashflowBudget(
+                CategoryData.fromData(row.data, db),
+                row.readInt('budget') ?? 0,
+                row.readInt('cashflow') ?? 0,
+              ))
+          //.where((a) => archive ? true : !a.account.archive)
+          .toList();
+    });
+  }
 
   Future insertCategory(CategoryData entity) => into(category).insert(entity);
 
@@ -413,8 +462,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Stream<List<BudgetData>> watchBudget(DateTime date) {
     DateTime monthStart = DateTime(date.year, date.month);
-    return (select(budget)
-          ..where((t) => budget.date.equals(monthStart)))
+    return (select(budget)..where((t) => budget.date.equals(monthStart)))
         .watch();
   }
 
@@ -426,8 +474,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         'SELECT date, SUM(sum) as sum FROM budget GROUP BY date ORDER BY date',
         readsFrom: {budget}).watch().map((rows) {
       return rows
-          .map((t) => MonthBudget(
-              t.readDateTime('date'), t.readInt('sum')))
+          .map((t) => MonthBudget(t.readDateTime('date'), t.readInt('sum')))
           .toList();
     });
   }
