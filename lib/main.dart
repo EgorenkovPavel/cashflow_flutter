@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (context) => Model())
+        ChangeNotifierProvider(create: (context) => Model())
       ],
       child: MaterialApp(
         title: 'Cashflow',
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
               },
             );
           }
+          return null;
         },
       ),
     );
