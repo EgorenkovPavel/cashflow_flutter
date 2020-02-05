@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
@@ -22,22 +24,28 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-
-  List<bool> isExpanded = List.generate(3, (_)=> false);
+  List<bool> isExpanded = List.generate(3, (_) => false);
 
   List<AccountWithBalance> accounts = [];
   List<CategoryCashflowBudget> categoriesInput = [];
   List<CategoryCashflowBudget> categoriesOutput = [];
 
+  StreamSubscription<List<AccountWithBalance>> subAccount;
+  StreamSubscription<List<CategoryCashflowBudget>> subCategory;
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Provider.of<Model>(context).watchAllAccountsWithBalance().listen((list) {
+  void initState() {
+    super.initState();
+    subAccount = Provider.of<Model>(context, listen: false)
+        .watchAllAccountsWithBalance()
+        .listen((list) {
       setState(() {
         accounts = list;
       });
     });
-    Provider.of<Model>(context).watchAllCategoryCashflowBudget(DateTime.now()).listen((list) {
+    subCategory = Provider.of<Model>(context, listen: false)
+        .watchAllCategoryCashflowBudget(DateTime.now())
+        .listen((list) {
       setState(() {
         categoriesInput = list
             .where((category) =>
@@ -52,6 +60,14 @@ class _TestWidgetState extends State<TestWidget> {
     });
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    subAccount.cancel();
+    subCategory.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -64,51 +80,50 @@ class _TestWidgetState extends State<TestWidget> {
           },
           children: [
             ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(
-                      AppLocalizations.of(context).titleTotalSum,
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    trailing: Text(
-                      accounts.isNotEmpty
-                          ? accounts
-                              .map((account) => account.sum)
-                              .reduce((a, b) => a + b)
-                              .toString()
-                          : '0',
-                      style: Theme.of(context).textTheme.headline,
-                    ),
-                  );
-                },
-                body: Column(
-                  children: accounts
-                      .map((account) => ListTile(
-                            title: Text(account.account.title),
-                            trailing: Text(account.sum.toString()),
-                          ))
-                      .toList(),
-                ),
-                isExpanded: isExpanded[0]),
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  title: Text(
+                    AppLocalizations.of(context).titleTotalSum,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  trailing: Text(
+                    accounts
+                        .map((account) => account.sum)
+                        .fold(0, (a, b) => a + b)
+                        .toString(),
+                    style: Theme.of(context).textTheme.headline,
+                  ),
+                );
+              },
+              body: Column(
+                children: accounts
+                    .map((account) => ListTile(
+                          title: Text(account.account.title),
+                          trailing: Text(account.sum.toString()),
+                        ))
+                    .toList(),
+              ),
+              isExpanded: isExpanded[0],
+              canTapOnHeader: true,
+            ),
             ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-
-                int totalBudget = categoriesInput.isNotEmpty
-                    ? categoriesInput
+                int totalBudget = categoriesInput
                     .map((category) => category.budget)
-                    .reduce((a, b) => a + b) : 0;
+                    .fold(0, (a, b) => a + b);
 
-                int totalCashflow = categoriesInput.isNotEmpty
-                    ? categoriesInput
+                int totalCashflow = categoriesInput
                     .map((category) => category.cashflow)
-                    .reduce((a, b) => a + b) : 0;
+                    .fold(0, (a, b) => a + b);
 
                 return ListTile(
                   title: Text('Input'),
-                  subtitle: Text('Budget $totalBudget',
+                  subtitle: Text(
+                    'Budget $totalBudget',
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  trailing: Text('$totalCashflow',
+                  trailing: Text(
+                    '$totalCashflow',
                     style: Theme.of(context).textTheme.headline,
                   ),
                 );
@@ -123,26 +138,26 @@ class _TestWidgetState extends State<TestWidget> {
                     .toList(),
               ),
               isExpanded: isExpanded[1],
+              canTapOnHeader: true,
             ),
             ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-
-                int totalBudget = categoriesOutput.isNotEmpty
-                    ? categoriesOutput
+                int totalBudget = categoriesOutput
                     .map((category) => category.budget)
-                    .reduce((a, b) => a + b) : 0;
+                    .fold(0, (a, b) => a + b);
 
-                int totalCashflow = categoriesOutput.isNotEmpty
-                    ? categoriesOutput
+                int totalCashflow = categoriesOutput
                     .map((category) => category.cashflow)
-                    .reduce((a, b) => a + b) : 0;
+                    .fold(0, (a, b) => a + b);
 
                 return ListTile(
                   title: Text('Output'),
-                  subtitle: Text('Budget $totalBudget',
+                  subtitle: Text(
+                    'Budget $totalBudget',
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  trailing: Text('$totalCashflow',
+                  trailing: Text(
+                    '$totalCashflow',
                     style: Theme.of(context).textTheme.headline,
                   ),
                 );
@@ -150,13 +165,14 @@ class _TestWidgetState extends State<TestWidget> {
               body: Column(
                 children: categoriesOutput
                     .map((category) => ListTile(
-                  title: Text(category.category.title),
-                  subtitle: Text(category.budget.toString()),
-                  trailing: Text(category.cashflow.toString()),
-                ))
+                          title: Text(category.category.title),
+                          subtitle: Text(category.budget.toString()),
+                          trailing: Text(category.cashflow.toString()),
+                        ))
                     .toList(),
               ),
               isExpanded: isExpanded[2],
+              canTapOnHeader: true,
             ),
           ],
         ),
