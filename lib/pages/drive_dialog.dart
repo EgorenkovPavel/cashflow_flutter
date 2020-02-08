@@ -20,6 +20,7 @@ class DriveDialog extends StatefulWidget {
 class _DriveDialogState extends State<DriveDialog> {
   lib.Stack<String> rootFolder = lib.Stack();
   List<drive.File> folderList = [];
+  ScrollController _listController = ScrollController();
 
   void loadFolders() async {
     try {
@@ -32,6 +33,7 @@ class _DriveDialogState extends State<DriveDialog> {
 
       setState(() {
         folderList = data.files.toList();
+        _listController.jumpTo(0);
       });
     } catch (e) {
       print(e.toString());
@@ -87,6 +89,7 @@ class _DriveDialogState extends State<DriveDialog> {
           children: <Widget>[
             Expanded(
                 child: ListView(
+                  controller: _listController,
               padding: EdgeInsets.zero,
               children: folderList.map((f) {
                 bool isFolder =
