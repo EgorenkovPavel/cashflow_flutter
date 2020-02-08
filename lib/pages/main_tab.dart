@@ -60,7 +60,6 @@ class _TestWidgetState extends State<TestWidget> {
     });
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -117,9 +116,9 @@ class _TestWidgetState extends State<TestWidget> {
                     .fold(0, (a, b) => a + b);
 
                 return ListTile(
-                  title: Text('Input'),
+                  title: Text(AppLocalizations.of(context).typeInput),
                   subtitle: Text(
-                    'Budget $totalBudget',
+                    '${AppLocalizations.of(context).titleBudget} $totalBudget',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   trailing: Text(
@@ -130,11 +129,7 @@ class _TestWidgetState extends State<TestWidget> {
               },
               body: Column(
                 children: categoriesInput
-                    .map((category) => ListTile(
-                          title: Text(category.category.title),
-                          subtitle: Text(category.budget.toString()),
-                          trailing: Text(category.cashflow.toString()),
-                        ))
+                    .map((category) => CategoryListItem(category))
                     .toList(),
               ),
               isExpanded: isExpanded[1],
@@ -151,9 +146,9 @@ class _TestWidgetState extends State<TestWidget> {
                     .fold(0, (a, b) => a + b);
 
                 return ListTile(
-                  title: Text('Output'),
+                  title: Text(AppLocalizations.of(context).typeOutput),
                   subtitle: Text(
-                    'Budget $totalBudget',
+                    '${AppLocalizations.of(context).titleBudget} $totalBudget',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   trailing: Text(
@@ -164,11 +159,7 @@ class _TestWidgetState extends State<TestWidget> {
               },
               body: Column(
                 children: categoriesOutput
-                    .map((category) => ListTile(
-                          title: Text(category.category.title),
-                          subtitle: Text(category.budget.toString()),
-                          trailing: Text(category.cashflow.toString()),
-                        ))
+                    .map((category) => CategoryListItem(category))
                     .toList(),
               ),
               isExpanded: isExpanded[2],
@@ -177,6 +168,25 @@ class _TestWidgetState extends State<TestWidget> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CategoryListItem extends StatelessWidget {
+  final CategoryCashflowBudget category;
+
+  const CategoryListItem(this.category, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(category.category.title),
+      subtitle: Text(
+        '${AppLocalizations.of(context).titleBudget} ${category.budget}',
+        style: Theme.of(context).textTheme.caption,
+      ),
+      trailing: Text(category.cashflow.toString()),
+      onTap: (){},
     );
   }
 }
