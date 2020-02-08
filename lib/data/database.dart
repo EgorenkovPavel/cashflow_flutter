@@ -67,7 +67,7 @@ class Cashflow extends Table {
       integer().customConstraint('NULL REFERENCES operation(id)')();
 
   IntColumn get category =>
-      integer().nullable().customConstraint('NULL REFERENCES category(id)')();
+      integer().customConstraint('NULL REFERENCES category(id)')();
 
   IntColumn get sum => integer()();
 }
@@ -261,6 +261,23 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
           .toList();
     });
   }
+
+  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
+    await batch((batch) {
+      batch.insertAll(
+        account,
+        data
+            .map((p) => AccountCompanion.insert(
+                  id: Value(int.parse(p['_id'])),
+                  title: p['account_title'],
+                  archive: Value(p.containsKey('account_archive')
+                      ? p['account_archive'] = 'true'
+                      : false),
+                ))
+            .toList(),
+      );
+    });
+  }
 }
 
 @UseDao(tables: [Category, Budget, Cashflow])
@@ -320,7 +337,26 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future updateCategory(CategoryData entity) =>
       update(category).replace(entity);
-//  Future deleteTask(Task task) => delete(tasks).delete(task);
+
+  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
+    var converter = OperationTypeConverter();
+    await batch((batch) {
+      batch.insertAll(
+        category,
+        data
+            .map((p) => CategoryCompanion.insert(
+                  id: Value(int.parse(p['_id'])),
+                  title: p['category_title'],
+                  operationType:
+                      converter.mapToDart(int.parse(p['category_type'])),
+                  budget: p['category_budget'] == ''
+                      ? 0
+                      : int.parse(p['category_budget']),
+                ))
+            .toList(),
+      );
+    });
+  }
 }
 
 @UseDao(tables: [Account, Category, Operation, Balance, Cashflow])
@@ -395,6 +431,126 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       await delete(operation).delete(entity);
       await _deleteAnalytic(entity);
     });
+  }
+
+  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
+    var converter = OperationTypeConverter();
+
+    List<OperationData> operationData = [];
+    List<CashflowData> cashflowData = [];
+    List<BalanceData> balanceData = [];
+
+    data.forEach((p) {
+      int id = int.parse(p['_id']);
+      DateTime date =
+          DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date']));
+      OperationType operationType =
+          converter.mapToDart(int.parse(p['operation_type']));
+      int account = int.parse(p['operation_account_id']);
+      int category = _getId(p['operation_category_id']);
+      int recAccount = _getId(p['operation_recipient_account_id']);
+      int sum = int.parse(p['operation_sum']);
+
+      operationData.add(OperationData(
+          id: id,
+          date: date,
+          operationType: operationType,
+          account: account,
+          category: category,
+          recAccount: recAccount,
+          sum: sum));
+    });
+
+    operationData.forEach((operation) {
+      switch (operation.operationType) {
+        case OperationType.INPUT:
+          {
+            balanceData.add(BalanceData(
+                date: operation.date,
+                operation: operation.id,
+                account: operation.account,
+                sum: operation.sum));
+            cashflowData.add(CashflowData(
+                date: operation.date,
+                operation: operation.id,
+                category: operation.category,
+                sum: operation.sum));
+            break;
+          }
+        case OperationType.OUTPUT:
+          {
+            balanceData.add(BalanceData(
+                date: operation.date,
+                operation: operation.id,
+                account: operation.account,
+                sum: -1 * operation.sum));
+            cashflowData.add(CashflowData(
+                date: operation.date,
+                operation: operation.id,
+                category: operation.category,
+                sum: operation.sum));
+            break;
+          }
+        case OperationType.TRANSFER:
+          {
+            balanceData.add(BalanceData(
+                date: operation.date,
+                operation: operation.id,
+                account: operation.account,
+                sum: -1 * operation.sum));
+            balanceData.add(BalanceData(
+                date: operation.date,
+                operation: operation.id,
+                account: operation.recAccount,
+                sum: operation.sum));
+            break;
+          }
+      }
+    });
+
+    await batch((batch) {
+      batch.insertAll(
+        operation,
+        operationData
+            .map((p) => OperationCompanion.insert(
+                  id: Value(p.id),
+                  date: p.date,
+                  operationType: p.operationType,
+                  account: p.account,
+                  category: Value(p.category),
+                  recAccount: Value(p.recAccount),
+                  sum: p.sum,
+                ))
+            .toList(),
+      );
+      batch.insertAll(
+        cashflow,
+        cashflowData
+            .map((p) => CashflowCompanion.insert(
+                date: p.date,
+                operation: p.operation,
+                category: p.category,
+                sum: p.sum))
+            .toList(),
+      );
+      batch.insertAll(
+          balance,
+          balanceData
+              .map((p) => BalanceCompanion.insert(
+                  date: p.date,
+                  operation: p.operation,
+                  account: p.account,
+                  sum: p.sum))
+              .toList());
+    });
+  }
+
+  int _getId(String id) {
+    if (id.isEmpty) {
+      return null;
+    } else {
+      return int.parse(id);
+    }
   }
 
   Future _insertAnalytic(OperationData operation) async {

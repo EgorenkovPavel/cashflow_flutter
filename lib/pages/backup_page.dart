@@ -2,6 +2,7 @@ import 'package:cashflow/data/backuper.dart';
 import 'package:cashflow/pages/drive_dialog.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
+import 'package:cashflow/widgets/load_progress.dart';
 import 'package:flutter/material.dart';
 
 class BackupPage extends StatelessWidget {
@@ -38,6 +39,10 @@ class BackupPage extends StatelessWidget {
                 onPressed: () => _restore(context),
               )
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: LoadProgress(title: 'Accounts', count: 20, total: 100,),
           ),
         ],
       ),

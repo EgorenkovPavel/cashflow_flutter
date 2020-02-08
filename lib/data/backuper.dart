@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/pages/drive_dialog.dart';
 import 'package:cashflow/utils/google_http_client.dart';
@@ -58,61 +57,40 @@ class Backuper{
     Map<String, dynamic> data = jsonDecode(file.readAsStringSync());
     print(data.toString());
 
-    data.forEach((String key, dynamic value){
+    Model model = Provider.of<Model>(context, listen: false);
+
+    data.forEach((String key, dynamic value) async {
       if(key == 'account'){
 
+        List<Map<String, dynamic>> data = [];
         value.forEach((dynamic d) async {
-          if(d is Map<String, dynamic>){
-            Map<String, dynamic> p = d;
-            var account = AccountData(title: p['account_title'], id: int.parse(p['_id']));
-            await Provider.of<Model>(context, listen: false).insertAccount(account);
+          if (d is Map<String, dynamic>) {
+            data.add(d);
           }
         });
+        await model.batchInsertAccounts(data);
 
       }else if(key == 'category'){
 
+        List<Map<String, dynamic>> data = [];
         value.forEach((dynamic d) async {
-          var converter = OperationTypeConverter();
-          if(d is Map<String, dynamic>){
-            Map<String, dynamic> p = d;
-            var category = CategoryData(
-                title: p['category_title'],
-                id: int.parse(p['_id']),
-                operationType: converter.mapToDart(int.parse(p['category_type'])),
-                budget: p['category_budget'] == '' ? 0 : int.parse(p['category_budget'])
-            );
-            await Provider.of<Model>(context, listen: false).insertCategory(category);
+          if (d is Map<String, dynamic>) {
+            data.add(d);
           }
         });
+        await model.batchInsertCategories(data);
 
       }else if(key == 'operation'){
 
+        List<Map<String, dynamic>> data = [];
         value.forEach((dynamic d) async {
-          var converter = OperationTypeConverter();
-          if(d is Map<String, dynamic>){
-            Map<String, dynamic> p = d;
-            var operation = OperationData(
-                id: int.parse(p['_id']),
-                date: DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date'])),
-                operationType: converter.mapToDart(int.parse(p['operation_type'])),
-                account: int.parse(p['operation_account_id']),
-                category: getId(p['operation_category_id']),
-                recAccount: getId(p['operation_recipient_account_id']),
-                sum: int.parse(p['operation_sum'])
-            );
-            await Provider.of<Model>(context, listen: false).insertOperation(operation);
+          if (d is Map<String, dynamic>) {
+            data.add(d);
           }
         });
+        await model.batchInsertOperations(data);
+
       }
     });
   }
-
-  int getId(String id){
-    if (id.isEmpty) {
-      return null;
-    }else{
-      return int.parse(id);
-    }
-  }
-
 }

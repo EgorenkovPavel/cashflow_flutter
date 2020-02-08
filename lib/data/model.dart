@@ -26,6 +26,8 @@ class Model extends ChangeNotifier {
 
   Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
 
+  Future<void> batchInsertAccounts(List<Map<String, dynamic>> data) => db.accountDao.batchInsert(data);
+
   //Categories
   Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
       db.categoryDao.watchAllCategories(archive: archive);
@@ -44,6 +46,8 @@ class Model extends ChangeNotifier {
   Future updateCategory(CategoryData entity) =>
       db.categoryDao.updateCategory(entity);
 
+  Future<void> batchInsertCategories(List<Map<String, dynamic>> data) => db.categoryDao.batchInsert(data);
+
   //Operations
   Stream<List<OperationItem>> watchAllOperationItems() =>
       db.operationDao.watchAllOperationItems();
@@ -61,6 +65,8 @@ class Model extends ChangeNotifier {
 
   Future deleteOperation(OperationData entity) =>
       db.operationDao.deleteOperation(entity);
+
+  Future<void> batchInsertOperations(List<Map<String, dynamic>> data) => db.operationDao.batchInsert(data);
 
   //Budget
 
