@@ -239,6 +239,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       (select(account)..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
+  Future<List<AccountData>> getAllAccounts() => select(account).get();
+
   Future insertAccount(AccountData entity) => into(account).insert(entity);
 
   Future updateAccount(AccountData entity) => update(account).replace(entity);
@@ -262,17 +264,15 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     });
   }
 
-  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
+  Future<void> batchInsert(List<AccountData> accounts) async {
     await batch((batch) {
       batch.insertAll(
         account,
-        data
+        accounts
             .map((p) => AccountCompanion.insert(
-                  id: Value(int.parse(p['_id'])),
-                  title: p['account_title'],
-                  archive: Value(p.containsKey('account_archive')
-                      ? p['account_archive'] = 'true'
-                      : false),
+                  id: Value(p.id),
+                  title: p.title,
+                  archive: Value(p.archive),
                 ))
             .toList(),
       );
@@ -293,6 +293,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
             ..where((a) => a.archive.equals(false) | a.archive.equals(archive))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
+
+  Future<List<CategoryData>> getAllCategories() => select(category).get();
 
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
@@ -338,22 +340,18 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Future updateCategory(CategoryData entity) =>
       update(category).replace(entity);
 
-  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
-    var converter = OperationTypeConverter();
+  Future<void> batchInsert(List<CategoryData> categories) async {
     await batch((batch) {
       batch.insertAll(
         category,
-        data
+        categories
             .map((p) => CategoryCompanion.insert(
-                  id: Value(int.parse(p['_id'])),
-                  title: p['category_title'],
-                  operationType:
-                      converter.mapToDart(int.parse(p['category_type'])),
-                  budget: p['category_budget'] == ''
-                      ? 0
-                      : int.parse(p['category_budget']),
-                ))
-            .toList(),
+                  id: Value(p.id),
+                  title: p.title,
+                  operationType: p.operationType,
+                  budget: p.budget,
+                  archive: Value(p.archive),
+                )).toList(),
       );
     });
   }
@@ -401,6 +399,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
+  Future<List<OperationData>> getAllOperations() => select(operation).get();
+
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
       int id = await into(operation).insert(entity.operationData);
@@ -433,33 +433,32 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
-  Future<void> batchInsert(List<Map<String, dynamic>> data) async {
+  Future<void> batchInsert(List<OperationData> operationData) async {
     var converter = OperationTypeConverter();
 
-    List<OperationData> operationData = [];
     List<CashflowData> cashflowData = [];
     List<BalanceData> balanceData = [];
 
-    data.forEach((p) {
-      int id = int.parse(p['_id']);
-      DateTime date =
-          DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date']));
-      OperationType operationType =
-          converter.mapToDart(int.parse(p['operation_type']));
-      int account = int.parse(p['operation_account_id']);
-      int category = _getId(p['operation_category_id']);
-      int recAccount = _getId(p['operation_recipient_account_id']);
-      int sum = int.parse(p['operation_sum']);
-
-      operationData.add(OperationData(
-          id: id,
-          date: date,
-          operationType: operationType,
-          account: account,
-          category: category,
-          recAccount: recAccount,
-          sum: sum));
-    });
+//    data.forEach((p) {
+//      int id = int.parse(p['_id']);
+//      DateTime date =
+//          DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date']));
+//      OperationType operationType =
+//          converter.mapToDart(int.parse(p['operation_type']));
+//      int account = int.parse(p['operation_account_id']);
+//      int category = _getId(p['operation_category_id']);
+//      int recAccount = _getId(p['operation_recipient_account_id']);
+//      int sum = int.parse(p['operation_sum']);
+//
+//      operationData.add(OperationData(
+//          id: id,
+//          date: date,
+//          operationType: operationType,
+//          account: account,
+//          category: category,
+//          recAccount: recAccount,
+//          sum: sum));
+//    });
 
     operationData.forEach((operation) {
       switch (operation.operationType) {
@@ -545,13 +544,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
-  int _getId(String id) {
-    if (id.isEmpty) {
-      return null;
-    } else {
-      return int.parse(id);
-    }
-  }
 
   Future _insertAnalytic(OperationData operation) async {
     switch (operation.operationType) {

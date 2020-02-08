@@ -14,6 +14,8 @@ class Model extends ChangeNotifier {
   Stream<List<AccountData>> watchAllAccounts({bool archive = false}) =>
       db.accountDao.watchAllAccounts(archive: archive);
 
+  Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
+
   Stream<List<AccountWithBalance>> watchAllAccountsWithBalance(
           {bool archive = false}) =>
       db.accountDao.watchAllAccountsWithBalance(archive: archive);
@@ -26,11 +28,13 @@ class Model extends ChangeNotifier {
 
   Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
 
-  Future<void> batchInsertAccounts(List<Map<String, dynamic>> data) => db.accountDao.batchInsert(data);
+  Future<void> batchInsertAccounts(List<AccountData> accounts) => db.accountDao.batchInsert(accounts);
 
   //Categories
   Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
       db.categoryDao.watchAllCategories(archive: archive);
+
+  Future<List<CategoryData>> getAllCategories() => db.categoryDao.getAllCategories();
 
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
@@ -46,11 +50,13 @@ class Model extends ChangeNotifier {
   Future updateCategory(CategoryData entity) =>
       db.categoryDao.updateCategory(entity);
 
-  Future<void> batchInsertCategories(List<Map<String, dynamic>> data) => db.categoryDao.batchInsert(data);
+  Future<void> batchInsertCategories(List<CategoryData> data) => db.categoryDao.batchInsert(data);
 
   //Operations
   Stream<List<OperationItem>> watchAllOperationItems() =>
       db.operationDao.watchAllOperationItems();
+
+  Future<List<OperationData>> getAllOperations() => db.operationDao.getAllOperations();
 
   Future insertOperationItem(OperationItem entity) =>
       db.operationDao.insertOperationItem(entity);
@@ -66,7 +72,7 @@ class Model extends ChangeNotifier {
   Future deleteOperation(OperationData entity) =>
       db.operationDao.deleteOperation(entity);
 
-  Future<void> batchInsertOperations(List<Map<String, dynamic>> data) => db.operationDao.batchInsert(data);
+  Future<void> batchInsertOperations(List<OperationData> data) => db.operationDao.batchInsert(data);
 
   //Budget
 

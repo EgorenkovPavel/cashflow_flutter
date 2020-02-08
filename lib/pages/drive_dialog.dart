@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:cashflow/data/stack.dart' as lib;
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DriveDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
@@ -37,27 +34,6 @@ class _DriveDialogState extends State<DriveDialog> {
       });
     } catch (e) {
       print(e.toString());
-    }
-  }
-
-  void uploadFile() async {
-    final directory = await getTemporaryDirectory();
-    var localFile = new File('${directory.path}/test.txt');
-    localFile.writeAsString('Test string');
-
-    var media = new drive.Media(localFile.openRead(), localFile.lengthSync());
-
-    drive.File file = drive.File();
-    file.name = 'New test file';
-    file.parents = [rootFolder.top()];
-    file.mimeType = 'application/json';
-
-    try {
-      await drive.DriveApi(widget.httpClient)
-          .files
-          .create(file, uploadMedia: media);
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -128,7 +104,7 @@ class _DriveDialogState extends State<DriveDialog> {
                       style: TextStyle(color: Colors.white)),
                   color: Theme.of(context).primaryColor,
                   onPressed: () {
-                    uploadFile();
+                    Navigator.of(context).pop(rootFolder.top());
                   },
                 )
               ],

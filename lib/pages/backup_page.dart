@@ -40,6 +40,10 @@ class BackupPage extends StatelessWidget {
               )
             ],
           ),
+          RaisedButton(
+            child: Text('Restore old format'),
+            onPressed: () => _restoreOld(context),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: LoadProgress(title: 'Accounts', count: 20, total: 100,),
@@ -54,8 +58,10 @@ class BackupPage extends StatelessWidget {
 
     if (httpClient == null) return;
 
-    Navigator.of(context)
+    String catalogId = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+
+    _backuper.backup(context, httpClient, catalogId);
   }
 
   _restore(BuildContext context) async {
@@ -67,5 +73,16 @@ class BackupPage extends StatelessWidget {
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
 
     _backuper.restore(context, httpClient, fileId);
+  }
+
+  _restoreOld(BuildContext context) async {
+    final httpClient = await GoogleHttpClient.getClient();
+
+    if (httpClient == null) return;
+
+    String fileId = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+
+    _backuper.restoreOld(context, httpClient, fileId);
   }
 }
