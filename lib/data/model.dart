@@ -28,15 +28,18 @@ class Model extends ChangeNotifier {
 
   Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
 
-  Future<void> batchInsertAccounts(List<AccountData> accounts) => db.accountDao.batchInsert(accounts);
+  Future<void> batchInsertAccounts(List<AccountData> accounts) =>
+      db.accountDao.batchInsert(accounts);
 
   //Categories
   Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
       db.categoryDao.watchAllCategories(archive: archive);
 
-  Future<List<CategoryData>> getAllCategories() => db.categoryDao.getAllCategories();
+  Future<List<CategoryData>> getAllCategories() =>
+      db.categoryDao.getAllCategories();
 
-  Stream<CategoryData> getCategoryById(int id) => db.categoryDao.getCategoryById(id);
+  Stream<CategoryData> getCategoryById(int id) =>
+      db.categoryDao.getCategoryById(id);
 
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
@@ -52,13 +55,15 @@ class Model extends ChangeNotifier {
   Future updateCategory(CategoryData entity) =>
       db.categoryDao.updateCategory(entity);
 
-  Future<void> batchInsertCategories(List<CategoryData> data) => db.categoryDao.batchInsert(data);
+  Future<void> batchInsertCategories(List<CategoryData> data) =>
+      db.categoryDao.batchInsert(data);
 
   //Operations
   Stream<List<OperationItem>> watchAllOperationItems() =>
       db.operationDao.watchAllOperationItems();
 
-  Future<List<OperationData>> getAllOperations() => db.operationDao.getAllOperations();
+  Future<List<OperationData>> getAllOperations() =>
+      db.operationDao.getAllOperations();
 
   Future insertOperationItem(OperationItem entity) =>
       db.operationDao.insertOperationItem(entity);
@@ -74,12 +79,16 @@ class Model extends ChangeNotifier {
   Future deleteOperation(OperationData entity) =>
       db.operationDao.deleteOperation(entity);
 
-  Future<void> batchInsertOperations(List<OperationData> data) => db.operationDao.batchInsert(data);
+  Future<void> batchInsertOperations(List<OperationData> data) =>
+      db.operationDao.batchInsert(data);
 
   //Budget
 
   Stream<List<MonthBudget>> watchMonthBudget() =>
       db.budgetDao.watchMonthBudget();
+
+  Stream<List<BudgetData>> watchBudgetByCategory(int categoryId) =>
+      db.budgetDao.watchBudgetByCategory(categoryId);
 
   Stream<List<BudgetData>> watchBudget(DateTime date) =>
       db.budgetDao.watchBudget(date);

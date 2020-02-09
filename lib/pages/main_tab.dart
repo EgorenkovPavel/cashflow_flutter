@@ -5,7 +5,7 @@ import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/old/account_page.dart';
-import 'package:cashflow/pages/old/category_page.dart';
+import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

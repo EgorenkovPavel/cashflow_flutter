@@ -617,6 +617,15 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         .watch();
   }
 
+  Stream<List<BudgetData>> watchBudgetByCategory(int categoryId) {
+    return (select(budget)
+          ..where((t) => t.category.equals(categoryId))
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ]))
+        .watch();
+  }
+
   Stream<List<MonthBudget>> watchMonthBudget() {
 //    return select(budget)
 //        .map((t) => MonthBudget(t.year, t.month, t.sum))
@@ -631,10 +640,12 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   }
 
   Future<void> insertBudget(BudgetData entity) {
-    return into(budget).insert(entity);
+    DateTime monthStart = DateTime(entity.date.year, entity.date.month);
+    return into(budget).insert(entity.copyWith(date: monthStart));
   }
 
   Future<void> updateBudget(BudgetData entity) {
-    return update(budget).replace(entity);
+    DateTime monthStart = DateTime(entity.date.year, entity.date.month);
+    return update(budget).replace(entity.copyWith(date: monthStart));
   }
 }

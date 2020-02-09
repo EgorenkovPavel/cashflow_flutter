@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
@@ -51,7 +52,46 @@ class _CategoryPageState extends State<CategoryPage> {
         title: header(context),
         actions: <Widget>[appBarIcon()],
       ),
-      body: SizedBox(),
+      body: StreamBuilder<List<BudgetData>>(
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(!snapshot.hasData){
+              return SizedBox();
+            }
+
+            List<BudgetData> list = snapshot.data;
+
+            return ListView.builder(itemBuilder: (context, pos){
+              return ListTile(
+                title: Text(list[pos].date.toString()),
+                trailing: Text(list[pos].sum.toString()),
+              );
+            }, itemCount: list.length,);
+
+          },
+          stream: Provider.of<Model>(context, listen: false)
+              .watchBudgetByCategory(widget.id),
+        ),
+  floatingActionButton: FloatingActionButton(
+    child: Icon(Icons.add),
+    onPressed: (){
+//      Provider.of<Model>(context, listen: false).insertBudget(BudgetData(
+//        date: DateTime.now(),
+//        category: widget.id,
+//        sum: 1000,
+//      ));
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Dialog(
+                child: BudgetCard(
+                  categoryId: widget.id,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))));
+          });
+    },
+  ),
     );
   }
 
