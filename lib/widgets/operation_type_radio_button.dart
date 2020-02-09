@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class OperationTypeRadioButton extends StatelessWidget {
   final Function onChange;
   final OperationType type;
+
   final List<OperationType> items;
 
   const OperationTypeRadioButton(
