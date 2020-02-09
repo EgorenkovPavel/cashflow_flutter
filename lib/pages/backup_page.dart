@@ -44,11 +44,7 @@ class BackupPage extends StatelessWidget {
             child: Text('Restore old format'),
             onPressed: () => _restoreOld(context),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: LoadProgress(title: 'Accounts', count: 20, total: 100,),
-          ),
-        ],
+         ],
       ),
     );
   }

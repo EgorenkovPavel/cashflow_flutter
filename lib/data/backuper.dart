@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 class Backuper {
+
   void backup(BuildContext context, GoogleHttpClient httpClient,
       String catalogId) async {
     final directory = await getTemporaryDirectory();
