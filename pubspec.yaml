@@ -28,7 +28,7 @@ dependencies:
   provider: ^4.0.3
   moor_flutter: ^2.1.0
   intl:
-
+  charts_flutter: ^0.8.1
 
 dev_dependencies:
   flutter_test:
