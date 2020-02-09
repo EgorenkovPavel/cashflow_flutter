@@ -4,6 +4,7 @@ import 'package:cashflow/pages/budget_page.dart';
 import 'package:cashflow/pages/home_page.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_page_new.dart';
+import 'package:cashflow/pages/old/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -51,6 +52,10 @@ class MyApp extends StatelessWidget {
               builder: (context) {
                 return BudgetPage(date: args['date']);
               },
+            );
+          }else if (settings.name == CategoryPage.routeName){
+            return MaterialPageRoute(
+              builder: (context) => CategoryPage(id: settings.arguments,)
             );
           }
           return null;

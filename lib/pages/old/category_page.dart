@@ -1,89 +1,114 @@
+import 'dart:async';
+
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class CategoryPage extends StatefulWidget {
-
   static const routeName = '/category';
+
+  final int id;
+
+  const CategoryPage({Key key, this.id}) : super(key: key);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
-
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  CategoryData category;
+  StreamSubscription<CategoryData> subscription;
 
-  bool loadedArgs = false;
-  OperationType _type;
+  bool _editTitleMode = false;
+  TextEditingController _titleController = TextEditingController();
 
-  final TextEditingController controller = TextEditingController();
-
-  CategoryData category = null;
-
-  void _onTypeChanged(OperationType type){
-    setState(() {
-      _type = type;
+  @override
+  void initState() {
+    super.initState();
+    subscription = Provider.of<Model>(context, listen: false)
+        .getCategoryById(widget.id)
+        .listen((CategoryData data) {
+      setState(() {
+        category = data;
+      });
+      _titleController.text = category.title;
     });
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    subscription.cancel();
+    _titleController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if(!loadedArgs) {
-      category = ModalRoute
-          .of(context)
-          .settings
-          .arguments;
-      controller.text = category == null ? '' : category.title;
-      _type = category == null ? OperationType.INPUT : category.operationType;
-
-      loadedArgs = true;
-    }
     return Scaffold(
-      appBar: AppBar(title: Text('Category'),
-      actions: <Widget>[
-        IconButton(icon: Icon(Icons.save),
-          onPressed: (){
-            if(category == null){
-              category = CategoryData(title: controller.text, operationType: _type);
-              Provider.of<Model>(context, listen: false).insertCategory(category);
-            }else{
-              category = category.copyWith(title: controller.text, operationType: _type);
-              Provider.of<Model>(context, listen: false).updateCategory(category);
-            }
-
-            Navigator.pop(context);
-          },)
-      ],),
-
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextField(controller: controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Title',
-                ),
-
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0, top: 8.0),
-              child: Text('Type', style: Theme.of(context).textTheme.caption,),
-            ),
-            OperationTypeRadioButton(
-              type: _type,
-              onChange: _onTypeChanged,
-              items: [OperationType.INPUT, OperationType.OUTPUT],
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: header(context),
+        actions: <Widget>[appBarIcon()],
       ),
+      body: SizedBox(),
     );
   }
 
+  IconButton appBarIcon() {
+    if (_editTitleMode) {
+      return IconButton(
+        icon: Icon(
+          Icons.check,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          setState(() {
+            _editTitleMode = false;
+            category = category.copyWith(title: _titleController.text);
+          });
+          Provider.of<Model>(context, listen: false)
+              .updateCategory(category.copyWith(title: _titleController.text));
+        },
+      );
+    } else {
+      return IconButton(
+        icon: Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          setState(() {
+            _editTitleMode = true;
+          });
+        },
+      );
+    }
+  }
+
+  Widget header(BuildContext context) {
+    if (_editTitleMode) {
+      return TextField(
+        controller: _titleController,
+        style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+        autofocus: true,
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(category?.title ?? ''),
+          Text(
+            category == null
+                ? ''
+                : getOperationTitle(context, category.operationType),
+            style: Theme.of(context)
+                .textTheme
+                .caption
+                .copyWith(color: Colors.white),
+          ),
+        ],
+      );
+    }
+  }
 }

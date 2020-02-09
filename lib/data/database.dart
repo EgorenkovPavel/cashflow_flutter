@@ -296,6 +296,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future<List<CategoryData>> getAllCategories() => select(category).get();
 
+  Stream<CategoryData> getCategoryById(int id) =>
+      (select(category)..where((c) => c.id.equals(id))).watchSingle();
+
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
       (select(category)
@@ -351,7 +354,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                   operationType: p.operationType,
                   budget: p.budget,
                   archive: Value(p.archive),
-                )).toList(),
+                ))
+            .toList(),
       );
     });
   }
@@ -543,7 +547,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               .toList());
     });
   }
-
 
   Future _insertAnalytic(OperationData operation) async {
     switch (operation.operationType) {

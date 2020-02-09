@@ -36,6 +36,8 @@ class Model extends ChangeNotifier {
 
   Future<List<CategoryData>> getAllCategories() => db.categoryDao.getAllCategories();
 
+  Stream<CategoryData> getCategoryById(int id) => db.categoryDao.getCategoryById(id);
+
   Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
       db.categoryDao.watchAllCategoriesByType(type, archive: archive);
