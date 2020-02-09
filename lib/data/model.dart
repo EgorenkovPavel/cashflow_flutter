@@ -98,4 +98,7 @@ class Model extends ChangeNotifier {
 
   Future<void> updateBudget(BudgetData entity) =>
       db.budgetDao.updateBudget(entity);
+
+  Future<void> deleteBudget(BudgetData entity) =>
+      db.budgetDao.deleteBudget(entity);
 }

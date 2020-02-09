@@ -648,4 +648,8 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
     DateTime monthStart = DateTime(entity.date.year, entity.date.month);
     return update(budget).replace(entity.copyWith(date: monthStart));
   }
+
+  Future<void> deleteBudget(BudgetData entity){
+    return delete(budget).delete(entity);
+  }
 }
