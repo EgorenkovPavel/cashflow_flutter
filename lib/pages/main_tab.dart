@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
@@ -6,6 +7,7 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/old/account_page.dart';
 import 'package:cashflow/pages/old/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -131,7 +133,12 @@ class _TestWidgetState extends State<TestWidget> {
               },
               body: Column(
                 children: categoriesInput
-                    .map((category) => CategoryListItem(category))
+                    .map((category) => Column(
+                      children: <Widget>[
+                        CategoryListItem(category),
+                        Divider(),
+                      ],
+                    ))
                     .toList(),
               ),
               isExpanded: isExpanded[1],
@@ -181,15 +188,36 @@ class CategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _progress = 0.0;
+    if (category.budget == 0) {
+      _progress = 0.0;
+    } else {
+      _progress = min(category.cashflow / category.budget, 1);
+    }
+
     return ListTile(
+      leading: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          CircularProgressIndicator(
+            value: _progress,
+            backgroundColor: Colors.black12,
+          ),
+          Text(
+            '${_progress * 100}%',
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
       title: Text(category.category.title),
       subtitle: Text(
         '${AppLocalizations.of(context).titleBudget} ${category.budget}',
         style: Theme.of(context).textTheme.caption,
       ),
       trailing: Text(category.cashflow.toString()),
-      onTap: (){
-        Navigator.of(context).pushNamed(CategoryPage.routeName, arguments: category.category.id);
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(CategoryPage.routeName, arguments: category.category.id);
       },
     );
   }
