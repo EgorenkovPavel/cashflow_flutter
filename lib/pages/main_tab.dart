@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/pages/old/account_page.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

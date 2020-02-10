@@ -63,20 +63,32 @@ class _CategoryPageState extends State<CategoryPage> {
 
           return ListView.builder(
             itemBuilder: (context, pos) {
-              return ListTile(
-                title: Text(DateFormat.yMMM(
-                        Localizations.localeOf(context).languageCode)
-                    .format(list[pos].date)),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(list[pos].sum.toString()),
-                    IconButton(icon: Icon(Icons.delete),
-                    onPressed: (){
-                      Provider.of<Model>(context, listen: false).deleteBudget(list[pos]);
-                    },)
-                  ],
-                ),
+              var key = GlobalKey();
+              return Column(
+                children: <Widget>[
+                  ListTile(
+                    key: key,
+                    title: Text(DateFormat.yMMM(
+                            Localizations.localeOf(context).languageCode)
+                        .format(list[pos].date)),
+                    trailing: Text(list[pos].sum.toString()),
+                    onLongPress: () async {
+                      final position = buttonMenuPosition(key.currentContext);
+                      int res = await showMenu(
+                        context: context,
+                        position: position,
+                        items: <PopupMenuEntry<int>>[
+                          PopupMenuItem<int>(child: Text('Delete'),
+                          value: 1,)
+                        ],
+                      );
+                      if(res == 1){
+                        Provider.of<Model>(context, listen: false).deleteBudget(list[pos]);
+                      }
+                    },
+                  ),
+                  Divider(),
+                ],
               );
             },
             itemCount: list.length,
@@ -102,6 +114,19 @@ class _CategoryPageState extends State<CategoryPage> {
         },
       ),
     );
+  }
+
+  RelativeRect buttonMenuPosition(BuildContext c) {
+    final RenderBox bar = c.findRenderObject();
+    final RenderBox overlay = Overlay.of(c).context.findRenderObject();
+    final RelativeRect position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
+        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+    return position;
   }
 
   IconButton appBarIcon() {
