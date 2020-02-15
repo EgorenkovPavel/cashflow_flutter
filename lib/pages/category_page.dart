@@ -4,6 +4,7 @@ import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/widgets/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,9 @@ class _CategoryPageState extends State<CategoryPage> {
             actions: <Widget>[appBarIcon()],
             bottom: TabBar(
               tabs: [
-                Tab(text: 'Main', ),
+                Tab(
+                  text: 'Main',
+                ),
                 Tab(text: 'Budget'),
                 Tab(text: 'Operations')
               ],
@@ -65,7 +68,7 @@ class _CategoryPageState extends State<CategoryPage> {
           children: <Widget>[
             SizedBox(),
             buildBudgetList(context),
-            SizedBox(),
+            buildOperationList(context),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -104,7 +107,7 @@ class _CategoryPageState extends State<CategoryPage> {
               children: <Widget>[
                 ListTile(
                   key: key,
-                  title: Text(DateFormat.yMMM(
+                  title: Text(DateFormat.yMMMM(
                           Localizations.localeOf(context).languageCode)
                       .format(list[pos].date)),
                   trailing: Text(list[pos].sum.toString()),
@@ -135,6 +138,27 @@ class _CategoryPageState extends State<CategoryPage> {
       },
       stream: Provider.of<Model>(context, listen: false)
           .watchBudgetByCategory(widget.id),
+    );
+  }
+
+  Widget buildOperationList(BuildContext context) {
+    return StreamBuilder<List<OperationItem>>(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return SizedBox();
+        }
+
+        List<OperationItem> operations = snapshot.data;
+
+        return ListView.builder(
+          itemBuilder: (context, pos) {
+            return ListTileOperation(operations[pos]);
+          },
+          itemCount: operations.length,
+        );
+      },
+      stream: Provider.of<Model>(context, listen: false)
+          .watchAllOperationItemsByCategory(widget.id),
     );
   }
 

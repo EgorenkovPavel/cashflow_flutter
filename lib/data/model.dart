@@ -62,6 +62,9 @@ class Model extends ChangeNotifier {
   Stream<List<OperationItem>> watchAllOperationItems() =>
       db.operationDao.watchAllOperationItems();
 
+  Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) =>
+      db.operationDao.watchAllOperationItemsByCategory(categoryId);
+
   Future<List<OperationData>> getAllOperations() =>
       db.operationDao.getAllOperations();
 

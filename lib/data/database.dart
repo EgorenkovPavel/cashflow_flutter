@@ -403,6 +403,42 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
+  Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) {
+    final acc = alias(account, 'a');
+    final rec = alias(account, 'rec');
+
+    return (select(operation)
+          ..where((t) => t.category.equals(categoryId))
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ]))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operation.account),
+            ),
+            leftOuterJoin(
+              category,
+              category.id.equalsExp(operation.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operation.recAccount),
+            ),
+          ],
+        )
+        .watch()
+        .map(
+          (rows) => rows.map(
+            (row) {
+              return OperationItem(row.readTable(operation), row.readTable(acc),
+                  row.readTable(category), row.readTable(rec));
+            },
+          ).toList(),
+        );
+  }
+
   Future<List<OperationData>> getAllOperations() => select(operation).get();
 
   Future insertOperationItem(OperationItem entity) {
@@ -649,7 +685,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
     return update(budget).replace(entity.copyWith(date: monthStart));
   }
 
-  Future<void> deleteBudget(BudgetData entity){
+  Future<void> deleteBudget(BudgetData entity) {
     return delete(budget).delete(entity);
   }
 }
