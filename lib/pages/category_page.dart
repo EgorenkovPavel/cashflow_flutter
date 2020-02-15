@@ -4,6 +4,7 @@ import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/widgets/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -102,33 +103,9 @@ class _CategoryPageState extends State<CategoryPage> {
 
         return ListView.builder(
           itemBuilder: (context, pos) {
-            var key = GlobalKey();
             return Column(
               children: <Widget>[
-                ListTile(
-                  key: key,
-                  title: Text(DateFormat.yMMMM(
-                          Localizations.localeOf(context).languageCode)
-                      .format(list[pos].date)),
-                  trailing: Text(list[pos].sum.toString()),
-                  onLongPress: () async {
-                    final position = buttonMenuPosition(key.currentContext);
-                    int res = await showMenu(
-                      context: context,
-                      position: position,
-                      items: <PopupMenuEntry<int>>[
-                        PopupMenuItem<int>(
-                          child: Text('Delete'),
-                          value: 1,
-                        )
-                      ],
-                    );
-                    if (res == 1) {
-                      Provider.of<Model>(context, listen: false)
-                          .deleteBudget(list[pos]);
-                    }
-                  },
-                ),
+                ListTileBudget(list[pos]),
                 Divider(),
               ],
             );
@@ -160,19 +137,6 @@ class _CategoryPageState extends State<CategoryPage> {
       stream: Provider.of<Model>(context, listen: false)
           .watchAllOperationItemsByCategory(widget.id),
     );
-  }
-
-  RelativeRect buttonMenuPosition(BuildContext c) {
-    final RenderBox bar = c.findRenderObject();
-    final RenderBox overlay = Overlay.of(c).context.findRenderObject();
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
-        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
-    return position;
   }
 
   IconButton appBarIcon() {
