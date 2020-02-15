@@ -48,71 +48,93 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: header(context),
-        actions: <Widget>[appBarIcon()],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+            title: header(context),
+            actions: <Widget>[appBarIcon()],
+            bottom: TabBar(
+              tabs: [
+                Tab(text: 'Main', ),
+                Tab(text: 'Budget'),
+                Tab(text: 'Operations')
+              ],
+            )),
+        body: TabBarView(
+          children: <Widget>[
+            SizedBox(),
+            buildBudgetList(context),
+            SizedBox(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return Dialog(
+                      child: BudgetCard(
+                        categoryId: widget.id,
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12))));
+                });
+          },
+        ),
       ),
-      body: StreamBuilder<List<BudgetData>>(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return SizedBox();
-          }
+    );
+  }
 
-          List<BudgetData> list = snapshot.data;
+  Widget buildBudgetList(BuildContext context) {
+    return StreamBuilder<List<BudgetData>>(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return SizedBox();
+        }
 
-          return ListView.builder(
-            itemBuilder: (context, pos) {
-              var key = GlobalKey();
-              return Column(
-                children: <Widget>[
-                  ListTile(
-                    key: key,
-                    title: Text(DateFormat.yMMM(
-                            Localizations.localeOf(context).languageCode)
-                        .format(list[pos].date)),
-                    trailing: Text(list[pos].sum.toString()),
-                    onLongPress: () async {
-                      final position = buttonMenuPosition(key.currentContext);
-                      int res = await showMenu(
-                        context: context,
-                        position: position,
-                        items: <PopupMenuEntry<int>>[
-                          PopupMenuItem<int>(child: Text('Delete'),
-                          value: 1,)
-                        ],
-                      );
-                      if(res == 1){
-                        Provider.of<Model>(context, listen: false).deleteBudget(list[pos]);
-                      }
-                    },
-                  ),
-                  Divider(),
-                ],
-              );
-            },
-            itemCount: list.length,
-          );
-        },
-        stream: Provider.of<Model>(context, listen: false)
-            .watchBudgetByCategory(widget.id),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) {
-                return Dialog(
-                    child: BudgetCard(
-                      categoryId: widget.id,
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12))));
-              });
-        },
-      ),
+        List<BudgetData> list = snapshot.data;
+
+        return ListView.builder(
+          itemBuilder: (context, pos) {
+            var key = GlobalKey();
+            return Column(
+              children: <Widget>[
+                ListTile(
+                  key: key,
+                  title: Text(DateFormat.yMMM(
+                          Localizations.localeOf(context).languageCode)
+                      .format(list[pos].date)),
+                  trailing: Text(list[pos].sum.toString()),
+                  onLongPress: () async {
+                    final position = buttonMenuPosition(key.currentContext);
+                    int res = await showMenu(
+                      context: context,
+                      position: position,
+                      items: <PopupMenuEntry<int>>[
+                        PopupMenuItem<int>(
+                          child: Text('Delete'),
+                          value: 1,
+                        )
+                      ],
+                    );
+                    if (res == 1) {
+                      Provider.of<Model>(context, listen: false)
+                          .deleteBudget(list[pos]);
+                    }
+                  },
+                ),
+                Divider(),
+              ],
+            );
+          },
+          itemCount: list.length,
+        );
+      },
+      stream: Provider.of<Model>(context, listen: false)
+          .watchBudgetByCategory(widget.id),
     );
   }
 
