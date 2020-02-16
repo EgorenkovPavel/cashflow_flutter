@@ -109,11 +109,14 @@ class AccountWithBalance {
 }
 
 class CategoryCashflowBudget {
+  int year;
+  int month;
   CategoryData category;
   int budget;
   int cashflow;
 
-  CategoryCashflowBudget(this.category, this.budget, this.cashflow);
+  CategoryCashflowBudget(
+      this.year, this.month, this.category, this.budget, this.cashflow);
 
   @override
   bool operator ==(Object other) =>
@@ -329,12 +332,54 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     ).watch().map((rows) {
       return rows
           .map((row) => CategoryCashflowBudget(
+                date.year,
+                date.month,
                 CategoryData.fromData(row.data, db),
                 row.readInt('budget') ?? 0,
                 row.readInt('cashflow') ?? 0,
               ))
           //.where((a) => archive ? true : !a.account.archive)
           .toList();
+    });
+  }
+
+  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCatergory(
+      int categoryId) {
+    return
+      customSelectQuery(
+      'SELECT *, '
+      'cashflow.date as date,'
+      'cashflow.sum as sum '
+      'FROM category c '
+      'INNER JOIN '
+      '(SELECT '
+      'date(date, "start of month") as date, '
+//          '0 as SUM '
+      'SUM(sum) as sum '
+      'FROM cashflow as cash '
+      'WHERE category = ? '
+      //'GROUP BY date(strftime(\'%Y-%m-%d\', cash.date), "start of month")'
+
+      ') AS "cashflow" '
+      'WHERE c.id = ?;',
+      variables: [
+        Variable.withInt(categoryId),
+        Variable.withInt(categoryId),
+      ],
+      readsFrom: {category, cashflow},
+    
+
+    ).watch().map((rows) {
+      return rows.map((row) {
+        print(row.readDateTime('date').toString());
+        return CategoryCashflowBudget(
+          row.readDateTime('date').year,
+          row.readDateTime('date').month,
+          CategoryData.fromData(row.data, db),
+          0,
+          row.readInt('sum') ?? 0,
+        );
+      }).toList();
     });
   }
 

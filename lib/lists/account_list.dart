@@ -2,6 +2,7 @@ import 'package:cashflow/cards/account_card.dart';
 import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
+import 'package:cashflow/widgets/list_tiles/list_tile_account.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,14 +20,7 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
           key: Key(itemAccount.account.id.toString()),
           child: Column(
             children: <Widget>[
-              ListTile(
-                title: Text(itemAccount.account.title),
-                trailing: Text(
-                  (itemAccount.sum ?? 0).toString(),
-                  style: Theme.of(context).textTheme.title,
-                ),
-                onTap: () => onItemTap(context, itemAccount),
-              ),
+              ListTileAccount(itemAccount, onTap: () => onItemTap(context, itemAccount),),
               Divider()
             ],
           ),

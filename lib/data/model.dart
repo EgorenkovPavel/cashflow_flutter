@@ -49,6 +49,9 @@ class Model extends ChangeNotifier {
           DateTime date) =>
       db.categoryDao.watchAllCategoryCashflowBudget(date);
 
+  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCatergory(
+      int categoryId) => db.categoryDao.watchCashflowBudgetByCatergory(categoryId);
+
   Future insertCategory(CategoryData entity) =>
       db.categoryDao.insertCategory(entity);
 
