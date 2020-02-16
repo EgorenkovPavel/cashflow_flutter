@@ -46,25 +46,16 @@ class _MasterPageNewState extends State<MasterPageNew> {
           },
           itemHeigth: 60.0,
           itemBuilder: (context, pos) {
-            return Container(
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(
-                      width: 1.0, color: Theme.of(context).primaryColor),
-                ),
-                height: 20.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(accounts[pos].account.title),
-                    Text(
-                      accounts[pos].sum.toString(),
-                      style: Theme.of(context).textTheme.caption,
-                    )
-                  ],
-                ),
-              );
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(accounts[pos].account.title),
+                Text(
+                  accounts[pos].sum.toString(),
+                  style: Theme.of(context).textTheme.caption,
+                )
+              ],
+            );
           },
         );
       },
@@ -92,16 +83,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
           },
           itemHeigth: 60.0,
           itemBuilder: (context, pos) {
-            return Container(
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                    width: 1.0, color: Theme.of(context).primaryColor),
-              ),
-              height: 20.0,
-              child: Center(child: Text(categories[pos].title)),
-            );
+            return Center(child: Text(categories[pos].title));
           },
         );
       },
@@ -129,24 +111,15 @@ class _MasterPageNewState extends State<MasterPageNew> {
           },
           itemHeigth: 60.0,
           itemBuilder: (context, pos) {
-            return Container(
-              height: 20.0,
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                    width: 1.0, color: Theme.of(context).primaryColor),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(accounts[pos].account.title),
-                  Text(
-                    accounts[pos].sum.toString(),
-                    style: Theme.of(context).textTheme.caption,
-                  )
-                ],
-              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(accounts[pos].account.title),
+                Text(
+                  accounts[pos].sum.toString(),
+                  style: Theme.of(context).textTheme.caption,
+                )
+              ],
             );
           },
         );
@@ -215,10 +188,13 @@ class _MasterPageNewState extends State<MasterPageNew> {
   Widget title(String text) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-      child: Text(text, style: Theme.of(context).textTheme.caption,),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
-  
+
   @override
   void initState() {
     _type = OperationType.INPUT;
@@ -256,12 +232,11 @@ class _MasterPageNewState extends State<MasterPageNew> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                title(AppLocalizations.of(context).titleAccount),
-                title(AppLocalizations.of(context).titleCategory),
-              ],
-            ),
-
+            children: <Widget>[
+              title(AppLocalizations.of(context).titleAccount),
+              title(AppLocalizations.of(context).titleCategory),
+            ],
+          ),
           Expanded(
             child: Row(
               children: <Widget>[
@@ -297,7 +272,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
               ),
               FlatButton(
                 child: Text(AppLocalizations.of(context).next.toUpperCase()),
-                  onPressed: () => _saveOperation(context),
+                onPressed: () => _saveOperation(context),
               ),
             ],
           ),
@@ -306,5 +281,3 @@ class _MasterPageNewState extends State<MasterPageNew> {
     );
   }
 }
-
-

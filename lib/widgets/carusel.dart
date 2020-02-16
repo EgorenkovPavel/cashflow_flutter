@@ -55,7 +55,15 @@ class Carusel<T> extends StatelessWidget {
                 onPageChanged: onPageChanged,
                 itemBuilder: (context, pos){
                   return GestureDetector(
-                    child: itemBuilder(context, pos),
+                    child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(
+                              width: 1.0, color: Theme.of(context).primaryColor),
+                        ),
+                        height: 20.0,
+                        child: itemBuilder(context, pos)),
                     onTap: (){
                       _pageController.animateToPage(pos, duration: Duration(seconds: 1), curve: ElasticOutCurve());
                     },
