@@ -2,6 +2,7 @@ import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/utils/sum_text_formatter.dart';
 import 'package:cashflow/widgets/carusel.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
@@ -46,24 +47,24 @@ class _MasterPageNewState extends State<MasterPageNew> {
           itemHeigth: 60.0,
           itemBuilder: (context, pos) {
             return Container(
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                    width: 1.0, color: Theme.of(context).primaryColor),
-              ),
-              height: 20.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(accounts[pos].account.title),
-                  Text(
-                    accounts[pos].sum.toString(),
-                    style: Theme.of(context).textTheme.caption,
-                  )
-                ],
-              ),
-            );
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                      width: 1.0, color: Theme.of(context).primaryColor),
+                ),
+                height: 20.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(accounts[pos].account.title),
+                    Text(
+                      accounts[pos].sum.toString(),
+                      style: Theme.of(context).textTheme.caption,
+                    )
+                  ],
+                ),
+              );
           },
         );
       },
@@ -291,7 +292,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
                   ),
                   keyboardType: TextInputType.number,
                   onEditingComplete: () => _saveOperation(context),
-                  inputFormatters: [TextFomatter()],
+                  inputFormatters: [SumTextFormatter()],
                 ),
               ),
               FlatButton(
@@ -306,23 +307,4 @@ class _MasterPageNewState extends State<MasterPageNew> {
   }
 }
 
-class TextFomatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String text = newValue.text;
-    if (text.isEmpty || text == '0') {
-      String newText = '';
-      TextSelection selection = newValue.selection
-          .copyWith(baseOffset: newText.length, extentOffset: newText.length);
-      return newValue.copyWith(text: newText, selection: selection);
-    } else if (text.startsWith('0')) {
-      String newText = text.substring(1);
-      TextSelection selection = newValue.selection
-          .copyWith(baseOffset: newText.length, extentOffset: newText.length);
-      return newValue.copyWith(text: newText, selection: selection);
-    } else {
-      return newValue;
-    }
-  }
-}
+

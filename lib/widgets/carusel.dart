@@ -8,6 +8,8 @@ class Carusel<T> extends StatelessWidget {
   final ValueChanged<int> onPageChanged;
   final IndexedWidgetBuilder itemBuilder;
 
+  PageController _pageController;
+
   Carusel(
       {Key key,
       this.items,
@@ -17,10 +19,23 @@ class Carusel<T> extends StatelessWidget {
       this.itemHeigth})
       : super(key: key);
 
+  Future<void> animateTo(T item){
+    if(items.contains(item)) {
+      _pageController.animateToPage(items.indexOf(item),
+          duration: Duration(seconds: 1),
+          curve: ElasticOutCurve());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constrains) {
+        _pageController = PageController(
+          initialPage: items.indexOf(initialItem),
+          keepPage: true,
+          viewportFraction: 1 / (constrains.maxHeight / itemHeigth),
+        );
         return Stack(
           children: <Widget>[
             Center(
@@ -34,15 +49,18 @@ class Carusel<T> extends StatelessWidget {
               ),
             ),
             PageView.builder(
-                controller: PageController(
-                  initialPage: items.indexOf(initialItem),
-                  keepPage: true,
-                  viewportFraction: 1 / (constrains.maxHeight / itemHeigth),
-                ),
+                controller: _pageController,
                 scrollDirection: Axis.vertical,
                 itemCount: items.length,
                 onPageChanged: onPageChanged,
-                itemBuilder: itemBuilder),
+                itemBuilder: (context, pos){
+                  return GestureDetector(
+                    child: itemBuilder(context, pos),
+                    onTap: (){
+                      _pageController.animateToPage(pos, duration: Duration(seconds: 1), curve: ElasticOutCurve());
+                    },
+                  );
+                }),
           ],
         );
       },
