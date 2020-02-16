@@ -44,7 +44,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
           onPageChanged: (pos) {
             _account = accounts[pos];
           },
-          itemHeigth: 60.0,
+          itemHeight: 60.0,
           itemBuilder: (context, pos) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +81,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
           onPageChanged: (pos) {
             _category = categories[pos];
           },
-          itemHeigth: 60.0,
+          itemHeight: 60.0,
           itemBuilder: (context, pos) {
             return Center(child: Text(categories[pos].title));
           },
@@ -109,7 +109,7 @@ class _MasterPageNewState extends State<MasterPageNew> {
           onPageChanged: (pos) {
             _recAccount = accounts[pos];
           },
-          itemHeigth: 60.0,
+          itemHeight: 60.0,
           itemBuilder: (context, pos) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
