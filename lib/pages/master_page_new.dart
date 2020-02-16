@@ -219,18 +219,21 @@ class _MasterPageNewState extends State<MasterPageNew> {
       body: Column(
         children: <Widget>[
           title(AppLocalizations.of(context).titleType),
-          OperationTypeRadioButton(
-            type: _type,
-            items: [
-              OperationType.INPUT,
-              OperationType.OUTPUT,
-              OperationType.TRANSFER
-            ],
-            onChange: (newValue) {
-              setState(() {
-                _type = newValue;
-              });
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: OperationTypeRadioButton(
+              type: _type,
+              items: [
+                OperationType.INPUT,
+                OperationType.OUTPUT,
+                OperationType.TRANSFER
+              ],
+              onChange: (newValue) {
+                setState(() {
+                  _type = newValue;
+                });
+              },
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
