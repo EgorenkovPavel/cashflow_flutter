@@ -182,6 +182,8 @@ class _MasterPageNewState extends State<MasterPageNew> {
       content: Text(AppLocalizations.of(context).mesOperationCreated),
     ));
 
+    print('TEST');
+
     _sumController.text = '';
   }
 
@@ -249,33 +251,35 @@ class _MasterPageNewState extends State<MasterPageNew> {
               ],
             ),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              FlatButton(
-                child: Text(AppLocalizations.of(context).more.toUpperCase()),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              Expanded(
-                child: TextField(
-                  controller: _sumController,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  onEditingComplete: () => _saveOperation(context),
-                  inputFormatters: [SumTextFormatter()],
+          Builder(builder: (BuildContext context) {
+            return Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(AppLocalizations.of(context).more.toUpperCase()),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              FlatButton(
-                child: Text(AppLocalizations.of(context).next.toUpperCase()),
-                onPressed: () => _saveOperation(context),
-              ),
-            ],
-          ),
+                Expanded(
+                  child: TextField(
+                    controller: _sumController,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                    onEditingComplete: () => _saveOperation(context),
+                    inputFormatters: [SumTextFormatter()],
+                  ),
+                ),
+                FlatButton(
+                  child: Text(AppLocalizations.of(context).next.toUpperCase()),
+                  onPressed: () => _saveOperation(context),
+                ),
+              ],
+            );
+          }),
         ],
       ),
     );
