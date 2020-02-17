@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainTab extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return TestWidget();
@@ -28,7 +29,6 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  List<bool> isExpanded = List.generate(3, (_) => false);
 
   List<AccountWithBalance> accounts = [];
   List<CategoryCashflowBudget> categoriesInput = [];
@@ -53,12 +53,12 @@ class _TestWidgetState extends State<TestWidget> {
       setState(() {
         categoriesInput = list
             .where((category) =>
-        category.category.operationType == OperationType.INPUT)
+                category.category.operationType == OperationType.INPUT)
             .toList();
 
         categoriesOutput = list
             .where((category) =>
-        category.category.operationType == OperationType.OUTPUT)
+                category.category.operationType == OperationType.OUTPUT)
             .toList();
       });
     });
@@ -73,154 +73,61 @@ class _TestWidgetState extends State<TestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: ExpansionPanelList(
-          expansionCallback: (pos, isExp) {
-            setState(() {
-              isExpanded[pos] = !isExp;
-            });
-          },
-          children: [
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  title: Text(
-                    AppLocalizations
-                        .of(context)
-                        .titleTotalSum,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .title,
-                  ),
-                  trailing: Text(
-                    accounts
-                        .map((account) => account.sum)
-                        .fold(0, (a, b) => a + b)
-                        .toString(),
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline,
-                  ),
-                );
-              },
-              body: Column(
-                children: accounts
-                    .map((account) =>
-                    ListTile(
+    return ListView(
+      children: <Widget>[
+        Card(
+          child: ExpansionTile(
+            title: Text(
+              AppLocalizations.of(context).titleTotalSum,
+              style: Theme.of(context).textTheme.title,
+            ),
+            subtitle: Text(
+              accounts
+                  .map((account) => account.sum)
+                  .fold(0, (a, b) => a + b)
+                  .toString(),
+              style: Theme.of(context).textTheme.headline,
+            ),
+            children: accounts
+                .map((account) => ListTile(
                       title: Text(account.account.title),
                       trailing: Text(account.sum.toString()),
                     ))
-                    .toList(),
-              ),
-              isExpanded: isExpanded[0],
-              canTapOnHeader: true,
+                .toList(),
+          ),
+        ),
+        Card(
+          child: ExpansionTile(
+            title: Text(AppLocalizations.of(context).typeInput),
+            subtitle: Text(
+              '${AppLocalizations.of(context).titleBudget} ${categoriesInput.map((category) => category.budget).fold(0, (a, b) => a + b)}'
+              ' cashflow ${categoriesInput.map((category) => category.cashflow).fold(0, (a, b) => a + b)}',
+              style: Theme.of(context).textTheme.caption,
             ),
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                int totalBudget = categoriesInput
-                    .map((category) => category.budget)
-                    .fold(0, (a, b) => a + b);
-
-                int totalCashflow = categoriesInput
-                    .map((category) => category.cashflow)
-                    .fold(0, (a, b) => a + b);
-
-                if (isExpanded) {
-                  return Container(
-                      width: 140.0,
-                      height: 140.0,
-                      child: DonutAutoLabelChart(categoriesInput));
-                } else {
-                  return ListTile(
-                    title: Text(AppLocalizations
-                        .of(context)
-                        .typeInput),
-                    subtitle: Text(
-                      '${AppLocalizations
-                          .of(context)
-                          .titleBudget} $totalBudget',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .caption,
-                    ),
-                    trailing: Text(
-                      '$totalCashflow',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline,
-                    ),
-                  );
-                }
-              },
-              body: Column(
-                children: categoriesInput
-                    .map((category) =>
-                    Column(
+            children: categoriesInput
+                .map((category) => Column(
                       children: <Widget>[
                         CategoryListItem(category),
                         Divider(),
                       ],
                     ))
-                    .toList(),
-              ),
-              isExpanded: isExpanded[1],
-              canTapOnHeader: true,
-            ),
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                int totalBudget = categoriesOutput
-                    .map((category) => category.budget)
-                    .fold(0, (a, b) => a + b);
-
-                int totalCashflow = categoriesOutput
-                    .map((category) => category.cashflow)
-                    .fold(0, (a, b) => a + b);
-
-                if(isExpanded){
-                  return Container(
-                      width: 140.0,
-                      height: 140.0,
-                      child: DonutAutoLabelChart(categoriesOutput));
-                }else {
-                  return ListTile(
-                    title: Text(AppLocalizations
-                        .of(context)
-                        .typeOutput),
-                    subtitle: Text(
-                      '${AppLocalizations
-                          .of(context)
-                          .titleBudget} $totalBudget',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .caption,
-                    ),
-                    trailing: Text(
-                      '$totalCashflow',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline,
-                    ),
-                  );
-                }
-              },
-              body: Column(
-                children: categoriesOutput
-                    .map((category) => CategoryListItem(category))
-                    .toList(),
-              ),
-              isExpanded: isExpanded[2],
-              canTapOnHeader: true,
-            ),
-          ],
+                .toList(),
+          ),
         ),
-      ),
+        Card(
+          child: ExpansionTile(
+            title: Text(AppLocalizations.of(context).typeOutput),
+            subtitle: Text(
+              '${AppLocalizations.of(context).titleBudget} ${categoriesOutput.map((category) => category.budget).fold(0, (a, b) => a + b)}'
+              ' cashflow ${categoriesOutput.map((category) => category.cashflow).fold(0, (a, b) => a + b)}',
+              style: Theme.of(context).textTheme.caption,
+            ),
+            children: categoriesOutput
+                .map((category) => CategoryListItem(category))
+                .toList(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -249,22 +156,14 @@ class CategoryListItem extends StatelessWidget {
           ),
           Text(
             '${_progress * 100}%',
-            style: Theme
-                .of(context)
-                .textTheme
-                .caption,
+            style: Theme.of(context).textTheme.caption,
           ),
         ],
       ),
       title: Text(category.category.title),
       subtitle: Text(
-        '${AppLocalizations
-            .of(context)
-            .titleBudget} ${category.budget}',
-        style: Theme
-            .of(context)
-            .textTheme
-            .caption,
+        '${AppLocalizations.of(context).titleBudget} ${category.budget}',
+        style: Theme.of(context).textTheme.caption,
       ),
       trailing: Text(category.cashflow.toString()),
       onTap: () {
@@ -276,7 +175,6 @@ class CategoryListItem extends StatelessWidget {
 }
 
 class DonutAutoLabelChart extends StatelessWidget {
-
   final List<CategoryCashflowBudget> categories;
   final bool animate;
 
@@ -285,17 +183,21 @@ class DonutAutoLabelChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return charts.PieChart(
-        [charts.Series<CategoryCashflowBudget, int>(
+      [
+        charts.Series<CategoryCashflowBudget, int>(
           id: 'Sales',
           data: categories.where((c) => c.cashflow > 0).toList(),
-          measureFn: (CategoryCashflowBudget datum, int index)  => datum.cashflow,
+          measureFn: (CategoryCashflowBudget datum, int index) =>
+              datum.cashflow,
           domainFn: (CategoryCashflowBudget datum, int index) => index,
-          labelAccessorFn: (CategoryCashflowBudget row, _) => '${row.category.title} ${row.cashflow}',
-        )],
-        animate: animate,
-        defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: 60,
-            arcRendererDecorators: [new charts.ArcLabelDecorator()]),
+          labelAccessorFn: (CategoryCashflowBudget row, _) =>
+              '${row.category.title} ${row.cashflow}',
+        )
+      ],
+      animate: animate,
+      defaultRenderer: new charts.ArcRendererConfig(
+          arcWidth: 60,
+          arcRendererDecorators: [new charts.ArcLabelDecorator()]),
       behaviors: [
         new charts.DatumLegend(
           // Positions for "start" and "end" will be left and right respectively
