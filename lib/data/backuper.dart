@@ -178,9 +178,6 @@ class Backuper {
               id: int.parse(d['_id']),
               title: d['category_title'],
               operationType: converter.mapToDart(int.parse(d['category_type'])),
-              budget: d['category_budget'] == ''
-                  ? 0
-                  : int.parse(d['category_budget']),
               archive: false,
             ));
           }

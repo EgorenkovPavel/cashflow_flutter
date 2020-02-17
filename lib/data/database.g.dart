@@ -205,13 +205,11 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
   final String title;
   final bool archive;
   final OperationType operationType;
-  final int budget;
   CategoryData(
       {@required this.id,
       @required this.title,
       @required this.archive,
-      @required this.operationType,
-      @required this.budget});
+      @required this.operationType});
   factory CategoryData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -226,7 +224,6 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}archive']),
       operationType: $CategoryTable.$converter0.mapToDart(intType
           .mapFromDatabaseResponse(data['${effectivePrefix}operation_type'])),
-      budget: intType.mapFromDatabaseResponse(data['${effectivePrefix}budget']),
     );
   }
   factory CategoryData.fromJson(Map<String, dynamic> json,
@@ -237,7 +234,6 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
       title: serializer.fromJson<String>(json['title']),
       archive: serializer.fromJson<bool>(json['archive']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
-      budget: serializer.fromJson<int>(json['budget']),
     );
   }
   @override
@@ -248,7 +244,6 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
       'title': serializer.toJson<String>(title),
       'archive': serializer.toJson<bool>(archive),
       'operationType': serializer.toJson<OperationType>(operationType),
-      'budget': serializer.toJson<int>(budget),
     };
   }
 
@@ -264,23 +259,16 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
       operationType: operationType == null && nullToAbsent
           ? const Value.absent()
           : Value(operationType),
-      budget:
-          budget == null && nullToAbsent ? const Value.absent() : Value(budget),
     );
   }
 
   CategoryData copyWith(
-          {int id,
-          String title,
-          bool archive,
-          OperationType operationType,
-          int budget}) =>
+          {int id, String title, bool archive, OperationType operationType}) =>
       CategoryData(
         id: id ?? this.id,
         title: title ?? this.title,
         archive: archive ?? this.archive,
         operationType: operationType ?? this.operationType,
-        budget: budget ?? this.budget,
       );
   @override
   String toString() {
@@ -288,19 +276,14 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('archive: $archive, ')
-          ..write('operationType: $operationType, ')
-          ..write('budget: $budget')
+          ..write('operationType: $operationType')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          title.hashCode,
-          $mrjc(archive.hashCode,
-              $mrjc(operationType.hashCode, budget.hashCode)))));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(title.hashCode, $mrjc(archive.hashCode, operationType.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -308,8 +291,7 @@ class CategoryData extends DataClass implements Insertable<CategoryData> {
           other.id == this.id &&
           other.title == this.title &&
           other.archive == this.archive &&
-          other.operationType == this.operationType &&
-          other.budget == this.budget);
+          other.operationType == this.operationType);
 }
 
 class CategoryCompanion extends UpdateCompanion<CategoryData> {
@@ -317,35 +299,29 @@ class CategoryCompanion extends UpdateCompanion<CategoryData> {
   final Value<String> title;
   final Value<bool> archive;
   final Value<OperationType> operationType;
-  final Value<int> budget;
   const CategoryCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.archive = const Value.absent(),
     this.operationType = const Value.absent(),
-    this.budget = const Value.absent(),
   });
   CategoryCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
     this.archive = const Value.absent(),
     @required OperationType operationType,
-    @required int budget,
   })  : title = Value(title),
-        operationType = Value(operationType),
-        budget = Value(budget);
+        operationType = Value(operationType);
   CategoryCompanion copyWith(
       {Value<int> id,
       Value<String> title,
       Value<bool> archive,
-      Value<OperationType> operationType,
-      Value<int> budget}) {
+      Value<OperationType> operationType}) {
     return CategoryCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       archive: archive ?? this.archive,
       operationType: operationType ?? this.operationType,
-      budget: budget ?? this.budget,
     );
   }
 }
@@ -399,21 +375,8 @@ class $CategoryTable extends Category
     );
   }
 
-  final VerificationMeta _budgetMeta = const VerificationMeta('budget');
-  GeneratedIntColumn _budget;
   @override
-  GeneratedIntColumn get budget => _budget ??= _constructBudget();
-  GeneratedIntColumn _constructBudget() {
-    return GeneratedIntColumn(
-      'budget',
-      $tableName,
-      false,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, title, archive, operationType, budget];
+  List<GeneratedColumn> get $columns => [id, title, archive, operationType];
   @override
   $CategoryTable get asDslTable => this;
   @override
@@ -438,12 +401,6 @@ class $CategoryTable extends Category
           archive.isAcceptableValue(d.archive.value, _archiveMeta));
     }
     context.handle(_operationTypeMeta, const VerificationResult.success());
-    if (d.budget.present) {
-      context.handle(
-          _budgetMeta, budget.isAcceptableValue(d.budget.value, _budgetMeta));
-    } else if (isInserting) {
-      context.missing(_budgetMeta);
-    }
     return context;
   }
 
@@ -472,9 +429,6 @@ class $CategoryTable extends Category
       map['operation_type'] =
           Variable<int, IntType>(converter.mapToSql(d.operationType.value));
     }
-    if (d.budget.present) {
-      map['budget'] = Variable<int, IntType>(d.budget.value);
-    }
     return map;
   }
 
@@ -483,7 +437,8 @@ class $CategoryTable extends Category
     return $CategoryTable(_db, alias);
   }
 
-  static OperationTypeConverter $converter0 = const OperationTypeConverter();
+  static TypeConverter<OperationType, int> $converter0 =
+      const OperationTypeConverter();
 }
 
 class OperationData extends DataClass implements Insertable<OperationData> {
@@ -841,7 +796,8 @@ class $OperationTable extends Operation
     return $OperationTable(_db, alias);
   }
 
-  static OperationTypeConverter $converter0 = const OperationTypeConverter();
+  static TypeConverter<OperationType, int> $converter0 =
+      const OperationTypeConverter();
 }
 
 class BalanceData extends DataClass implements Insertable<BalanceData> {

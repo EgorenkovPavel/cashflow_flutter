@@ -20,13 +20,11 @@ class _CategoryCardState extends State<CategoryCard> {
   OperationType _type;
 
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController budgetController = TextEditingController();
 
   @override
   void initState() {
     if (widget.category != null) {
       titleController.text = widget.category.title;
-      budgetController.text = widget.category.budget.toString();
 
       _type = widget.category.operationType;
     } else {
@@ -44,15 +42,13 @@ class _CategoryCardState extends State<CategoryCard> {
     if (widget.category == null) {
       widget.category = CategoryData(
           title: titleController.text,
-          operationType: _type,
-          budget: int.parse(budgetController.text));
+          operationType: _type);
       Provider.of<Model>(context, listen: false)
           .insertCategory(widget.category);
     } else {
       widget.category = widget.category.copyWith(
           title: titleController.text,
-          operationType: _type,
-          budget: int.parse(budgetController.text));
+          operationType: _type,);
       Provider.of<Model>(context, listen: false)
           .updateCategory(widget.category);
     }
@@ -94,23 +90,6 @@ class _CategoryCardState extends State<CategoryCard> {
             type: _type,
             onChange: _onTypeChanged,
             items: [OperationType.INPUT, OperationType.OUTPUT],
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          TextFormField(
-            controller: budgetController,
-            keyboardType: TextInputType.numberWithOptions(),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: AppLocalizations.of(context).titleBudget,
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return AppLocalizations.of(context).emptyBudgetError;
-              }
-              return null;
-            },
           ),
         ],
       ),

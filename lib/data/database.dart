@@ -21,7 +21,6 @@ class Category extends Table {
   IntColumn get operationType =>
       integer().named('operation_type').map(const OperationTypeConverter())();
 
-  IntColumn get budget => integer()();
 }
 
 class Operation extends Table {
@@ -397,7 +396,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                   id: Value(p.id),
                   title: p.title,
                   operationType: p.operationType,
-                  budget: p.budget,
                   archive: Value(p.archive),
                 ))
             .toList(),
