@@ -92,9 +92,14 @@ class _TestWidgetState extends State<TestWidget> {
               ],
             ),
             children: accounts
-                .map((account) => ListTile(
-                      title: Text(account.account.title),
-                      trailing: Text(account.sum.toString()),
+                .map((account) => Column(
+                      children: <Widget>[
+                        Divider(),
+                        ListTile(
+                          title: Text(account.account.title),
+                          trailing: Text(account.sum.toString()),
+                        ),
+                      ],
                     ))
                 .toList(),
           ),
@@ -112,8 +117,8 @@ class _TestWidgetState extends State<TestWidget> {
             children: categoriesInput
                 .map((category) => Column(
                       children: <Widget>[
-                        CategoryListItem(category),
                         Divider(),
+                        CategoryListItem(category),
                       ],
                     ))
                 .toList(),
@@ -130,7 +135,12 @@ class _TestWidgetState extends State<TestWidget> {
                     .map((category) => category.cashflow)
                     .fold(0, (a, b) => a + b)),
             children: categoriesOutput
-                .map((category) => CategoryListItem(category))
+                .map((category) => Column(
+                      children: <Widget>[
+                        Divider(),
+                        CategoryListItem(category),
+                      ],
+                    ))
                 .toList(),
           ),
         ),
@@ -186,20 +196,23 @@ class CategoryListItem extends StatelessWidget {
     if (category.budget == 0) {
       _progress = 0.0;
     } else {
-      _progress = min(category.cashflow / category.budget, 1);
+      _progress = category.cashflow / category.budget;
     }
 
     return ListTile(
-      leading: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      leading: Stack(
+        alignment: AlignmentDirectional.center,
         children: <Widget>[
           CircularProgressIndicator(
-            value: _progress,
+            value: min(_progress, 1),
+            valueColor: AlwaysStoppedAnimation(_progress < 1
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).accentColor),
             backgroundColor: Colors.black12,
           ),
           Text(
-            '${_progress * 100}%',
-            style: Theme.of(context).textTheme.caption,
+            '${(_progress * 100).round()}%',
+            style: _progress < 1 ? Theme.of(context).textTheme.caption : Theme.of(context).textTheme.subtitle,
           ),
         ],
       ),
@@ -211,7 +224,7 @@ class CategoryListItem extends StatelessWidget {
       trailing: Text(category.cashflow.toString()),
       onTap: () {
         CategoryPage.open(context, category.category.id);
-       },
+      },
     );
   }
 }
