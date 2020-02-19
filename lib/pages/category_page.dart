@@ -13,6 +13,11 @@ import 'package:provider/provider.dart';
 class CategoryPage extends StatefulWidget {
   static const routeName = '/category';
 
+  static open(BuildContext context, int categoryId){
+    Navigator.of(context)
+        .pushNamed(CategoryPage.routeName, arguments: categoryId);
+  }
+  
   final int id;
 
   const CategoryPage({Key key, this.id}) : super(key: key);

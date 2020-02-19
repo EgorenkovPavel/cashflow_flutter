@@ -210,9 +210,8 @@ class CategoryListItem extends StatelessWidget {
       ),
       trailing: Text(category.cashflow.toString()),
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(CategoryPage.routeName, arguments: category.category.id);
-      },
+        CategoryPage.open(context, category.category.id);
+       },
     );
   }
 }

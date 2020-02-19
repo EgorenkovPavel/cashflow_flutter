@@ -1,5 +1,6 @@
 import 'package:cashflow/cards/category_card.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
@@ -87,17 +88,7 @@ class CategoryList extends StatelessWidget implements MainList<CategoryData>{
 
   @override
   void onItemTap(BuildContext context, CategoryData item) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: CategoryCard(
-                category: item,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
+    CategoryPage.open(context, item.id);
   }
 
   @override
