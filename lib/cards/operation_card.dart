@@ -207,8 +207,7 @@ class _OperationCardState extends State<OperationCard> {
               ],
             ),
             title(AppLocalizations.of(context).titleType),
-            Row(
-              children: <Widget>[
+
                 OperationTypeRadioButton(
                   type: _type,
                   onChange: (newValue) {
@@ -223,8 +222,7 @@ class _OperationCardState extends State<OperationCard> {
                     OperationType.TRANSFER
                   ],
                 ),
-              ],
-            ),
+
             title(AppLocalizations.of(context).titleAccount),
             DropdownList(
               value: _account,

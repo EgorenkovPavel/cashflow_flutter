@@ -17,7 +17,7 @@ class CategoryPage extends StatefulWidget {
     Navigator.of(context)
         .pushNamed(CategoryPage.routeName, arguments: categoryId);
   }
-  
+
   final int id;
 
   const CategoryPage({Key key, this.id}) : super(key: key);
@@ -98,6 +98,9 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Widget buildChart(BuildContext context){
+    return Center(
+      child: Text('Here will be chart'),
+    );
     return StreamBuilder<List<CategoryCashflowBudget>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(!snapshot.hasData){
