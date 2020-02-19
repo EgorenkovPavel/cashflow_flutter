@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainTab extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return TestWidget();
@@ -29,7 +28,6 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-
   List<AccountWithBalance> accounts = [];
   List<CategoryCashflowBudget> categoriesInput = [];
   List<CategoryCashflowBudget> categoriesOutput = [];
@@ -99,11 +97,13 @@ class _TestWidgetState extends State<TestWidget> {
         Card(
           child: ExpansionTile(
             title: Text(AppLocalizations.of(context).typeInput),
-            subtitle: Text(
-              '${AppLocalizations.of(context).titleBudget} ${categoriesInput.map((category) => category.budget).fold(0, (a, b) => a + b)}'
-              ' cashflow ${categoriesInput.map((category) => category.cashflow).fold(0, (a, b) => a + b)}',
-              style: Theme.of(context).textTheme.caption,
-            ),
+            subtitle: progress(
+                categoriesInput
+                    .map((category) => category.budget)
+                    .fold(0, (a, b) => a + b),
+                categoriesInput
+                    .map((category) => category.cashflow)
+                    .fold(0, (a, b) => a + b)),
             children: categoriesInput
                 .map((category) => Column(
                       children: <Widget>[
@@ -117,15 +117,48 @@ class _TestWidgetState extends State<TestWidget> {
         Card(
           child: ExpansionTile(
             title: Text(AppLocalizations.of(context).typeOutput),
-            subtitle: Text(
-              '${AppLocalizations.of(context).titleBudget} ${categoriesOutput.map((category) => category.budget).fold(0, (a, b) => a + b)}'
-              ' cashflow ${categoriesOutput.map((category) => category.cashflow).fold(0, (a, b) => a + b)}',
-              style: Theme.of(context).textTheme.caption,
-            ),
+            subtitle: progress(
+                categoriesOutput
+                    .map((category) => category.budget)
+                    .fold(0, (a, b) => a + b),
+                categoriesOutput
+                    .map((category) => category.cashflow)
+                    .fold(0, (a, b) => a + b)),
             children: categoriesOutput
                 .map((category) => CategoryListItem(category))
                 .toList(),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget progress(int budget, int cashflow) {
+    return Column(
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            LinearProgressIndicator(
+              value: budget == 0 ? 1 : cashflow / budget,
+            ),
+            Positioned(
+              left: 30.0,
+
+              height: 15.0,
+              child: Container(
+                height: 15.0,
+                width: 2.0,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('${AppLocalizations.of(context).titleBudget} $budget', style: Theme.of(context).textTheme.caption,),
+            Text('Cashflow $cashflow', style: Theme.of(context).textTheme.caption,),
+          ],
         ),
       ],
     );

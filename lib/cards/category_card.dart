@@ -65,6 +65,19 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+            child: Text(
+              AppLocalizations.of(context).titleType,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ),
+          OperationTypeRadioButton(
+            type: _type,
+            onChange: _onTypeChanged,
+            items: [OperationType.INPUT, OperationType.OUTPUT],
+          ),
           TextFormField(
             controller: titleController,
             textCapitalization: TextCapitalization.sentences,
@@ -78,18 +91,6 @@ class _CategoryCardState extends State<CategoryCard> {
               }
               return null;
             },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 8.0),
-            child: Text(
-              AppLocalizations.of(context).titleType,
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ),
-          OperationTypeRadioButton(
-            type: _type,
-            onChange: _onTypeChanged,
-            items: [OperationType.INPUT, OperationType.OUTPUT],
           ),
         ],
       ),
