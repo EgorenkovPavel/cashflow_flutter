@@ -75,16 +75,21 @@ class _TestWidgetState extends State<TestWidget> {
       children: <Widget>[
         Card(
           child: ExpansionTile(
-            title: Text(
-              AppLocalizations.of(context).titleTotalSum,
-              style: Theme.of(context).textTheme.title,
-            ),
-            subtitle: Text(
-              accounts
-                  .map((account) => account.sum)
-                  .fold(0, (a, b) => a + b)
-                  .toString(),
-              style: Theme.of(context).textTheme.headline,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  AppLocalizations.of(context).titleTotalSum,
+                  style: Theme.of(context).textTheme.title,
+                ),
+                Text(
+                  accounts
+                      .map((account) => account.sum)
+                      .fold(0, (a, b) => a + b)
+                      .toString(),
+                  style: Theme.of(context).textTheme.headline,
+                ),
+              ],
             ),
             children: accounts
                 .map((account) => ListTile(
@@ -143,7 +148,6 @@ class _TestWidgetState extends State<TestWidget> {
             ),
             Positioned(
               left: 30.0,
-
               height: 15.0,
               child: Container(
                 height: 15.0,
@@ -156,8 +160,14 @@ class _TestWidgetState extends State<TestWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('${AppLocalizations.of(context).titleBudget} $budget', style: Theme.of(context).textTheme.caption,),
-            Text('Cashflow $cashflow', style: Theme.of(context).textTheme.caption,),
+            Text(
+              '${AppLocalizations.of(context).titleBudget} $budget',
+              style: Theme.of(context).textTheme.caption,
+            ),
+            Text(
+              'Cashflow $cashflow',
+              style: Theme.of(context).textTheme.caption,
+            ),
           ],
         ),
       ],
