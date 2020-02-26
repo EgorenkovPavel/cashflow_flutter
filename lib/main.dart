@@ -1,7 +1,7 @@
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/budget_page.dart';
 import 'package:cashflow/pages/home_page.dart';
-import 'package:cashflow/pages/master_page_new.dart';
+import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
           HomePage.routeName: (BuildContext context) => HomePage(),
-          MasterPageNew.routeName: (BuildContext context) => MasterPageNew(),
+          MasterPage.routeName: (BuildContext context) => MasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },

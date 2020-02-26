@@ -10,14 +10,14 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-class MasterPageNew extends StatefulWidget {
+class MasterPage extends StatefulWidget {
   static const routeName = '/masterPageNew';
 
   @override
-  _MasterPageNewState createState() => _MasterPageNewState();
+  _MasterPageState createState() => _MasterPageState();
 }
 
-class _MasterPageNewState extends State<MasterPageNew> {
+class _MasterPageState extends State<MasterPage> {
   OperationType _type;
   bool _showKeyboard = false;
   AccountWithBalance _account;

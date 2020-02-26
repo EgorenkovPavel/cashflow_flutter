@@ -1,6 +1,6 @@
 import 'package:cashflow/cards/operation_card.dart';
 import 'package:cashflow/pages/main_list.dart';
-import 'package:cashflow/pages/master_page_new.dart';
+import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
@@ -29,7 +29,7 @@ class OperationList extends StatelessWidget implements MainList{
 
   @override
   void addItem(BuildContext context) {
-    Navigator.of(context).pushNamed(MasterPageNew.routeName);
+    Navigator.of(context).pushNamed(MasterPage.routeName);
   }
 
   @override
