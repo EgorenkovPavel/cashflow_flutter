@@ -39,20 +39,21 @@ class ListTileOperation extends StatelessWidget {
       onTap: onTap,
       onLongPress: () {
         showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) => Wrap(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text('DELETE'),
-                      onTap: () {
-                        Provider.of<Model>(context, listen: false)
-                            .deleteOperation(_operation.operationData);
-                      },
-                    ),
-                  ],
-                ));
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.delete),
+                title: Text('DELETE'),
+                onTap: () {
+                  Provider.of<Model>(context, listen: false)
+                      .deleteOperation(_operation.operationData);
+                },
+              ),
+            ],
+          ),
+        );
       },
     );
   }

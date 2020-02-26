@@ -16,46 +16,13 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
       itemCount: accounts.length,
       itemBuilder: (_, index) {
         final itemAccount = accounts[index];
-        return Dismissible(
-          key: Key(itemAccount.account.id.toString()),
-          child: Column(
+        return Column(
             children: <Widget>[
               ListTileAccount(itemAccount, onTap: () => onItemTap(context, itemAccount),),
               Divider()
             ],
-          ),
-          secondaryBackground:
-          dismissBackground(context, Alignment.centerRight),
-          background: dismissBackground(context, Alignment.centerLeft),
-          onDismissed: (_) async {
-            await Provider.of<Model>(context, listen: false)
-                .updateAccount(itemAccount.account.copyWith(archive: true));
-
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text(AppLocalizations.of(context).mesAccountArchived)));
-          },
-        );
+          );
       },
-    );
-  }
-
-  Container dismissBackground(BuildContext context, Alignment alignment) {
-    return Container(
-      color: Colors.grey,
-      alignment: alignment,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Icon(Icons.archive, color: Colors.white,),
-            Text(
-              AppLocalizations.of(context).archive.toUpperCase(),
-              style:
-              Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
