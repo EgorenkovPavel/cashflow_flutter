@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Carusel<T> extends StatelessWidget {
+class Carousel<T> extends StatelessWidget {
   final double itemHeight;
 
   final List<T> items;
@@ -10,7 +10,7 @@ class Carusel<T> extends StatelessWidget {
 
   PageController _pageController;
 
-  Carusel(
+  Carousel(
       {Key key,
       this.items,
       this.onPageChanged,

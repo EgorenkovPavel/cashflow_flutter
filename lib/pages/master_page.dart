@@ -3,7 +3,7 @@ import 'package:cashflow/data/model.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/sum_text_formatter.dart';
-import 'package:cashflow/widgets/carusel.dart';
+import 'package:cashflow/widgets/carousel.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +37,7 @@ class _MasterPageState extends State<MasterPage> {
 
         List<AccountWithBalance> accounts = snapshot.data;
 
-        return Carusel(
+        return Carousel(
           key: GlobalKey(),
           items: accounts,
           initialItem: _account,
@@ -74,7 +74,7 @@ class _MasterPageState extends State<MasterPage> {
 
         List<CategoryData> categories = snapshot.data;
 
-        return Carusel(
+        return Carousel(
           key: GlobalKey(),
           initialItem: _category,
           items: categories,
@@ -102,7 +102,7 @@ class _MasterPageState extends State<MasterPage> {
 
         List<AccountWithBalance> accounts = snapshot.data;
 
-        return Carusel(
+        return Carousel(
           key: GlobalKey(),
           items: accounts,
           initialItem: _recAccount,
