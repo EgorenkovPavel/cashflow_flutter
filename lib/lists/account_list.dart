@@ -102,7 +102,7 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
 
         return Column(
           children: <Widget>[
-            totalSum(context, accounts),
+            //totalSum(context, accounts),
             Expanded(child: accountList(context, accounts)),
           ],
         );

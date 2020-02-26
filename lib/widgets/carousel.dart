@@ -20,10 +20,17 @@ class Carousel<T> extends StatefulWidget {
 
   @override
   _CarouselState createState() => _CarouselState();
+
 }
 
 class _CarouselState<T> extends State<Carousel<T>> {
   PageController _pageController;
+
+
+  @override
+  void didChangeDependencies() {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +62,10 @@ class _CarouselState<T> extends State<Carousel<T>> {
                 return AnimatedBuilder(
                   builder: (BuildContext context, Widget child) {
                     if (!_pageController.position.haveDimensions) {
-                      Future.delayed(Duration(seconds: 1), () {
-                        setState(() {
-
-                        });
-                      });
-                      return child;
+                      return Transform.scale(
+                        scale: 1 - (pos - _pageController.initialPage).abs() / 10,
+                        child: child,
+                      );
                     }
                     return Transform.scale(
                       scale: 1 - (pos - _pageController.page).abs() / 10,
