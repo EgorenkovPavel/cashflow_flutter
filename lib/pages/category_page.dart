@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class CategoryPage extends StatefulWidget {
   static const routeName = '/category';
 
-  static open(BuildContext context, int categoryId){
+  static open(BuildContext context, int categoryId) {
     Navigator.of(context)
         .pushNamed(CategoryPage.routeName, arguments: categoryId);
   }
@@ -59,17 +59,16 @@ class _CategoryPageState extends State<CategoryPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-            title: header(context),
-            actions: <Widget>[appBarIcon()],
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  text: 'Main',
-                ),
-                Tab(text: 'Budget'),
-                Tab(text: 'Operations')
-              ],
-            )),
+          title: header(context),
+          actions: <Widget>[appBarIcon()],
+//          bottom: TabBar(
+//            tabs: [
+//              Tab(text: 'Main'),
+//              Tab(text: 'Budget'),
+//              Tab(text: 'Operations')
+//            ],
+//          ),
+        ),
         body: TabBarView(
           children: <Widget>[
             buildChart(context),
@@ -93,33 +92,65 @@ class _CategoryPageState extends State<CategoryPage> {
                 });
           },
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: BottomAppBar(
+          //color: Colors.grey,
+          shape: CircularNotchedRectangle(),
+          notchMargin: 4.0,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 80.0),
+            child: TabBar(
+                      tabs: [
+                        Tab(
+                          icon: new Icon(Icons.home),
+                        ),
+                        Tab(
+                          icon: new Icon(Icons.rss_feed),
+                        ),
+                        Tab(
+                          icon: new Icon(Icons.perm_identity),
+                        ),
+                      ],
+                      labelColor: Colors.amber[800],
+                      //unselectedLabelColor: Colors.blue,
+                      //indicatorSize: TabBarIndicatorSize.label,
+                      //indicatorPadding: EdgeInsets.all(5.0),
+                      indicatorColor: Colors.red,
+
+                    ),
+          ),
+                ),
+
+
       ),
     );
   }
 
-  Widget buildChart(BuildContext context){
+  Widget buildChart(BuildContext context) {
     return Center(
       child: Text('Here will be chart'),
     );
     return StreamBuilder<List<CategoryCashflowBudget>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(!snapshot.hasData){
+        if (!snapshot.hasData) {
           return SizedBox();
         }
 
         List<CategoryCashflowBudget> list = snapshot.data;
 
-        return ListView.builder(itemBuilder: (context, pos){
-          return ListTile(
-            title: Text(list[pos].month.toString()),
-            subtitle: Text(list[pos].year.toString()),
-            trailing: Text(list[pos].cashflow.toString()),
-          );
-        },
-        itemCount: list.length,);
-
+        return ListView.builder(
+          itemBuilder: (context, pos) {
+            return ListTile(
+              title: Text(list[pos].month.toString()),
+              subtitle: Text(list[pos].year.toString()),
+              trailing: Text(list[pos].cashflow.toString()),
+            );
+          },
+          itemCount: list.length,
+        );
       },
-      stream: Provider.of<Model>(context, listen: false).watchCashflowBudgetByCatergory(widget.id),
+      stream: Provider.of<Model>(context, listen: false)
+          .watchCashflowBudgetByCatergory(widget.id),
     );
   }
 
