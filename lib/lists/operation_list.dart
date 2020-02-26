@@ -1,12 +1,10 @@
 import 'package:cashflow/cards/operation_card.dart';
-import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database.dart';

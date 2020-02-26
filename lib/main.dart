@@ -1,8 +1,6 @@
-
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/budget_page.dart';
 import 'package:cashflow/pages/home_page.dart';
-import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/pages/master_page_new.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -19,15 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => Model())
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => Model())],
       child: MaterialApp(
         title: 'Cashflow',
         theme: ThemeData(
-          primarySwatch: Colors.green,
-          accentColor: Colors.deepOrangeAccent
-        ),
+            primarySwatch: Colors.green, accentColor: Colors.deepOrangeAccent),
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,
@@ -40,12 +34,11 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
           HomePage.routeName: (BuildContext context) => HomePage(),
-          MasterPage.routeName: (BuildContext context) => MasterPage(),//SimpleMasterPage(),
           MasterPageNew.routeName: (BuildContext context) => MasterPageNew(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },
-        onGenerateRoute: (settings){
+        onGenerateRoute: (settings) {
           if (settings.name == BudgetPage.routeName) {
             final Map<String, DateTime> args = settings.arguments;
             return MaterialPageRoute(
@@ -53,10 +46,11 @@ class MyApp extends StatelessWidget {
                 return BudgetPage(date: args['date']);
               },
             );
-          }else if (settings.name == CategoryPage.routeName){
+          } else if (settings.name == CategoryPage.routeName) {
             return MaterialPageRoute(
-              builder: (context) => CategoryPage(id: settings.arguments,)
-            );
+                builder: (context) => CategoryPage(
+                      id: settings.arguments,
+                    ));
           }
           return null;
         },
@@ -64,4 +58,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
