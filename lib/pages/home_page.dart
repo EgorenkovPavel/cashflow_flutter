@@ -18,136 +18,99 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
-  int _selectedIndex = 0;
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  List<Widget> tabs = [];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
+    tabs = [
+      MainTab(),
+      AccountList(),
+      CategoryList(),
+      OperationList(),
+    ];
 
-  Widget body() {
-    switch (_selectedIndex) {
-      case 0:
-        return MainTab();
-      case 1:
-        return AccountList();
-      case 2:
-        return CategoryList();
-      case 3:
-        return OperationList();
-      default:
-        return SizedBox();
-    }
+    _tabController = TabController(length: tabs.length, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: AppBar(
-            title: Text('Cashflow'),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: PopupMenuButton<AppMenu>(
-                  child: Icon(Icons.more_vert),
-                  itemBuilder: (context) =>
-                  [
-                    PopupMenuItem<AppMenu>(
-                      child: Text(AppLocalizations
-                          .of(context)
-                          .itemMenuService
-                          .toUpperCase()),
-                      value: AppMenu.BACKUP,
-                    )
-                  ],
-                  onSelected: (value) {
-                    switch (value) {
-                      case AppMenu.BACKUP:
-                        {
-                          Navigator.of(context).pushNamed(BackupPage.routeName);
-                          break;
-                        }
-                    }
-                  },
-                ),
+        appBar: AppBar(
+          title: Text('Cashflow'),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PopupMenuButton<AppMenu>(
+                child: Icon(Icons.more_vert),
+                itemBuilder: (context) => [
+                  PopupMenuItem<AppMenu>(
+                    child: Text(AppLocalizations.of(context)
+                        .itemMenuService
+                        .toUpperCase()),
+                    value: AppMenu.BACKUP,
+                  )
+                ],
+                onSelected: (value) {
+                  switch (value) {
+                    case AppMenu.BACKUP:
+                      {
+                        Navigator.of(context).pushNamed(BackupPage.routeName);
+                        break;
+                      }
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
         body: TabBarView(
           controller: _tabController,
-          children: <Widget>[
-            MainTab(),
-            AccountList(),
-            CategoryList(),
-            OperationList(),
-          ],
+          children: tabs.toList(),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: (){},
+          onPressed: () {
+            if(_tabController.index != 0){
+              (tabs[_tabController.index] as MainList).addItem(context);
+            }
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          bottomNavigationBar: BottomAppBar(
-            shape: CircularNotchedRectangle(),
-            notchMargin: 4.0,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 80.0),
-//              child: TabBar(
-//                tabs: [
-//                  Tab(
-//                    icon: new Icon(Icons.home),
-//                    text: AppLocalizations.of(context).itemBarMain,
-//                  ),
-//                  Tab(
-//                    icon: new Icon(Icons.account_balance_wallet),
-//                    text: AppLocalizations.of(context).itemBarAccounts,
-//                  ),
-//                  Tab(
-//                    icon: new Icon(Icons.dns),
-//                    text: AppLocalizations.of(context).itemBarCategories,
-//                  ),
-//                  Tab(
-//                    icon: new Icon(Icons.view_list),
-//                    text:  AppLocalizations.of(context).itemBarOperations,
-//                  ),
-//                ],
-//                labelColor: Colors.amber[800],
-//                unselectedLabelColor:  Colors.black26,
-//                //indicatorSize: TabBarIndicatorSize.tab,
-//                //indicatorPadding: EdgeInsets.all(5.0),
-//                indicatorColor: Colors.red,
-//              ),
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 4.0,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 80.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                tabTitle(context, 0, Icons.home, AppLocalizations.of(context).itemBarMain),
-                tabTitle(context, 1, Icons.account_balance_wallet, AppLocalizations.of(context).itemBarAccounts),
-                tabTitle(context, 2, Icons.dns, AppLocalizations.of(context).itemBarCategories),
-                tabTitle(context, 3, Icons.view_list, AppLocalizations.of(context).itemBarOperations),
+                tabTitle(context, 0, Icons.home,
+                    AppLocalizations.of(context).itemBarMain),
+                tabTitle(context, 1, Icons.account_balance_wallet,
+                    AppLocalizations.of(context).itemBarAccounts),
+                tabTitle(context, 2, Icons.dns,
+                    AppLocalizations.of(context).itemBarCategories),
+                tabTitle(context, 3, Icons.view_list,
+                    AppLocalizations.of(context).itemBarOperations),
               ],
             ),
-            ),
-          )
-
-    );
+          ),
+        ));
   }
 
-  Widget tabTitle(BuildContext context, int index, IconData icon, String title){
+  Widget tabTitle(
+      BuildContext context, int index, IconData icon, String title) {
     return AnimatedBuilder(
       animation: _tabController.animation,
       builder: (BuildContext context, Widget child) {
         return Transform.scale(
-          scale: 1 - (min((index - _tabController.animation.value).abs(), 1)) /2,
+          scale:
+              1 - (min((index - _tabController.animation.value).abs(), 1)) / 2,
           child: child,
         );
       },
@@ -159,78 +122,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Text(title),
           ],
         ),
-        onTap: () =>_tabController.animateTo(index),
+        onTap: () => _tabController.animateTo(index),
       ),
     );
   }
 
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: Text('Cashflow'),
-//        actions: <Widget>[
-//          Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: PopupMenuButton<AppMenu>(
-//              child: Icon(Icons.more_vert),
-//              itemBuilder: (context) => [
-//                PopupMenuItem<AppMenu>(
-//                  child: Text(AppLocalizations.of(context)
-//                      .itemMenuService
-//                      .toUpperCase()),
-//                  value: AppMenu.BACKUP,
-//                )
-//              ],
-//              onSelected: (value) {
-//                switch (value) {
-//                  case AppMenu.BACKUP:
-//                    {
-//                      Navigator.of(context).pushNamed(BackupPage.routeName);
-//                      break;
-//                    }
-//                }
-//              },
-//            ),
-//          ),
-//        ],
-//      ),
-//      body: body(),
-//      bottomNavigationBar: BottomNavigationBar(
-//        items: <BottomNavigationBarItem>[
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.home),
-//            title: Text(AppLocalizations.of(context).itemBarMain),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.account_balance_wallet),
-//            title: Text(AppLocalizations.of(context).itemBarAccounts),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.dns),
-//            title: Text(AppLocalizations.of(context).itemBarCategories),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.view_list),
-//            title: Text(AppLocalizations.of(context).itemBarOperations),
-//          ),
-//        ],
-//        type: BottomNavigationBarType.fixed,
-//        currentIndex: _selectedIndex,
-//        selectedItemColor: Colors.amber[800],
-//        onTap: _onItemTapped,
-//      ),
-//      floatingActionButton: _selectedIndex == 0
-//          ? SizedBox()
-//          : FloatingActionButton(
-//              child: Icon(Icons.add),
-//              onPressed: () {
-//                (body() as MainList).addItem(context);
-//              },
-//            ),
-//    );
-//  }
 }
 
 enum AppMenu { BACKUP }
