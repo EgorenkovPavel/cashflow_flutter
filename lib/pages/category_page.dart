@@ -100,28 +100,25 @@ class _CategoryPageState extends State<CategoryPage> {
           child: Padding(
             padding: const EdgeInsets.only(right: 80.0),
             child: TabBar(
-                      tabs: [
-                        Tab(
-                          icon: new Icon(Icons.home),
-                        ),
-                        Tab(
-                          icon: new Icon(Icons.rss_feed),
-                        ),
-                        Tab(
-                          icon: new Icon(Icons.perm_identity),
-                        ),
-                      ],
-                      labelColor: Colors.amber[800],
-                      //unselectedLabelColor: Colors.blue,
-                      //indicatorSize: TabBarIndicatorSize.label,
-                      //indicatorPadding: EdgeInsets.all(5.0),
-                      indicatorColor: Colors.red,
-
-                    ),
-          ),
+              tabs: [
+                Tab(
+                  icon: new Icon(Icons.home),
                 ),
-
-
+                Tab(
+                  icon: new Icon(Icons.rss_feed),
+                ),
+                Tab(
+                  icon: new Icon(Icons.perm_identity),
+                ),
+              ],
+              labelColor: Colors.amber[800],
+              //unselectedLabelColor: Colors.blue,
+              //indicatorSize: TabBarIndicatorSize.label,
+              //indicatorPadding: EdgeInsets.all(5.0),
+              indicatorColor: Colors.red,
+            ),
+          ),
+        ),
       ),
     );
   }
