@@ -36,6 +36,21 @@ class _HomePageState extends State<HomePage>
     _tabController = TabController(length: tabs.length, vsync: this);
   }
 
+  Widget body(_selectedIndex) {
+    switch (_selectedIndex) {
+      case 0:
+        return MainTab();
+      case 1:
+        return AccountList();
+      case 2:
+        return CategoryList();
+      case 3:
+        return OperationList();
+      default:
+        return SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,13 +84,18 @@ class _HomePageState extends State<HomePage>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: tabs.toList(),
+          children: [
+            body(0),
+            body(1),
+            body(2),
+            body(3),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
             if(_tabController.index != 0){
-              (tabs[_tabController.index] as MainList).addItem(context);
+              (body(_tabController.index) as MainList).addItem(context);
             }
           },
         ),
