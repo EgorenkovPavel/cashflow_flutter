@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage>
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            if(_tabController.index != 0){
+            if (_tabController.index != 0) {
               (body(_tabController.index) as MainList).addItem(context);
             }
           },
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage>
             padding: const EdgeInsets.only(right: 80.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 tabTitle(context, 0, Icons.home,
                     AppLocalizations.of(context).itemBarMain),
@@ -125,28 +125,42 @@ class _HomePageState extends State<HomePage>
 
   Widget tabTitle(
       BuildContext context, int index, IconData icon, String title) {
+    var _tween = ColorTween(begin: Colors.black26, end: Colors.amber);
+
     return AnimatedBuilder(
       animation: _tabController.animation,
-      builder: (BuildContext context, Widget child) {
-        return Transform.scale(
-          scale:
-              1 - (min((index - _tabController.animation.value).abs(), 1)) / 2,
-          child: child,
-        );
-      },
-      child: GestureDetector(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(icon),
-            Text(title),
-          ],
+      builder: (BuildContext context, Widget child) => Flexible(
+        flex: 1,
+        fit: FlexFit.tight,
+        child: GestureDetector(
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: _tween.transform(max(
+                      1 - (index - _tabController.animation.value).abs(), 0)),
+                ),
+                Transform.scale(
+                  scale: 1.0 -
+                      min((index - _tabController.animation.value).abs(), 1.0),
+                  child: Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: Colors.amber),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          onTap: () => _tabController.animateTo(index),
         ),
-        onTap: () => _tabController.animateTo(index),
       ),
     );
   }
-
 }
 
 enum AppMenu { BACKUP }
