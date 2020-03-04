@@ -6,7 +6,6 @@ import 'package:cashflow/lists/operation_list.dart';
 import 'package:cashflow/pages/backup_page.dart';
 import 'package:cashflow/pages/main_tab.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'main_list.dart';
@@ -85,10 +84,10 @@ class _HomePageState extends State<HomePage>
         body: TabBarView(
           controller: _tabController,
           children: [
-            body(0),
-            body(1),
-            body(2),
-            body(3),
+            pageWidget(context, 0, body(0)),
+            pageWidget(context, 1, body(1)),
+            pageWidget(context, 2, body(2)),
+            pageWidget(context, 3, body(3)),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -121,6 +120,17 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ));
+  }
+
+  Widget pageWidget(BuildContext context, int index, Widget child){
+    return AnimatedBuilder(
+      animation: _tabController.animation,
+      builder: (BuildContext context, Widget child) => Padding(
+        padding: EdgeInsets.all((index - _tabController.animation.value).abs() * 30),
+        child: Material(child: child, elevation: 16.0,),
+      ),
+      child: child,
+    );
   }
 
   Widget tabTitle(
