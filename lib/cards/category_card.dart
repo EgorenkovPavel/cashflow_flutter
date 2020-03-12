@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -43,13 +43,13 @@ class _CategoryCardState extends State<CategoryCard> {
       widget.category = CategoryData(
           title: titleController.text,
           operationType: _type);
-      Provider.of<Model>(context, listen: false)
+      Provider.of<Repository>(context, listen: false)
           .insertCategory(widget.category);
     } else {
       widget.category = widget.category.copyWith(
           title: titleController.text,
           operationType: _type,);
-      Provider.of<Model>(context, listen: false)
+      Provider.of<Repository>(context, listen: false)
           .updateCategory(widget.category);
     }
   }

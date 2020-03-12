@@ -1,5 +1,5 @@
 import 'package:cashflow/data/backuper.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/pages/drive_dialog.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
@@ -97,7 +97,7 @@ class BackupPage extends StatelessWidget {
         FlatButton(
           child: Text('Yes'),
           onPressed: () {
-            Provider.of<Model>(context, listen: false).deleteAll();
+            Provider.of<Repository>(context, listen: false).deleteAll();
           },
         ),
       ],

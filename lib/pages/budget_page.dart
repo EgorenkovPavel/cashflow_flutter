@@ -1,6 +1,6 @@
 
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class BudgetPage extends StatelessWidget {
         children: <Widget>[
           Text('$date'),
           StreamBuilder<List<BudgetData>>(
-              stream: Provider.of<Model>(context).watchBudget(date),
+              stream: Provider.of<Repository>(context).watchBudget(date),
               builder: (context, snapshot) {
 
                 if(!snapshot.hasData || snapshot.data.isEmpty){

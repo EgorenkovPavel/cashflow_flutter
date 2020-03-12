@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/google_http_client.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class Backuper {
 
   Future<Map<String, List<Map<String, dynamic>>>> getDbData(
       BuildContext context) async {
-    Model model = Provider.of<Model>(context, listen: false);
+    Repository model = Provider.of<Repository>(context, listen: false);
 
     Map<String, List<Map<String, dynamic>>> data = {};
 
@@ -76,7 +76,7 @@ class Backuper {
         await saveFile.writeAsBytes(dataStore);
         print("File saved at ${saveFile.path}");
 
-        await Provider.of<Model>(context, listen: false).deleteAll();
+        await Provider.of<Repository>(context, listen: false).deleteAll();
         _loadFromFile(context, saveFile);
       }, onError: (error) {
         print("Some Error");
@@ -90,7 +90,7 @@ class Backuper {
     Map<String, dynamic> data = jsonDecode(file.readAsStringSync());
     print(data.toString());
 
-    Model model = Provider.of<Model>(context, listen: false);
+    Repository model = Provider.of<Repository>(context, listen: false);
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
@@ -140,7 +140,7 @@ class Backuper {
         await saveFile.writeAsBytes(dataStore);
         print("File saved at ${saveFile.path}");
 
-        await Provider.of<Model>(context, listen: false).deleteAll();
+        await Provider.of<Repository>(context, listen: false).deleteAll();
         _loadFromFileOld(context, saveFile);
       }, onError: (error) {
         print("Some Error");
@@ -155,7 +155,7 @@ class Backuper {
     print(data.toString());
 
     var converter = OperationTypeConverter();
-    Model model = Provider.of<Model>(context, listen: false);
+    Repository model = Provider.of<Repository>(context, listen: false);
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {

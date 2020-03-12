@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -38,14 +38,14 @@ class _TestWidgetState extends State<TestWidget> {
   @override
   void initState() {
     super.initState();
-    subAccount = Provider.of<Model>(context, listen: false)
+    subAccount = Provider.of<Repository>(context, listen: false)
         .watchAllAccountsWithBalance()
         .listen((list) {
       setState(() {
         accounts = list;
       });
     });
-    subCategory = Provider.of<Model>(context, listen: false)
+    subCategory = Provider.of<Repository>(context, listen: false)
         .watchAllCategoryCashflowBudget(DateTime.now())
         .listen((list) {
       setState(() {

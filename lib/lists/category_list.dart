@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database.dart';
-import '../data/model.dart';
+import '../data/repository.dart';
 
 class CategoryList extends StatelessWidget implements MainList<CategoryData>{
 
@@ -60,7 +60,7 @@ class CategoryList extends StatelessWidget implements MainList<CategoryData>{
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<Repository>(context);
     return StreamBuilder<List<CategoryData>>(
       stream: model.watchAllCategories(),
       builder: (context, AsyncSnapshot<List<CategoryData>> snapshot) {

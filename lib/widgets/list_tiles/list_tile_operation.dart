@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,7 +47,7 @@ class ListTileOperation extends StatelessWidget {
                 leading: Icon(Icons.delete),
                 title: Text('DELETE'),
                 onTap: () {
-                  Provider.of<Model>(context, listen: false)
+                  Provider.of<Repository>(context, listen: false)
                       .deleteOperation(_operation.operationData);
                 },
               ),

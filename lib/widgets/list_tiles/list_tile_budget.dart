@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +43,7 @@ class ListTileBudget extends StatelessWidget {
           ],
         );
         if (res == 1) {
-          Provider.of<Model>(context, listen: false).deleteBudget(_budget);
+          Provider.of<Repository>(context, listen: false).deleteBudget(_budget);
         }
       },
     );

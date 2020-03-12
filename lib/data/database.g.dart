@@ -109,7 +109,7 @@ class AccountCompanion extends UpdateCompanion<AccountData> {
   }
 }
 
-class $AccountTable extends Account with TableInfo<$AccountTable, AccountData> {
+class $AccountTable extends AccountEntity with TableInfo<$AccountTable, AccountData> {
   final GeneratedDatabase _db;
   final String _alias;
   $AccountTable(this._db, [this._alias]);
@@ -148,9 +148,9 @@ class $AccountTable extends Account with TableInfo<$AccountTable, AccountData> {
   @override
   $AccountTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'account';
+  String get $tableName => _alias ?? 'accounts';
   @override
-  final String actualTableName = 'account';
+  final String actualTableName = 'accounts';
   @override
   VerificationContext validateIntegrity(AccountCompanion d,
       {bool isInserting = false}) {
@@ -326,7 +326,7 @@ class CategoryCompanion extends UpdateCompanion<CategoryData> {
   }
 }
 
-class $CategoryTable extends Category
+class $CategoryTable extends CategoryEntity
     with TableInfo<$CategoryTable, CategoryData> {
   final GeneratedDatabase _db;
   final String _alias;
@@ -380,9 +380,9 @@ class $CategoryTable extends Category
   @override
   $CategoryTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'category';
+  String get $tableName => _alias ?? 'categories';
   @override
-  final String actualTableName = 'category';
+  final String actualTableName = 'categories';
   @override
   VerificationContext validateIntegrity(CategoryCompanion d,
       {bool isInserting = false}) {
@@ -630,7 +630,7 @@ class OperationCompanion extends UpdateCompanion<OperationData> {
   }
 }
 
-class $OperationTable extends Operation
+class $OperationTable extends OperationEntity
     with TableInfo<$OperationTable, OperationData> {
   final GeneratedDatabase _db;
   final String _alias;
@@ -715,9 +715,9 @@ class $OperationTable extends Operation
   @override
   $OperationTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'operation';
+  String get $tableName => _alias ?? 'operations';
   @override
-  final String actualTableName = 'operation';
+  final String actualTableName = 'operations';
   @override
   VerificationContext validateIntegrity(OperationCompanion d,
       {bool isInserting = false}) {
@@ -942,7 +942,7 @@ class BalanceCompanion extends UpdateCompanion<BalanceData> {
   }
 }
 
-class $BalanceTable extends Balance with TableInfo<$BalanceTable, BalanceData> {
+class $BalanceTable extends BalanceEntity with TableInfo<$BalanceTable, BalanceData> {
   final GeneratedDatabase _db;
   final String _alias;
   $BalanceTable(this._db, [this._alias]);
@@ -1215,7 +1215,7 @@ class CashflowCompanion extends UpdateCompanion<CashflowData> {
   }
 }
 
-class $CashflowTable extends Cashflow
+class $CashflowTable extends CashflowEntity
     with TableInfo<$CashflowTable, CashflowData> {
   final GeneratedDatabase _db;
   final String _alias;
@@ -1491,9 +1491,9 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   @override
   $BudgetTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'budget';
+  String get $tableName => _alias ?? 'budgets';
   @override
-  final String actualTableName = 'budget';
+  final String actualTableName = 'budgets';
   @override
   VerificationContext validateIntegrity(BudgetCompanion d,
       {bool isInserting = false}) {

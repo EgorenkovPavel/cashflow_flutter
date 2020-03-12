@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
@@ -36,7 +36,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     super.initState();
-    subscription = Provider.of<Model>(context, listen: false)
+    subscription = Provider.of<Repository>(context, listen: false)
         .getCategoryById(widget.id)
         .listen((CategoryData data) {
       setState(() {
@@ -119,7 +119,7 @@ class _CategoryPageState extends State<CategoryPage> {
           itemCount: list.length,
         );
       },
-      stream: Provider.of<Model>(context, listen: false)
+      stream: Provider.of<Repository>(context, listen: false)
           .watchCashflowBudgetByCatergory(widget.id),
     );
   }
@@ -145,7 +145,7 @@ class _CategoryPageState extends State<CategoryPage> {
           itemCount: list.length,
         );
       },
-      stream: Provider.of<Model>(context, listen: false)
+      stream: Provider.of<Repository>(context, listen: false)
           .watchBudgetByCategory(widget.id),
     );
   }
@@ -166,7 +166,7 @@ class _CategoryPageState extends State<CategoryPage> {
           itemCount: operations.length,
         );
       },
-      stream: Provider.of<Model>(context, listen: false)
+      stream: Provider.of<Repository>(context, listen: false)
           .watchAllOperationItemsByCategory(widget.id),
     );
   }
@@ -183,7 +183,7 @@ class _CategoryPageState extends State<CategoryPage> {
             _editTitleMode = false;
             category = category.copyWith(title: _titleController.text);
           });
-          Provider.of<Model>(context, listen: false)
+          Provider.of<Repository>(context, listen: false)
               .updateCategory(category.copyWith(title: _titleController.text));
         },
       );

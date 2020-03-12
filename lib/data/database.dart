@@ -3,15 +3,22 @@ import 'package:moor_flutter/moor_flutter.dart';
 
 part 'database.g.dart';
 
-class Account extends Table {
+class AccountEntity extends Table {
+  @override
+  String get tableName => 'accounts';
+
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
 
   BoolColumn get archive => boolean().withDefault(const Constant(false))();
+
 }
 
-class Category extends Table {
+class CategoryEntity extends Table {
+  @override
+  String get tableName => 'categories';
+
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get title => text()();
@@ -23,7 +30,10 @@ class Category extends Table {
 
 }
 
-class Operation extends Table {
+class OperationEntity extends Table {
+  @override
+  String get tableName => 'operations';
+
   IntColumn get id => integer().autoIncrement()();
 
   DateTimeColumn get date => dateTime()();
@@ -43,7 +53,10 @@ class Operation extends Table {
   IntColumn get sum => integer()();
 }
 
-class Balance extends Table {
+class BalanceEntity extends Table {
+  @override
+  String get tableName => 'balance';
+
   IntColumn get id => integer().autoIncrement()();
 
   DateTimeColumn get date => dateTime()();
@@ -57,7 +70,10 @@ class Balance extends Table {
   IntColumn get sum => integer()();
 }
 
-class Cashflow extends Table {
+class CashflowEntity extends Table {
+  @override
+  String get tableName => 'cashflow';
+
   IntColumn get id => integer().autoIncrement()();
 
   DateTimeColumn get date => dateTime()();
@@ -72,6 +88,9 @@ class Cashflow extends Table {
 }
 
 class Budget extends Table {
+  @override
+  String get tableName => 'budgets';
+
   DateTimeColumn get date => dateTime()();
 
   IntColumn get category =>
@@ -205,10 +224,11 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
         return null;
     }
   }
+
 }
 
 @UseMoor(
-    tables: [Account, Category, Operation, Balance, Cashflow, Budget],
+    tables: [AccountEntity, CategoryEntity, OperationEntity, BalanceEntity, CashflowEntity, Budget],
     daos: [AccountDao, CategoryDao, OperationDao, BudgetDao])
 class Database extends _$Database {
   Database()
@@ -230,7 +250,7 @@ class Database extends _$Database {
   }
 }
 
-@UseDao(tables: [Account, Balance])
+@UseDao(tables: [AccountEntity, BalanceEntity])
 class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   final Database db;
 
@@ -282,7 +302,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   }
 }
 
-@UseDao(tables: [Category, Budget, Cashflow])
+@UseDao(tables: [CategoryEntity, Budget, CashflowEntity])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   final Database db;
 
@@ -404,7 +424,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 }
 
-@UseDao(tables: [Account, Category, Operation, Balance, Cashflow])
+@UseDao(tables: [AccountEntity, CategoryEntity, OperationEntity, BalanceEntity, CashflowEntity])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   final Database db;
 

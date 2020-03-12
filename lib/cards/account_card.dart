@@ -1,6 +1,6 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +17,10 @@ class AccountCard extends StatelessWidget {
 
   void saveAccount(BuildContext context) {
     if (account == null) {
-      Provider.of<Model>(context, listen: false)
+      Provider.of<Repository>(context, listen: false)
           .insertAccount(AccountData(title: controller.text));
     } else {
-      Provider.of<Model>(context, listen: false)
+      Provider.of<Repository>(context, listen: false)
           .updateAccount(account.account.copyWith(title: controller.text));
     }
   }

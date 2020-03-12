@@ -1,4 +1,6 @@
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
@@ -24,13 +26,13 @@ class _OperationPageState extends State<OperationPage> {
   OperationType _type;
   DateTime _date;
   TimeOfDay _time;
-  AccountData _account;
+  Account _account;
   CategoryData _category;
-  AccountData _recAccount;
+  Account _recAccount;
   TextEditingController _sumController = TextEditingController();
 
-  Model model;
-  List<AccountData> accountList;
+  Repository model;
+  List<Account> accountList;
   List<CategoryData> categoryInList;
   List<CategoryData> categoryOutList;
 
@@ -38,7 +40,7 @@ class _OperationPageState extends State<OperationPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    model = Provider.of<Model>(context);
+    model = Provider.of<Repository>(context);
 
     model.watchAllAccounts().forEach((list) {
       setState(() {
@@ -61,12 +63,16 @@ class _OperationPageState extends State<OperationPage> {
 
   @override
   void initState() {
+    super.initState();
+
+    AccountMapper mapper = const AccountMapper();
+
     _id = widget.operation.operationData.id;
     _type = widget.operation.type;
     _date = widget.operation.date;
-    _account = widget.operation.account;
+    _account = mapper.mapToDart(widget.operation.account);
     _category = widget.operation.category;
-    _recAccount = widget.operation.recAccount;
+    _recAccount = mapper.mapToDart(widget.operation.recAccount);
     _sumController.text = widget.operation.sum.toString();
 
     _time = TimeOfDay.fromDateTime(_date);
@@ -97,10 +103,10 @@ class _OperationPageState extends State<OperationPage> {
             items: categoryOutList,
             getListItem: (item) => ListTile(title: Text(item.title)));
       case OperationType.TRANSFER:
-        return DropdownList<AccountData>(
+        return DropdownList<Account>(
             value: _recAccount,
             hint: 'Choose Account',
-            onChange: (AccountData newValue) {
+            onChange: (Account newValue) {
               setState(() {
                 _recAccount = newValue;
               });
@@ -124,7 +130,7 @@ class _OperationPageState extends State<OperationPage> {
           recAccount: _recAccount.id,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Model>(context).insertOperation(operation);
+      Provider.of<Repository>(context).insertOperation(operation);
     } else {
       OperationData operation = OperationData(
           id: _id,
@@ -134,7 +140,7 @@ class _OperationPageState extends State<OperationPage> {
           category: _category.id,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Model>(context).insertOperation(operation);
+      Provider.of<Repository>(context).insertOperation(operation);
     }
     Navigator.pop(context);
   }

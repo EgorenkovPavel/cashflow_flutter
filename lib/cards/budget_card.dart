@@ -1,6 +1,6 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +25,7 @@ class _BudgetCardState extends State<BudgetCard> {
   int _year;
 
   void saveBudget(BuildContext context) {
-    Provider.of<Model>(context, listen: false).insertBudget(BudgetData(
+    Provider.of<Repository>(context, listen: false).insertBudget(BudgetData(
         date: DateTime(_year, _month),
         category: widget.categoryId,
         sum: int.parse(sumController.text)));

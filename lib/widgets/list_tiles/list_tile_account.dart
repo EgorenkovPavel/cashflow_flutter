@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class ListTileAccount extends StatelessWidget {
                 leading: Icon(Icons.delete),
                 title: Text(_account.account.archive ? 'UNARCHIVE' : 'ARCHIVE'),
                 onTap: () {
-                  Provider.of<Model>(context, listen: false)
+                  Provider.of<Repository>(context, listen: false)
                       .updateAccount(_account.account.copyWith(archive: !_account.account.archive));
                   Navigator.of(context).pop();
                 },

@@ -1,6 +1,8 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
@@ -23,13 +25,13 @@ class _OperationCardState extends State<OperationCard> {
   OperationType _type;
   DateTime _date;
   TimeOfDay _time;
-  AccountData _account;
+  Account _account;
   CategoryData _category;
-  AccountData _recAccount;
+  Account _recAccount;
   TextEditingController _sumController = TextEditingController();
 
-  Model model;
-  List<AccountData> accountList;
+  Repository model;
+  List<Account> accountList;
   List<CategoryData> categoryInList;
   List<CategoryData> categoryOutList;
 
@@ -37,7 +39,7 @@ class _OperationCardState extends State<OperationCard> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    model = Provider.of<Model>(context);
+    model = Provider.of<Repository>(context);
 
     model.watchAllAccounts(archive: true).forEach((list) {
       setState(() {
@@ -62,12 +64,14 @@ class _OperationCardState extends State<OperationCard> {
   void initState() {
     super.initState();
 
+    AccountMapper mapper = const AccountMapper();
+
     _id = widget.operation.operationData.id;
     _type = widget.operation.type;
     _date = widget.operation.date;
-    _account = widget.operation.account;
+    _account = mapper.mapToDart(widget.operation.account);
     _category = widget.operation.category;
-    _recAccount = widget.operation.recAccount;
+    _recAccount = mapper.mapToDart(widget.operation.recAccount);
     _sumController.text = widget.operation.sum.toString();
 
     _time = TimeOfDay.fromDateTime(_date);
@@ -98,10 +102,10 @@ class _OperationCardState extends State<OperationCard> {
             items: categoryOutList,
             getListItem: (item) => ListTile(title: Text(item.title)));
       case OperationType.TRANSFER:
-        return DropdownList<AccountData>(
+        return DropdownList<Account>(
             value: _recAccount,
             hint: AppLocalizations.of(context).hintAccount,
-            onChange: (AccountData newValue) {
+            onChange: (Account newValue) {
               setState(() {
                 _recAccount = newValue;
               });
@@ -125,7 +129,7 @@ class _OperationCardState extends State<OperationCard> {
           recAccount: _recAccount.id,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Model>(context, listen: false).insertOperation(operation);
+      Provider.of<Repository>(context, listen: false).insertOperation(operation);
     } else {
       OperationData operation = OperationData(
           id: _id,
@@ -135,7 +139,7 @@ class _OperationCardState extends State<OperationCard> {
           category: _category.id,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Model>(context, listen: false).insertOperation(operation);
+      Provider.of<Repository>(context, listen: false).insertOperation(operation);
     }
   }
 

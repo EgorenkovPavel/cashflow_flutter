@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'data/model.dart';
+import 'data/repository.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => Model())],
+      providers: [ChangeNotifierProvider(create: (context) => Repository())],
       child: MaterialApp(
         title: 'Cashflow',
         theme: ThemeData(

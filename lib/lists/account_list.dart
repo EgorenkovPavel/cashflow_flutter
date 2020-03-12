@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database.dart';
-import '../data/model.dart';
+import '../data/repository.dart';
 
 class AccountList extends StatelessWidget implements MainList<AccountWithBalance> {
 
@@ -84,7 +84,7 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<Repository>(context);
 
     return StreamBuilder<List<AccountWithBalance>>(
       stream: model.watchAllAccountsWithBalance(),

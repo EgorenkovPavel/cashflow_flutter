@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database.dart';
-import '../data/model.dart';
+import '../data/repository.dart';
 
 class OperationList extends StatelessWidget implements MainList{
 
@@ -55,7 +55,7 @@ class OperationList extends StatelessWidget implements MainList{
   @override
   Widget build(BuildContext context) {
 
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<Repository>(context);
     return StreamBuilder<List<OperationItem>>(
       stream: model.watchAllOperationItems(),
       builder: (context, AsyncSnapshot<List<OperationItem>> snapshot) {

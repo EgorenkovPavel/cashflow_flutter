@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +22,10 @@ class AccountPage extends StatelessWidget {
             icon: Icon(Icons.save),
             onPressed: () {
               if (account == null) {
-                Provider.of<Model>(context, listen: false)
+                Provider.of<Repository>(context, listen: false)
                     .insertAccount(AccountData(title: controller.text));
               } else {
-                Provider.of<Model>(context, listen: false).updateAccount(
+                Provider.of<Repository>(context, listen: false).updateAccount(
                     account.account.copyWith(title: controller.text));
               }
 

@@ -1,5 +1,5 @@
 import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/model.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/sum_text_formatter.dart';
@@ -27,7 +27,7 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget accountPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Model>(context).watchAllAccountsWithBalance(),
+      stream: Provider.of<Repository>(context).watchAllAccountsWithBalance(),
       initialData: <AccountWithBalance>[],
       builder: (BuildContext context,
           AsyncSnapshot<List<AccountWithBalance>> snapshot) {
@@ -64,7 +64,7 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget categoryPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Model>(context).watchAllCategoriesByType(_type),
+      stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
       initialData: <CategoryData>[],
       builder:
           (BuildContext context, AsyncSnapshot<List<CategoryData>> snapshot) {
@@ -92,7 +92,7 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget recAccountPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Model>(context).watchAllAccountsWithBalance(),
+      stream: Provider.of<Repository>(context).watchAllAccountsWithBalance(),
       initialData: <AccountWithBalance>[],
       builder: (BuildContext context,
           AsyncSnapshot<List<AccountWithBalance>> snapshot) {
@@ -166,7 +166,7 @@ class _MasterPageState extends State<MasterPage> {
           recAccount: _recAccount.account.id,
           sum: sum);
 
-      Provider.of<Model>(context, listen: false).insertOperation(operation);
+      Provider.of<Repository>(context, listen: false).insertOperation(operation);
     } else {
       OperationData operation = OperationData(
           date: DateTime.now(),
@@ -175,7 +175,7 @@ class _MasterPageState extends State<MasterPage> {
           category: _category.id,
           sum: sum);
 
-      Provider.of<Model>(context, listen: false)..insertOperation(operation);
+      Provider.of<Repository>(context, listen: false)..insertOperation(operation);
     }
 
     Scaffold.of(context).showSnackBar(SnackBar(

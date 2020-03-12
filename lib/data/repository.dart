@@ -1,18 +1,22 @@
+import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
 import 'database.dart';
+import 'objects/account.dart';
 
-class Model extends ChangeNotifier {
-  final db;
+class Repository extends ChangeNotifier {
+  final Database db;
 
-  Model() : db = Database();
+  Repository() : db = Database();
 
   Future deleteAll() => db.deleteAll();
 
   //Accounts
-  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) =>
-      db.accountDao.watchAllAccounts(archive: archive);
+  Stream<List<Account>> watchAllAccounts({bool archive = false}) =>
+      db.accountDao
+          .watchAllAccounts(archive: archive)
+          .map((list) => list.map((a) => const AccountMapper().mapToDart(a)));
 
   Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
 
@@ -50,7 +54,8 @@ class Model extends ChangeNotifier {
       db.categoryDao.watchAllCategoryCashflowBudget(date);
 
   Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCatergory(
-      int categoryId) => db.categoryDao.watchCashflowBudgetByCatergory(categoryId);
+          int categoryId) =>
+      db.categoryDao.watchCashflowBudgetByCatergory(categoryId);
 
   Future insertCategory(CategoryData entity) =>
       db.categoryDao.insertCategory(entity);
@@ -65,7 +70,8 @@ class Model extends ChangeNotifier {
   Stream<List<OperationItem>> watchAllOperationItems() =>
       db.operationDao.watchAllOperationItems();
 
-  Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) =>
+  Stream<List<OperationItem>> watchAllOperationItemsByCategory(
+          int categoryId) =>
       db.operationDao.watchAllOperationItemsByCategory(categoryId);
 
   Future<List<OperationData>> getAllOperations() =>
