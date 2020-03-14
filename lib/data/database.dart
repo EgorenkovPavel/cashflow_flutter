@@ -12,7 +12,6 @@ class AccountEntity extends Table {
   TextColumn get title => text()();
 
   BoolColumn get archive => boolean().withDefault(const Constant(false))();
-
 }
 
 class CategoryEntity extends Table {
@@ -27,7 +26,6 @@ class CategoryEntity extends Table {
 
   IntColumn get operationType =>
       integer().named('operation_type').map(const OperationTypeConverter())();
-
 }
 
 class OperationEntity extends Table {
@@ -224,12 +222,21 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
         return null;
     }
   }
-
 }
 
-@UseMoor(
-    tables: [AccountEntity, CategoryEntity, OperationEntity, BalanceEntity, CashflowEntity, Budget],
-    daos: [AccountDao, CategoryDao, OperationDao, BudgetDao])
+@UseMoor(tables: [
+  AccountEntity,
+  CategoryEntity,
+  OperationEntity,
+  BalanceEntity,
+  CashflowEntity,
+  Budget
+], daos: [
+  AccountDao,
+  CategoryDao,
+  OperationDao,
+  BudgetDao
+])
 class Database extends _$Database {
   Database()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -247,6 +254,126 @@ class Database extends _$Database {
       await delete(account).go();
       await delete(category).go();
     });
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>> getDbData() async {
+    Map<String, List<Map<String, dynamic>>> data = {};
+
+    List<AccountData> accounts = await accountDao.getAllAccounts();
+    List<CategoryData> categories = await categoryDao.getAllCategories();
+    List<OperationData> operations = await operationDao.getAllOperations();
+
+    data.putIfAbsent(
+        'account',
+        () => accounts
+            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .toList());
+
+    data.putIfAbsent(
+        'category',
+        () => categories
+            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .toList());
+
+    data.putIfAbsent(
+        'operation',
+        () => operations
+            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .toList());
+
+    return data;
+  }
+
+  Future loadData(Map<String, dynamic> data) async {
+    data.forEach((String key, dynamic value) async {
+      if (key == 'account') {
+        List<AccountData> accounts = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            accounts.add(
+                AccountData.fromJson(d, serializer: _DefaultValueSerializer()));
+          }
+        });
+        await accountDao.batchInsert(accounts);
+      } else if (key == 'category') {
+        List<CategoryData> categories = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            categories.add(CategoryData.fromJson(d,
+                serializer: _DefaultValueSerializer()));
+          }
+        });
+        await categoryDao.batchInsert(categories);
+      } else if (key == 'operation') {
+        List<OperationData> operations = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            operations.add(OperationData.fromJson(d,
+                serializer: _DefaultValueSerializer()));
+          }
+        });
+        await operationDao.batchInsert(operations);
+      }
+    });
+  }
+
+  Future loadOldData(Map<String, dynamic> data) async {
+    var converter = const OperationTypeConverter();
+
+    data.forEach((String key, dynamic value) async {
+      if (key == 'account') {
+        List<AccountData> accounts = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            accounts.add(AccountData(
+              id: int.parse(d['_id']),
+              title: d['account_title'],
+              archive: false,
+            ));
+          }
+        });
+        await accountDao.batchInsert(accounts);
+      } else if (key == 'category') {
+        List<CategoryData> categories = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            categories.add(CategoryData(
+              id: int.parse(d['_id']),
+              title: d['category_title'],
+              operationType: converter.mapToDart(int.parse(d['category_type'])),
+              archive: false,
+            ));
+          }
+        });
+        await categoryDao.batchInsert(categories);
+      } else if (key == 'operation') {
+        List<OperationData> operations = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+            operations.add(OperationData(
+              id: int.parse(d['_id']),
+              date: DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(d['operation_date'])),
+              operationType:
+                  converter.mapToDart(int.parse(d['operation_type'])),
+              account: int.parse(d['operation_account_id']),
+              category: _getId(d['operation_category_id']),
+              recAccount: _getId(d['operation_recipient_account_id']),
+              sum: int.parse(d['operation_sum']),
+            ));
+          }
+        });
+        await operationDao.batchInsert(operations);
+      }
+    });
+  }
+
+  int _getId(String id) {
+    if (id.isEmpty) {
+      return null;
+    } else {
+      return int.parse(id);
+    }
   }
 }
 
@@ -277,7 +404,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       {bool archive = false}) {
     return customSelectQuery(
         'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
-            'FROM account c ORDER BY title;',
+        'FROM account c ORDER BY title;',
         readsFrom: {account, balance}).watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
@@ -365,8 +492,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowBudgetEntity>> watchCashflowBudgetByCategory(
       int categoryId) {
-    return
-      customSelectQuery(
+    return customSelectQuery(
       'SELECT *, '
       'cashflow.date as date,'
       'cashflow.sum as sum '
@@ -387,8 +513,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withInt(categoryId),
       ],
       readsFrom: {category, cashflow},
-    
-
     ).watch().map((rows) {
       return rows.map((row) {
         print(row.readDateTime('date').toString());
@@ -425,7 +549,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 }
 
-@UseDao(tables: [AccountEntity, CategoryEntity, OperationEntity, BalanceEntity, CashflowEntity])
+@UseDao(tables: [
+  AccountEntity,
+  CategoryEntity,
+  OperationEntity,
+  BalanceEntity,
+  CashflowEntity
+])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   final Database db;
 
@@ -751,5 +881,37 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Future<void> deleteBudget(BudgetData entity) {
     return delete(budget).delete(entity);
+  }
+}
+
+class _DefaultValueSerializer extends ValueSerializer {
+  const _DefaultValueSerializer();
+
+  final _converter = const OperationTypeConverter();
+
+  @override
+  T fromJson<T>(dynamic json) {
+    if (T == DateTime) {
+      if (json == null) {
+        return null;
+      } else {
+        return DateTime.fromMillisecondsSinceEpoch(json as int) as T;
+      }
+    } else if (T == OperationType) {
+      return _converter.mapToDart(json as int) as T;
+    }
+
+    return json as T;
+  }
+
+  @override
+  dynamic toJson<T>(T value) {
+    if (value is DateTime) {
+      return value.millisecondsSinceEpoch;
+    } else if (value is OperationType) {
+      return _converter.mapToSql(value);
+    }
+
+    return value;
   }
 }

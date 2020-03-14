@@ -19,6 +19,9 @@ class Repository extends ChangeNotifier {
   Repository() : db = Database();
 
   Future deleteAll() => db.deleteAll();
+  Future<Map<String, List<Map<String, dynamic>>>> getDbData() => db.getDbData();
+  Future loadData(Map<String, dynamic> data) => db.loadData(data);
+  Future loadOldData(Map<String, dynamic> data) => db.loadOldData(data);
 
   //Accounts
   Stream<List<Account>> watchAllAccounts({bool archive = false}) =>
@@ -132,4 +135,6 @@ class Repository extends ChangeNotifier {
 
   Future<void> batchInsertOperations(List<OperationData> data) =>
       db.operationDao.batchInsert(data);
+
 }
+
