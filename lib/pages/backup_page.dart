@@ -1,16 +1,12 @@
-import 'package:cashflow/data/backuper.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/pages/drive_dialog.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
-import 'package:cashflow/widgets/load_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BackupPage extends StatelessWidget {
   static const routeName = '/backup';
-
-  Backuper _backuper = Backuper();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +59,7 @@ class BackupPage extends StatelessWidget {
     String catalogId = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
 
-    _backuper.backup(context, httpClient, catalogId);
+    Provider.of<Repository>(context, listen: false).backup(httpClient, catalogId);
   }
 
   _restore(BuildContext context) async {
@@ -74,7 +70,7 @@ class BackupPage extends StatelessWidget {
     String fileId = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
 
-    _backuper.restore(context, httpClient, fileId);
+    Provider.of<Repository>(context, listen: false).restore(httpClient, fileId);
   }
 
   _restoreOld(BuildContext context) async {
@@ -85,7 +81,7 @@ class BackupPage extends StatelessWidget {
     String fileId = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
 
-    _backuper.restoreOld(context, httpClient, fileId);
+    Provider.of<Repository>(context, listen: false).restoreOld(httpClient, fileId);
   }
 
   _deleteAll(BuildContext context){
