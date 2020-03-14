@@ -1,5 +1,7 @@
 import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/mappers/category_cashflow_budget_mapper.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
@@ -51,11 +53,15 @@ class Repository extends ChangeNotifier {
 
   Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
           DateTime date) =>
-      db.categoryDao.watchAllCategoryCashflowBudget(date);
+      db.categoryDao.watchAllCategoryCashflowBudget(date).map(
+              (list) => list.map((a) => const CategoryCashflowBudgetMapper().mapToDart(a))
+      );
 
-  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCatergory(
+  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCategory(
           int categoryId) =>
-      db.categoryDao.watchCashflowBudgetByCatergory(categoryId);
+      db.categoryDao.watchCashflowBudgetByCategory(categoryId).map(
+              (list) => list.map((a) => const CategoryCashflowBudgetMapper().mapToDart(a))
+      );
 
   Future insertCategory(Category entity) =>
       db.categoryDao.insertCategory(const CategoryMapper().mapToSql(entity));

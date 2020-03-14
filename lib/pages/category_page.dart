@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
@@ -107,7 +108,7 @@ class _CategoryPageState extends State<CategoryPage> {
           return SizedBox();
         }
 
-        List<CategoryCashflowBudget> list = snapshot.data;
+        List<CategoryCashflowBudgetEntity> list = snapshot.data;
 
         return ListView.builder(
           itemBuilder: (context, pos) {
@@ -121,7 +122,7 @@ class _CategoryPageState extends State<CategoryPage> {
         );
       },
       stream: Provider.of<Repository>(context, listen: false)
-          .watchCashflowBudgetByCatergory(widget.id),
+          .watchCashflowBudgetByCategory(widget.id),
     );
   }
 

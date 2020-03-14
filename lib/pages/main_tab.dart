@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/category_page.dart';
@@ -52,12 +53,12 @@ class _TestWidgetState extends State<TestWidget> {
       setState(() {
         categoriesInput = list
             .where((category) =>
-                category.category.operationType == OperationType.INPUT)
+                category.type == OperationType.INPUT)
             .toList();
 
         categoriesOutput = list
             .where((category) =>
-                category.category.operationType == OperationType.OUTPUT)
+                category.type == OperationType.OUTPUT)
             .toList();
       });
     });
@@ -217,21 +218,21 @@ class CategoryListItem extends StatelessWidget {
           ),
         ],
       ),
-      title: Text(category.category.title),
+      title: Text(category.title),
       subtitle: Text(
         '${AppLocalizations.of(context).titleBudget} ${category.budget}',
         style: Theme.of(context).textTheme.caption,
       ),
       trailing: Text(category.cashflow.toString()),
       onTap: () {
-        CategoryPage.open(context, category.category.id);
+        CategoryPage.open(context, category.id);
       },
     );
   }
 }
 
 class DonutAutoLabelChart extends StatelessWidget {
-  final List<CategoryCashflowBudget> categories;
+  final List<CategoryCashflowBudgetEntity> categories;
   final bool animate;
 
   DonutAutoLabelChart(this.categories, {this.animate});
@@ -240,13 +241,13 @@ class DonutAutoLabelChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return charts.PieChart(
       [
-        charts.Series<CategoryCashflowBudget, int>(
+        charts.Series<CategoryCashflowBudgetEntity, int>(
           id: 'Sales',
           data: categories.where((c) => c.cashflow > 0).toList(),
-          measureFn: (CategoryCashflowBudget datum, int index) =>
+          measureFn: (CategoryCashflowBudgetEntity datum, int index) =>
               datum.cashflow,
-          domainFn: (CategoryCashflowBudget datum, int index) => index,
-          labelAccessorFn: (CategoryCashflowBudget row, _) =>
+          domainFn: (CategoryCashflowBudgetEntity datum, int index) => index,
+          labelAccessorFn: (CategoryCashflowBudgetEntity row, _) =>
               '${row.category.title} ${row.cashflow}',
         )
       ],

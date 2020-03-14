@@ -1,8 +1,9 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
 
-class CategoryMapper{
+class CategoryMapper extends Mapper<Category, CategoryData>{
   const CategoryMapper();
 
   CategoryData mapToSql(Category c){

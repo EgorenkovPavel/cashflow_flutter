@@ -1,8 +1,9 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 
-class AccountBalanceMapper {
+class AccountBalanceMapper extends Mapper<AccountBalance, AccountBalanceEntity>{
   const AccountBalanceMapper();
 
   AccountBalanceEntity mapToSql(AccountBalance a) {

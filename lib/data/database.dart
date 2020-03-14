@@ -126,20 +126,20 @@ class AccountBalanceEntity {
   int get hashCode => account.hashCode;
 }
 
-class CategoryCashflowBudget {
+class CategoryCashflowBudgetEntity {
   int year;
   int month;
   CategoryData category;
   int budget;
   int cashflow;
 
-  CategoryCashflowBudget(
+  CategoryCashflowBudgetEntity(
       this.year, this.month, this.category, this.budget, this.cashflow);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CategoryCashflowBudget &&
+      other is CategoryCashflowBudgetEntity &&
           runtimeType == other.runtimeType &&
           category == other.category;
 
@@ -331,7 +331,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
+  Stream<List<CategoryCashflowBudgetEntity>> watchAllCategoryCashflowBudget(
       DateTime date) {
     DateTime monthStart = DateTime(date.year, date.month);
     DateTime monthEnd = date.month < 12
@@ -351,7 +351,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       readsFrom: {category, cashflow, budget},
     ).watch().map((rows) {
       return rows
-          .map((row) => CategoryCashflowBudget(
+          .map((row) => CategoryCashflowBudgetEntity(
                 date.year,
                 date.month,
                 CategoryData.fromData(row.data, db),
@@ -363,7 +363,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     });
   }
 
-  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCatergory(
+  Stream<List<CategoryCashflowBudgetEntity>> watchCashflowBudgetByCategory(
       int categoryId) {
     return
       customSelectQuery(
@@ -392,7 +392,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     ).watch().map((rows) {
       return rows.map((row) {
         print(row.readDateTime('date').toString());
-        return CategoryCashflowBudget(
+        return CategoryCashflowBudgetEntity(
           row.readDateTime('date').year,
           row.readDateTime('date').month,
           CategoryData.fromData(row.data, db),
