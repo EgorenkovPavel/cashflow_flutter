@@ -6,7 +6,7 @@ import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/pages/category_page.dart';
+import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';

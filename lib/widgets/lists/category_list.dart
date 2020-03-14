@@ -1,15 +1,13 @@
-import 'package:cashflow/cards/category_card.dart';
+import 'package:cashflow/widgets/cards/category_card.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/pages/category_page.dart';
-import 'package:cashflow/pages/main_list.dart';
+import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/widgets/pages/category_page.dart';
+import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../data/database.dart';
-import '../data/repository.dart';
 
 class CategoryList extends StatelessWidget implements MainList<Category>{
 

@@ -1,14 +1,14 @@
 import 'dart:math';
 
-import 'package:cashflow/lists/account_list.dart';
-import 'package:cashflow/lists/category_list.dart';
-import 'package:cashflow/lists/operation_list.dart';
-import 'package:cashflow/pages/backup_page.dart';
-import 'package:cashflow/pages/main_tab.dart';
+import 'package:cashflow/widgets/lists/account_list.dart';
+import 'package:cashflow/widgets/lists/category_list.dart';
+import 'package:cashflow/widgets/lists/operation_list.dart';
+import 'package:cashflow/widgets/pages/backup_page.dart';
+import 'package:cashflow/widgets/pages/main_tab.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'main_list.dart';
+import '../lists/main_list.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
