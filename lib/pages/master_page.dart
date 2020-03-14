@@ -1,5 +1,6 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -22,7 +23,7 @@ class _MasterPageState extends State<MasterPage> {
   OperationType _type;
   bool _showKeyboard = false;
   AccountBalance _account;
-  CategoryData _category;
+  Category _category;
   AccountBalance _recAccount;
   TextEditingController _sumController = TextEditingController();
 
@@ -66,14 +67,14 @@ class _MasterPageState extends State<MasterPage> {
   Widget categoryPageView(BuildContext context) {
     return StreamBuilder(
       stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
-      initialData: <CategoryData>[],
+      initialData: <Category>[],
       builder:
-          (BuildContext context, AsyncSnapshot<List<CategoryData>> snapshot) {
+          (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
           return SizedBox();
         }
 
-        List<CategoryData> categories = snapshot.data;
+        List<Category> categories = snapshot.data;
 
         return Carousel(
           key: GlobalKey(),
@@ -144,7 +145,7 @@ class _MasterPageState extends State<MasterPage> {
     }
 
     if (_type != OperationType.TRANSFER &&
-        (_category == null || _category.operationType != _type)) {
+        (_category == null || _category.type != _type)) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));

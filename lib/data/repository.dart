@@ -1,9 +1,11 @@
 import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
 import 'database.dart';
 import 'mappers/account_balance_mapper.dart';
+import 'mappers/category_mapper.dart';
 import 'objects/account.dart';
 import 'objects/account_balance.dart';
 
@@ -20,10 +22,10 @@ class Repository extends ChangeNotifier {
           .watchAllAccounts(archive: archive)
           .map((list) => list.map((a) => const AccountMapper().mapToDart(a)));
 
-  Stream<List<AccountBalance>> watchAllAccountsBalance({bool archive = false}) =>
-      db.accountDao
-          .watchAllAccountsWithBalance(archive: archive)
-          .map((list) => list.map((a) => const AccountBalanceMapper().mapToDart(a)));
+  Stream<List<AccountBalance>> watchAllAccountsBalance(
+          {bool archive = false}) =>
+      db.accountDao.watchAllAccountsWithBalance(archive: archive).map(
+          (list) => list.map((a) => const AccountBalanceMapper().mapToDart(a)));
 
   Future insertAccount(Account account) =>
       db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
@@ -31,24 +33,21 @@ class Repository extends ChangeNotifier {
   Future updateAccount(Account account) =>
       db.accountDao.updateAccount(const AccountMapper().mapToSql(account));
 
-  Future<void> batchInsertAccounts(List<AccountData> accounts) =>
-      db.accountDao.batchInsert(accounts);
-
-  Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
-
   //Categories
-  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
-      db.categoryDao.watchAllCategories(archive: archive);
+  Stream<List<Category>> watchAllCategories({bool archive = false}) =>
+      db.categoryDao
+          .watchAllCategories(archive: archive)
+          .map((list) => list.map((a) => const CategoryMapper().mapToDart(a)));
 
-  Future<List<CategoryData>> getAllCategories() =>
-      db.categoryDao.getAllCategories();
+  Stream<Category> getCategoryById(int id) => db.categoryDao
+      .getCategoryById(id)
+      .map((a) => const CategoryMapper().mapToDart(a));
 
-  Stream<CategoryData> getCategoryById(int id) =>
-      db.categoryDao.getCategoryById(id);
-
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
+  Stream<List<Category>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
-      db.categoryDao.watchAllCategoriesByType(type, archive: archive);
+      db.categoryDao
+          .watchAllCategoriesByType(type, archive: archive)
+          .map((list) => list.map((a) => const CategoryMapper().mapToDart(a)));
 
   Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
           DateTime date) =>
@@ -58,14 +57,11 @@ class Repository extends ChangeNotifier {
           int categoryId) =>
       db.categoryDao.watchCashflowBudgetByCatergory(categoryId);
 
-  Future insertCategory(CategoryData entity) =>
-      db.categoryDao.insertCategory(entity);
+  Future insertCategory(Category entity) =>
+      db.categoryDao.insertCategory(const CategoryMapper().mapToSql(entity));
 
-  Future updateCategory(CategoryData entity) =>
-      db.categoryDao.updateCategory(entity);
-
-  Future<void> batchInsertCategories(List<CategoryData> data) =>
-      db.categoryDao.batchInsert(data);
+  Future updateCategory(Category entity) =>
+      db.categoryDao.updateCategory(const CategoryMapper().mapToSql(entity));
 
   //Operations
   Stream<List<OperationItem>> watchAllOperationItems() =>
@@ -114,4 +110,18 @@ class Repository extends ChangeNotifier {
 
   Future<void> deleteBudget(BudgetData entity) =>
       db.budgetDao.deleteBudget(entity);
+
+  //INTERNAL operations backup
+
+  Future<void> batchInsertAccounts(List<AccountData> accounts) =>
+      db.accountDao.batchInsert(accounts);
+
+  Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
+
+  Future<List<CategoryData>> getAllCategories() =>
+      db.categoryDao.getAllCategories();
+
+  Future<void> batchInsertCategories(List<CategoryData> data) =>
+      db.categoryDao.batchInsert(data);
+
 }

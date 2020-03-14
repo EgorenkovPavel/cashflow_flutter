@@ -1,7 +1,9 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/mappers/category_mapper.dart';
 import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -26,14 +28,14 @@ class _OperationCardState extends State<OperationCard> {
   DateTime _date;
   TimeOfDay _time;
   Account _account;
-  CategoryData _category;
+  Category _category;
   Account _recAccount;
   TextEditingController _sumController = TextEditingController();
 
   Repository model;
   List<Account> accountList;
-  List<CategoryData> categoryInList;
-  List<CategoryData> categoryOutList;
+  List<Category> categoryInList;
+  List<Category> categoryOutList;
 
   @override
   void didChangeDependencies() {
@@ -70,7 +72,7 @@ class _OperationCardState extends State<OperationCard> {
     _type = widget.operation.type;
     _date = widget.operation.date;
     _account = mapper.mapToDart(widget.operation.account);
-    _category = widget.operation.category;
+    _category = const CategoryMapper().mapToDart(widget.operation.category);
     _recAccount = mapper.mapToDart(widget.operation.recAccount);
     _sumController.text = widget.operation.sum.toString();
 
@@ -80,10 +82,10 @@ class _OperationCardState extends State<OperationCard> {
   Widget AnalyticMenu() {
     switch (_type) {
       case OperationType.INPUT:
-        return DropdownList<CategoryData>(
+        return DropdownList<Category>(
             value: _category,
             hint: AppLocalizations.of(context).hintCategory,
-            onChange: (CategoryData newValue) {
+            onChange: (Category newValue) {
               setState(() {
                 _category = newValue;
               });
@@ -91,10 +93,10 @@ class _OperationCardState extends State<OperationCard> {
             items: categoryInList,
             getListItem: (item) => ListTile(title: Text(item.title)));
       case OperationType.OUTPUT:
-        return DropdownList<CategoryData>(
+        return DropdownList<Category>(
             value: _category,
             hint: AppLocalizations.of(context).hintCategory,
-            onChange: (CategoryData newValue) {
+            onChange: (Category newValue) {
               setState(() {
                 _category = newValue;
               });

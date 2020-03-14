@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/category_card.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/category_page.dart';
 import 'package:cashflow/pages/main_list.dart';
@@ -10,9 +11,9 @@ import 'package:provider/provider.dart';
 import '../data/database.dart';
 import '../data/repository.dart';
 
-class CategoryList extends StatelessWidget implements MainList<CategoryData>{
+class CategoryList extends StatelessWidget implements MainList<Category>{
 
-  Widget categoryList(BuildContext context, List<CategoryData> categories) {
+  Widget categoryList(BuildContext context, List<Category> categories) {
     return ListView.builder(
       itemCount: categories.length,
       itemBuilder: (_, index) {
@@ -22,9 +23,9 @@ class CategoryList extends StatelessWidget implements MainList<CategoryData>{
               ListTile(
                 title: Text(itemCategory.title),
                 subtitle: Text(
-                  getOperationTitle(context, itemCategory.operationType),
+                  getOperationTitle(context, itemCategory.type),
                   style: Theme.of(context).textTheme.caption.copyWith(
-                      color: getOperationColor(itemCategory.operationType)),
+                      color: getOperationColor(itemCategory.type)),
                 ),
                 onTap: () => onItemTap(context, itemCategory),
               ),
@@ -54,16 +55,16 @@ class CategoryList extends StatelessWidget implements MainList<CategoryData>{
   }
 
   @override
-  void onItemTap(BuildContext context, CategoryData item) {
+  void onItemTap(BuildContext context, Category item) {
     CategoryPage.open(context, item.id);
   }
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Repository>(context);
-    return StreamBuilder<List<CategoryData>>(
+    return StreamBuilder<List<Category>>(
       stream: model.watchAllCategories(),
-      builder: (context, AsyncSnapshot<List<CategoryData>> snapshot) {
+      builder: (context, AsyncSnapshot<List<Category>> snapshot) {
 
         if (!snapshot.hasData){
           return Center(child: CircularProgressIndicator());

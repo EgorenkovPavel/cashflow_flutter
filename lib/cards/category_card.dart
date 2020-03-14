@@ -1,4 +1,5 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/cards/item_card.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryCard extends StatefulWidget {
-  CategoryData category;
+  Category category;
 
   CategoryCard({this.category});
 
@@ -26,7 +27,7 @@ class _CategoryCardState extends State<CategoryCard> {
     if (widget.category != null) {
       titleController.text = widget.category.title;
 
-      _type = widget.category.operationType;
+      _type = widget.category.type;
     } else {
       _type = OperationType.INPUT;
     }
@@ -40,15 +41,13 @@ class _CategoryCardState extends State<CategoryCard> {
 
   void saveCategory(BuildContext context) {
     if (widget.category == null) {
-      widget.category = CategoryData(
-          title: titleController.text,
-          operationType: _type);
       Provider.of<Repository>(context, listen: false)
-          .insertCategory(widget.category);
+          .insertCategory(Category(title: titleController.text, type: _type));
     } else {
       widget.category = widget.category.copyWith(
-          title: titleController.text,
-          operationType: _type,);
+        title: titleController.text,
+        type: _type,
+      );
       Provider.of<Repository>(context, listen: false)
           .updateCategory(widget.category);
     }
@@ -65,7 +64,6 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-
           Padding(
             padding: const EdgeInsets.only(left: 12.0, top: 8.0),
             child: Text(

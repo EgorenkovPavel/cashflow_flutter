@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
@@ -27,8 +28,8 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  CategoryData category;
-  StreamSubscription<CategoryData> subscription;
+  Category category;
+  StreamSubscription<Category> subscription;
 
   bool _editTitleMode = false;
   TextEditingController _titleController = TextEditingController();
@@ -38,7 +39,7 @@ class _CategoryPageState extends State<CategoryPage> {
     super.initState();
     subscription = Provider.of<Repository>(context, listen: false)
         .getCategoryById(widget.id)
-        .listen((CategoryData data) {
+        .listen((Category data) {
       setState(() {
         category = data;
       });
@@ -217,7 +218,7 @@ class _CategoryPageState extends State<CategoryPage> {
           Text(
             category == null
                 ? ''
-                : getOperationTitle(context, category.operationType),
+                : getOperationTitle(context, category.type),
             style: Theme.of(context)
                 .textTheme
                 .caption
