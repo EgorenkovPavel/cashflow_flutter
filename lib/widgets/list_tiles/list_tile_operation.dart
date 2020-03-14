@@ -1,12 +1,12 @@
-import 'package:cashflow/data/database.dart';
-import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ListTileOperation extends StatelessWidget {
-  final OperationItem _operation;
+  final Operation _operation;
   final GestureTapCallback onTap;
 
   const ListTileOperation(this._operation, {Key key, this.onTap})
@@ -48,7 +48,7 @@ class ListTileOperation extends StatelessWidget {
                 title: Text('DELETE'),
                 onTap: () {
                   Provider.of<Repository>(context, listen: false)
-                      .deleteOperation(_operation.operationData);
+                      .deleteOperation(_operation);
                 },
               ),
             ],

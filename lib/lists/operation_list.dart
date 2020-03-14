@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/operation_card.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/pages/master_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -12,7 +13,7 @@ import '../data/repository.dart';
 
 class OperationList extends StatelessWidget implements MainList{
 
-  Widget operationList(BuildContext context, List<OperationItem> operations){
+  Widget operationList(BuildContext context, List<Operation> operations){
     return ListView.builder(
       itemCount: operations.length,
       itemBuilder: (_, index) {
@@ -56,9 +57,9 @@ class OperationList extends StatelessWidget implements MainList{
   Widget build(BuildContext context) {
 
     final model = Provider.of<Repository>(context);
-    return StreamBuilder<List<OperationItem>>(
-      stream: model.watchAllOperationItems(),
-      builder: (context, AsyncSnapshot<List<OperationItem>> snapshot) {
+    return StreamBuilder<List<Operation>>(
+      stream: model.watchAllOperations(),
+      builder: (context, AsyncSnapshot<List<Operation>> snapshot) {
 
         if(!snapshot.hasData){
           return Center(child: CircularProgressIndicator());

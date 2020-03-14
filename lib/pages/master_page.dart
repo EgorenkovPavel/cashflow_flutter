@@ -1,6 +1,9 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/account_balance_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -161,20 +164,20 @@ class _MasterPageState extends State<MasterPage> {
     }
 
     if (_type == OperationType.TRANSFER) {
-      OperationData operation = OperationData(
+      Operation operation = Operation(
           date: DateTime.now(),
-          operationType: _type,
-          account: _account.id,
-          recAccount: _recAccount.id,
+          type: _type,
+          account: const AccountBalanceMapper().mapToAccount(_account),
+          recAccount: const AccountBalanceMapper().mapToAccount(_recAccount),
           sum: sum);
 
       Provider.of<Repository>(context, listen: false).insertOperation(operation);
     } else {
-      OperationData operation = OperationData(
+      Operation operation = Operation(
           date: DateTime.now(),
-          operationType: _type,
-          account: _account.id,
-          category: _category.id,
+          type: _type,
+          account: const AccountBalanceMapper().mapToAccount(_account),
+          category: _category,
           sum: sum);
 
       Provider.of<Repository>(context, listen: false)..insertOperation(operation);

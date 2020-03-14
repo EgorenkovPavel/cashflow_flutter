@@ -18,4 +18,11 @@ class AccountBalanceMapper extends Mapper<AccountBalance, AccountBalanceEntity>{
         archive: a.account.archive,
         balance: a.sum);
   }
+
+  Account mapToAccount(AccountBalance a) {
+    return Account(
+        id: a.id,
+        title: a.title,
+        archive: a.archive);
+  }
 }

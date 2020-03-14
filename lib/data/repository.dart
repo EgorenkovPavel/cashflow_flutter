@@ -1,7 +1,9 @@
 import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/mappers/category_cashflow_budget_mapper.dart';
+import 'package:cashflow/data/mappers/operation_mapper.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
@@ -70,32 +72,27 @@ class Repository extends ChangeNotifier {
       db.categoryDao.updateCategory(const CategoryMapper().mapToSql(entity));
 
   //Operations
-  Stream<List<OperationItem>> watchAllOperationItems() =>
-      db.operationDao.watchAllOperationItems();
+  Stream<List<Operation>> watchAllOperations() =>
+      db.operationDao.watchAllOperationItems().map(
+              (list) => list.map((a) => const OperationMapper().mapToDart(a))
+      );
 
-  Stream<List<OperationItem>> watchAllOperationItemsByCategory(
+  Stream<List<Operation>> watchAllOperationsByCategory(
           int categoryId) =>
-      db.operationDao.watchAllOperationItemsByCategory(categoryId);
+      db.operationDao.watchAllOperationItemsByCategory(categoryId).map(
+              (list) => list.map((a) => const OperationMapper().mapToDart(a))
+      );
 
-  Future<List<OperationData>> getAllOperations() =>
-      db.operationDao.getAllOperations();
-
-  Future insertOperationItem(OperationItem entity) =>
-      db.operationDao.insertOperationItem(entity);
-
-  Future insertOperation(OperationData entity) {
+  Future insertOperation(Operation entity) {
     if (entity.id == 0) {
-      db.operationDao.insertOperation(entity);
+      db.operationDao.insertOperation(const OperationMapper().mapToOperationData(entity));
     } else {
-      db.operationDao.updateOperation(entity);
+      db.operationDao.updateOperation(const OperationMapper().mapToOperationData(entity));
     }
   }
 
-  Future deleteOperation(OperationData entity) =>
-      db.operationDao.deleteOperation(entity);
-
-  Future<void> batchInsertOperations(List<OperationData> data) =>
-      db.operationDao.batchInsert(data);
+  Future deleteOperation(Operation entity) =>
+      db.operationDao.deleteOperation(const OperationMapper().mapToOperationData(entity));
 
   //Budget
 
@@ -130,4 +127,9 @@ class Repository extends ChangeNotifier {
   Future<void> batchInsertCategories(List<CategoryData> data) =>
       db.categoryDao.batchInsert(data);
 
+  Future<List<OperationData>> getAllOperations() =>
+      db.operationDao.getAllOperations();
+
+  Future<void> batchInsertOperations(List<OperationData> data) =>
+      db.operationDao.batchInsert(data);
 }

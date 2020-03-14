@@ -1,21 +1,19 @@
-import 'package:cashflow/data/mappers/account_mapper.dart';
-import 'package:cashflow/data/mappers/category_mapper.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 class OperationPage extends StatefulWidget {
   static const routeName = '/operation';
 
-  final OperationItem operation;
+  final Operation operation;
 
   const OperationPage({Key key, this.operation}) : super(key: key);
 
@@ -67,14 +65,12 @@ class _OperationPageState extends State<OperationPage> {
   void initState() {
     super.initState();
 
-    AccountMapper mapper = const AccountMapper();
-
-    _id = widget.operation.operationData.id;
+    _id = widget.operation.id;
     _type = widget.operation.type;
     _date = widget.operation.date;
-    _account = mapper.mapToDart(widget.operation.account);
-    _category = const CategoryMapper().mapToDart(widget.operation.category);
-    _recAccount = mapper.mapToDart(widget.operation.recAccount);
+    _account = widget.operation.account;
+    _category = widget.operation.category;
+    _recAccount = widget.operation.recAccount;
     _sumController.text = widget.operation.sum.toString();
 
     _time = TimeOfDay.fromDateTime(_date);
@@ -124,22 +120,22 @@ class _OperationPageState extends State<OperationPage> {
     _date =
         DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     if (_type == OperationType.TRANSFER) {
-      OperationData operation = OperationData(
+      Operation operation = Operation(
           id: _id,
           date: _date,
-          operationType: _type,
-          account: _account.id,
-          recAccount: _recAccount.id,
+          type: _type,
+          account: _account,
+          recAccount: _recAccount,
           sum: int.parse(_sumController.text));
 
       Provider.of<Repository>(context).insertOperation(operation);
     } else {
-      OperationData operation = OperationData(
+      Operation operation = Operation(
           id: _id,
           date: _date,
-          operationType: _type,
-          account: _account.id,
-          category: _category.id,
+          type: _type,
+          account: _account,
+          category: _category,
           sum: int.parse(_sumController.text));
 
       Provider.of<Repository>(context).insertOperation(operation);

@@ -4,6 +4,7 @@ import 'package:cashflow/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
@@ -153,13 +154,13 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Widget buildOperationList(BuildContext context) {
-    return StreamBuilder<List<OperationItem>>(
+    return StreamBuilder<List<Operation>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return SizedBox();
         }
 
-        List<OperationItem> operations = snapshot.data;
+        List<Operation> operations = snapshot.data;
 
         return ListView.builder(
           itemBuilder: (context, pos) {
@@ -169,7 +170,7 @@ class _CategoryPageState extends State<CategoryPage> {
         );
       },
       stream: Provider.of<Repository>(context, listen: false)
-          .watchAllOperationItemsByCategory(widget.id),
+          .watchAllOperationsByCategory(widget.id),
     );
   }
 
