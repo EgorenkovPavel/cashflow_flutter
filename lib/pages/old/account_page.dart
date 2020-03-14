@@ -1,4 +1,7 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +12,10 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountWithBalance account = ModalRoute.of(context).settings.arguments;
+    AccountBalance account = ModalRoute.of(context).settings.arguments;
 
     final TextEditingController controller = TextEditingController(
-        text: account == null ? '' : account.account.title);
+        text: account == null ? '' : account.title);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,10 +26,10 @@ class AccountPage extends StatelessWidget {
             onPressed: () {
               if (account == null) {
                 Provider.of<Repository>(context, listen: false)
-                    .insertAccount(AccountData(title: controller.text));
+                    .insertAccount(Account(title: controller.text));
               } else {
                 Provider.of<Repository>(context, listen: false).updateAccount(
-                    account.account.copyWith(title: controller.text));
+                    account.getAccount().copyWith(title: controller.text));
               }
 
               Navigator.pop(context);

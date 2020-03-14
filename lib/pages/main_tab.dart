@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/pages/category_page.dart';
@@ -28,18 +29,18 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  List<AccountWithBalance> accounts = [];
+  List<AccountBalance> accounts = [];
   List<CategoryCashflowBudget> categoriesInput = [];
   List<CategoryCashflowBudget> categoriesOutput = [];
 
-  StreamSubscription<List<AccountWithBalance>> subAccount;
+  StreamSubscription<List<AccountBalance>> subAccount;
   StreamSubscription<List<CategoryCashflowBudget>> subCategory;
 
   @override
   void initState() {
     super.initState();
     subAccount = Provider.of<Repository>(context, listen: false)
-        .watchAllAccountsWithBalance()
+        .watchAllAccountsBalance()
         .listen((list) {
       setState(() {
         accounts = list;
@@ -84,7 +85,7 @@ class _TestWidgetState extends State<TestWidget> {
                 ),
                 Text(
                   accounts
-                      .map((account) => account.sum)
+                      .map((account) => account.balance)
                       .fold(0, (a, b) => a + b)
                       .toString(),
                   style: Theme.of(context).textTheme.headline,
@@ -96,8 +97,8 @@ class _TestWidgetState extends State<TestWidget> {
                       children: <Widget>[
                         Divider(),
                         ListTile(
-                          title: Text(account.account.title),
-                          trailing: Text(account.sum.toString()),
+                          title: Text(account.title),
+                          trailing: Text(account.balance.toString()),
                         ),
                       ],
                     ))

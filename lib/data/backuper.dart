@@ -11,6 +11,8 @@ import 'package:moor_flutter/moor_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'objects/account.dart';
+
 class Backuper {
 
   void backup(BuildContext context, GoogleHttpClient httpClient,

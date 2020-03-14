@@ -1,4 +1,5 @@
 import 'package:cashflow/cards/account_card.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/pages/main_list.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
@@ -9,9 +10,9 @@ import 'package:provider/provider.dart';
 import '../data/database.dart';
 import '../data/repository.dart';
 
-class AccountList extends StatelessWidget implements MainList<AccountWithBalance> {
+class AccountList extends StatelessWidget implements MainList<AccountBalance> {
 
-  Widget accountList(BuildContext context, List<AccountWithBalance> accounts) {
+  Widget accountList(BuildContext context, List<AccountBalance> accounts) {
     return ListView.builder(
       itemCount: accounts.length,
       itemBuilder: (_, index) {
@@ -26,13 +27,12 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
     );
   }
 
-  Widget totalSum(BuildContext context, List<AccountWithBalance> accounts) {
+  Widget totalSum(BuildContext context, List<AccountBalance> accounts) {
     if (accounts.length <= 1) {
       return SizedBox();
     }
 
-    int sum = 0;
-    accounts.forEach((f) => sum += f.sum);
+    int sum = accounts.fold(0, (prev, next) => prev + next.balance);
 
     return Container(
       child: ListTile(
@@ -68,7 +68,7 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
   }
 
   @override
-  void onItemTap(BuildContext context, AccountWithBalance item) {
+  void onItemTap(BuildContext context, AccountBalance item) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -86,11 +86,11 @@ class AccountList extends StatelessWidget implements MainList<AccountWithBalance
   Widget build(BuildContext context) {
     final model = Provider.of<Repository>(context);
 
-    return StreamBuilder<List<AccountWithBalance>>(
-      stream: model.watchAllAccountsWithBalance(),
+    return StreamBuilder<List<AccountBalance>>(
+      stream: model.watchAllAccountsBalance(),
 
       builder: (BuildContext context,
-          AsyncSnapshot<List<AccountWithBalance>> snapshot) {
+          AsyncSnapshot<List<AccountBalance>> snapshot) {
 
         if(!snapshot.hasData){
           return Center(child: CircularProgressIndicator());

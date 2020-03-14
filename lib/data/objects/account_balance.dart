@@ -1,0 +1,23 @@
+import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/objects/account.dart';
+
+import '../database.dart';
+
+class AccountBalance {
+  final int id;
+  final String title;
+  final bool archive;
+  final int balance;
+
+  const AccountBalance({this.id, this.title, this.archive, this.balance});
+
+  AccountBalance copyWith({int id, String title, bool archive, int balance}) =>
+      AccountBalance(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        archive: archive ?? this.archive,
+        balance: balance ?? this.balance,
+      );
+
+  Account getAccount() => Account(id: this.id, title: this.title, archive: this.archive);
+}

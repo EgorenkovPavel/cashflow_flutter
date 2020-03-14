@@ -109,16 +109,16 @@ class MonthBudget {
   MonthBudget(this.date, this.sum);
 }
 
-class AccountWithBalance {
+class AccountBalanceEntity {
   AccountData account;
   int sum;
 
-  AccountWithBalance(this.account, this.sum);
+  AccountBalanceEntity(this.account, this.sum);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AccountWithBalance &&
+      other is AccountBalanceEntity &&
           runtimeType == other.runtimeType &&
           account == other.account;
 
@@ -273,13 +273,14 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     ).watchSingle().map((row) => row.readInt('sum') ?? 0);
   }
 
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance(
+  Stream<List<AccountBalanceEntity>> watchAllAccountsWithBalance(
       {bool archive = false}) {
     return customSelectQuery(
-        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" FROM account c ORDER BY title;',
+        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
+            'FROM account c ORDER BY title;',
         readsFrom: {account, balance}).watch().map((rows) {
       return rows
-          .map((row) => AccountWithBalance(
+          .map((row) => AccountBalanceEntity(
               AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
           .where((a) => archive ? true : !a.account.archive)
           .toList();

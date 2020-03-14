@@ -1,11 +1,11 @@
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListTileAccount extends StatelessWidget {
-
-  final AccountWithBalance _account;
+  final AccountBalance _account;
   final GestureTapCallback onTap;
 
   const ListTileAccount(this._account, {Key key, this.onTap}) : super(key: key);
@@ -13,9 +13,9 @@ class ListTileAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(_account.account.title),
+      title: Text(_account.title),
       trailing: Text(
-        (_account.sum ?? 0).toString(),
+        (_account.balance ?? 0).toString(),
         style: Theme.of(context).textTheme.title,
       ),
       onTap: onTap,
@@ -27,10 +27,10 @@ class ListTileAccount extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.delete),
-                title: Text(_account.account.archive ? 'UNARCHIVE' : 'ARCHIVE'),
+                title: Text(_account.archive ? 'UNARCHIVE' : 'ARCHIVE'),
                 onTap: () {
-                  Provider.of<Repository>(context, listen: false)
-                      .updateAccount(_account.account.copyWith(archive: !_account.account.archive));
+                  Provider.of<Repository>(context, listen: false).updateAccount(
+                      _account.getAccount().copyWith(archive: !_account.archive));
                   Navigator.of(context).pop();
                 },
               ),

@@ -1,27 +1,30 @@
 import 'package:cashflow/cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountCard extends StatelessWidget {
-  AccountWithBalance account;
+  AccountBalance account;
   final TextEditingController controller = TextEditingController();
 
   AccountCard({this.account}) {
     if (account != null) {
-      controller.text = account.account.title;
+      controller.text = account.title;
     }
   }
 
   void saveAccount(BuildContext context) {
     if (account == null) {
       Provider.of<Repository>(context, listen: false)
-          .insertAccount(AccountData(title: controller.text));
+          .insertAccount(Account(title: controller.text));
     } else {
       Provider.of<Repository>(context, listen: false)
-          .updateAccount(account.account.copyWith(title: controller.text));
+          .updateAccount(account.getAccount().copyWith(title: controller.text));
     }
   }
 

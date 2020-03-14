@@ -3,7 +3,9 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
 import 'database.dart';
+import 'mappers/account_balance_mapper.dart';
 import 'objects/account.dart';
+import 'objects/account_balance.dart';
 
 class Repository extends ChangeNotifier {
   final Database db;
@@ -18,22 +20,21 @@ class Repository extends ChangeNotifier {
           .watchAllAccounts(archive: archive)
           .map((list) => list.map((a) => const AccountMapper().mapToDart(a)));
 
-  Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
+  Stream<List<AccountBalance>> watchAllAccountsBalance({bool archive = false}) =>
+      db.accountDao
+          .watchAllAccountsWithBalance(archive: archive)
+          .map((list) => list.map((a) => const AccountBalanceMapper().mapToDart(a)));
 
-  Stream<List<AccountWithBalance>> watchAllAccountsWithBalance(
-          {bool archive = false}) =>
-      db.accountDao.watchAllAccountsWithBalance(archive: archive);
+  Future insertAccount(Account account) =>
+      db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
 
-  Future insertAccount(AccountData entity) =>
-      db.accountDao.insertAccount(entity);
-
-  Future updateAccount(AccountData entity) =>
-      db.accountDao.updateAccount(entity);
-
-  Stream<int> getTotalBalance() => db.accountDao.getTotalBalance();
+  Future updateAccount(Account account) =>
+      db.accountDao.updateAccount(const AccountMapper().mapToSql(account));
 
   Future<void> batchInsertAccounts(List<AccountData> accounts) =>
       db.accountDao.batchInsert(accounts);
+
+  Future<List<AccountData>> getAllAccounts() => db.accountDao.getAllAccounts();
 
   //Categories
   Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>

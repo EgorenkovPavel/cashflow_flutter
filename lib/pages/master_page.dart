@@ -1,4 +1,5 @@
 import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -20,22 +21,22 @@ class MasterPage extends StatefulWidget {
 class _MasterPageState extends State<MasterPage> {
   OperationType _type;
   bool _showKeyboard = false;
-  AccountWithBalance _account;
+  AccountBalance _account;
   CategoryData _category;
-  AccountWithBalance _recAccount;
+  AccountBalance _recAccount;
   TextEditingController _sumController = TextEditingController();
 
   Widget accountPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllAccountsWithBalance(),
-      initialData: <AccountWithBalance>[],
+      stream: Provider.of<Repository>(context).watchAllAccountsBalance(),
+      initialData: <AccountBalance>[],
       builder: (BuildContext context,
-          AsyncSnapshot<List<AccountWithBalance>> snapshot) {
+          AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
           return SizedBox();
         }
 
-        List<AccountWithBalance> accounts = snapshot.data;
+        List<AccountBalance> accounts = snapshot.data;
 
         return Carousel(
           key: GlobalKey(),
@@ -49,9 +50,9 @@ class _MasterPageState extends State<MasterPage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(accounts[pos].account.title),
+                Text(accounts[pos].title),
                 Text(
-                  accounts[pos].sum.toString(),
+                  accounts[pos].balance.toString(),
                   style: Theme.of(context).textTheme.caption,
                 )
               ],
@@ -92,15 +93,15 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget recAccountPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllAccountsWithBalance(),
-      initialData: <AccountWithBalance>[],
+      stream: Provider.of<Repository>(context).watchAllAccountsBalance(),
+      initialData: <AccountBalance>[],
       builder: (BuildContext context,
-          AsyncSnapshot<List<AccountWithBalance>> snapshot) {
+          AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
           return SizedBox();
         }
 
-        List<AccountWithBalance> accounts = snapshot.data;
+        List<AccountBalance> accounts = snapshot.data;
 
         return Carousel(
           key: GlobalKey(),
@@ -114,9 +115,9 @@ class _MasterPageState extends State<MasterPage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(accounts[pos].account.title),
+                Text(accounts[pos].title),
                 Text(
-                  accounts[pos].sum.toString(),
+                  accounts[pos].balance.toString(),
                   style: Theme.of(context).textTheme.caption,
                 )
               ],
@@ -162,8 +163,8 @@ class _MasterPageState extends State<MasterPage> {
       OperationData operation = OperationData(
           date: DateTime.now(),
           operationType: _type,
-          account: _account.account.id,
-          recAccount: _recAccount.account.id,
+          account: _account.id,
+          recAccount: _recAccount.id,
           sum: sum);
 
       Provider.of<Repository>(context, listen: false).insertOperation(operation);
@@ -171,7 +172,7 @@ class _MasterPageState extends State<MasterPage> {
       OperationData operation = OperationData(
           date: DateTime.now(),
           operationType: _type,
-          account: _account.account.id,
+          account: _account.id,
           category: _category.id,
           sum: sum);
 
