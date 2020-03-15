@@ -404,7 +404,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       {bool archive = false}) {
     return customSelectQuery(
         'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
-        'FROM account c ORDER BY title;',
+        'FROM accounts c ORDER BY title;',
         readsFrom: {account, balance}).watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
@@ -440,7 +440,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   //Future<List<Task>> getAllTasks() => select(tasks).get();
   Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
       (select(category)
-            ..where((a) => a.archive.equals(false) | a.archive.equals(archive))
+            //..where((a) => a.archive.equals(false) | a.archive.equals(archive))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
@@ -467,9 +467,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelectQuery(
       'SELECT *, '
-      '(SELECT sum as sum FROM budget WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-      'FROM category c ORDER BY title;',
+      'FROM categories c ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthStart),

@@ -36,12 +36,13 @@ class Repository extends ChangeNotifier {
   Stream<List<Account>> watchAllAccounts({bool archive = false}) =>
       db.accountDao
           .watchAllAccounts(archive: archive)
-          .map((list) => list.map((a) => const AccountMapper().mapToDart(a)));
+          .map((list) => const AccountMapper().mapListToDart(list));
 
   Stream<List<AccountBalance>> watchAllAccountsBalance(
           {bool archive = false}) =>
-      db.accountDao.watchAllAccountsWithBalance(archive: archive).map(
-          (list) => list.map((a) => const AccountBalanceMapper().mapToDart(a)));
+      db.accountDao
+          .watchAllAccountsWithBalance(archive: archive)
+          .map((list) => const AccountBalanceMapper().mapListToDart(list));
 
   Future insertAccount(Account account) =>
       db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
@@ -53,7 +54,7 @@ class Repository extends ChangeNotifier {
   Stream<List<Category>> watchAllCategories({bool archive = false}) =>
       db.categoryDao
           .watchAllCategories(archive: archive)
-          .map((list) => list.map((a) => const CategoryMapper().mapToDart(a)));
+          .map((list) => const CategoryMapper().mapListToDart(list));
 
   Stream<Category> getCategoryById(int id) => db.categoryDao
       .getCategoryById(id)
@@ -63,17 +64,17 @@ class Repository extends ChangeNotifier {
           {bool archive = false}) =>
       db.categoryDao
           .watchAllCategoriesByType(type, archive: archive)
-          .map((list) => list.map((a) => const CategoryMapper().mapToDart(a)));
+          .map((list) => const CategoryMapper().mapListToDart(list));
 
   Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
           DateTime date) =>
-      db.categoryDao.watchAllCategoryCashflowBudget(date).map((list) =>
-          list.map((a) => const CategoryCashflowBudgetMapper().mapToDart(a)));
+      db.categoryDao.watchAllCategoryCashflowBudget(date).map(
+          (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
 
   Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCategory(
           int categoryId) =>
-      db.categoryDao.watchCashflowBudgetByCategory(categoryId).map((list) =>
-          list.map((a) => const CategoryCashflowBudgetMapper().mapToDart(a)));
+      db.categoryDao.watchCashflowBudgetByCategory(categoryId).map(
+          (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
 
   Future insertCategory(Category entity) =>
       db.categoryDao.insertCategory(const CategoryMapper().mapToSql(entity));
@@ -84,12 +85,12 @@ class Repository extends ChangeNotifier {
   //Operations
   Stream<List<Operation>> watchAllOperations() => db.operationDao
       .watchAllOperationItems()
-      .map((list) => list.map((a) => const OperationMapper().mapToDart(a)));
+      .map((list) => const OperationMapper().mapListToDart(list));
 
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
       db.operationDao
           .watchAllOperationItemsByCategory(categoryId)
-          .map((list) => list.map((a) => const OperationMapper().mapToDart(a)));
+          .map((list) => const OperationMapper().mapListToDart(list));
 
   Future insertOperation(Operation entity) {
     if (entity.id == 0) {

@@ -59,9 +59,8 @@ class CategoryList extends StatelessWidget implements MainList<Category>{
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Repository>(context);
     return StreamBuilder<List<Category>>(
-      stream: model.watchAllCategories(),
+      stream: Provider.of<Repository>(context, listen: false).watchAllCategories(),
       builder: (context, AsyncSnapshot<List<Category>> snapshot) {
 
         if (!snapshot.hasData){
