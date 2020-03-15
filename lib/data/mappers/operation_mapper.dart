@@ -13,8 +13,8 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
     return OperationItem(
         mapToOperationData(o),
         const AccountMapper().mapToSql(o.account),
-        const CategoryMapper().mapToSql(o.category),
-        const AccountMapper().mapToSql(o.recAccount));
+        o.category == null ? null : const CategoryMapper().mapToSql(o.category),
+        o.recAccount == null ? null : const AccountMapper().mapToSql(o.recAccount));
   }
 
   Operation mapToDart(OperationItem o) {
@@ -23,8 +23,8 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),
-        category: const CategoryMapper().mapToDart(o.category),
-        recAccount: const AccountMapper().mapToDart(o.recAccount),
+        category: o.category == null ? null : const CategoryMapper().mapToDart(o.category),
+        recAccount: o.recAccount == null ? null : const AccountMapper().mapToDart(o.recAccount),
         sum: o.operationData.sum);
   }
 
@@ -34,8 +34,8 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         date: o.date,
         operationType: o.type,
         account: o.account.id,
-        category: o.category.id,
-        recAccount: o.recAccount.id,
+        category: o.category?.id,
+        recAccount: o.recAccount?.id,
         sum: o.sum);
   }
 }

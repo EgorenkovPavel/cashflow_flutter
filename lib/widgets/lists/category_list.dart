@@ -9,28 +9,25 @@ import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryList extends StatelessWidget implements MainList<Category>{
-
+class CategoryList extends StatelessWidget implements MainList<Category> {
   Widget categoryList(BuildContext context, List<Category> categories) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: categories.length,
       itemBuilder: (_, index) {
         final itemCategory = categories[index];
-        return Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(itemCategory.title),
-                subtitle: Text(
-                  getOperationTitle(context, itemCategory.type),
-                  style: Theme.of(context).textTheme.caption.copyWith(
-                      color: getOperationColor(itemCategory.type)),
-                ),
-                onTap: () => onItemTap(context, itemCategory),
-              ),
-              Divider()
-            ],
-          );
+        return ListTile(
+          title: Text(itemCategory.title),
+          subtitle: Text(
+            getOperationTitle(context, itemCategory.type),
+            style: Theme.of(context)
+                .textTheme
+                .caption
+                .copyWith(color: getOperationColor(itemCategory.type)),
+          ),
+          onTap: () => onItemTap(context, itemCategory),
+        );
       },
+      separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
 
@@ -60,13 +57,14 @@ class CategoryList extends StatelessWidget implements MainList<Category>{
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Category>>(
-      stream: Provider.of<Repository>(context, listen: false).watchAllCategories(),
+      stream:
+          Provider.of<Repository>(context, listen: false).watchAllCategories(),
       builder: (context, AsyncSnapshot<List<Category>> snapshot) {
-
-        if (!snapshot.hasData){
+        if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
-        }else if(snapshot.data.isEmpty) {
-          return EmptyListHint(AppLocalizations.of(context).hintEmptyListCategories);
+        } else if (snapshot.data.isEmpty) {
+          return EmptyListHint(
+              AppLocalizations.of(context).hintEmptyListCategories);
         }
 
         final categories = snapshot.data ?? List();

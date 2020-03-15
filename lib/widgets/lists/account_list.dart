@@ -9,19 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountList extends StatelessWidget implements MainList<AccountBalance> {
-
   Widget accountList(BuildContext context, List<AccountBalance> accounts) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: accounts.length,
       itemBuilder: (_, index) {
         final itemAccount = accounts[index];
-        return Column(
-            children: <Widget>[
-              ListTileAccount(itemAccount, onTap: () => onItemTap(context, itemAccount),),
-              Divider()
-            ],
-          );
+        return ListTileAccount(
+          itemAccount,
+          onTap: () => onItemTap(context, itemAccount),
+        );
       },
+      separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
 
@@ -86,14 +84,13 @@ class AccountList extends StatelessWidget implements MainList<AccountBalance> {
 
     return StreamBuilder<List<AccountBalance>>(
       stream: model.watchAllAccountsBalance(),
-
-      builder: (BuildContext context,
-          AsyncSnapshot<List<AccountBalance>> snapshot) {
-
-        if(!snapshot.hasData){
+      builder:
+          (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
+        if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
-        }else if(snapshot.data.isEmpty){
-          return EmptyListHint(AppLocalizations.of(context).hintEmptyListAccounts);
+        } else if (snapshot.data.isEmpty) {
+          return EmptyListHint(
+              AppLocalizations.of(context).hintEmptyListAccounts);
         }
 
         final accounts = snapshot.data ?? List();
