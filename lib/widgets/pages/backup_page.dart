@@ -94,6 +94,7 @@ class BackupPage extends StatelessWidget {
           child: Text('Yes'),
           onPressed: () {
             Provider.of<Repository>(context, listen: false).deleteAll();
+            Navigator.of(context).pop();
           },
         ),
       ],
