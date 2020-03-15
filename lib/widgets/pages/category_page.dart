@@ -1,16 +1,14 @@
 import 'dart:async';
 
-import 'package:cashflow/widgets/cards/budget_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/widgets/cards/budget_card.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -102,28 +100,6 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget buildChart(BuildContext context) {
     return Center(
       child: Text('Here will be chart'),
-    );
-    return StreamBuilder<List<CategoryCashflowBudget>>(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return SizedBox();
-        }
-
-        List<CategoryCashflowBudgetEntity> list = snapshot.data;
-
-        return ListView.builder(
-          itemBuilder: (context, pos) {
-            return ListTile(
-              title: Text(list[pos].month.toString()),
-              subtitle: Text(list[pos].year.toString()),
-              trailing: Text(list[pos].cashflow.toString()),
-            );
-          },
-          itemCount: list.length,
-        );
-      },
-      stream: Provider.of<Repository>(context, listen: false)
-          .watchCashflowBudgetByCategory(widget.id),
     );
   }
 

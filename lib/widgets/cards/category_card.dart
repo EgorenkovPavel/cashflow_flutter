@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryCard extends StatefulWidget {
-  Category category;
+  final Category category;
 
   CategoryCard({this.category});
 
@@ -23,6 +23,7 @@ class _CategoryCardState extends State<CategoryCard> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.category != null) {
       titleController.text = widget.category.title;
 
@@ -43,12 +44,12 @@ class _CategoryCardState extends State<CategoryCard> {
       Provider.of<Repository>(context, listen: false)
           .insertCategory(Category(title: titleController.text, type: _type));
     } else {
-      widget.category = widget.category.copyWith(
+      var category = widget.category.copyWith(
         title: titleController.text,
         type: _type,
       );
       Provider.of<Repository>(context, listen: false)
-          .updateCategory(widget.category);
+          .updateCategory(category);
     }
   }
 

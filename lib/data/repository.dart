@@ -94,10 +94,10 @@ class Repository extends ChangeNotifier {
 
   Future insertOperation(Operation entity) {
     if (entity.id == 0) {
-      db.operationDao
+      return db.operationDao
           .insertOperation(const OperationMapper().mapToOperationData(entity));
     } else {
-      db.operationDao
+      return db.operationDao
           .updateOperation(const OperationMapper().mapToOperationData(entity));
     }
   }

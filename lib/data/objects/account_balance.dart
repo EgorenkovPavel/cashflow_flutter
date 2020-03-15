@@ -1,7 +1,4 @@
-import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account.dart';
-
-import '../database.dart';
 
 class AccountBalance {
   final int id;

@@ -1,9 +1,7 @@
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
-enum OperationType{
-  INPUT, OUTPUT, TRANSFER
-}
+enum OperationType { INPUT, OUTPUT, TRANSFER }
 
 Color getOperationColor(OperationType type) {
   switch (type) {
@@ -15,6 +13,9 @@ Color getOperationColor(OperationType type) {
 
     case OperationType.TRANSFER:
       return Colors.blue;
+
+    default:
+      return Colors.transparent;
   }
 }
 
@@ -28,6 +29,9 @@ IconData getOperationIcon(OperationType type) {
 
     case OperationType.TRANSFER:
       return Icons.redo;
+
+    default:
+      return Icons.do_not_disturb_on;
   }
 }
 
@@ -39,5 +43,6 @@ String getOperationTitle(BuildContext context, OperationType _type) {
       return AppLocalizations.of(context).typeOutput;
     case OperationType.TRANSFER:
       return AppLocalizations.of(context).typeTransfer;
+    default: return '';
   }
 }

@@ -1,11 +1,9 @@
-import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/mappers/account_balance_mapper.dart';
-import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/sum_text_formatter.dart';
 import 'package:cashflow/widgets/carousel.dart';
@@ -13,7 +11,6 @@ import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class MasterPage extends StatefulWidget {
   static const routeName = '/masterPageNew';
@@ -24,7 +21,6 @@ class MasterPage extends StatefulWidget {
 
 class _MasterPageState extends State<MasterPage> {
   OperationType _type;
-  bool _showKeyboard = false;
   AccountBalance _account;
   Category _category;
   AccountBalance _recAccount;
@@ -204,15 +200,8 @@ class _MasterPageState extends State<MasterPage> {
 
   @override
   void initState() {
+    super.initState();
     _type = OperationType.INPUT;
-
-    KeyboardVisibilityNotification().addNewListener(
-      onChange: (bool visible) {
-        setState(() {
-          _showKeyboard = visible;
-        });
-      },
-    );
   }
 
   @override

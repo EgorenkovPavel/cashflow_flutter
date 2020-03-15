@@ -76,7 +76,7 @@ class _OperationPageState extends State<OperationPage> {
     _time = TimeOfDay.fromDateTime(_date);
   }
 
-  Widget AnalyticMenu() {
+  Widget analyticMenu() {
     switch (_type) {
       case OperationType.INPUT:
         return DropdownList<Category>(
@@ -255,7 +255,7 @@ class _OperationPageState extends State<OperationPage> {
             title('Analytic'),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AnalyticMenu(),
+              child: analyticMenu(),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),

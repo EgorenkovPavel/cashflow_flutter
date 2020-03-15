@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountCard extends StatelessWidget {
-  AccountBalance account;
+  final AccountBalance account;
   final TextEditingController controller = TextEditingController();
 
   AccountCard({this.account}) {

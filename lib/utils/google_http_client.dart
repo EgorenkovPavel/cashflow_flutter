@@ -16,8 +16,8 @@ class GoogleHttpClient extends IOClient {
       ],
     );
 
-    var GoogleAccount = await _googleSignIn.signIn();
-    if (GoogleAccount == null) return null;
+    var googleAccount = await _googleSignIn.signIn();
+    if (googleAccount == null) return null;
 
     final authHeaders = await _googleSignIn.currentUser.authHeaders;
 

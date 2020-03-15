@@ -75,7 +75,7 @@ class _OperationCardState extends State<OperationCard> {
     _time = TimeOfDay.fromDateTime(_date);
   }
 
-  Widget AnalyticMenu() {
+  Widget analyticMenu() {
     switch (_type) {
       case OperationType.INPUT:
         return DropdownList<Category>(
@@ -238,7 +238,7 @@ class _OperationCardState extends State<OperationCard> {
               getListItem: (data) => ListTile(title: Text(data.title)),
             ),
             title(AppLocalizations.of(context).titleAnalytic),
-            AnalyticMenu(),
+            analyticMenu(),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: TextFormField(

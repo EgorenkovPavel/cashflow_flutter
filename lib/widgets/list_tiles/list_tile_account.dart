@@ -1,4 +1,3 @@
-import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:flutter/material.dart';

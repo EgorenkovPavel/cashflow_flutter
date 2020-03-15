@@ -162,6 +162,7 @@ class OperationItem {
       case OperationType.TRANSFER:
         return _operation.copyWith(
             account: account.id, recAccount: recAccount.id);
+      default: return null;
     }
   }
 
@@ -668,7 +669,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<void> batchInsert(List<OperationData> operationData) async {
-    var converter = OperationTypeConverter();
 
     List<CashflowData> cashflowData = [];
     List<BalanceData> balanceData = [];

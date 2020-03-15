@@ -1,7 +1,5 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
-import 'package:cashflow/data/objects/account.dart';
-import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 
 class CategoryCashflowBudgetMapper
