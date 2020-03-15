@@ -64,31 +64,32 @@ class _DriveDialogState extends State<DriveDialog> {
         body: Column(
           children: <Widget>[
             Expanded(
-                child: ListView(
+                child: ListView.separated(
                   controller: _listController,
-              padding: EdgeInsets.zero,
-              children: folderList.map((f) {
+                  itemCount: folderList.length,
+                  separatorBuilder: (BuildContext context, int index) {return Divider();},
+                  itemBuilder: (BuildContext context, int index) {
+                  var f = folderList[index];
                 bool isFolder =
-                    f.mimeType == 'application/vnd.google-apps.folder';
-                return ListTile(
-                  leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
-                  title: Text(f.name),
-                  subtitle: Text(
-                      'Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
-                  enabled: isFolder ||
-                      f.mimeType == 'application/json' ||
-                      f.mimeType == 'text/plain',
-                  onTap: () {
-                    if (isFolder) {
-                      rootFolder.push(f.id);
-                      loadFolders();
-                    } else {
-                      Navigator.of(context).pop(f.id);
-                    }
+                        f.mimeType == 'application/vnd.google-apps.folder';
+                    return ListTile(
+                      leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
+                      title: Text(f.name),
+                      subtitle: Text(
+                          'Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
+                      enabled: isFolder ||
+                          f.mimeType == 'application/json' ||
+                          f.mimeType == 'text/plain',
+                      onTap: () {
+                        if (isFolder) {
+                          rootFolder.push(f.id);
+                          loadFolders();
+                        } else {
+                          Navigator.of(context).pop(f.id);
+                        }
+                      },
+                    );
                   },
-                );
-              }).toList(),
-              shrinkWrap: true,
             )),
             ButtonBar(
               children: <Widget>[
