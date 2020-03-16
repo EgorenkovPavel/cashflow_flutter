@@ -7,20 +7,52 @@ import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class OperationList extends StatelessWidget implements MainList {
   Widget operationList(BuildContext context, List<Operation> operations) {
-    return ListView.separated(
-      itemCount: operations.length,
-      itemBuilder: (_, index) {
-        final itemOperation = operations[index];
-        return ListTileOperation(
-          itemOperation,
-          onTap: () => onItemTap(context, itemOperation),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) =>Divider(),
+    var _controller = ScrollController();
+    return Column(
+      children: <Widget>[
+        dateTitle(context, operations[0].date),
+        Expanded(
+          child: ListView.separated(
+            controller: _controller,
+            itemCount: operations.length,
+            itemBuilder: (_, index) {
+              final itemOperation = operations[index];
+              return ListTileOperation(
+                itemOperation,
+                onTap: () => onItemTap(context, itemOperation),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              if (index == operations.length - 1) {
+                return Divider();
+              }
+              var op1 = operations[index].date;
+              var op2 = operations[index + 1].date;
+              if (op1.year == op2.year &&
+                  op1.month == op2.month &&
+                  op1.day == op2.day) {
+                return Divider();
+              } else {
+                return dateTitle(context, DateTime(op2.year, op2.month, op2.day));
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget dateTitle(BuildContext context, DateTime date){
+    return Text(
+      DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+          .format(date),
+      style: Theme.of(context).textTheme.caption,
+      textAlign: TextAlign.center,
     );
   }
 
@@ -37,16 +69,19 @@ class OperationList extends StatelessWidget implements MainList {
   @override
   void onItemTap(BuildContext context, item) {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: OperationCard(
-                operation: item,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          child: OperationCard(
+            operation: item,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -58,7 +93,7 @@ class OperationList extends StatelessWidget implements MainList {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
           return EmptyListHint(
-              AppLocalizations.of(context).hintEmptyListOperations);
+            title: 'List of operations is empty', hint: 'Press button to add first one',);
         }
 
         final operations = snapshot.data ?? List();

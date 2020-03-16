@@ -64,7 +64,7 @@ class CategoryList extends StatelessWidget implements MainList<Category> {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
           return EmptyListHint(
-              AppLocalizations.of(context).hintEmptyListCategories);
+            title: 'List of categories is empty', hint: 'Press button to add first one',);
         }
 
         final categories = snapshot.data ?? List();

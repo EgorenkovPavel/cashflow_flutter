@@ -33,8 +33,11 @@ class ListTileOperation extends StatelessWidget {
         ],
       ),
       leading: CircleAvatar(
-        backgroundColor: getOperationColor(_operation.type),
-        child: Icon(getOperationIcon(_operation.type)),
+        backgroundColor: Colors.transparent,
+        child: Icon(
+          getOperationIcon(_operation.type),
+          color: getOperationColor(_operation.type),
+        ),
       ),
       onTap: onTap,
       onLongPress: () {

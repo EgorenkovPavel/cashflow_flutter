@@ -90,7 +90,7 @@ class AccountList extends StatelessWidget implements MainList<AccountBalance> {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
           return EmptyListHint(
-              AppLocalizations.of(context).hintEmptyListAccounts);
+              title: 'List of accounts is empty', hint: 'Press button to add first one',);
         }
 
         final accounts = snapshot.data ?? List();

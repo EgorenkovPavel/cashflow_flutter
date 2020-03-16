@@ -2,18 +2,29 @@ import 'package:flutter/material.dart';
 
 class EmptyListHint extends StatelessWidget {
 
-  final String text;
+  final String title;
+  final String hint;
 
-  const EmptyListHint(this.text);
+  const EmptyListHint({this.title, this.hint});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(text,
-          style: Theme.of(context)
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Icon(Icons.add, color: Colors.grey,size: 48.0,),
+          Text(title, style: Theme.of(context)
               .textTheme
               .headline
               .copyWith(color: Colors.grey)),
+          Text(hint,
+              style: Theme.of(context)
+                  .textTheme
+                  .subhead
+                  .copyWith(color: Colors.grey)),
+        ],
+      ),
     );
   }
 }
