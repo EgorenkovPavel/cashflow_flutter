@@ -4,8 +4,10 @@ import 'dart:math';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -52,13 +54,11 @@ class _TestWidgetState extends State<TestWidget> {
         .listen((list) {
       setState(() {
         categoriesInput = list
-            .where((category) =>
-                category.type == OperationType.INPUT)
+            .where((category) => category.type == OperationType.INPUT)
             .toList();
 
         categoriesOutput = list
-            .where((category) =>
-                category.type == OperationType.OUTPUT)
+            .where((category) => category.type == OperationType.OUTPUT)
             .toList();
       });
     });
@@ -76,77 +76,93 @@ class _TestWidgetState extends State<TestWidget> {
     return ListView(
       children: <Widget>[
         Card(
-          child: ExpansionTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).titleTotalSum,
-                  style: Theme.of(context).textTheme.title,
-                ),
-                Text(
-                  accounts
-                      .map((account) => account.balance)
-                      .fold(0, (a, b) => a + b)
-                      .toString(),
-                  style: Theme.of(context).textTheme.headline,
-                ),
-              ],
-            ),
-            children: accounts
-                .map((account) => Column(
-                      children: <Widget>[
-                        Divider(),
-                        ListTile(
-                          title: Text(account.title),
-                          trailing: Text(account.balance.toString()),
-                        ),
-                      ],
-                    ))
-                .toList(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              cardTitle('Total balance'),
+              Container(
+                height: 200.0,
+                alignment: Alignment.center,
+                color: Colors.grey,
+                child: Text('Here will be a chart'),
+              ),
+              ExpansionTile(
+                title: Text(accounts
+                    .map((account) => account.balance)
+                    .fold(0, (a, b) => a + b)
+                    .toString()),
+                children: accounts
+                    .map((account) => Column(
+                          children: <Widget>[
+                            Divider(),
+                            ListTile(
+                              title: Text(account.title),
+                              trailing: Text(account.balance.toString()),
+                            ),
+                          ],
+                        ))
+                    .toList(),
+              ),
+            ],
           ),
         ),
         Card(
-          child: ExpansionTile(
-            title: Text(AppLocalizations.of(context).typeInput),
-            subtitle: progress(
-                categoriesInput
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              cardTitle('Cashflow'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: progress(100000, 15000),
+              ),
+              CardRow(
+                  type: OperationType.INPUT,
+                  cashflow: categoriesInput
+                      .map((category) => category.cashflow)
+                      .fold(0, (a, b) => a + b),
+                  budget: categoriesInput
+                      .map((category) => category.budget)
+                      .fold(0, (a, b) => a + b),
+              ),
+              CardRow(
+                  type: OperationType.OUTPUT,
+                cashflow: categoriesOutput
+                    .map((category) => category.cashflow)
+                    .fold(0, (a, b) => a + b),
+                budget: categoriesOutput
                     .map((category) => category.budget)
                     .fold(0, (a, b) => a + b),
-                categoriesInput
-                    .map((category) => category.cashflow)
-                    .fold(0, (a, b) => a + b)),
-            children: categoriesInput
-                .map((category) => Column(
-                      children: <Widget>[
-                        Divider(),
-                        CategoryListItem(category),
-                      ],
-                    ))
-                .toList(),
+              ),
+            ],
           ),
         ),
         Card(
-          child: ExpansionTile(
-            title: Text(AppLocalizations.of(context).typeOutput),
-            subtitle: progress(
-                categoriesOutput
-                    .map((category) => category.budget)
-                    .fold(0, (a, b) => a + b),
-                categoriesOutput
-                    .map((category) => category.cashflow)
-                    .fold(0, (a, b) => a + b)),
-            children: categoriesOutput
-                .map((category) => Column(
-                      children: <Widget>[
-                        Divider(),
-                        CategoryListItem(category),
-                      ],
-                    ))
-                .toList(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              cardTitle('Last operations'),
+              ListTile(
+                title: Text('Account'),
+                subtitle: Text('Category'),
+                trailing: Text('2000'),
+              ),
+              CardButton(
+                leading: Text('Show all'),
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget cardTitle(String text) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.headline,
+      ),
     );
   }
 
@@ -187,6 +203,61 @@ class _TestWidgetState extends State<TestWidget> {
   }
 }
 
+class CardRow extends StatelessWidget {
+  final OperationType type;
+  final int cashflow;
+  final int budget;
+
+  const CardRow({this.type, this.cashflow, this.budget});
+
+  @override
+  Widget build(BuildContext context) {
+    return CardButton(
+      leading: Text(getOperationTitle(context, type)),
+      trailing: RichText(
+        text: TextSpan(
+            text: '$cashflow',
+            style: DefaultTextStyle.of(context)
+                .style
+                .copyWith(fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                  text: '/$budget',
+                  style: DefaultTextStyle.of(context)
+                      .style
+                      .copyWith(fontSize: 12)),
+            ]),
+      ),
+    );
+  }
+}
+
+class CardButton extends StatelessWidget {
+  final Widget leading;
+  final Widget trailing;
+
+  const CardButton({this.leading, this.trailing});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          leading ?? SizedBox(),
+          Row(
+            children: <Widget>[
+              trailing ?? SizedBox(),
+              Icon(Icons.keyboard_arrow_right),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class CategoryListItem extends StatelessWidget {
   final CategoryCashflowBudget category;
 
@@ -214,7 +285,9 @@ class CategoryListItem extends StatelessWidget {
           ),
           Text(
             '${(_progress * 100).round()}%',
-            style: _progress < 1 ? Theme.of(context).textTheme.caption : Theme.of(context).textTheme.subtitle,
+            style: _progress < 1
+                ? Theme.of(context).textTheme.caption
+                : Theme.of(context).textTheme.subtitle,
           ),
         ],
       ),
