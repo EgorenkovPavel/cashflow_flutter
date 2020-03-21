@@ -39,21 +39,6 @@ class _HomePageState extends State<HomePage>
     _tabController = TabController(length: tabs.length, vsync: this);
   }
 
-//  Widget body(_selectedIndex) {
-//    switch (_selectedIndex) {
-//      case 0:
-//        return MainTab();
-//      case 1:
-//        return AccountList();
-//      case 2:
-//        return CategoryList();
-//      case 3:
-//        return OperationList();
-//      default:
-//        return SizedBox();
-//    }
-//  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

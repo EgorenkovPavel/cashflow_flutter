@@ -673,27 +673,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     List<CashflowData> cashflowData = [];
     List<BalanceData> balanceData = [];
 
-//    data.forEach((p) {
-//      int id = int.parse(p['_id']);
-//      DateTime date =
-//          DateTime.fromMillisecondsSinceEpoch(int.parse(p['operation_date']));
-//      OperationType operationType =
-//          converter.mapToDart(int.parse(p['operation_type']));
-//      int account = int.parse(p['operation_account_id']);
-//      int category = _getId(p['operation_category_id']);
-//      int recAccount = _getId(p['operation_recipient_account_id']);
-//      int sum = int.parse(p['operation_sum']);
-//
-//      operationData.add(OperationData(
-//          id: id,
-//          date: date,
-//          operationType: operationType,
-//          account: account,
-//          category: category,
-//          recAccount: recAccount,
-//          sum: sum));
-//    });
-
     operationData.forEach((operation) {
       switch (operation.operationType) {
         case OperationType.INPUT:
