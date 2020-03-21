@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountList extends StatelessWidget implements MainList<AccountBalance> {
+  
   Widget accountList(BuildContext context, List<AccountBalance> accounts) {
     return ListView.separated(
       itemCount: accounts.length,
