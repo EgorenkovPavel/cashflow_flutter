@@ -8,8 +8,11 @@ import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryList extends StatelessWidget implements MainList<Category> {
-  Widget categoryList(BuildContext context, List<Category> categories) {
+class CategoryList extends MainList<Category> {
+  CategoryList(Stream<List<Category>> stream) : super(stream);
+
+  @override
+  Widget listBuilder(BuildContext context, List<Category> categories) {
     return ListView.separated(
       itemCount: categories.length,
       itemBuilder: (_, index) {
@@ -37,34 +40,15 @@ class CategoryList extends StatelessWidget implements MainList<Category> {
   }
 
   @override
-  void filterList() {
-    // TODO: implement filterList
-  }
-
-  @override
   void onItemTap(BuildContext context, Category item) {
     CategoryPage.open(context, item.id);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<List<Category>>(
-      stream:
-          Provider.of<Repository>(context, listen: false).watchAllCategories(),
-      builder: (context, AsyncSnapshot<List<Category>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.data.isEmpty) {
-          return EmptyListHint(
-            title: 'List of categories is empty',
-            hint: 'Press button to add first one',
-          );
-        }
-
-        final categories = snapshot.data ?? List();
-
-        return categoryList(context, categories);
-      },
+  Widget emptyListHint() {
+    return EmptyListHint(
+      title: 'List of categories is empty',
+      hint: 'Press button to add first one',
     );
   }
 }

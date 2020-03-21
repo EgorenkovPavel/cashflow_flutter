@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
@@ -7,6 +8,7 @@ import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/main_tab.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../lists/main_list.dart';
 
@@ -25,30 +27,32 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+
+    final Repository repository = Provider.of<Repository>(context, listen: false);
     tabs = [
       MainTab(),
-      AccountList(),
-      CategoryList(),
-      OperationList(),
+      AccountList(repository.watchAllAccountsBalance()),
+      CategoryList(repository.watchAllCategories()),
+      OperationList(repository.watchAllOperations()),
     ];
 
     _tabController = TabController(length: tabs.length, vsync: this);
   }
 
-  Widget body(_selectedIndex) {
-    switch (_selectedIndex) {
-      case 0:
-        return MainTab();
-      case 1:
-        return AccountList();
-      case 2:
-        return CategoryList();
-      case 3:
-        return OperationList();
-      default:
-        return SizedBox();
-    }
-  }
+//  Widget body(_selectedIndex) {
+//    switch (_selectedIndex) {
+//      case 0:
+//        return MainTab();
+//      case 1:
+//        return AccountList();
+//      case 2:
+//        return CategoryList();
+//      case 3:
+//        return OperationList();
+//      default:
+//        return SizedBox();
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,17 +88,17 @@ class _HomePageState extends State<HomePage>
         body: TabBarView(
           controller: _tabController,
           children: [
-            pageWidget(context, 0, body(0)),
-            pageWidget(context, 1, body(1)),
-            pageWidget(context, 2, body(2)),
-            pageWidget(context, 3, body(3)),
+            pageWidget(context, 0, tabs[0]),
+            pageWidget(context, 1, tabs[1]),
+            pageWidget(context, 2, tabs[2]),
+            pageWidget(context, 3, tabs[3]),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
             if (_tabController.index != 0) {
-              (body(_tabController.index) as MainList).addItem(context);
+              (tabs[_tabController.index] as MainList).addItem(context);
             }
           },
         ),

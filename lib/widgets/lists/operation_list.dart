@@ -1,6 +1,4 @@
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/repository.dart';
-import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/operation_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
@@ -8,10 +6,12 @@ import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class OperationList extends StatelessWidget implements MainList {
-  Widget operationList(BuildContext context, List<Operation> operations) {
+class OperationList extends MainList<Operation> {
+  OperationList(Stream<List<Operation>> stream) : super(stream);
+
+  @override
+  Widget listBuilder(BuildContext context, List<Operation> operations) {
     var _controller = ScrollController();
     return Column(
       children: <Widget>[
@@ -62,11 +62,6 @@ class OperationList extends StatelessWidget implements MainList {
   }
 
   @override
-  void filterList() {
-    // TODO: implement filterList
-  }
-
-  @override
   void onItemTap(BuildContext context, item) {
     showDialog(
       context: context,
@@ -85,21 +80,9 @@ class OperationList extends StatelessWidget implements MainList {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<List<Operation>>(
-      stream: Provider.of<Repository>(context).watchAllOperations(),
-      builder: (context, AsyncSnapshot<List<Operation>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.data.isEmpty) {
-          return EmptyListHint(
-            title: 'List of operations is empty', hint: 'Press button to add first one',);
-        }
-
-        final operations = snapshot.data ?? List();
-
-        return operationList(context, operations);
-      },
-    );
+  Widget emptyListHint() {
+    return EmptyListHint(
+      title: 'List of operations is empty', hint: 'Press button to add first one',);
   }
+
 }

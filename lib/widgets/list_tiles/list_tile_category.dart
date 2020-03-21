@@ -11,7 +11,7 @@ class ListTileCategory extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    ListTile(
+    return ListTile(
       title: Text(category.title),
       subtitle: Text(
         getOperationTitle(context, category.type),
