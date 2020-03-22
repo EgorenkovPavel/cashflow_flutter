@@ -634,6 +634,43 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
+  Stream<List<OperationItem>> watchLastOperationItems(int limit) {
+    final acc = alias(account, 'a');
+    final rec = alias(account, 'rec');
+
+    return (select(operation)
+      ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+      ])
+        ..limit(limit)
+    )
+        .join(
+      [
+        innerJoin(
+          acc,
+          acc.id.equalsExp(operation.account),
+        ),
+        leftOuterJoin(
+          category,
+          category.id.equalsExp(operation.category),
+        ),
+        leftOuterJoin(
+          rec,
+          rec.id.equalsExp(operation.recAccount),
+        ),
+      ],
+    )
+        .watch()
+        .map(
+          (rows) => rows.map(
+            (row) {
+          return OperationItem(row.readTable(operation), row.readTable(acc),
+              row.readTable(category), row.readTable(rec));
+        },
+      ).toList(),
+    );
+  }
+
   Future<List<OperationData>> getAllOperations() => select(operation).get();
 
   Future insertOperationItem(OperationItem entity) {
