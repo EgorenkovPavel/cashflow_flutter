@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(pageTitle(currentPage)),
       ),
-      floatingActionButton:
+      floatingActionButton: currentPage == 4 ? SizedBox() :
           FloatingActionButton(child: Icon(Icons.add), onPressed: addItem),
       body: getBody(),
       drawer: Drawer(
