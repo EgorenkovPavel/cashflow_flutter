@@ -10,11 +10,7 @@ class BackupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).itemMenuService),
-      ),
-      body: Column(
+    return Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -47,8 +43,7 @@ class BackupPage extends StatelessWidget {
             onPressed: () => _deleteAll(context),
           ),
          ],
-      ),
-    );
+      );
   }
 
   _backup(BuildContext context) async {

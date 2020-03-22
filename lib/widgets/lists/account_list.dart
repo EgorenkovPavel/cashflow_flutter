@@ -24,8 +24,7 @@ class AccountList extends MainList<AccountBalance> {
     );
   }
 
-  @override
-  void addItem(BuildContext context) {
+  static void addItem(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,

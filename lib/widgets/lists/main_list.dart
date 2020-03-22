@@ -7,7 +7,7 @@ abstract class MainList<T> extends StatelessWidget{
 
   const MainList(this.stream, {Key key}) : super(key: key);
 
-  void addItem(BuildContext context);
+  //void addItem(BuildContext context);
 
   void onItemTap(BuildContext context, T item);
 

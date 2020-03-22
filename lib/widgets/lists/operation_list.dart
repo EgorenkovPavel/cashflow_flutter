@@ -56,8 +56,7 @@ class OperationList extends MainList<Operation> {
     );
   }
 
-  @override
-  void addItem(BuildContext context) {
+  static void addItem(BuildContext context) {
     Navigator.of(context).pushNamed(MasterPage.routeName);
   }
 

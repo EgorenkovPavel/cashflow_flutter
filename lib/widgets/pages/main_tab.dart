@@ -4,12 +4,11 @@ import 'dart:math';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
-import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/data/operation_type.dart';
-import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
-import 'package:cashflow/widgets/pages/category_page.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/month_cashflow.dart';
+import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +112,7 @@ class _TestWidgetState extends State<TestWidget> {
               cardTitle('Cashflow'),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: progress(100000, 15000),
+                child: MonthCashflow(date: DateTime.now(), cashflow: 15000, budget: 20000,),
               ),
               CardRow(
                   type: OperationType.INPUT,
@@ -166,41 +165,6 @@ class _TestWidgetState extends State<TestWidget> {
     );
   }
 
-  Widget progress(int budget, int cashflow) {
-    return Column(
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            LinearProgressIndicator(
-              value: budget == 0 ? 1 : cashflow / budget,
-            ),
-            Positioned(
-              left: 30.0,
-              height: 15.0,
-              child: Container(
-                height: 15.0,
-                width: 2.0,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              '${AppLocalizations.of(context).titleBudget} $budget',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            Text(
-              'Cashflow $cashflow',
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
 }
 
 class CardRow extends StatelessWidget {

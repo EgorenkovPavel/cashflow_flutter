@@ -1,12 +1,10 @@
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/cards/category_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_category.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CategoryList extends MainList<Category> {
   CategoryList(Stream<List<Category>> stream) : super(stream);
@@ -26,8 +24,7 @@ class CategoryList extends MainList<Category> {
     );
   }
 
-  @override
-  void addItem(BuildContext context) {
+  static void addItem(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,
