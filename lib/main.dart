@@ -4,6 +4,7 @@ import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           HomePage.routeName: (BuildContext context) => HomePage(),
           MasterPage.routeName: (BuildContext context) => MasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
+          OperationPage.routeName: (BuildContext context) => OperationPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },
         onGenerateRoute: (settings) {
