@@ -16,6 +16,7 @@ class LastOperationsCard extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CardTitle('Last operations'),
+          Divider(),
           StreamBuilder<List<Operation>>(
             stream: Provider.of<Repository>(context, listen: false).watchLastOperations(5),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -25,7 +26,12 @@ class LastOperationsCard extends StatelessWidget{
               }
               List<Operation> list = snapshot.data;
               return Column(
-                children: list.map((op) => ListTileOperation(op)).toList(),
+                children: list.map((op) => Column(
+                  children: <Widget>[
+                    ListTileOperation(op),
+                    Divider(),
+                  ],
+                )).toList(),
               );
             },
           ),
