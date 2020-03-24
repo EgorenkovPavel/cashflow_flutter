@@ -20,7 +20,7 @@ class ListTileCategory extends StatelessWidget{
             .caption
             .copyWith(color: getOperationColor(category.type)),
       ),
-      onTap: () => onTap,
+      onTap: onTap,
     );
   }
 
