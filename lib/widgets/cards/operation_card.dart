@@ -47,13 +47,17 @@ class _OperationCardState extends State<OperationCard> {
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.INPUT, archive: true).forEach((list) {
+    model
+        .watchAllCategoriesByType(OperationType.INPUT, archive: true)
+        .forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.OUTPUT, archive: true).forEach((list) {
+    model
+        .watchAllCategoriesByType(OperationType.OUTPUT, archive: true)
+        .forEach((list) {
       setState(() {
         categoryOutList = list;
       });
@@ -127,7 +131,8 @@ class _OperationCardState extends State<OperationCard> {
           recAccount: _recAccount,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Repository>(context, listen: false).insertOperation(operation);
+      Provider.of<Repository>(context, listen: false)
+          .insertOperation(operation);
     } else {
       Operation operation = Operation(
           id: _id,
@@ -137,7 +142,8 @@ class _OperationCardState extends State<OperationCard> {
           category: _category,
           sum: int.parse(_sumController.text));
 
-      Provider.of<Repository>(context, listen: false).insertOperation(operation);
+      Provider.of<Repository>(context, listen: false)
+          .insertOperation(operation);
     }
   }
 
@@ -193,69 +199,68 @@ class _OperationCardState extends State<OperationCard> {
       title: widget.operation == null
           ? AppLocalizations.of(context).newOperationCardTitle
           : AppLocalizations.of(context).operationCardTitle,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+          Widget>[
+        title(AppLocalizations.of(context).titleDate),
+        Row(
           children: <Widget>[
-            title(AppLocalizations.of(context).titleDate),
-            Row(
-              children: <Widget>[
-                dateButtom(Icons.calendar_today,
-                    DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(_date), _selectDate),
-                SizedBox(
-                  width: 16.0,
-                ),
-                dateButtom(
-                    Icons.access_time, _time.format(context), _selectTime),
-              ],
+            dateButtom(
+                Icons.calendar_today,
+                DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+                    .format(_date),
+                _selectDate),
+            SizedBox(
+              width: 16.0,
             ),
-            title(AppLocalizations.of(context).titleType),
-
-                OperationTypeRadioButton(
-                  type: _type,
-                  onChange: (newValue) {
-                    setState(() {
-                      _type = newValue;
-                      _category = null;
-                    });
-                  },
-                  items: [
-                    OperationType.INPUT,
-                    OperationType.OUTPUT,
-                    OperationType.TRANSFER
-                  ],
-                ),
-
-            title(AppLocalizations.of(context).titleAccount),
-            DropdownList(
-              value: _account,
-              hint: AppLocalizations.of(context).hintAccount,
-              items: accountList,
-              onChange: (newValue) {
-                setState(() {
-                  _account = newValue;
-                });
-              },
-              getListItem: (data) => ListTile(title: Text(data.title)),
+            dateButtom(Icons.access_time, _time.format(context), _selectTime),
+          ],
+        ),
+        title(AppLocalizations.of(context).titleType),
+        OperationTypeRadioButton(
+          type: _type,
+          onChange: (newValue) {
+            setState(() {
+              _type = newValue;
+              _category = null;
+            });
+          },
+          items: [
+            OperationType.INPUT,
+            OperationType.OUTPUT,
+            OperationType.TRANSFER
+          ],
+        ),
+        title(AppLocalizations.of(context).titleAccount),
+        DropdownList<Account>(
+          value: _account,
+          hint: AppLocalizations.of(context).hintAccount,
+          items: accountList,
+          onChange: (newValue) {
+            setState(() {
+              _account = newValue;
+            });
+          },
+          getListItem: (data) => ListTile(title: Text(data.title)),
+        ),
+        title(AppLocalizations.of(context).titleAnalytic),
+        analyticMenu(),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: TextFormField(
+            controller: _sumController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: AppLocalizations.of(context).titleSum,
             ),
-            title(AppLocalizations.of(context).titleAnalytic),
-            analyticMenu(),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: TextFormField(
-                controller: _sumController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context).titleSum,
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return AppLocalizations.of(context).emptySumError;
-                  }
-                  return null;
-                },
-              ),
-            )
-          ]),
+            validator: (value) {
+              if (value.isEmpty) {
+                return AppLocalizations.of(context).emptySumError;
+              }
+              return null;
+            },
+          ),
+        )
+      ]),
       onSave: (context) {
         _saveOperation(context);
       },

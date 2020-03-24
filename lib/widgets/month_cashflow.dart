@@ -11,32 +11,11 @@ class MonthCashflow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     int lastDay = DateTime(date.year, date.month + 1, 0).day;
 
     return Column(
       children: <Widget>[
-        Stack(
-          children: <Widget>[
-            LinearProgressIndicator(
-              value: budget == 0 ? 1 : cashflow / budget,
-            ),
-            Flex(
-              children: List<Widget>.generate(
-                  lastDay,
-                  (index) => Flexible(
-                        child: Container(
-                          height: 5.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: index == date.day
-                                      ? Colors.black
-                                      : Colors.black26)),
-                        ),
-                      )),
-              direction: Axis.horizontal,
-            ),
-          ],
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -50,7 +29,36 @@ class MonthCashflow extends StatelessWidget {
             ),
           ],
         ),
-      ],
+        Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                LinearProgressIndicator(
+                  value: budget == 0 ? 1 : cashflow / budget,
+                ),
+                Flex(
+                  children: List<Widget>.generate(
+                      lastDay,
+                          (index) => Flexible(
+                        child: Container(
+                          height: 5.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: index == date.day -1
+                                      ? Colors.black
+                                      : Colors.black26)),
+                        ),
+                      )),
+                  direction: Axis.horizontal,
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment((2 * date.day - lastDay - 1) / (lastDay - 1) ,0),
+              child: Text('${date.day}'),
+            ),
+          ],
+        ),      ],
     );
   }
 }

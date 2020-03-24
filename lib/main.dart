@@ -1,5 +1,6 @@
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/budget_page.dart';
+import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           MasterPage.routeName: (BuildContext context) => MasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           OperationPage.routeName: (BuildContext context) => OperationPage(),
+          CashflowPage.routeName: (BuildContext context) => CashflowPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },
         onGenerateRoute: (settings) {

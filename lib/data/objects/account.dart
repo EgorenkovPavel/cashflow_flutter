@@ -10,4 +10,17 @@ class Account{
     title: title ?? this.title,
     archive: archive ?? this.archive,
   );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Account &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+
+
 }

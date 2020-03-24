@@ -2,6 +2,7 @@ import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/month_cashflow.dart';
+import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:flutter/material.dart';
 
 class CashflowCard extends StatelessWidget{
@@ -23,7 +24,8 @@ class CashflowCard extends StatelessWidget{
           CardTitle('Cashflow'),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MonthCashflow(date: DateTime.now(), cashflow: 15000, budget: 20000,),
+            child: MonthCashflow(date: DateTime.now(),
+              cashflow: 15000, budget: 20000,),
           ),
           CardRow(
             type: OperationType.INPUT,
@@ -87,20 +89,25 @@ class CardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          leading ?? SizedBox(),
-          Row(
-            children: <Widget>[
-              trailing ?? SizedBox(),
-              Icon(Icons.keyboard_arrow_right),
-            ],
-          ),
-        ],
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            leading ?? SizedBox(),
+            Row(
+              children: <Widget>[
+                trailing ?? SizedBox(),
+                Icon(Icons.keyboard_arrow_right),
+              ],
+            ),
+          ],
+        ),
       ),
+      onTap: (){
+        Navigator.of(context).pushNamed(CashflowPage.routeName);
+      },
     );
   }
 }
