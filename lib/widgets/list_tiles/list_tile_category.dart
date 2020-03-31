@@ -1,10 +1,12 @@
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ListTileCategory extends StatelessWidget{
 
-  final Category category;
+  final CategoryCashflowBudget category;
   final GestureTapCallback onTap;
 
   const ListTileCategory({Key key, this.category, this.onTap}) : super(key: key);
@@ -13,12 +15,13 @@ class ListTileCategory extends StatelessWidget{
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(category.title),
-      subtitle: Text(
-        getOperationTitle(context, category.type),
-        style: Theme.of(context)
-            .textTheme
-            .caption
-            .copyWith(color: getOperationColor(category.type)),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(NumberFormat().format(category.cashflow), style: Theme.of(context).textTheme.headline,),
+          Text(NumberFormat().format(category.budget), style: Theme.of(context).textTheme.subhead,),
+        ],
       ),
       onTap: onTap,
     );

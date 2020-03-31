@@ -1,4 +1,5 @@
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
@@ -7,11 +8,11 @@ import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends MainList<Category> {
-  CategoryList(Stream<List<Category>> stream) : super(stream);
+class CategoryList extends MainList<CategoryCashflowBudget> {
+  CategoryList(Stream<List<CategoryCashflowBudget>> stream) : super(stream);
 
   @override
-  Widget listBuilder(BuildContext context, List<Category> categories) {
+  Widget listBuilder(BuildContext context, List<CategoryCashflowBudget> categories) {
     return ListView.separated(
       itemCount: categories.length,
       itemBuilder: (_, index) {
@@ -38,7 +39,7 @@ class CategoryList extends MainList<Category> {
   }
 
   @override
-  void onItemTap(BuildContext context, Category item) {
+  void onItemTap(BuildContext context, CategoryCashflowBudget item) {
     CategoryPage.open(context, item.id);
   }
 

@@ -75,6 +75,11 @@ class Repository extends ChangeNotifier {
       db.categoryDao.watchAllCategoryCashflowBudget(date).map(
           (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
 
+  Stream<List<CategoryCashflowBudget>> watchCategoryCashflowBudgetByType(
+      DateTime date, OperationType type) =>
+      db.categoryDao.watchCategoryCashflowBudgetByType(date, type).map(
+              (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
+
   Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCategory(
           int categoryId) =>
       db.categoryDao.watchCashflowBudgetByCategory(categoryId).map(

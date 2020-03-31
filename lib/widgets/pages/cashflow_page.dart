@@ -1,3 +1,4 @@
+import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
@@ -30,7 +31,9 @@ class CashflowPage extends StatelessWidget{
         ),
       ),
       
-      body: CategoryList(Provider.of<Repository>(context, listen: false).watchAllCategoriesByType(type)),
+      body: CategoryList(Provider.of<Repository>(context, listen: false).watchCategoryCashflowBudgetByType(DateTime.now(), type)),
+
+
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => CategoryList.addItem(context, type: type),

@@ -489,7 +489,40 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                 row.readInt('budget') ?? 0,
                 row.readInt('cashflow') ?? 0,
               ))
-          //.where((a) => archive ? true : !a.account.archive)
+          .toList();
+    });
+  }
+
+  Stream<List<CategoryCashflowBudgetEntity>> watchCategoryCashflowBudgetByType(
+      DateTime date, OperationType type) {
+    DateTime monthStart = DateTime(date.year, date.month);
+    DateTime monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return customSelectQuery(
+      'SELECT *, '
+          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+          'FROM categories c '
+          'WHERE operation_type = ? '
+          'ORDER BY title;',
+      variables: [
+        Variable.withDateTime(monthStart),
+        Variable.withDateTime(monthStart),
+        Variable.withDateTime(monthEnd),
+        Variable.withInt(OperationTypeConverter().mapToSql(type)),
+      ],
+      readsFrom: {category, cashflow, budget},
+    ).watch().map((rows) {
+      return rows
+          .map((row) => CategoryCashflowBudgetEntity(
+        date.year,
+        date.month,
+        CategoryData.fromData(row.data, db),
+        row.readInt('budget') ?? 0,
+        row.readInt('cashflow') ?? 0,
+      ))
           .toList();
     });
   }
