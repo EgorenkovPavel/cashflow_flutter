@@ -1,12 +1,8 @@
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/lists/account_list.dart';
-import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/main_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';

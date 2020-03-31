@@ -39,24 +39,34 @@ class MyApp extends StatelessWidget {
           MasterPage.routeName: (BuildContext context) => MasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           OperationPage.routeName: (BuildContext context) => OperationPage(),
-          CashflowPage.routeName: (BuildContext context) => CashflowPage(),
+          //CashflowPage.routeName: (BuildContext context) => CashflowPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },
         onGenerateRoute: (settings) {
-          if (settings.name == BudgetPage.routeName) {
-            final Map<String, DateTime> args = settings.arguments;
-            return MaterialPageRoute(
-              builder: (context) {
-                return BudgetPage(date: args['date']);
-              },
-            );
-          } else if (settings.name == CategoryPage.routeName) {
-            return MaterialPageRoute(
-                builder: (context) => CategoryPage(
-                      id: settings.arguments,
-                    ));
+          switch (settings.name){
+            case BudgetPage.routeName: {
+              final Map<String, DateTime> args = settings.arguments;
+              return MaterialPageRoute(
+                builder: (context) {
+                  return BudgetPage(date: args['date']);
+                },
+              );
+            }
+            case CategoryPage.routeName: {
+              return MaterialPageRoute(
+                  builder: (context) => CategoryPage(
+                    id: settings.arguments,
+                  ));
+            }
+            case CashflowPage.routeName: {
+              return MaterialPageRoute(
+                builder: (context) {
+                  return CashflowPage(type: settings.arguments,);
+                },
+              );
+            }
+            default: return null;
           }
-          return null;
         },
       ),
     );

@@ -22,18 +22,20 @@ class CashflowCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CardTitle('Cashflow'),
-          categoriesOutput.isEmpty ? SizedBox() : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MonthCashflow(
-              date: DateTime.now(),
-              cashflow: categoriesOutput
-                  .map((category) => category.cashflow)
-                  .fold(0, (a, b) => a + b),
-              budget: categoriesOutput
-                  .map((category) => category.budget)
-                  .fold(0, (a, b) => a + b),
-            ),
-          ),
+          categoriesOutput.isEmpty
+              ? SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MonthCashflow(
+                    date: DateTime.now(),
+                    cashflow: categoriesOutput
+                        .map((category) => category.cashflow)
+                        .fold(0, (a, b) => a + b),
+                    budget: categoriesOutput
+                        .map((category) => category.budget)
+                        .fold(0, (a, b) => a + b),
+                  ),
+                ),
           CardRow(type: OperationType.INPUT, categories: categoriesInput),
           CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
         ],
@@ -61,7 +63,14 @@ class CardRow extends StatelessWidget {
     return categories.isEmpty
         ? CardButton(
             leading: Text(getOperationTitle(context, type)),
-            trailing: Text('No categories', style: DefaultTextStyle.of(context).style.copyWith(color: Colors.black38)),
+            trailing: Text('No categories',
+                style: DefaultTextStyle.of(context)
+                    .style
+                    .copyWith(color: Colors.black38)),
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(CashflowPage.routeName, arguments: type);
+            },
           )
         : CardButton(
             leading: Text(getOperationTitle(context, type)),
@@ -79,6 +88,10 @@ class CardRow extends StatelessWidget {
                             .copyWith(fontSize: 12)),
                   ]),
             ),
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(CashflowPage.routeName, arguments: type);
+            },
           );
   }
 }
@@ -86,8 +99,9 @@ class CardRow extends StatelessWidget {
 class CardButton extends StatelessWidget {
   final Widget leading;
   final Widget trailing;
+  final GestureTapCallback onTap;
 
-  const CardButton({this.leading, this.trailing});
+  const CardButton({this.leading, this.trailing, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +121,7 @@ class CardButton extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {
-        Navigator.of(context).pushNamed(CashflowPage.routeName);
-      },
+      onTap: onTap,
     );
   }
 }
