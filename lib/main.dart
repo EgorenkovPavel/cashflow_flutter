@@ -1,3 +1,4 @@
+import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/budget_page.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
@@ -51,6 +52,12 @@ class MyApp extends StatelessWidget {
                   return BudgetPage(date: args['date']);
                 },
               );
+            }
+            case AccountPage.routeName: {
+              return MaterialPageRoute(
+                  builder: (context) => AccountPage(
+                    id: settings.arguments,
+                  ));
             }
             case CategoryPage.routeName: {
               return MaterialPageRoute(

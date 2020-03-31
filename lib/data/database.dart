@@ -391,6 +391,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Future<List<AccountData>> getAllAccounts() => select(account).get();
 
+  Stream<AccountData> getAccountById(int id) =>
+      (select(account)..where((c) => c.id.equals(id))).watchSingle();
+
   Future insertAccount(AccountData entity) => into(account).insert(entity);
 
   Future updateAccount(AccountData entity) => update(account).replace(entity);

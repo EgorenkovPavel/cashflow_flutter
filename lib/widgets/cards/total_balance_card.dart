@@ -1,6 +1,7 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
+import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -54,6 +55,7 @@ class TotalBalanceCard extends StatelessWidget {
                           NumberFormat().format(account.balance),
                           style: Theme.of(context).textTheme.title,
                         ),
+                        onTap: () => AccountPage.open(context, account.id),
                       ),
                     ],
                   ))
