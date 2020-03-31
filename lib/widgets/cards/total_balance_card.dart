@@ -2,6 +2,7 @@ import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TotalBalanceCard extends StatelessWidget {
   final List<AccountBalance> accounts;
@@ -39,10 +40,9 @@ class TotalBalanceCard extends StatelessWidget {
         ),
         ExpansionTile(
           title: Text(
-              accounts
+              NumberFormat().format(accounts
                   .map((account) => account.balance)
-                  .fold(0, (a, b) => a + b)
-                  .toString(),
+                  .fold(0, (a, b) => a + b)),
               style: Theme.of(context).textTheme.title),
           children: accounts
               .map<Widget>((account) => Column(
@@ -51,7 +51,7 @@ class TotalBalanceCard extends StatelessWidget {
                       ListTile(
                         title: Text(account.title),
                         trailing: Text(
-                          account.balance.toString(),
+                          NumberFormat().format(account.balance),
                           style: Theme.of(context).textTheme.title,
                         ),
                       ),
