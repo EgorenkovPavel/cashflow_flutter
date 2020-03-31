@@ -16,7 +16,7 @@ class CashflowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class CardRow extends StatelessWidget {
     return categories.isEmpty
         ? CardButton(
             leading: Text(getOperationTitle(context, type)),
-            trailing: Text('No categories'),
+            trailing: Text('No categories', style: DefaultTextStyle.of(context).style.copyWith(color: Colors.black38)),
           )
         : CardButton(
             leading: Text(getOperationTitle(context, type)),

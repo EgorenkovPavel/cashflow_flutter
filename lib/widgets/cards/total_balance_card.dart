@@ -12,16 +12,16 @@ class TotalBalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: body(context),
     );
   }
 
   Widget body(BuildContext context) {
-    if(accounts.isEmpty){
+    if (accounts.isEmpty) {
       return emptyBody(context);
-    }else{
+    } else {
       return filledBody(context);
     }
   }
@@ -45,7 +45,7 @@ class TotalBalanceCard extends StatelessWidget {
                   .toString(),
               style: Theme.of(context).textTheme.title),
           children: accounts
-              .map((account) => Column(
+              .map<Widget>((account) => Column(
                     children: <Widget>[
                       Divider(),
                       ListTile(
@@ -57,23 +57,35 @@ class TotalBalanceCard extends StatelessWidget {
                       ),
                     ],
                   ))
-              .toList(),
+              .toList()
+                ..add(addButton(context)),
         ),
       ],
     );
   }
 
-  Widget emptyBody(BuildContext context){
+  Widget addButton(BuildContext context) {
+    return Align(
+      child: FlatButton(
+        child: Text('Add account'),
+        onPressed: () {
+          AccountList.addItem(context);
+        },
+      ),
+    );
+  }
+
+  Widget emptyBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CardTitle('Total balance'),
         Align(
-          child: FlatButton(child: Text('Add account'),
-          onPressed: (){
-            AccountList.addItem(context);
-          },),
-        ),
+            child: Text('No accounts',
+                style: DefaultTextStyle.of(context)
+                    .style
+                    .copyWith(color: Colors.black38))),
+        addButton(context),
       ],
     );
   }

@@ -11,7 +11,7 @@ class LastOperationsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +25,7 @@ class LastOperationsCard extends StatelessWidget {
                 return Align(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('No operations'),
+                    child: Text('No operations', style: DefaultTextStyle.of(context).style.copyWith(color: Colors.black38)),
                   ),
                 );
               }
@@ -38,19 +38,19 @@ class LastOperationsCard extends StatelessWidget {
                             Divider(),
                           ],
                         ))
-                    .toList()
-                      ..add(Align(
-                        child: FlatButton(
-                          child: Text('Show all'),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(OperationPage.routeName);
-                          },
-                        ),
-                      )),
+                    .toList(),
               );
             },
           ),
+          Align(
+            child: FlatButton(
+              child: Text('Show all'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(OperationPage.routeName);
+              },
+            ),
+          )
         ],
       ),
     );
