@@ -1,4 +1,4 @@
-import 'package:cashflow/widgets/cards/item_card.dart';
+import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';

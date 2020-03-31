@@ -1,5 +1,6 @@
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/widgets/cards/category_card.dart';
+import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_category.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
@@ -24,13 +25,13 @@ class CategoryList extends MainList<Category> {
     );
   }
 
-  static void addItem(BuildContext context) {
+  static void addItem(BuildContext context, {OperationType type}) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
-              child: CategoryCard(),
+              child: CategoryCard(type: type,),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12))));
         });

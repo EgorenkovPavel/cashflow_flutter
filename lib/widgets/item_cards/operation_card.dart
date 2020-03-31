@@ -1,4 +1,4 @@
-import 'package:cashflow/widgets/cards/item_card.dart';
+import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';

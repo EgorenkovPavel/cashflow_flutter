@@ -16,13 +16,24 @@ class CashflowPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cashflow'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Cashflow'),
+            Text('${getOperationTitle(context, type)}',
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  .copyWith(color: Colors.white),
+            ),
+          ],
+        ),
       ),
       
       body: CategoryList(Provider.of<Repository>(context, listen: false).watchAllCategoriesByType(type)),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => CategoryList.addItem(context),
+        onPressed: () => CategoryList.addItem(context, type: type),
       ),
     );
   }

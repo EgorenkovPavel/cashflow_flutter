@@ -1,5 +1,5 @@
 import 'package:cashflow/data/objects/account_balance.dart';
-import 'package:cashflow/widgets/cards/account_card.dart';
+import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_account.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
