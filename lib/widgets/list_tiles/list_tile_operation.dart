@@ -22,7 +22,7 @@ class ListTileOperation extends StatelessWidget {
       trailing: Column(
         children: <Widget>[
           Text(
-            _operation.sum.toString(),
+          NumberFormat().format(_operation.sum),
             style: Theme.of(context).textTheme.headline,
           ),
           Text(

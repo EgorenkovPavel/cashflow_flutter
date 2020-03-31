@@ -1,5 +1,6 @@
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MonthCashflow extends StatelessWidget {
   final DateTime date;
@@ -20,11 +21,11 @@ class MonthCashflow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              'Cashflow $cashflow',
+              'Cashflow ${NumberFormat().format(cashflow)}',
               style: Theme.of(context).textTheme.caption,
             ),
             Text(
-              '${AppLocalizations.of(context).titleBudget} $budget',
+              '${AppLocalizations.of(context).titleBudget} ${NumberFormat().format(budget)}',
               style: Theme.of(context).textTheme.caption,
             ),
           ],

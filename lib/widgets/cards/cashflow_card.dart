@@ -4,6 +4,7 @@ import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/month_cashflow.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CashflowCard extends StatelessWidget {
   final List<CategoryCashflowBudget> categoriesInput;
@@ -76,13 +77,13 @@ class CardRow extends StatelessWidget {
             leading: Text(getOperationTitle(context, type)),
             trailing: RichText(
               text: TextSpan(
-                  text: '$_cashflow',
+                  text: '${NumberFormat().format(_cashflow)}',
                   style: DefaultTextStyle.of(context)
                       .style
                       .copyWith(fontWeight: FontWeight.bold),
                   children: [
                     TextSpan(
-                        text: '/$_budget',
+                        text: '/${NumberFormat().format(_budget)}',
                         style: DefaultTextStyle.of(context)
                             .style
                             .copyWith(fontSize: 12)),
