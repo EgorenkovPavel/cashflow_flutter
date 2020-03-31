@@ -6,7 +6,7 @@ import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LastOperationsCard extends StatelessWidget{
+class LastOperationsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,33 +17,42 @@ class LastOperationsCard extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CardTitle('Last operations'),
-          Divider(),
           StreamBuilder<List<Operation>>(
-            stream: Provider.of<Repository>(context, listen: false).watchLastOperations(5),
+            stream: Provider.of<Repository>(context, listen: false)
+                .watchLastOperations(5),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-              if(!snapshot.hasData){
-                return SizedBox();
+              if (!snapshot.hasData || snapshot.data.isEmpty) {
+                return Align(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('No operations'),
+                  ),
+                );
               }
               List<Operation> list = snapshot.data;
               return Column(
-                children: list.map((op) => Column(
-                  children: <Widget>[
-                    ListTileOperation(op),
-                    Divider(),
-                  ],
-                )).toList(),
+                children: list
+                    .map<Widget>((op) => Column(
+                          children: <Widget>[
+                            ListTileOperation(op),
+                            Divider(),
+                          ],
+                        ))
+                    .toList()
+                      ..add(Align(
+                        child: FlatButton(
+                          child: Text('Show all'),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(OperationPage.routeName);
+                          },
+                        ),
+                      )),
               );
             },
           ),
-          Align(
-            child: FlatButton(child: Text('Show all'), onPressed: () {
-              Navigator.of(context).pushNamed(OperationPage.routeName);
-            },),
-          )
         ],
       ),
     );
   }
-
 }

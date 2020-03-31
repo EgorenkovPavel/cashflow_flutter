@@ -67,7 +67,7 @@ class TotalBalanceCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CardTitle('No accounts'),
+        CardTitle('Total balance'),
         Align(
           child: FlatButton(child: Text('Add account'),
           onPressed: (){
