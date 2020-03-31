@@ -11,12 +11,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 
-class OperationPage extends StatelessWidget {
+class OperationListPage extends StatelessWidget {
   static const routeName = '/operation';
 
   final Operation operation;
 
-  const OperationPage({Key key, this.operation}) : super(key: key);
+  const OperationListPage({Key key, this.operation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,10 @@ class OperationPage extends StatelessWidget {
       appBar: AppBar(title: Text('Operations'),),
       body: OperationList(
         Provider.of<Repository>(context).watchAllOperations(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => OperationList.addItem(context),
       ),
     );
   }

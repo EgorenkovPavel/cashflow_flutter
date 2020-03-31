@@ -2,7 +2,7 @@ import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
-import 'package:cashflow/widgets/pages/operation_page.dart';
+import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +47,7 @@ class LastOperationsCard extends StatelessWidget {
               child: Text('Show all'),
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed(OperationPage.routeName);
+                    .pushNamed(OperationListPage.routeName);
               },
             ),
           )
