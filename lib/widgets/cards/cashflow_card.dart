@@ -108,7 +108,8 @@ class CardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return FlatButton(
+      padding: EdgeInsets.all(0.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -124,7 +125,7 @@ class CardButton extends StatelessWidget {
           ],
         ),
       ),
-      onTap: onTap,
+      onPressed: onTap,
     );
   }
 }

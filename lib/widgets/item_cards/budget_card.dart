@@ -2,6 +2,7 @@ import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ class BudgetCard extends StatefulWidget {
 }
 
 class _BudgetCardState extends State<BudgetCard> {
-
   final TextEditingController sumController = TextEditingController();
 
   static List<int> months = List.generate(12, (index) => index + 1);
@@ -31,24 +31,62 @@ class _BudgetCardState extends State<BudgetCard> {
         sum: int.parse(sumController.text)));
   }
 
-  Widget yearInput(){
-    return Row(
-      children: <Widget>[
-        IconButton(icon: Icon(Icons.remove), onPressed: () {
-          setState(() {
-            --_year;
-          });
-        },),
-        Text('$_year'),
-        IconButton(icon: Icon(Icons.add), onPressed: () {
-          setState(() {
-            ++_year;
-          });
-        },),
-      ],
+  Widget yearInput() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.remove),
+            onPressed: () {
+              setState(() {
+                --_year;
+              });
+            },
+          ),
+          Text('$_year'),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              setState(() {
+                ++_year;
+              });
+            },
+          ),
+        ],
+      ),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black38),
+            borderRadius: BorderRadius.all(Radius.circular(4.0)))
     );
   }
 
+  Widget monthInput() {
+    return Container(
+      child: DropdownButton<int>(
+        items: months
+            .map(
+              (m) => DropdownMenuItem<int>(
+            child: Text(DateFormat.MMMM(
+                Localizations.localeOf(context).languageCode)
+                .format(DateTime(1970, m, 1))),
+            value: m,
+          ),
+        )
+            .toList(),
+        underline: SizedBox(),
+        value: _month,
+        onChanged: (value) {
+          setState(() {
+            _month = value;
+          });
+        },
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black38),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
+    );
+  }
 
   @override
   void initState() {
@@ -66,26 +104,13 @@ class _BudgetCardState extends State<BudgetCard> {
       child: Column(
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              DropdownButton<int>(
-                items: months.map(
-                  (m) => DropdownMenuItem<int>(
-                    child: Text(DateFormat.MMMM(
-                            Localizations.localeOf(context).languageCode)
-                        .format(DateTime(1970, m, 1))),
-                    value: m,
-                  ),
-                ).toList(),
-                value: _month,
-                onChanged: (value) {
-                  setState(() {
-                    _month = value;
-                  });
-                },
-              ),
+              monthInput(),
               yearInput(),
             ],
           ),
+          SizedBox(height: 8.0,),
           TextFormField(
             controller: sumController,
             keyboardType: TextInputType.numberWithOptions(),
