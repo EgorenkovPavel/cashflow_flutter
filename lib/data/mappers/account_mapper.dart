@@ -2,14 +2,14 @@ import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/account.dart';
 
-class AccountMapper extends Mapper<Account, AccountData>{
+class AccountMapper extends Mapper<Account, AccountEntityData>{
   const AccountMapper();
 
-  AccountData mapToSql(Account a){
-    return AccountData(id: a.id, title: a.title, archive: a.archive);
+  AccountEntityData mapToSql(Account a){
+    return AccountEntityData(id: a.id, title: a.title, archive: a.archive);
   }
 
-  Account mapToDart(AccountData a){
+  Account mapToDart(AccountEntityData a){
     return Account(id: a.id, title: a.title, archive: a.archive);
   }
 }

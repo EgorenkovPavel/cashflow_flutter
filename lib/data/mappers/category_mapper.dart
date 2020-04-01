@@ -2,14 +2,14 @@ import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/category.dart';
 
-class CategoryMapper extends Mapper<Category, CategoryData>{
+class CategoryMapper extends Mapper<Category, CategoryEntityData>{
   const CategoryMapper();
 
-  CategoryData mapToSql(Category c){
-    return CategoryData(id: c.id, title: c.title, archive: c.archive, operationType: c.type);
+  CategoryEntityData mapToSql(Category c){
+    return CategoryEntityData(id: c.id, title: c.title, archive: c.archive, operationType: c.type);
   }
 
-  Category mapToDart(CategoryData c){
+  Category mapToDart(CategoryEntityData c){
     return Category(id: c.id, title: c.title, archive: c.archive, type: c.operationType);
   }
 }

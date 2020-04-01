@@ -26,8 +26,8 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         sum: o.operationData.sum);
   }
 
-  OperationData mapToOperationData(Operation o){
-    return OperationData(
+  OperationEntityData mapToOperationData(Operation o){
+    return OperationEntityData(
         id: o.id,
         date: o.date,
         operationType: o.type,

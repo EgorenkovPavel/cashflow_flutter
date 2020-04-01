@@ -8,7 +8,7 @@ class AccountBalanceMapper extends Mapper<AccountBalance, AccountBalanceEntity>{
 
   AccountBalanceEntity mapToSql(AccountBalance a) {
     return AccountBalanceEntity(
-        AccountData(id: a.id, title: a.title, archive: a.archive), a.balance);
+        AccountEntityData(id: a.id, title: a.title, archive: a.archive), a.balance);
   }
 
   AccountBalance mapToDart(AccountBalanceEntity a) {

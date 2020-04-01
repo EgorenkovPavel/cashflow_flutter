@@ -1,14 +1,16 @@
 import 'package:cashflow/data/objects/account_balance.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TotalBalanceCard extends StatelessWidget {
-  final List<AccountBalance> accounts;
-
-  const TotalBalanceCard({Key key, this.accounts}) : super(key: key);
+//  final List<AccountBalance> accounts;
+//
+//  const TotalBalanceCard({Key key, this.accounts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,19 @@ class TotalBalanceCard extends StatelessWidget {
   }
 
   Widget body(BuildContext context) {
-    if (accounts.isEmpty) {
-      return emptyBody(context);
-    } else {
-      return filledBody(context);
-    }
+    return StreamBuilder<List<AccountBalance>>(
+      stream: Provider.of<Repository>(context, listen: false).watchAllAccountsBalance(),
+      builder: (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
+        if(!snapshot.hasData || snapshot.data.isEmpty){
+          return emptyBody(context);
+        } else {
+          return filledBody(context, snapshot.data);
+        }
+      },
+    );
   }
 
-  Widget filledBody(BuildContext context) {
+  Widget filledBody(BuildContext context, List<AccountBalance> accounts) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

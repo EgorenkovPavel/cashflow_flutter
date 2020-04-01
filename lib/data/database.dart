@@ -55,8 +55,6 @@ class BalanceEntity extends Table {
   @override
   String get tableName => 'balance';
 
-  IntColumn get id => integer().autoIncrement()();
-
   DateTimeColumn get date => dateTime()();
 
   IntColumn get operation =>
@@ -66,13 +64,16 @@ class BalanceEntity extends Table {
       integer().customConstraint('NULL REFERENCES account(id)')();
 
   IntColumn get sum => integer()();
+
+  @override
+  Set<Column> get primaryKey => {operation, account};
 }
 
 class CashflowEntity extends Table {
   @override
   String get tableName => 'cashflow';
-
-  IntColumn get id => integer().autoIncrement()();
+//
+//  IntColumn get id => integer().autoIncrement()();
 
   DateTimeColumn get date => dateTime()();
 
@@ -83,6 +84,9 @@ class CashflowEntity extends Table {
       integer().customConstraint('NULL REFERENCES category(id)')();
 
   IntColumn get sum => integer()();
+
+  @override
+  Set<Column> get primaryKey => {operation, category};
 }
 
 class Budget extends Table {
@@ -108,7 +112,7 @@ class MonthBudget {
 }
 
 class AccountBalanceEntity {
-  AccountData account;
+  AccountEntityData account;
   int sum;
 
   AccountBalanceEntity(this.account, this.sum);
@@ -127,7 +131,7 @@ class AccountBalanceEntity {
 class CategoryCashflowBudgetEntity {
   int year;
   int month;
-  CategoryData category;
+  CategoryEntityData category;
   int budget;
   int cashflow;
 
@@ -146,15 +150,15 @@ class CategoryCashflowBudgetEntity {
 }
 
 class OperationItem {
-  OperationData _operation;
-  AccountData account;
-  CategoryData category;
-  AccountData recAccount;
+  OperationEntityData _operation;
+  AccountEntityData account;
+  CategoryEntityData category;
+  AccountEntityData recAccount;
 
   OperationItem(this._operation, this.account, this.category, this.recAccount);
 
   //TODO rewrite to date, type, account, category, recAccount sum
-  OperationData get operationData {
+  OperationEntityData get operationData {
     switch (_operation.operationType) {
       case OperationType.INPUT:
       case OperationType.OUTPUT:
@@ -162,7 +166,8 @@ class OperationItem {
       case OperationType.TRANSFER:
         return _operation.copyWith(
             account: account.id, recAccount: recAccount.id);
-      default: return null;
+      default:
+        return null;
     }
   }
 
@@ -248,21 +253,22 @@ class Database extends _$Database {
 
   Future deleteAll() {
     return transaction(() async {
-      await delete(balance).go();
-      await delete(cashflow).go();
-      await delete(operation).go();
+      await delete(balanceEntity).go();
+      await delete(cashflowEntity).go();
+      await delete(operationEntity).go();
       await delete(budget).go();
-      await delete(account).go();
-      await delete(category).go();
+      await delete(accountEntity).go();
+      await delete(categoryEntity).go();
     });
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> getDbData() async {
     Map<String, List<Map<String, dynamic>>> data = {};
 
-    List<AccountData> accounts = await accountDao.getAllAccounts();
-    List<CategoryData> categories = await categoryDao.getAllCategories();
-    List<OperationData> operations = await operationDao.getAllOperations();
+    List<AccountEntityData> accounts = await accountDao.getAllAccounts();
+    List<CategoryEntityData> categories = await categoryDao.getAllCategories();
+    List<OperationEntityData> operations =
+        await operationDao.getAllOperations();
 
     data.putIfAbsent(
         'account',
@@ -288,28 +294,28 @@ class Database extends _$Database {
   Future loadData(Map<String, dynamic> data) async {
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
-        List<AccountData> accounts = [];
+        List<AccountEntityData> accounts = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            accounts.add(
-                AccountData.fromJson(d, serializer: _DefaultValueSerializer()));
+            accounts.add(AccountEntityData.fromJson(d,
+                serializer: _DefaultValueSerializer()));
           }
         });
         await accountDao.batchInsert(accounts);
       } else if (key == 'category') {
-        List<CategoryData> categories = [];
+        List<CategoryEntityData> categories = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            categories.add(CategoryData.fromJson(d,
+            categories.add(CategoryEntityData.fromJson(d,
                 serializer: _DefaultValueSerializer()));
           }
         });
         await categoryDao.batchInsert(categories);
       } else if (key == 'operation') {
-        List<OperationData> operations = [];
+        List<OperationEntityData> operations = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            operations.add(OperationData.fromJson(d,
+            operations.add(OperationEntityData.fromJson(d,
                 serializer: _DefaultValueSerializer()));
           }
         });
@@ -323,10 +329,10 @@ class Database extends _$Database {
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
-        List<AccountData> accounts = [];
+        List<AccountEntityData> accounts = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            accounts.add(AccountData(
+            accounts.add(AccountEntityData(
               id: int.parse(d['_id']),
               title: d['account_title'],
               archive: false,
@@ -335,10 +341,10 @@ class Database extends _$Database {
         });
         await accountDao.batchInsert(accounts);
       } else if (key == 'category') {
-        List<CategoryData> categories = [];
+        List<CategoryEntityData> categories = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            categories.add(CategoryData(
+            categories.add(CategoryEntityData(
               id: int.parse(d['_id']),
               title: d['category_title'],
               operationType: converter.mapToDart(int.parse(d['category_type'])),
@@ -348,10 +354,10 @@ class Database extends _$Database {
         });
         await categoryDao.batchInsert(categories);
       } else if (key == 'operation') {
-        List<OperationData> operations = [];
+        List<OperationEntityData> operations = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            operations.add(OperationData(
+            operations.add(OperationEntityData(
               id: int.parse(d['_id']),
               date: DateTime.fromMillisecondsSinceEpoch(
                   int.parse(d['operation_date'])),
@@ -385,18 +391,22 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   // Called by the AppDatabase class
   AccountDao(this.db) : super(db);
 
-  Stream<List<AccountData>> watchAllAccounts({bool archive = false}) =>
-      (select(account)..orderBy([(t) => OrderingTerm(expression: t.title)]))
+  Stream<List<AccountEntityData>> watchAllAccounts({bool archive = false}) =>
+      (select(accountEntity)
+            ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<AccountData>> getAllAccounts() => select(account).get();
+  Future<List<AccountEntityData>> getAllAccounts() =>
+      select(accountEntity).get();
 
-  Stream<AccountData> getAccountById(int id) =>
-      (select(account)..where((c) => c.id.equals(id))).watchSingle();
+  Stream<AccountEntityData> getAccountById(int id) =>
+      (select(accountEntity)..where((c) => c.id.equals(id))).watchSingle();
 
-  Future insertAccount(AccountData entity) => into(account).insert(entity);
+  Future insertAccount(AccountEntityData entity) =>
+      into(accountEntity).insert(entity);
 
-  Future updateAccount(AccountData entity) => update(account).replace(entity);
+  Future updateAccount(AccountEntityData entity) =>
+      update(accountEntity).replace(entity);
 
   Stream<int> getTotalBalance() {
     return customSelectQuery(
@@ -406,24 +416,46 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Stream<List<AccountBalanceEntity>> watchAllAccountsWithBalance(
       {bool archive = false}) {
-    return customSelectQuery(
-        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
-        'FROM accounts c ORDER BY title;',
-        readsFrom: {account, balance}).watch().map((rows) {
+    final sumBalance = balanceEntity.sum.sum();
+
+    final query = db.select(accountEntity).join([
+      leftOuterJoin(
+        balanceEntity,
+        balanceEntity.account.equalsExp(accountEntity.id),
+        useColumns: false,
+      )
+    ]);
+    query
+      ..addColumns([sumBalance])
+      ..groupBy([accountEntity.id]);
+
+    return query.watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
-              AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
-          .where((a) => archive ? true : !a.account.archive)
+              row.readTable(accountEntity), row.read(sumBalance) ?? 0))
           .toList();
     });
+
+//    return customSelectQuery(
+//        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
+//        'FROM accounts c ORDER BY title;',
+//        readsFrom: {account, balance})
+//        .watch()
+//        .map((rows) {
+//      return rows
+//          .map((row) => AccountBalanceEntity(
+//              AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
+//          .where((a) => archive ? true : !a.account.archive)
+//          .toList();
+//    });
   }
 
-  Future<void> batchInsert(List<AccountData> accounts) async {
+  Future<void> batchInsert(List<AccountEntityData> accounts) async {
     await batch((batch) {
       batch.insertAll(
-        account,
+        accountEntity,
         accounts
-            .map((p) => AccountCompanion.insert(
+            .map((p) => AccountEntityCompanion.insert(
                   id: Value(p.id),
                   title: p.title,
                   archive: Value(p.archive),
@@ -442,20 +474,21 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   CategoryDao(this.db) : super(db);
 
   //Future<List<Task>> getAllTasks() => select(tasks).get();
-  Stream<List<CategoryData>> watchAllCategories({bool archive = false}) =>
-      (select(category)
+  Stream<List<CategoryEntityData>> watchAllCategories({bool archive = false}) =>
+      (select(categoryEntity)
             //..where((a) => a.archive.equals(false) | a.archive.equals(archive))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<CategoryData>> getAllCategories() => select(category).get();
+  Future<List<CategoryEntityData>> getAllCategories() =>
+      select(categoryEntity).get();
 
-  Stream<CategoryData> getCategoryById(int id) =>
-      (select(category)..where((c) => c.id.equals(id))).watchSingle();
+  Stream<CategoryEntityData> getCategoryById(int id) =>
+      (select(categoryEntity)..where((c) => c.id.equals(id))).watchSingle();
 
-  Stream<List<CategoryData>> watchAllCategoriesByType(OperationType type,
+  Stream<List<CategoryEntityData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
-      (select(category)
+      (select(categoryEntity)
             ..where((a) => a.archive.equals(false) | a.archive.equals(archive))
             ..where((cat) => cat.operationType
                 .equals(OperationTypeConverter().mapToSql(type)))
@@ -479,13 +512,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd)
       ],
-      readsFrom: {category, cashflow, budget},
+      readsFrom: {categoryEntity, cashflowEntity, budget},
     ).watch().map((rows) {
       return rows
           .map((row) => CategoryCashflowBudgetEntity(
                 date.year,
                 date.month,
-                CategoryData.fromData(row.data, db),
+                CategoryEntityData.fromData(row.data, db),
                 row.readInt('budget') ?? 0,
                 row.readInt('cashflow') ?? 0,
               ))
@@ -502,27 +535,27 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelectQuery(
       'SELECT *, '
-          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
         Variable.withInt(OperationTypeConverter().mapToSql(type)),
       ],
-      readsFrom: {category, cashflow, budget},
+      readsFrom: {categoryEntity, cashflowEntity, budget},
     ).watch().map((rows) {
       return rows
           .map((row) => CategoryCashflowBudgetEntity(
-        date.year,
-        date.month,
-        CategoryData.fromData(row.data, db),
-        row.readInt('budget') ?? 0,
-        row.readInt('cashflow') ?? 0,
-      ))
+                date.year,
+                date.month,
+                CategoryEntityData.fromData(row.data, db),
+                row.readInt('budget') ?? 0,
+                row.readInt('cashflow') ?? 0,
+              ))
           .toList();
     });
   }
@@ -549,14 +582,14 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withInt(categoryId),
         Variable.withInt(categoryId),
       ],
-      readsFrom: {category, cashflow},
+      readsFrom: {categoryEntity, cashflowEntity},
     ).watch().map((rows) {
       return rows.map((row) {
         print(row.readDateTime('date').toString());
         return CategoryCashflowBudgetEntity(
           row.readDateTime('date').year,
           row.readDateTime('date').month,
-          CategoryData.fromData(row.data, db),
+          CategoryEntityData.fromData(row.data, db),
           0,
           row.readInt('sum') ?? 0,
         );
@@ -564,17 +597,18 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     });
   }
 
-  Future insertCategory(CategoryData entity) => into(category).insert(entity);
+  Future insertCategory(CategoryEntityData entity) =>
+      into(categoryEntity).insert(entity);
 
-  Future updateCategory(CategoryData entity) =>
-      update(category).replace(entity);
+  Future updateCategory(CategoryEntityData entity) =>
+      update(categoryEntity).replace(entity);
 
-  Future<void> batchInsert(List<CategoryData> categories) async {
+  Future<void> batchInsert(List<CategoryEntityData> categories) async {
     await batch((batch) {
       batch.insertAll(
-        category,
+        categoryEntity,
         categories
-            .map((p) => CategoryCompanion.insert(
+            .map((p) => CategoryEntityCompanion.insert(
                   id: Value(p.id),
                   title: p.title,
                   operationType: p.operationType,
@@ -600,10 +634,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   OperationDao(this.db) : super(db);
 
   Stream<List<OperationItem>> watchAllOperationItems() {
-    final acc = alias(account, 'a');
-    final rec = alias(account, 'rec');
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
 
-    return (select(operation)
+    return (select(operationEntity)
           ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
           ]))
@@ -611,15 +645,15 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           [
             innerJoin(
               acc,
-              acc.id.equalsExp(operation.account),
+              acc.id.equalsExp(operationEntity.account),
             ),
             leftOuterJoin(
-              category,
-              category.id.equalsExp(operation.category),
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
             ),
             leftOuterJoin(
               rec,
-              rec.id.equalsExp(operation.recAccount),
+              rec.id.equalsExp(operationEntity.recAccount),
             ),
           ],
         )
@@ -627,18 +661,21 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
-              return OperationItem(row.readTable(operation), row.readTable(acc),
-                  row.readTable(category), row.readTable(rec));
+              return OperationItem(
+                  row.readTable(operationEntity),
+                  row.readTable(acc),
+                  row.readTable(categoryEntity),
+                  row.readTable(rec));
             },
           ).toList(),
         );
   }
 
   Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) {
-    final acc = alias(account, 'a');
-    final rec = alias(account, 'rec');
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
 
-    return (select(operation)
+    return (select(operationEntity)
           ..where((t) => t.category.equals(categoryId))
           ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
@@ -647,15 +684,15 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           [
             innerJoin(
               acc,
-              acc.id.equalsExp(operation.account),
+              acc.id.equalsExp(operationEntity.account),
             ),
             leftOuterJoin(
-              category,
-              category.id.equalsExp(operation.category),
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
             ),
             leftOuterJoin(
               rec,
-              rec.id.equalsExp(operation.recAccount),
+              rec.id.equalsExp(operationEntity.recAccount),
             ),
           ],
         )
@@ -663,99 +700,104 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
-              return OperationItem(row.readTable(operation), row.readTable(acc),
-                  row.readTable(category), row.readTable(rec));
+              return OperationItem(
+                  row.readTable(operationEntity),
+                  row.readTable(acc),
+                  row.readTable(categoryEntity),
+                  row.readTable(rec));
             },
           ).toList(),
         );
   }
 
   Stream<List<OperationItem>> watchLastOperationItems(int limit) {
-    final acc = alias(account, 'a');
-    final rec = alias(account, 'rec');
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
 
-    return (select(operation)
-      ..orderBy([
+    return (select(operationEntity)
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ])
-        ..limit(limit)
-    )
+          ])
+          ..limit(limit))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operation.account),
-        ),
-        leftOuterJoin(
-          category,
-          category.id.equalsExp(operation.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operation.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operationEntity.account),
+            ),
+            leftOuterJoin(
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operationEntity.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          return OperationItem(row.readTable(operation), row.readTable(acc),
-              row.readTable(category), row.readTable(rec));
-        },
-      ).toList(),
-    );
+              return OperationItem(
+                  row.readTable(operationEntity),
+                  row.readTable(acc),
+                  row.readTable(categoryEntity),
+                  row.readTable(rec));
+            },
+          ).toList(),
+        );
   }
 
-  Future<List<OperationData>> getAllOperations() => select(operation).get();
+  Future<List<OperationEntityData>> getAllOperations() =>
+      select(operationEntity).get();
 
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
-      int id = await into(operation).insert(entity.operationData);
+      int id = await into(operationEntity).insert(entity.operationData);
 
-      OperationData operationData = entity.operationData.copyWith(id: id);
-      _insertAnalytic(operationData);
+      OperationEntityData operationData = entity.operationData.copyWith(id: id);
+      await _insertAnalytic(operationData);
     });
   }
 
-  Future insertOperation(OperationData entity) {
+  Future insertOperation(OperationEntityData entity) {
     return transaction(() async {
-      int id = await into(operation).insert(entity);
+      int id = await into(operationEntity).insert(entity);
 
-      OperationData operationData = entity.copyWith(id: id);
-      _insertAnalytic(operationData);
+      OperationEntityData operationData = entity.copyWith(id: id);
+      await _insertAnalytic(operationData);
     });
   }
 
-  Future updateOperation(OperationData entity) {
+  Future updateOperation(OperationEntityData entity) {
     return transaction(() async {
       await deleteOperation(entity);
       await insertOperation(entity);
     });
   }
 
-  Future deleteOperation(OperationData entity) {
+  Future deleteOperation(OperationEntityData entity) {
     return transaction(() async {
-      await delete(operation).delete(entity);
+      await delete(operationEntity).delete(entity);
       await _deleteAnalytic(entity);
     });
   }
 
-  Future<void> batchInsert(List<OperationData> operationData) async {
-
-    List<CashflowData> cashflowData = [];
-    List<BalanceData> balanceData = [];
+  Future<void> batchInsert(List<OperationEntityData> operationData) async {
+    List<CashflowEntityData> cashflowData = [];
+    List<BalanceEntityData> balanceData = [];
 
     operationData.forEach((operation) {
       switch (operation.operationType) {
         case OperationType.INPUT:
           {
-            balanceData.add(BalanceData(
+            balanceData.add(BalanceEntityData(
                 date: operation.date,
                 operation: operation.id,
                 account: operation.account,
                 sum: operation.sum));
-            cashflowData.add(CashflowData(
+            cashflowData.add(CashflowEntityData(
                 date: operation.date,
                 operation: operation.id,
                 category: operation.category,
@@ -764,12 +806,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           }
         case OperationType.OUTPUT:
           {
-            balanceData.add(BalanceData(
+            balanceData.add(BalanceEntityData(
                 date: operation.date,
                 operation: operation.id,
                 account: operation.account,
                 sum: -1 * operation.sum));
-            cashflowData.add(CashflowData(
+            cashflowData.add(CashflowEntityData(
                 date: operation.date,
                 operation: operation.id,
                 category: operation.category,
@@ -778,12 +820,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           }
         case OperationType.TRANSFER:
           {
-            balanceData.add(BalanceData(
+            balanceData.add(BalanceEntityData(
                 date: operation.date,
                 operation: operation.id,
                 account: operation.account,
                 sum: -1 * operation.sum));
-            balanceData.add(BalanceData(
+            balanceData.add(BalanceEntityData(
                 date: operation.date,
                 operation: operation.id,
                 account: operation.recAccount,
@@ -795,9 +837,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     await batch((batch) {
       batch.insertAll(
-        operation,
+        operationEntity,
         operationData
-            .map((p) => OperationCompanion.insert(
+            .map((p) => OperationEntityCompanion.insert(
                   id: Value(p.id),
                   date: p.date,
                   operationType: p.operationType,
@@ -809,9 +851,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             .toList(),
       );
       batch.insertAll(
-        cashflow,
+        cashflowEntity,
         cashflowData
-            .map((p) => CashflowCompanion.insert(
+            .map((p) => CashflowEntityCompanion.insert(
                 date: p.date,
                 operation: p.operation,
                 category: p.category,
@@ -819,9 +861,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             .toList(),
       );
       batch.insertAll(
-          balance,
+          balanceEntity,
           balanceData
-              .map((p) => BalanceCompanion.insert(
+              .map((p) => BalanceEntityCompanion.insert(
                   date: p.date,
                   operation: p.operation,
                   account: p.account,
@@ -830,16 +872,16 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
-  Future _insertAnalytic(OperationData operation) async {
+  Future _insertAnalytic(OperationEntityData operation) async {
     switch (operation.operationType) {
       case OperationType.INPUT:
         {
-          await into(balance).insert(BalanceData(
+          await into(balanceEntity).insert(BalanceEntityData(
               date: operation.date,
               operation: operation.id,
               account: operation.account,
               sum: operation.sum));
-          await into(cashflow).insert(CashflowData(
+          await into(cashflowEntity).insert(CashflowEntityData(
               date: operation.date,
               operation: operation.id,
               category: operation.category,
@@ -848,12 +890,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         }
       case OperationType.OUTPUT:
         {
-          await into(balance).insert(BalanceData(
+          await into(balanceEntity).insert(BalanceEntityData(
               date: operation.date,
               operation: operation.id,
               account: operation.account,
               sum: -1 * operation.sum));
-          await into(cashflow).insert(CashflowData(
+          await into(cashflowEntity).insert(CashflowEntityData(
               date: operation.date,
               operation: operation.id,
               category: operation.category,
@@ -862,12 +904,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         }
       case OperationType.TRANSFER:
         {
-          await into(balance).insert(BalanceData(
+          await into(balanceEntity).insert(BalanceEntityData(
               date: operation.date,
               operation: operation.id,
               account: operation.account,
               sum: -1 * operation.sum));
-          await into(balance).insert(BalanceData(
+          await into(balanceEntity).insert(BalanceEntityData(
               date: operation.date,
               operation: operation.id,
               account: operation.recAccount,
@@ -877,11 +919,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     }
   }
 
-  Future _deleteAnalytic(OperationData operation) async {
-    await (delete(balance)
+  Future _deleteAnalytic(OperationEntityData operation) async {
+    await (delete(balanceEntity)
           ..where((entry) => entry.operation.equals(operation.id)))
         .go();
-    await (delete(cashflow)
+    await (delete(cashflowEntity)
           ..where((entry) => entry.operation.equals(operation.id)))
         .go();
   }

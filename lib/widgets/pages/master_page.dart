@@ -176,14 +176,12 @@ class _MasterPageState extends State<MasterPage> {
           category: _category,
           sum: sum);
 
-      Provider.of<Repository>(context, listen: false)..insertOperation(operation);
+      Provider.of<Repository>(context, listen: false).insertOperation(operation);
     }
 
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(AppLocalizations.of(context).mesOperationCreated),
     ));
-
-    print('TEST');
 
     _sumController.text = '';
   }

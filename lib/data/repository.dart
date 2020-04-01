@@ -107,7 +107,7 @@ class Repository extends ChangeNotifier {
           .map((list) => const OperationMapper().mapListToDart(list));
 
   Future insertOperation(Operation entity) {
-    if (entity.id == 0) {
+    if (entity.id ?? 0 == 0) {
       return db.operationDao
           .insertOperation(const OperationMapper().mapToOperationData(entity));
     } else {

@@ -32,6 +32,37 @@ class _MainTabState extends State<MainTab> {
   @override
   void initState() {
     super.initState();
+//    subAccount = Provider.of<Repository>(context, listen: false)
+//        .watchAllAccountsBalance()
+//        .listen((list) {
+//      setState(() {
+//        accounts = list;
+//      });
+//    });
+//    subCategory = Provider.of<Repository>(context, listen: false)
+//        .watchAllCategoryCashflowBudget(DateTime.now())
+//        .listen((list) {
+//      setState(() {
+//        categoriesInput = list
+//            .where((category) => category.type == OperationType.INPUT)
+//            .toList();
+//
+//        categoriesOutput = list
+//            .where((category) => category.type == OperationType.OUTPUT)
+//            .toList();
+//      });
+//    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subAccount.cancel();
+    subCategory.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     subAccount = Provider.of<Repository>(context, listen: false)
         .watchAllAccountsBalance()
         .listen((list) {
@@ -52,17 +83,8 @@ class _MainTabState extends State<MainTab> {
             .toList();
       });
     });
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    subAccount.cancel();
-    subCategory.cancel();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Container(
@@ -74,7 +96,7 @@ class _MainTabState extends State<MainTab> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TotalBalanceCard(accounts: accounts,),
+                child: TotalBalanceCard(),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

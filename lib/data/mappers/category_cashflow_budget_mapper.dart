@@ -10,7 +10,7 @@ class CategoryCashflowBudgetMapper
     return CategoryCashflowBudgetEntity(
         c.year,
         c.month,
-        CategoryData(
+        CategoryEntityData(
             id: c.id,
             title: c.title,
             operationType: c.type,
