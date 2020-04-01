@@ -52,6 +52,7 @@ class ListTileOperation extends StatelessWidget {
                 onTap: () {
                   Provider.of<Repository>(context, listen: false)
                       .deleteOperation(_operation);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
