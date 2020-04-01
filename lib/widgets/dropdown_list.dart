@@ -21,9 +21,9 @@ class DropdownList<T> extends StatelessWidget {
       decoration:
 //      InputDecoration(
 //      border: OutlineInputBorder(),
-//      labelText: 'Title',
+//      labelText: 'Title'),
       BoxDecoration(
-        border: Border.all(),
+        border: Border.all(color: Colors.black38),
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: DropdownButton<T>(
@@ -36,6 +36,7 @@ class DropdownList<T> extends StatelessWidget {
         icon: Icon(Icons.keyboard_arrow_down),
         iconSize: 24,
         elevation: 16,
+        underline: SizedBox(),
 
         //style: TextStyle(color: Colors.deepPurple),
 //      underline: Container(
