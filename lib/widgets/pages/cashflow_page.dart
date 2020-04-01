@@ -5,8 +5,7 @@ import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CashflowPage extends StatelessWidget{
-
+class CashflowPage extends StatelessWidget {
   static const String routeName = '/cashflow';
 
   final OperationType type;
@@ -21,7 +20,8 @@ class CashflowPage extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Cashflow'),
-            Text('${getOperationTitle(context, type)}',
+            Text(
+              '${getOperationTitle(context, type)}',
               style: Theme.of(context)
                   .textTheme
                   .caption
@@ -30,15 +30,12 @@ class CashflowPage extends StatelessWidget{
           ],
         ),
       ),
-      
-      body: CategoryList(Provider.of<Repository>(context, listen: false).watchCategoryCashflowBudgetByType(DateTime.now(), type)),
-
-
+      body: CategoryList(Provider.of<Repository>(context, listen: false)
+          .watchCategoryCashflowBudgetByType(DateTime.now(), type)),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => CategoryList.addItem(context, type: type),
       ),
     );
   }
-
 }
