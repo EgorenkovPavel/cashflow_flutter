@@ -1,6 +1,4 @@
-import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
-import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

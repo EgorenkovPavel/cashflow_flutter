@@ -1,4 +1,4 @@
-import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +12,6 @@ class MonthCashflow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     int lastDay = DateTime(date.year, date.month + 1, 0).day;
 
     return Column(
@@ -20,14 +19,21 @@ class MonthCashflow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              'Cashflow ${NumberFormat().format(cashflow)}',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            Text(
-              '${AppLocalizations.of(context).titleBudget} ${NumberFormat().format(budget)}',
-              style: Theme.of(context).textTheme.caption,
-            ),
+            Text(DateFormat.MMMM(Localizations.localeOf(context).languageCode)
+                .format(date).capitalize()),
+            RichText(
+                  text: TextSpan(
+                      text: '${NumberFormat().format(cashflow)}',
+                      style: DefaultTextStyle.of(context)
+                          .style
+                          .copyWith(fontWeight: FontWeight.bold),
+                      children: [
+                    TextSpan(
+                        text: '/${NumberFormat().format(budget)}',
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .copyWith(fontSize: 12)),
+                  ])),
           ],
         ),
         Column(
@@ -40,26 +46,28 @@ class MonthCashflow extends StatelessWidget {
                 Flex(
                   children: List<Widget>.generate(
                       lastDay,
-                          (index) => Flexible(
-                        child: Container(
-                          height: 5.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: index == date.day -1
-                                      ? Colors.black
-                                      : Colors.black26)),
-                        ),
-                      )),
+                      (index) => Flexible(
+                            child: Container(
+                              height: 5.0,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: index == date.day - 1
+                                          ? Colors.black
+                                          : Colors.black26)),
+                            ),
+                          )),
                   direction: Axis.horizontal,
                 ),
               ],
             ),
             Align(
-              alignment: Alignment((2 * date.day - lastDay - 1) / (lastDay - 1) ,0),
+              alignment:
+                  Alignment((2 * date.day - lastDay - 1) / (lastDay - 1), 0),
               child: Text('${date.day}'),
             ),
           ],
-        ),      ],
+        ),
+      ],
     );
   }
 }
