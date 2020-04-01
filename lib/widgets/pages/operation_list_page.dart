@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OperationListPage extends StatelessWidget {
-  static const routeName = '/operation';
+  static const routeName = '/operationList';
 
   final Operation operation;
 

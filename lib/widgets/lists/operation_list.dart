@@ -1,9 +1,9 @@
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/widgets/item_cards/operation_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
+import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -62,20 +62,7 @@ class OperationList extends MainList<Operation> {
 
   @override
   void onItemTap(BuildContext context, item) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-          child: OperationCard(
-            operation: item,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-        );
-      },
-    );
+    OperationPage.open(context, item.id);
   }
 
   @override

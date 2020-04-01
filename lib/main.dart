@@ -7,6 +7,7 @@ import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
+import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +63,12 @@ class MyApp extends StatelessWidget {
             case CategoryPage.routeName: {
               return MaterialPageRoute(
                   builder: (context) => CategoryPage(
+                    id: settings.arguments,
+                  ));
+            }
+            case OperationPage.routeName: {
+              return MaterialPageRoute(
+                  builder: (context) => OperationPage(
                     id: settings.arguments,
                   ));
             }

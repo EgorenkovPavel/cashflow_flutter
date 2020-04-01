@@ -752,6 +752,40 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future<List<OperationEntityData>> getAllOperations() =>
       select(operationEntity).get();
 
+  Stream<OperationItem> getOperationById(int id) {
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
+
+    return (select(operationEntity)
+      ..where((o) => o.id.equals(id)))
+        .join(
+      [
+        innerJoin(
+          acc,
+          acc.id.equalsExp(operationEntity.account),
+        ),
+        leftOuterJoin(
+          categoryEntity,
+          categoryEntity.id.equalsExp(operationEntity.category),
+        ),
+        leftOuterJoin(
+          rec,
+          rec.id.equalsExp(operationEntity.recAccount),
+        ),
+      ],
+    )
+        .watchSingle()
+        .map(
+            (row) {
+          return OperationItem(
+              row.readTable(operationEntity),
+              row.readTable(acc),
+              row.readTable(categoryEntity),
+              row.readTable(rec));
+        }
+    );
+  }
+
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
       int id = await into(operationEntity).insert(entity.operationData);

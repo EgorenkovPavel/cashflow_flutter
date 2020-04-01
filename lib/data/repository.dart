@@ -96,6 +96,10 @@ class Repository extends ChangeNotifier {
       .watchAllOperationItems()
       .map((list) => const OperationMapper().mapListToDart(list));
 
+  Stream<Operation> getOperationById(int id) => db.operationDao
+      .getOperationById(id)
+      .map((o) => const OperationMapper().mapToDart(o));
+
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
       db.operationDao
           .watchAllOperationItemsByCategory(categoryId)
@@ -107,7 +111,7 @@ class Repository extends ChangeNotifier {
           .map((list) => const OperationMapper().mapListToDart(list));
 
   Future insertOperation(Operation entity) {
-    if (entity.id ?? 0 == 0) {
+    if ((entity.id ?? 0) == 0) {
       return db.operationDao
           .insertOperation(const OperationMapper().mapToOperationData(entity));
     } else {
