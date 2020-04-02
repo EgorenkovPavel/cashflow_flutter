@@ -32,8 +32,8 @@ class _OperationPageState extends State<OperationPage> {
   final _formKey = GlobalKey<FormState>();
 
   OperationType _type;
-  DateTime _date;
-  TimeOfDay _time;
+  DateTime _date = DateTime.now();
+  TimeOfDay _time = TimeOfDay.now();
   Account _account;
   Category _category;
   Account _recAccount;
