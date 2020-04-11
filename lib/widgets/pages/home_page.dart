@@ -9,16 +9,15 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   static const routeName = '/';
 
-  Widget appBarMenu(BuildContext context){
+  Widget appBarMenu(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: PopupMenuButton<AppMenu>(
         child: Icon(Icons.more_vert),
         itemBuilder: (context) => [
           PopupMenuItem<AppMenu>(
-            child: Text(AppLocalizations.of(context)
-                .itemMenuService
-                .toUpperCase()),
+            child: Text(
+                AppLocalizations.of(context).itemMenuService.toUpperCase()),
             value: AppMenu.BACKUP,
           )
         ],
@@ -52,28 +51,28 @@ class HomePage extends StatelessWidget {
           Container(
             color: Theme.of(context).primaryColor,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TotalBalanceCard(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CashflowCard(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LastOperationsCard(),
-                ),
-                SizedBox(
-                  height: 60.0,
-                ),
-              ],
-            ),
-          )
+          ListView(
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: TotalBalanceCard(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: CashflowCard(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: LastOperationsCard(),
+              ),
+              SizedBox(
+                height: 60.0,
+              ),
+            ],
+          ),
         ],
       ),
     );
