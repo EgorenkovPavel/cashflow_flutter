@@ -34,8 +34,9 @@ class Carousel<T> extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Container(
-                margin: EdgeInsets.all(8.0),
-                height: itemHeight - 16.0,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                height: itemHeight - 8.0,
                 decoration: BoxDecoration(
                     border: Border.all(
                         width: 3.0, color: Theme.of(context).primaryColor),
@@ -50,21 +51,19 @@ class Carousel<T> extends StatelessWidget {
                 itemBuilder: (context, pos) {
                   return AnimatedBuilder(
                     builder: (BuildContext context, Widget child) {
-                      if (!_pageController.position.haveDimensions) {
-                        return Transform.scale(
-                          scale: 1 - (min((pos - _pageController.initialPage).abs(), 1)) / 10,
-                          child: child,
-                        );
-                      }
+                      int page = !_pageController.position.haveDimensions
+                          ? _pageController.initialPage
+                          : _pageController.page;
                       return Transform.scale(
-                        scale: 1 - (min((pos - _pageController.page).abs(), 1)) / 10,
+                        scale: 1 - (min((pos - page).abs(), 1)) / 10,
                         child: child,
                       );
                     },
                     animation: _pageController,
                     child: GestureDetector(
                       child: Container(
-                          margin: EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(

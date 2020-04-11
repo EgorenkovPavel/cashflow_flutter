@@ -10,6 +10,7 @@ import 'package:cashflow/widgets/carousel.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MasterPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _MasterPageState extends State<MasterPage> {
               children: <Widget>[
                 Text(accounts[pos].title),
                 Text(
-                  accounts[pos].balance.toString(),
+                NumberFormat().format(accounts[pos].balance),
                   style: Theme.of(context).textTheme.caption,
                 )
               ],
@@ -117,7 +118,7 @@ class _MasterPageState extends State<MasterPage> {
               children: <Widget>[
                 Text(accounts[pos].title),
                 Text(
-                  accounts[pos].balance.toString(),
+                NumberFormat().format(accounts[pos].balance),
                   style: Theme.of(context).textTheme.caption,
                 )
               ],

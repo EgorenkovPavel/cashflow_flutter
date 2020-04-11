@@ -8,9 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TotalBalanceCard extends StatelessWidget {
-//  final List<AccountBalance> accounts;
-//
-//  const TotalBalanceCard({Key key, this.accounts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
