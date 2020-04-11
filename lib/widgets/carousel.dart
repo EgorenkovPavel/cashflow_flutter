@@ -51,11 +51,11 @@ class Carousel<T> extends StatelessWidget {
                 itemBuilder: (context, pos) {
                   return AnimatedBuilder(
                     builder: (BuildContext context, Widget child) {
-                      int page = !_pageController.position.haveDimensions
-                          ? _pageController.initialPage
+                      double page = !_pageController.position.haveDimensions
+                          ? _pageController.initialPage.toDouble()
                           : _pageController.page;
                       return Transform.scale(
-                        scale: 1 - (min((pos - page).abs(), 1)) / 10,
+                        scale: 1 - ((pos - page).abs()) / 10,
                         child: child,
                       );
                     },
