@@ -1,17 +1,14 @@
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/month_cashflow.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CashflowCard extends StatelessWidget {
-  final List<CategoryCashflowBudget> categoriesInput;
-  final List<CategoryCashflowBudget> categoriesOutput;
-
-  const CashflowCard({Key key, this.categoriesInput, this.categoriesOutput})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +16,45 @@ class CashflowCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          CardTitle('Cashflow'),
-          categoriesOutput.isEmpty
-              ? SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MonthCashflow(
-                    date: DateTime.now(),
-                    cashflow: categoriesOutput
-                        .map((category) => category.cashflow)
-                        .fold(0, (a, b) => a + b),
-                    budget: categoriesOutput
-                        .map((category) => category.budget)
-                        .fold(0, (a, b) => a + b),
-                  ),
-                ),
-          Divider(height: 1.0,),
-          CardRow(type: OperationType.INPUT, categories: categoriesInput),
-          Divider(height: 1.0,),
-          CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
-        ],
+      child: StreamBuilder<List<CategoryCashflowBudget>>(
+        initialData: [],
+        stream: Provider.of<Repository>(context, listen: false)
+            .watchAllCategoryCashflowBudget(DateTime.now()),
+        builder: (context, snapshot) {
+
+          List<CategoryCashflowBudget> categoriesInput = snapshot.data
+              .where((category) => category.type == OperationType.INPUT)
+              .toList();
+
+          List<CategoryCashflowBudget> categoriesOutput = snapshot.data
+              .where((category) => category.type == OperationType.OUTPUT)
+              .toList();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CardTitle('Cashflow'),
+              categoriesOutput.isEmpty
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MonthCashflow(
+                        date: DateTime.now(),
+                        cashflow: categoriesOutput
+                            .map((category) => category.cashflow)
+                            .fold(0, (a, b) => a + b),
+                        budget: categoriesOutput
+                            .map((category) => category.budget)
+                            .fold(0, (a, b) => a + b),
+                      ),
+                    ),
+              Divider(height: 1.0,),
+              CardRow(type: OperationType.INPUT, categories: categoriesInput),
+              Divider(height: 1.0,),
+              CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
+            ],
+          );
+        }
       ),
     );
   }

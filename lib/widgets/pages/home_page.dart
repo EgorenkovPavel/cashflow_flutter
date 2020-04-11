@@ -1,7 +1,9 @@
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/cards/cashflow_card.dart';
+import 'package:cashflow/widgets/cards/last_operations_card.dart';
+import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
-import 'package:cashflow/widgets/pages/main_tab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -45,7 +47,35 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => OperationList.addItem(context)),
-      body: MainTab(),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            color: Theme.of(context).primaryColor,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TotalBalanceCard(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CashflowCard(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: LastOperationsCard(),
+                ),
+                SizedBox(
+                  height: 60.0,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
