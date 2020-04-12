@@ -18,15 +18,14 @@ class Keyboard extends StatelessWidget {
           child: child,
           elevation: 2.0,
           fillColor: Colors.white,
-          padding: const EdgeInsets.all(15.0),
           onPressed: onPressed,
         ),
       ),
     );
   }
 
-  Widget _digitButton(int digit){
-    return _button(Text('$digit'), () => onDigitPressed(digit));
+  Widget _digitButton(BuildContext context, int digit){
+    return _button(Text('$digit', style: Theme.of(context).textTheme.title,), () => onDigitPressed(digit));
   }
 
   Widget _rowButton(List<Widget> buttons){
@@ -41,23 +40,23 @@ class Keyboard extends StatelessWidget {
     return Column(
       children: <Widget>[
         _rowButton(<Widget>[
-          _digitButton(1),
-          _digitButton(2),
-          _digitButton(3),
+          _digitButton(context, 1),
+          _digitButton(context, 2),
+          _digitButton(context, 3),
         ]),
         _rowButton(<Widget>[
-          _digitButton(4),
-          _digitButton(5),
-          _digitButton(6),
+          _digitButton(context, 4),
+          _digitButton(context, 5),
+          _digitButton(context, 6),
         ]),
         _rowButton(<Widget>[
-          _digitButton(7),
-          _digitButton(8),
-          _digitButton(9),
+          _digitButton(context, 7),
+          _digitButton(context, 8),
+          _digitButton(context, 9),
         ]),
         _rowButton(<Widget>[
           SizedBox(height: 52.0, width: 52.0,),
-          _digitButton(0),
+          _digitButton(context, 0),
           _button(Icon(Icons.arrow_back), onBackPressed),
         ]),
       ],
