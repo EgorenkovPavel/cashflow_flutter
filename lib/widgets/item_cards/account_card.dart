@@ -33,6 +33,7 @@ class AccountCard extends StatelessWidget {
           ? AppLocalizations.of(context).newAccountCardTitle
           : AppLocalizations.of(context).accountCardTitle,
       child: TextFormField(
+        autofocus: true,
         controller: controller,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(

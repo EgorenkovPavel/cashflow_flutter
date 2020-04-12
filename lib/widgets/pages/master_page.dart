@@ -9,6 +9,8 @@ import 'package:cashflow/utils/sum_text_formatter.dart';
 import 'package:cashflow/widgets/carousel.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/keyboard.dart';
+import 'package:cashflow/widgets/lists/account_list.dart';
+import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -251,7 +253,22 @@ class _MasterPageState extends State<MasterPage> {
       content: Text(AppLocalizations.of(context).mesOperationCreated),
     ));
 
-    _sum = 0;
+    setState(() {
+      _sum = 0;
+    });
+  }
+
+  void _addAnalytic(BuildContext context){
+    switch(_type){
+      case OperationType.INPUT: case OperationType.OUTPUT:{
+        CategoryList.addItem(context, type: _type);
+        break;
+      }
+      case OperationType.TRANSFER:{
+        AccountList.addItem(context);
+        break;
+      }
+    }
   }
 
   Widget title(String text) {
@@ -321,7 +338,7 @@ class _MasterPageState extends State<MasterPage> {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 onPressed: () {
-                                  //TODO
+                                  AccountList.addItem(context);
                                 },
                               ),
                             ],
@@ -349,8 +366,7 @@ class _MasterPageState extends State<MasterPage> {
                                   Icons.add,
                                   color: Theme.of(context).primaryColor,
                                 ),
-                                onPressed: () {//TODO
-                                   },
+                                onPressed: () => _addAnalytic(context),
                               ),
                             ],
                           ),
