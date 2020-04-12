@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Carousel<T> extends StatelessWidget {
@@ -34,9 +35,9 @@ class Carousel<T> extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                height: itemHeight - 8.0,
+//                margin:
+//                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                height: itemHeight - 0.0, // - 16.0,
                 decoration: BoxDecoration(
                     border: Border.all(
                         width: 3.0, color: Theme.of(context).primaryColor),
@@ -54,16 +55,22 @@ class Carousel<T> extends StatelessWidget {
                       double page = !_pageController.position.haveDimensions
                           ? _pageController.initialPage.toDouble()
                           : _pageController.page;
-                      return Transform.scale(
-                        scale: 1 - ((pos - page).abs()) / 10,
-                        child: child,
+                      return Transform(
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.01)
+                          ..rotateX((pos - page)/10),
+                        alignment: FractionalOffset.center,
+                        child: Transform.scale(
+                          scale: 1 - ((pos - page).abs()) / 10,
+                          child: child,
+                        ),
                       );
                     },
                     animation: _pageController,
                     child: GestureDetector(
                       child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
+//                          margin: const EdgeInsets.symmetric(
+//                              horizontal: 8.0, vertical: 4.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(

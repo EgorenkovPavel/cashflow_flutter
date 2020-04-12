@@ -17,4 +17,15 @@ class AccountBalance {
       );
 
   Account getAccount() => Account(id: this.id, title: this.title, archive: this.archive);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is AccountBalance &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
 }
