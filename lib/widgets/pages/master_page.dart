@@ -70,7 +70,7 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget categoryInPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
+      stream: Provider.of<Repository>(context).watchAllCategoriesByType(OperationType.INPUT),
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
@@ -97,7 +97,7 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget categoryOutPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
+      stream: Provider.of<Repository>(context).watchAllCategoriesByType(OperationType.OUTPUT),
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
@@ -159,7 +159,7 @@ class _MasterPageState extends State<MasterPage> {
     );
   }
 
-  Widget analitycList(BuildContext context){
+  Widget analyticList(BuildContext context){
     switch (_type){
       case OperationType.INPUT:
         return categoryInPageView(context);
@@ -357,7 +357,7 @@ class _MasterPageState extends State<MasterPage> {
                           Divider(),
                           Flexible(
                               child: Container(
-                                  child: analitycList(context))),
+                                  child: analyticList(context))),
                         ],
                       ),
                     ),
