@@ -25,7 +25,8 @@ class MasterPage extends StatefulWidget {
 class _MasterPageState extends State<MasterPage> {
   OperationType _type;
   AccountBalance _account;
-  Category _category;
+  Category _categoryIn;
+  Category _categoryOut;
   AccountBalance _recAccount;
   int _sum = 0;
   bool _showKeyboard = false;
@@ -67,7 +68,7 @@ class _MasterPageState extends State<MasterPage> {
     );
   }
 
-  Widget categoryPageView(BuildContext context) {
+  Widget categoryInPageView(BuildContext context) {
     return StreamBuilder(
       stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
       initialData: <Category>[],
@@ -80,10 +81,37 @@ class _MasterPageState extends State<MasterPage> {
 
         return Carousel(
           key: GlobalKey(),
-          initialItem: _category,
+          initialItem: _categoryIn,
           items: categories,
           onPageChanged: (pos) {
-            _category = categories[pos];
+            _categoryIn = categories[pos];
+          },
+          itemHeight: 60.0,
+          itemBuilder: (context, pos) {
+            return Center(child: Text(categories[pos].title));
+          },
+        );
+      },
+    );
+  }
+
+  Widget categoryOutPageView(BuildContext context) {
+    return StreamBuilder(
+      stream: Provider.of<Repository>(context).watchAllCategoriesByType(_type),
+      initialData: <Category>[],
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (!snapshot.hasData || snapshot.data.isEmpty) {
+          return SizedBox();
+        }
+
+        List<Category> categories = snapshot.data;
+
+        return Carousel(
+          key: GlobalKey(),
+          initialItem: _categoryOut,
+          items: categories,
+          onPageChanged: (pos) {
+            _categoryOut = categories[pos];
           },
           itemHeight: 60.0,
           itemBuilder: (context, pos) {
@@ -131,6 +159,19 @@ class _MasterPageState extends State<MasterPage> {
     );
   }
 
+  Widget analitycList(BuildContext context){
+    switch (_type){
+      case OperationType.INPUT:
+        return categoryInPageView(context);
+      case OperationType.OUTPUT:
+        return categoryOutPageView(context);
+      case OperationType.TRANSFER:
+        return recAccountPageView(context);
+      default:
+        return SizedBox();
+    }
+  }
+
   void _saveOperation(BuildContext context) {
     if (_account == null) {
       Scaffold.of(context).showSnackBar(SnackBar(
@@ -146,8 +187,14 @@ class _MasterPageState extends State<MasterPage> {
       return;
     }
 
-    if (_type != OperationType.TRANSFER &&
-        (_category == null || _category.type != _type)) {
+    if (_type == OperationType.INPUT && _categoryIn == null ) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context).emptyCategoryError),
+      ));
+      return;
+    }
+
+    if (_type == OperationType.OUTPUT && _categoryOut == null ) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));
@@ -161,26 +208,43 @@ class _MasterPageState extends State<MasterPage> {
       return;
     }
 
-    if (_type == OperationType.TRANSFER) {
-      Operation operation = Operation(
-          date: DateTime.now(),
-          type: _type,
-          account: const AccountBalanceMapper().mapToAccount(_account),
-          recAccount: const AccountBalanceMapper().mapToAccount(_recAccount),
-          sum: _sum);
+    switch (_type){
+      case OperationType.INPUT: {
+        Operation operation = Operation(
+            date: DateTime.now(),
+            type: _type,
+            account: const AccountBalanceMapper().mapToAccount(_account),
+            category: _categoryIn,
+            sum: _sum);
 
-      Provider.of<Repository>(context, listen: false)
-          .insertOperation(operation);
-    } else {
-      Operation operation = Operation(
-          date: DateTime.now(),
-          type: _type,
-          account: const AccountBalanceMapper().mapToAccount(_account),
-          category: _category,
-          sum: _sum);
+        Provider.of<Repository>(context, listen: false)
+            .insertOperation(operation);
+        break;
+      }
+      case OperationType.OUTPUT: {
+        Operation operation = Operation(
+            date: DateTime.now(),
+            type: _type,
+            account: const AccountBalanceMapper().mapToAccount(_account),
+            category: _categoryOut,
+            sum: _sum);
 
-      Provider.of<Repository>(context, listen: false)
-          .insertOperation(operation);
+        Provider.of<Repository>(context, listen: false)
+            .insertOperation(operation);
+        break;
+      }
+      case OperationType.TRANSFER: {
+        Operation operation = Operation(
+            date: DateTime.now(),
+            type: _type,
+            account: const AccountBalanceMapper().mapToAccount(_account),
+            recAccount: const AccountBalanceMapper().mapToAccount(_recAccount),
+            sum: _sum);
+
+        Provider.of<Repository>(context, listen: false)
+            .insertOperation(operation);
+        break;
+      }
     }
 
     Scaffold.of(context).showSnackBar(SnackBar(
@@ -293,9 +357,7 @@ class _MasterPageState extends State<MasterPage> {
                           Divider(),
                           Flexible(
                               child: Container(
-                                  child: _type == OperationType.TRANSFER
-                                      ? recAccountPageView(context)
-                                      : categoryPageView(context))),
+                                  child: analitycList(context))),
                         ],
                       ),
                     ),
