@@ -1,6 +1,7 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,7 @@ class TotalBalanceCard extends StatelessWidget {
       child: FlatButton(
         child: Text('Add account'),
         onPressed: () {
-          AccountList.addItem(context);
+          AccountCard.open(context);
         },
       ),
     );

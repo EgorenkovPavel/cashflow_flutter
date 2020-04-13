@@ -3,6 +3,7 @@ import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_account.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
+import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:flutter/material.dart';
 
 class AccountList extends MainList<AccountBalance> {
@@ -17,38 +18,11 @@ class AccountList extends MainList<AccountBalance> {
         final itemAccount = accounts[index];
         return ListTileAccount(
           itemAccount,
-          onTap: () => onItemTap(context, itemAccount),
+          onTap: () => AccountPage.open(context, itemAccount.id),
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(),
     );
-  }
-
-  static void addItem(BuildContext context) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: AccountCard(),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
-
-  @override
-  void onItemTap(BuildContext context, AccountBalance item) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: AccountCard(
-                account: item,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
   }
 
   @override

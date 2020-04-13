@@ -13,6 +13,18 @@ class CategoryCard extends StatelessWidget {
 
   CategoryCard({this.type});
 
+  static void open(BuildContext context, {OperationType type}){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: CategoryCard(type: type,),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
+
   void saveCategory(BuildContext context) {
       Provider.of<Repository>(context, listen: false)
           .insertCategory(Category(title: titleController.text, type: type));

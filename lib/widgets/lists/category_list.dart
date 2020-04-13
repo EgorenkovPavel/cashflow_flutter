@@ -32,18 +32,6 @@ class CategoryList extends MainList<CategoryCashflowBudget> {
     );
   }
 
-  static void addItem(BuildContext context, {OperationType type}) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              child: CategoryCard(type: type,),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
-        });
-  }
-
   @override
   void onItemTap(BuildContext context, CategoryCashflowBudget item) {
     CategoryPage.open(context, item.id);

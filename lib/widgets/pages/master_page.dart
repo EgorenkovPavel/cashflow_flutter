@@ -8,6 +8,7 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/sum_text_formatter.dart';
 import 'package:cashflow/widgets/carousel.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
+import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/keyboard.dart';
 import 'package:cashflow/widgets/lists/account_list.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
@@ -265,22 +266,6 @@ class _MasterPageState extends State<MasterPage> {
     });
   }
 
-  void _addAnalytic(BuildContext context) {
-    switch (_type) {
-      case OperationType.INPUT:
-      case OperationType.OUTPUT:
-        {
-          CategoryList.addItem(context, type: _type);
-          break;
-        }
-      case OperationType.TRANSFER:
-        {
-          AccountList.addItem(context);
-          break;
-        }
-    }
-  }
-
   Widget title(String text) {
     return Text(
       text,
@@ -365,19 +350,19 @@ class _MasterPageState extends State<MasterPage> {
                 children: <Widget>[
                   buildList(
                       AppLocalizations.of(context).titleAccount,
-                          () => AccountList.addItem(context),
+                          () => AccountCard.open(context),
                       accountPageView(context)),
                   _type == OperationType.INPUT ? buildList(
                       AppLocalizations.of(context).titleCategory,
-                          () => CategoryList.addItem(context, type: OperationType.INPUT),
+                          () => CategoryCard.open(context, type: OperationType.INPUT),
                       categoryInPageView(context)) : SizedBox(),
                   _type == OperationType.OUTPUT ? buildList(
                       AppLocalizations.of(context).titleCategory,
-                          () => CategoryList.addItem(context, type: OperationType.OUTPUT),
+                          () => CategoryCard.open(context, type: OperationType.OUTPUT),
                       categoryOutPageView(context)) : SizedBox(),
                   _type == OperationType.TRANSFER ? buildList(
                       AppLocalizations.of(context).titleAccount,
-                          () => AccountList.addItem(context),
+                          () => AccountCard.open(context),
                       recAccountPageView(context)) : SizedBox(),
                 ],
               ),

@@ -1,37 +1,34 @@
-import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:cashflow/data/objects/account.dart';
-import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountCard extends StatelessWidget {
-  final AccountBalance account;
   final TextEditingController controller = TextEditingController();
 
-  AccountCard({this.account}) {
-    if (account != null) {
-      controller.text = account.title;
-    }
+  static void open(BuildContext context){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: AccountCard(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
   }
 
-  void saveAccount(BuildContext context) {
-    if (account == null) {
+  void _saveAccount(BuildContext context) {
       Provider.of<Repository>(context, listen: false)
           .insertAccount(Account(title: controller.text));
-    } else {
-      Provider.of<Repository>(context, listen: false)
-          .updateAccount(account.getAccount().copyWith(title: controller.text));
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return ItemCard(
-      title: account == null
-          ? AppLocalizations.of(context).newAccountCardTitle
-          : AppLocalizations.of(context).accountCardTitle,
+      title: AppLocalizations.of(context).newAccountCardTitle,
       child: TextFormField(
         autofocus: true,
         controller: controller,
@@ -48,7 +45,7 @@ class AccountCard extends StatelessWidget {
         },
       ),
       onSave: (context) {
-        saveAccount(context);
+        _saveAccount(context);
       },
     );
   }
