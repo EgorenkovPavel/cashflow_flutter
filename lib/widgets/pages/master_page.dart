@@ -72,7 +72,8 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget categoryInPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllCategoriesByType(OperationType.INPUT),
+      stream: Provider.of<Repository>(context)
+          .watchAllCategoriesByType(OperationType.INPUT),
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
@@ -87,6 +88,7 @@ class _MasterPageState extends State<MasterPage> {
           items: categories,
           onPageChanged: (pos) {
             _categoryIn = categories[pos];
+            print(_categoryIn.title);
           },
           itemHeight: 60.0,
           itemBuilder: (context, pos) {
@@ -99,7 +101,8 @@ class _MasterPageState extends State<MasterPage> {
 
   Widget categoryOutPageView(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<Repository>(context).watchAllCategoriesByType(OperationType.OUTPUT),
+      stream: Provider.of<Repository>(context)
+          .watchAllCategoriesByType(OperationType.OUTPUT),
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
@@ -161,8 +164,8 @@ class _MasterPageState extends State<MasterPage> {
     );
   }
 
-  Widget analyticList(BuildContext context){
-    switch (_type){
+  Widget analyticList(BuildContext context) {
+    switch (_type) {
       case OperationType.INPUT:
         return categoryInPageView(context);
       case OperationType.OUTPUT:
@@ -189,14 +192,14 @@ class _MasterPageState extends State<MasterPage> {
       return;
     }
 
-    if (_type == OperationType.INPUT && _categoryIn == null ) {
+    if (_type == OperationType.INPUT && _categoryIn == null) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));
       return;
     }
 
-    if (_type == OperationType.OUTPUT && _categoryOut == null ) {
+    if (_type == OperationType.OUTPUT && _categoryOut == null) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));
@@ -210,43 +213,47 @@ class _MasterPageState extends State<MasterPage> {
       return;
     }
 
-    switch (_type){
-      case OperationType.INPUT: {
-        Operation operation = Operation(
-            date: DateTime.now(),
-            type: _type,
-            account: const AccountBalanceMapper().mapToAccount(_account),
-            category: _categoryIn,
-            sum: _sum);
+    switch (_type) {
+      case OperationType.INPUT:
+        {
+          Operation operation = Operation(
+              date: DateTime.now(),
+              type: _type,
+              account: const AccountBalanceMapper().mapToAccount(_account),
+              category: _categoryIn,
+              sum: _sum);
 
-        Provider.of<Repository>(context, listen: false)
-            .insertOperation(operation);
-        break;
-      }
-      case OperationType.OUTPUT: {
-        Operation operation = Operation(
-            date: DateTime.now(),
-            type: _type,
-            account: const AccountBalanceMapper().mapToAccount(_account),
-            category: _categoryOut,
-            sum: _sum);
+          Provider.of<Repository>(context, listen: false)
+              .insertOperation(operation);
+          break;
+        }
+      case OperationType.OUTPUT:
+        {
+          Operation operation = Operation(
+              date: DateTime.now(),
+              type: _type,
+              account: const AccountBalanceMapper().mapToAccount(_account),
+              category: _categoryOut,
+              sum: _sum);
 
-        Provider.of<Repository>(context, listen: false)
-            .insertOperation(operation);
-        break;
-      }
-      case OperationType.TRANSFER: {
-        Operation operation = Operation(
-            date: DateTime.now(),
-            type: _type,
-            account: const AccountBalanceMapper().mapToAccount(_account),
-            recAccount: const AccountBalanceMapper().mapToAccount(_recAccount),
-            sum: _sum);
+          Provider.of<Repository>(context, listen: false)
+              .insertOperation(operation);
+          break;
+        }
+      case OperationType.TRANSFER:
+        {
+          Operation operation = Operation(
+              date: DateTime.now(),
+              type: _type,
+              account: const AccountBalanceMapper().mapToAccount(_account),
+              recAccount:
+                  const AccountBalanceMapper().mapToAccount(_recAccount),
+              sum: _sum);
 
-        Provider.of<Repository>(context, listen: false)
-            .insertOperation(operation);
-        break;
-      }
+          Provider.of<Repository>(context, listen: false)
+              .insertOperation(operation);
+          break;
+        }
     }
 
     Scaffold.of(context).showSnackBar(SnackBar(
@@ -258,16 +265,19 @@ class _MasterPageState extends State<MasterPage> {
     });
   }
 
-  void _addAnalytic(BuildContext context){
-    switch(_type){
-      case OperationType.INPUT: case OperationType.OUTPUT:{
-        CategoryList.addItem(context, type: _type);
-        break;
-      }
-      case OperationType.TRANSFER:{
-        AccountList.addItem(context);
-        break;
-      }
+  void _addAnalytic(BuildContext context) {
+    switch (_type) {
+      case OperationType.INPUT:
+      case OperationType.OUTPUT:
+        {
+          CategoryList.addItem(context, type: _type);
+          break;
+        }
+      case OperationType.TRANSFER:
+        {
+          AccountList.addItem(context);
+          break;
+        }
     }
   }
 
@@ -275,6 +285,36 @@ class _MasterPageState extends State<MasterPage> {
     return Text(
       text,
       style: Theme.of(context).textTheme.subtitle,
+    );
+  }
+
+  Widget buildList(String titleStr, Function onAdd, Widget list) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                title(titleStr),
+                _showKeyboard
+                    ? SizedBox()
+                    : IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: onAdd,
+                      ),
+              ],
+            ),
+            Divider(),
+            Flexible(child: Container(child: list)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -304,7 +344,8 @@ class _MasterPageState extends State<MasterPage> {
         body: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: OperationTypeRadioButton(
                 type: _type,
                 items: [
@@ -322,62 +363,22 @@ class _MasterPageState extends State<MasterPage> {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              title(AppLocalizations.of(context).titleAccount),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                onPressed: () {
-                                  AccountList.addItem(context);
-                                },
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          Flexible(
-                              child:
-                                  Container(child: accountPageView(context))),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              title(AppLocalizations.of(context).titleCategory),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                onPressed: () => _addAnalytic(context),
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          Flexible(
-                              child: Container(
-                                  child: analyticList(context))),
-                        ],
-                      ),
-                    ),
-                  ),
+                  buildList(
+                      AppLocalizations.of(context).titleAccount,
+                          () => AccountList.addItem(context),
+                      accountPageView(context)),
+                  _type == OperationType.INPUT ? buildList(
+                      AppLocalizations.of(context).titleCategory,
+                          () => CategoryList.addItem(context, type: OperationType.INPUT),
+                      categoryInPageView(context)) : SizedBox(),
+                  _type == OperationType.OUTPUT ? buildList(
+                      AppLocalizations.of(context).titleCategory,
+                          () => CategoryList.addItem(context, type: OperationType.OUTPUT),
+                      categoryOutPageView(context)) : SizedBox(),
+                  _type == OperationType.TRANSFER ? buildList(
+                      AppLocalizations.of(context).titleAccount,
+                          () => AccountList.addItem(context),
+                      recAccountPageView(context)) : SizedBox(),
                 ],
               ),
             ),
@@ -425,7 +426,10 @@ class _MasterPageState extends State<MasterPage> {
                               child: Container(
                                 child: Text(
                                   '$_sum',
-                                  style: Theme.of(context).textTheme.display1,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .copyWith(color: Colors.black),
                                 ),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.0),

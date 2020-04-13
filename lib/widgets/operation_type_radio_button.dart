@@ -1,7 +1,7 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:flutter/material.dart';
 
-class OperationTypeRadioButton extends StatelessWidget{
+class OperationTypeRadioButton extends StatelessWidget {
   final Function onChange;
   final OperationType type;
 
@@ -13,36 +13,49 @@ class OperationTypeRadioButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: items
-          .map((item) => Flexible(
-                child: ClipRRect(
-                  borderRadius: getBorderRadius(item),
-                  child: RawMaterialButton(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      getOperationTitle(context, item).toUpperCase(),
-                      style: TextStyle(
-                          color: item == type ? Colors.white : Colors.black),
+    return Container(
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.zero,
+      decoration: BoxDecoration(
+        border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(6.0),
+        child: Row(
+          children: items
+              .map((item) => Flexible(
+                    child: RawMaterialButton(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      elevation: 0.0,
+                      child: Text(
+                        getOperationTitle(context, item).toUpperCase(),
+                        style: TextStyle(
+                            color: item == type ? Colors.white : Colors.black),
+                      ),
+                      fillColor: item == type
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                      onPressed: () {
+                        onChange(item);
+                      },
                     ),
-                    fillColor: item == type ? Theme.of(context).primaryColor : Colors.white,
-                    onPressed: (){onChange(item);},
-                  ),
-                ),
-                flex: 1,
-                fit: FlexFit.tight,
-              ))
-          .toList(),
+                    flex: 1,
+                    fit: FlexFit.tight,
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 
-  BorderRadiusGeometry getBorderRadius(item){
+  BorderRadiusGeometry getBorderRadius(item) {
     int index = items.indexOf(item);
-    if(index == 0){
+    if (index == 0) {
       return BorderRadius.horizontal(left: Radius.circular(14.0));
-    }else if (index == items.length-1){
+    } else if (index == items.length - 1) {
       return BorderRadius.horizontal(right: Radius.circular(14.0));
-    } else{
+    } else {
       return BorderRadius.all(Radius.circular(0.0));
     }
   }
