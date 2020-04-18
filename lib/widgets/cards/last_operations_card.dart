@@ -86,6 +86,7 @@ class LastOperationsBloc extends Bloc<LastOperationsEvent, LastOperationsState>{
 
   @override
   Stream<LastOperationsState> mapEventToState(LastOperationsEvent event) async* {
+
     await for(List<Operation> operations in _repository.watchLastOperations(5)){
       if(operations.isEmpty){
         yield Empty();

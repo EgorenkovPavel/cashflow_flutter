@@ -1,3 +1,4 @@
+import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
@@ -28,8 +29,14 @@ void main(){
           BlocProvider<LastOperationsBloc>(
             create: (BuildContext context) => LastOperationsBloc(_repository),
           ),
+          BlocProvider<CashflowCardBloc>(
+            create: (BuildContext context) => CashflowCardBloc(_repository),
+          ),
         ],
-        child: MyApp(),
+        child: MultiProvider(
+          providers: [ChangeNotifierProvider(create: (context) => _repository)],
+          child: MyApp(),
+        )
       )
   );
 }
@@ -38,9 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => Repository())],
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Cashflow',
         theme: ThemeData(
             primarySwatch: Colors.green, accentColor: Colors.deepOrangeAccent),
@@ -88,7 +93,6 @@ class MyApp extends StatelessWidget {
             default: return null;
           }
         },
-      ),
     );
   }
 }
