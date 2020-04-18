@@ -4,7 +4,7 @@ import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountCard extends StatefulWidget {
 
@@ -26,11 +26,6 @@ class AccountCard extends StatefulWidget {
 
 class _AccountCardState extends State<AccountCard> {
   final TextEditingController _controller = TextEditingController();
-
-  void _saveAccount(BuildContext context) {
-      Provider.of<Repository>(context, listen: false)
-          .insertAccount(Account(title: _controller.text));
-  }
 
   @override
   void dispose() {
@@ -58,7 +53,7 @@ class _AccountCardState extends State<AccountCard> {
         },
       ),
       onSave: (context) {
-        _saveAccount(context);
+        BlocProvider.of<AccountCardBloc>(context).add(Save(title: _controller.text));
       },
     );
   }
@@ -95,7 +90,7 @@ class AccountCardBloc extends Bloc<AccountCardEvent, AccountCardState>{
   Stream<AccountCardState> mapEventToState(AccountCardEvent event) async* {
 
     if (event is Save){
-      _repository.insertAccount(Account(title: event.title));
+      await _repository.insertAccount(Account(title: event.title));
       yield CloseState();
     }
 
