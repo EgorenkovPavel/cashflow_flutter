@@ -1,3 +1,4 @@
+import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/budget_page.dart';
@@ -9,12 +10,25 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repository.dart';
 
-void main() => runApp(MyApp());
+void main(){
+  final Repository _repository = Repository();
+  runApp(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<TotalBalanceBloc>(
+            create: (BuildContext context) => TotalBalanceBloc(_repository),
+          ),
+        ],
+        child: MyApp(),
+      )
+  );
+}
 
 class MyApp extends StatelessWidget {
 
@@ -49,35 +63,23 @@ class MyApp extends StatelessWidget {
             case BudgetPage.routeName: {
               final Map<String, DateTime> args = settings.arguments;
               return MaterialPageRoute(
-                builder: (context) {
-                  return BudgetPage(date: args['date']);
-                },
-              );
+                builder: (context) => BudgetPage(date: args['date']));
             }
             case AccountPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => AccountPage(
-                    id: settings.arguments,
-                  ));
+                  builder: (context) => AccountPage(id: settings.arguments));
             }
             case CategoryPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => CategoryPage(
-                    id: settings.arguments,
-                  ));
+                  builder: (context) => CategoryPage(id: settings.arguments));
             }
             case OperationPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => OperationPage(
-                    id: settings.arguments,
-                  ));
+                  builder: (context) => OperationPage(id: settings.arguments));
             }
             case CashflowPage.routeName: {
               return MaterialPageRoute(
-                builder: (context) {
-                  return CashflowPage(type: settings.arguments,);
-                },
-              );
+                builder: (context) => CashflowPage(type: settings.arguments));
             }
             default: return null;
           }

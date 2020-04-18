@@ -12,12 +12,12 @@ import 'package:provider/provider.dart';
 class TotalBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<TotalBalanceBloc>(context).add(Fetch());
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
-        bloc: TotalBalanceBloc(Provider.of<Repository>(context, listen: false))..add(Fetch()),
         builder: (BuildContext context, TotalBalanceState state) {
           if(state is Empty){
             return emptyBody(context);
