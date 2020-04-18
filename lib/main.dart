@@ -1,3 +1,4 @@
+import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
@@ -23,6 +24,9 @@ void main(){
         providers: [
           BlocProvider<TotalBalanceBloc>(
             create: (BuildContext context) => TotalBalanceBloc(_repository),
+          ),
+          BlocProvider<LastOperationsBloc>(
+            create: (BuildContext context) => LastOperationsBloc(_repository),
           ),
         ],
         child: MyApp(),
