@@ -25,7 +25,15 @@ class AccountCard extends StatefulWidget {
 }
 
 class _AccountCardState extends State<AccountCard> {
+
   final TextEditingController _controller = TextEditingController();
+  AccountCardBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BlocProvider.of<AccountCardBloc>(context);
+  }
 
   @override
   void dispose() {
@@ -53,7 +61,7 @@ class _AccountCardState extends State<AccountCard> {
         },
       ),
       onSave: (context) {
-        BlocProvider.of<AccountCardBloc>(context).add(Save(title: _controller.text));
+        _bloc.add(Save(title: _controller.text));
       },
     );
   }
