@@ -36,6 +36,9 @@ void main(){
           BlocProvider<AccountCardBloc>(
             create: (BuildContext context) => AccountCardBloc(_repository),
           ),
+          BlocProvider<AccountPageBloc>(
+            create: (BuildContext context) => AccountPageBloc(_repository),
+          ),
           BlocProvider<MasterBloc>(
             create: (BuildContext context) => MasterBloc(_repository),
           ),

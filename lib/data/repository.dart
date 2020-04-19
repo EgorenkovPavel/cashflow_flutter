@@ -44,9 +44,12 @@ class Repository extends ChangeNotifier {
           .watchAllAccountsWithBalance(archive: archive)
           .map((list) => const AccountBalanceMapper().mapListToDart(list));
 
-  Stream<Account> getAccountById(int id) => db.accountDao
-      .getAccountById(id)
+  Stream<Account> watchAccountById(int id) => db.accountDao
+      .watchAccountById(id)
       .map((a) => const AccountMapper().mapToDart(a));
+
+  Future<Account> getAccountById(int id) async =>
+    const AccountMapper().mapToDart(await db.accountDao.getAccountById(id));
 
   Future insertAccount(Account account) =>
       db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
