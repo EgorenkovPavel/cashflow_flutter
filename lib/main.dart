@@ -32,6 +32,9 @@ void main(){
           BlocProvider<CashflowCardBloc>(
             create: (BuildContext context) => CashflowCardBloc(_repository),
           ),
+          BlocProvider<MasterBloc>(
+            create: (BuildContext context) => MasterBloc(_repository),
+          ),
         ],
         child: MultiProvider(
           providers: [ChangeNotifierProvider(create: (context) => _repository)],
