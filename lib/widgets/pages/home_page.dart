@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            color: Theme.of(context).primaryColor,
+            //color: Theme.of(context).primaryColor,
           ),
           ListView(
             children: <Widget>[
@@ -67,9 +67,6 @@ class HomePage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: LastOperationsCard(),
-              ),
-              SizedBox(
-                height: 60.0,
               ),
             ],
           ),

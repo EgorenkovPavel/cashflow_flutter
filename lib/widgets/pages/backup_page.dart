@@ -13,42 +13,42 @@ class BackupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: Text(AppLocalizations.of(context).itemMenuService),
-    ),
-    body:Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Google drive',
-              style: Theme.of(context).textTheme.title,
-            ),
-          ),
-          Flex(
-            direction: Axis.horizontal,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton(
-                child: Text(AppLocalizations.of(context).backup.toUpperCase()),
-                onPressed: () => _backup(context),
+          title: Text(AppLocalizations.of(context).itemMenuService),
+        ),
+        body: Builder(
+          builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                      'Google drive',
+                      style: Theme.of(context).textTheme.title,
+                  ),
+                  RaisedButton(
+                    child:
+                        Text(AppLocalizations.of(context).backup.toUpperCase()),
+                    onPressed: () => _backup(context),
+                  ),
+                  RaisedButton(
+                    child:
+                        Text(AppLocalizations.of(context).restore.toUpperCase()),
+                    onPressed: () => _restore(context),
+                  ),
+                  RaisedButton(
+                    child: Text('Restore old format'),
+                    onPressed: () => _restoreOld(context),
+                  ),
+                  RaisedButton(
+                    child: Text('DELETE ALL'),
+                    onPressed: () => _deleteAll(context),
+                  ),
+                ],
               ),
-              RaisedButton(
-                child: Text(AppLocalizations.of(context).restore.toUpperCase()),
-                onPressed: () => _restore(context),
-              )
-            ],
-          ),
-          RaisedButton(
-            child: Text('Restore old format'),
-            onPressed: () => _restoreOld(context),
-          ),
-          RaisedButton(
-            child: Text('DELETE ALL'),
-            onPressed: () => _deleteAll(context),
-          ),
-         ],
-      ));
+            );
+          },
+        ));
   }
 
   _backup(BuildContext context) async {
@@ -63,8 +63,15 @@ class BackupPage extends StatelessWidget {
   }
 
   _restore(BuildContext context) async {
-    final httpClient = await GoogleHttpClient.getClient();
-
+    var httpClient;
+    try {
+      httpClient = await GoogleHttpClient.getClient();
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('No google play services'),
+      ));
+      return;
+    }
     if (httpClient == null) return;
 
     String fileId = await DriveDialog.open(context, httpClient);
@@ -79,57 +86,58 @@ class BackupPage extends StatelessWidget {
 
     String fileId = await DriveDialog.open(context, httpClient);
 
-    BlocProvider.of<BackupPageBloc>(context).add(RestoreOld(httpClient, fileId));
+    BlocProvider.of<BackupPageBloc>(context)
+        .add(RestoreOld(httpClient, fileId));
   }
 
-  _deleteAll(BuildContext context){
-    showDialog(context: context,
-    builder: (context) => AlertDialog(
-      title: Text('Delete all'),
-      content: Text('Are you sure?'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Yes'),
-          onPressed: () {
-            BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
+  _deleteAll(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete all'),
+        content: Text('Are you sure?'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () {
+              BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
-abstract class BackupPageEvent{}
+abstract class BackupPageEvent {}
 
-class Backup extends BackupPageEvent{
+class Backup extends BackupPageEvent {
   final GoogleHttpClient client;
   final String catalogId;
 
   Backup(this.client, this.catalogId);
 }
 
-class Restore extends BackupPageEvent{
+class Restore extends BackupPageEvent {
   final GoogleHttpClient client;
   final String fileId;
 
   Restore(this.client, this.fileId);
 }
 
-class RestoreOld extends BackupPageEvent{
+class RestoreOld extends BackupPageEvent {
   final GoogleHttpClient client;
   final String fileId;
 
   RestoreOld(this.client, this.fileId);
 }
 
-class DeleteAll extends BackupPageEvent{}
+class DeleteAll extends BackupPageEvent {}
 
-abstract class BackupPageState{}
+abstract class BackupPageState {}
 
-class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState>{
-
+class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
   final Repository _repository;
 
   BackupPageBloc(this._repository);
@@ -138,16 +146,15 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState>{
   BackupPageState get initialState => null;
 
   @override
-  Stream<BackupPageState> mapEventToState(BackupPageEvent event) async*{
-    if(event is Backup){
+  Stream<BackupPageState> mapEventToState(BackupPageEvent event) async* {
+    if (event is Backup) {
       _repository.backup(event.client, event.catalogId);
-    }else if(event is Restore){
+    } else if (event is Restore) {
       _repository.restore(event.client, event.fileId);
-    }else if(event is RestoreOld){
+    } else if (event is RestoreOld) {
       _repository.restoreOld(event.client, event.fileId);
-    }else if(event is DeleteAll){
+    } else if (event is DeleteAll) {
       _repository.deleteAll();
     }
   }
-
 }
