@@ -8,15 +8,12 @@ class Keyboard extends StatelessWidget {
   const Keyboard({Key key, this.onDigitPressed, this.onBackPressed})
       : super(key: key);
 
-  Widget _button(BuildContext context, Widget child, onPressed) {
-    double _ratio = MediaQuery
-        .of(context)
-        .devicePixelRatio;
+  Widget _button(BuildContext context, Widget child, onPressed, double width) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4.0*_ratio, vertical: 2.0*_ratio),
+      padding: EdgeInsets.symmetric(horizontal: width*0.1, vertical: width*0.05),
       child: SizedBox(
-        height: 24.0*_ratio,
-        width: 24.0*_ratio,
+        height: width *0.75,//24.0*_ratio,
+        width: width *0.75,//24.0*_ratio,
         child: RawMaterialButton(
           shape: CircleBorder(),
           child: child,
@@ -28,11 +25,11 @@ class Keyboard extends StatelessWidget {
     );
   }
 
-  Widget _digitButton(BuildContext context, int digit) {
+  Widget _digitButton(BuildContext context, int digit, double width) {
     return _button(context, Text('$digit', style: Theme
         .of(context)
         .textTheme
-        .title,), () => onDigitPressed(digit));
+        .title,), () => onDigitPressed(digit), width);
   }
 
   Widget _rowButton(List<Widget> buttons) {
@@ -44,29 +41,34 @@ class Keyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _rowButton(<Widget>[
-          _digitButton(context, 1),
-          _digitButton(context, 2),
-          _digitButton(context, 3),
-        ]),
-        _rowButton(<Widget>[
-          _digitButton(context, 4),
-          _digitButton(context, 5),
-          _digitButton(context, 6),
-        ]),
-        _rowButton(<Widget>[
-          _digitButton(context, 7),
-          _digitButton(context, 8),
-          _digitButton(context, 9),
-        ]),
-        _rowButton(<Widget>[
-          _button(context, SizedBox(), null),
-          _digitButton(context, 0),
-          _button(context, Icon(Icons.arrow_back), onBackPressed),
-        ]),
-      ],
+    return LayoutBuilder(
+      builder: (BuildContext context, constrains) {
+        double _col = constrains.maxWidth / 3;
+        return Column(
+          children: <Widget>[
+            _rowButton(<Widget>[
+              _digitButton(context, 1, _col),
+              _digitButton(context, 2, _col),
+              _digitButton(context, 3, _col),
+            ]),
+            _rowButton(<Widget>[
+              _digitButton(context, 4, _col),
+              _digitButton(context, 5, _col),
+              _digitButton(context, 6, _col),
+            ]),
+            _rowButton(<Widget>[
+              _digitButton(context, 7, _col),
+              _digitButton(context, 8, _col),
+              _digitButton(context, 9, _col),
+            ]),
+            _rowButton(<Widget>[
+              _button(context, SizedBox(), null, _col),
+              _digitButton(context, 0, _col),
+              _button(context, Icon(Icons.arrow_back), onBackPressed, _col),
+            ]),
+          ],
+        );
+      }
     );
   }
 }

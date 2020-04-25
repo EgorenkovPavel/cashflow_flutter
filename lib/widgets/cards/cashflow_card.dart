@@ -105,7 +105,7 @@ class CardRow extends StatelessWidget {
             },
           )
         : CardButton(
-            leading: Text(getOperationTitle(context, type), style: Theme.of(context).textTheme.title,),
+            leading: Text(getOperationTitle(context, type)),
             trailing: RichText(
               text: TextSpan(
                   text: '${NumberFormat().format(_cashflow)}',
