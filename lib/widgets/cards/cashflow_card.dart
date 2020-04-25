@@ -14,6 +14,7 @@ class CashflowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<CashflowCardBloc>(context)..add(Fetch());
     return Card(
+      elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -104,7 +105,7 @@ class CardRow extends StatelessWidget {
             },
           )
         : CardButton(
-            leading: Text(getOperationTitle(context, type)),
+            leading: Text(getOperationTitle(context, type), style: Theme.of(context).textTheme.title,),
             trailing: RichText(
               text: TextSpan(
                   text: '${NumberFormat().format(_cashflow)}',

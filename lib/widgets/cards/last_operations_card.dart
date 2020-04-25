@@ -13,6 +13,7 @@ class LastOperationsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<LastOperationsBloc>(context)..add(Fetch());
     return Card(
+      elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),

@@ -75,7 +75,8 @@ class _MasterPageState extends State<MasterPage> {
           key: GlobalKey(),
           initialItem: _bloc.categoryIn,
           items: categories,
-          onPageChanged: (pos) => _bloc.add(OnCategoryInChanged(categories[pos])),
+          onPageChanged: (pos) =>
+              _bloc.add(OnCategoryInChanged(categories[pos])),
           itemHeight: 60.0,
           itemBuilder: (context, pos) {
             return Center(child: Text(categories[pos].title));
@@ -156,7 +157,7 @@ class _MasterPageState extends State<MasterPage> {
   Widget buildList(String titleStr, Function onAdd, Widget list) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: <Widget>[
             Row(
@@ -164,21 +165,12 @@ class _MasterPageState extends State<MasterPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 title(titleStr),
-                BlocBuilder<MasterBloc, MasterState>(
-                  condition: (oldState, newState) {
-                    return newState is DataState;
-                  },
-                  builder: (BuildContext context, MasterState state) {
-                    return (state as DataState).showKeyboard
-                        ? SizedBox()
-                        : IconButton(
-                            icon: Icon(
-                              Icons.add,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            onPressed: onAdd,
-                          );
-                  },
+                IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: onAdd,
                 )
               ],
             ),
@@ -236,7 +228,6 @@ class _MasterPageState extends State<MasterPage> {
             }
           },
           buildWhen: (oldState, newState) {
-
             return newState is DataState;
           },
           builder: (BuildContext context, MasterState state) {
@@ -501,11 +492,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
 
   AccountBalance get recAccount => _data.recAccount;
 
-
-
   @override
   Stream<MasterState> mapEventToState(MasterEvent event) async* {
-
     if (event is BackPressed) {
       if (_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: false);
@@ -530,16 +518,13 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       _data = _data.copyWith(account: event.account);
       return;
     } else if (event is OnCategoryInChanged) {
-      _data =
-          _data.copyWith(categoryIn: event.category);
+      _data = _data.copyWith(categoryIn: event.category);
       return;
     } else if (event is OnCategoryOutChanged) {
-      _data =
-          _data.copyWith(categoryOut: event.category);
+      _data = _data.copyWith(categoryOut: event.category);
       return;
     } else if (event is OnRecAccountChanged) {
-      _data =
-          _data.copyWith(recAccount: event.account);
+      _data = _data.copyWith(recAccount: event.account);
       return;
     } else if (event is OnNextTap) {
       if (_data.account == null) {
