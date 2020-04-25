@@ -47,6 +47,9 @@ void main(){
           BlocProvider<AccountPageBloc>(
             create: (BuildContext context) => AccountPageBloc(_repository),
           ),
+          BlocProvider<BackupPageBloc>(
+            create: (BuildContext context) => BackupPageBloc(_repository),
+          ),
           BlocProvider<MasterBloc>(
             create: (BuildContext context) => MasterBloc(_repository),
           ),

@@ -1,9 +1,10 @@
+import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/repository.dart';
-import 'package:cashflow/widgets/pages/drive_dialog.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
+import 'package:cashflow/widgets/pages/drive_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BackupPage extends StatelessWidget {
   static const routeName = '/backup';
@@ -58,7 +59,7 @@ class BackupPage extends StatelessWidget {
     String catalogId = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
 
-    Provider.of<Repository>(context, listen: false).backup(httpClient, catalogId);
+    BlocProvider.of<BackupPageBloc>(context).add(Backup(httpClient, catalogId));
   }
 
   _restore(BuildContext context) async {
@@ -66,10 +67,9 @@ class BackupPage extends StatelessWidget {
 
     if (httpClient == null) return;
 
-    String fileId = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+    String fileId = await DriveDialog.open(context, httpClient);
 
-    Provider.of<Repository>(context, listen: false).restore(httpClient, fileId);
+    BlocProvider.of<BackupPageBloc>(context).add(Restore(httpClient, fileId));
   }
 
   _restoreOld(BuildContext context) async {
@@ -77,10 +77,9 @@ class BackupPage extends StatelessWidget {
 
     if (httpClient == null) return;
 
-    String fileId = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+    String fileId = await DriveDialog.open(context, httpClient);
 
-    Provider.of<Repository>(context, listen: false).restoreOld(httpClient, fileId);
+    BlocProvider.of<BackupPageBloc>(context).add(RestoreOld(httpClient, fileId));
   }
 
   _deleteAll(BuildContext context){
@@ -92,7 +91,7 @@ class BackupPage extends StatelessWidget {
         FlatButton(
           child: Text('Yes'),
           onPressed: () {
-            Provider.of<Repository>(context, listen: false).deleteAll();
+            BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
             Navigator.of(context).pop();
           },
         ),
@@ -100,4 +99,55 @@ class BackupPage extends StatelessWidget {
     ),
     );
   }
+}
+
+abstract class BackupPageEvent{}
+
+class Backup extends BackupPageEvent{
+  final GoogleHttpClient client;
+  final String catalogId;
+
+  Backup(this.client, this.catalogId);
+}
+
+class Restore extends BackupPageEvent{
+  final GoogleHttpClient client;
+  final String fileId;
+
+  Restore(this.client, this.fileId);
+}
+
+class RestoreOld extends BackupPageEvent{
+  final GoogleHttpClient client;
+  final String fileId;
+
+  RestoreOld(this.client, this.fileId);
+}
+
+class DeleteAll extends BackupPageEvent{}
+
+abstract class BackupPageState{}
+
+class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState>{
+
+  final Repository _repository;
+
+  BackupPageBloc(this._repository);
+
+  @override
+  BackupPageState get initialState => null;
+
+  @override
+  Stream<BackupPageState> mapEventToState(BackupPageEvent event) async*{
+    if(event is Backup){
+      _repository.backup(event.client, event.catalogId);
+    }else if(event is Restore){
+      _repository.restore(event.client, event.fileId);
+    }else if(event is RestoreOld){
+      _repository.restoreOld(event.client, event.fileId);
+    }else if(event is DeleteAll){
+      _repository.deleteAll();
+    }
+  }
+
 }

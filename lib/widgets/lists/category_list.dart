@@ -1,8 +1,6 @@
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
-import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/widgets/cashflow_category_chart.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
-import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_category.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';

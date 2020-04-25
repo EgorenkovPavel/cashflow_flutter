@@ -10,6 +10,11 @@ class DriveDialog extends StatefulWidget {
 
   const DriveDialog(this.httpClient);
 
+  static Future<String> open(BuildContext context, GoogleHttpClient httpClient) async {
+    return await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+  }
+
   @override
   _DriveDialogState createState() => _DriveDialogState();
 }
