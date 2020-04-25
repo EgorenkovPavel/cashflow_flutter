@@ -8,7 +8,6 @@ import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class CashflowCard extends StatelessWidget {
   @override
@@ -22,7 +21,18 @@ class CashflowCard extends StatelessWidget {
           BlocBuilder<CashflowCardBloc, CashflowCardState>(
             builder: (BuildContext context, CashflowCardState state) {
               if(state is Empty){
-                return SizedBox();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CardTitle('Categories'),
+                    CardRow(type: OperationType.INPUT, categories: []),
+                    Divider(
+                      height: 1.0,
+                    ),
+                    CardRow(
+                        type: OperationType.OUTPUT, categories: []),
+                  ],
+                );
               }else if(state is Loading){
                 return Center(child: CircularProgressIndicator(),);
               }else if(state is Success){
@@ -55,6 +65,8 @@ class CashflowCard extends StatelessWidget {
                         type: OperationType.OUTPUT, categories: state.categoriesOutput),
                   ],
                 );
+              }else{
+                return SizedBox();
               }
             },
 
