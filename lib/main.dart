@@ -6,7 +6,6 @@ import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
-import 'package:cashflow/widgets/pages/budget_page.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
@@ -90,11 +89,6 @@ class MyApp extends StatelessWidget {
         },
         onGenerateRoute: (settings) {
           switch (settings.name){
-            case BudgetPage.routeName: {
-              final Map<String, DateTime> args = settings.arguments;
-              return MaterialPageRoute(
-                builder: (context) => BudgetPage(date: args['date']));
-            }
             case AccountPage.routeName: {
               return MaterialPageRoute(
                   builder: (context) => AccountPage(id: settings.arguments));
