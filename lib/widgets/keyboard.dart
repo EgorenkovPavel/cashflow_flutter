@@ -5,14 +5,18 @@ class Keyboard extends StatelessWidget {
   final ValueSetter<int> onDigitPressed;
   final VoidCallback onBackPressed;
 
-  const Keyboard({Key key, this.onDigitPressed, this.onBackPressed}) : super(key: key);
+  const Keyboard({Key key, this.onDigitPressed, this.onBackPressed})
+      : super(key: key);
 
-  Widget _button(Widget child, onPressed) {
+  Widget _button(BuildContext context, Widget child, onPressed) {
+    double _ratio = MediaQuery
+        .of(context)
+        .devicePixelRatio;
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.symmetric(horizontal: 4.0*_ratio, vertical: 2.0*_ratio),
       child: SizedBox(
-        height: 48.0,
-        width: 48.0,
+        height: 24.0*_ratio,
+        width: 24.0*_ratio,
         child: RawMaterialButton(
           shape: CircleBorder(),
           child: child,
@@ -24,11 +28,14 @@ class Keyboard extends StatelessWidget {
     );
   }
 
-  Widget _digitButton(BuildContext context, int digit){
-    return _button(Text('$digit', style: Theme.of(context).textTheme.title,), () => onDigitPressed(digit));
+  Widget _digitButton(BuildContext context, int digit) {
+    return _button(context, Text('$digit', style: Theme
+        .of(context)
+        .textTheme
+        .title,), () => onDigitPressed(digit));
   }
 
-  Widget _rowButton(List<Widget> buttons){
+  Widget _rowButton(List<Widget> buttons) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: buttons,
@@ -55,9 +62,9 @@ class Keyboard extends StatelessWidget {
           _digitButton(context, 9),
         ]),
         _rowButton(<Widget>[
-          SizedBox(height: 52.0, width: 52.0,),
+          _button(context, SizedBox(), null),
           _digitButton(context, 0),
-          _button(Icon(Icons.arrow_back), onBackPressed),
+          _button(context, Icon(Icons.arrow_back), onBackPressed),
         ]),
       ],
     );

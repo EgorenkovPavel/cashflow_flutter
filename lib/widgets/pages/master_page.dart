@@ -170,7 +170,10 @@ class _MasterPageState extends State<MasterPage> {
                     Icons.add,
                     color: Theme.of(context).primaryColor,
                   ),
-                  onPressed: onAdd,
+                  onPressed: (){
+                    _bloc.add(BackPressed());
+                    onAdd();
+                    },
                 )
               ],
             ),
@@ -308,29 +311,32 @@ class _MasterPageState extends State<MasterPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                GestureDetector(
-                                  onTap: () => _bloc.add(OnSumTap()),
-                                  child: Container(
-                                    child: Text(
-                                      '${(state as DataState).sum}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .display1
-                                          .copyWith(color: Colors.black),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () => _bloc.add(OnSumTap()),
+                                    child: Container(
+                                      child: Text(
+                                        '${(state as DataState).sum}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .display1
+                                            .copyWith(color: Colors.black),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          border: Border.all(
+                                              color: (state as DataState)
+                                                      .showKeyboard
+                                                  ? Theme.of(context).accentColor
+                                                  : Theme.of(context)
+                                                      .primaryColor,
+                                              width: 2.0)),
+                                      width: double.infinity,
+                                      height: 48.0,
+                                      alignment: Alignment.center,
                                     ),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        border: Border.all(
-                                            color: (state as DataState)
-                                                    .showKeyboard
-                                                ? Theme.of(context).accentColor
-                                                : Theme.of(context)
-                                                    .primaryColor,
-                                            width: 2.0)),
-                                    width: double.infinity,
-                                    height: 48.0,
-                                    alignment: Alignment.center,
                                   ),
                                 ),
                                 (state as DataState).showKeyboard
