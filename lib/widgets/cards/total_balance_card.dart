@@ -155,10 +155,14 @@ class BalanceChart extends StatefulWidget {
 }
 
 class _BalanceChartState extends State<BalanceChart> {
+
+  static DateTime _now = DateTime.now();
+
+
   static List<DateTime> dates = [
-    DateTime.now().subtract(Duration(days: 60)),
-    DateTime.now().subtract(Duration(days: 30)),
-    DateTime.now()
+    DateTime(_now.month == 1 ? _now.year-1 : _now.year, _now.month == 1 ? 12 : _now.month-1),
+    DateTime(_now.year, _now.month),
+    DateTime(_now.month == 12 ? _now.year+1 : _now.year, _now.month == 12 ? 1 : _now.month+1),
   ];
 
   static List<MonthBalance> balance = dates.map((d) => MonthBalance(d, 0)).toList();
@@ -190,7 +194,7 @@ class _BalanceChartState extends State<BalanceChart> {
     _repository.watchBalance(dates[2])
       ..listen((d) {
         setState(() {
-          balance[2] = d;
+          balance[2] = MonthBalance(_now, d.sum);
         });
       });
 
@@ -203,7 +207,7 @@ class _BalanceChartState extends State<BalanceChart> {
   void calcBudget(){
     setState(() {
       budget[0] = balance[1];
-      budget[1] = MonthBalance(balance[2].date, balance[1].sum + budgetSum);
+      budget[1] = MonthBalance(dates[2], balance[1].sum + budgetSum);
     });
   }
 
