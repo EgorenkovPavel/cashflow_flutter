@@ -37,10 +37,6 @@ class BackupPage extends StatelessWidget {
                     onPressed: () => _restore(context),
                   ),
                   RaisedButton(
-                    child: Text('Restore old format'),
-                    onPressed: () => _restoreOld(context),
-                  ),
-                  RaisedButton(
                     child: Text('DELETE ALL'),
                     onPressed: () => _deleteAll(context),
                   ),
@@ -79,17 +75,6 @@ class BackupPage extends StatelessWidget {
     BlocProvider.of<BackupPageBloc>(context).add(Restore(httpClient, fileId));
   }
 
-  _restoreOld(BuildContext context) async {
-    final httpClient = await GoogleHttpClient.getClient();
-
-    if (httpClient == null) return;
-
-    String fileId = await DriveDialog.open(context, httpClient);
-
-    BlocProvider.of<BackupPageBloc>(context)
-        .add(RestoreOld(httpClient, fileId));
-  }
-
   _deleteAll(BuildContext context) {
     showDialog(
       context: context,
@@ -126,13 +111,6 @@ class Restore extends BackupPageEvent {
   Restore(this.client, this.fileId);
 }
 
-class RestoreOld extends BackupPageEvent {
-  final GoogleHttpClient client;
-  final String fileId;
-
-  RestoreOld(this.client, this.fileId);
-}
-
 class DeleteAll extends BackupPageEvent {}
 
 abstract class BackupPageState {}
@@ -151,8 +129,6 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
       _repository.backup(event.client, event.catalogId);
     } else if (event is Restore) {
       _repository.restore(event.client, event.fileId);
-    } else if (event is RestoreOld) {
-      _repository.restoreOld(event.client, event.fileId);
     } else if (event is DeleteAll) {
       _repository.deleteAll();
     }

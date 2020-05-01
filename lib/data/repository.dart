@@ -30,8 +30,6 @@ class Repository extends ChangeNotifier {
 
   Future loadData(Map<String, dynamic> data) => db.loadData(data);
 
-  Future loadOldData(Map<String, dynamic> data) => db.loadOldData(data);
-
   //Accounts
   Stream<List<Account>> watchAllAccounts({bool archive = false}) =>
       db.accountDao
@@ -206,35 +204,4 @@ class Repository extends ChangeNotifier {
     }
   }
 
-  void restoreOld(GoogleHttpClient httpClient, String fileId) async {
-    try {
-      drive.Media file = await drive.DriveApi(httpClient)
-          .files
-          .get(fileId, downloadOptions: drive.DownloadOptions.FullMedia);
-
-      final directory = await getTemporaryDirectory();
-      var saveFile = new File('${directory.path}/test.json');
-
-      List<int> dataStore = [];
-      file.stream.listen((data) {
-        print("DataReceived: ${data.length}");
-        dataStore.insertAll(dataStore.length, data);
-      }, onDone: () async {
-        print("Task Done");
-        await saveFile.writeAsBytes(dataStore);
-        print("File saved at ${saveFile.path}");
-
-        await deleteAll();
-
-        Map<String, dynamic> data = jsonDecode(saveFile.readAsStringSync());
-        print(data.toString());
-
-        await loadOldData(data);
-      }, onError: (error) {
-        print("Some Error");
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 }

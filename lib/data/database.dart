@@ -293,39 +293,6 @@ class Database extends _$Database {
   }
 
   Future loadData(Map<String, dynamic> data) async {
-    data.forEach((String key, dynamic value) async {
-      if (key == 'account') {
-        List<AccountEntityData> accounts = [];
-        value.forEach((dynamic d) async {
-          if (d is Map<String, dynamic>) {
-            accounts.add(AccountEntityData.fromJson(d,
-                serializer: _DefaultValueSerializer()));
-          }
-        });
-        await accountDao.batchInsert(accounts);
-      } else if (key == 'category') {
-        List<CategoryEntityData> categories = [];
-        value.forEach((dynamic d) async {
-          if (d is Map<String, dynamic>) {
-            categories.add(CategoryEntityData.fromJson(d,
-                serializer: _DefaultValueSerializer()));
-          }
-        });
-        await categoryDao.batchInsert(categories);
-      } else if (key == 'operation') {
-        List<OperationEntityData> operations = [];
-        value.forEach((dynamic d) async {
-          if (d is Map<String, dynamic>) {
-            operations.add(OperationEntityData.fromJson(d,
-                serializer: _DefaultValueSerializer()));
-          }
-        });
-        await operationDao.batchInsert(operations);
-      }
-    });
-  }
-
-  Future loadOldData(Map<String, dynamic> data) async {
     var converter = const OperationTypeConverter();
 
     data.forEach((String key, dynamic value) async {
@@ -333,11 +300,16 @@ class Database extends _$Database {
         List<AccountEntityData> accounts = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            accounts.add(AccountEntityData(
-              id: int.parse(d['_id']),
-              title: d['account_title'],
-              archive: false,
-            ));
+            if(d.containsKey('account_title')){
+              accounts.add(AccountEntityData(
+                id: int.parse(d['_id']),
+                title: d['account_title'],
+                archive: false,
+              ));
+            }else {
+              accounts.add(AccountEntityData.fromJson(d,
+                  serializer: _DefaultValueSerializer()));
+            }
           }
         });
         await accountDao.batchInsert(accounts);
@@ -345,31 +317,39 @@ class Database extends _$Database {
         List<CategoryEntityData> categories = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            categories.add(CategoryEntityData(
-              id: int.parse(d['_id']),
-              title: d['category_title'],
-              operationType: converter.mapToDart(int.parse(d['category_type'])),
-              archive: false,
-            ));
-          }
+            if(d.containsKey('category_title')){
+              categories.add(CategoryEntityData(
+                id: int.parse(d['_id']),
+                title: d['category_title'],
+                operationType: converter.mapToDart(int.parse(d['category_type'])),
+                archive: false,
+              ));
+            }else{
+            categories.add(CategoryEntityData.fromJson(d,
+                serializer: _DefaultValueSerializer()));
+          }}
         });
         await categoryDao.batchInsert(categories);
       } else if (key == 'operation') {
         List<OperationEntityData> operations = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            operations.add(OperationEntityData(
-              id: int.parse(d['_id']),
-              date: DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(d['operation_date'])),
-              operationType:
-                  converter.mapToDart(int.parse(d['operation_type'])),
-              account: int.parse(d['operation_account_id']),
-              category: _getId(d['operation_category_id']),
-              recAccount: _getId(d['operation_recipient_account_id']),
-              sum: int.parse(d['operation_sum']),
-            ));
-          }
+            if(d.containsKey('operation_date')){
+              operations.add(OperationEntityData(
+                id: int.parse(d['_id']),
+                date: DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(d['operation_date'])),
+                operationType:
+                converter.mapToDart(int.parse(d['operation_type'])),
+                account: int.parse(d['operation_account_id']),
+                category: _getId(d['operation_category_id']),
+                recAccount: _getId(d['operation_recipient_account_id']),
+                sum: int.parse(d['operation_sum']),
+              ));
+            }else{
+            operations.add(OperationEntityData.fromJson(d,
+                serializer: _DefaultValueSerializer()));
+          }}
         });
         await operationDao.batchInsert(operations);
       }
