@@ -1,5 +1,6 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/item_cards/category_card.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class CashflowPage extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Cashflow'),
+            Text(AppLocalizations.of(context).titleCashflow),
             Text(
               '${getOperationTitle(context, type)}',
               style: Theme.of(context)
