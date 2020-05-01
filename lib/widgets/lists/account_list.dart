@@ -1,4 +1,5 @@
 import 'package:cashflow/data/objects/account_balance.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_account.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
@@ -25,9 +26,10 @@ class AccountList extends MainList<AccountBalance> {
   }
 
   @override
-  Widget emptyListHint() {
+  Widget emptyListHint(BuildContext context) {
     return EmptyListHint(
-              title: 'List of accounts is empty', hint: 'Press button to add first one',);
+              title: AppLocalizations.of(context).emptyListAccounts,
+      hint: AppLocalizations.of(context).hintEmptyList,);
   }
 
 }

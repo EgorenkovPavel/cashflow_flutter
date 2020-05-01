@@ -96,7 +96,7 @@ class CardRow extends StatelessWidget {
     return categories.isEmpty
         ? CardButton(
             leading: Text(getOperationTitle(context, type)),
-            trailing: Text('No categories',
+            trailing: Text(AppLocalizations.of(context).noCategories,
                 style: DefaultTextStyle.of(context)
                     .style
                     .copyWith(color: Colors.black38)),

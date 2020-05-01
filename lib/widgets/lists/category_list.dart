@@ -1,4 +1,5 @@
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cashflow_category_chart.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_category.dart';
@@ -36,10 +37,10 @@ class CategoryList extends MainList<CategoryCashflowBudget> {
   }
 
   @override
-  Widget emptyListHint() {
+  Widget emptyListHint(BuildContext context) {
     return EmptyListHint(
-      title: 'List of categories is empty',
-      hint: 'Press button to add first one',
+      title: AppLocalizations.of(context).emptyListCategories,
+      hint: AppLocalizations.of(context).hintEmptyList,
     );
   }
 }

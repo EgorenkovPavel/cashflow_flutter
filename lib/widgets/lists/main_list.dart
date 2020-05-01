@@ -9,7 +9,7 @@ abstract class MainList<T> extends StatelessWidget{
 
   Widget listBuilder(BuildContext context, List<T> list);
 
-  Widget emptyListHint();
+  Widget emptyListHint(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ abstract class MainList<T> extends StatelessWidget{
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
-          return emptyListHint();
+          return emptyListHint(context);
         }
 
         final List<T> items = snapshot.data ?? List<T>();

@@ -48,9 +48,10 @@ class AppLocalizations {
 
       'hint_account': 'Choose account',
       'hint_category': 'Choose category',
-      'hint_empty_list_accounts': 'Add accounts',
-      'hint_empty_list_categories': 'Add categories',
-      'hint_empty_list_operations': 'Add operations',
+      'hint_empty_list': 'Press button to add first one',
+      'empty_list_accounts': 'List of accounts is empty',
+      'empty_list_categories': 'List of categories is empty',
+      'empty_list_operations': 'List of operations is empty',
 
       'mes_operation_deleted': 'Operation deleted',
       'mes_operation_created': 'Operation created',
@@ -61,6 +62,7 @@ class AppLocalizations {
       'accounts': 'Accounts',
       'no_accounts': 'No account',
       'categories': 'Categories',
+      'no_categories': 'No categories',
       'operations': 'Operations',
       'no_operations': 'No operations',
       'item_menu_service': 'Service',
@@ -118,9 +120,10 @@ class AppLocalizations {
 
       'hint_account': 'Выберите счет',
       'hint_category': 'Выберите категорию',
-      'hint_empty_list_accounts': 'Добавьте счета',
-      'hint_empty_list_categories': 'Добавьте категории',
-      'hint_empty_list_operations': 'Добавьте операции',
+      'hint_empty_list': 'Нажмите кнопку для добавления нового',
+      'empty_list_accounts': 'Список счетов пуст',
+      'empty_list_categories': 'Список категорий пуст',
+      'empty_list_operations': 'Список операций пуст',
 
       'mes_operation_deleted': 'Операция удалена',
       'mes_operation_created': 'Операция создана',
@@ -131,6 +134,7 @@ class AppLocalizations {
       'accounts': 'Счета',
       'no_accounts': 'Нет счетов',
       'categories': 'Категории',
+      'no_categories': 'Нет категорий',
       'operations': 'Операции',
       'no_operations': 'Нет операций',
       'item_menu_service': 'Сервис',
@@ -189,9 +193,10 @@ class AppLocalizations {
 
   String get hintAccount => _localizedValues[locale.languageCode]['hint_account'];
   String get hintCategory => _localizedValues[locale.languageCode]['hint_category'];
-  String get hintEmptyListAccounts => _localizedValues[locale.languageCode]['hint_empty_list_accounts'];
-  String get hintEmptyListCategories => _localizedValues[locale.languageCode]['hint_empty_list_categories'];
-  String get hintEmptyListOperations => _localizedValues[locale.languageCode]['hint_empty_list_operations'];
+  String get hintEmptyList => _localizedValues[locale.languageCode]['hint_empty_list'];
+  String get emptyListAccounts => _localizedValues[locale.languageCode]['empty_list_accounts'];
+  String get emptyListCategories => _localizedValues[locale.languageCode]['empty_list_categories'];
+  String get emptyListOperations => _localizedValues[locale.languageCode]['empty_list_operations'];
 
   String get mesOperationDeleted => _localizedValues[locale.languageCode]['mes_operation_deleted'];
   String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];
@@ -202,6 +207,7 @@ class AppLocalizations {
   String get accounts => _localizedValues[locale.languageCode]['accounts'];
   String get noAccounts => _localizedValues[locale.languageCode]['no_accounts'];
   String get categories => _localizedValues[locale.languageCode]['categories'];
+  String get noCategories => _localizedValues[locale.languageCode]['no_categories'];
   String get operations => _localizedValues[locale.languageCode]['operations'];
   String get noOperations => _localizedValues[locale.languageCode]['no_operations'];
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];

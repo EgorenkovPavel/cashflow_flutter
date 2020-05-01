@@ -1,4 +1,5 @@
 import 'package:cashflow/data/objects/operation.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
@@ -66,9 +67,10 @@ class OperationList extends MainList<Operation> {
   }
 
   @override
-  Widget emptyListHint() {
+  Widget emptyListHint(BuildContext context) {
     return EmptyListHint(
-      title: 'List of operations is empty', hint: 'Press button to add first one',);
+      title: AppLocalizations.of(context).emptyListOperations,
+      hint: AppLocalizations.of(context).hintEmptyList,);
   }
 
 }
