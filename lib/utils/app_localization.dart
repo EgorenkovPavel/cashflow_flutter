@@ -22,6 +22,9 @@ class AppLocalizations {
       'title_sum': 'Sum',
       'title_total_sum': 'Total sum',
       'title_master': 'Operation master',
+      'title_total_balance': 'Total balance',
+      'title_cashflow': 'Cashflow',
+      'title_last_operations': 'Last operations',
 
       'empty_title_error': 'Enter title',
       'empty_budget_error': 'Enter budget',
@@ -53,9 +56,11 @@ class AppLocalizations {
       'mes_account_archived': 'Account archived',
       'mes_category_archived': 'Category archived',
 
-      'item_bar_accounts': 'Accounts',
-      'item_bar_categories': 'Categories',
-      'item_bar_operations': 'Operations',
+      'accounts': 'Accounts',
+      'no_accounts': 'No account',
+      'categories': 'Categories',
+      'operations': 'Operations',
+      'no_operations': 'No operations',
       'item_menu_service': 'Service',
       'item_bar_main': 'Main',
 
@@ -68,6 +73,9 @@ class AppLocalizations {
       'restore': 'Restore',
       'choose': 'Choose',
       'archive': 'Archive',
+
+      'btn_add_account': 'Add account',
+      'btn_show_all': 'Show all',
     },
     'ru': {
       'title': 'Имя',
@@ -80,6 +88,9 @@ class AppLocalizations {
       'title_sum': 'Сумма',
       'title_total_sum': 'Итого',
       'title_master': 'Мастер ввода',
+      'title_total_balance': 'Общий итог',
+      'title_cashflow': 'Денежный поток',
+      'title_last_operations': 'Последние операции',
 
       'empty_title_error': 'Введите имя',
       'empty_budget_error': 'Введите бюджет',
@@ -111,9 +122,11 @@ class AppLocalizations {
       'mes_account_archived': 'Счет добавлен в архив',
       'mes_category_archived': 'Категория добавлена в архив',
 
-      'item_bar_accounts': 'Счета',
-      'item_bar_categories': 'Категории',
-      'item_bar_operations': 'Операции',
+      'accounts': 'Счета',
+      'no_accounts': 'Нет счетов',
+      'categories': 'Категории',
+      'operations': 'Операции',
+      'no_operations': 'Нет операций',
       'item_menu_service': 'Сервис',
       'item_bar_main': 'Главная',
 
@@ -126,6 +139,9 @@ class AppLocalizations {
       'restore': 'Восстановить',
       'choose': 'Выбрать',
       'archive': 'Архив',
+
+      'btn_add_account': 'Добавить счет',
+      'btn_show_all': 'Показать все',
     },
   };
 
@@ -139,6 +155,9 @@ class AppLocalizations {
   String get titleSum => _localizedValues[locale.languageCode]['title_sum'];
   String get titleTotalSum => _localizedValues[locale.languageCode]['title_total_sum'];
   String get titleMaster => _localizedValues[locale.languageCode]['title_master'];
+  String get titleTotalBalance => _localizedValues[locale.languageCode]['title_total_balance'];
+  String get titleCashflow => _localizedValues[locale.languageCode]['title_cashflow'];
+  String get titleLastOperations => _localizedValues[locale.languageCode]['title_last_operations'];
 
   String get emptyTitleError => _localizedValues[locale.languageCode]['empty_title_error'];
   String get emptyBudgetError => _localizedValues[locale.languageCode]['empty_budget_error'];
@@ -170,9 +189,11 @@ class AppLocalizations {
   String get mesAccountArchived => _localizedValues[locale.languageCode]['mes_account_archived'];
   String get mesCategoryArchived => _localizedValues[locale.languageCode]['mes_category_archived'];
 
-  String get itemBarAccounts => _localizedValues[locale.languageCode]['item_bar_accounts'];
-  String get itemBarCategories => _localizedValues[locale.languageCode]['item_bar_categories'];
-  String get itemBarOperations => _localizedValues[locale.languageCode]['item_bar_operations'];
+  String get accounts => _localizedValues[locale.languageCode]['accounts'];
+  String get noAccounts => _localizedValues[locale.languageCode]['no_accounts'];
+  String get categories => _localizedValues[locale.languageCode]['categories'];
+  String get operations => _localizedValues[locale.languageCode]['operations'];
+  String get noOperations => _localizedValues[locale.languageCode]['no_operations'];
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
   String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
 
@@ -185,6 +206,9 @@ class AppLocalizations {
   String get restore => _localizedValues[locale.languageCode]['restore'];
   String get choose => _localizedValues[locale.languageCode]['choose'];
   String get archive => _localizedValues[locale.languageCode]['archive'];
+
+  String get btnAddAccount => _localizedValues[locale.languageCode]['btn_add_account'];
+  String get btnShowAll => _localizedValues[locale.languageCode]['btn_show_all'];
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).itemBarMain),
+        title: Text('Cashflow'),
         actions: <Widget>[
           appBarMenu(context),
         ],
@@ -46,12 +46,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => OperationList.addItem(context)),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            //color: Theme.of(context).primaryColor,
-          ),
-          ListView(
+      body: ListView(
             children: <Widget>[
               Padding(
                 padding:
@@ -70,8 +65,6 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
     );
   }
 }

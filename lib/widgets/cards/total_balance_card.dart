@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
@@ -43,7 +44,7 @@ class TotalBalanceCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CardTitle('Total balance'),
+        CardTitle(AppLocalizations.of(context).titleTotalBalance),
         Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: Container(
@@ -80,7 +81,7 @@ class TotalBalanceCard extends StatelessWidget {
   Widget addButton(BuildContext context) {
     return Align(
       child: FlatButton(
-        child: Text('Add account'),
+        child: Text(AppLocalizations.of(context).btnAddAccount),
         onPressed: () {
           AccountCard.open(context);
         },
@@ -92,9 +93,9 @@ class TotalBalanceCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CardTitle('Accounts'),
+        CardTitle(AppLocalizations.of(context).accounts),
         Align(
-            child: Text('No accounts',
+            child: Text(AppLocalizations.of(context).noAccounts,
                 style: DefaultTextStyle.of(context)
                     .style
                     .copyWith(color: Colors.black38))),

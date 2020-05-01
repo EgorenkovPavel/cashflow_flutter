@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/month_cashflow.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
@@ -25,7 +26,7 @@ class CashflowCard extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CardTitle('Categories'),
+                    CardTitle(AppLocalizations.of(context).categories),
                     CardRow(type: OperationType.INPUT, categories: []),
                     Divider(
                       height: 1.0,
@@ -40,7 +41,7 @@ class CashflowCard extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CardTitle('Cashflow'),
+                    CardTitle(AppLocalizations.of(context).titleCashflow),
                     state.categoriesOutput.isEmpty
                         ? SizedBox()
                         : Padding(

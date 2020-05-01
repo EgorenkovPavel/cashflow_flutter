@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
@@ -20,37 +21,45 @@ class LastOperationsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CardTitle('Last operations'),
+          CardTitle(AppLocalizations.of(context).titleLastOperations),
           BlocBuilder<LastOperationsBloc, LastOperationsState>(
             builder: (BuildContext context, LastOperationsState state) {
-              if(state is Empty){
+              if (state is Empty) {
                 return Align(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('No operations', style: DefaultTextStyle.of(context).style.copyWith(color: Colors.black38)),
+                    child: Text(AppLocalizations.of(context).noOperations,
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .copyWith(color: Colors.black38)),
                   ),
                 );
-              }else if(state is Loading){
-                return Center(child: CircularProgressIndicator(),);
-              }else if(state is Success){
+              } else if (state is Loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is Success) {
                 return Column(
                   children: state.operations
                       .map<Widget>((op) => Column(
-                    children: <Widget>[
-                      ListTileOperation(op, onTap: () => OperationPage.open(context, op.id),),
-                      Divider(),
-                    ],
-                  )).toList(),
+                            children: <Widget>[
+                              ListTileOperation(
+                                op,
+                                onTap: () => OperationPage.open(context, op.id),
+                              ),
+                              Divider(),
+                            ],
+                          ))
+                      .toList(),
                 );
               }
             },
           ),
           Align(
             child: FlatButton(
-              child: Text('Show all'),
+              child: Text(AppLocalizations.of(context).btnShowAll),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(OperationListPage.routeName);
+                Navigator.of(context).pushNamed(OperationListPage.routeName);
               },
             ),
           )
@@ -60,24 +69,24 @@ class LastOperationsCard extends StatelessWidget {
   }
 }
 
-abstract class LastOperationsEvent{}
+abstract class LastOperationsEvent {}
 
-class Fetch extends LastOperationsEvent{}
+class Fetch extends LastOperationsEvent {}
 
-abstract class LastOperationsState{}
+abstract class LastOperationsState {}
 
-class Loading extends LastOperationsState{}
+class Loading extends LastOperationsState {}
 
-class Success extends LastOperationsState{
+class Success extends LastOperationsState {
   final List<Operation> operations;
 
   Success(this.operations);
 }
 
-class Empty extends LastOperationsState{}
+class Empty extends LastOperationsState {}
 
-class LastOperationsBloc extends Bloc<LastOperationsEvent, LastOperationsState>{
-
+class LastOperationsBloc
+    extends Bloc<LastOperationsEvent, LastOperationsState> {
   final Repository _repository;
 
   LastOperationsBloc(this._repository);
@@ -86,12 +95,13 @@ class LastOperationsBloc extends Bloc<LastOperationsEvent, LastOperationsState>{
   LastOperationsState get initialState => Loading();
 
   @override
-  Stream<LastOperationsState> mapEventToState(LastOperationsEvent event) async* {
-
-    await for(List<Operation> operations in _repository.watchLastOperations(5)){
-      if(operations.isEmpty){
+  Stream<LastOperationsState> mapEventToState(
+      LastOperationsEvent event) async* {
+    await for (List<Operation> operations
+        in _repository.watchLastOperations(5)) {
+      if (operations.isEmpty) {
         yield Empty();
-      }else{
+      } else {
         yield Success(operations);
       }
     }
