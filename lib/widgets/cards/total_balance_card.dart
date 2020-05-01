@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cashflow/utils/extensions.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 class TotalBalanceCard extends StatelessWidget {
   @override
