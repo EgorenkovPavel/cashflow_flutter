@@ -45,7 +45,7 @@ class CashflowCard extends StatelessWidget {
                     state.categoriesOutput.isEmpty
                         ? SizedBox()
                         : Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                       child: MonthCashflow(
                         date: DateTime.now(),
                         cashflow: state.categoriesOutput
