@@ -253,26 +253,26 @@ class _MasterPageState extends State<MasterPage> {
                   child: Row(
                     children: <Widget>[
                       buildList(
-                          AppLocalizations.of(context).titleAccount,
+                          AppLocalizations.of(context).accounts,
                           () => AccountCard.open(context),
                           accountPageView(context)),
                       (state as DataState).type == OperationType.INPUT
                           ? buildList(
-                              AppLocalizations.of(context).titleCategory,
+                              AppLocalizations.of(context).categories,
                               () => CategoryCard.open(context,
                                   type: OperationType.INPUT),
                               categoryInPageView(context))
                           : SizedBox(),
                       (state as DataState).type == OperationType.OUTPUT
                           ? buildList(
-                              AppLocalizations.of(context).titleCategory,
+                              AppLocalizations.of(context).categories,
                               () => CategoryCard.open(context,
                                   type: OperationType.OUTPUT),
                               categoryOutPageView(context))
                           : SizedBox(),
                       (state as DataState).type == OperationType.TRANSFER
                           ? buildList(
-                              AppLocalizations.of(context).titleAccount,
+                              AppLocalizations.of(context).accounts,
                               () => AccountCard.open(context),
                               recAccountPageView(context))
                           : SizedBox(),
