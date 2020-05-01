@@ -32,6 +32,7 @@ class AppLocalizations {
       'empty_category_error': 'Choose category',
       'empty_rec_account_error': 'Choose recipient account',
       'empty_sum_error': 'Enter sum',
+      'error_no_gp_services': 'No google play services',
 
       'type_input': 'Input',
       'type_output': 'Output',
@@ -55,6 +56,7 @@ class AppLocalizations {
       'mes_operation_created': 'Operation created',
       'mes_account_archived': 'Account archived',
       'mes_category_archived': 'Category archived',
+      'mes_are_you_sure': 'Are you sure?',
 
       'accounts': 'Accounts',
       'no_accounts': 'No account',
@@ -64,6 +66,7 @@ class AppLocalizations {
       'item_menu_service': 'Service',
       'item_bar_main': 'Main',
 
+      'yes': 'Yes',
       'cancel': 'Cancel',
       'save': 'Save',
       'delete': 'Delete',
@@ -76,6 +79,7 @@ class AppLocalizations {
 
       'btn_add_account': 'Add account',
       'btn_show_all': 'Show all',
+      'btn_delete_all': 'Delete all',
     },
     'ru': {
       'title': 'Имя',
@@ -98,6 +102,7 @@ class AppLocalizations {
       'empty_category_error': 'Выберите категорию',
       'empty_rec_account_error': 'Выберите счет-приемник',
       'empty_sum_error': 'Введите сумму',
+      'error_no_gp_services': 'Нет google play сервисов',
 
       'type_input': 'Приход',
       'type_output': 'Расход',
@@ -121,6 +126,7 @@ class AppLocalizations {
       'mes_operation_created': 'Операция создана',
       'mes_account_archived': 'Счет добавлен в архив',
       'mes_category_archived': 'Категория добавлена в архив',
+      'mes_are_you_sure': 'Вы уверены?',
 
       'accounts': 'Счета',
       'no_accounts': 'Нет счетов',
@@ -130,6 +136,7 @@ class AppLocalizations {
       'item_menu_service': 'Сервис',
       'item_bar_main': 'Главная',
 
+      'yes': 'Да',
       'cancel': 'Отмена',
       'save': 'Сохранить',
       'delete': 'Удалить',
@@ -142,6 +149,7 @@ class AppLocalizations {
 
       'btn_add_account': 'Добавить счет',
       'btn_show_all': 'Показать все',
+      'btn_delete_all': 'Удалить все',
     },
   };
 
@@ -165,6 +173,7 @@ class AppLocalizations {
   String get emptyCategoryError => _localizedValues[locale.languageCode]['empty_category_error'];
   String get emptyRecAccountError => _localizedValues[locale.languageCode]['empty_rec_account_error'];
   String get emptySumError => _localizedValues[locale.languageCode]['empty_sum_error'];
+  String get errorNoGPServices => _localizedValues[locale.languageCode]['error_no_gp_services'];
 
   String get typeInput => _localizedValues[locale.languageCode]['type_input'];
   String get typeOutput => _localizedValues[locale.languageCode]['type_output'];
@@ -188,6 +197,7 @@ class AppLocalizations {
   String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];
   String get mesAccountArchived => _localizedValues[locale.languageCode]['mes_account_archived'];
   String get mesCategoryArchived => _localizedValues[locale.languageCode]['mes_category_archived'];
+  String get mesAreYouSure => _localizedValues[locale.languageCode]['mes_are_you_sure'];
 
   String get accounts => _localizedValues[locale.languageCode]['accounts'];
   String get noAccounts => _localizedValues[locale.languageCode]['no_accounts'];
@@ -197,6 +207,7 @@ class AppLocalizations {
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
   String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
 
+  String get yes => _localizedValues[locale.languageCode]['yes'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get save => _localizedValues[locale.languageCode]['save'];
   String get delete => _localizedValues[locale.languageCode]['delete'];
@@ -209,6 +220,7 @@ class AppLocalizations {
 
   String get btnAddAccount => _localizedValues[locale.languageCode]['btn_add_account'];
   String get btnShowAll => _localizedValues[locale.languageCode]['btn_show_all'];
+  String get btnDeleteAll => _localizedValues[locale.languageCode]['btn_delete_all'];
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

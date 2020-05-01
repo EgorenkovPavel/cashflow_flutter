@@ -37,7 +37,7 @@ class BackupPage extends StatelessWidget {
                     onPressed: () => _restore(context),
                   ),
                   RaisedButton(
-                    child: Text('DELETE ALL'),
+                    child: Text(AppLocalizations.of(context).btnDeleteAll.toUpperCase()),
                     onPressed: () => _deleteAll(context),
                   ),
                 ],
@@ -64,7 +64,7 @@ class BackupPage extends StatelessWidget {
       httpClient = await GoogleHttpClient.getClient();
     } catch (e) {
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('No google play services'),
+        content: Text(AppLocalizations.of(context).errorNoGPServices),
       ));
       return;
     }
@@ -79,11 +79,11 @@ class BackupPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete all'),
-        content: Text('Are you sure?'),
+        title: Text(AppLocalizations.of(context).btnDeleteAll),
+        content: Text(AppLocalizations.of(context).mesAreYouSure),
         actions: <Widget>[
           FlatButton(
-            child: Text('Yes'),
+            child: Text(AppLocalizations.of(context).yes),
             onPressed: () {
               BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
               Navigator.of(context).pop();
