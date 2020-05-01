@@ -60,7 +60,7 @@ class AppLocalizations {
       'mes_are_you_sure': 'Are you sure?',
 
       'accounts': 'Accounts',
-      'no_accounts': 'No account',
+      'no_accounts': 'No accounts',
       'categories': 'Categories',
       'no_categories': 'No categories',
       'operations': 'Operations',

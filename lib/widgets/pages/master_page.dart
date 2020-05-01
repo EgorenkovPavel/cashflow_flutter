@@ -32,7 +32,7 @@ class _MasterPageState extends State<MasterPage> {
       builder:
           (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return SizedBox();
+          return Center(child: Text(AppLocalizations.of(context).noAccounts),);
         }
 
         List<AccountBalance> accounts = snapshot.data;
@@ -66,7 +66,7 @@ class _MasterPageState extends State<MasterPage> {
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return SizedBox();
+          return Center(child: Text(AppLocalizations.of(context).noCategories),);
         }
 
         List<Category> categories = snapshot.data;
@@ -92,7 +92,7 @@ class _MasterPageState extends State<MasterPage> {
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return SizedBox();
+          return Center(child: Text(AppLocalizations.of(context).noCategories),);
         }
 
         List<Category> categories = snapshot.data;
@@ -119,7 +119,7 @@ class _MasterPageState extends State<MasterPage> {
       builder:
           (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return SizedBox();
+          return Center(child: Text(AppLocalizations.of(context).noAccounts),);
         }
 
         List<AccountBalance> accounts = snapshot.data;
