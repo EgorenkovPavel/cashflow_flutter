@@ -57,6 +57,8 @@ class Repository extends ChangeNotifier {
   Future updateAccount(Account account) =>
       db.accountDao.updateAccount(const AccountMapper().mapToSql(account));
 
+  Stream<MonthBalance> watchBalance(DateTime date) => db.accountDao.watchBalance(date);
+
   //Categories
   Stream<List<Category>> watchAllCategories({bool archive = false}) =>
       db.categoryDao
@@ -94,6 +96,8 @@ class Repository extends ChangeNotifier {
   Future updateCategory(Category entity) =>
       db.categoryDao.updateCategory(const CategoryMapper().mapToSql(entity));
 
+  Stream<int> watchBudgetSum(DateTime date) => db.categoryDao.watchBudget(date);
+
   //Operations
   Stream<List<Operation>> watchAllOperations() => db.operationDao
       .watchAllOperationItems()
@@ -128,7 +132,7 @@ class Repository extends ChangeNotifier {
 
   //Budget
 
-  Stream<List<MonthBudget>> watchMonthBudget() =>
+  Stream<List<MonthBalance>> watchMonthBudget() =>
       db.budgetDao.watchMonthBudget();
 
   Stream<List<BudgetData>> watchBudgetByCategory(int categoryId) =>

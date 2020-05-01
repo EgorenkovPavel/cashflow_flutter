@@ -45,7 +45,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   void dispose() {
     super.dispose();
-    _bloc.close();
+    //_bloc.close();
     titleController.dispose();
   }
 

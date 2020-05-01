@@ -29,8 +29,8 @@ dependencies:
   moor_flutter: ^2.1.1
   intl:
   charts_flutter: ^0.9.0
-  bloc: ^3.0.0
-  flutter_bloc: ^3.2.0
+  bloc: ^4.0.0
+  flutter_bloc: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -40,9 +40,9 @@ dev_dependencies:
 
   googleapis: any
   googleapis_auth: any
-  google_sign_in: ^4.4.2
+  google_sign_in: ^4.4.4
 
-  path_provider: ^1.6.5
+  path_provider: ^1.6.7
 
   flutter_keyboard_visibility: ^2.0.0
 # For information on the generic Dart part of this file, see the

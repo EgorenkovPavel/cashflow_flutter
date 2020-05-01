@@ -93,7 +93,7 @@ class _BudgetCardState extends State<BudgetCard> {
   void dispose() {
     super.dispose();
     sumController.dispose();
-    _bloc.close();
+    //_bloc.close();
   }
 
   @override

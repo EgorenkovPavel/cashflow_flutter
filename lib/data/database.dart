@@ -72,6 +72,7 @@ class BalanceEntity extends Table {
 class CashflowEntity extends Table {
   @override
   String get tableName => 'cashflow';
+
 //
 //  IntColumn get id => integer().autoIncrement()();
 
@@ -104,11 +105,11 @@ class Budget extends Table {
   IntColumn get sum => integer()();
 }
 
-class MonthBudget {
+class MonthBalance {
   DateTime date;
   int sum;
 
-  MonthBudget(this.date, this.sum);
+  MonthBalance(this.date, this.sum);
 }
 
 class AccountBalanceEntity {
@@ -438,19 +439,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
               row.readTable(accountEntity), row.read(sumBalance) ?? 0))
           .toList();
     });
-
-//    return customSelectQuery(
-//        'SELECT *, (SELECT SUM(sum) as sum FROM balance WHERE account = c.id) AS "sum" '
-//        'FROM accounts c ORDER BY title;',
-//        readsFrom: {account, balance})
-//        .watch()
-//        .map((rows) {
-//      return rows
-//          .map((row) => AccountBalanceEntity(
-//              AccountData.fromData(row.data, db), row.readInt('sum') ?? 0))
-//          .where((a) => archive ? true : !a.account.archive)
-//          .toList();
-//    });
   }
 
   Future<void> batchInsert(List<AccountEntityData> accounts) async {
@@ -466,6 +454,18 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
             .toList(),
       );
     });
+  }
+
+  Stream<MonthBalance> watchBalance(DateTime date) {
+    final sumBalance = balanceEntity.sum.sum();
+
+    final query = db.selectOnly(balanceEntity)
+      ..where(balanceEntity.date.isSmallerOrEqualValue(date))
+      ..addColumns([sumBalance]);
+
+    return query
+        .watchSingle()
+        .map((c) => MonthBalance(date, c.read(sumBalance) ?? 0));
   }
 }
 
@@ -605,6 +605,26 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future updateCategory(CategoryEntityData entity) =>
       update(categoryEntity).replace(entity);
+
+  Stream<int> watchBudget(DateTime date) {
+    return customSelectQuery(
+      'SELECT c.operation_type, '
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
+      'FROM categories c;',
+      variables: [
+        Variable.withDateTime(date),
+      ],
+      readsFrom: {categoryEntity, budget},
+    ).watch().map((rows) {
+      return rows
+          .map((row) => OperationTypeConverter()
+                      .mapToDart(row.readInt('operation_type')) ==
+                  OperationType.INPUT
+              ? row.readInt('budget') ?? 0
+              : -(row.readInt('budget') ?? 0))
+          .fold(0, (a, b) => a + b);
+    });
+  }
 
   Future<void> batchInsert(List<CategoryEntityData> categories) async {
     await batch((batch) {
@@ -759,34 +779,31 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final acc = alias(accountEntity, 'a');
     final rec = alias(accountEntity, 'rec');
 
-    return (select(operationEntity)
-      ..where((o) => o.id.equals(id)))
+    return (select(operationEntity)..where((o) => o.id.equals(id)))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operationEntity.account),
-        ),
-        leftOuterJoin(
-          categoryEntity,
-          categoryEntity.id.equalsExp(operationEntity.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operationEntity.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operationEntity.account),
+            ),
+            leftOuterJoin(
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operationEntity.recAccount),
+            ),
+          ],
+        )
         .watchSingle()
-        .map(
-            (row) {
+        .map((row) {
           return OperationItem(
               row.readTable(operationEntity),
               row.readTable(acc),
               row.readTable(categoryEntity),
               row.readTable(rec));
-        }
-    );
+        });
   }
 
   Future insertOperationItem(OperationItem entity) {
@@ -987,7 +1004,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         .watch();
   }
 
-  Stream<List<MonthBudget>> watchMonthBudget() {
+  Stream<List<MonthBalance>> watchMonthBudget() {
 //    return select(budget)
 //        .map((t) => MonthBudget(t.year, t.month, t.sum))
 //        .watch();
@@ -995,7 +1012,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         'SELECT date, SUM(sum) as sum FROM budget GROUP BY date ORDER BY date',
         readsFrom: {budget}).watch().map((rows) {
       return rows
-          .map((t) => MonthBudget(t.readDateTime('date'), t.readInt('sum')))
+          .map((t) => MonthBalance(t.readDateTime('date'), t.readInt('sum')))
           .toList();
     });
   }
