@@ -252,6 +252,8 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 1;
 
+
+
   Future deleteAll() {
     return transaction(() async {
       await delete(balanceEntity).go();
