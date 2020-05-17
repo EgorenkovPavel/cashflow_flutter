@@ -1,16 +1,15 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geocinema/models/cinema.dart';
 import 'package:geocinema/models/film.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CinemaMap extends StatefulWidget {
-
   static const String routeName = '/cinemaMap';
 
-  static open(BuildContext context, Film film){
+  static open(BuildContext context, Film film) {
     Navigator.of(context).pushNamed(routeName, arguments: film);
   }
 
@@ -26,11 +25,10 @@ class CinemaMapState extends State<CinemaMap> {
   Completer<GoogleMapController> _controller = Completer();
 
   Geolocator _geolocator;
-  Position _position;
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static final CameraPosition _moscow = CameraPosition(
+    target: LatLng(55.7458008, 37.6566186),
+    zoom: 11.9,
   );
 
   static final CameraPosition _kLake = CameraPosition(
@@ -39,24 +37,22 @@ class CinemaMapState extends State<CinemaMap> {
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
+  List<Cinema> cinemas = [
+    Cinema(title: 'Formula kino', lat: 55.728089, lon: 37.584724),
+    Cinema(title: 'KARO', lat: 55.753314, lon: 37.587466),
+    Cinema(title: '5 stars', lat: 55.733121, lon: 37.637380),
+  ];
+
   @override
   void initState() {
     super.initState();
 
     _geolocator = Geolocator();
     LocationOptions locationOptions =
-    LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
+        LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
 
     checkPermission();
     updateLocation();
-
-    StreamSubscription positionStream = _geolocator
-        .getPositionStream(locationOptions)
-        .listen((Position position) {
-      setState(() {
-        _position = position;
-      });
-    });
   }
 
   @override
@@ -66,22 +62,37 @@ class CinemaMapState extends State<CinemaMap> {
         children: <Widget>[
           Expanded(
               child: GoogleMap(
-                mapType: MapType.hybrid,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              )),
+            mapType: MapType.normal,
+            myLocationButtonEnabled: true,
+            initialCameraPosition: _moscow,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            zoomControlsEnabled: false,
+            markers: cinemas
+                .toSet()
+                .map((e) => Marker(
+                    markerId: MarkerId(e.title),
+                    position: LatLng(e.lat, e.lon)))
+                .toSet(),
+          )),
           Container(
-            child: ListView(scrollDirection: Axis.horizontal,
-              children: List<String>.generate(10, (i) => 'Cinema$i').map((s) =>
-                  Card(child: Column(
-                    children: <Widget>[
-                      Icon(Icons.camera_roll),
-                      Text(s),
-                    ],
-                  ),)
-              ).toList(),),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: cinemas
+                  .map((s) => Card(
+                        child: GestureDetector(
+                          child: Column(
+                            children: <Widget>[
+                              Icon(Icons.camera_roll),
+                              Text(s.title),
+                            ],
+                          ),
+                          onTap: () => _goToCinema(s),
+                        ),
+                      ))
+                  .toList(),
+            ),
             height: 100.0,
           ),
         ],
@@ -92,6 +103,12 @@ class CinemaMapState extends State<CinemaMap> {
 //        icon: Icon(Icons.directions_boat),
 //      ),
     );
+  }
+
+  Future<void> _goToCinema(Cinema cinema) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(cinema.lat, cinema.lon), zoom: 15.0)));
   }
 
   Future<void> _goToTheLake() async {
@@ -105,7 +122,7 @@ class CinemaMapState extends State<CinemaMap> {
     });
     _geolocator
         .checkGeolocationPermissionStatus(
-        locationPermission: GeolocationPermission.locationAlways)
+            locationPermission: GeolocationPermission.locationAlways)
         .then((status) {
       print('always status: $status');
     });
@@ -122,9 +139,9 @@ class CinemaMapState extends State<CinemaMap> {
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
           .timeout(new Duration(seconds: 5));
 
-      setState(() {
-        _position = newPosition;
-      });
+      final GoogleMapController controller = await _controller.future;
+      controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(newPosition.latitude, newPosition.longitude))));
     } catch (e) {
       print('Error: ${e.toString()}');
     }
