@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocinema/cinema_map.dart';
+import 'package:geocinema/film_page.dart';
+import 'package:geocinema/models/film.dart';
 
 class FilmList extends StatelessWidget {
   final List<Film> films = [
@@ -68,12 +70,9 @@ class FilmCard extends StatelessWidget {
                       film.title,
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    Text(film.genres
-                        .reduce((value, element) => value + ', ' + element)),
-                    Text(film.contries
-                        .reduce((value, element) => value + ', ' + element)),
+                    Text(film.genres.join(', ')),
+                    Text(film.countries.join(', ')),
                     Text(film.description),
-
                   ],
                 ),
               ],
@@ -110,30 +109,28 @@ class FilmCard extends StatelessWidget {
             children: <Widget>[
               FlatButton(
                 child: Text('RESERVE'),
-                onPressed: (){},
+                onPressed: (){
+                  //TODO
+                },
               ),
               FlatButton(
                 child: const Text('VIEW'),
-                onPressed: () {},
+                onPressed: () => FilmPage.open(context, film),
               ),
               IconButton(
                 icon: Icon(
                   Icons.location_on,
                   color: Colors.black45,
                 ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return CinemaMap();
-                      }));
-                },
+                onPressed: () => CinemaMap.open(context, film),
               ),
               IconButton(
                 icon: Icon(
                   Icons.share,
                   color: Colors.black45,
                 ),
-                onPressed: () {},
+                onPressed: () {//TODO
+                   },
               ),
             ],
           ),
@@ -143,13 +140,4 @@ class FilmCard extends StatelessWidget {
   }
 }
 
-class Film {
-  final String title;
-  final String imagePath =
-      'https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/c6adfa98-a415-4565-bacf-38855e4919a6/x1000';
-  final List<String> genres = ['Comedy'];
-  final String description = 'Description of the film';
-  final List<String> contries = ['USA'];
 
-  Film(this.title);
-}

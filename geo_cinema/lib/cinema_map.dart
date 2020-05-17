@@ -2,10 +2,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geocinema/models/film.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CinemaMap extends StatefulWidget {
+
+  static const String routeName = '/cinemaMap';
+
+  static open(BuildContext context, Film film){
+    Navigator.of(context).pushNamed(routeName, arguments: film);
+  }
+
+  final Film film;
+
+  const CinemaMap({Key key, this.film}) : super(key: key);
+
   @override
   State<CinemaMap> createState() => CinemaMapState();
 }
