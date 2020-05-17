@@ -43,6 +43,7 @@ class FilmPage extends StatelessWidget{
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(film.title),
+                      Text(film.duration.toString()),
                       Text(film.genres.join(', ')),
                       Text(film.countries.join(', ')),
                       OutlineButton(
