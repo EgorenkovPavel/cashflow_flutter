@@ -78,7 +78,6 @@ class FilmCard extends StatelessWidget {
               ],
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -86,22 +85,7 @@ class FilmCard extends StatelessWidget {
               children: <Widget>[
                 Divider(),
                 Text('In favorite cinema'),
-                Wrap(
-                  children: <Widget>[
-                    ChoiceChip(
-                      label: Text('4:00PM'),
-                      selected: false,
-                    ),
-                    SizedBox(
-                      width: 8.0,
-                    ),
-                    ChoiceChip(
-                      label: Text('9:00PM'),
-                      selected: true,
-                    ),
-
-                  ],
-                ),
+                Sessions(),
               ],
             ),
           ),
@@ -140,4 +124,35 @@ class FilmCard extends StatelessWidget {
   }
 }
 
+class Sessions extends StatefulWidget {
+  @override
+  _SessionsState createState() => _SessionsState();
+}
 
+class _SessionsState extends State<Sessions> {
+
+  List<String> ses = ['4:00PM', '9:00PM'];
+  int selected = null;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: ses.map((s) => Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ChoiceChip(
+          label: Text(s),
+          selected: ses.indexOf(s) == selected,
+          onSelected: (select){
+            setState(() {
+              if(select){
+                selected = ses.indexOf(s);
+              }else{
+                selected = null;
+              }
+            });
+          },
+        ),
+      )).toList(),
+    );
+  }
+}
