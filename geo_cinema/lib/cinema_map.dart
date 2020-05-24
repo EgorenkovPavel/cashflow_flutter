@@ -26,6 +26,8 @@ class CinemaMapState extends State<CinemaMap> {
 
   Geolocator _geolocator;
 
+  int _checked;
+
   static final CameraPosition _moscow = CameraPosition(
     target: LatLng(55.7458008, 37.6566186),
     zoom: 11.9,
@@ -52,7 +54,7 @@ class CinemaMapState extends State<CinemaMap> {
         LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
 
     checkPermission();
-    updateLocation();
+    //updateLocation();
   }
 
   @override
@@ -80,16 +82,10 @@ class CinemaMapState extends State<CinemaMap> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: cinemas
-                  .map((s) => Card(
-                        child: GestureDetector(
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.camera_roll),
-                              Text(s.title),
-                            ],
-                          ),
-                          onTap: () => _goToCinema(s),
-                        ),
+                  .map((s) => CinemaCard(
+                        cinema: s,
+                        onTap: () => _goToCinema(s),
+                        checked: cinemas.indexOf(s) == _checked,
                       ))
                   .toList(),
             ),
@@ -106,9 +102,21 @@ class CinemaMapState extends State<CinemaMap> {
   }
 
   Future<void> _goToCinema(Cinema cinema) async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(cinema.lat, cinema.lon), zoom: 15.0)));
+    if (cinemas.indexOf(cinema) == _checked) {
+      setState(() {
+        _checked = null;
+      });
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(_moscow));
+    } else {
+      setState(() {
+        _checked = cinemas.indexOf(cinema);
+      });
+
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(cinema.lat, cinema.lon), zoom: 15.0)));
+    }
   }
 
   Future<void> _goToTheLake() async {
@@ -145,5 +153,37 @@ class CinemaMapState extends State<CinemaMap> {
     } catch (e) {
       print('Error: ${e.toString()}');
     }
+  }
+}
+
+class CinemaCard extends StatelessWidget {
+  final Cinema cinema;
+  final checked;
+  final GestureTapCallback onTap;
+
+  const CinemaCard({Key key, this.cinema, this.onTap, this.checked})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: checked ? Colors.amber : Theme.of(context).cardTheme.color,
+      child: GestureDetector(
+        child: Container(
+          width: 100.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                    'https://opentalk.org.ua/wp-content/uploads/2019/10/at-the-cinema.jpg'),
+                Text(cinema.title),
+              ],
+            ),
+          ),
+        ),
+        onTap: onTap,
+      ),
+    );
   }
 }
