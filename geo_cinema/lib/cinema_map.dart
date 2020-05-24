@@ -60,23 +60,38 @@ class CinemaMapState extends State<CinemaMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Choose cinema'),
+      ),
       body: Column(
         children: <Widget>[
           Expanded(
-              child: GoogleMap(
-            mapType: MapType.normal,
-            myLocationButtonEnabled: true,
-            initialCameraPosition: _moscow,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-            zoomControlsEnabled: false,
-            markers: cinemas
-                .toSet()
-                .map((e) => Marker(
-                    markerId: MarkerId(e.title),
-                    position: LatLng(e.lat, e.lon)))
-                .toSet(),
+              child: Stack(
+            children: <Widget>[
+              GoogleMap(
+                mapType: MapType.normal,
+                myLocationButtonEnabled: true,
+                initialCameraPosition: _moscow,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                zoomControlsEnabled: false,
+                markers: cinemas
+                    .toSet()
+                    .map((e) => Marker(
+                        markerId: MarkerId(e.title),
+                        position: LatLng(e.lat, e.lon)))
+                    .toSet(),
+              ),
+              _checked == null ? SizedBox() : Positioned(
+                right: 8.0,
+                bottom: 0.0,
+                child: RaisedButton(
+                  color: Colors.white,
+                child: Text('VIEW SESSIONS'),
+                onPressed: () {  },),
+              ),
+            ],
           )),
           Container(
             child: ListView(
@@ -170,6 +185,7 @@ class CinemaCard extends StatelessWidget {
       color: checked ? Colors.amber : Theme.of(context).cardTheme.color,
       child: GestureDetector(
         child: Container(
+          height: 150.0,
           width: 100.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
