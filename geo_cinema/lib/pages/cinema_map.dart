@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocinema/models/cinema.dart';
 import 'package:geocinema/models/film.dart';
+import 'package:geocinema/pages/session_page.dart';
+import 'package:geocinema/widgets/cinema_card.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -54,7 +56,7 @@ class CinemaMapState extends State<CinemaMap> {
         LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
 
     checkPermission();
-    //updateLocation();
+    updateLocation();
   }
 
   @override
@@ -89,11 +91,14 @@ class CinemaMapState extends State<CinemaMap> {
                 child: RaisedButton(
                   color: Colors.white,
                 child: Text('VIEW SESSIONS'),
-                onPressed: () {  },),
+                onPressed: () =>
+                    SessionPage.open(context, widget.film, cinemas[_checked])
+                ),
               ),
             ],
           )),
           Container(
+            color: Colors.transparent,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: cinemas
@@ -171,35 +176,4 @@ class CinemaMapState extends State<CinemaMap> {
   }
 }
 
-class CinemaCard extends StatelessWidget {
-  final Cinema cinema;
-  final checked;
-  final GestureTapCallback onTap;
 
-  const CinemaCard({Key key, this.cinema, this.onTap, this.checked})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: checked ? Colors.amber : Theme.of(context).cardTheme.color,
-      child: GestureDetector(
-        child: Container(
-          height: 150.0,
-          width: 100.0,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                Image.network(
-                    'https://opentalk.org.ua/wp-content/uploads/2019/10/at-the-cinema.jpg'),
-                Text(cinema.title),
-              ],
-            ),
-          ),
-        ),
-        onTap: onTap,
-      ),
-    );
-  }
-}

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geocinema/cinema_map.dart';
 import 'package:geocinema/models/film.dart';
+import 'package:geocinema/pages/cinema_map.dart';
 
 class FilmPage extends StatelessWidget{
 

@@ -1,44 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geocinema/cinema_map.dart';
-import 'package:geocinema/film_page.dart';
 import 'package:geocinema/models/film.dart';
-
-class FilmList extends StatelessWidget {
-  final List<Film> films = [
-    Film('Batman'),
-    Film('Titanic'),
-    Film('Jopa'),
-    Film('Varejka')
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('GeoCinema'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.filter_list),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ListView(
-          children: films
-              .map((e) => Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: FilmCard(
-                          film: e,
-                    ),
-                  ))
-              .toList(),
-        ),
-      ),
-    );
-  }
-}
+import 'package:geocinema/pages/cinema_map.dart';
+import 'package:geocinema/pages/film_page.dart';
 
 class FilmCard extends StatelessWidget {
   final Film film;
@@ -114,7 +77,7 @@ class FilmCard extends StatelessWidget {
                   color: Colors.black45,
                 ),
                 onPressed: () {//TODO
-                   },
+                },
               ),
             ],
           ),
