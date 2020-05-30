@@ -22,21 +22,25 @@ class FilmCard extends StatelessWidget {
                 Image.network(
                   film.imagePath,
                   height: 150,
+                  width: 100,
                 ),
                 SizedBox(
                   width: 16.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      film.title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(film.genres.join(', ')),
-                    Text(film.countries.join(', ')),
-                    Text(film.description),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        film.title,
+                        style: Theme.of(context).textTheme.headline6,
+                        maxLines: 3,
+                      ),
+                      Text(film.genres.join(', ')),
+                      Text(film.countries.join(', ')),
+                      Text(film.description),
+                    ],
+                  ),
                 ),
               ],
             ),
