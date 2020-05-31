@@ -14,53 +14,52 @@ class FilmList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('GeoCinema'),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.filter_list),
-            )
-          ],
-        ),
-        body: RefreshIndicator(
-          onRefresh: () {
-            _refreshCompleter = Completer();
-            BlocProvider.of<FilmListBloc>(context).add(InitialState());
-            return _refreshCompleter.future;
+      appBar: AppBar(
+        title: Text('GeoCinema'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.filter_list),
+          )
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          _refreshCompleter = Completer();
+          BlocProvider.of<FilmListBloc>(context).add(InitialState());
+          return _refreshCompleter.future;
+        },
+        child: BlocBuilder(
+          bloc: BlocProvider.of<FilmListBloc>(context)..add(InitialState()),
+          builder: (BuildContext context, state) {
+            if (state is Loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is Error) {
+              _refreshCompleter?.completeError(1);
+              return Center(
+                child: Text(state.message),
+              );
+            } else if (state is Success) {
+              _refreshCompleter?.complete();
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ListView(
+                  children: state.films
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: FilmCard(film: e),
+                          ))
+                      .toList(),
+                ),
+              );
+            } else
+              return SizedBox();
           },
-          child: BlocBuilder(
-            bloc: BlocProvider.of<FilmListBloc>(context)..add(InitialState()),
-            builder: (BuildContext context, state) {
-              if (state is Loading) {
-
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }else if (state is Error) {
-                _refreshCompleter?.completeError(1);
-                return Center(
-                  child: Text(state.message),
-                );
-              }else if (state is Success) {
-                _refreshCompleter?.complete();
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ListView(
-                    children: state.films
-                        .map((e) =>
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: FilmCard(film: e),
-                        ))
-                        .toList(),
-                  ),
-                );
-              }else
-                return SizedBox();
-            },
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }
 

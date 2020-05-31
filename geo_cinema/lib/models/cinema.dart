@@ -1,8 +1,10 @@
 class Cinema{
 
-  final String title;
+  final int id;
+  final String name;
   final double lat;
   final double lon;
+  final String address;
 
-  Cinema({this.lat, this.lon, this.title});
+  Cinema({this.id, this.lat, this.lon, this.name, this.address});
 }

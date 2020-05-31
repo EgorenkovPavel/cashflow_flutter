@@ -20,7 +20,7 @@ class SessionPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(cinema.title),
+        title: Text(cinema.name),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.favorite_border),
