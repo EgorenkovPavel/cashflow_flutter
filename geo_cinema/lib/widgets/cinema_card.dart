@@ -24,7 +24,7 @@ class CinemaCard extends StatelessWidget {
               children: <Widget>[
                 Image.network(
                     'https://opentalk.org.ua/wp-content/uploads/2019/10/at-the-cinema.jpg'),
-                Text(cinema.name),
+                Flexible(child: Text(cinema.name)),
               ],
             ),
           ),
