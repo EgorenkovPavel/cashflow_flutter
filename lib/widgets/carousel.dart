@@ -55,15 +55,19 @@ class Carousel<T> extends StatelessWidget {
                       double page = !_pageController.position.haveDimensions
                           ? _pageController.initialPage.toDouble()
                           : _pageController.page;
-                      return Transform(
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.01)
-                          ..rotateX((pos - page)/10),
-                        alignment: FractionalOffset.center,
-                        child: Transform.scale(
-                          scale: 1 - ((pos - page).abs()) / 10,
-                          child: child,
-                        ),
+//                      return Transform(
+//                        transform: Matrix4.identity()
+//                          ..setEntry(3, 2, 0.01)
+//                          ..rotateX((pos - page)/10),
+//                        alignment: FractionalOffset.center,
+//                        child: Transform.scale(
+//                          scale: 1 - ((pos - page).abs()) / 10,
+//                          child: child,
+//                        ),
+//                      );
+                      return Transform.scale(
+                        scale: 1 - (min((pos - page).abs(), 1)) / 10,
+                        child: child,
                       );
                     },
                     animation: _pageController,
