@@ -26,15 +26,26 @@ class BackupPage extends StatelessWidget {
                       'Google drive',
                       style: Theme.of(context).textTheme.title,
                   ),
-                  RaisedButton(
-                    child:
+                  Flex(
+                    direction: Axis.horizontal,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      RaisedButton(
+                        child:
                         Text(AppLocalizations.of(context).backup.toUpperCase()),
-                    onPressed: () => _backup(context),
-                  ),
-                  RaisedButton(
-                    child:
+                        onPressed: () => _backup(context),
+                      ),
+                      RaisedButton(
+                        child:
                         Text(AppLocalizations.of(context).restore.toUpperCase()),
-                    onPressed: () => _restore(context),
+                        onPressed: () => _restore(context),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    AppLocalizations.of(context).titleDataControl,
+                    style: Theme.of(context).textTheme.title,
                   ),
                   RaisedButton(
                     child: Text(AppLocalizations.of(context).btnDeleteAll.toUpperCase()),
