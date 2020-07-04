@@ -413,7 +413,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     ]);
     query
       ..addColumns([sumBalance])
-      ..groupBy([accountEntity.id]);
+      ..groupBy([accountEntity.id])
+      ..orderBy([OrderingTerm(expression: accountEntity.title)]);
 
     return query.watch().map((rows) {
       return rows

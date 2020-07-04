@@ -43,28 +43,19 @@ class HomePage extends StatelessWidget {
           appBarMenu(context),
         ],
       ),
+      body: ListView(
+          children: [TotalBalanceCard(), CashflowCard(), LastOperationsCard()]
+              .map(
+                (e) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  child: e,
+                ),
+              )
+              .toList()),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => OperationList.addItem(context)),
-      body: ListView(
-            children: <Widget>[
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: TotalBalanceCard(),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: CashflowCard(),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: LastOperationsCard(),
-              ),
-            ],
-          ),
     );
   }
 }
