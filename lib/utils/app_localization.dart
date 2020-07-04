@@ -81,6 +81,7 @@ class AppLocalizations {
 
       'btn_add_account': 'Add account',
       'btn_show_all': 'Show all',
+      'btn_show_reports': 'Show reports',
       'btn_delete_all': 'Delete all',
     },
     'ru': {
@@ -153,6 +154,7 @@ class AppLocalizations {
 
       'btn_add_account': 'Добавить счет',
       'btn_show_all': 'Показать все',
+      'btn_show_reports': 'Показать отчеты',
       'btn_delete_all': 'Удалить все',
     },
   };
@@ -226,6 +228,7 @@ class AppLocalizations {
 
   String get btnAddAccount => _localizedValues[locale.languageCode]['btn_add_account'];
   String get btnShowAll => _localizedValues[locale.languageCode]['btn_show_all'];
+  String get btnShowReports => _localizedValues[locale.languageCode]['btn_show_reports'];
   String get btnDeleteAll => _localizedValues[locale.languageCode]['btn_delete_all'];
 }
 

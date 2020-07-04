@@ -9,6 +9,17 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   static const routeName = '/';
 
+  List<Widget> _cards = [
+    TotalBalanceCard(),
+    CashflowCard(),
+    LastOperationsCard()
+  ];
+
+  Widget wrapCard(Widget w) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: w,
+      );
+
   Widget appBarMenu(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -44,15 +55,8 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: ListView(
-          children: [TotalBalanceCard(), CashflowCard(), LastOperationsCard()]
-              .map(
-                (e) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                  child: e,
-                ),
-              )
-              .toList()),
+        children: _cards.map(wrapCard).toList(),
+      ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => OperationList.addItem(context)),

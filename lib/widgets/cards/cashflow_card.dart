@@ -6,6 +6,7 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/month_cashflow.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
+import 'package:cashflow/widgets/pages/reporst_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -65,6 +66,14 @@ class CashflowCard extends StatelessWidget {
                     ),
                     CardRow(
                         type: OperationType.OUTPUT, categories: state.categoriesOutput),
+                    Align(
+                      child: FlatButton(
+                        child: Text(AppLocalizations.of(context).btnShowReports),
+                        onPressed: () {
+                          ReportsPage.open(context);
+                        },
+                      ),
+                    )
                   ],
                 );
               }else{
