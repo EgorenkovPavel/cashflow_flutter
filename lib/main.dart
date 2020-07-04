@@ -18,11 +18,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'data/repository.dart';
 
 void main(){
   final Repository _repository = Repository();
+
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
   runApp(
       MultiBlocProvider(
         providers: [
