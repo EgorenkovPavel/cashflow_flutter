@@ -26,6 +26,7 @@ class AppLocalizations {
       'title_cashflow': 'Cashflow',
       'title_last_operations': 'Last operations',
       'title_data_control': 'Data control',
+      'title_reports': 'Reports',
 
       'empty_title_error': 'Enter title',
       'empty_budget_error': 'Enter budget',
@@ -100,6 +101,7 @@ class AppLocalizations {
       'title_cashflow': 'Денежный поток',
       'title_last_operations': 'Последние операции',
       'title_data_control': 'Управление данными',
+      'title_reports': 'Отчеты',
 
       'empty_title_error': 'Введите имя',
       'empty_budget_error': 'Введите бюджет',
@@ -175,6 +177,7 @@ class AppLocalizations {
   String get titleCashflow => _localizedValues[locale.languageCode]['title_cashflow'];
   String get titleLastOperations => _localizedValues[locale.languageCode]['title_last_operations'];
   String get titleDataControl => _localizedValues[locale.languageCode]['title_data_control'];
+  String get titleReports => _localizedValues[locale.languageCode]['title_reports'];
 
   String get emptyTitleError => _localizedValues[locale.languageCode]['empty_title_error'];
   String get emptyBudgetError => _localizedValues[locale.languageCode]['empty_budget_error'];
