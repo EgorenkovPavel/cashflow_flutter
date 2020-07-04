@@ -181,7 +181,7 @@ class Success extends CashflowCardState {
 class CashflowCardBloc extends Bloc<CashflowCardEvent, CashflowCardState> {
   final Repository _repository;
 
-  CashflowCardBloc(this._repository);
+  CashflowCardBloc(this._repository) : super(Loading());
 
   @override
   CashflowCardState get initialState => Loading();

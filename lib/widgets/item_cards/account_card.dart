@@ -89,7 +89,7 @@ class AccountCardBloc extends Bloc<AccountCardEvent, AccountCardState>{
 
   final Repository _repository;
 
-  AccountCardBloc(this._repository);
+  AccountCardBloc(this._repository) : super(EmptyState());
 
   @override
   AccountCardState get initialState => EmptyState();

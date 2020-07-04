@@ -173,7 +173,7 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
   int _month;
   int _year;
 
-  BudgetCardBloc(this._repository);
+  BudgetCardBloc(this._repository) : super(DataState(1, 1));
 
   @override
   BudgetCardState get initialState => DataState(1, 1);

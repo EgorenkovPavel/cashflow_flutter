@@ -131,7 +131,7 @@ class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryCardState> {
 
   OperationType _type;
 
-  CategoryCardBloc(this._repository);
+  CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
 
   @override
   CategoryCardState get initialState => InitialState(OperationType.INPUT);

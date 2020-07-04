@@ -29,6 +29,32 @@ class AccountEntityData extends DataClass
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}archive']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || archive != null) {
+      map['archive'] = Variable<bool>(archive);
+    }
+    return map;
+  }
+
+  AccountEntityCompanion toCompanion(bool nullToAbsent) {
+    return AccountEntityCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      title:
+          title == null && nullToAbsent ? const Value.absent() : Value(title),
+      archive: archive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archive),
+    );
+  }
+
   factory AccountEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -46,18 +72,6 @@ class AccountEntityData extends DataClass
       'title': serializer.toJson<String>(title),
       'archive': serializer.toJson<bool>(archive),
     };
-  }
-
-  @override
-  AccountEntityCompanion createCompanion(bool nullToAbsent) {
-    return AccountEntityCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      archive: archive == null && nullToAbsent
-          ? const Value.absent()
-          : Value(archive),
-    );
   }
 
   AccountEntityData copyWith({int id, String title, bool archive}) =>
@@ -102,6 +116,18 @@ class AccountEntityCompanion extends UpdateCompanion<AccountEntityData> {
     @required String title,
     this.archive = const Value.absent(),
   }) : title = Value(title);
+  static Insertable<AccountEntityData> custom({
+    Expression<int> id,
+    Expression<String> title,
+    Expression<bool> archive,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (archive != null) 'archive': archive,
+    });
+  }
+
   AccountEntityCompanion copyWith(
       {Value<int> id, Value<String> title, Value<bool> archive}) {
     return AccountEntityCompanion(
@@ -109,6 +135,31 @@ class AccountEntityCompanion extends UpdateCompanion<AccountEntityData> {
       title: title ?? this.title,
       archive: archive ?? this.archive,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (archive.present) {
+      map['archive'] = Variable<bool>(archive.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AccountEntityCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('archive: $archive')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -156,21 +207,22 @@ class $AccountEntityTable extends AccountEntity
   @override
   final String actualTableName = 'accounts';
   @override
-  VerificationContext validateIntegrity(AccountEntityCompanion d,
+  VerificationContext validateIntegrity(Insertable<AccountEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (d.archive.present) {
+    if (data.containsKey('archive')) {
       context.handle(_archiveMeta,
-          archive.isAcceptableValue(d.archive.value, _archiveMeta));
+          archive.isAcceptableOrUnknown(data['archive'], _archiveMeta));
     }
     return context;
   }
@@ -181,21 +233,6 @@ class $AccountEntityTable extends AccountEntity
   AccountEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return AccountEntityData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(AccountEntityCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    if (d.archive.present) {
-      map['archive'] = Variable<bool, BoolType>(d.archive.value);
-    }
-    return map;
   }
 
   @override
@@ -232,6 +269,39 @@ class CategoryEntityData extends DataClass
           .mapFromDatabaseResponse(data['${effectivePrefix}operation_type'])),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || archive != null) {
+      map['archive'] = Variable<bool>(archive);
+    }
+    if (!nullToAbsent || operationType != null) {
+      final converter = $CategoryEntityTable.$converter0;
+      map['operation_type'] = Variable<int>(converter.mapToSql(operationType));
+    }
+    return map;
+  }
+
+  CategoryEntityCompanion toCompanion(bool nullToAbsent) {
+    return CategoryEntityCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      title:
+          title == null && nullToAbsent ? const Value.absent() : Value(title),
+      archive: archive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archive),
+      operationType: operationType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(operationType),
+    );
+  }
+
   factory CategoryEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -251,21 +321,6 @@ class CategoryEntityData extends DataClass
       'archive': serializer.toJson<bool>(archive),
       'operationType': serializer.toJson<OperationType>(operationType),
     };
-  }
-
-  @override
-  CategoryEntityCompanion createCompanion(bool nullToAbsent) {
-    return CategoryEntityCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      archive: archive == null && nullToAbsent
-          ? const Value.absent()
-          : Value(archive),
-      operationType: operationType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(operationType),
-    );
   }
 
   CategoryEntityData copyWith(
@@ -318,6 +373,20 @@ class CategoryEntityCompanion extends UpdateCompanion<CategoryEntityData> {
     @required OperationType operationType,
   })  : title = Value(title),
         operationType = Value(operationType);
+  static Insertable<CategoryEntityData> custom({
+    Expression<int> id,
+    Expression<String> title,
+    Expression<bool> archive,
+    Expression<int> operationType,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (archive != null) 'archive': archive,
+      if (operationType != null) 'operation_type': operationType,
+    });
+  }
+
   CategoryEntityCompanion copyWith(
       {Value<int> id,
       Value<String> title,
@@ -329,6 +398,37 @@ class CategoryEntityCompanion extends UpdateCompanion<CategoryEntityData> {
       archive: archive ?? this.archive,
       operationType: operationType ?? this.operationType,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (archive.present) {
+      map['archive'] = Variable<bool>(archive.value);
+    }
+    if (operationType.present) {
+      final converter = $CategoryEntityTable.$converter0;
+      map['operation_type'] =
+          Variable<int>(converter.mapToSql(operationType.value));
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryEntityCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('archive: $archive, ')
+          ..write('operationType: $operationType')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -390,21 +490,22 @@ class $CategoryEntityTable extends CategoryEntity
   @override
   final String actualTableName = 'categories';
   @override
-  VerificationContext validateIntegrity(CategoryEntityCompanion d,
+  VerificationContext validateIntegrity(Insertable<CategoryEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (d.archive.present) {
+    if (data.containsKey('archive')) {
       context.handle(_archiveMeta,
-          archive.isAcceptableValue(d.archive.value, _archiveMeta));
+          archive.isAcceptableOrUnknown(data['archive'], _archiveMeta));
     }
     context.handle(_operationTypeMeta, const VerificationResult.success());
     return context;
@@ -416,26 +517,6 @@ class $CategoryEntityTable extends CategoryEntity
   CategoryEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return CategoryEntityData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(CategoryEntityCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    if (d.archive.present) {
-      map['archive'] = Variable<bool, BoolType>(d.archive.value);
-    }
-    if (d.operationType.present) {
-      final converter = $CategoryEntityTable.$converter0;
-      map['operation_type'] =
-          Variable<int, IntType>(converter.mapToSql(d.operationType.value));
-    }
-    return map;
   }
 
   @override
@@ -485,6 +566,54 @@ class OperationEntityData extends DataClass
       sum: intType.mapFromDatabaseResponse(data['${effectivePrefix}sum']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || date != null) {
+      map['date'] = Variable<DateTime>(date);
+    }
+    if (!nullToAbsent || operationType != null) {
+      final converter = $OperationEntityTable.$converter0;
+      map['operation_type'] = Variable<int>(converter.mapToSql(operationType));
+    }
+    if (!nullToAbsent || account != null) {
+      map['account'] = Variable<int>(account);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<int>(category);
+    }
+    if (!nullToAbsent || recAccount != null) {
+      map['rec_account'] = Variable<int>(recAccount);
+    }
+    if (!nullToAbsent || sum != null) {
+      map['sum'] = Variable<int>(sum);
+    }
+    return map;
+  }
+
+  OperationEntityCompanion toCompanion(bool nullToAbsent) {
+    return OperationEntityCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      operationType: operationType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(operationType),
+      account: account == null && nullToAbsent
+          ? const Value.absent()
+          : Value(account),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      recAccount: recAccount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(recAccount),
+      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
+    );
+  }
+
   factory OperationEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -510,27 +639,6 @@ class OperationEntityData extends DataClass
       'recAccount': serializer.toJson<int>(recAccount),
       'sum': serializer.toJson<int>(sum),
     };
-  }
-
-  @override
-  OperationEntityCompanion createCompanion(bool nullToAbsent) {
-    return OperationEntityCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
-      operationType: operationType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(operationType),
-      account: account == null && nullToAbsent
-          ? const Value.absent()
-          : Value(account),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      recAccount: recAccount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(recAccount),
-      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
-    );
   }
 
   OperationEntityData copyWith(
@@ -617,6 +725,26 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
         operationType = Value(operationType),
         account = Value(account),
         sum = Value(sum);
+  static Insertable<OperationEntityData> custom({
+    Expression<int> id,
+    Expression<DateTime> date,
+    Expression<int> operationType,
+    Expression<int> account,
+    Expression<int> category,
+    Expression<int> recAccount,
+    Expression<int> sum,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (operationType != null) 'operation_type': operationType,
+      if (account != null) 'account': account,
+      if (category != null) 'category': category,
+      if (recAccount != null) 'rec_account': recAccount,
+      if (sum != null) 'sum': sum,
+    });
+  }
+
   OperationEntityCompanion copyWith(
       {Value<int> id,
       Value<DateTime> date,
@@ -634,6 +762,49 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
       recAccount: recAccount ?? this.recAccount,
       sum: sum ?? this.sum,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (operationType.present) {
+      final converter = $OperationEntityTable.$converter0;
+      map['operation_type'] =
+          Variable<int>(converter.mapToSql(operationType.value));
+    }
+    if (account.present) {
+      map['account'] = Variable<int>(account.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<int>(category.value);
+    }
+    if (recAccount.present) {
+      map['rec_account'] = Variable<int>(recAccount.value);
+    }
+    if (sum.present) {
+      map['sum'] = Variable<int>(sum.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OperationEntityCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('operationType: $operationType, ')
+          ..write('account: $account, ')
+          ..write('category: $category, ')
+          ..write('recAccount: $recAccount, ')
+          ..write('sum: $sum')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -726,35 +897,40 @@ class $OperationEntityTable extends OperationEntity
   @override
   final String actualTableName = 'operations';
   @override
-  VerificationContext validateIntegrity(OperationEntityCompanion d,
+  VerificationContext validateIntegrity(
+      Insertable<OperationEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.date.present) {
+    if (data.containsKey('date')) {
       context.handle(
-          _dateMeta, date.isAcceptableValue(d.date.value, _dateMeta));
+          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
     context.handle(_operationTypeMeta, const VerificationResult.success());
-    if (d.account.present) {
+    if (data.containsKey('account')) {
       context.handle(_accountMeta,
-          account.isAcceptableValue(d.account.value, _accountMeta));
+          account.isAcceptableOrUnknown(data['account'], _accountMeta));
     } else if (isInserting) {
       context.missing(_accountMeta);
     }
-    if (d.category.present) {
+    if (data.containsKey('category')) {
       context.handle(_categoryMeta,
-          category.isAcceptableValue(d.category.value, _categoryMeta));
+          category.isAcceptableOrUnknown(data['category'], _categoryMeta));
     }
-    if (d.recAccount.present) {
-      context.handle(_recAccountMeta,
-          recAccount.isAcceptableValue(d.recAccount.value, _recAccountMeta));
+    if (data.containsKey('rec_account')) {
+      context.handle(
+          _recAccountMeta,
+          recAccount.isAcceptableOrUnknown(
+              data['rec_account'], _recAccountMeta));
     }
-    if (d.sum.present) {
-      context.handle(_sumMeta, sum.isAcceptableValue(d.sum.value, _sumMeta));
+    if (data.containsKey('sum')) {
+      context.handle(
+          _sumMeta, sum.isAcceptableOrUnknown(data['sum'], _sumMeta));
     } else if (isInserting) {
       context.missing(_sumMeta);
     }
@@ -767,35 +943,6 @@ class $OperationEntityTable extends OperationEntity
   OperationEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return OperationEntityData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(OperationEntityCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.date.present) {
-      map['date'] = Variable<DateTime, DateTimeType>(d.date.value);
-    }
-    if (d.operationType.present) {
-      final converter = $OperationEntityTable.$converter0;
-      map['operation_type'] =
-          Variable<int, IntType>(converter.mapToSql(d.operationType.value));
-    }
-    if (d.account.present) {
-      map['account'] = Variable<int, IntType>(d.account.value);
-    }
-    if (d.category.present) {
-      map['category'] = Variable<int, IntType>(d.category.value);
-    }
-    if (d.recAccount.present) {
-      map['rec_account'] = Variable<int, IntType>(d.recAccount.value);
-    }
-    if (d.sum.present) {
-      map['sum'] = Variable<int, IntType>(d.sum.value);
-    }
-    return map;
   }
 
   @override
@@ -834,6 +981,37 @@ class BalanceEntityData extends DataClass
       sum: intType.mapFromDatabaseResponse(data['${effectivePrefix}sum']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || date != null) {
+      map['date'] = Variable<DateTime>(date);
+    }
+    if (!nullToAbsent || operation != null) {
+      map['operation'] = Variable<int>(operation);
+    }
+    if (!nullToAbsent || account != null) {
+      map['account'] = Variable<int>(account);
+    }
+    if (!nullToAbsent || sum != null) {
+      map['sum'] = Variable<int>(sum);
+    }
+    return map;
+  }
+
+  BalanceEntityCompanion toCompanion(bool nullToAbsent) {
+    return BalanceEntityCompanion(
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      operation: operation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(operation),
+      account: account == null && nullToAbsent
+          ? const Value.absent()
+          : Value(account),
+      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
+    );
+  }
+
   factory BalanceEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -853,20 +1031,6 @@ class BalanceEntityData extends DataClass
       'account': serializer.toJson<int>(account),
       'sum': serializer.toJson<int>(sum),
     };
-  }
-
-  @override
-  BalanceEntityCompanion createCompanion(bool nullToAbsent) {
-    return BalanceEntityCompanion(
-      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
-      operation: operation == null && nullToAbsent
-          ? const Value.absent()
-          : Value(operation),
-      account: account == null && nullToAbsent
-          ? const Value.absent()
-          : Value(account),
-      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
-    );
   }
 
   BalanceEntityData copyWith(
@@ -921,6 +1085,20 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
         operation = Value(operation),
         account = Value(account),
         sum = Value(sum);
+  static Insertable<BalanceEntityData> custom({
+    Expression<DateTime> date,
+    Expression<int> operation,
+    Expression<int> account,
+    Expression<int> sum,
+  }) {
+    return RawValuesInsertable({
+      if (date != null) 'date': date,
+      if (operation != null) 'operation': operation,
+      if (account != null) 'account': account,
+      if (sum != null) 'sum': sum,
+    });
+  }
+
   BalanceEntityCompanion copyWith(
       {Value<DateTime> date,
       Value<int> operation,
@@ -932,6 +1110,35 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
       account: account ?? this.account,
       sum: sum ?? this.sum,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (operation.present) {
+      map['operation'] = Variable<int>(operation.value);
+    }
+    if (account.present) {
+      map['account'] = Variable<int>(account.value);
+    }
+    if (sum.present) {
+      map['sum'] = Variable<int>(sum.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BalanceEntityCompanion(')
+          ..write('date: $date, ')
+          ..write('operation: $operation, ')
+          ..write('account: $account, ')
+          ..write('sum: $sum')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -991,29 +1198,31 @@ class $BalanceEntityTable extends BalanceEntity
   @override
   final String actualTableName = 'balance';
   @override
-  VerificationContext validateIntegrity(BalanceEntityCompanion d,
+  VerificationContext validateIntegrity(Insertable<BalanceEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.date.present) {
+    final data = instance.toColumns(true);
+    if (data.containsKey('date')) {
       context.handle(
-          _dateMeta, date.isAcceptableValue(d.date.value, _dateMeta));
+          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
-    if (d.operation.present) {
+    if (data.containsKey('operation')) {
       context.handle(_operationMeta,
-          operation.isAcceptableValue(d.operation.value, _operationMeta));
+          operation.isAcceptableOrUnknown(data['operation'], _operationMeta));
     } else if (isInserting) {
       context.missing(_operationMeta);
     }
-    if (d.account.present) {
+    if (data.containsKey('account')) {
       context.handle(_accountMeta,
-          account.isAcceptableValue(d.account.value, _accountMeta));
+          account.isAcceptableOrUnknown(data['account'], _accountMeta));
     } else if (isInserting) {
       context.missing(_accountMeta);
     }
-    if (d.sum.present) {
-      context.handle(_sumMeta, sum.isAcceptableValue(d.sum.value, _sumMeta));
+    if (data.containsKey('sum')) {
+      context.handle(
+          _sumMeta, sum.isAcceptableOrUnknown(data['sum'], _sumMeta));
     } else if (isInserting) {
       context.missing(_sumMeta);
     }
@@ -1026,24 +1235,6 @@ class $BalanceEntityTable extends BalanceEntity
   BalanceEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return BalanceEntityData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(BalanceEntityCompanion d) {
-    final map = <String, Variable>{};
-    if (d.date.present) {
-      map['date'] = Variable<DateTime, DateTimeType>(d.date.value);
-    }
-    if (d.operation.present) {
-      map['operation'] = Variable<int, IntType>(d.operation.value);
-    }
-    if (d.account.present) {
-      map['account'] = Variable<int, IntType>(d.account.value);
-    }
-    if (d.sum.present) {
-      map['sum'] = Variable<int, IntType>(d.sum.value);
-    }
-    return map;
   }
 
   @override
@@ -1079,6 +1270,37 @@ class CashflowEntityData extends DataClass
       sum: intType.mapFromDatabaseResponse(data['${effectivePrefix}sum']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || date != null) {
+      map['date'] = Variable<DateTime>(date);
+    }
+    if (!nullToAbsent || operation != null) {
+      map['operation'] = Variable<int>(operation);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<int>(category);
+    }
+    if (!nullToAbsent || sum != null) {
+      map['sum'] = Variable<int>(sum);
+    }
+    return map;
+  }
+
+  CashflowEntityCompanion toCompanion(bool nullToAbsent) {
+    return CashflowEntityCompanion(
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      operation: operation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(operation),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
+    );
+  }
+
   factory CashflowEntityData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -1098,20 +1320,6 @@ class CashflowEntityData extends DataClass
       'category': serializer.toJson<int>(category),
       'sum': serializer.toJson<int>(sum),
     };
-  }
-
-  @override
-  CashflowEntityCompanion createCompanion(bool nullToAbsent) {
-    return CashflowEntityCompanion(
-      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
-      operation: operation == null && nullToAbsent
-          ? const Value.absent()
-          : Value(operation),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
-    );
   }
 
   CashflowEntityData copyWith(
@@ -1166,6 +1374,20 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
         operation = Value(operation),
         category = Value(category),
         sum = Value(sum);
+  static Insertable<CashflowEntityData> custom({
+    Expression<DateTime> date,
+    Expression<int> operation,
+    Expression<int> category,
+    Expression<int> sum,
+  }) {
+    return RawValuesInsertable({
+      if (date != null) 'date': date,
+      if (operation != null) 'operation': operation,
+      if (category != null) 'category': category,
+      if (sum != null) 'sum': sum,
+    });
+  }
+
   CashflowEntityCompanion copyWith(
       {Value<DateTime> date,
       Value<int> operation,
@@ -1177,6 +1399,35 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
       category: category ?? this.category,
       sum: sum ?? this.sum,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (operation.present) {
+      map['operation'] = Variable<int>(operation.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<int>(category.value);
+    }
+    if (sum.present) {
+      map['sum'] = Variable<int>(sum.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CashflowEntityCompanion(')
+          ..write('date: $date, ')
+          ..write('operation: $operation, ')
+          ..write('category: $category, ')
+          ..write('sum: $sum')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -1236,29 +1487,31 @@ class $CashflowEntityTable extends CashflowEntity
   @override
   final String actualTableName = 'cashflow';
   @override
-  VerificationContext validateIntegrity(CashflowEntityCompanion d,
+  VerificationContext validateIntegrity(Insertable<CashflowEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.date.present) {
+    final data = instance.toColumns(true);
+    if (data.containsKey('date')) {
       context.handle(
-          _dateMeta, date.isAcceptableValue(d.date.value, _dateMeta));
+          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
-    if (d.operation.present) {
+    if (data.containsKey('operation')) {
       context.handle(_operationMeta,
-          operation.isAcceptableValue(d.operation.value, _operationMeta));
+          operation.isAcceptableOrUnknown(data['operation'], _operationMeta));
     } else if (isInserting) {
       context.missing(_operationMeta);
     }
-    if (d.category.present) {
+    if (data.containsKey('category')) {
       context.handle(_categoryMeta,
-          category.isAcceptableValue(d.category.value, _categoryMeta));
+          category.isAcceptableOrUnknown(data['category'], _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
-    if (d.sum.present) {
-      context.handle(_sumMeta, sum.isAcceptableValue(d.sum.value, _sumMeta));
+    if (data.containsKey('sum')) {
+      context.handle(
+          _sumMeta, sum.isAcceptableOrUnknown(data['sum'], _sumMeta));
     } else if (isInserting) {
       context.missing(_sumMeta);
     }
@@ -1271,24 +1524,6 @@ class $CashflowEntityTable extends CashflowEntity
   CashflowEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return CashflowEntityData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(CashflowEntityCompanion d) {
-    final map = <String, Variable>{};
-    if (d.date.present) {
-      map['date'] = Variable<DateTime, DateTimeType>(d.date.value);
-    }
-    if (d.operation.present) {
-      map['operation'] = Variable<int, IntType>(d.operation.value);
-    }
-    if (d.category.present) {
-      map['category'] = Variable<int, IntType>(d.category.value);
-    }
-    if (d.sum.present) {
-      map['sum'] = Variable<int, IntType>(d.sum.value);
-    }
-    return map;
   }
 
   @override
@@ -1316,6 +1551,31 @@ class BudgetData extends DataClass implements Insertable<BudgetData> {
       sum: intType.mapFromDatabaseResponse(data['${effectivePrefix}sum']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || date != null) {
+      map['date'] = Variable<DateTime>(date);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<int>(category);
+    }
+    if (!nullToAbsent || sum != null) {
+      map['sum'] = Variable<int>(sum);
+    }
+    return map;
+  }
+
+  BudgetCompanion toCompanion(bool nullToAbsent) {
+    return BudgetCompanion(
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
+    );
+  }
+
   factory BudgetData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -1333,17 +1593,6 @@ class BudgetData extends DataClass implements Insertable<BudgetData> {
       'category': serializer.toJson<int>(category),
       'sum': serializer.toJson<int>(sum),
     };
-  }
-
-  @override
-  BudgetCompanion createCompanion(bool nullToAbsent) {
-    return BudgetCompanion(
-      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
-    );
   }
 
   BudgetData copyWith({DateTime date, int category, int sum}) => BudgetData(
@@ -1389,6 +1638,18 @@ class BudgetCompanion extends UpdateCompanion<BudgetData> {
   })  : date = Value(date),
         category = Value(category),
         sum = Value(sum);
+  static Insertable<BudgetData> custom({
+    Expression<DateTime> date,
+    Expression<int> category,
+    Expression<int> sum,
+  }) {
+    return RawValuesInsertable({
+      if (date != null) 'date': date,
+      if (category != null) 'category': category,
+      if (sum != null) 'sum': sum,
+    });
+  }
+
   BudgetCompanion copyWith(
       {Value<DateTime> date, Value<int> category, Value<int> sum}) {
     return BudgetCompanion(
@@ -1396,6 +1657,31 @@ class BudgetCompanion extends UpdateCompanion<BudgetData> {
       category: category ?? this.category,
       sum: sum ?? this.sum,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<int>(category.value);
+    }
+    if (sum.present) {
+      map['sum'] = Variable<int>(sum.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BudgetCompanion(')
+          ..write('date: $date, ')
+          ..write('category: $category, ')
+          ..write('sum: $sum')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -1445,23 +1731,25 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   @override
   final String actualTableName = 'budgets';
   @override
-  VerificationContext validateIntegrity(BudgetCompanion d,
+  VerificationContext validateIntegrity(Insertable<BudgetData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.date.present) {
+    final data = instance.toColumns(true);
+    if (data.containsKey('date')) {
       context.handle(
-          _dateMeta, date.isAcceptableValue(d.date.value, _dateMeta));
+          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
-    if (d.category.present) {
+    if (data.containsKey('category')) {
       context.handle(_categoryMeta,
-          category.isAcceptableValue(d.category.value, _categoryMeta));
+          category.isAcceptableOrUnknown(data['category'], _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
-    if (d.sum.present) {
-      context.handle(_sumMeta, sum.isAcceptableValue(d.sum.value, _sumMeta));
+    if (data.containsKey('sum')) {
+      context.handle(
+          _sumMeta, sum.isAcceptableOrUnknown(data['sum'], _sumMeta));
     } else if (isInserting) {
       context.missing(_sumMeta);
     }
@@ -1474,21 +1762,6 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   BudgetData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return BudgetData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(BudgetCompanion d) {
-    final map = <String, Variable>{};
-    if (d.date.present) {
-      map['date'] = Variable<DateTime, DateTimeType>(d.date.value);
-    }
-    if (d.category.present) {
-      map['category'] = Variable<int, IntType>(d.category.value);
-    }
-    if (d.sum.present) {
-      map['sum'] = Variable<int, IntType>(d.sum.value);
-    }
-    return map;
   }
 
   @override
@@ -1543,21 +1816,21 @@ abstract class _$Database extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$AccountDaoMixin on DatabaseAccessor<Database> {
-  $AccountEntityTable get accountEntity => db.accountEntity;
-  $BalanceEntityTable get balanceEntity => db.balanceEntity;
+  $AccountEntityTable get accountEntity => attachedDatabase.accountEntity;
+  $BalanceEntityTable get balanceEntity => attachedDatabase.balanceEntity;
 }
 mixin _$CategoryDaoMixin on DatabaseAccessor<Database> {
-  $CategoryEntityTable get categoryEntity => db.categoryEntity;
-  $BudgetTable get budget => db.budget;
-  $CashflowEntityTable get cashflowEntity => db.cashflowEntity;
+  $CategoryEntityTable get categoryEntity => attachedDatabase.categoryEntity;
+  $BudgetTable get budget => attachedDatabase.budget;
+  $CashflowEntityTable get cashflowEntity => attachedDatabase.cashflowEntity;
 }
 mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
-  $AccountEntityTable get accountEntity => db.accountEntity;
-  $CategoryEntityTable get categoryEntity => db.categoryEntity;
-  $OperationEntityTable get operationEntity => db.operationEntity;
-  $BalanceEntityTable get balanceEntity => db.balanceEntity;
-  $CashflowEntityTable get cashflowEntity => db.cashflowEntity;
+  $AccountEntityTable get accountEntity => attachedDatabase.accountEntity;
+  $CategoryEntityTable get categoryEntity => attachedDatabase.categoryEntity;
+  $OperationEntityTable get operationEntity => attachedDatabase.operationEntity;
+  $BalanceEntityTable get balanceEntity => attachedDatabase.balanceEntity;
+  $CashflowEntityTable get cashflowEntity => attachedDatabase.cashflowEntity;
 }
 mixin _$BudgetDaoMixin on DatabaseAccessor<Database> {
-  $BudgetTable get budget => db.budget;
+  $BudgetTable get budget => attachedDatabase.budget;
 }

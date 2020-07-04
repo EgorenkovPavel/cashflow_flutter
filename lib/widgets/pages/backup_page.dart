@@ -119,7 +119,7 @@ abstract class BackupPageState {}
 class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
   final Repository _repository;
 
-  BackupPageBloc(this._repository);
+  BackupPageBloc(this._repository) : super(null);
 
   @override
   BackupPageState get initialState => null;

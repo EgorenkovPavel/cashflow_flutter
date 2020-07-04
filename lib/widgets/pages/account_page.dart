@@ -129,7 +129,7 @@ class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState>{
   bool _editTitleMode = false;
   Account _account;
 
-  AccountPageBloc(this._repository);
+  AccountPageBloc(this._repository) : super(AccountPageState(false, ''));
 
   @override
   AccountPageState get initialState => AccountPageState(_editTitleMode, '');

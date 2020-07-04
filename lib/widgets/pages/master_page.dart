@@ -477,7 +477,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final Stream<List<Category>> categoryInStream;
   final Stream<List<Category>> categoryOutStream;
 
-  DataState _data =
+  static DataState _data =
       new DataState(type: OperationType.INPUT, showKeyboard: false, sum: 0);
 
   MasterBloc(this._repository)
@@ -485,7 +485,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         categoryInStream =
             _repository.watchAllCategoriesByType(OperationType.INPUT),
         categoryOutStream =
-            _repository.watchAllCategoriesByType(OperationType.OUTPUT);
+            _repository.watchAllCategoriesByType(OperationType.OUTPUT),
+        super(_data);
 
   @override
   MasterState get initialState => _data;

@@ -125,7 +125,7 @@ class Success extends TotalBalanceState {
 class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
   final Repository _repository;
 
-  TotalBalanceBloc(this._repository);
+  TotalBalanceBloc(this._repository) : super(Loading());
 
   @override
   TotalBalanceState get initialState => Loading();

@@ -89,7 +89,7 @@ class LastOperationsBloc
     extends Bloc<LastOperationsEvent, LastOperationsState> {
   final Repository _repository;
 
-  LastOperationsBloc(this._repository);
+  LastOperationsBloc(this._repository) : super(Loading());
 
   @override
   LastOperationsState get initialState => Loading();
