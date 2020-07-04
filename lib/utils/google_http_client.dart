@@ -26,7 +26,7 @@ class GoogleHttpClient extends IOClient {
   }
 
   @override
-  Future<StreamedResponse> send(BaseRequest request) =>
+  Future<IOStreamedResponse> send(BaseRequest request) =>
       super.send(request..headers.addAll(_headers));
 
   @override

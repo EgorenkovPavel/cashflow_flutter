@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "764112372488-854d9j7ig2betfhcoirm5a72tj9iog7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.epipasha.cashflow",
+            "certificate_hash": "d6aee59d60ee3213895f4e7e6b2d22478d285bf8"
+          }
+        },
+        {
           "client_id": "764112372488-bnndim7v32sjptrkpup61ula311jj51l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -36,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "764112372488-k9duujaej6iic1p65lnl6saque7e96sr.apps.googleusercontent.com",
+              "client_id": "764112372488-etgc5ln6i37t6r1gvrqbrcub1phm3djp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

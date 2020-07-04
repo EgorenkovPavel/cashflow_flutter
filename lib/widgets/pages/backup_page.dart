@@ -66,6 +66,7 @@ class BackupPage extends StatelessWidget {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).errorNoGPServices),
       ));
+      print(e.toString());
       return;
     }
     if (httpClient == null) return;
