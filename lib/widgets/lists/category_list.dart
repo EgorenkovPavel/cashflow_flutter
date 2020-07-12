@@ -1,6 +1,5 @@
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/cashflow_category_chart.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_category.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
@@ -13,15 +12,9 @@ class CategoryList extends MainList<CategoryCashflowBudget> {
   @override
   Widget listBuilder(BuildContext context, List<CategoryCashflowBudget> categories) {
     return ListView.separated(
-      itemCount: categories.length + 1,
+      itemCount: categories.length,
       itemBuilder: (_, index) {
-        if(index == 0){
-          return SizedBox(
-            child: CashflowCategoryChart(categories: categories),
-            height: 400.0,
-          );
-        }
-        final itemCategory = categories[index -1];
+        final itemCategory = categories[index];
         return ListTileCategory(
           category: itemCategory,
           onTap: () => onItemTap(context, itemCategory),

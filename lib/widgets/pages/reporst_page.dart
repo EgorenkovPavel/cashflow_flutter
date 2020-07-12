@@ -32,3 +32,26 @@ class ReportsPage extends StatelessWidget{
   }
 
 }
+
+//await for (List<CategoryCashflowBudget> categories
+//in _repository.watchAllCategoryCashflowBudget(DateTime.now())) {
+//
+//if(categories.isEmpty){
+//yield Empty();
+//}else {
+//List<CategoryCashflowBudget> categoriesInput = categories
+//    .where((category) => category.type == OperationType.INPUT)
+//    .toList();
+//
+//List<CategoryCashflowBudget> categoriesOutput = categories
+//    .where((category) => category.type == OperationType.OUTPUT)
+//    .toList();
+//
+//yield Success(categoriesInput, categoriesOutput);
+//}
+//}
+
+//SizedBox(
+//child: CashflowCategoryChart(categories: categories),
+//height: 400.0,
+//)
