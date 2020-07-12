@@ -171,7 +171,7 @@ class _MasterPageState extends State<MasterPage> {
                     color: Theme.of(context).primaryColor,
                   ),
                   onPressed: (){
-                    _bloc.add(BackPressed());
+                    _bloc.add(OnAddNewItem());
                     onAdd();
                     },
                 )
@@ -392,6 +392,8 @@ class OnDigitTap extends MasterEvent {
 
 class OnBackKeyTap extends MasterEvent {}
 
+class OnAddNewItem extends MasterEvent {}
+
 class OnMoreTap extends MasterEvent {}
 
 class OnNextTap extends MasterEvent {}
@@ -508,7 +510,13 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         yield ClosePage();
         return;
       }
-    } else if (event is OnSumTap) {
+    } else if (event is OnAddNewItem) {
+      if (_data.showKeyboard) {
+        _data = _data.copyWith(showKeyboard: false);
+      }else{
+        return;
+      }
+    }else if (event is OnSumTap) {
       if (!_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: true);
       }
