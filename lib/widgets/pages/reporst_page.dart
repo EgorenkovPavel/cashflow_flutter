@@ -1,4 +1,5 @@
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:flutter/material.dart';
 
 class ReportsPage extends StatelessWidget{
@@ -14,7 +15,19 @@ class ReportsPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).titleReports),),
-      //TODO
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Container(
+              height: 200.0,
+              alignment: Alignment.center,
+              //color: Colors.grey,
+              child: BalanceChart(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
