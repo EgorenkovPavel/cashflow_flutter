@@ -55,7 +55,8 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: ListView(
-        children: _cards.map(wrapCard).toList(),
+        children: _cards.map(wrapCard).toList()
+        ..add(SizedBox(height: 60.0,)),
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

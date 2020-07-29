@@ -55,13 +55,16 @@ class LastOperationsCard extends StatelessWidget {
               }
             },
           ),
-          Align(
-            child: FlatButton(
-              child: Text(AppLocalizations.of(context).btnShowAll),
-              onPressed: () {
-                Navigator.of(context).pushNamed(OperationListPage.routeName);
-              },
-            ),
+          ButtonBar(
+            children: [
+              FlatButton(
+                child:
+                    Text(AppLocalizations.of(context).btnShowAll.toUpperCase()),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(OperationListPage.routeName);
+                },
+              )
+            ],
           )
         ],
       ),

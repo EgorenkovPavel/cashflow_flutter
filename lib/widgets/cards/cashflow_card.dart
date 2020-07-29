@@ -20,68 +20,75 @@ class CashflowCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child:
-          BlocBuilder<CashflowCardBloc, CashflowCardState>(
-            builder: (BuildContext context, CashflowCardState state) {
-              if(state is Empty){
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CardTitle(AppLocalizations.of(context).categories),
-                    CardRow(type: OperationType.INPUT, categories: []),
-                    Divider(
-                      height: 1.0,
-                    ),
-                    CardRow(
-                        type: OperationType.OUTPUT, categories: []),
-                  ],
-                );
-              }else if(state is Loading){
-                return Center(child: CircularProgressIndicator(),);
-              }else if(state is Success){
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CardTitle(AppLocalizations.of(context).titleCashflow),
-                    state.categoriesOutput.isEmpty
-                        ? SizedBox()
-                        : Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      child: MonthCashflow(
-                        date: DateTime.now(),
-                        cashflow: state.categoriesOutput
-                            .map((category) => category.cashflow)
-                            .fold(0, (a, b) => a + b),
-                        budget: state.categoriesOutput
-                            .map((category) => category.budget)
-                            .fold(0, (a, b) => a + b),
+      child: BlocBuilder<CashflowCardBloc, CashflowCardState>(
+        builder: (BuildContext context, CashflowCardState state) {
+          if (state is Empty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CardTitle(AppLocalizations.of(context).categories),
+                CardRow(type: OperationType.INPUT, categories: []),
+                Divider(
+                  height: 1.0,
+                ),
+                CardRow(type: OperationType.OUTPUT, categories: []),
+              ],
+            );
+          } else if (state is Loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is Success) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CardTitle(AppLocalizations.of(context).titleCashflow),
+                state.categoriesOutput.isEmpty
+                    ? SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: MonthCashflow(
+                          date: DateTime.now(),
+                          cashflow: state.categoriesOutput
+                              .map((category) => category.cashflow)
+                              .fold(0, (a, b) => a + b),
+                          budget: state.categoriesOutput
+                              .map((category) => category.budget)
+                              .fold(0, (a, b) => a + b),
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 1.0,
-                    ),
-                    CardRow(type: OperationType.INPUT, categories: state.categoriesInput),
-                    Divider(
-                      height: 1.0,
-                    ),
-                    CardRow(
-                        type: OperationType.OUTPUT, categories: state.categoriesOutput),
-                    Align(
-                      child: FlatButton(
-                        child: Text(AppLocalizations.of(context).btnShowReports),
-                        onPressed: () {
-                          ReportsPage.open(context);
-                        },
-                      ),
+                Divider(
+                  height: 1.0,
+                ),
+                CardRow(
+                    type: OperationType.INPUT,
+                    categories: state.categoriesInput),
+                Divider(
+                  height: 1.0,
+                ),
+                CardRow(
+                    type: OperationType.OUTPUT,
+                    categories: state.categoriesOutput),
+                ButtonBar(
+                  children: [
+                    FlatButton(
+                      child: Text(AppLocalizations.of(context)
+                          .btnShowReports
+                          .toUpperCase()),
+                      onPressed: () {
+                        ReportsPage.open(context);
+                      },
                     )
                   ],
-                );
-              }else{
-                return SizedBox();
-              }
-            },
-
-          ),
+                )
+              ],
+            );
+          } else {
+            return SizedBox();
+          }
+        },
+      ),
     );
   }
 }
@@ -169,10 +176,9 @@ class CardButton extends StatelessWidget {
   }
 }
 
-
 abstract class CashflowCardEvent {}
 
-class Fetch extends CashflowCardEvent{}
+class Fetch extends CashflowCardEvent {}
 
 abstract class CashflowCardState {}
 
@@ -199,10 +205,9 @@ class CashflowCardBloc extends Bloc<CashflowCardEvent, CashflowCardState> {
   Stream<CashflowCardState> mapEventToState(CashflowCardEvent event) async* {
     await for (List<CategoryCashflowBudget> categories
         in _repository.watchAllCategoryCashflowBudget(DateTime.now())) {
-
-      if(categories.isEmpty){
+      if (categories.isEmpty) {
         yield Empty();
-      }else {
+      } else {
         List<CategoryCashflowBudget> categoriesInput = categories
             .where((category) => category.type == OperationType.INPUT)
             .toList();
