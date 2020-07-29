@@ -90,19 +90,22 @@ class CardRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: OutlineButton(
-        padding: EdgeInsets.all(0.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              title(context),
-              categoryCount(context),
-              balance(context),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: OutlineButton(
+          padding: EdgeInsets.symmetric(horizontal: 2.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                title(context),
+                categoryCount(context),
+                balance(context),
+              ],
+            ),
           ),
+          onPressed: () => onTap(context),
         ),
-        onPressed: () => onTap(context),
       ),
     );
   }
