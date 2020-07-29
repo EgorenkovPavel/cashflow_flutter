@@ -4,7 +4,7 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
-import 'package:cashflow/widgets/month_cashflow.dart';
+import 'package:cashflow/widgets/charts/month_cashflow.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/reporst_page.dart';
 import 'package:flutter/material.dart';
@@ -23,72 +23,48 @@ class CashflowCard extends StatelessWidget {
       child: BlocBuilder<CashflowCardBloc, CashflowCardState>(
         builder: (BuildContext context, CashflowCardState state) {
           if (state is Empty) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CardTitle(AppLocalizations.of(context).categories),
-                CardRow(type: OperationType.INPUT, categories: []),
-                Divider(
-                  height: 1.0,
-                ),
-                CardRow(type: OperationType.OUTPUT, categories: []),
-              ],
-            );
+            return successState(context, [], []);
           } else if (state is Loading) {
             return Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is Success) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CardTitle(AppLocalizations.of(context).titleCashflow),
-                state.categoriesOutput.isEmpty
-                    ? SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 16.0),
-                        child: MonthCashflow(
-                          date: DateTime.now(),
-                          cashflow: state.categoriesOutput
-                              .map((category) => category.cashflow)
-                              .fold(0, (a, b) => a + b),
-                          budget: state.categoriesOutput
-                              .map((category) => category.budget)
-                              .fold(0, (a, b) => a + b),
-                        ),
-                      ),
-                Divider(
-                  height: 1.0,
-                ),
-                CardRow(
-                    type: OperationType.INPUT,
-                    categories: state.categoriesInput),
-                Divider(
-                  height: 1.0,
-                ),
-                CardRow(
-                    type: OperationType.OUTPUT,
-                    categories: state.categoriesOutput),
-                ButtonBar(
-                  children: [
-                    FlatButton(
-                      child: Text(AppLocalizations.of(context)
-                          .btnShowReports
-                          .toUpperCase()),
-                      onPressed: () {
-                        ReportsPage.open(context);
-                      },
-                    )
-                  ],
-                )
-              ],
-            );
+            return successState(
+                context, state.categoriesInput, state.categoriesOutput);
           } else {
             return SizedBox();
           }
         },
       ),
+    );
+  }
+
+  Column successState(
+      BuildContext context,
+      List<CategoryCashflowBudget> categoriesInput,
+      List<CategoryCashflowBudget> categoriesOutput) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        CardTitle(AppLocalizations.of(context).titleCashflow),
+        Row(
+          children: <Widget>[
+            CardRow(type: OperationType.INPUT, categories: categoriesInput),
+            CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
+          ],
+        ),
+        ButtonBar(
+          children: [
+            FlatButton(
+              child: Text(
+                  AppLocalizations.of(context).btnShowReports.toUpperCase()),
+              onPressed: () {
+                ReportsPage.open(context);
+              },
+            )
+          ],
+        )
+      ],
     );
   }
 }
@@ -107,73 +83,59 @@ class CardRow extends StatelessWidget {
         categories.map((category) => category.budget).fold(0, (a, b) => a + b);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return categories.isEmpty
-        ? CardButton(
-            leading: Text(getOperationTitle(context, type)),
-            trailing: Text(AppLocalizations.of(context).noCategories,
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .copyWith(color: Colors.black38)),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed(CashflowPage.routeName, arguments: type);
-            },
-          )
-        : CardButton(
-            leading: Text(getOperationTitle(context, type)),
-            trailing: RichText(
-              text: TextSpan(
-                  text: '${NumberFormat().format(_cashflow)}',
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: '/${NumberFormat().format(_budget)}',
-                        style: DefaultTextStyle.of(context)
-                            .style
-                            .copyWith(fontSize: 12)),
-                  ]),
-            ),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed(CashflowPage.routeName, arguments: type);
-            },
-          );
+  void onTap(BuildContext context) {
+    Navigator.of(context).pushNamed(CashflowPage.routeName, arguments: type);
   }
-}
-
-class CardButton extends StatelessWidget {
-  final Widget leading;
-  final Widget trailing;
-  final GestureTapCallback onTap;
-
-  const CardButton({this.leading, this.trailing, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.all(0.0),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            leading ?? SizedBox(),
-            Row(
-              children: <Widget>[
-                trailing ?? SizedBox(),
-                Icon(Icons.keyboard_arrow_right),
-              ],
-            ),
-          ],
+    return Expanded(
+      child: OutlineButton(
+        padding: EdgeInsets.all(0.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              title(context),
+              categoryCount(context),
+              balance(context),
+            ],
+          ),
         ),
+        onPressed: () => onTap(context),
       ),
-      onPressed: onTap,
     );
   }
+
+  RichText balance(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+          text: '${NumberFormat().format(_cashflow)}',
+          style: DefaultTextStyle.of(context)
+              .style
+              .copyWith(fontWeight: FontWeight.bold),
+          children: [
+            TextSpan(
+                text: '/${NumberFormat().format(_budget)}',
+                style:
+                    DefaultTextStyle.of(context).style.copyWith(fontSize: 12)),
+          ]),
+    );
+  }
+
+  Text categoryCount(BuildContext context) {
+    String text = categories.isEmpty
+        ? AppLocalizations.of(context).noCategories
+        : categories.length.toString() +
+            ' ' +
+            AppLocalizations.of(context).categories;
+
+    return Text(text,
+        style:
+            DefaultTextStyle.of(context).style.copyWith(color: Colors.black38));
+  }
+
+  Text title(BuildContext context) => Text(getOperationTitle(context, type));
 }
 
 abstract class CashflowCardEvent {}
