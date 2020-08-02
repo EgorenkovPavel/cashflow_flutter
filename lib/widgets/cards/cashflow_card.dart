@@ -5,6 +5,7 @@ import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/charts/month_cashflow.dart';
+import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/reporst_page.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class CashflowCard extends StatelessWidget {
       children: <Widget>[
         CardTitle(AppLocalizations.of(context).titleCashflow),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             CardRow(type: OperationType.INPUT, categories: categoriesInput),
             CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
@@ -58,6 +60,17 @@ class CashflowCard extends StatelessWidget {
               ),
               onPressed: () {
                 ReportsPage.open(context);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                AppLocalizations.of(context).categories.toUpperCase(),
+                style: DefaultTextStyle.of(context)
+                    .style
+                    .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                CategoryList.open(context);
               },
             )
           ],
@@ -91,6 +104,7 @@ class CardRow extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: OutlineButton(
+          borderSide: BorderSide(color: Theme.of(context).accentColor),
           padding: EdgeInsets.symmetric(horizontal: 2.0),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -108,20 +122,40 @@ class CardRow extends StatelessWidget {
     );
   }
 
-  RichText balance(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-          text: '${NumberFormat().format(_cashflow)}',
-          style: DefaultTextStyle.of(context)
-              .style
-              .copyWith(fontWeight: FontWeight.bold),
-          children: [
-            TextSpan(
-                text: '/${NumberFormat().format(_budget)}',
-                style:
-                    DefaultTextStyle.of(context).style.copyWith(fontSize: 12)),
-          ]),
+  Widget balance(BuildContext context) {
+
+    return categories.isEmpty ? SizedBox() : Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Fact'),
+            Text('${NumberFormat().format(_cashflow)}'),
+          ],
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Budget'),
+            Text('${NumberFormat().format(_budget)}')
+          ],
+        ),
+      ],
     );
+
+//    return RichText(
+//      text: TextSpan(
+//          text: '${NumberFormat().format(_cashflow)}',
+//          style: DefaultTextStyle.of(context)
+//              .style
+//              .copyWith(fontWeight: FontWeight.bold),
+//          children: [
+//            TextSpan(
+//                text: '/${NumberFormat().format(_budget)}',
+//                style:
+//                    DefaultTextStyle.of(context).style.copyWith(fontSize: 12)),
+//          ]),
+//    );
   }
 
   Text categoryCount(BuildContext context) {

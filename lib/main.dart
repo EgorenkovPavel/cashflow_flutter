@@ -4,6 +4,7 @@ import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/item_cards/category_card.dart';
+import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
           HomePage.routeName: (BuildContext context) => HomePage(),
+          CategoryList.routeName: (BuildContext context) => CategoryList(),
           MasterPage.routeName: (BuildContext context) => MasterPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           OperationListPage.routeName: (BuildContext context) => OperationListPage(),

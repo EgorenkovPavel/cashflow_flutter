@@ -31,8 +31,8 @@ class CashflowPage extends StatelessWidget {
           ],
         ),
       ),
-      body: CategoryList(Provider.of<Repository>(context, listen: false)
-          .watchCategoryCashflowBudgetByType(DateTime.now(), type)),
+//      body: CategoryList(Provider.of<Repository>(context, listen: false)
+//          .watchCategoryCashflowBudgetByType(DateTime.now(), type)),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => CategoryCard.open(context, type: type),
