@@ -54,8 +54,18 @@ class HomePage extends StatelessWidget {
           appBarMenu(context),
         ],
       ),
-      body: ListView(
-        children: _cards.map(wrapCard).toList(),
+
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.green, Colors.greenAccent])
+        ),
+        child: ListView(
+          children: _cards.map(wrapCard).toList()
+          ..add(SizedBox(height: 60.0,)),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

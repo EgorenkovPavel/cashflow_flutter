@@ -58,34 +58,35 @@ class TotalBalanceCard extends StatelessWidget {
         Column(
           children: accounts
               .map<Widget>((account) => Column(
-            children: <Widget>[
-              Divider(),
-              ListTile(
-                title: Text(account.title),
-                trailing: Text(
-                  NumberFormat().format(account.balance),
-                  style: Theme.of(context).textTheme.title,
-                ),
-                onTap: () => AccountPage.open(context, account.id),
-              ),
-            ],
-          ))
+                    children: <Widget>[
+                      Divider(),
+                      ListTile(
+                        title: Text(account.title),
+                        trailing: Text(
+                          NumberFormat().format(account.balance),
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        onTap: () => AccountPage.open(context, account.id),
+                      ),
+                    ],
+                  ))
               .toList()
-          ..add(Divider())
-            ..add(addButton(context)),
+                ..add(addButton(context)),
         ),
       ],
     );
   }
 
   Widget addButton(BuildContext context) {
-    return Align(
-      child: FlatButton(
-        child: Text(AppLocalizations.of(context).btnAddAccount),
-        onPressed: () {
-          AccountCard.open(context);
-        },
-      ),
+    return ButtonBar(
+      children: [
+        FlatButton(
+          child: Text(AppLocalizations.of(context).btnAddAccount.toUpperCase()),
+          onPressed: () {
+            AccountCard.open(context);
+          },
+        )
+      ],
     );
   }
 
