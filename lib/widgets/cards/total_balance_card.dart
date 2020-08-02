@@ -15,17 +15,17 @@ class TotalBalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<TotalBalanceBloc>(context).add(Fetch());
     return BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
-        builder: (BuildContext context, TotalBalanceState state) {
-          if (state is Empty) {
-            return emptyBody(context);
-          } else if (state is Loading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is Success) {
-            return filledBody(context, state.totalBalance, state.accounts);
-          } else {
-            throw Exception(state.toString());
-          }
-        },
+      builder: (BuildContext context, TotalBalanceState state) {
+        if (state is Empty) {
+          return emptyBody(context);
+        } else if (state is Loading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is Success) {
+          return filledBody(context, state.totalBalance, state.accounts);
+        } else {
+          throw Exception(state.toString());
+        }
+      },
     );
   }
 
@@ -49,7 +49,8 @@ class TotalBalanceCard extends StatelessWidget {
             ],
           ),
         ),
-        Column(
+        ExpansionTile(
+          title: Text('${accounts.length} accounts'),
           children: accounts
               .map<Widget>((account) => Column(
                     children: <Widget>[
@@ -64,9 +65,9 @@ class TotalBalanceCard extends StatelessWidget {
                       ),
                     ],
                   ))
-              .toList()
-                ..add(addButton(context)),
+              .toList(),
         ),
+        addButton(context),
       ],
     );
   }
@@ -75,10 +76,11 @@ class TotalBalanceCard extends StatelessWidget {
     return ButtonBar(
       children: [
         FlatButton(
-          child: Text(AppLocalizations.of(context).btnAddAccount.toUpperCase(),
-            style: DefaultTextStyle.of(context)
-                .style
-                .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+          child: Text(
+            AppLocalizations.of(context).btnAddAccount.toUpperCase(),
+            style: DefaultTextStyle.of(context).style.copyWith(
+                color: Theme.of(context).accentColor,
+                fontWeight: FontWeight.bold),
           ),
           onPressed: () {
             AccountCard.open(context);
