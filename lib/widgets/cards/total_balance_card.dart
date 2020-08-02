@@ -14,12 +14,7 @@ class TotalBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<TotalBalanceBloc>(context).add(Fetch());
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
+    return BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
         builder: (BuildContext context, TotalBalanceState state) {
           if (state is Empty) {
             return emptyBody(context);
@@ -31,7 +26,6 @@ class TotalBalanceCard extends StatelessWidget {
             throw Exception(state.toString());
           }
         },
-      ),
     );
   }
 
@@ -81,7 +75,11 @@ class TotalBalanceCard extends StatelessWidget {
     return ButtonBar(
       children: [
         FlatButton(
-          child: Text(AppLocalizations.of(context).btnAddAccount.toUpperCase()),
+          child: Text(AppLocalizations.of(context).btnAddAccount.toUpperCase(),
+            style: DefaultTextStyle.of(context)
+                .style
+                .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+          ),
           onPressed: () {
             AccountCard.open(context);
           },

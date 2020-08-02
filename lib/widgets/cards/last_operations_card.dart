@@ -13,12 +13,7 @@ class LastOperationsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<LastOperationsBloc>(context)..add(Fetch());
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CardTitle(AppLocalizations.of(context).titleLastOperations),
@@ -59,7 +54,10 @@ class LastOperationsCard extends StatelessWidget {
             children: [
               FlatButton(
                 child:
-                    Text(AppLocalizations.of(context).btnShowAll.toUpperCase()),
+                    Text(AppLocalizations.of(context).btnShowAll.toUpperCase(),style: DefaultTextStyle.of(context)
+                        .style
+                        .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+                    ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(OperationListPage.routeName);
                 },
@@ -67,7 +65,6 @@ class LastOperationsCard extends StatelessWidget {
             ],
           )
         ],
-      ),
     );
   }
 }

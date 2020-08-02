@@ -15,27 +15,21 @@ class CashflowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<CashflowCardBloc>(context)..add(Fetch());
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: BlocBuilder<CashflowCardBloc, CashflowCardState>(
-        builder: (BuildContext context, CashflowCardState state) {
-          if (state is Empty) {
-            return successState(context, [], []);
-          } else if (state is Loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is Success) {
-            return successState(
-                context, state.categoriesInput, state.categoriesOutput);
-          } else {
-            return SizedBox();
-          }
-        },
-      ),
+    return BlocBuilder<CashflowCardBloc, CashflowCardState>(
+      builder: (BuildContext context, CashflowCardState state) {
+        if (state is Empty) {
+          return successState(context, [], []);
+        } else if (state is Loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is Success) {
+          return successState(
+              context, state.categoriesInput, state.categoriesOutput);
+        } else {
+          return SizedBox();
+        }
+      },
     );
   }
 
@@ -57,7 +51,11 @@ class CashflowCard extends StatelessWidget {
           children: [
             FlatButton(
               child: Text(
-                  AppLocalizations.of(context).btnShowReports.toUpperCase()),
+                AppLocalizations.of(context).btnShowReports.toUpperCase(),
+                style: DefaultTextStyle.of(context)
+                    .style
+                    .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+              ),
               onPressed: () {
                 ReportsPage.open(context);
               },

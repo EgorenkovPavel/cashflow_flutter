@@ -16,9 +16,14 @@ class HomePage extends StatelessWidget {
   ];
 
   Widget wrapCard(Widget w) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Card(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         child: w,
-      );
+      ));
 
   Widget appBarMenu(BuildContext context) {
     return Padding(
@@ -54,17 +59,17 @@ class HomePage extends StatelessWidget {
           appBarMenu(context),
         ],
       ),
-
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.green, Colors.greenAccent])
-        ),
+                colors: [Colors.green, Colors.greenAccent])),
         child: ListView(
           children: _cards.map(wrapCard).toList()
-          ..add(SizedBox(height: 60.0,)),
+            ..add(SizedBox(
+              height: 60.0,
+            )),
         ),
       ),
       floatingActionButton: FloatingActionButton(
