@@ -4,7 +4,6 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
-import 'package:cashflow/widgets/charts/month_cashflow.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/reporst_page.dart';
@@ -103,8 +102,11 @@ class CardRow extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: OutlineButton(
-          borderSide: BorderSide(color: Theme.of(context).accentColor),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+          ),
           padding: EdgeInsets.symmetric(horizontal: 2.0),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -116,7 +118,6 @@ class CardRow extends StatelessWidget {
               ],
             ),
           ),
-          onPressed: () => onTap(context),
         ),
       ),
     );
