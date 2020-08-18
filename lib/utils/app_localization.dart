@@ -15,6 +15,7 @@ class AppLocalizations {
       'title': 'Title',
       'title_type': 'Type',
       'title_budget': 'Budget',
+      'title_fact': 'Fact',
       'title_date': 'Date',
       'title_account': 'Account',
       'title_category': 'Category',
@@ -90,6 +91,7 @@ class AppLocalizations {
       'title': 'Имя',
       'title_type': 'Тип',
       'title_budget': 'Бюджет',
+      'title_fact': 'Факт',
       'title_date': 'Дата',
       'title_account': 'Счет',
       'title_category': 'Категория',
@@ -166,6 +168,7 @@ class AppLocalizations {
   String get title => _localizedValues[locale.languageCode]['title'];
   String get titleType => _localizedValues[locale.languageCode]['title_type'];
   String get titleBudget => _localizedValues[locale.languageCode]['title_budget'];
+  String get titleFact => _localizedValues[locale.languageCode]['title_fact'];
   String get titleDate => _localizedValues[locale.languageCode]['title_date'];
   String get titleAccount => _localizedValues[locale.languageCode]['title_account'];
   String get titleCategory => _localizedValues[locale.languageCode]['title_category'];

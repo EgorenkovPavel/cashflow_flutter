@@ -131,13 +131,13 @@ class CardRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('Fact'),
+            Text(AppLocalizations.of(context).titleFact),
             Text('${NumberFormat().format(_cashflow)}'),
           ],
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('Budget'),
+            Text(AppLocalizations.of(context).titleBudget),
             Text('${NumberFormat().format(_budget)}')
           ],
         ),
