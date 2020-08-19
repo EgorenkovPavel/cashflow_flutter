@@ -32,7 +32,9 @@ class _MasterPageState extends State<MasterPage> {
       builder:
           (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return Center(child: Text(AppLocalizations.of(context).noAccounts),);
+          return Center(
+            child: Text(AppLocalizations.of(context).noAccounts),
+          );
         }
 
         List<AccountBalance> accounts = snapshot.data;
@@ -66,7 +68,9 @@ class _MasterPageState extends State<MasterPage> {
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return Center(child: Text(AppLocalizations.of(context).noCategories),);
+          return Center(
+            child: Text(AppLocalizations.of(context).noCategories),
+          );
         }
 
         List<Category> categories = snapshot.data;
@@ -92,7 +96,9 @@ class _MasterPageState extends State<MasterPage> {
       initialData: <Category>[],
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return Center(child: Text(AppLocalizations.of(context).noCategories),);
+          return Center(
+            child: Text(AppLocalizations.of(context).noCategories),
+          );
         }
 
         List<Category> categories = snapshot.data;
@@ -119,7 +125,9 @@ class _MasterPageState extends State<MasterPage> {
       builder:
           (BuildContext context, AsyncSnapshot<List<AccountBalance>> snapshot) {
         if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return Center(child: Text(AppLocalizations.of(context).noAccounts),);
+          return Center(
+            child: Text(AppLocalizations.of(context).noAccounts),
+          );
         }
 
         List<AccountBalance> accounts = snapshot.data;
@@ -170,10 +178,10 @@ class _MasterPageState extends State<MasterPage> {
                     Icons.add,
                     color: Theme.of(context).primaryColor,
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     _bloc.add(OnAddNewItem());
                     onAdd();
-                    },
+                  },
                 )
               ],
             ),
@@ -317,7 +325,8 @@ class _MasterPageState extends State<MasterPage> {
                                     onTap: () => _bloc.add(OnSumTap()),
                                     child: Container(
                                       child: Text(
-                                        '${(state as DataState).sum}',
+                                        NumberFormat()
+                                            .format((state as DataState).sum),
                                         style: Theme.of(context)
                                             .textTheme
                                             .display1
@@ -329,7 +338,8 @@ class _MasterPageState extends State<MasterPage> {
                                           border: Border.all(
                                               color: (state as DataState)
                                                       .showKeyboard
-                                                  ? Theme.of(context).accentColor
+                                                  ? Theme.of(context)
+                                                      .accentColor
                                                   : Theme.of(context)
                                                       .primaryColor,
                                               width: 2.0)),
@@ -513,10 +523,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     } else if (event is OnAddNewItem) {
       if (_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: false);
-      }else{
+      } else {
         return;
       }
-    }else if (event is OnSumTap) {
+    } else if (event is OnSumTap) {
       if (!_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: true);
       }
