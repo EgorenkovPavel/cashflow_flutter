@@ -1,6 +1,7 @@
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,17 @@ class ListTileOperation extends StatelessWidget {
       builder: (context) => Wrap(
         children: <Widget>[
           ListTile(
+            leading: Icon(Icons.control_point_duplicate),
+            title: Text(AppLocalizations.of(context).duplicate),
+            onTap: () {
+              Provider.of<Repository>(context, listen: false)
+                  .duplicateOperation(_operation);
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.delete),
-            title: Text('DELETE'),
+            title: Text(AppLocalizations.of(context).delete),
             onTap: () {
               Provider.of<Repository>(context, listen: false)
                   .deleteOperation(_operation);

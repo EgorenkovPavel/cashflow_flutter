@@ -131,6 +131,10 @@ class Repository extends ChangeNotifier {
     }
   }
 
+  Future duplicateOperation(Operation entity) =>
+      db.operationDao.insertOperation(const OperationMapper()
+          .mapToOperationData(entity.copyWith(id: -1, date: DateTime.now())));
+
   Future deleteOperation(Operation entity) => db.operationDao
       .deleteOperation(const OperationMapper().mapToOperationData(entity));
 

@@ -75,6 +75,7 @@ class AppLocalizations {
       'cancel': 'Cancel',
       'save': 'Save',
       'delete': 'Delete',
+      'duplicate': 'Duplicate',
       'next': 'Next',
       'more': 'More',
       'backup': 'Backup',
@@ -151,6 +152,7 @@ class AppLocalizations {
       'cancel': 'Отмена',
       'save': 'Сохранить',
       'delete': 'Удалить',
+      'duplicate': 'Дублировать',
       'next': 'Далее',
       'more': 'Еще',
       'backup': 'Сохранить',
@@ -228,6 +230,7 @@ class AppLocalizations {
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get save => _localizedValues[locale.languageCode]['save'];
   String get delete => _localizedValues[locale.languageCode]['delete'];
+  String get duplicate => _localizedValues[locale.languageCode]['duplicate'];
   String get next => _localizedValues[locale.languageCode]['next'];
   String get more => _localizedValues[locale.languageCode]['more'];
   String get backup => _localizedValues[locale.languageCode]['backup'];
