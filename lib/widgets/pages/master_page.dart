@@ -581,7 +581,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
 
       yield OperationCreatedMessage();
 
-      _data = _data.copyWith(sum: 0);
+      _data = _data.copyWith(sum: 0, showKeyboard: false);
     }
     yield _data;
   }
