@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class AccountPage extends StatefulWidget {
   static const routeName = '/account';
@@ -42,11 +45,45 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: header(context),
-        actions: <Widget>[appBarIcon()],
+    return DefaultTabController(
+      length: 1,
+      child: Scaffold(
+        appBar: AppBar(
+          title: header(context),
+          actions: <Widget>[appBarIcon()],
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Operations')
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            buildOperationList(context),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget buildOperationList(BuildContext context) {
+    return StreamBuilder<List<Operation>>(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return SizedBox();
+        }
+
+        List<Operation> operations = snapshot.data;
+
+        return ListView.builder(
+          itemBuilder: (context, pos) {
+            return ListTileOperation(operations[pos]);
+          },
+          itemCount: operations.length,
+        );
+      },
+      stream: Provider.of<Repository>(context, listen: false)
+          .watchAllOperationsByAccount(widget.id),
     );
   }
 

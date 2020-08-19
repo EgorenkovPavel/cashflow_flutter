@@ -112,6 +112,11 @@ class Repository extends ChangeNotifier {
       .getOperationById(id)
       .map((o) => const OperationMapper().mapToDart(o));
 
+  Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
+      db.operationDao
+          .watchAllOperationItemsByAccount(accountId)
+          .map((list) => const OperationMapper().mapListToDart(list));
+
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
       db.operationDao
           .watchAllOperationItemsByCategory(categoryId)
