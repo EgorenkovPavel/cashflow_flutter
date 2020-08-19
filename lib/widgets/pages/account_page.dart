@@ -37,7 +37,6 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void dispose() {
     super.dispose();
-    _bloc.close();
     _titleController.dispose();
   }
 
@@ -138,6 +137,7 @@ class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState>{
   Stream<AccountPageState> mapEventToState(AccountPageEvent event) async* {
 
     if(event is Fetch){
+      print(event.id);
       _account = await _repository.getAccountById(event.id);
       yield AccountPageState(_editTitleMode, _account.title);
     }else if(event is EditTitle){
