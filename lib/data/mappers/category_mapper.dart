@@ -12,4 +12,8 @@ class CategoryMapper extends Mapper<Category, CategoryEntityData>{
   Category mapToDart(CategoryEntityData c){
     return Category(id: c.id, title: c.title, archive: c.archive, type: c.operationType);
   }
+
+  MapEntry<Category, int> mapCategoryBudgetToDart(CategoryBudgetEntity c){
+    return MapEntry(mapToDart(c.category), c.budget);
+  }
 }

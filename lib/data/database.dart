@@ -129,6 +129,24 @@ class AccountBalanceEntity {
   int get hashCode => account.hashCode;
 }
 
+class CategoryBudgetEntity {
+  CategoryEntityData category;
+  int budget;
+
+  CategoryBudgetEntity(
+      this.category, this.budget);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is CategoryBudgetEntity &&
+              runtimeType == other.runtimeType &&
+              category == other.category;
+
+  @override
+  int get hashCode => category.hashCode;
+}
+
 class CategoryCashflowBudgetEntity {
   int year;
   int month;
@@ -542,6 +560,29 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                 row.readInt('budget') ?? 0,
                 row.readInt('cashflow') ?? 0,
               ))
+          .toList();
+    });
+  }
+
+  Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(OperationType type) {
+
+    return customSelectQuery(
+      'SELECT *, '
+          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
+          'FROM categories c '
+          'WHERE operation_type = ? '
+          'ORDER BY title;',
+      variables: [
+        Variable.withDateTime(DateTime.now()),
+        Variable.withInt(OperationTypeConverter().mapToSql(type)),
+      ],
+      readsFrom: {categoryEntity, budget},
+    ).watch().map((rows) {
+      return rows
+          .map((row) => CategoryBudgetEntity(
+        CategoryEntityData.fromData(row.data, db),
+        row.readInt('budget') ?? 0
+      ))
           .toList();
     });
   }

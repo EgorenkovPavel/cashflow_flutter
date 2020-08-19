@@ -66,31 +66,32 @@ class _CategoryListState extends State<CategoryList>
   }
 
   Widget buildList(BuildContext context, OperationType type) {
-    return StreamBuilder<List<Category>>(
+    return StreamBuilder<Map<Category, int>>(
       stream: Provider.of<Repository>(context, listen: false)
-          .watchAllCategoriesByType(type),
-      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          .watchCategoryBudgetByType(type),
+      builder: (BuildContext context, AsyncSnapshot<Map<Category, int>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
           return emptyListHint(context);
         }
 
-        final List<Category> items = snapshot.data ?? List<Category>();
+        final Map<Category, int> items = snapshot.data ?? Map<Category, int>();
 
         return listBuilder(context, items);
       },
     );
   }
 
-  Widget listBuilder(BuildContext context, List<Category> categories) {
+  Widget listBuilder(BuildContext context, Map<Category, int> categories) {
     return ListView.separated(
       itemCount: categories.length,
       itemBuilder: (_, index) {
-        final itemCategory = categories[index];
+        final itemCategory = categories.entries.toList()[index];
         return ListTile(
-          title: Text(itemCategory.title),
-          onTap: () => CategoryPage.open(context, itemCategory.id),
+          title: Text(itemCategory.key.title),
+          subtitle: Text('${AppLocalizations.of(context).titleBudget} ${itemCategory.value}'),
+          onTap: () => CategoryPage.open(context, itemCategory.key.id),
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(),
