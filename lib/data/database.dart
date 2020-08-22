@@ -911,19 +911,20 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
-  Future insertOperation(OperationEntityData entity) {
+  Future<int> insertOperation(OperationEntityData entity) {
     return transaction(() async {
       int id = await into(operationEntity).insert(entity);
 
       OperationEntityData operationData = entity.copyWith(id: id);
       await _insertAnalytic(operationData);
+      return id;
     });
   }
 
-  Future updateOperation(OperationEntityData entity) {
+  Future<int> updateOperation(OperationEntityData entity) {
     return transaction(() async {
       await deleteOperation(entity);
-      await insertOperation(entity);
+      return await insertOperation(entity);
     });
   }
 
@@ -931,6 +932,14 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return transaction(() async {
       await delete(operationEntity).delete(entity);
       await _deleteAnalytic(entity);
+    });
+  }
+
+  Future deleteOperationById(int operationId) {
+    return transaction(() async {
+      await (delete(operationEntity)
+        ..where((tbl) => tbl.id.equals(operationId))).go();
+      await _deleteAnalyticByOperationId(operationId);
     });
   }
 
@@ -1070,11 +1079,15 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future _deleteAnalytic(OperationEntityData operation) async {
+    _deleteAnalyticByOperationId(operation.id);
+  }
+
+  Future _deleteAnalyticByOperationId(int operationId) async {
     await (delete(balanceEntity)
-          ..where((entry) => entry.operation.equals(operation.id)))
+      ..where((entry) => entry.operation.equals(operationId)))
         .go();
     await (delete(cashflowEntity)
-          ..where((entry) => entry.operation.equals(operation.id)))
+      ..where((entry) => entry.operation.equals(operationId)))
         .go();
   }
 }

@@ -58,6 +58,7 @@ class AppLocalizations {
 
       'mes_operation_deleted': 'Operation deleted',
       'mes_operation_created': 'Operation created',
+      'mes_operation_canceled': 'Operation canceled',
       'mes_account_archived': 'Account archived',
       'mes_category_archived': 'Category archived',
       'mes_are_you_sure': 'Are you sure?',
@@ -135,6 +136,7 @@ class AppLocalizations {
 
       'mes_operation_deleted': 'Операция удалена',
       'mes_operation_created': 'Операция создана',
+      'mes_operation_canceled': 'Операция отменена',
       'mes_account_archived': 'Счет добавлен в архив',
       'mes_category_archived': 'Категория добавлена в архив',
       'mes_are_you_sure': 'Вы уверены?',
@@ -213,6 +215,7 @@ class AppLocalizations {
 
   String get mesOperationDeleted => _localizedValues[locale.languageCode]['mes_operation_deleted'];
   String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];
+  String get mesOperationCanceled => _localizedValues[locale.languageCode]['mes_operation_canceled'];
   String get mesAccountArchived => _localizedValues[locale.languageCode]['mes_account_archived'];
   String get mesCategoryArchived => _localizedValues[locale.languageCode]['mes_category_archived'];
   String get mesAreYouSure => _localizedValues[locale.languageCode]['mes_are_you_sure'];

@@ -130,7 +130,7 @@ class Repository extends ChangeNotifier {
       .getLastOperationItem()
       .then((value) => const OperationMapper().mapToDart(value));
 
-  Future insertOperation(Operation entity) {
+  Future<int> insertOperation(Operation entity) {
     if ((entity.id ?? 0) == 0) {
       return db.operationDao
           .insertOperation(const OperationMapper().mapToOperationData(entity));
@@ -146,6 +146,9 @@ class Repository extends ChangeNotifier {
 
   Future deleteOperation(Operation entity) => db.operationDao
       .deleteOperation(const OperationMapper().mapToOperationData(entity));
+
+  Future deleteOperationById(int operationId) => db.operationDao
+      .deleteOperationById(operationId);
 
   //Budget
 

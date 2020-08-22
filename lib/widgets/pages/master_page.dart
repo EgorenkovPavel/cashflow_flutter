@@ -236,7 +236,17 @@ class _MasterPageState extends State<MasterPage> {
             } else if (state is OperationCreatedMessage) {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(AppLocalizations.of(context).mesOperationCreated),
+                action: SnackBarAction(
+                  label: AppLocalizations.of(context).cancel,
+                  onPressed: () {
+                    _bloc.add(cancelOperation());
+                  },
+                ),
               ));
+            } else if (state is OperationCanceled){
+              Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text(AppLocalizations.of(context).mesOperationCanceled),)
+              );
             }
           },
           buildWhen: (oldState, newState) {
@@ -433,6 +443,10 @@ class OnRecAccountChanged extends MasterEvent {
   OnRecAccountChanged(this.account);
 }
 
+class cancelOperation extends MasterEvent{
+  
+}
+
 abstract class MasterState {}
 
 class DataState extends MasterState {
@@ -443,6 +457,7 @@ class DataState extends MasterState {
   final AccountBalance recAccount;
   final int sum;
   final bool showKeyboard;
+  final int operationId;
 
   DataState(
       {this.type,
@@ -451,7 +466,8 @@ class DataState extends MasterState {
       this.categoryOut,
       this.recAccount,
       this.sum,
-      this.showKeyboard});
+      this.showKeyboard,
+      this.operationId});
 
   DataState copyWith(
           {OperationType type,
@@ -460,7 +476,8 @@ class DataState extends MasterState {
           Category categoryOut,
           AccountBalance recAccount,
           int sum,
-          bool showKeyboard}) =>
+          bool showKeyboard,
+          int operationId}) =>
       DataState(
         type: type ?? this.type,
         account: account ?? this.account,
@@ -469,6 +486,7 @@ class DataState extends MasterState {
         recAccount: recAccount ?? this.recAccount,
         sum: sum ?? this.sum,
         showKeyboard: showKeyboard ?? this.showKeyboard,
+        operationId: operationId ?? this.operationId,
       );
 }
 
@@ -483,6 +501,8 @@ class EmptyRecAccountMessage extends MasterState {}
 class EmptySumMessage extends MasterState {}
 
 class OperationCreatedMessage extends MasterState {}
+
+class OperationCanceled extends MasterState{}
 
 class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final Repository _repository;
@@ -578,6 +598,12 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     } else if (event is OnRecAccountChanged) {
       _data = _data.copyWith(recAccount: event.account);
       return;
+    } else if (event is cancelOperation){
+      
+      await _repository.deleteOperationById(_data.operationId);
+      _data = _data.copyWith(operationId: null);
+      yield OperationCanceled();
+      
     } else if (event is OnNextTap) {
       if (_data.account == null) {
         yield EmptyAccountMessage();
@@ -604,7 +630,9 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         return;
       }
 
-      _saveOperation();
+      int opId = await _saveOperation();
+      print(opId.toString());
+      _data = _data.copyWith(operationId: opId);
 
       yield OperationCreatedMessage();
 
@@ -613,7 +641,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     yield _data;
   }
 
-  Future _saveOperation() {
+  Future<int> _saveOperation() {
     switch (_data.type) {
       case OperationType.INPUT:
         {
