@@ -74,6 +74,7 @@ class AppLocalizations {
 
       'yes': 'Yes',
       'cancel': 'Cancel',
+      'create': 'Create',
       'save': 'Save',
       'delete': 'Delete',
       'duplicate': 'Duplicate',
@@ -152,6 +153,7 @@ class AppLocalizations {
 
       'yes': 'Да',
       'cancel': 'Отмена',
+      'create': 'Создать',
       'save': 'Сохранить',
       'delete': 'Удалить',
       'duplicate': 'Дублировать',
@@ -231,6 +233,7 @@ class AppLocalizations {
 
   String get yes => _localizedValues[locale.languageCode]['yes'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
+  String get create => _localizedValues[locale.languageCode]['create'];
   String get save => _localizedValues[locale.languageCode]['save'];
   String get delete => _localizedValues[locale.languageCode]['delete'];
   String get duplicate => _localizedValues[locale.languageCode]['duplicate'];

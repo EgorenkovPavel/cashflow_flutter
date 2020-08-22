@@ -373,7 +373,7 @@ class _MasterPageState extends State<MasterPage> {
                           ),
                           FlatButton(
                             child: Text(AppLocalizations.of(context)
-                                .next
+                                .create
                                 .toUpperCase()),
                             onPressed: () => _bloc.add(OnNextTap()),
                           ),
