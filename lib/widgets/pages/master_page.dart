@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/mappers/account_balance_mapper.dart';
+import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
@@ -490,7 +491,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final Stream<List<Category>> categoryOutStream;
 
   static DataState _data =
-      new DataState(type: OperationType.INPUT, showKeyboard: false, sum: 0);
+      DataState(type: OperationType.INPUT, showKeyboard: false, sum: 0);
 
   MasterBloc(this._repository)
       : accountStream = _repository.watchAllAccountsBalance(),
@@ -513,7 +514,33 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
 
   @override
   Stream<MasterState> mapEventToState(MasterEvent event) async* {
-    if (event is BackPressed) {
+    if (event is Start) {
+      Operation op = await _repository.getLastOperation();
+
+      _data = _data.copyWith(
+          account: AccountBalance(
+              id: op.account.id,
+              title: op.account.title,
+              archive: op.account.archive,
+              balance: 0),
+          type: op.type);
+      switch (op.type) {
+        case OperationType.INPUT:
+          _data = _data.copyWith(categoryIn: op.category);
+          break;
+        case OperationType.OUTPUT:
+          _data = _data.copyWith(categoryOut: op.category);
+          break;
+        case OperationType.TRANSFER:
+          _data = _data.copyWith(
+              recAccount: AccountBalance(
+                  id: op.recAccount.id,
+                  title: op.recAccount.title,
+                  archive: op.recAccount.archive,
+                  balance: 0));
+          break;
+      }
+    } else if (event is BackPressed) {
       if (_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: false);
       } else {

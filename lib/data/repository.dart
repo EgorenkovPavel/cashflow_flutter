@@ -126,6 +126,10 @@ class Repository extends ChangeNotifier {
       .watchLastOperationItems(limit)
       .map((list) => const OperationMapper().mapListToDart(list));
 
+  Future<Operation> getLastOperation() => db.operationDao
+      .getLastOperationItem()
+      .then((value) => const OperationMapper().mapToDart(value));
+
   Future insertOperation(Operation entity) {
     if ((entity.id ?? 0) == 0) {
       return db.operationDao

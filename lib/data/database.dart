@@ -133,15 +133,14 @@ class CategoryBudgetEntity {
   CategoryEntityData category;
   int budget;
 
-  CategoryBudgetEntity(
-      this.category, this.budget);
+  CategoryBudgetEntity(this.category, this.budget);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is CategoryBudgetEntity &&
-              runtimeType == other.runtimeType &&
-              category == other.category;
+      other is CategoryBudgetEntity &&
+          runtimeType == other.runtimeType &&
+          category == other.category;
 
   @override
   int get hashCode => category.hashCode;
@@ -270,8 +269,6 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 1;
 
-
-
   Future deleteAll() {
     return transaction(() async {
       await delete(balanceEntity).go();
@@ -320,13 +317,13 @@ class Database extends _$Database {
         List<AccountEntityData> accounts = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            if(d.containsKey('account_title')){
+            if (d.containsKey('account_title')) {
               accounts.add(AccountEntityData(
                 id: int.parse(d['_id']),
                 title: d['account_title'],
                 archive: false,
               ));
-            }else {
+            } else {
               accounts.add(AccountEntityData.fromJson(d,
                   serializer: _DefaultValueSerializer()));
             }
@@ -337,39 +334,42 @@ class Database extends _$Database {
         List<CategoryEntityData> categories = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            if(d.containsKey('category_title')){
+            if (d.containsKey('category_title')) {
               categories.add(CategoryEntityData(
                 id: int.parse(d['_id']),
                 title: d['category_title'],
-                operationType: converter.mapToDart(int.parse(d['category_type'])),
+                operationType:
+                    converter.mapToDart(int.parse(d['category_type'])),
                 archive: false,
               ));
-            }else{
-            categories.add(CategoryEntityData.fromJson(d,
-                serializer: _DefaultValueSerializer()));
-          }}
+            } else {
+              categories.add(CategoryEntityData.fromJson(d,
+                  serializer: _DefaultValueSerializer()));
+            }
+          }
         });
         await categoryDao.batchInsert(categories);
       } else if (key == 'operation') {
         List<OperationEntityData> operations = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-            if(d.containsKey('operation_date')){
+            if (d.containsKey('operation_date')) {
               operations.add(OperationEntityData(
                 id: int.parse(d['_id']),
                 date: DateTime.fromMillisecondsSinceEpoch(
                     int.parse(d['operation_date'])),
                 operationType:
-                converter.mapToDart(int.parse(d['operation_type'])),
+                    converter.mapToDart(int.parse(d['operation_type'])),
                 account: int.parse(d['operation_account_id']),
                 category: _getId(d['operation_category_id']),
                 recAccount: _getId(d['operation_recipient_account_id']),
                 sum: int.parse(d['operation_sum']),
               ));
-            }else{
-            operations.add(OperationEntityData.fromJson(d,
-                serializer: _DefaultValueSerializer()));
-          }}
+            } else {
+              operations.add(OperationEntityData.fromJson(d,
+                  serializer: _DefaultValueSerializer()));
+            }
+          }
         });
         await operationDao.batchInsert(operations);
       }
@@ -564,14 +564,14 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     });
   }
 
-  Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(OperationType type) {
-
+  Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
+      OperationType type) {
     return customSelectQuery(
       'SELECT *, '
-          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(DateTime.now()),
         Variable.withInt(OperationTypeConverter().mapToSql(type)),
@@ -580,9 +580,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     ).watch().map((rows) {
       return rows
           .map((row) => CategoryBudgetEntity(
-        CategoryEntityData.fromData(row.data, db),
-        row.readInt('budget') ?? 0
-      ))
+              CategoryEntityData.fromData(row.data, db),
+              row.readInt('budget') ?? 0))
           .toList();
     });
   }
@@ -762,38 +761,39 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accountEntity, 'rec');
 
     return (select(operationEntity)
-      ..where((t) => t.account.equals(accountId) | t.recAccount.equals(accountId) )
-      ..orderBy([
+          ..where((t) =>
+              t.account.equals(accountId) | t.recAccount.equals(accountId))
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operationEntity.account),
-        ),
-        leftOuterJoin(
-          categoryEntity,
-          categoryEntity.id.equalsExp(operationEntity.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operationEntity.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operationEntity.account),
+            ),
+            leftOuterJoin(
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operationEntity.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          return OperationItem(
-              row.readTable(operationEntity),
-              row.readTable(acc),
-              row.readTable(categoryEntity),
-              row.readTable(rec));
-        },
-      ).toList(),
-    );
+              return OperationItem(
+                  row.readTable(operationEntity),
+                  row.readTable(acc),
+                  row.readTable(categoryEntity),
+                  row.readTable(rec));
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<OperationItem>> watchLastOperationItems(int limit) {
@@ -833,6 +833,39 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             },
           ).toList(),
         );
+  }
+
+  Future<OperationItem> getLastOperationItem() {
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
+
+    return (select(operationEntity)
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ])
+          ..limit(1))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operationEntity.account),
+            ),
+            leftOuterJoin(
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operationEntity.recAccount),
+            ),
+          ],
+        )
+        .getSingle()
+        .then((row) => OperationItem(
+            row.readTable(operationEntity),
+            row.readTable(acc),
+            row.readTable(categoryEntity),
+            row.readTable(rec)));
   }
 
   Future<List<OperationEntityData>> getAllOperations() =>
