@@ -23,8 +23,8 @@ class BackupPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                      'Google drive',
-                      style: Theme.of(context).textTheme.title,
+                    'Google drive',
+                    style: Theme.of(context).textTheme.title,
                   ),
                   Flex(
                     direction: Axis.horizontal,
@@ -32,13 +32,13 @@ class BackupPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       RaisedButton(
-                        child:
-                        Text(AppLocalizations.of(context).backup.toUpperCase()),
+                        child: Text(
+                            AppLocalizations.of(context).backup.toUpperCase()),
                         onPressed: () => _backup(context),
                       ),
                       RaisedButton(
-                        child:
-                        Text(AppLocalizations.of(context).restore.toUpperCase()),
+                        child: Text(
+                            AppLocalizations.of(context).restore.toUpperCase()),
                         onPressed: () => _restore(context),
                       ),
                     ],
@@ -48,9 +48,41 @@ class BackupPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.title,
                   ),
                   RaisedButton(
-                    child: Text(AppLocalizations.of(context).btnDeleteAll.toUpperCase()),
+                    child: Text(AppLocalizations.of(context)
+                        .btnDeleteAll
+                        .toUpperCase()),
                     onPressed: () => _deleteAll(context),
                   ),
+                  BlocConsumer<BackupPageBloc, BackupPageState>(
+                      buildWhen:
+                      (BackupPageState previosState,
+                          BackupPageState currentState) {
+                    return currentState is InitialState ||
+                        currentState is ProgressState;
+                  },
+            builder: (BuildContext context, BackupPageState state) {
+              if (state is InitialState) {
+                      return SizedBox();
+                    } else if (state is ProgressState) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }, listener: (BuildContext context, BackupPageState state) {
+                    if (state is BackupSuccessState) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)
+                              .mesDatabaseBackuped)));
+                    } else if (state is RestoreSuccessState) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)
+                              .mesDatabaseRestored)));
+                    } else if (state is DeleteSuccessState) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)
+                              .mesDatabaseDeleted)));
+                    }
+                  })
                 ],
               ),
             );
@@ -127,22 +159,41 @@ class DeleteAll extends BackupPageEvent {}
 
 abstract class BackupPageState {}
 
+class InitialState extends BackupPageState {}
+
+class ProgressState extends BackupPageState {}
+
+class BackupSuccessState extends BackupPageState {}
+
+class RestoreSuccessState extends BackupPageState {}
+
+class DeleteSuccessState extends BackupPageState {}
+
 class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
   final Repository _repository;
 
-  BackupPageBloc(this._repository) : super(null);
+  BackupPageBloc(this._repository) : super(InitialState());
 
   @override
-  BackupPageState get initialState => null;
+  BackupPageState get initialState => InitialState();
 
   @override
   Stream<BackupPageState> mapEventToState(BackupPageEvent event) async* {
     if (event is Backup) {
-      _repository.backup(event.client, event.catalogId);
+      yield ProgressState();
+      await _repository.backup(event.client, event.catalogId);
+      yield BackupSuccessState();
+      yield InitialState();
     } else if (event is Restore) {
-      _repository.restore(event.client, event.fileId);
+      yield ProgressState();
+      await _repository.restore(event.client, event.fileId);
+      yield RestoreSuccessState();
+      yield InitialState();
     } else if (event is DeleteAll) {
-      _repository.deleteAll();
+      yield ProgressState();
+      await _repository.deleteAll();
+      yield DeleteSuccessState();
+      yield InitialState();
     }
   }
 }
