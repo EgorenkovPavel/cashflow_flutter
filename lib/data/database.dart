@@ -861,7 +861,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ],
         )
         .getSingle()
-        .then((row) => OperationItem(
+        .then((row) => row == null ? null : OperationItem(
             row.readTable(operationEntity),
             row.readTable(acc),
             row.readTable(categoryEntity),

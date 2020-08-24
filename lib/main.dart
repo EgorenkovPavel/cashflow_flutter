@@ -12,6 +12,7 @@ import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:cashflow/widgets/pages/reporst_page.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           OperationListPage.routeName: (BuildContext context) => OperationListPage(),
           ReportsPage.routeName: (BuildContext context) => ReportsPage(),
+          OperationFilterPage.routeName: (BuildContext context) => OperationFilterPage(),
           //CashflowPage.routeName: (BuildContext context) => CashflowPage(),
           //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
         },

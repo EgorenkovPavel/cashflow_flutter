@@ -537,6 +537,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     if (event is Start) {
       Operation op = await _repository.getLastOperation();
 
+      if (op == null){
+        return;
+      }
+
       _data = _data.copyWith(
           account: AccountBalance(
               id: op.account.id,

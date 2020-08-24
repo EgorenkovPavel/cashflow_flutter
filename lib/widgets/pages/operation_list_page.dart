@@ -2,6 +2,7 @@ import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
+import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,12 @@ class OperationListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).operations),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.filter_list),
+          onPressed: (){
+            OperationFilterPage.open(context);
+          },),
+        ],
       ),
       body: OperationList(
         Provider.of<Repository>(context).watchAllOperations(),

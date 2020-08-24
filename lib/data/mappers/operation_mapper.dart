@@ -16,7 +16,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
   }
 
   Operation mapToDart(OperationItem o) {
-    return Operation(
+    return o == null ? null : Operation(
         id: o.operationData.id,
         date: o.operationData.date,
         type: o.operationData.operationType,

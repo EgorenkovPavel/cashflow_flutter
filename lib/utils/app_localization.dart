@@ -28,6 +28,7 @@ class AppLocalizations {
       'title_last_operations': 'Last operations',
       'title_data_control': 'Data control',
       'title_reports': 'Reports',
+      'title_filters': 'Filters',
 
       'empty_title_error': 'Enter title',
       'empty_budget_error': 'Enter budget',
@@ -110,6 +111,7 @@ class AppLocalizations {
       'title_last_operations': 'Последние операции',
       'title_data_control': 'Управление данными',
       'title_reports': 'Отчеты',
+      'title_filters': 'Отборы',
 
       'empty_title_error': 'Введите имя',
       'empty_budget_error': 'Введите бюджет',
@@ -193,6 +195,7 @@ class AppLocalizations {
   String get titleLastOperations => _localizedValues[locale.languageCode]['title_last_operations'];
   String get titleDataControl => _localizedValues[locale.languageCode]['title_data_control'];
   String get titleReports => _localizedValues[locale.languageCode]['title_reports'];
+  String get titleFilters => _localizedValues[locale.languageCode]['title_filters'];
 
   String get emptyTitleError => _localizedValues[locale.languageCode]['empty_title_error'];
   String get emptyBudgetError => _localizedValues[locale.languageCode]['empty_budget_error'];
