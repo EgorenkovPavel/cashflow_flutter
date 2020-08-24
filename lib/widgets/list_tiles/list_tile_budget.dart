@@ -1,5 +1,6 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -9,17 +10,24 @@ class ListTileBudget extends StatelessWidget {
 
   const ListTileBudget(this._budget, {Key key}) : super(key: key);
 
-  RelativeRect buttonMenuPosition(BuildContext c) {
-    final RenderBox bar = c.findRenderObject();
-    final RenderBox overlay = Overlay.of(c).context.findRenderObject();
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
-        bar.localToGlobal(bar.size.center(Offset.zero), ancestor: overlay),
+  void onLongPress(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Wrap(
+        children: <Widget>[
+           ListTile(
+            leading: Icon(Icons.delete),
+            title: Text(AppLocalizations.of(context).delete),
+            onTap: () {
+              Provider.of<Repository>(context, listen: false)
+                  .deleteBudget(_budget);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
-      Offset.zero & overlay.size,
     );
-    return position;
   }
 
   @override
@@ -30,22 +38,7 @@ class ListTileBudget extends StatelessWidget {
       title: Text(DateFormat.yMMMM(Localizations.localeOf(context).languageCode)
           .format(_budget.date)),
       trailing: Text(_budget.sum.toString()),
-      onLongPress: () async {
-        final position = buttonMenuPosition(key.currentContext);
-        int res = await showMenu(
-          context: context,
-          position: position,
-          items: <PopupMenuEntry<int>>[
-            PopupMenuItem<int>(
-              child: Text('Delete'),
-              value: 1,
-            )
-          ],
-        );
-        if (res == 1) {
-          Provider.of<Repository>(context, listen: false).deleteBudget(_budget);
-        }
-      },
+      onLongPress: () => onLongPress(context),
     );
   }
 }

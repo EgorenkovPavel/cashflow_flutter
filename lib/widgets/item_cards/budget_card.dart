@@ -13,6 +13,20 @@ class BudgetCard extends StatefulWidget {
 
   BudgetCard({@required this.categoryId});
 
+  static void open(BuildContext context, int categoryId){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+              child: BudgetCard(
+                categoryId: categoryId,
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))));
+        });
+  }
+
   @override
   _BudgetCardState createState() => _BudgetCardState();
 }

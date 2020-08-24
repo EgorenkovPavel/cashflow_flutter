@@ -79,19 +79,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) {
-                  return Dialog(
-                      child: BudgetCard(
-                        categoryId: widget.id,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12))));
-                });
-          },
+          onPressed: () => BudgetCard.open(context, widget.id),
         ),
       ),
     );
