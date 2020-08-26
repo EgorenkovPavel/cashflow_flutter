@@ -88,6 +88,8 @@ class AppLocalizations {
       'restore': 'Restore',
       'choose': 'Choose',
       'archive': 'Archive',
+      'expand': 'Expand',
+      'collapse': 'Collapse',
 
       'btn_add_account': 'Add account',
       'btn_show_all': 'Show all',
@@ -171,6 +173,8 @@ class AppLocalizations {
       'restore': 'Восстановить',
       'choose': 'Выбрать',
       'archive': 'Архив',
+      'expand': 'Развернуть',
+      'collapse': 'Свернуть',
 
       'btn_add_account': 'Добавить счет',
       'btn_show_all': 'Показать все',
@@ -255,6 +259,8 @@ class AppLocalizations {
   String get restore => _localizedValues[locale.languageCode]['restore'];
   String get choose => _localizedValues[locale.languageCode]['choose'];
   String get archive => _localizedValues[locale.languageCode]['archive'];
+  String get expand => _localizedValues[locale.languageCode]['expand'];
+  String get collapse => _localizedValues[locale.languageCode]['collapse'];
 
   String get btnAddAccount => _localizedValues[locale.languageCode]['btn_add_account'];
   String get btnShowAll => _localizedValues[locale.languageCode]['btn_show_all'];

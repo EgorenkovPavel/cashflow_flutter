@@ -29,8 +29,6 @@ class _MasterPageState extends State<MasterPage>
   AnimationController animationController;
   Animation<double> animation;
 
-  double _heigth = 0;
-
   Widget accountPageView(BuildContext context) {
     return StreamBuilder(
       stream: _bloc.accountStream,
