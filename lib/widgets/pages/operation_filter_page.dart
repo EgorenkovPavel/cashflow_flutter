@@ -154,14 +154,14 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       ),
       persistentFooterButtons: [
         FlatButton(
-          child: Text('Reset'),
+          child: Text(AppLocalizations.of(context).reset),
           onPressed: (){
             widget.filter.reset();
             Navigator.pop(context, widget.filter);
           },
         ),
         RaisedButton(
-          child: Text('Apply'),
+          child: Text(AppLocalizations.of(context).apply),
           onPressed: (){
             Navigator.pop(context, widget.filter);
           },
