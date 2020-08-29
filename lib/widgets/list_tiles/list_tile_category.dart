@@ -17,8 +17,8 @@ class ListTileCategory extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text(NumberFormat().format(category.cashflow), style: Theme.of(context).textTheme.headline,),
-          Text(NumberFormat().format(category.budget), style: Theme.of(context).textTheme.subhead,),
+          Text(NumberFormat().format(category.cashflow), style: Theme.of(context).textTheme.headline5,),
+          Text(NumberFormat().format(category.budget), style: Theme.of(context).textTheme.subtitle1,),
         ],
       ),
       onTap: onTap,

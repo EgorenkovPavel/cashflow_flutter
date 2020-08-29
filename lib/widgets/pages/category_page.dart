@@ -173,7 +173,7 @@ class _CategoryPageState extends State<CategoryPage> {
     if (_editTitleMode) {
       return TextField(
         controller: _titleController,
-        style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+        style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
         autofocus: true,
       );
     } else {

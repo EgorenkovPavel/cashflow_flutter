@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   static const routeName = '/';
 
-  List<Widget> _cards = [
+  final List<Widget> _cards = [
     TotalBalanceCard(),
     CashflowCard(),
     LastOperationsCard()

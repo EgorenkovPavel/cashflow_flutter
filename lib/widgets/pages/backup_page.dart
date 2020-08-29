@@ -24,7 +24,7 @@ class BackupPage extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Google drive',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Flex(
                     direction: Axis.horizontal,
@@ -45,7 +45,7 @@ class BackupPage extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context).titleDataControl,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   RaisedButton(
                     child: Text(AppLocalizations.of(context)
@@ -53,20 +53,20 @@ class BackupPage extends StatelessWidget {
                         .toUpperCase()),
                     onPressed: () => _deleteAll(context),
                   ),
-                  BlocConsumer<BackupPageBloc, BackupPageState>(
-                      buildWhen:
+                  BlocConsumer<BackupPageBloc, BackupPageState>(buildWhen:
                       (BackupPageState previosState,
                           BackupPageState currentState) {
                     return currentState is InitialState ||
                         currentState is ProgressState;
-                  },
-            builder: (BuildContext context, BackupPageState state) {
-              if (state is InitialState) {
+                  }, builder: (BuildContext context, BackupPageState state) {
+                    if (state is InitialState) {
                       return SizedBox();
                     } else if (state is ProgressState) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
+                    } else {
+                      return SizedBox();
                     }
                   }, listener: (BuildContext context, BackupPageState state) {
                     if (state is BackupSuccessState) {
@@ -173,9 +173,6 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
   final Repository _repository;
 
   BackupPageBloc(this._repository) : super(InitialState());
-
-  @override
-  BackupPageState get initialState => InitialState();
 
   @override
   Stream<BackupPageState> mapEventToState(BackupPageEvent event) async* {

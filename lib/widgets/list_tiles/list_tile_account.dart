@@ -15,7 +15,7 @@ class ListTileAccount extends StatelessWidget {
       title: Text(_account.title),
       trailing: Text(
         (_account.balance ?? 0).toString(),
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.headline6,
       ),
       onTap: onTap,
       onLongPress: () {

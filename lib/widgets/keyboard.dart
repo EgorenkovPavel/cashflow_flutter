@@ -29,7 +29,7 @@ class Keyboard extends StatelessWidget {
     return _button(context, Text('$digit', style: Theme
         .of(context)
         .textTheme
-        .title,), () => onDigitPressed(digit), width);
+        .headline6,), () => onDigitPressed(digit), width);
   }
 
   Widget _rowButton(List<Widget> buttons) {

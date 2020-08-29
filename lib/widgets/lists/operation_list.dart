@@ -85,7 +85,6 @@ class OperationList extends MainList<Operation> {
     Navigator.of(context).pushNamed(MasterPage.routeName);
   }
 
-  @override
   void onItemTap(BuildContext context, item) {
     OperationPage.open(context, item.id);
   }

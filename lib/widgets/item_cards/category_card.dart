@@ -6,7 +6,6 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class CategoryCard extends StatefulWidget {
   final OperationType type;
@@ -132,9 +131,6 @@ class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryCardState> {
   OperationType _type;
 
   CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
-
-  @override
-  CategoryCardState get initialState => InitialState(OperationType.INPUT);
 
   @override
   Stream<CategoryCardState> mapEventToState(CategoryCardEvent event) async* {

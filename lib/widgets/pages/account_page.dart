@@ -96,7 +96,7 @@ class _AccountPageState extends State<AccountPage> {
         if (state.editTitleMode) {
           return TextField(
             controller: _titleController,
-            style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
             autofocus: true,
           );
         } else {
@@ -166,9 +166,6 @@ class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState>{
   Account _account;
 
   AccountPageBloc(this._repository) : super(AccountPageState(false, ''));
-
-  @override
-  AccountPageState get initialState => AccountPageState(_editTitleMode, '');
 
   @override
   Stream<AccountPageState> mapEventToState(AccountPageEvent event) async* {

@@ -20,7 +20,7 @@ class MonthCashflow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(DateFormat.MMMM(Localizations.localeOf(context).languageCode)
-                .format(date).capitalize(), style: Theme.of(context).textTheme.subtitle,),
+                .format(date).capitalize(), style: Theme.of(context).textTheme.subtitle2,),
             RichText(
                   text: TextSpan(
                       text: '${NumberFormat().format(cashflow)}',

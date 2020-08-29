@@ -47,6 +47,8 @@ class LastOperationsCard extends StatelessWidget {
                           ))
                       .toList(),
                 );
+              } else {
+                return SizedBox();
               }
             },
           ),
@@ -90,9 +92,6 @@ class LastOperationsBloc
   final Repository _repository;
 
   LastOperationsBloc(this._repository) : super(Loading());
-
-  @override
-  LastOperationsState get initialState => Loading();
 
   @override
   Stream<LastOperationsState> mapEventToState(

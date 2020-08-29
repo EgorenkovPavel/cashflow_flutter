@@ -13,7 +13,7 @@ class CardTitle extends StatelessWidget{
       padding: const EdgeInsets.all(8.0),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headline,
+        style: Theme.of(context).textTheme.headline5,
       ),
     );
   }

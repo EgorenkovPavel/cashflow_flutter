@@ -413,7 +413,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       update(accountEntity).replace(entity);
 
   Stream<int> getTotalBalance() {
-    return customSelectQuery(
+    return customSelect(
       'SELECT SUM(sum) as sum FROM balance',
     ).watchSingle().map((row) => row.readInt('sum') ?? 0);
   }
@@ -506,7 +506,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         ? DateTime(date.year, date.month + 1)
         : DateTime(date.year + 1, 1);
 
-    return customSelectQuery(
+    return customSelect(
       'SELECT *, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
@@ -537,7 +537,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         ? DateTime(date.year, date.month + 1)
         : DateTime(date.year + 1, 1);
 
-    return customSelectQuery(
+    return customSelect(
       'SELECT *, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
@@ -566,7 +566,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
       OperationType type) {
-    return customSelectQuery(
+    return customSelect(
       'SELECT *, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
       'FROM categories c '
@@ -588,7 +588,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowBudgetEntity>> watchCashflowBudgetByCategory(
       int categoryId) {
-    return customSelectQuery(
+    return customSelect(
       'SELECT *, '
       'cashflow.date as date,'
       'cashflow.sum as sum '
@@ -630,7 +630,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       update(categoryEntity).replace(entity);
 
   Stream<int> watchBudget(DateTime date) {
-    return customSelectQuery(
+    return customSelect(
       'SELECT c.operation_type, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
       'FROM categories c;',
@@ -734,11 +734,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       sel..where((t) => t.date.isSmallerOrEqualValue(end));
     }
 
-    if(accountIds?.isNotEmpty){
+    if(accountIds?.isNotEmpty ?? false){
       sel..where((t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
     }
 
-    if(categoriesIds?.isNotEmpty){
+    if(categoriesIds?.isNotEmpty ?? false){
       sel..where((t) => t.category.isIn(categoriesIds));
     }
 
@@ -1176,7 +1176,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 //    return select(budget)
 //        .map((t) => MonthBudget(t.year, t.month, t.sum))
 //        .watch();
-    return customSelectQuery(
+    return customSelect(
         'SELECT date, SUM(sum) as sum FROM budget GROUP BY date ORDER BY date',
         readsFrom: {budget}).watch().map((rows) {
       return rows

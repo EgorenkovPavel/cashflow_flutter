@@ -16,12 +16,12 @@ class EmptyListHint extends StatelessWidget {
           Icon(Icons.add, color: Colors.grey,size: 48.0,),
           Text(title, style: Theme.of(context)
               .textTheme
-              .headline
+              .headline5
               .copyWith(color: Colors.grey)),
           Text(hint,
               style: Theme.of(context)
                   .textTheme
-                  .subhead
+                  .subtitle2
                   .copyWith(color: Colors.grey)),
         ],
       ),

@@ -82,15 +82,17 @@ class CashflowCard extends StatelessWidget {
 class CardRow extends StatelessWidget {
   final OperationType type;
   final List<CategoryCashflowBudget> categories;
-  int _cashflow;
-  int _budget;
 
-  CardRow({this.type, this.categories}) {
-    _cashflow = categories
+  CardRow({this.type, this.categories});
+
+  int _cashflow(){
+    return categories
         .map((category) => category.cashflow)
         .fold(0, (a, b) => a + b);
-    _budget =
-        categories.map((category) => category.budget).fold(0, (a, b) => a + b);
+  }
+
+  int _budget(){
+    return categories.map((category) => category.budget).fold(0, (a, b) => a + b);
   }
 
   void onTap(BuildContext context) {
@@ -132,13 +134,13 @@ class CardRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(AppLocalizations.of(context).titleFact),
-            Text('${NumberFormat().format(_cashflow)}'),
+            Text('${NumberFormat().format(_cashflow())}'),
           ],
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(AppLocalizations.of(context).titleBudget),
-            Text('${NumberFormat().format(_budget)}')
+            Text('${NumberFormat().format(_budget())}')
           ],
         ),
       ],
@@ -195,9 +197,6 @@ class CashflowCardBloc extends Bloc<CashflowCardEvent, CashflowCardState> {
   final Repository _repository;
 
   CashflowCardBloc(this._repository) : super(Loading());
-
-  @override
-  CashflowCardState get initialState => Loading();
 
   @override
   Stream<CashflowCardState> mapEventToState(CashflowCardEvent event) async* {

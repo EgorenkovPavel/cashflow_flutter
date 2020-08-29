@@ -5,10 +5,8 @@ import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
-import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
-import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -111,7 +109,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
                       title: Text(account.title),
                       trailing: Text(
                         NumberFormat().format(account.balance),
-                        style: Theme.of(context).textTheme.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       onTap: () => AccountPage.open(context, account.id),
                     ))
@@ -228,9 +226,6 @@ class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
     _subscription?.cancel();
     return super.close();
   }
-
-  @override
-  TotalBalanceState get initialState => Loading();
 
   @override
   Stream<TotalBalanceState> mapEventToState(TotalBalanceEvent event) async* {

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/mappers/account_balance_mapper.dart';
-import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
@@ -162,7 +161,7 @@ class _MasterPageState extends State<MasterPage>
   Widget title(String text) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.subtitle,
+      style: Theme.of(context).textTheme.subtitle2,
     );
   }
 
@@ -362,7 +361,7 @@ class _MasterPageState extends State<MasterPage>
                                             .format((state as DataState).sum),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .display1
+                                            .headline4
                                             .copyWith(color: Colors.black),
                                       ),
                                       decoration: BoxDecoration(
@@ -548,9 +547,6 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         categoryOutStream =
             _repository.watchAllCategoriesByType(OperationType.OUTPUT),
         super(_data);
-
-  @override
-  MasterState get initialState => _data;
 
   AccountBalance get account => _data.account;
 

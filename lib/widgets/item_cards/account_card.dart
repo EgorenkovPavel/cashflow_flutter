@@ -92,9 +92,6 @@ class AccountCardBloc extends Bloc<AccountCardEvent, AccountCardState>{
   AccountCardBloc(this._repository) : super(EmptyState());
 
   @override
-  AccountCardState get initialState => EmptyState();
-
-  @override
   Stream<AccountCardState> mapEventToState(AccountCardEvent event) async* {
 
     if (event is Save){

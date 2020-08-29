@@ -190,9 +190,6 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
   BudgetCardBloc(this._repository) : super(DataState(1, 1));
 
   @override
-  BudgetCardState get initialState => DataState(1, 1);
-
-  @override
   Stream<BudgetCardState> mapEventToState(BudgetCardEvent event) async* {
     if (event is Initial) {
       categoryId = event.categoryId;
