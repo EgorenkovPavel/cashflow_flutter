@@ -15,7 +15,7 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
-import 'package:cashflow/widgets/pages/reporst_page.dart';
+import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

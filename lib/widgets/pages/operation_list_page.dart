@@ -6,12 +6,18 @@ import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OperationListPage extends StatelessWidget {
+class OperationListPage extends StatefulWidget {
   static const routeName = '/operationList';
 
-  final Operation operation;
+  const OperationListPage({Key key}) : super(key: key);
 
-  const OperationListPage({Key key, this.operation}) : super(key: key);
+  @override
+  _OperationListPageState createState() => _OperationListPageState();
+}
+
+class _OperationListPageState extends State<OperationListPage> {
+
+  OperationFilter _filter = OperationFilter();
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +26,17 @@ class OperationListPage extends StatelessWidget {
         title: Text(AppLocalizations.of(context).operations),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.filter_list),
-          onPressed: (){
-            OperationFilterPage.open(context);
+          onPressed: ()async{
+            var filter = await OperationFilterPage.open(context, _filter);
+            setState(() {
+              _filter = filter;
+            });
           },),
         ],
       ),
       body: OperationList(
-        Provider.of<Repository>(context).watchAllOperations(),
+        _filter == null ? Provider.of<Repository>(context).watchAllOperations() :
+        Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

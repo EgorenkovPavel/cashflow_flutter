@@ -717,6 +717,65 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
+  Stream<List<OperationItem>> watchAllOperationItemsByFilter({
+    DateTime start,
+    DateTime end,
+    Set<int> accountIds,
+    Set<int> categoriesIds}) {
+    final acc = alias(accountEntity, 'a');
+    final rec = alias(accountEntity, 'rec');
+
+    var sel = select(operationEntity);
+    if(start != null){
+      sel..where((t) => t.date.isBiggerOrEqualValue(start));
+    }
+
+    if(end != null){
+      sel..where((t) => t.date.isSmallerOrEqualValue(end));
+    }
+
+    if(accountIds?.isNotEmpty){
+      sel..where((t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
+    }
+
+    if(categoriesIds?.isNotEmpty){
+      sel..where((t) => t.category.isIn(categoriesIds));
+    }
+
+    return (sel
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ]))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operationEntity.account),
+            ),
+            leftOuterJoin(
+              categoryEntity,
+              categoryEntity.id.equalsExp(operationEntity.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operationEntity.recAccount),
+            ),
+          ],
+        )
+        .watch()
+        .map(
+          (rows) => rows.map(
+            (row) {
+              return OperationItem(
+                  row.readTable(operationEntity),
+                  row.readTable(acc),
+                  row.readTable(categoryEntity),
+                  row.readTable(rec));
+            },
+          ).toList(),
+        );
+  }
+
   Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) {
     final acc = alias(accountEntity, 'a');
     final rec = alias(accountEntity, 'rec');
@@ -861,11 +920,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ],
         )
         .getSingle()
-        .then((row) => row == null ? null : OperationItem(
-            row.readTable(operationEntity),
-            row.readTable(acc),
-            row.readTable(categoryEntity),
-            row.readTable(rec)));
+        .then((row) => row == null
+            ? null
+            : OperationItem(row.readTable(operationEntity), row.readTable(acc),
+                row.readTable(categoryEntity), row.readTable(rec)));
   }
 
   Future<List<OperationEntityData>> getAllOperations() =>
@@ -938,7 +996,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future deleteOperationById(int operationId) {
     return transaction(() async {
       await (delete(operationEntity)
-        ..where((tbl) => tbl.id.equals(operationId))).go();
+            ..where((tbl) => tbl.id.equals(operationId)))
+          .go();
       await _deleteAnalyticByOperationId(operationId);
     });
   }
@@ -1084,10 +1143,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future _deleteAnalyticByOperationId(int operationId) async {
     await (delete(balanceEntity)
-      ..where((entry) => entry.operation.equals(operationId)))
+          ..where((entry) => entry.operation.equals(operationId)))
         .go();
     await (delete(cashflowEntity)
-      ..where((entry) => entry.operation.equals(operationId)))
+          ..where((entry) => entry.operation.equals(operationId)))
         .go();
   }
 }

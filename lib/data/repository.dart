@@ -9,6 +9,7 @@ import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/google_http_client.dart';
+import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
@@ -108,6 +109,15 @@ class Repository extends ChangeNotifier {
       .watchAllOperationItems()
       .map((list) => const OperationMapper().mapListToDart(list));
 
+  Stream<List<Operation>> watchAllOperationsByFilter(OperationFilter filter) =>
+      db.operationDao
+          .watchAllOperationItemsByFilter(
+              start: filter.date?.start,
+              end: filter.date?.end,
+              accountIds: filter.accounts.map((e) => e.id).toSet(),
+              categoriesIds: filter.categories.map((e) => e.id).toSet())
+          .map((list) => const OperationMapper().mapListToDart(list));
+
   Stream<Operation> getOperationById(int id) => db.operationDao
       .getOperationById(id)
       .map((o) => const OperationMapper().mapToDart(o));
@@ -147,8 +157,8 @@ class Repository extends ChangeNotifier {
   Future deleteOperation(Operation entity) => db.operationDao
       .deleteOperation(const OperationMapper().mapToOperationData(entity));
 
-  Future deleteOperationById(int operationId) => db.operationDao
-      .deleteOperationById(operationId);
+  Future deleteOperationById(int operationId) =>
+      db.operationDao.deleteOperationById(operationId);
 
   //Budget
 
