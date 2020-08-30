@@ -23,7 +23,7 @@ class MasterPage extends StatefulWidget {
 }
 
 class _MasterPageState extends State<MasterPage>
-    with SingleTickerProviderStateMixin{
+    with SingleTickerProviderStateMixin {
   MasterBloc _bloc;
   AnimationController animationController;
   Animation<double> animation;
@@ -233,9 +233,9 @@ class _MasterPageState extends State<MasterPage>
           listener: (BuildContext context, MasterState state) {
             if (state is ClosePage) {
               Navigator.of(context).pop();
-            } else if(state is ShowKeyboad) {
+            } else if (state is ShowKeyboard) {
               animationController.forward();
-            } else if(state is HideKeyBoard){
+            } else if (state is HideKeyBoard) {
               animationController.reverse();
             } else if (state is EmptyAccountMessage) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -264,10 +264,11 @@ class _MasterPageState extends State<MasterPage>
                   },
                 ),
               ));
-            } else if (state is OperationCanceled){
-              Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text(AppLocalizations.of(context).mesOperationCanceled),)
-              );
+            } else if (state is OperationCanceled) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content:
+                    Text(AppLocalizations.of(context).mesOperationCanceled),
+              ));
             }
           },
           buildWhen: (oldState, newState) {
@@ -466,9 +467,7 @@ class OnRecAccountChanged extends MasterEvent {
   OnRecAccountChanged(this.account);
 }
 
-class CancelOperation extends MasterEvent{
-  
-}
+class CancelOperation extends MasterEvent {}
 
 abstract class MasterState {}
 
@@ -515,9 +514,9 @@ class DataState extends MasterState {
 
 class ClosePage extends MasterState {}
 
-class ShowKeyboad extends MasterState{}
+class ShowKeyboard extends MasterState {}
 
-class HideKeyBoard extends MasterState{}
+class HideKeyBoard extends MasterState {}
 
 class EmptyAccountMessage extends MasterState {}
 
@@ -529,7 +528,7 @@ class EmptySumMessage extends MasterState {}
 
 class OperationCreatedMessage extends MasterState {}
 
-class OperationCanceled extends MasterState{}
+class OperationCanceled extends MasterState {}
 
 class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final Repository _repository;
@@ -561,7 +560,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     if (event is Start) {
       Operation op = await _repository.getLastOperation();
 
-      if (op == null){
+      if (op == null) {
         return;
       }
 
@@ -606,7 +605,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     } else if (event is OnSumTap) {
       if (!_data.showKeyboard) {
         _data = _data.copyWith(showKeyboard: true);
-        yield ShowKeyboad();
+        yield ShowKeyboard();
       }
     } else if (event is TypeChanged) {
       _data = _data.copyWith(type: event.type);
@@ -629,12 +628,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     } else if (event is OnRecAccountChanged) {
       _data = _data.copyWith(recAccount: event.account);
       return;
-    } else if (event is CancelOperation){
-      
+    } else if (event is CancelOperation) {
       await _repository.deleteOperationById(_data.operationId);
       _data = _data.copyWith(operationId: null);
       yield OperationCanceled();
-      
     } else if (event is OnNextTap) {
       if (_data.account == null) {
         yield EmptyAccountMessage();
