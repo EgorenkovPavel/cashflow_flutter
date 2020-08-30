@@ -67,100 +67,111 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).titleFilters),
       ),
-      body: Column(
-        children: <Widget>[
-          Wrap(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
             children: <Widget>[
-              if (widget.filter.date != null)
-                InputChip(
-                  label: Text(
-                      '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
-                  deleteIcon: Icon(Icons.cancel),
-                  onDeleted: () {
-                    setState(() {
-                      widget.filter.date = null;
-                    });
-                  },
-                ),
-              for (var account in widget.filter.accounts)
-                InputChip(
-                  label: Text(account.title),
-                  deleteIcon: Icon(Icons.cancel),
-                  onDeleted: () {
-                    setState(() {
-                      widget.filter.accounts.remove(account);
-                    });
-                  },
-                ),
-              for (var category in widget.filter.categories)
-                InputChip(
-                  label: Text(category.title),
-                  deleteIcon: Icon(Icons.cancel),
-                  onDeleted: () {
-                    setState(() {
-                      widget.filter.categories.remove(category);
-                    });
-                  },
-                ),
+              Wrap(
+                children: <Widget>[
+                  if (widget.filter.date != null)
+                    InputChip(
+                      label: Text(
+                          '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
+                      deleteIcon: Icon(Icons.cancel),
+                      onDeleted: () {
+                        setState(() {
+                          widget.filter.date = null;
+                        });
+                      },
+                    ),
+                  for (var account in widget.filter.accounts)
+                    InputChip(
+                      label: Text(account.title),
+                      deleteIcon: Icon(Icons.cancel),
+                      onDeleted: () {
+                        setState(() {
+                          widget.filter.accounts.remove(account);
+                        });
+                      },
+                    ),
+                  for (var category in widget.filter.categories)
+                    InputChip(
+                      label: Text(category.title),
+                      deleteIcon: Icon(Icons.cancel),
+                      onDeleted: () {
+                        setState(() {
+                          widget.filter.categories.remove(category);
+                        });
+                      },
+                    ),
+                ],
+              ),
+              OutlineButton(
+                child: Text('Choose period'),
+                onPressed: () async {
+                  DateTimeRange date = await showDateRangePicker(
+                      context: context,
+                      firstDate: DateTime(2020), //TODO
+                      lastDate: DateTime.now());
+                  setState(() {
+                    widget.filter.date = date;
+                  });
+                },
+              ),
+              SizedBox(height: 8.0,),
+              DropdownList<Account>(
+                value: null,
+                hint: AppLocalizations.of(context).hintAccount,
+                onChange: (Account newValue) {
+                  setState(() {
+                    widget.filter.accounts.add(newValue);
+                  });
+                },
+                items: accountList,
+                getListItem: (item) => ListTile(title: Text(item.title)),
+              ),
+              SizedBox(height: 16.0,),
+              DropdownList<Category>(
+                value: null,
+                hint: AppLocalizations.of(context).hintCategory,
+                onChange: (Category newValue) {
+                  setState(() {
+                    widget.filter.categories.add(newValue);
+                  });
+                },
+                items: categoryInList,
+                getListItem: (item) => ListTile(title: Text(item.title)),
+              ),
+              SizedBox(height: 16.0,),
+              DropdownList<Category>(
+                value: null,
+                hint: AppLocalizations.of(context).hintCategory,
+                onChange: (Category newValue) {
+                  setState(() {
+                    widget.filter.categories.add(newValue);
+                  });
+                },
+                items: categoryOutList,
+                getListItem: (item) => ListTile(title: Text(item.title)),
+              ),
             ],
           ),
-          OutlineButton(
-            child: Text('Choose period'),
-            onPressed: () async {
-              DateTimeRange date = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(2020), //TODO
-                  lastDate: DateTime.now());
-              setState(() {
-                widget.filter.date = date;
-              });
-            },
-          ),
-          DropdownList<Account>(
-            value: null,
-            hint: AppLocalizations.of(context).hintAccount,
-            onChange: (Account newValue) {
-              setState(() {
-                widget.filter.accounts.add(newValue);
-              });
-            },
-            items: accountList,
-            getListItem: (item) => ListTile(title: Text(item.title)),
-          ),
-          DropdownList<Category>(
-            value: null,
-            hint: AppLocalizations.of(context).hintCategory,
-            onChange: (Category newValue) {
-              setState(() {
-                widget.filter.categories.add(newValue);
-              });
-            },
-            items: categoryInList,
-            getListItem: (item) => ListTile(title: Text(item.title)),
-          ),
-          DropdownList<Category>(
-            value: null,
-            hint: AppLocalizations.of(context).hintCategory,
-            onChange: (Category newValue) {
-              setState(() {
-                widget.filter.categories.add(newValue);
-              });
-            },
-            items: categoryOutList,
-            getListItem: (item) => ListTile(title: Text(item.title)),
-          ),
-        ],
+        ),
       ),
       persistentFooterButtons: [
         FlatButton(
-          child: Text(AppLocalizations.of(context).reset),
+          child: Text(AppLocalizations.of(context).reset.toUpperCase()),
           onPressed: (){
             widget.filter.reset();
             Navigator.pop(context, widget.filter);
           },
         ),
         RaisedButton(
-          child: Text(AppLocalizations.of(context).apply),
+          child: Text(AppLocalizations.of(context).apply.toUpperCase(),
+            style: TextStyle(color: Colors.white),
+          ),
+          color: Theme.of(context).primaryColor,
           onPressed: (){
             Navigator.pop(context, widget.filter);
           },
