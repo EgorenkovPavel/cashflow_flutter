@@ -9,28 +9,45 @@ import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:visibility_detector/visibility_detector.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends MainList<Operation> {
   OperationList(Stream<List<Operation>> stream) : super(stream);
 
   @override
   Widget listBuilder(BuildContext context, List<Operation> operations) {
-    var _controller = ScrollController();
+    final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 
-    DateTime initDate = operations[0].date;
-    var controller = StreamController<DateTime>()..add(initDate);
+    Widget positionsView() {
+      return ValueListenableBuilder<Iterable<ItemPosition>>(
+        valueListenable: itemPositionsListener.itemPositions,
+        builder: (context, positions, child) {
+          int min;
+          if (positions.isNotEmpty) {
+            min = positions
+                .where((ItemPosition position) => position.itemTrailingEdge > 0)
+                .reduce((ItemPosition min, ItemPosition position) =>
+            position.itemTrailingEdge < min.itemTrailingEdge
+                ? position
+                : min)
+                .index;
+          }
+
+            if (min == null) {
+              return SizedBox();
+            }else{
+              return dateTitle(context, operations[min].date);
+            }
+        },
+      );
+    }
 
     return Column(
       children: <Widget>[
-        StreamBuilder<DateTime>(
-            stream: controller.stream,
-            builder: (context, snapshot) {
-              return dateTitle(context, snapshot.data);
-            }),
+        positionsView(),
         Expanded(
-          child: ListView.separated(
-            controller: _controller,
+          child: ScrollablePositionedList.separated(
+            itemPositionsListener: itemPositionsListener,
             itemCount: operations.length,
             itemBuilder: (_, index) {
               final itemOperation = operations[index];
@@ -50,19 +67,9 @@ class OperationList extends MainList<Operation> {
                   op1.day == op2.day) {
                 return Divider();
               } else {
-                return VisibilityDetector(
-                  child: dateTitle(
-                      context, DateTime(op2.year, op2.month, op2.day)),
-                  onVisibilityChanged: (i) {
-                    if (i.visibleFraction == 0.0 && initDate.isAfter(DateTime(op2.year, op2.month, op2.day))){
-                      initDate = DateTime(op2.year, op2.month, op2.day);
-                      controller.add(DateTime(op2.year, op2.month, op2.day));
-                    }else if (i.visibleFraction == 1.0 && initDate.isBefore(DateTime(op2.year, op2.month, op2.day))) {
-                      initDate = DateTime(op1.year, op1.month, op1.day);
-                      controller.add(DateTime(op1.year, op1.month, op1.day));
-                    }
-                  },
-                  key: Key(DateTime(op2.year, op2.month, op2.day).toString()),
+                return dateTitle(
+                  context,
+                  DateTime(op2.year, op2.month, op2.day),
                 );
               }
             },
