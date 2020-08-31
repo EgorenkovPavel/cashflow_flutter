@@ -72,7 +72,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
             } else if (state is Success) {
               return filledBody(context, state.totalBalance, state.accounts);
             } else {
-              throw Exception(state.toString());
+              return  SizedBox();
             }
           },
         ),
