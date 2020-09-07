@@ -1,6 +1,7 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,7 @@ class ListTileBudget extends StatelessWidget {
       title: Text(DateFormat.yMMMM(Localizations.localeOf(context).languageCode)
           .format(_budget.date)),
       trailing: Text(_budget.sum.toString()),
+      onTap: () => BudgetCard.openExists(context, _budget.category, _budget.date),
       onLongPress: () => onLongPress(context),
     );
   }

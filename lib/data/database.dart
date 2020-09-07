@@ -717,28 +717,30 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
-  Stream<List<OperationItem>> watchAllOperationItemsByFilter({
-    DateTime start,
-    DateTime end,
-    Set<int> accountIds,
-    Set<int> categoriesIds}) {
+  Stream<List<OperationItem>> watchAllOperationItemsByFilter(
+      {DateTime start,
+      DateTime end,
+      Set<int> accountIds,
+      Set<int> categoriesIds}) {
     final acc = alias(accountEntity, 'a');
     final rec = alias(accountEntity, 'rec');
 
     var sel = select(operationEntity);
-    if(start != null){
+    if (start != null) {
       sel..where((t) => t.date.isBiggerOrEqualValue(start));
     }
 
-    if(end != null){
+    if (end != null) {
       sel..where((t) => t.date.isSmallerOrEqualValue(end));
     }
 
-    if(accountIds?.isNotEmpty ?? false){
-      sel..where((t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
+    if (accountIds?.isNotEmpty ?? false) {
+      sel
+        ..where(
+            (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
     }
 
-    if(categoriesIds?.isNotEmpty ?? false){
+    if (categoriesIds?.isNotEmpty ?? false) {
       sel..where((t) => t.category.isIn(categoriesIds));
     }
 
@@ -1157,6 +1159,15 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   BudgetDao(this.db) : super(db);
 
+  Future<BudgetData> getBudget(int categoryId, DateTime date) {
+    DateTime monthStart = DateTime(date.year, date.month);
+    return (select(budget)
+          ..where((tbl) =>
+              budget.category.equals(categoryId) &
+              budget.date.equals(monthStart)))
+        .getSingle();
+  }
+
   Stream<List<BudgetData>> watchBudget(DateTime date) {
     DateTime monthStart = DateTime(date.year, date.month);
     return (select(budget)..where((t) => budget.date.equals(monthStart)))
@@ -1187,7 +1198,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Future<void> insertBudget(BudgetData entity) {
     DateTime monthStart = DateTime(entity.date.year, entity.date.month);
-    return into(budget).insert(entity.copyWith(date: monthStart));
+    return into(budget).insert(entity.copyWith(date: monthStart), mode: InsertMode.insertOrReplace);
   }
 
   Future<void> updateBudget(BudgetData entity) {

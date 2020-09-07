@@ -41,6 +41,8 @@ class _CategoryPageState extends State<CategoryPage>
 
   @override
   void initState() {
+    _tabController = new TabController(length: 2, vsync: this);
+
     super.initState();
     subscription = Provider.of<Repository>(context, listen: false)
         .getCategoryById(widget.id)
@@ -49,7 +51,6 @@ class _CategoryPageState extends State<CategoryPage>
         category = data;
       });
       _titleController.text = category.title;
-      _tabController = new TabController(length: 2, vsync: this);
     });
   }
 

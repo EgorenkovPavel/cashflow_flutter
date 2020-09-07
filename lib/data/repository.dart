@@ -162,6 +162,9 @@ class Repository extends ChangeNotifier {
 
   //Budget
 
+  Future<BudgetData> getBudget(int categoryId, DateTime date) =>
+    db.budgetDao.getBudget(categoryId, date);
+
   Stream<List<MonthBalance>> watchMonthBudget() =>
       db.budgetDao.watchMonthBudget();
 
