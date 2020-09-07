@@ -56,6 +56,7 @@ class AppLocalizations {
       'empty_list_accounts': 'List of accounts is empty',
       'empty_list_categories': 'List of categories is empty',
       'empty_list_operations': 'List of operations is empty',
+      'empty_list_budgets': 'List of budgets is empty',
 
       'mes_operation_deleted': 'Operation deleted',
       'mes_operation_created': 'Operation created',
@@ -143,6 +144,7 @@ class AppLocalizations {
       'empty_list_accounts': 'Список счетов пуст',
       'empty_list_categories': 'Список категорий пуст',
       'empty_list_operations': 'Список операций пуст',
+      'empty_list_budgets': 'Список бюджетов пуст',
 
       'mes_operation_deleted': 'Операция удалена',
       'mes_operation_created': 'Операция создана',
@@ -231,6 +233,7 @@ class AppLocalizations {
   String get emptyListAccounts => _localizedValues[locale.languageCode]['empty_list_accounts'];
   String get emptyListCategories => _localizedValues[locale.languageCode]['empty_list_categories'];
   String get emptyListOperations => _localizedValues[locale.languageCode]['empty_list_operations'];
+  String get emptyListBudgets => _localizedValues[locale.languageCode]['empty_list_budgets'];
 
   String get mesOperationDeleted => _localizedValues[locale.languageCode]['mes_operation_deleted'];
   String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];

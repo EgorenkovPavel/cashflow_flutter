@@ -5,6 +5,8 @@ import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
@@ -103,10 +105,14 @@ class _CategoryPageState extends State<CategoryPage>
     return StreamBuilder<List<BudgetData>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
-          return SizedBox();
+          return emptyBudgetListHint(context);
         }
 
         List<BudgetData> list = snapshot.data;
+
+        if(list.isEmpty){
+          return emptyBudgetListHint(context);
+        }
 
         return ListView.builder(
           itemBuilder: (context, pos) {
@@ -201,5 +207,12 @@ class _CategoryPageState extends State<CategoryPage>
         ],
       );
     }
+  }
+
+  Widget emptyBudgetListHint(BuildContext context) {
+    return EmptyListHint(
+      title: AppLocalizations.of(context).emptyListBudgets,
+      hint: AppLocalizations.of(context).hintEmptyList,
+    );
   }
 }
