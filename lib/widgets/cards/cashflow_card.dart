@@ -10,6 +10,7 @@ import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class CashflowCard extends StatelessWidget {
   @override
@@ -26,10 +27,57 @@ class CashflowCard extends StatelessWidget {
         } else if (state is Success) {
           return successState(
               context, state.categoriesInput, state.categoriesOutput);
-        } else {
+         } else {
           return SizedBox();
         }
       },
+    );
+  }
+
+  Widget chart(BuildContext context, OperationType type, int fact, int budget) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: [
+          Text(getOperationTitle(context, type)),
+          Table(
+            columnWidths: {0: FractionColumnWidth(.2)},
+            children: [
+              TableRow(
+                children: [
+                  Text('Fact'),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LinearProgressIndicator(
+                        minHeight: 8.0,
+                        value: fact >= budget ? 1 : fact / budget,
+                        backgroundColor: Theme.of(context).cardColor,
+                      ),
+                      Text('$fact')
+                    ],
+                  ),
+                ],
+              ),
+              TableRow(children: [
+                Text('Budget'),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LinearProgressIndicator(
+                      minHeight: 8.0,
+                      value: budget >= fact ? 1 : budget / fact,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                      backgroundColor: Theme.of(context).cardColor,
+                    ),
+                    Text('$budget'),
+                  ],
+                ),
+              ]),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -41,21 +89,21 @@ class CashflowCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CardTitle(AppLocalizations.of(context).titleCashflow),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CardRow(type: OperationType.INPUT, categories: categoriesInput),
-            CardRow(type: OperationType.OUTPUT, categories: categoriesOutput),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: SizedBox(
+            child: HorizontalBarLabelChart(categoriesInput, categoriesOutput),
+            height: 200,
+          ),
         ),
-        ButtonBar(
+         ButtonBar(
           children: [
             FlatButton(
               child: Text(
                 AppLocalizations.of(context).btnShowReports.toUpperCase(),
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+                style: DefaultTextStyle.of(context).style.copyWith(
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 ReportsPage.open(context);
@@ -64,9 +112,9 @@ class CashflowCard extends StatelessWidget {
             FlatButton(
               child: Text(
                 AppLocalizations.of(context).categories.toUpperCase(),
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+                style: DefaultTextStyle.of(context).style.copyWith(
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 CategoryList.open(context);
@@ -85,14 +133,16 @@ class CardRow extends StatelessWidget {
 
   CardRow({this.type, this.categories});
 
-  int _cashflow(){
+  int _cashflow() {
     return categories
         .map((category) => category.cashflow)
         .fold(0, (a, b) => a + b);
   }
 
-  int _budget(){
-    return categories.map((category) => category.budget).fold(0, (a, b) => a + b);
+  int _budget() {
+    return categories
+        .map((category) => category.budget)
+        .fold(0, (a, b) => a + b);
   }
 
   void onTap(BuildContext context) {
@@ -126,25 +176,27 @@ class CardRow extends StatelessWidget {
   }
 
   Widget balance(BuildContext context) {
-
-    return categories.isEmpty ? SizedBox() : Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(AppLocalizations.of(context).titleFact),
-            Text('${NumberFormat().format(_cashflow())}'),
-          ],
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(AppLocalizations.of(context).titleBudget),
-            Text('${NumberFormat().format(_budget())}')
-          ],
-        ),
-      ],
-    );
+    return categories.isEmpty
+        ? SizedBox()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(AppLocalizations.of(context).titleFact),
+                  Text('${NumberFormat().format(_cashflow())}'),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(AppLocalizations.of(context).titleBudget),
+                  Text('${NumberFormat().format(_budget())}')
+                ],
+              ),
+            ],
+          );
 
 //    return RichText(
 //      text: TextSpan(
@@ -174,6 +226,90 @@ class CardRow extends StatelessWidget {
   }
 
   Text title(BuildContext context) => Text(getOperationTitle(context, type));
+}
+
+class HorizontalBarLabelChart extends StatelessWidget {
+  final List<CategoryCashflowBudget> categoriesInput;
+  final List<CategoryCashflowBudget> categoriesOutput;
+
+  final bool animate;
+
+  HorizontalBarLabelChart(this.categoriesInput, this.categoriesOutput,
+      {this.animate});
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.BarChart(
+      _seriesList(context),
+      animate: animate,
+      barGroupingType: charts.BarGroupingType.grouped,
+      vertical: false,
+      barRendererDecorator: new charts.BarLabelDecorator<String>(),
+      // Hide domain axis.
+      // domainAxis:
+      //  new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
+      behaviors: [
+        new charts.SeriesLegend(
+          position: charts.BehaviorPosition.bottom,
+        )
+      ],
+    );
+  }
+
+  int _cashflow(List<CategoryCashflowBudget> categories) {
+    return categories
+        .map((category) => category.cashflow)
+        .fold(0, (a, b) => a + b);
+  }
+
+  int _budget(List<CategoryCashflowBudget> categories) {
+    return categories
+        .map((category) => category.budget)
+        .fold(0, (a, b) => a + b);
+  }
+
+  List<charts.Series<Value, String>> _seriesList(BuildContext context) {
+    final fact = [
+      Value(getOperationTitle(context, OperationType.INPUT),
+          _cashflow(categoriesInput)),
+      Value(getOperationTitle(context, OperationType.OUTPUT),
+          _cashflow(categoriesOutput)),
+    ];
+
+    final budget = [
+      Value(getOperationTitle(context, OperationType.INPUT),
+          _budget(categoriesInput)),
+      Value(getOperationTitle(context, OperationType.OUTPUT),
+          _budget(categoriesOutput)),
+    ];
+
+    return [
+      new charts.Series<Value, String>(
+          id: AppLocalizations.of(context).titleFact,
+          domainFn: (Value sales, _) => sales.title,
+          measureFn: (Value sales, _) => sales.sum,
+          data: fact,
+          colorFn: (Value sales, _) =>
+              charts.MaterialPalette.deepOrange.shadeDefault,
+          // Set a label accessor to control the text of the bar label.
+          labelAccessorFn: (Value sales, _) => '${sales.sum.toString()}'),
+      new charts.Series<Value, String>(
+          id: AppLocalizations.of(context).titleBudget,
+          domainFn: (Value sales, _) => sales.title,
+          measureFn: (Value sales, _) => sales.sum,
+          data: budget,
+          colorFn: (Value sales, _) => charts.MaterialPalette.gray.shadeDefault,
+          // Set a label accessor to control the text of the bar label.
+          labelAccessorFn: (Value sales, _) => '${sales.sum.toString()}')
+    ];
+  }
+}
+
+class Value {
+  final String title;
+  final int sum;
+
+  Value(this.title, this.sum);
 }
 
 abstract class CashflowCardEvent {}
