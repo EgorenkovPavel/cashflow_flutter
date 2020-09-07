@@ -8,6 +8,7 @@ import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
+import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +28,11 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State<CategoryPage>
+    with SingleTickerProviderStateMixin{
   Category category;
   StreamSubscription<Category> subscription;
+  TabController _tabController;
 
   bool _editTitleMode = false;
   TextEditingController _titleController = TextEditingController();
@@ -44,6 +47,7 @@ class _CategoryPageState extends State<CategoryPage> {
         category = data;
       });
       _titleController.text = category.title;
+      _tabController = new TabController(length: 2, vsync: this);
     });
   }
 
@@ -52,42 +56,46 @@ class _CategoryPageState extends State<CategoryPage> {
     super.dispose();
     subscription.cancel();
     _titleController.dispose();
+    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: header(context),
           actions: <Widget>[appBarIcon()],
           bottom: TabBar(
             tabs: [
-              Tab(text: 'Main'),
               Tab(text: 'Budget'),
               Tab(text: 'Operations')
             ],
+            controller: _tabController,
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: <Widget>[
-            buildChart(context),
             buildBudgetList(context),
             buildOperationList(context),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => BudgetCard.open(context, widget.id),
-        ),
-      ),
-    );
-  }
+        floatingActionButton: AnimatedBuilder(
+          animation: _tabController.animation,
+          builder: (BuildContext context, Widget child) {
+            return Transform.scale(
+              scale: 1 - _tabController.animation.value,
+              child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    BudgetCard.open(context, widget.id);
+                  }
+              ),
+            );
+          },
 
-  Widget buildChart(BuildContext context) {
-    return Center(
-      child: Text('Here will be chart'),
+        )
+
     );
   }
 
