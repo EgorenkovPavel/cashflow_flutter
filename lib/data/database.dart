@@ -508,7 +508,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
       'FROM categories c ORDER BY title;',
       variables: [
@@ -539,7 +539,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget", '
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget", '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
       'FROM categories c '
       'WHERE operation_type = ? '
@@ -568,7 +568,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       OperationType type) {
     return customSelect(
       'SELECT *, '
-      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget" '
       'FROM categories c '
       'WHERE operation_type = ? '
       'ORDER BY title;',
