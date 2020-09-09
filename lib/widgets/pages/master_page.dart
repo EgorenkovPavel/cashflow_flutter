@@ -275,6 +275,9 @@ class _MasterPageState extends State<MasterPage>
             return newState is DataState;
           },
           builder: (BuildContext context, MasterState state) {
+            if (!(state is DataState)){
+              return SizedBox();
+            }
             return Column(
               children: <Widget>[
                 Padding(
