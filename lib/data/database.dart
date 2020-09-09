@@ -287,6 +287,7 @@ class Database extends _$Database {
     List<CategoryEntityData> categories = await categoryDao.getAllCategories();
     List<OperationEntityData> operations =
         await operationDao.getAllOperations();
+    List<BudgetData> budgets = await budgetDao.getAllBudgets();
 
     data.putIfAbsent(
         'account',
@@ -303,6 +304,12 @@ class Database extends _$Database {
     data.putIfAbsent(
         'operation',
         () => operations
+            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .toList());
+
+    data.putIfAbsent(
+        'budget',
+        () => budgets
             .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
             .toList());
 
@@ -372,6 +379,15 @@ class Database extends _$Database {
           }
         });
         await operationDao.batchInsert(operations);
+      } else if (key == 'budget'){
+        List<BudgetData> budgets = [];
+        value.forEach((dynamic d) async {
+          if (d is Map<String, dynamic>) {
+              budgets.add(BudgetData.fromJson(d,
+                  serializer: _DefaultValueSerializer()));
+          }
+        });
+        await budgetDao.batchInsert(budgets);
       }
     });
   }
@@ -1159,6 +1175,10 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   BudgetDao(this.db) : super(db);
 
+  Future<List<BudgetData>> getAllBudgets() {
+    return select(budget).get();
+  }
+
   Future<BudgetData> getBudget(int categoryId, DateTime date) {
     DateTime monthStart = DateTime(date.year, date.month);
     return (select(budget)
@@ -1198,7 +1218,8 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Future<void> insertBudget(BudgetData entity) {
     DateTime monthStart = DateTime(entity.date.year, entity.date.month);
-    return into(budget).insert(entity.copyWith(date: monthStart), mode: InsertMode.insertOrReplace);
+    return into(budget).insert(entity.copyWith(date: monthStart),
+        mode: InsertMode.insertOrReplace);
   }
 
   Future<void> updateBudget(BudgetData entity) {
@@ -1208,6 +1229,20 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
 
   Future<void> deleteBudget(BudgetData entity) {
     return delete(budget).delete(entity);
+  }
+
+  Future<void> batchInsert(List<BudgetData> budgets) async {
+    await batch((batch) {
+      batch.insertAll(
+        budget,
+        budgets
+            .map((p) => BudgetCompanion.insert(
+          date: p.date,
+          category: p.category,
+          sum: p.sum,
+        )).toList(),
+      );
+    });
   }
 }
 
