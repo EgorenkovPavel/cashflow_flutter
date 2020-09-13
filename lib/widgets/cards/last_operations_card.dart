@@ -21,14 +21,11 @@ class LastOperationsCard extends StatelessWidget {
           BlocBuilder<LastOperationsBloc, LastOperationsState>(
             builder: (BuildContext context, LastOperationsState state) {
               if (state is Empty) {
-                return Align(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(AppLocalizations.of(context).noOperations,
-                        style: DefaultTextStyle.of(context)
-                            .style
-                            .copyWith(color: Colors.black38)),
-                  ),
+                return ListTile(
+                  title: Text(AppLocalizations.of(context).noOperations,
+                      style: DefaultTextStyle.of(context)
+                          .style
+                          .copyWith(color: Colors.black38)),
                 );
               } else if (state is Loading) {
                 return Center(
