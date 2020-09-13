@@ -198,15 +198,15 @@ class Repository extends ChangeNotifier {
 
   //INTERNAL operations backup
 
-  Future backup(GoogleHttpClient httpClient, String catalogId) async {
+  Future backup(GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
-    var localFile = new File('${directory.path}/Cashflow backup.txt');
+    var localFile = new File('${directory.path}/${fileName}.txt');
     await localFile.writeAsString(jsonEncode(await getDbData()));
 
     var media = new drive.Media(localFile.openRead(), localFile.lengthSync());
 
     drive.File file = drive.File();
-    file.name = 'Cashflow backup';
+    file.name = fileName;
     file.parents = [catalogId];
     file.mimeType = 'application/json';
 

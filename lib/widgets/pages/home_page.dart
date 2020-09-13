@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
           switch (value) {
             case AppMenu.BACKUP:
               {
-                Navigator.of(context).pushNamed(BackupPage.routeName);
+                BackupPage.open(context);
                 break;
               }
           }

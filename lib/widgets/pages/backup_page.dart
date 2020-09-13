@@ -9,6 +9,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BackupPage extends StatelessWidget {
   static const routeName = '/backup';
 
+  static void open(BuildContext context) {
+    Navigator.of(context).pushNamed(routeName);
+  }
+
+  Widget sectionTitle(BuildContext context, String text) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.headline6,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,45 +33,38 @@ class BackupPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Google drive',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                  sectionTitle(context, 'Google drive'),
                   Flex(
                     direction: Axis.horizontal,
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       RaisedButton(
+                        color: Theme.of(context).primaryColor,
                         child: Text(
-                            AppLocalizations.of(context).backup.toUpperCase()),
-                        // onPressed: () {
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return Dialog(
-                        //         child: Text('TEST!!'),
-                        //       );
-                        //     },
-                        //   );
-                        // },
+                          AppLocalizations.of(context).backup.toUpperCase(),
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: () => _backup(context),
                       ),
                       RaisedButton(
+                        color: Theme.of(context).primaryColor,
                         child: Text(
-                            AppLocalizations.of(context).restore.toUpperCase()),
+                          AppLocalizations.of(context).restore.toUpperCase(),
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: () => _restore(context),
                       ),
                     ],
                   ),
-                  Text(
-                    AppLocalizations.of(context).titleDataControl,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                  sectionTitle(
+                      context, AppLocalizations.of(context).titleDataControl),
                   RaisedButton(
-                    child: Text(AppLocalizations.of(context)
-                        .btnDeleteAll
-                        .toUpperCase()),
+                    color: Theme.of(context).accentColor,
+                    child: Text(
+                      AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () => _deleteAll(context),
                   ),
                   BlocConsumer<BackupPageBloc, BackupPageState>(buildWhen:
@@ -91,6 +95,11 @@ class BackupPage extends StatelessWidget {
                       Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text(AppLocalizations.of(context)
                               .mesDatabaseDeleted)));
+                    } else if (state is GetHttpClientError) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            AppLocalizations.of(context).errorNoGPServices),
+                      ));
                     }
                   })
                 ],
@@ -113,13 +122,11 @@ class BackupPage extends StatelessWidget {
     }
     if (httpClient == null) return;
 
-    String catalogId = await DriveDialog.chooseFolder(context, httpClient);
-
-    if (catalogId == null){
-      return;
-    }
-
-    BlocProvider.of<BackupPageBloc>(context).add(Backup(httpClient, catalogId));
+    showDialog(
+        context: context,
+        builder: (context) => BackupDialog(
+              httpClient: httpClient,
+            ));
   }
 
   _restore(BuildContext context) async {
@@ -135,13 +142,11 @@ class BackupPage extends StatelessWidget {
     }
     if (httpClient == null) return;
 
-    String fileId = await DriveDialog.chooseFile(context, httpClient);
-
-    if(fileId == null){
-      return;
-    }
-
-    BlocProvider.of<BackupPageBloc>(context).add(Restore(httpClient, fileId));
+    showDialog(
+        context: context,
+        builder: (context) => RestoreDialog(
+              httpClient: httpClient,
+            ));
   }
 
   _deleteAll(BuildContext context) {
@@ -164,13 +169,160 @@ class BackupPage extends StatelessWidget {
   }
 }
 
+class BackupDialog extends StatefulWidget {
+  final GoogleHttpClient httpClient;
+
+  BackupDialog({Key key, this.httpClient}) : super(key: key);
+
+  @override
+  _BackupDialogState createState() => _BackupDialogState();
+}
+
+class _BackupDialogState extends State<BackupDialog> {
+  TextEditingController _controller =
+      TextEditingController(text: 'Cashflow backup');
+
+  DriveFile _folder = DriveFile(id: 'root', title: 'Root', isFolder: true);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.of(context).backup),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: AppLocalizations.of(context).title,
+              ),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              width: double.infinity,
+              decoration: BoxDecoration(border: Border.all(width: 1)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(_folder.title),
+                  IconButton(
+                    icon: Icon(Icons.arrow_drop_down),
+                    onPressed: () async {
+                      var newFolder = await DriveDialog.chooseFolder(
+                          context, widget.httpClient);
+                      if (newFolder != null) {
+                        setState(() {
+                          _folder = newFolder;
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        FlatButton(
+          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        RaisedButton(
+          color: Theme.of(context).primaryColor,
+          child: Text(AppLocalizations.of(context).backup.toUpperCase(),),
+          onPressed: () async {
+            if (_folder == null || _controller.text.isEmpty) {
+              return;
+            }
+
+            BlocProvider.of<BackupPageBloc>(context)
+                .add(Backup(widget.httpClient, _folder.id, _controller.text));
+
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+  }
+}
+
+class RestoreDialog extends StatefulWidget {
+  final GoogleHttpClient httpClient;
+
+  const RestoreDialog({Key key, this.httpClient}) : super(key: key);
+
+  @override
+  _RestoreDialogState createState() => _RestoreDialogState();
+}
+
+class _RestoreDialogState extends State<RestoreDialog> {
+  DriveFile _file;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.of(context).restore),
+      content: Container(
+        padding: EdgeInsets.all(16.0),
+        width: double.infinity,
+        decoration: BoxDecoration(border: Border.all(width: 1)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(_file?.title ?? ''),
+            IconButton(
+              icon: Icon(Icons.arrow_drop_down),
+              onPressed: () async {
+                var newFile =
+                    await DriveDialog.chooseFile(context, widget.httpClient);
+                if (newFile != null) {
+                  setState(() {
+                    _file = newFile;
+                  });
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        FlatButton(
+          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        RaisedButton(
+          color: Theme.of(context).primaryColor,
+          child: Text(AppLocalizations.of(context).restore.toUpperCase()),
+          onPressed: () async {
+            if (_file == null) {
+              return;
+            }
+
+            BlocProvider.of<BackupPageBloc>(context)
+                .add(Restore(widget.httpClient, _file.id));
+
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+  }
+}
+
 abstract class BackupPageEvent {}
 
 class Backup extends BackupPageEvent {
   final GoogleHttpClient client;
   final String catalogId;
+  final String fileName;
 
-  Backup(this.client, this.catalogId);
+  Backup(this.client, this.catalogId, this.fileName);
 }
 
 class Restore extends BackupPageEvent {
@@ -188,6 +340,8 @@ class InitialState extends BackupPageState {}
 
 class ProgressState extends BackupPageState {}
 
+class GetHttpClientError extends BackupPageState {}
+
 class BackupSuccessState extends BackupPageState {}
 
 class RestoreSuccessState extends BackupPageState {}
@@ -203,7 +357,7 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
   Stream<BackupPageState> mapEventToState(BackupPageEvent event) async* {
     if (event is Backup) {
       yield ProgressState();
-      await _repository.backup(event.client, event.catalogId);
+      await _repository.backup(event.client, event.catalogId, event.fileName);
       yield BackupSuccessState();
       yield InitialState();
     } else if (event is Restore) {
@@ -217,5 +371,15 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
       yield DeleteSuccessState();
       yield InitialState();
     }
+  }
+
+  Future<GoogleHttpClient> getHttpClient() async {
+    GoogleHttpClient httpClient;
+    try {
+      httpClient = await GoogleHttpClient.getClient();
+    } catch (e) {
+      return null;
+    }
+    return httpClient;
   }
 }

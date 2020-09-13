@@ -13,14 +13,14 @@ class DriveDialog extends StatefulWidget {
 
   const DriveDialog({this.httpClient, this.mode});
 
-  static Future<String> chooseFile(
+  static Future<DriveFile> chooseFile(
       BuildContext context, GoogleHttpClient httpClient) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             DriveDialog(httpClient: httpClient, mode: DialogMode.CHOOSE_FILE)));
   }
 
-  static Future<String> chooseFolder(
+  static Future<DriveFile> chooseFolder(
       BuildContext context, GoogleHttpClient httpClient) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DriveDialog(
@@ -32,8 +32,7 @@ class DriveDialog extends StatefulWidget {
 }
 
 class _DriveDialogState extends State<DriveDialog> {
-
-  lib.Stack<String> rootFolder = lib.Stack();
+  lib.Stack<DriveFile> rootFolder = lib.Stack();
   List<drive.File> folderList = [];
   ScrollController _listController = ScrollController();
 
@@ -42,7 +41,7 @@ class _DriveDialogState extends State<DriveDialog> {
       drive.FileList data = await drive.DriveApi(widget.httpClient).files.list(
           orderBy: 'folder,name,modifiedTime',
           spaces: 'drive',
-          q: "'${rootFolder.top()}' in parents and trashed = false",
+          q: "'${rootFolder.top().id}' in parents and trashed = false",
           //(mimeType = 'application/vnd.google-apps.folder')
           $fields: 'files(id,name,parents,mimeType,modifiedTime)');
 
@@ -57,7 +56,7 @@ class _DriveDialogState extends State<DriveDialog> {
 
   @override
   void initState() {
-    rootFolder.push('root');
+    rootFolder.push(DriveFile(id: 'root', title: 'root', isFolder: true));
     loadFolders();
     super.initState();
   }
@@ -102,10 +101,12 @@ class _DriveDialogState extends State<DriveDialog> {
                       f.mimeType == 'text/plain',
                   onTap: () {
                     if (isFolder) {
-                      rootFolder.push(f.id);
+                      rootFolder.push(DriveFile(
+                          id: f.id, title: f.name, isFolder: isFolder));
                       loadFolders();
-                    } else if (widget.mode == DialogMode.CHOOSE_FILE){
-                      Navigator.of(context).pop(f.id);
+                    } else if (widget.mode == DialogMode.CHOOSE_FILE) {
+                      Navigator.of(context).pop<DriveFile>(
+                          DriveFile(id: f.id, title: f.name, isFolder: false));
                     }
                   },
                 );
@@ -126,7 +127,7 @@ class _DriveDialogState extends State<DriveDialog> {
                   color: Theme.of(context).primaryColor,
                   onPressed: () {
                     if (widget.mode == DialogMode.CHOOSE_FOLDER) {
-                      Navigator.of(context).pop(rootFolder.top());
+                      Navigator.of(context).pop<DriveFile>(rootFolder.top());
                     }
                   },
                 )
@@ -137,4 +138,12 @@ class _DriveDialogState extends State<DriveDialog> {
       ),
     );
   }
+}
+
+class DriveFile {
+  final String title;
+  final String id;
+  final bool isFolder;
+
+  DriveFile({this.title, this.id, this.isFolder});
 }
