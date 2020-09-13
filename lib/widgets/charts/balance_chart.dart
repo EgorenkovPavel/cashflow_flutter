@@ -104,7 +104,7 @@ class _BalanceChartState extends State<BalanceChart> {
     ];
 
     return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
-        animate: true,
+        animate: false,
         primaryMeasureAxis: new charts.NumericAxisSpec(
             tickProviderSpec:
                 new charts.BasicNumericTickProviderSpec(zeroBound: false)),

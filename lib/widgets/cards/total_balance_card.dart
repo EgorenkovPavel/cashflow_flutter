@@ -5,6 +5,7 @@ import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,12 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
                   style: Theme.of(context).textTheme.headline6)
             ],
           ),
+        ),
+        if (accounts.isNotEmpty) Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: SizedBox(
+              height: 200.0,
+              child: BalanceChart()),
         ),
         SizeTransition(
           axis: Axis.vertical,
