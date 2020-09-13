@@ -62,17 +62,15 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
             }
           },
           buildWhen: (TotalBalanceState previous, TotalBalanceState current) {
-            return current is Empty || current is Loading || current is Success;
+            return current is Loading || current is Success;
           },
           builder: (BuildContext context, TotalBalanceState state) {
-            if (state is Empty) {
-              return emptyBody(context);
-            } else if (state is Loading) {
+            if (state is Loading) {
               return Center(child: CircularProgressIndicator());
             } else if (state is Success) {
               return filledBody(context, state.totalBalance, state.accounts);
             } else {
-              return  SizedBox();
+              return SizedBox();
             }
           },
         ),
@@ -103,20 +101,26 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         SizeTransition(
           axis: Axis.vertical,
           sizeFactor: animation,
-          child: Column(
-            children: accounts
-                .map((account) => ListTile(
-                      title: Text(account.title),
-                      trailing: Text(
-                        NumberFormat().format(account.balance),
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      onTap: () => AccountPage.open(context, account.id),
-                    ))
-                .toList(),
-          ),
+          child: accounts.isEmpty
+              ? ListTile(
+                  title: Text(AppLocalizations.of(context).noAccounts,
+                      style: DefaultTextStyle.of(context)
+                          .style
+                          .copyWith(color: Colors.black38)),
+                )
+              : Column(
+                  children: accounts
+                      .map((account) => ListTile(
+                            title: Text(account.title),
+                            trailing: Text(
+                              NumberFormat().format(account.balance),
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            onTap: () => AccountPage.open(context, account.id),
+                          ))
+                      .toList(),
+                ),
         ),
-        //addButton(context),
       ],
     );
   }
@@ -128,23 +132,30 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         FlatButton(
           child: BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
             builder: (BuildContext context, state) {
-            if(state is ExpandAccounts){
-              return Text(AppLocalizations.of(context).collapse.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),);
-            }else if(state is CollapseAccounts){
-              return Text(AppLocalizations.of(context).expand.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),);
-            }else {
-              return Text(AppLocalizations.of(context).expand.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),);
-            }
-          },),
+              if (state is ExpandAccounts) {
+                return Text(
+                  AppLocalizations.of(context).collapse.toUpperCase(),
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold),
+                );
+              } else if (state is CollapseAccounts) {
+                return Text(
+                  AppLocalizations.of(context).expand.toUpperCase(),
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold),
+                );
+              } else {
+                return Text(
+                  AppLocalizations.of(context).expand.toUpperCase(),
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold),
+                );
+              }
+            },
+          ),
           onPressed: () {
             _bloc.add(ChangeAccountsVisibility());
           },
@@ -163,21 +174,6 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
       ],
     );
   }
-
-  Widget emptyBody(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        CardTitle(AppLocalizations.of(context).accounts),
-        Align(
-            child: Text(AppLocalizations.of(context).noAccounts,
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .copyWith(color: Colors.black38))),
-        //addButton(context),
-      ],
-    );
-  }
 }
 
 abstract class TotalBalanceEvent {}
@@ -193,8 +189,6 @@ class AccountsChange extends TotalBalanceEvent {
 class ChangeAccountsVisibility extends TotalBalanceEvent {}
 
 abstract class TotalBalanceState {}
-
-class Empty extends TotalBalanceState {}
 
 class Loading extends TotalBalanceState {}
 
@@ -239,10 +233,13 @@ class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
         yield CollapseAccounts();
       }
     } else if (event is AccountsChange) {
+      if(_accounts.length != event.accounts.length && !_showAccounts){
+        _showAccounts = true;
+        yield ExpandAccounts();
+      }
       _accounts = event.accounts;
-      _totalBalance = _accounts
-          .map((account) => account.balance)
-          .fold(0, (a, b) => a + b);
+      _totalBalance =
+          _accounts.map((account) => account.balance).fold(0, (a, b) => a + b);
 
       yield Success(totalBalance: _totalBalance, accounts: _accounts);
     } else if (event is ChangeAccountsVisibility) {
