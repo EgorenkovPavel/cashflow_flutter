@@ -105,11 +105,11 @@ class Budget extends Table {
   IntColumn get sum => integer()();
 }
 
-class MonthBalance {
+class BalanceOnDate {
   DateTime date;
   int sum;
 
-  MonthBalance(this.date, this.sum);
+  BalanceOnDate(this.date, this.sum);
 }
 
 class AccountBalanceEntity {
@@ -379,12 +379,12 @@ class Database extends _$Database {
           }
         });
         await operationDao.batchInsert(operations);
-      } else if (key == 'budget'){
+      } else if (key == 'budget') {
         List<BudgetData> budgets = [];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
-              budgets.add(BudgetData.fromJson(d,
-                  serializer: _DefaultValueSerializer()));
+            budgets.add(
+                BudgetData.fromJson(d, serializer: _DefaultValueSerializer()));
           }
         });
         await budgetDao.batchInsert(budgets);
@@ -473,7 +473,38 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     });
   }
 
-  Stream<MonthBalance> watchBalance(DateTime date) {
+  Stream<List<BalanceOnDate>> watchBalanceOnPeriod(
+      DateTime start, DateTime end) {
+    final sumBalance = balanceEntity.sum.sum();
+    //final date = CustomExpression<DateTime>("DATE(balance.date, 'start of day')");
+
+    final day = balanceEntity.date.day;
+    final month = balanceEntity.date.month;
+    final year = balanceEntity.date.year;
+
+    final query = db.selectOnly(balanceEntity)
+      ..where(balanceEntity.date.isBiggerOrEqualValue(start) &
+          balanceEntity.date.isSmallerOrEqualValue(end));
+
+    query
+      ..addColumns([day, month, year, sumBalance])
+      ..groupBy([day, month, year])
+      ..orderBy([
+        OrderingTerm(expression: year),
+        OrderingTerm(expression: month),
+        OrderingTerm(expression: day)
+      ]);
+
+    return query.watch().map((list) {
+      return list
+          .map((c) => BalanceOnDate(
+              DateTime(c.read(year), c.read(month), c.read(day)),
+              c.read(sumBalance)))
+          .toList();
+    });
+  }
+
+  Stream<BalanceOnDate> watchBalance(DateTime date) {
     final sumBalance = balanceEntity.sum.sum();
 
     final query = db.selectOnly(balanceEntity)
@@ -482,7 +513,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
     return query
         .watchSingle()
-        .map((c) => MonthBalance(date, c.read(sumBalance) ?? 0));
+        .map((c) => BalanceOnDate(date, c.read(sumBalance) ?? 0));
   }
 }
 
@@ -1203,7 +1234,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         .watch();
   }
 
-  Stream<List<MonthBalance>> watchMonthBudget() {
+  Stream<List<BalanceOnDate>> watchMonthBudget() {
 //    return select(budget)
 //        .map((t) => MonthBudget(t.year, t.month, t.sum))
 //        .watch();
@@ -1211,7 +1242,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         'SELECT date, SUM(sum) as sum FROM budget GROUP BY date ORDER BY date',
         readsFrom: {budget}).watch().map((rows) {
       return rows
-          .map((t) => MonthBalance(t.readDateTime('date'), t.readInt('sum')))
+          .map((t) => BalanceOnDate(t.readDateTime('date'), t.readInt('sum')))
           .toList();
     });
   }
@@ -1237,10 +1268,11 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         budget,
         budgets
             .map((p) => BudgetCompanion.insert(
-          date: p.date,
-          category: p.category,
-          sum: p.sum,
-        )).toList(),
+                  date: p.date,
+                  category: p.category,
+                  sum: p.sum,
+                ))
+            .toList(),
       );
     });
   }
