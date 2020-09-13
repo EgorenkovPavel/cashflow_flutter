@@ -34,6 +34,16 @@ class BackupPage extends StatelessWidget {
                       RaisedButton(
                         child: Text(
                             AppLocalizations.of(context).backup.toUpperCase()),
+                        // onPressed: () {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return Dialog(
+                        //         child: Text('TEST!!'),
+                        //       );
+                        //     },
+                        //   );
+                        // },
                         onPressed: () => _backup(context),
                       ),
                       RaisedButton(
@@ -91,12 +101,23 @@ class BackupPage extends StatelessWidget {
   }
 
   _backup(BuildContext context) async {
-    final httpClient = await GoogleHttpClient.getClient();
-
+    var httpClient;
+    try {
+      httpClient = await GoogleHttpClient.getClient();
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context).errorNoGPServices),
+      ));
+      print(e.toString());
+      return;
+    }
     if (httpClient == null) return;
 
-    String catalogId = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+    String catalogId = await DriveDialog.chooseFolder(context, httpClient);
+
+    if (catalogId == null){
+      return;
+    }
 
     BlocProvider.of<BackupPageBloc>(context).add(Backup(httpClient, catalogId));
   }
@@ -114,7 +135,11 @@ class BackupPage extends StatelessWidget {
     }
     if (httpClient == null) return;
 
-    String fileId = await DriveDialog.open(context, httpClient);
+    String fileId = await DriveDialog.chooseFile(context, httpClient);
+
+    if(fileId == null){
+      return;
+    }
 
     BlocProvider.of<BackupPageBloc>(context).add(Restore(httpClient, fileId));
   }

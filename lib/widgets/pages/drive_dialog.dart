@@ -5,14 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
 
+enum DialogMode { CHOOSE_FILE, CHOOSE_FOLDER }
+
 class DriveDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
+  final DialogMode mode;
 
-  const DriveDialog(this.httpClient);
+  const DriveDialog({this.httpClient, this.mode});
 
-  static Future<String> open(BuildContext context, GoogleHttpClient httpClient) async {
-    return await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DriveDialog(httpClient)));
+  static Future<String> chooseFile(
+      BuildContext context, GoogleHttpClient httpClient) async {
+    return await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            DriveDialog(httpClient: httpClient, mode: DialogMode.CHOOSE_FILE)));
+  }
+
+  static Future<String> chooseFolder(
+      BuildContext context, GoogleHttpClient httpClient) async {
+    return await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DriveDialog(
+            httpClient: httpClient, mode: DialogMode.CHOOSE_FOLDER)));
   }
 
   @override
@@ -20,6 +32,7 @@ class DriveDialog extends StatefulWidget {
 }
 
 class _DriveDialogState extends State<DriveDialog> {
+
   lib.Stack<String> rootFolder = lib.Stack();
   List<drive.File> folderList = [];
   ScrollController _listController = ScrollController();
@@ -70,31 +83,33 @@ class _DriveDialogState extends State<DriveDialog> {
           children: <Widget>[
             Expanded(
                 child: ListView.separated(
-                  controller: _listController,
-                  itemCount: folderList.length,
-                  separatorBuilder: (BuildContext context, int index) {return Divider();},
-                  itemBuilder: (BuildContext context, int index) {
-                  var f = folderList[index];
+              controller: _listController,
+              itemCount: folderList.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider();
+              },
+              itemBuilder: (BuildContext context, int index) {
+                var f = folderList[index];
                 bool isFolder =
-                        f.mimeType == 'application/vnd.google-apps.folder';
-                    return ListTile(
-                      leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
-                      title: Text(f.name),
-                      subtitle: Text(
-                          'Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
-                      enabled: isFolder ||
-                          f.mimeType == 'application/json' ||
-                          f.mimeType == 'text/plain',
-                      onTap: () {
-                        if (isFolder) {
-                          rootFolder.push(f.id);
-                          loadFolders();
-                        } else {
-                          Navigator.of(context).pop(f.id);
-                        }
-                      },
-                    );
+                    f.mimeType == 'application/vnd.google-apps.folder';
+                return ListTile(
+                  leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
+                  title: Text(f.name),
+                  subtitle: Text(
+                      'Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
+                  enabled: isFolder ||
+                      f.mimeType == 'application/json' ||
+                      f.mimeType == 'text/plain',
+                  onTap: () {
+                    if (isFolder) {
+                      rootFolder.push(f.id);
+                      loadFolders();
+                    } else if (widget.mode == DialogMode.CHOOSE_FILE){
+                      Navigator.of(context).pop(f.id);
+                    }
                   },
+                );
+              },
             )),
             ButtonBar(
               children: <Widget>[
@@ -110,7 +125,9 @@ class _DriveDialogState extends State<DriveDialog> {
                       style: TextStyle(color: Colors.white)),
                   color: Theme.of(context).primaryColor,
                   onPressed: () {
-                    Navigator.of(context).pop(rootFolder.top());
+                    if (widget.mode == DialogMode.CHOOSE_FOLDER) {
+                      Navigator.of(context).pop(rootFolder.top());
+                    }
                   },
                 )
               ],
