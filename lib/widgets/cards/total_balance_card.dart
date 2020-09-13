@@ -212,7 +212,9 @@ class CollapseAccounts extends TotalBalanceState {}
 class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
   final Repository _repository;
 
-  bool showAccounts = false;
+  bool _showAccounts = false;
+  int _totalBalance = 0;
+  List<AccountBalance> _accounts = [];
   StreamSubscription<List<AccountBalance>> _subscription;
 
   TotalBalanceBloc(this._repository) : super(Loading()) {
@@ -230,16 +232,22 @@ class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
   @override
   Stream<TotalBalanceState> mapEventToState(TotalBalanceEvent event) async* {
     if (event is Fetch) {
-
+      yield Success(totalBalance: _totalBalance, accounts: _accounts);
+      if (_showAccounts) {
+        yield ExpandAccounts();
+      } else {
+        yield CollapseAccounts();
+      }
     } else if (event is AccountsChange) {
-      int _totalBalance = event.accounts
+      _accounts = event.accounts;
+      _totalBalance = _accounts
           .map((account) => account.balance)
           .fold(0, (a, b) => a + b);
 
-      yield Success(totalBalance: _totalBalance, accounts: event.accounts);
+      yield Success(totalBalance: _totalBalance, accounts: _accounts);
     } else if (event is ChangeAccountsVisibility) {
-      showAccounts = !showAccounts;
-      if (showAccounts) {
+      _showAccounts = !_showAccounts;
+      if (_showAccounts) {
         yield ExpandAccounts();
       } else {
         yield CollapseAccounts();
