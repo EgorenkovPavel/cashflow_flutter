@@ -16,7 +16,8 @@ class OperationList extends MainList<Operation> {
 
   @override
   Widget listBuilder(BuildContext context, List<Operation> operations) {
-    final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+    final ItemPositionsListener itemPositionsListener =
+        ItemPositionsListener.create();
 
     Widget positionsView() {
       return ValueListenableBuilder<Iterable<ItemPosition>>(
@@ -27,17 +28,17 @@ class OperationList extends MainList<Operation> {
             min = positions
                 .where((ItemPosition position) => position.itemTrailingEdge > 0)
                 .reduce((ItemPosition min, ItemPosition position) =>
-            position.itemTrailingEdge < min.itemTrailingEdge
-                ? position
-                : min)
+                    position.itemTrailingEdge < min.itemTrailingEdge
+                        ? position
+                        : min)
                 .index;
           }
 
-            if (min == null) {
-              return SizedBox();
-            }else{
-              return dateTitle(context, operations[min].date);
-            }
+          if (min == null) {
+            return SizedBox();
+          } else {
+            return OperationTitle(date: operations[min].date);
+          }
         },
       );
     }
@@ -67,24 +68,14 @@ class OperationList extends MainList<Operation> {
                   op1.day == op2.day) {
                 return Divider();
               } else {
-                return dateTitle(
-                  context,
-                  DateTime(op2.year, op2.month, op2.day),
+                return OperationTitle(
+                  date: DateTime(op2.year, op2.month, op2.day),
                 );
               }
             },
           ),
         ),
       ],
-    );
-  }
-
-  Widget dateTitle(BuildContext context, DateTime date) {
-    return Text(
-      DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-          .format(date ?? DateTime.now()),
-      style: Theme.of(context).textTheme.caption,
-      textAlign: TextAlign.center,
     );
   }
 
@@ -101,6 +92,22 @@ class OperationList extends MainList<Operation> {
     return EmptyListHint(
       title: AppLocalizations.of(context).emptyListOperations,
       hint: AppLocalizations.of(context).hintEmptyList,
+    );
+  }
+}
+
+class OperationTitle extends StatelessWidget {
+  final DateTime date;
+
+  const OperationTitle({Key key, this.date}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+          .format(date ?? DateTime.now()),
+      style: Theme.of(context).textTheme.caption,
+      textAlign: TextAlign.center,
     );
   }
 }
