@@ -1,5 +1,6 @@
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -86,6 +87,7 @@ class _BalanceChartState extends State<BalanceChart> {
       charts.Series<BalanceOnDate, DateTime>(
         id: 'Balance',
         data: balance,
+        displayName: AppLocalizations.of(context).titleTotalBalance,
         domainFn: (BalanceOnDate datum, int index) => datum.date,
         measureFn: (BalanceOnDate datum, int index) => datum.sum,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
@@ -96,9 +98,10 @@ class _BalanceChartState extends State<BalanceChart> {
       charts.Series<BalanceOnDate, DateTime>(
         id: 'Budget',
         data: budget,
+        displayName: AppLocalizations.of(context).titleBudget,
         domainFn: (BalanceOnDate datum, int index) => datum.date,
         measureFn: (BalanceOnDate datum, int index) => datum.sum,
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
         dashPatternFn: (_, __) => [4, 2],
       )
     ];
@@ -122,6 +125,9 @@ class _BalanceChartState extends State<BalanceChart> {
               .map((d) => charts.LineAnnotationSegment(
                   d, charts.RangeAnnotationAxisType.domain))
               .toList()),
+          new charts.SeriesLegend(
+            position: charts.BehaviorPosition.bottom,
+          )
         ]);
   }
 }
