@@ -14,19 +14,11 @@ class BalanceChart extends StatefulWidget {
 }
 
 class _BalanceChartState extends State<BalanceChart> {
-  static DateTime _now = DateTime.now();
+  // ADD BLoC
+  List<DateTime> dates = [];
 
-  static List<DateTime> dates = [
-    DateTime(_now.month == 1 ? _now.year - 1 : _now.year,
-        _now.month == 1 ? 12 : _now.month - 1),
-    DateTime(_now.year, _now.month),
-    DateTime(_now.month == 12 ? _now.year + 1 : _now.year,
-        _now.month == 12 ? 1 : _now.month + 1),
-  ];
-
-  static List<BalanceOnDate> balance =
-      dates.map((d) => BalanceOnDate(d, 0)).toList();
-  static List<BalanceOnDate> budget = [balance[1], balance[2]];
+  List<BalanceOnDate> balance = [];
+  List<BalanceOnDate> budget = [];
 
   int budgetSum = 0;
   int startBalance = 0;
@@ -48,9 +40,26 @@ class _BalanceChartState extends State<BalanceChart> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
+    DateTime _now = DateTime.now();
+
+    dates = [
+      DateTime(_now.month == 1 ? _now.year - 1 : _now.year,
+          _now.month == 1 ? 12 : _now.month - 1),
+      DateTime(_now.year, _now.month),
+      DateTime(_now.month == 12 ? _now.year + 1 : _now.year,
+          _now.month == 12 ? 1 : _now.month + 1),
+    ];
+
+    budget.add(BalanceOnDate(dates[1], 0));
+    budget.add(BalanceOnDate(dates[2], 0));
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Repository _repository = Provider.of<Repository>(context);
 
     _repository.watchBalanceOnPeriod(dates[0], dates[2]).listen((event) {
@@ -60,7 +69,10 @@ class _BalanceChartState extends State<BalanceChart> {
 
     _repository.watchBalance(dates[0])
       ..listen((d) {
-        startBalance = d.sum;
+        setState(() {
+          startBalance = d.sum;
+        });
+
         calcBalance();
       });
 
@@ -79,10 +91,7 @@ class _BalanceChartState extends State<BalanceChart> {
           budget[1] = BalanceOnDate(dates[2], budget[0].sum + budgetSum);
         });
       });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     List<charts.Series<BalanceOnDate, DateTime>> balanceSeries = [
       charts.Series<BalanceOnDate, DateTime>(
         id: 'Balance',
