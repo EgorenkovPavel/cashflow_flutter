@@ -3,6 +3,7 @@ import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/list_tiles/list_divider_operation.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
@@ -36,7 +37,7 @@ class LastOperationsCard extends StatelessWidget {
                   children: state.operations
                       .map<Widget>((op) => Column(
                             children: <Widget>[
-                              OperationTitle(date: op.date),
+                              ListDividerOperation.createByDate(context, op.date),
                               ListTileOperation(
                                 op,
                                 onTap: () => OperationPage.open(context, op.id),

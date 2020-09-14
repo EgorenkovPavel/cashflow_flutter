@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
+import 'package:cashflow/widgets/list_tiles/list_divider_operation.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
@@ -17,7 +18,7 @@ class OperationList extends MainList<Operation> {
   @override
   Widget listBuilder(BuildContext context, List<Operation> operations) {
     final ItemPositionsListener itemPositionsListener =
-        ItemPositionsListener.create();
+    ItemPositionsListener.create();
 
     Widget positionsView() {
       return ValueListenableBuilder<Iterable<ItemPosition>>(
@@ -28,16 +29,16 @@ class OperationList extends MainList<Operation> {
             min = positions
                 .where((ItemPosition position) => position.itemTrailingEdge > 0)
                 .reduce((ItemPosition min, ItemPosition position) =>
-                    position.itemTrailingEdge < min.itemTrailingEdge
-                        ? position
-                        : min)
+            position.itemTrailingEdge < min.itemTrailingEdge
+                ? position
+                : min)
                 .index;
           }
 
           if (min == null) {
             return SizedBox();
           } else {
-            return OperationTitle(date: operations[min].date);
+            return ListDividerOperation.createByDate(context, operations[min].date);
           }
         },
       );
@@ -61,17 +62,10 @@ class OperationList extends MainList<Operation> {
               if (index == operations.length - 1) {
                 return Divider();
               }
-              var op1 = operations[index].date;
-              var op2 = operations[index + 1].date;
-              if (op1.year == op2.year &&
-                  op1.month == op2.month &&
-                  op1.day == op2.day) {
-                return Divider();
-              } else {
-                return OperationTitle(
-                  date: DateTime(op2.year, op2.month, op2.day),
-                );
-              }
+
+              return ListDividerOperation(
+                operation1: operations[index],
+                operation2: operations[index + 1]);
             },
           ),
         ),
@@ -90,24 +84,13 @@ class OperationList extends MainList<Operation> {
   @override
   Widget emptyListHint(BuildContext context) {
     return EmptyListHint(
-      title: AppLocalizations.of(context).emptyListOperations,
-      hint: AppLocalizations.of(context).hintEmptyList,
+      title: AppLocalizations
+          .of(context)
+          .emptyListOperations,
+      hint: AppLocalizations
+          .of(context)
+          .hintEmptyList,
     );
   }
 }
 
-class OperationTitle extends StatelessWidget {
-  final DateTime date;
-
-  const OperationTitle({Key key, this.date}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-          .format(date ?? DateTime.now()),
-      style: Theme.of(context).textTheme.caption,
-      textAlign: TextAlign.center,
-    );
-  }
-}
