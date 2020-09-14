@@ -16,56 +16,73 @@ class LastOperationsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<LastOperationsBloc>(context)..add(Fetch());
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          CardTitle(AppLocalizations.of(context).titleLastOperations),
-          BlocBuilder<LastOperationsBloc, LastOperationsState>(
-            builder: (BuildContext context, LastOperationsState state) {
-              if (state is Empty) {
-                return ListTile(
-                  title: Text(AppLocalizations.of(context).noOperations,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .copyWith(color: Colors.black38)),
-                );
-              } else if (state is Loading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is Success) {
-                return Column(
-                  children: state.operations
-                      .map<Widget>((op) => Column(
-                            children: <Widget>[
-                              ListDividerOperation.createByDate(context, op.date),
-                              ListTileOperation(
-                                op,
-                                onTap: () => OperationPage.open(context, op.id),
-                              ),
-                            ],
-                          ))
-                      .toList(),
-                );
-              } else {
-                return SizedBox();
-              }
-            },
-          ),
-          ButtonBar(
-            children: [
-              FlatButton(
-                child:
-                    Text(AppLocalizations.of(context).btnShowAll.toUpperCase(),style: DefaultTextStyle.of(context)
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        CardTitle(AppLocalizations.of(context).titleLastOperations),
+        BlocBuilder<LastOperationsBloc, LastOperationsState>(
+          builder: (BuildContext context, LastOperationsState state) {
+            if (state is Empty) {
+              return ListTile(
+                title: Text(AppLocalizations.of(context).noOperations,
+                    style: DefaultTextStyle.of(context)
                         .style
-                        .copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
-                    ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(OperationListPage.routeName);
-                },
-              )
-            ],
-          )
-        ],
+                        .copyWith(color: Colors.black38)),
+              );
+            } else if (state is Loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is Success) {
+              return _operationList(context, state.operations);
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
+        ButtonBar(
+          children: [
+            FlatButton(
+              child: Text(
+                AppLocalizations.of(context).btnShowAll.toUpperCase(),
+                style: DefaultTextStyle.of(context).style.copyWith(
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(OperationListPage.routeName);
+              },
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _operationList(BuildContext context, List<Operation> operations) {
+    return Column(
+      children: operations.map<Widget>((op) {
+        int index = operations.indexOf(op);
+
+        Widget divider = Divider();
+        if (index == 0) {
+          divider = ListDividerOperation.createByDate(context, op.date);
+        } else {
+          divider = ListDividerOperation(
+            operation1: operations[index - 1],
+            operation2: operations[index],
+          );
+        }
+
+        return Column(
+          children: <Widget>[
+            divider,
+            ListTileOperation(
+              op,
+              onTap: () => OperationPage.open(context, op.id),
+            ),
+          ],
+        );
+      }).toList(),
     );
   }
 }
