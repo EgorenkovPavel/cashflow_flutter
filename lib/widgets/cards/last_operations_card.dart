@@ -1,13 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/cards/last_operations_bloc.dart';
 import 'package:cashflow/widgets/cards/widgets/card_bar_button.dart';
+import 'package:cashflow/widgets/cards/widgets/empty_card_hint.dart';
 import 'package:cashflow/widgets/pages/operation/list_divider_operation.dart';
 import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
-import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,12 +22,7 @@ class LastOperationsCard extends StatelessWidget {
         BlocBuilder<LastOperationsBloc, LastOperationsState>(
           builder: (BuildContext context, LastOperationsState state) {
             if (state is Empty) {
-              return ListTile(
-                title: Text(AppLocalizations.of(context).noOperations,
-                    style: DefaultTextStyle.of(context)
-                        .style
-                        .copyWith(color: Colors.black38)),
-              );
+              return EmptyCardHint(title: AppLocalizations.of(context).noOperations,);
             } else if (state is Loading) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -53,65 +48,31 @@ class LastOperationsCard extends StatelessWidget {
 
   Widget _operationList(BuildContext context, List<Operation> operations) {
     return Column(
-      children: operations.map<Widget>((op) {
-        int index = operations.indexOf(op);
+      children: operations
+          .map((op) {
+            int index = operations.indexOf(op);
 
-        Widget divider = Divider();
-        if (index == 0) {
-          divider = ListDividerOperation.createByDate(context, op.date);
-        } else {
-          divider = ListDividerOperation(
-            operation1: operations[index - 1],
-            operation2: operations[index],
-          );
-        }
+            Widget divider = Divider();
+            if (index == 0) {
+              divider = ListDividerOperation.createByDate(context, op.date);
+            } else {
+              divider = ListDividerOperation(
+                operation1: operations[index - 1],
+                operation2: operations[index],
+              );
+            }
 
-        return Column(
-          children: <Widget>[
-            divider,
-            ListTileOperation(
-              op,
-              onTap: () => OperationEditPage.open(context, op.id),
-            ),
-          ],
-        );
-      }).toList(),
+            return [
+              divider,
+              ListTileOperation(
+                op,
+                onTap: () => OperationEditPage.open(context, op.id),
+              ),
+            ];
+          })
+          .expand((element) => element)
+          .toList(),
     );
   }
 }
 
-abstract class LastOperationsEvent {}
-
-class Fetch extends LastOperationsEvent {}
-
-abstract class LastOperationsState {}
-
-class Loading extends LastOperationsState {}
-
-class Success extends LastOperationsState {
-  final List<Operation> operations;
-
-  Success(this.operations);
-}
-
-class Empty extends LastOperationsState {}
-
-class LastOperationsBloc
-    extends Bloc<LastOperationsEvent, LastOperationsState> {
-  final Repository _repository;
-
-  LastOperationsBloc(this._repository) : super(Loading());
-
-  @override
-  Stream<LastOperationsState> mapEventToState(
-      LastOperationsEvent event) async* {
-    await for (List<Operation> operations
-        in _repository.watchLastOperations(5)) {
-      if (operations.isEmpty) {
-        yield Empty();
-      } else {
-        yield Success(operations);
-      }
-    }
-  }
-}
