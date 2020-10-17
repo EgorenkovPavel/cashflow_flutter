@@ -4,6 +4,8 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/cards/card_bar_button.dart';
+import 'package:cashflow/widgets/cards/empty_card_hint.dart';
 import 'package:cashflow/widgets/pages/category/category_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,73 +16,54 @@ class CashflowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<CashflowCardBloc>(context)..add(Fetch());
-    return BlocBuilder<CashflowCardBloc, CashflowCardState>(
-      builder: (BuildContext context, CashflowCardState state) {
-        if (state is Empty) {
-          return successState(context, [], []);
-        } else if (state is Loading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is Success) {
-          return successState(
-              context, state.categoriesInput, state.categoriesOutput);
-         } else {
-          return SizedBox();
-        }
-      },
-    );
-  }
-
-  Column successState(
-      BuildContext context,
-      List<CategoryCashflowBudget> categoriesInput,
-      List<CategoryCashflowBudget> categoriesOutput) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: [
         CardTitle(AppLocalizations.of(context).titleCashflow),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: categoriesInput.isEmpty && categoriesOutput.isEmpty ?
-          ListTile(
-            title: Text(AppLocalizations.of(context).noCategories,
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .copyWith(color: Colors.black38)),
-          )
-           :SizedBox(
-            child: HorizontalBarLabelChart(categoriesInput, categoriesOutput),
-            height: 200,
-          ),
+        BlocBuilder<CashflowCardBloc, CashflowCardState>(
+          builder: (BuildContext context, CashflowCardState state) {
+            if (state is Empty) {
+              return successState(context, [], []);
+            } else if (state is Loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is Success) {
+              return successState(
+                  context, state.categoriesInput, state.categoriesOutput);
+            } else {
+              return SizedBox();
+            }
+          },
         ),
-         ButtonBar(
+        ButtonBar(
           children: [
-            FlatButton(
-              child: Text(
-                AppLocalizations.of(context).btnShowReports.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                ReportsPage.open(context);
-              },
+            CardBarButton(
+              title: AppLocalizations.of(context).btnShowReports,
+              onPressed: () => ReportsPage.open(context),
             ),
-            FlatButton(
-              child: Text(
-                AppLocalizations.of(context).categories.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                CategoryListPage.open(context);
-              },
-            )
+            CardBarButton(
+              title: AppLocalizations.of(context).categories,
+              onPressed: () => CategoryListPage.open(context),
+            ),
           ],
         )
       ],
+    );
+  }
+
+  Widget successState(
+      BuildContext context,
+      List<CategoryCashflowBudget> categoriesInput,
+      List<CategoryCashflowBudget> categoriesOutput) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: categoriesInput.isEmpty && categoriesOutput.isEmpty
+          ? EmptyCardHint(title: AppLocalizations.of(context).noCategories,)
+          : SizedBox(
+              child: HorizontalBarLabelChart(categoriesInput, categoriesOutput),
+              height: 200,
+            ),
     );
   }
 }

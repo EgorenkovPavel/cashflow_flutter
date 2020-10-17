@@ -1,5 +1,7 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/widgets/cards/card_bar_button.dart';
+import 'package:cashflow/widgets/cards/empty_card_hint.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
@@ -97,17 +99,6 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
     );
   }
 
-  FlatButton _buttonBarButton({String title, Function onPressed}) {
-    return FlatButton(
-      child: Text(
-        title.toUpperCase(),
-        style: DefaultTextStyle.of(context).style.copyWith(
-            color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
-      ),
-      onPressed: onPressed,
-    );
-  }
-
   Widget buttonBar(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.spaceBetween,
@@ -115,24 +106,24 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
           builder: (BuildContext context, state) {
             if (state is ExpandAccounts) {
-              return _buttonBarButton(
+              return CardBarButton(
                 title: AppLocalizations.of(context).collapse,
                 onPressed: () => _bloc.add(ChangeAccountsVisibility()),
               );
             } else if (state is CollapseAccounts) {
-              return _buttonBarButton(
+              return CardBarButton(
                 title: AppLocalizations.of(context).expand,
                 onPressed: () => _bloc.add(ChangeAccountsVisibility()),
               );
             } else {
-              return _buttonBarButton(
+              return CardBarButton(
                 title: AppLocalizations.of(context).expand.toUpperCase(),
                 onPressed: () => _bloc.add(ChangeAccountsVisibility()),
               );
             }
           },
         ),
-        _buttonBarButton(
+        CardBarButton(
           title: AppLocalizations.of(context).btnAddAccount,
           onPressed: () => AccountInputPage.open(context).then((res) {
             if (res) {
@@ -177,12 +168,7 @@ class _AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (accounts.isEmpty) {
-      return ListTile(
-        title: Text(AppLocalizations.of(context).noAccounts,
-            style: DefaultTextStyle.of(context)
-                .style
-                .copyWith(color: Colors.black38)),
-      );
+      return EmptyCardHint(title: AppLocalizations.of(context).noAccounts,);
     } else {
       return Column(
         children: accounts
