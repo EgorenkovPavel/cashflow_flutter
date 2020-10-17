@@ -6,8 +6,8 @@ import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/list_tiles/list_divider_operation.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:cashflow/widgets/lists/main_list.dart';
-import 'package:cashflow/widgets/pages/master_page.dart';
-import 'package:cashflow/widgets/pages/operation_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -73,11 +73,11 @@ class OperationList extends MainList<Operation> {
   }
 
   static void addItem(BuildContext context) {
-    Navigator.of(context).pushNamed(MasterPage.routeName);
+    Navigator.of(context).pushNamed(OperationInputPage.routeName);
   }
 
   void onItemTap(BuildContext context, item) {
-    OperationPage.open(context, item.id);
+    OperationEditPage.open(context, item.id);
   }
 
   @override

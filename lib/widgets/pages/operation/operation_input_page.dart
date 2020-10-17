@@ -7,22 +7,22 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/carousel.dart';
-import 'package:cashflow/widgets/pages/account_input_page.dart';
-import 'package:cashflow/widgets/pages/category_input_page.dart';
+import 'package:cashflow/widgets/pages/account/account_input_page.dart';
+import 'package:cashflow/widgets/pages/category/category_input_page.dart';
 import 'package:cashflow/widgets/keyboard.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class MasterPage extends StatefulWidget {
+class OperationInputPage extends StatefulWidget {
   static const routeName = '/masterPageNew';
 
   @override
-  _MasterPageState createState() => _MasterPageState();
+  _OperationInputPageState createState() => _OperationInputPageState();
 }
 
-class _MasterPageState extends State<MasterPage>
+class _OperationInputPageState extends State<OperationInputPage>
     with SingleTickerProviderStateMixin {
   MasterBloc _bloc;
   AnimationController animationController;

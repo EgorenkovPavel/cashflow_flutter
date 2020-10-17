@@ -9,7 +9,7 @@ import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/google_http_client.dart';
-import 'package:cashflow/widgets/pages/operation_filter_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:googleapis/drive/v3.dart' as drive;

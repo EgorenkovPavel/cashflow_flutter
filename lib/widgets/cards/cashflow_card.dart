@@ -4,7 +4,7 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
-import 'package:cashflow/widgets/lists/category_list.dart';
+import 'package:cashflow/widgets/pages/category/category_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class CashflowCard extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                CategoryList.open(context);
+                CategoryListPage.open(context);
               },
             )
           ],

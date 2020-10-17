@@ -3,7 +3,7 @@ import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
-import 'package:cashflow/widgets/pages/backup_page.dart';
+import 'package:cashflow/widgets/pages/service/backup_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

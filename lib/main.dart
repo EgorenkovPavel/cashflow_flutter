@@ -2,19 +2,18 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
-import 'package:cashflow/widgets/pages/account_input_page.dart';
+import 'package:cashflow/widgets/pages/account/account_input_page.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
-import 'package:cashflow/widgets/pages/category_input_page.dart';
-import 'package:cashflow/widgets/lists/category_list.dart';
-import 'package:cashflow/widgets/pages/account_edit_page.dart';
-import 'package:cashflow/widgets/pages/backup_page.dart';
-import 'package:cashflow/widgets/pages/cashflow_page.dart';
-import 'package:cashflow/widgets/pages/category_edit_page.dart';
+import 'package:cashflow/widgets/pages/category/category_input_page.dart';
+import 'package:cashflow/widgets/pages/category/category_list_page.dart';
+import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
+import 'package:cashflow/widgets/pages/service/backup_page.dart';
+import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
-import 'package:cashflow/widgets/pages/master_page.dart';
-import 'package:cashflow/widgets/pages/operation_filter_page.dart';
-import 'package:cashflow/widgets/pages/operation_list_page.dart';
-import 'package:cashflow/widgets/pages/operation_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -89,8 +88,8 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
           HomePage.routeName: (BuildContext context) => HomePage(),
-          CategoryList.routeName: (BuildContext context) => CategoryList(),
-          MasterPage.routeName: (BuildContext context) => MasterPage(),
+          CategoryListPage.routeName: (BuildContext context) => CategoryListPage(),
+          OperationInputPage.routeName: (BuildContext context) => OperationInputPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
           OperationListPage.routeName: (BuildContext context) => OperationListPage(),
           ReportsPage.routeName: (BuildContext context) => ReportsPage(),
@@ -108,13 +107,9 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                   builder: (context) => CategoryEditPage(id: settings.arguments));
             }
-            case OperationPage.routeName: {
+            case OperationEditPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => OperationPage(id: settings.arguments));
-            }
-            case CashflowPage.routeName: {
-              return MaterialPageRoute(
-                builder: (context) => CashflowPage(type: settings.arguments));
+                  builder: (context) => OperationEditPage(id: settings.arguments));
             }
             default: return null;
           }

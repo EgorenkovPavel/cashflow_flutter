@@ -3,23 +3,23 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
-import 'package:cashflow/widgets/pages/category_input_page.dart';
-import 'package:cashflow/widgets/pages/category_edit_page.dart';
+import 'package:cashflow/widgets/pages/category/category_input_page.dart';
+import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryList extends StatefulWidget {
+class CategoryListPage extends StatefulWidget {
   static const String routeName = '/categories';
 
   static open(BuildContext context) {
-    Navigator.of(context).pushNamed(CategoryList.routeName);
+    Navigator.of(context).pushNamed(CategoryListPage.routeName);
   }
 
   @override
-  _CategoryListState createState() => _CategoryListState();
+  _CategoryListPageState createState() => _CategoryListPageState();
 }
 
-class _CategoryListState extends State<CategoryList>
+class _CategoryListPageState extends State<CategoryListPage>
     with SingleTickerProviderStateMixin{
 
   static const List<OperationType> tabTypes = [

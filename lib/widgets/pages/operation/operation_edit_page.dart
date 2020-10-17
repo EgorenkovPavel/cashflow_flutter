@@ -12,23 +12,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class OperationPage extends StatefulWidget {
+class OperationEditPage extends StatefulWidget {
   static const routeName = '/operation';
 
   static open(BuildContext context, int operationId) {
     Navigator.of(context)
-        .pushNamed(OperationPage.routeName, arguments: operationId);
+        .pushNamed(OperationEditPage.routeName, arguments: operationId);
   }
 
   final int id;
 
-  const OperationPage({Key key, this.id}) : super(key: key);
+  const OperationEditPage({Key key, this.id}) : super(key: key);
 
   @override
-  _OperationPageState createState() => _OperationPageState();
+  _OperationEditPageState createState() => _OperationEditPageState();
 }
 
-class _OperationPageState extends State<OperationPage> {
+class _OperationEditPageState extends State<OperationEditPage> {
   final _formKey = GlobalKey<FormState>();
 
   OperationType _type;

@@ -1,7 +1,7 @@
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/lists/operation_list.dart';
-import 'package:cashflow/widgets/pages/operation_filter_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

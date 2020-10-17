@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
-import 'package:cashflow/widgets/pages/drive_dialog.dart';
+import 'package:cashflow/widgets/pages/service/drive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
