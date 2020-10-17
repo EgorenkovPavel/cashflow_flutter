@@ -6,9 +6,9 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/cards/card_bar_button.dart';
 import 'package:cashflow/widgets/cards/empty_card_hint.dart';
+import 'package:cashflow/widgets/charts/month_cashflow_chart.dart';
 import 'package:cashflow/widgets/pages/category/category_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,95 +61,11 @@ class CashflowCard extends StatelessWidget {
       child: categoriesInput.isEmpty && categoriesOutput.isEmpty
           ? EmptyCardHint(title: AppLocalizations.of(context).noCategories,)
           : SizedBox(
-              child: HorizontalBarLabelChart(categoriesInput, categoriesOutput),
+              child: MonthCashflowChart(categoriesInput, categoriesOutput),
               height: 200,
             ),
     );
   }
-}
-
-class HorizontalBarLabelChart extends StatelessWidget {
-  final List<CategoryCashflowBudget> categoriesInput;
-  final List<CategoryCashflowBudget> categoriesOutput;
-
-  final bool animate;
-
-  HorizontalBarLabelChart(this.categoriesInput, this.categoriesOutput,
-      {this.animate});
-
-  @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      _seriesList(context),
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      vertical: false,
-      barRendererDecorator: new charts.BarLabelDecorator<String>(),
-      // Hide domain axis.
-      // domainAxis:
-      //  new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-      behaviors: [
-        new charts.SeriesLegend(
-          position: charts.BehaviorPosition.bottom,
-        )
-      ],
-    );
-  }
-
-  int _cashflow(List<CategoryCashflowBudget> categories) {
-    return categories
-        .map((category) => category.cashflow)
-        .fold(0, (a, b) => a + b);
-  }
-
-  int _budget(List<CategoryCashflowBudget> categories) {
-    return categories
-        .map((category) => category.budget)
-        .fold(0, (a, b) => a + b);
-  }
-
-  List<charts.Series<Value, String>> _seriesList(BuildContext context) {
-    final fact = [
-      Value(getOperationTitle(context, OperationType.INPUT),
-          _cashflow(categoriesInput)),
-      Value(getOperationTitle(context, OperationType.OUTPUT),
-          _cashflow(categoriesOutput)),
-    ];
-
-    final budget = [
-      Value(getOperationTitle(context, OperationType.INPUT),
-          _budget(categoriesInput)),
-      Value(getOperationTitle(context, OperationType.OUTPUT),
-          _budget(categoriesOutput)),
-    ];
-
-    return [
-      new charts.Series<Value, String>(
-          id: AppLocalizations.of(context).titleFact,
-          domainFn: (Value sales, _) => sales.title,
-          measureFn: (Value sales, _) => sales.sum,
-          data: fact,
-          colorFn: (Value sales, _) =>
-              charts.MaterialPalette.deepOrange.shadeDefault,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (Value sales, _) => '${sales.sum.toString()}'),
-      new charts.Series<Value, String>(
-          id: AppLocalizations.of(context).titleBudget,
-          domainFn: (Value sales, _) => sales.title,
-          measureFn: (Value sales, _) => sales.sum,
-          data: budget,
-          colorFn: (Value sales, _) => charts.MaterialPalette.gray.shadeDefault,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (Value sales, _) => '${sales.sum.toString()}')
-    ];
-  }
-}
-
-class Value {
-  final String title;
-  final int sum;
-
-  Value(this.title, this.sum);
 }
 
 abstract class CashflowCardEvent {}
