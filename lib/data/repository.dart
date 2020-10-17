@@ -163,7 +163,7 @@ class Repository extends ChangeNotifier {
       recAccount: entity.recAccount,
       sum: entity.sum,
     );
-    db.operationDao.insertOperation(
+    return db.operationDao.insertOperation(
         const OperationMapper().mapToOperationData(newOperation));
   }
 
@@ -200,7 +200,7 @@ class Repository extends ChangeNotifier {
 
   Future backup(GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
-    var localFile = new File('${directory.path}/${fileName}.txt');
+    var localFile = new File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(await getDbData()));
 
     var media = new drive.Media(localFile.openRead(), localFile.lengthSync());

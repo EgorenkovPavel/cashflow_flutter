@@ -9,7 +9,6 @@ import 'package:cashflow/widgets/lists/main_list.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends MainList<Operation> {

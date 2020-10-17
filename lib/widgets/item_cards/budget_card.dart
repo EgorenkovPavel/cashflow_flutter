@@ -254,7 +254,7 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
     } else if (event is Save) {
       if(_oldBudgetData != null) {
         await _repository.deleteBudget(_oldBudgetData);
-        _oldBudgetData == null;
+        _oldBudgetData = null;
       }
       _repository.insertBudget(BudgetData(
           date: DateTime(_year, _month),

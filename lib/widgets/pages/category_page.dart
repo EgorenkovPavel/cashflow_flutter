@@ -10,7 +10,6 @@ import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
-import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

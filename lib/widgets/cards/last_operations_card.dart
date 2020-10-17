@@ -5,7 +5,6 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/list_tiles/list_divider_operation.dart';
 import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
-import 'package:cashflow/widgets/lists/operation_list.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:flutter/material.dart';

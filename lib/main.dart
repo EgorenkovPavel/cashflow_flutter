@@ -1,7 +1,7 @@
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
-import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
 import 'package:cashflow/widgets/item_cards/category_card.dart';
@@ -9,19 +9,18 @@ import 'package:cashflow/widgets/lists/category_list.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
+import 'package:cashflow/widgets/pages/category_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
-import 'package:cashflow/widgets/pages/category_page.dart';
-import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation_filter_page.dart';
 import 'package:cashflow/widgets/pages/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/operation_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'data/repository.dart';
 

@@ -5,12 +5,10 @@ import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
-import 'package:cashflow/widgets/pages/cashflow_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class CashflowCard extends StatelessWidget {
   @override
