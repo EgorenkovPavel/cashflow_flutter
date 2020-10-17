@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
-import 'package:cashflow/widgets/list_tiles/list_divider_operation.dart';
-import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
-import 'package:cashflow/widgets/lists/main_list.dart';
-import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
+import 'package:cashflow/widgets/pages/operation/list_divider_operation.dart';
+import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class OperationList extends MainList<Operation> {
-  OperationList(Stream<List<Operation>> stream) : super(stream);
+class OperationList extends StatelessWidget {
 
-  @override
+  final Stream<List<Operation>> stream;
+
+  OperationList(this.stream);
+
   Widget listBuilder(BuildContext context, List<Operation> operations) {
     final ItemPositionsListener itemPositionsListener =
     ItemPositionsListener.create();
@@ -91,5 +92,25 @@ class OperationList extends MainList<Operation> {
           .hintEmptyList,
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<Operation>>(
+      stream: stream,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.data.isEmpty) {
+          return emptyListHint(context);
+        }
+
+        final List<Operation> items = snapshot.data ?? List<Operation>();
+
+        return listBuilder(context, items);
+      },
+    );
+  }
+
 }
 

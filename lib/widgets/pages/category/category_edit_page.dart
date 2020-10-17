@@ -7,9 +7,9 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
-import 'package:cashflow/widgets/item_cards/budget_card.dart';
-import 'package:cashflow/widgets/list_tiles/list_tile_budget.dart';
-import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
+import 'package:cashflow/widgets/pages/budget/budget_card.dart';
+import 'package:cashflow/widgets/pages/budget/list_tile_budget.dart';
+import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

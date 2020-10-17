@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
-import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
+import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
