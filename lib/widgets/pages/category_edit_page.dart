@@ -13,23 +13,23 @@ import 'package:cashflow/widgets/list_tiles/list_tile_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryPage extends StatefulWidget {
+class CategoryEditPage extends StatefulWidget {
   static const routeName = '/category';
 
   static open(BuildContext context, int categoryId) {
     Navigator.of(context)
-        .pushNamed(CategoryPage.routeName, arguments: categoryId);
+        .pushNamed(CategoryEditPage.routeName, arguments: categoryId);
   }
 
   final int id;
 
-  const CategoryPage({Key key, this.id}) : super(key: key);
+  const CategoryEditPage({Key key, this.id}) : super(key: key);
 
   @override
-  _CategoryPageState createState() => _CategoryPageState();
+  _CategoryEditPageState createState() => _CategoryEditPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage>
+class _CategoryEditPageState extends State<CategoryEditPage>
     with SingleTickerProviderStateMixin{
   Category category;
   StreamSubscription<Category> subscription;

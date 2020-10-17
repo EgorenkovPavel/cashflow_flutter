@@ -7,8 +7,8 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/carousel.dart';
-import 'package:cashflow/widgets/item_cards/account_card.dart';
-import 'package:cashflow/widgets/item_cards/category_card.dart';
+import 'package:cashflow/widgets/pages/account_input_page.dart';
+import 'package:cashflow/widgets/pages/category_input_page.dart';
 import 'package:cashflow/widgets/keyboard.dart';
 import 'package:cashflow/widgets/operation_type_radio_button.dart';
 import 'package:flutter/material.dart';
@@ -298,26 +298,26 @@ class _MasterPageState extends State<MasterPage>
                     children: <Widget>[
                       buildList(
                           AppLocalizations.of(context).accounts,
-                          () => AccountCard.open(context),
+                          () => AccountInputPage.open(context),
                           accountPageView(context)),
                       (state as DataState).type == OperationType.INPUT
                           ? buildList(
                               AppLocalizations.of(context).categories,
-                              () => CategoryCard.open(context,
+                              () => CategoryInputPage.open(context,
                                   type: OperationType.INPUT),
                               categoryInPageView(context))
                           : SizedBox(),
                       (state as DataState).type == OperationType.OUTPUT
                           ? buildList(
                               AppLocalizations.of(context).categories,
-                              () => CategoryCard.open(context,
+                              () => CategoryInputPage.open(context,
                                   type: OperationType.OUTPUT),
                               categoryOutPageView(context))
                           : SizedBox(),
                       (state as DataState).type == OperationType.TRANSFER
                           ? buildList(
                               AppLocalizations.of(context).accounts,
-                              () => AccountCard.open(context),
+                              () => AccountInputPage.open(context),
                               recAccountPageView(context))
                           : SizedBox(),
                     ],

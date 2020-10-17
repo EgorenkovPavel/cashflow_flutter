@@ -1,6 +1,6 @@
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/item_cards/category_card.dart';
+import 'package:cashflow/widgets/pages/category_input_page.dart';
 import 'package:flutter/material.dart';
 
 class CashflowPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class CashflowPage extends StatelessWidget {
 //          .watchCategoryCashflowBudgetByType(DateTime.now(), type)),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => CategoryCard.open(context, type: type),
+        onPressed: () => CategoryInputPage.open(context, type: type),
       ),
     );
   }

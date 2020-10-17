@@ -2,8 +2,8 @@ import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/charts/balance_chart.dart';
-import 'package:cashflow/widgets/item_cards/account_card.dart';
-import 'package:cashflow/widgets/pages/account_page.dart';
+import 'package:cashflow/widgets/pages/account_input_page.dart';
+import 'package:cashflow/widgets/pages/account_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -134,7 +134,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         ),
         _buttonBarButton(
           title: AppLocalizations.of(context).btnAddAccount,
-          onPressed: () => AccountCard.open(context).then((res) {
+          onPressed: () => AccountInputPage.open(context).then((res) {
             if (res) {
               _bloc.add(AddAccount());
             }
@@ -201,7 +201,7 @@ class _AccountList extends StatelessWidget {
         NumberFormat().format(account.balance),
         style: Theme.of(context).textTheme.headline6,
       ),
-      onTap: () => AccountPage.open(context, account.id),
+      onTap: () => AccountEditPage.open(context, account.id),
     );
   }
 }

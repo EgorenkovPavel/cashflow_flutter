@@ -9,23 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-class AccountPage extends StatefulWidget {
+class AccountEditPage extends StatefulWidget {
   static const routeName = '/account';
 
   static open(BuildContext context, int accountId) {
     Navigator.of(context)
-        .pushNamed(AccountPage.routeName, arguments: accountId);
+        .pushNamed(AccountEditPage.routeName, arguments: accountId);
   }
 
   final int id;
 
-  const AccountPage({Key key, this.id}) : super(key: key);
+  const AccountEditPage({Key key, this.id}) : super(key: key);
 
   @override
-  _AccountPageState createState() => _AccountPageState();
+  _AccountEditPageState createState() => _AccountEditPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountEditPageState extends State<AccountEditPage> {
 
   AccountPageBloc _bloc;
   TextEditingController _titleController = TextEditingController();
@@ -88,8 +88,8 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Widget header(BuildContext context) {
-    return BlocBuilder<AccountPageBloc, AccountPageState>(
-      builder: (BuildContext context, AccountPageState state) {
+    return BlocBuilder<AccountPageBloc, AccountEditPageState>(
+      builder: (BuildContext context, AccountEditPageState state) {
 
         _titleController.text = state.accountTitle;
 
@@ -109,8 +109,8 @@ class _AccountPageState extends State<AccountPage> {
 
   Widget appBarIcon() {
 
-    return BlocBuilder<AccountPageBloc, AccountPageState>(
-      builder: (BuildContext context, AccountPageState state) {
+    return BlocBuilder<AccountPageBloc, AccountEditPageState>(
+      builder: (BuildContext context, AccountEditPageState state) {
         if (state.editTitleMode) {
           return IconButton(
             icon: Icon(
@@ -151,36 +151,36 @@ class SaveTitle extends AccountPageEvent{
   SaveTitle(this.title);
 }
 
-class AccountPageState{
+class AccountEditPageState{
   final bool editTitleMode;
   final String accountTitle;
 
-  AccountPageState(this.editTitleMode, this.accountTitle);
+  AccountEditPageState(this.editTitleMode, this.accountTitle);
 }
 
-class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState>{
+class AccountPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
 
   final Repository _repository;
 
   bool _editTitleMode = false;
   Account _account;
 
-  AccountPageBloc(this._repository) : super(AccountPageState(false, ''));
+  AccountPageBloc(this._repository) : super(AccountEditPageState(false, ''));
 
   @override
-  Stream<AccountPageState> mapEventToState(AccountPageEvent event) async* {
+  Stream<AccountEditPageState> mapEventToState(AccountPageEvent event) async* {
 
     if(event is Fetch){
       print(event.id);
       _account = await _repository.getAccountById(event.id);
-      yield AccountPageState(_editTitleMode, _account.title);
+      yield AccountEditPageState(_editTitleMode, _account.title);
     }else if(event is EditTitle){
       _editTitleMode = true;
-      yield AccountPageState(_editTitleMode, _account.title);
+      yield AccountEditPageState(_editTitleMode, _account.title);
     }else if(event is SaveTitle){
         _editTitleMode = false;
         _account = _account.copyWith(title: event.title);
-        yield AccountPageState(_editTitleMode, _account.title);
+        yield AccountEditPageState(_editTitleMode, _account.title);
 
         _repository.updateAccount(_account);
     }

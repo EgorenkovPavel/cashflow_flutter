@@ -7,10 +7,10 @@ import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CategoryCard extends StatefulWidget {
+class CategoryInputPage extends StatefulWidget {
   final OperationType type;
 
-  CategoryCard({this.type});
+  CategoryInputPage({this.type});
 
   static void open(BuildContext context, {OperationType type}) {
     showDialog(
@@ -18,7 +18,7 @@ class CategoryCard extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
-              child: CategoryCard(
+              child: CategoryInputPage(
                 type: type,
               ),
               shape: RoundedRectangleBorder(
@@ -27,10 +27,10 @@ class CategoryCard extends StatefulWidget {
   }
 
   @override
-  _CategoryCardState createState() => _CategoryCardState();
+  _CategoryInputPageState createState() => _CategoryInputPageState();
 }
 
-class _CategoryCardState extends State<CategoryCard> {
+class _CategoryInputPageState extends State<CategoryInputPage> {
   CategoryCardBloc _bloc;
   final TextEditingController titleController = TextEditingController();
 
@@ -66,7 +66,7 @@ class _CategoryCardState extends State<CategoryCard> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: BlocBuilder<CategoryCardBloc, CategoryCardState>(
+                child: BlocBuilder<CategoryCardBloc, CategoryInputPageState>(
                     builder: (context, state) {
                   if (state is InitialState) {
                     return Text(getOperationTitle(context, widget.type));
@@ -115,17 +115,17 @@ class Initial extends CategoryCardEvent {
   Initial(this.type);
 }
 
-abstract class CategoryCardState {}
+abstract class CategoryInputPageState {}
 
-class InitialState extends CategoryCardState {
+class InitialState extends CategoryInputPageState {
   final OperationType type;
 
   InitialState(this.type);
 }
 
-class Saved extends CategoryCardState {}
+class Saved extends CategoryInputPageState {}
 
-class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryCardState> {
+class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryInputPageState> {
   final Repository _repository;
 
   OperationType _type;
@@ -133,7 +133,7 @@ class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryCardState> {
   CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
 
   @override
-  Stream<CategoryCardState> mapEventToState(CategoryCardEvent event) async* {
+  Stream<CategoryInputPageState> mapEventToState(CategoryCardEvent event) async* {
     if (event is Initial) {
       _type = event.type;
       yield InitialState(_type);

@@ -3,8 +3,8 @@ import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
-import 'package:cashflow/widgets/item_cards/category_card.dart';
-import 'package:cashflow/widgets/pages/category_page.dart';
+import 'package:cashflow/widgets/pages/category_input_page.dart';
+import 'package:cashflow/widgets/pages/category_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +59,7 @@ class _CategoryListState extends State<CategoryList>
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () => CategoryCard.open(context,
+          onPressed: () => CategoryInputPage.open(context,
               type: tabTypes[_tabController.index]),
         ),
     );
@@ -91,7 +91,7 @@ class _CategoryListState extends State<CategoryList>
         return ListTile(
           title: Text(itemCategory.key.title),
           subtitle: Text('${AppLocalizations.of(context).titleBudget} ${itemCategory.value}'),
-          onTap: () => CategoryPage.open(context, itemCategory.key.id),
+          onTap: () => CategoryEditPage.open(context, itemCategory.key.id),
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(),

@@ -2,14 +2,14 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
-import 'package:cashflow/widgets/item_cards/account_card.dart';
+import 'package:cashflow/widgets/pages/account_input_page.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';
-import 'package:cashflow/widgets/item_cards/category_card.dart';
+import 'package:cashflow/widgets/pages/category_input_page.dart';
 import 'package:cashflow/widgets/lists/category_list.dart';
-import 'package:cashflow/widgets/pages/account_page.dart';
+import 'package:cashflow/widgets/pages/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/backup_page.dart';
 import 'package:cashflow/widgets/pages/cashflow_page.dart';
-import 'package:cashflow/widgets/pages/category_page.dart';
+import 'package:cashflow/widgets/pages/category_edit_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/master_page.dart';
 import 'package:cashflow/widgets/pages/operation_filter_page.dart';
@@ -100,13 +100,13 @@ class MyApp extends StatelessWidget {
         },
         onGenerateRoute: (settings) {
           switch (settings.name){
-            case AccountPage.routeName: {
+            case AccountEditPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => AccountPage(id: settings.arguments));
+                  builder: (context) => AccountEditPage(id: settings.arguments));
             }
-            case CategoryPage.routeName: {
+            case CategoryEditPage.routeName: {
               return MaterialPageRoute(
-                  builder: (context) => CategoryPage(id: settings.arguments));
+                  builder: (context) => CategoryEditPage(id: settings.arguments));
             }
             case OperationPage.routeName: {
               return MaterialPageRoute(

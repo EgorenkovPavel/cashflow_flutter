@@ -6,7 +6,7 @@ import 'package:cashflow/widgets/item_cards/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AccountCard extends StatefulWidget {
+class AccountInputPage extends StatefulWidget {
 
   static Future<bool> open(BuildContext context){
     return showDialog<bool>(
@@ -14,17 +14,17 @@ class AccountCard extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
-              child: AccountCard(),
+              child: AccountInputPage(),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12))));
         });
   }
 
   @override
-  _AccountCardState createState() => _AccountCardState();
+  _AccountInputPageState createState() => _AccountInputPageState();
 }
 
-class _AccountCardState extends State<AccountCard> {
+class _AccountInputPageState extends State<AccountInputPage> {
 
   final TextEditingController _controller = TextEditingController();
   AccountCardBloc _bloc;
@@ -75,24 +75,20 @@ class Save extends AccountCardEvent{
   Save({this.title});
 }
 
-abstract class AccountCardState{}
+abstract class AccountInputPageState{}
 
-class EmptyState extends AccountCardState{
+class EmptyState extends AccountInputPageState{}
 
-}
+class CloseState extends AccountInputPageState{}
 
-class CloseState extends AccountCardState{
-
-}
-
-class AccountCardBloc extends Bloc<AccountCardEvent, AccountCardState>{
+class AccountCardBloc extends Bloc<AccountCardEvent, AccountInputPageState>{
 
   final Repository _repository;
 
   AccountCardBloc(this._repository) : super(EmptyState());
 
   @override
-  Stream<AccountCardState> mapEventToState(AccountCardEvent event) async* {
+  Stream<AccountInputPageState> mapEventToState(AccountCardEvent event) async* {
 
     if (event is Save){
       await _repository.insertAccount(Account(title: event.title));
