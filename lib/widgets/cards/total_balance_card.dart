@@ -27,10 +27,10 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
     _bloc.fetch();
 
     animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 400),
-      value: _bloc.isShowAccounts() ? 1.0 : 0.0
-    )..addListener(() => setState(() {}));
+        vsync: this,
+        duration: Duration(milliseconds: 400),
+        value: _bloc.isShowAccounts() ? 1.0 : 0.0)
+      ..addListener(() => setState(() {}));
     animation = CurvedAnimation(
       parent: animationController,
       curve: Curves.easeInOut,
@@ -135,7 +135,9 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         _buttonBarButton(
           title: AppLocalizations.of(context).btnAddAccount,
           onPressed: () => AccountCard.open(context).then((res) {
-            if(res){_bloc.add(AddAccount());}
+            if (res) {
+              _bloc.add(AddAccount());
+            }
           }),
         ),
       ],
@@ -168,7 +170,6 @@ class _Header extends StatelessWidget {
 }
 
 class _AccountList extends StatelessWidget {
-
   final List<AccountBalance> accounts;
 
   const _AccountList({Key key, this.accounts}) : super(key: key);
@@ -176,25 +177,31 @@ class _AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (accounts.isEmpty) {
-        return ListTile(
+      return ListTile(
         title: Text(AppLocalizations.of(context).noAccounts,
-        style: DefaultTextStyle.of(context)
-            .style
-            .copyWith(color: Colors.black38)),
-        );
-    }else{
+            style: DefaultTextStyle.of(context)
+                .style
+                .copyWith(color: Colors.black38)),
+      );
+    } else {
       return Column(
         children: accounts
-            .map((account) => ListTile(
-          title: Text(account.title),
-          trailing: Text(
-            NumberFormat().format(account.balance),
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          onTap: () => AccountPage.open(context, account.id),
-        ))
-            .toList(),
+            .map((account) => accountItem(context, account))
+            .expand((element) => [Divider(), element])
+            .toList()
+              ..add(Divider()),
       );
     }
+  }
+
+  Widget accountItem(BuildContext context, AccountBalance account) {
+    return ListTile(
+      title: Text(account.title),
+      trailing: Text(
+        NumberFormat().format(account.balance),
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      onTap: () => AccountPage.open(context, account.id),
+    );
   }
 }
