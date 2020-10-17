@@ -1,7 +1,7 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/cards/card_bar_button.dart';
-import 'package:cashflow/widgets/cards/empty_card_hint.dart';
+import 'package:cashflow/widgets/cards/widgets/card_bar_button.dart';
+import 'package:cashflow/widgets/cards/widgets/empty_card_hint.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
