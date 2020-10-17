@@ -10,6 +10,10 @@ class OperationListPage extends StatefulWidget {
 
   const OperationListPage({Key key}) : super(key: key);
 
+  static open(BuildContext context) {
+    Navigator.of(context).pushNamed(routeName);
+  }
+
   @override
   _OperationListPageState createState() => _OperationListPageState();
 }

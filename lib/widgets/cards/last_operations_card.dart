@@ -3,6 +3,7 @@ import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/cards/widgets/card_bar_button.dart';
 import 'package:cashflow/widgets/pages/operation/list_divider_operation.dart';
 import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
@@ -40,17 +41,10 @@ class LastOperationsCard extends StatelessWidget {
         ),
         ButtonBar(
           children: [
-            FlatButton(
-              child: Text(
-                AppLocalizations.of(context).btnShowAll.toUpperCase(),
-                style: DefaultTextStyle.of(context).style.copyWith(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(OperationListPage.routeName);
-              },
-            )
+            CardBarButton(
+              title: AppLocalizations.of(context).btnShowAll,
+              onPressed: () => OperationListPage.open(context),
+            ),
           ],
         )
       ],
