@@ -1,6 +1,6 @@
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_bloc.dart';
-import 'package:cashflow/widgets/cards/last_operations_card.dart';
+import 'package:cashflow/widgets/cards/last_operations_bloc.dart';
 import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
