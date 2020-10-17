@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountCard extends StatefulWidget {
 
-  static void open(BuildContext context){
-    showDialog(
+  static Future<bool> open(BuildContext context){
+    return showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {

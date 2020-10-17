@@ -1,142 +1,178 @@
-import 'package:cashflow/data/database.dart';
+import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
+import 'package:cashflow/utils/extensions.dart';
 import 'package:charts_flutter/flutter.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:cashflow/utils/extensions.dart';
 
-class BalanceChart extends StatefulWidget {
+class BalanceChart extends StatelessWidget {
   @override
-  _BalanceChartState createState() => _BalanceChartState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<BalanceChartBloc, BalanceChartState>(
+      cubit: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
+      builder: (context, state) {
+        if (state is BalanceChartState) {
+          List<charts.Series<ValueOnDate, DateTime>> balanceSeries = [
+            charts.Series<ValueOnDate, DateTime>(
+              id: 'Balance',
+              data: state.balance,
+              displayName: AppLocalizations.of(context).titleTotalBalance,
+              domainFn: (ValueOnDate datum, int index) => datum.date,
+              measureFn: (ValueOnDate datum, int index) => datum.value,
+              colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+            )
+          ];
+
+          List<charts.Series<ValueOnDate, DateTime>> budgetSeries = [
+            charts.Series<ValueOnDate, DateTime>(
+              id: 'Budget',
+              data: state.budget,
+              displayName: AppLocalizations.of(context).titleBudget,
+              domainFn: (ValueOnDate datum, int index) => datum.date,
+              measureFn: (ValueOnDate datum, int index) => datum.value,
+              colorFn: (_, __) =>
+                  charts.MaterialPalette.deepOrange.shadeDefault,
+              dashPatternFn: (_, __) => [4, 2],
+            )
+          ];
+
+          return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
+              animate: false,
+              primaryMeasureAxis: new charts.NumericAxisSpec(
+                  tickProviderSpec: new charts.BasicNumericTickProviderSpec(
+                      zeroBound: false)),
+              domainAxis: new charts.EndPointsTimeAxisSpec(
+                  showAxisLine: false,
+                  tickProviderSpec: StaticDateTimeTickProviderSpec(state.dates
+                      .map((d) => TickSpec<DateTime>(d,
+                          label: DateFormat.MMM(
+                                  Localizations.localeOf(context).languageCode)
+                              .format(d)
+                              .capitalize()))
+                      .toList())),
+              behaviors: [
+                new charts.RangeAnnotation(state.dates
+                    .map((d) => charts.LineAnnotationSegment(
+                        d, charts.RangeAnnotationAxisType.domain))
+                    .toList()),
+                new charts.SeriesLegend(
+                  position: charts.BehaviorPosition.bottom,
+                )
+              ]);
+        } else {
+          return SizedBox();
+        }
+      },
+    );
+  }
 }
 
-class _BalanceChartState extends State<BalanceChart> {
-  // ADD BLoC
-  List<DateTime> dates = [];
+class BalanceChartState {
+  final List<DateTime> dates;
 
-  List<BalanceOnDate> balance = [];
-  List<BalanceOnDate> budget = [];
+  final List<ValueOnDate> balance;
+  final List<ValueOnDate> budget;
+
+  BalanceChartState(this.dates, this.balance, this.budget);
+}
+
+abstract class BalanceChartEvent {}
+
+class Fetch extends BalanceChartEvent {}
+
+class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
+  final Repository _repository;
+
+  List<DateTime> dates = [];
+  List<ValueOnDate> balance = [];
+  List<ValueOnDate> budget = [];
 
   int budgetSum = 0;
   int startBalance = 0;
-  List<BalanceOnDate> _balanceByPeriod = [];
+  List<ValueOnDate> _balanceByPeriod = [];
 
-  void calcBalance(){
-    List<BalanceOnDate> balances = [];
-    balances.add(BalanceOnDate(dates[0], startBalance));
+  void calcBalance() {
+    List<ValueOnDate> balances = [];
+    balances.add(ValueOnDate(dates[0], startBalance));
 
     int currentBalance = startBalance;
     _balanceByPeriod.forEach((element) {
-      currentBalance += element.sum;
-      balances.add(BalanceOnDate(element.date, currentBalance));
+      currentBalance += element.value;
+      balances.add(ValueOnDate(element.date, currentBalance));
     });
 
-    setState(() {
-      balance = balances;
-    });
+    balance = balances;
+
+    add(Fetch());
   }
 
-  @override
-  void initState() {
-    super.initState();
+  DateTime lastMonth(DateTime date) {
+    return DateTime(date.month == 1 ? date.year - 1 : date.year,
+        date.month == 1 ? 12 : date.month - 1);
+  }
 
+  DateTime nextMonth(DateTime date) {
+    return DateTime(date.month == 12 ? date.year + 1 : date.year,
+        date.month == 12 ? 1 : date.month + 1);
+  }
+
+  BalanceChartBloc(this._repository) : super(BalanceChartState([], [], [])) {
     DateTime _now = DateTime.now();
 
     dates = [
-      DateTime(_now.month == 1 ? _now.year - 1 : _now.year,
-          _now.month == 1 ? 12 : _now.month - 1),
+      lastMonth(_now),
       DateTime(_now.year, _now.month),
-      DateTime(_now.month == 12 ? _now.year + 1 : _now.year,
-          _now.month == 12 ? 1 : _now.month + 1),
+      nextMonth(_now),
     ];
 
-    budget.add(BalanceOnDate(dates[1], 0));
-    budget.add(BalanceOnDate(dates[2], 0));
-
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Repository _repository = Provider.of<Repository>(context);
+    budget.add(ValueOnDate(dates[1], 0));
+    budget.add(ValueOnDate(dates[2], 0));
 
     _repository.watchBalanceOnPeriod(dates[0], dates[2]).listen((event) {
-      _balanceByPeriod = event;
+      _balanceByPeriod = event.map((e) => ValueOnDate(e.date, e.sum)).toList();
       calcBalance();
     });
 
     _repository.watchBalance(dates[0])
       ..listen((d) {
-        setState(() {
           startBalance = d.sum;
-        });
+        add(Fetch());
 
         calcBalance();
       });
 
     _repository.watchBalance(dates[1])
       ..listen((d) {
-        setState(() {
-          budget[0] = d;
-          budget[1] = BalanceOnDate(dates[2], budget[0].sum + budgetSum);
-        });
+          budget[0] = ValueOnDate(d.date, d.sum);
+          budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
+
+        add(Fetch());
       });
 
     _repository.watchBudgetSum(dates[2])
       ..listen((d) {
         budgetSum = d;
-        setState(() {
-          budget[1] = BalanceOnDate(dates[2], budget[0].sum + budgetSum);
-        });
+          budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
+
+        add(Fetch());
       });
-
-    List<charts.Series<BalanceOnDate, DateTime>> balanceSeries = [
-      charts.Series<BalanceOnDate, DateTime>(
-        id: 'Balance',
-        data: balance,
-        displayName: AppLocalizations.of(context).titleTotalBalance,
-        domainFn: (BalanceOnDate datum, int index) => datum.date,
-        measureFn: (BalanceOnDate datum, int index) => datum.sum,
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-      )
-    ];
-
-    List<charts.Series<BalanceOnDate, DateTime>> budgetSeries = [
-      charts.Series<BalanceOnDate, DateTime>(
-        id: 'Budget',
-        data: budget,
-        displayName: AppLocalizations.of(context).titleBudget,
-        domainFn: (BalanceOnDate datum, int index) => datum.date,
-        measureFn: (BalanceOnDate datum, int index) => datum.sum,
-        colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
-        dashPatternFn: (_, __) => [4, 2],
-      )
-    ];
-
-    return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
-        animate: false,
-        primaryMeasureAxis: new charts.NumericAxisSpec(
-            tickProviderSpec:
-                new charts.BasicNumericTickProviderSpec(zeroBound: false)),
-        domainAxis: new charts.EndPointsTimeAxisSpec(
-            showAxisLine: false,
-            tickProviderSpec: StaticDateTimeTickProviderSpec(dates
-                .map((d) => TickSpec<DateTime>(d,
-                    label: DateFormat.MMM(
-                            Localizations.localeOf(context).languageCode)
-                        .format(d)
-                        .capitalize()))
-                .toList())),
-        behaviors: [
-          new charts.RangeAnnotation(dates
-              .map((d) => charts.LineAnnotationSegment(
-                  d, charts.RangeAnnotationAxisType.domain))
-              .toList()),
-          new charts.SeriesLegend(
-            position: charts.BehaviorPosition.bottom,
-          )
-        ]);
   }
+
+  @override
+  Stream<BalanceChartState> mapEventToState(BalanceChartEvent event) async* {
+    if (event is Fetch) {
+      yield BalanceChartState(dates, balance, budget);
+    }
+  }
+}
+
+class ValueOnDate {
+  final int value;
+  final DateTime date;
+
+  ValueOnDate(this.date, this.value);
 }

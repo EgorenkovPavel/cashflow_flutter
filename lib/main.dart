@@ -1,5 +1,6 @@
 import 'package:cashflow/widgets/cards/cashflow_card.dart';
 import 'package:cashflow/widgets/cards/last_operations_card.dart';
+import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/cards/total_balance_card.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/item_cards/budget_card.dart';

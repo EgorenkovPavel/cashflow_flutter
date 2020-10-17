@@ -33,7 +33,7 @@ class ItemCard extends StatelessWidget {
               FlatButton(
                 child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
               ),
               RaisedButton(
@@ -45,7 +45,7 @@ class ItemCard extends StatelessWidget {
                 onPressed: () {
                   if(_formKey.currentState.validate()){
                     onSave(context);
-                    Navigator.pop(context);
+                    Navigator.of(context).pop(true);
                   }
                 },
               )

@@ -1,10 +1,6 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account_balance.dart';
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/card_title.dart';
+import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/charts/balance_chart.dart';
 import 'package:cashflow/widgets/item_cards/account_card.dart';
 import 'package:cashflow/widgets/pages/account_page.dart';
@@ -28,11 +24,12 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
     super.initState();
 
     _bloc = BlocProvider.of<TotalBalanceBloc>(context);
-    _bloc.add(Fetch());
+    _bloc.fetch();
 
     animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
+      value: _bloc.isShowAccounts() ? 1.0 : 0.0
     )..addListener(() => setState(() {}));
     animation = CurvedAnimation(
       parent: animationController,
@@ -75,7 +72,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
             }
           },
         ),
-        addButton(context),
+        buttonBar(context),
       ],
     );
   }
@@ -85,177 +82,119 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                AppLocalizations.of(context).titleTotalBalance,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(NumberFormat().format(totalBalance),
-                  style: Theme.of(context).textTheme.headline6)
-            ],
+        _Header(totalBalance: totalBalance),
+        if (accounts.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: SizedBox(height: 200.0, child: BalanceChart()),
           ),
-        ),
-        if (accounts.isNotEmpty) Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: SizedBox(
-              height: 200.0,
-              child: BalanceChart()),
-        ),
         SizeTransition(
           axis: Axis.vertical,
           sizeFactor: animation,
-          child: accounts.isEmpty
-              ? ListTile(
-                  title: Text(AppLocalizations.of(context).noAccounts,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .copyWith(color: Colors.black38)),
-                )
-              : Column(
-                  children: accounts
-                      .map((account) => ListTile(
-                            title: Text(account.title),
-                            trailing: Text(
-                              NumberFormat().format(account.balance),
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            onTap: () => AccountPage.open(context, account.id),
-                          ))
-                      .toList(),
-                ),
+          child: _AccountList(accounts: accounts),
         ),
       ],
     );
   }
 
-  Widget addButton(BuildContext context) {
+  FlatButton _buttonBarButton({String title, Function onPressed}) {
+    return FlatButton(
+      child: Text(
+        title.toUpperCase(),
+        style: DefaultTextStyle.of(context).style.copyWith(
+            color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+      ),
+      onPressed: onPressed,
+    );
+  }
+
+  Widget buttonBar(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.spaceBetween,
       children: [
-        FlatButton(
-          child: BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
-            builder: (BuildContext context, state) {
-              if (state is ExpandAccounts) {
-                return Text(
-                  AppLocalizations.of(context).collapse.toUpperCase(),
-                  style: DefaultTextStyle.of(context).style.copyWith(
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold),
-                );
-              } else if (state is CollapseAccounts) {
-                return Text(
-                  AppLocalizations.of(context).expand.toUpperCase(),
-                  style: DefaultTextStyle.of(context).style.copyWith(
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold),
-                );
-              } else {
-                return Text(
-                  AppLocalizations.of(context).expand.toUpperCase(),
-                  style: DefaultTextStyle.of(context).style.copyWith(
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold),
-                );
-              }
-            },
-          ),
-          onPressed: () {
-            _bloc.add(ChangeAccountsVisibility());
+        BlocBuilder<TotalBalanceBloc, TotalBalanceState>(
+          builder: (BuildContext context, state) {
+            if (state is ExpandAccounts) {
+              return _buttonBarButton(
+                title: AppLocalizations.of(context).collapse,
+                onPressed: () => _bloc.add(ChangeAccountsVisibility()),
+              );
+            } else if (state is CollapseAccounts) {
+              return _buttonBarButton(
+                title: AppLocalizations.of(context).expand,
+                onPressed: () => _bloc.add(ChangeAccountsVisibility()),
+              );
+            } else {
+              return _buttonBarButton(
+                title: AppLocalizations.of(context).expand.toUpperCase(),
+                onPressed: () => _bloc.add(ChangeAccountsVisibility()),
+              );
+            }
           },
         ),
-        FlatButton(
-          child: Text(
-            AppLocalizations.of(context).btnAddAccount.toUpperCase(),
-            style: DefaultTextStyle.of(context).style.copyWith(
-                color: Theme.of(context).accentColor,
-                fontWeight: FontWeight.bold),
-          ),
-          onPressed: () {
-            AccountCard.open(context);
-          },
+        _buttonBarButton(
+          title: AppLocalizations.of(context).btnAddAccount,
+          onPressed: () => AccountCard.open(context).then((res) {
+            if(res){_bloc.add(AddAccount());}
+          }),
         ),
       ],
     );
   }
 }
 
-abstract class TotalBalanceEvent {}
-
-class Fetch extends TotalBalanceEvent {}
-
-class AccountsChange extends TotalBalanceEvent {
-  final List<AccountBalance> accounts;
-
-  AccountsChange(this.accounts);
-}
-
-class ChangeAccountsVisibility extends TotalBalanceEvent {}
-
-abstract class TotalBalanceState {}
-
-class Loading extends TotalBalanceState {}
-
-class Success extends TotalBalanceState {
+class _Header extends StatelessWidget {
   final int totalBalance;
-  final List<AccountBalance> accounts;
 
-  Success({this.totalBalance, this.accounts});
+  const _Header({Key key, this.totalBalance}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            AppLocalizations.of(context).titleTotalBalance,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          Text(NumberFormat().format(totalBalance),
+              style: Theme.of(context).textTheme.headline6)
+        ],
+      ),
+    );
+  }
 }
 
-class ExpandAccounts extends TotalBalanceState {}
+class _AccountList extends StatelessWidget {
 
-class CollapseAccounts extends TotalBalanceState {}
+  final List<AccountBalance> accounts;
 
-class TotalBalanceBloc extends Bloc<TotalBalanceEvent, TotalBalanceState> {
-  final Repository _repository;
-
-  bool _showAccounts = false;
-  int _totalBalance = 0;
-  List<AccountBalance> _accounts = [];
-  StreamSubscription<List<AccountBalance>> _subscription;
-
-  TotalBalanceBloc(this._repository) : super(Loading()) {
-    _subscription = _repository.watchAllAccountsBalance().listen((accounts) {
-      add(AccountsChange(accounts));
-    });
-  }
+  const _AccountList({Key key, this.accounts}) : super(key: key);
 
   @override
-  Future<void> close() {
-    _subscription?.cancel();
-    return super.close();
-  }
-
-  @override
-  Stream<TotalBalanceState> mapEventToState(TotalBalanceEvent event) async* {
-    if (event is Fetch) {
-      yield Success(totalBalance: _totalBalance, accounts: _accounts);
-      if (_showAccounts) {
-        yield ExpandAccounts();
-      } else {
-        yield CollapseAccounts();
-      }
-    } else if (event is AccountsChange) {
-      if(_accounts.length != event.accounts.length && !_showAccounts){
-        _showAccounts = true;
-        yield ExpandAccounts();
-      }
-      _accounts = event.accounts;
-      _totalBalance =
-          _accounts.map((account) => account.balance).fold(0, (a, b) => a + b);
-
-      yield Success(totalBalance: _totalBalance, accounts: _accounts);
-    } else if (event is ChangeAccountsVisibility) {
-      _showAccounts = !_showAccounts;
-      if (_showAccounts) {
-        yield ExpandAccounts();
-      } else {
-        yield CollapseAccounts();
-      }
+  Widget build(BuildContext context) {
+    if (accounts.isEmpty) {
+        return ListTile(
+        title: Text(AppLocalizations.of(context).noAccounts,
+        style: DefaultTextStyle.of(context)
+            .style
+            .copyWith(color: Colors.black38)),
+        );
+    }else{
+      return Column(
+        children: accounts
+            .map((account) => ListTile(
+          title: Text(account.title),
+          trailing: Text(
+            NumberFormat().format(account.balance),
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          onTap: () => AccountPage.open(context, account.id),
+        ))
+            .toList(),
+      );
     }
   }
 }
