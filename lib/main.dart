@@ -49,8 +49,8 @@ void main(){
           BlocProvider<BudgetCardBloc>(
             create: (BuildContext context) => BudgetCardBloc(_repository),
           ),
-          BlocProvider<AccountPageBloc>(
-            create: (BuildContext context) => AccountPageBloc(_repository),
+          BlocProvider<AccountEditPageBloc>(
+            create: (BuildContext context) => AccountEditPageBloc(_repository),
           ),
           BlocProvider<BackupPageBloc>(
             create: (BuildContext context) => BackupPageBloc(_repository),

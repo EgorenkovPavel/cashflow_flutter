@@ -27,13 +27,13 @@ class AccountEditPage extends StatefulWidget {
 
 class _AccountEditPageState extends State<AccountEditPage> {
 
-  AccountPageBloc _bloc;
+  AccountEditPageBloc _bloc;
   TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<AccountPageBloc>(context);
+    _bloc = BlocProvider.of<AccountEditPageBloc>(context);
     _bloc.add(Fetch(widget.id));
   }
 
@@ -88,7 +88,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
   }
 
   Widget header(BuildContext context) {
-    return BlocBuilder<AccountPageBloc, AccountEditPageState>(
+    return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
       builder: (BuildContext context, AccountEditPageState state) {
 
         _titleController.text = state.accountTitle;
@@ -109,7 +109,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
 
   Widget appBarIcon() {
 
-    return BlocBuilder<AccountPageBloc, AccountEditPageState>(
+    return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
       builder: (BuildContext context, AccountEditPageState state) {
         if (state.editTitleMode) {
           return IconButton(
@@ -130,8 +130,6 @@ class _AccountEditPageState extends State<AccountEditPage> {
         }
       },
     );
-
-
   }
 }
 
@@ -158,14 +156,14 @@ class AccountEditPageState{
   AccountEditPageState(this.editTitleMode, this.accountTitle);
 }
 
-class AccountPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
+class AccountEditPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
 
   final Repository _repository;
 
   bool _editTitleMode = false;
   Account _account;
 
-  AccountPageBloc(this._repository) : super(AccountEditPageState(false, ''));
+  AccountEditPageBloc(this._repository) : super(AccountEditPageState(false, ''));
 
   @override
   Stream<AccountEditPageState> mapEventToState(AccountPageEvent event) async* {
