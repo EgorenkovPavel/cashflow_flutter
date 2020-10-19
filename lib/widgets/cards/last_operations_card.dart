@@ -71,7 +71,7 @@ class LastOperationsCard extends StatelessWidget {
             ];
           })
           .expand((element) => element)
-          .toList(),
+          .toList()..add(Divider()),
     );
   }
 }
