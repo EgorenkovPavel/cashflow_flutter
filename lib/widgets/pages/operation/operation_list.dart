@@ -38,7 +38,7 @@ class OperationList extends StatelessWidget {
           if (min == null) {
             return SizedBox();
           } else {
-            return ListDividerOperation.createByDate(context, operations[min].date);
+            return ListDividerOperation(null, operations[min]);
           }
         },
       );
@@ -64,8 +64,8 @@ class OperationList extends StatelessWidget {
               }
 
               return ListDividerOperation(
-                operation1: operations[index],
-                operation2: operations[index + 1]);
+                operations[index],
+                operations[index + 1]);
             },
           ),
         ),

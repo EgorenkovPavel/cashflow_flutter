@@ -54,11 +54,11 @@ class LastOperationsCard extends StatelessWidget {
 
             Widget divider = Divider();
             if (index == 0) {
-              divider = ListDividerOperation.createByDate(context, op.date);
+              divider = ListDividerOperation(null, op);
             } else {
               divider = ListDividerOperation(
-                operation1: operations[index - 1],
-                operation2: operations[index],
+                operations[index - 1],
+                operations[index],
               );
             }
 
