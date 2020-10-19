@@ -6,6 +6,7 @@ import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/pages/category/category_input_page.dart';
 import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CategoryListPage extends StatefulWidget {
@@ -20,8 +21,7 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage>
-    with SingleTickerProviderStateMixin{
-
+    with SingleTickerProviderStateMixin {
   static const List<OperationType> tabTypes = [
     OperationType.INPUT,
     OperationType.OUTPUT
@@ -44,24 +44,24 @@ class _CategoryListPageState extends State<CategoryListPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context).categories),
-          bottom: TabBar(
-            tabs: tabTypes
-                .map((type) => Tab(text: getOperationTitle(context, type)))
-                .toList(),
-            controller: _tabController,
-          ),
-        ),
-        body: TabBarView(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).categories),
+        bottom: TabBar(
+          tabs: tabTypes
+              .map((type) => Tab(text: getOperationTitle(context, type)))
+              .toList(),
           controller: _tabController,
-          children: tabTypes.map((type) => buildList(context, type)).toList(),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => CategoryInputPage.open(context,
-              type: tabTypes[_tabController.index]),
-        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: tabTypes.map((type) => buildList(context, type)).toList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => CategoryInputPage.open(context,
+            type: tabTypes[_tabController.index]),
+      ),
     );
   }
 
@@ -69,7 +69,8 @@ class _CategoryListPageState extends State<CategoryListPage>
     return StreamBuilder<Map<Category, int>>(
       stream: Provider.of<Repository>(context, listen: false)
           .watchCategoryBudgetByType(type),
-      builder: (BuildContext context, AsyncSnapshot<Map<Category, int>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<Map<Category, int>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
@@ -90,7 +91,9 @@ class _CategoryListPageState extends State<CategoryListPage>
         final itemCategory = categories.entries.toList()[index];
         return ListTile(
           title: Text(itemCategory.key.title),
-          subtitle: Text('${AppLocalizations.of(context).titleBudget} ${itemCategory.value}'),
+          subtitle: Text(
+              '${AppLocalizations.of(context).titleBudget} '
+                  '${NumberFormat().format(itemCategory.value)}'),
           onTap: () => CategoryEditPage.open(context, itemCategory.key.id),
         );
       },
