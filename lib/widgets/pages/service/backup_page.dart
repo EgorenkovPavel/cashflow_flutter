@@ -203,9 +203,9 @@ class _BackupDialogState extends State<BackupDialog> {
               height: 16.0,
             ),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(left: 8.0),
               width: double.infinity,
-              decoration: BoxDecoration(border: Border.all(width: 1)),
+              decoration: BoxDecoration(border: Border.all(width: 1), borderRadius: BorderRadius.all(Radius.circular(8.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -228,6 +228,7 @@ class _BackupDialogState extends State<BackupDialog> {
           ],
         ),
       ),
+      contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
         FlatButton(
           child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
@@ -269,9 +270,9 @@ class _RestoreDialogState extends State<RestoreDialog> {
     return AlertDialog(
       title: Text(AppLocalizations.of(context).restore),
       content: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(left: 8.0),
         width: double.infinity,
-        decoration: BoxDecoration(border: Border.all(width: 1)),
+        decoration: BoxDecoration(border: Border.all(width: 1), borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -291,6 +292,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           ],
         ),
       ),
+      contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
         FlatButton(
           child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
@@ -299,7 +301,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
         RaisedButton(
           color: Theme.of(context).primaryColor,
           child: Text(AppLocalizations.of(context).restore.toUpperCase()),
-          onPressed: () async {
+          onPressed: () {
             if (_file == null) {
               return;
             }
