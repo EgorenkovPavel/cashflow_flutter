@@ -3,7 +3,6 @@ import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/dropdown_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +12,11 @@ class OperationFilterPage extends StatefulWidget {
 
   OperationFilterPage({Key key, this.filter}) : super(key: key);
 
-  static Future<OperationFilter> open(BuildContext context, OperationFilter filter) async {
-    return await Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => OperationFilterPage(filter: filter))
-    );
+  static Future<OperationFilter> open(
+      BuildContext context, OperationFilter filter) async {
+    return await Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) =>
+            OperationFilterPage(filter: filter)));
   }
 
   final OperationFilter filter;
@@ -26,7 +26,6 @@ class OperationFilterPage extends StatefulWidget {
 }
 
 class _OperationFilterPageState extends State<OperationFilterPage> {
-
   Repository model;
   List<Account> accountList;
   List<Category> categoryInList;
@@ -61,8 +60,54 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     });
   }
 
+  Widget _periodChoise(OperationFilter filter) {
+    if (filter.date != null)
+      return InputChip(
+        label: Text(
+            '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
+        deleteIcon: Icon(Icons.cancel),
+        onDeleted: () {
+          setState(() {
+            widget.filter.date = null;
+          });
+        },
+      );
+    else
+      return InputChip(
+        avatar: Icon(Icons.mode_edit),
+        label: Text('Choose period'),
+        onPressed: () async {
+          DateTimeRange date = await showDateRangePicker(
+              context: context,
+              firstDate: DateTime(2020), //TODO
+              lastDate: DateTime.now());
+          setState(() {
+            widget.filter.date = date;
+          });
+        },
+      );
+  }
+
+  RelativeRect buttonMenuPosition(BuildContext c) {
+    final RenderBox bar = c.findRenderObject();
+    final RenderBox overlay = Overlay.of(c).context.findRenderObject();
+    final RelativeRect position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        bar.localToGlobal(bar.size.bottomLeft(Offset.zero), ancestor: overlay),
+        bar.localToGlobal(bar.size.bottomRight(Offset.zero), ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+    return position;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _accountKey = GlobalKey<State<OperationFilterPage>>();
+    final _categoryInKey = GlobalKey<State<OperationFilterPage>>();
+    final _categoryOutKey = GlobalKey<State<OperationFilterPage>>();
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).titleFilters),
@@ -71,20 +116,40 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              SizedBox(
+                height: 8.0,
+              ),
+              Text('Period'),
+              _periodChoise(widget.filter),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text('Accounts'),
+              InputChip(
+                key: _accountKey,
+                avatar: Icon(Icons.mode_edit),
+                label: Text('Choose account'),
+                onPressed: () async {
+                  final result = await showMenu<Account>(
+                      context: context,
+                      position: buttonMenuPosition(_accountKey.currentContext),
+                      items: accountList
+                          .map((a) => PopupMenuItem<Account>(
+                                child: Text(a.title),
+                                value: a,
+                              ))
+                          .toList());
+                  if (result != null) {
+                    setState(() {
+                      widget.filter.accounts.add(result);
+                    });
+                  }
+                },
+              ),
               Wrap(
-                children: <Widget>[
-                  if (widget.filter.date != null)
-                    InputChip(
-                      label: Text(
-                          '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
-                      deleteIcon: Icon(Icons.cancel),
-                      onDeleted: () {
-                        setState(() {
-                          widget.filter.date = null;
-                        });
-                      },
-                    ),
+                children: [
                   for (var account in widget.filter.accounts)
                     InputChip(
                       label: Text(account.title),
@@ -95,66 +160,88 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                         });
                       },
                     ),
-                  for (var category in widget.filter.categories)
-                    InputChip(
-                      label: Text(category.title),
-                      deleteIcon: Icon(Icons.cancel),
-                      onDeleted: () {
-                        setState(() {
-                          widget.filter.categories.remove(category);
-                        });
-                      },
-                    ),
                 ],
               ),
-              OutlineButton(
-                child: Text('Choose period'),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text('Input categories'),
+              InputChip(
+                key: _categoryInKey,
+                avatar: Icon(Icons.mode_edit),
+                label: Text('Choose category'),
                 onPressed: () async {
-                  DateTimeRange date = await showDateRangePicker(
+                  final result = await showMenu<Category>(
                       context: context,
-                      firstDate: DateTime(2020), //TODO
-                      lastDate: DateTime.now());
-                  setState(() {
-                    widget.filter.date = date;
-                  });
+                      position: buttonMenuPosition(_categoryInKey.currentContext),
+                      items: categoryInList
+                          .map((c) => PopupMenuItem<Category>(
+                        child: Text(c.title),
+                        value: c,
+                      ))
+                          .toList());
+                  if (result != null) {
+                    setState(() {
+                      widget.filter.categories.add(result);
+                    });
+                  }
                 },
               ),
-              SizedBox(height: 8.0,),
-              DropdownList<Account>(
-                value: null,
-                hint: AppLocalizations.of(context).hintAccount,
-                onChange: (Account newValue) {
-                  setState(() {
-                    widget.filter.accounts.add(newValue);
-                  });
-                },
-                items: accountList,
-                getListItem: (item) => ListTile(title: Text(item.title)),
+              Wrap(
+                  children: widget.filter.categories
+                      .where((element) => element.type == OperationType.INPUT)
+                      .map(
+                        (category) => InputChip(
+                          label: Text(category.title),
+                          deleteIcon: Icon(Icons.cancel),
+                          onDeleted: () {
+                            setState(() {
+                              widget.filter.categories.remove(category);
+                            });
+                          },
+                        ),
+                      )
+                      .toList()),
+              SizedBox(
+                height: 8.0,
               ),
-              SizedBox(height: 16.0,),
-              DropdownList<Category>(
-                value: null,
-                hint: AppLocalizations.of(context).hintCategory,
-                onChange: (Category newValue) {
-                  setState(() {
-                    widget.filter.categories.add(newValue);
-                  });
+              Text('Output categories'),
+              InputChip(
+                key: _categoryOutKey,
+                avatar: Icon(Icons.mode_edit),
+                label: Text('Choose category'),
+                onPressed: () async {
+                  final result = await showMenu<Category>(
+                      context: context,
+                      position: buttonMenuPosition(_categoryOutKey.currentContext),
+                      items: categoryOutList
+                          .map((c) => PopupMenuItem<Category>(
+                        child: Text(c.title),
+                        value: c,
+                      ))
+                          .toList());
+                  if (result != null) {
+                    setState(() {
+                      widget.filter.categories.add(result);
+                    });
+                  }
                 },
-                items: categoryInList,
-                getListItem: (item) => ListTile(title: Text(item.title)),
               ),
-              SizedBox(height: 16.0,),
-              DropdownList<Category>(
-                value: null,
-                hint: AppLocalizations.of(context).hintCategory,
-                onChange: (Category newValue) {
-                  setState(() {
-                    widget.filter.categories.add(newValue);
-                  });
-                },
-                items: categoryOutList,
-                getListItem: (item) => ListTile(title: Text(item.title)),
-              ),
+              Wrap(
+                  children: widget.filter.categories
+                      .where((element) => element.type == OperationType.OUTPUT)
+                      .map(
+                        (category) => InputChip(
+                          label: Text(category.title),
+                          deleteIcon: Icon(Icons.cancel),
+                          onDeleted: () {
+                            setState(() {
+                              widget.filter.categories.remove(category);
+                            });
+                          },
+                        ),
+                      )
+                      .toList()),
             ],
           ),
         ),
@@ -162,17 +249,18 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       persistentFooterButtons: [
         FlatButton(
           child: Text(AppLocalizations.of(context).reset.toUpperCase()),
-          onPressed: (){
+          onPressed: () {
             widget.filter.reset();
             Navigator.pop(context, widget.filter);
           },
         ),
         RaisedButton(
-          child: Text(AppLocalizations.of(context).apply.toUpperCase(),
+          child: Text(
+            AppLocalizations.of(context).apply.toUpperCase(),
             style: TextStyle(color: Colors.white),
           ),
           color: Theme.of(context).primaryColor,
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context, widget.filter);
           },
         ),
@@ -186,7 +274,7 @@ class OperationFilter {
   final Set<Account> accounts = {};
   final Set<Category> categories = {};
 
-  void reset(){
+  void reset() {
     date = null;
     accounts.clear();
     categories.clear();
