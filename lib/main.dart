@@ -11,6 +11,7 @@ import 'package:cashflow/widgets/pages/category/category_list_page.dart';
 import 'package:cashflow/widgets/pages/home_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
+import 'package:cashflow/widgets/pages/operation/operation_input_bloc.dart';
 import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';

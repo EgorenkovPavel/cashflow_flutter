@@ -74,7 +74,7 @@ class OperationList extends StatelessWidget {
   }
 
   static void addItem(BuildContext context) {
-    Navigator.of(context).pushNamed(OperationInputPage.routeName);
+    OperationInputPage.open(context);
   }
 
   void onItemTap(BuildContext context, item) {
