@@ -7,7 +7,7 @@ class Carousel<T> extends StatelessWidget {
   final double itemHeight;
 
   final List<T> items;
-  final T initialItem;
+  final bool Function(T) initialItemFinder;
   final ValueChanged<int> onPageChanged;
   final IndexedWidgetBuilder itemBuilder;
 
@@ -18,7 +18,7 @@ class Carousel<T> extends StatelessWidget {
       this.items,
       this.onPageChanged,
       this.itemBuilder,
-      this.initialItem,
+      this.initialItemFinder,
       this.itemHeight})
       : super(key: key);
 
@@ -27,7 +27,7 @@ class Carousel<T> extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constrains) {
         _pageController = PageController(
-          initialPage: items.indexOf(initialItem),
+          initialPage: items.indexWhere(initialItemFinder),
           keepPage: true,
           viewportFraction: 1 / (constrains.maxHeight / itemHeight),
         );

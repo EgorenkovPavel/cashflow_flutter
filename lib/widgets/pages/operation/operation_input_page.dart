@@ -34,7 +34,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItem: _bloc.account,
+      initialItemFinder: (account) => account.id == _bloc.account.id,
       onItemChanged: (account) => _bloc.add(OnAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -55,7 +55,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryInStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItem: _bloc.categoryIn,
+      initialItemFinder: (category) => category.id == _bloc.categoryIn.id,
       onItemChanged: (category) => _bloc.add(OnCategoryInChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -67,7 +67,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryOutStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItem: _bloc.categoryOut,
+      initialItemFinder: (category) => category.id == _bloc.categoryOut.id,
       onItemChanged: (category) => _bloc.add(OnCategoryOutChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -79,7 +79,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItem: _bloc.recAccount,
+      initialItemFinder:(account) => account.id == _bloc.recAccount.id,
       onItemChanged: (account) => _bloc.add(OnRecAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -359,19 +359,19 @@ class CarouselList<T> extends StatelessWidget {
     Key key,
     Stream<List<T>> stream,
     String emptyListMessage,
-    T initialItem,
+    bool Function(T) initialItemFinder,
     Function(T) onItemChanged,
     Function(BuildContext, T) itemBuilder,
   })  : _emptyListMessage = emptyListMessage,
         _stream = stream,
-        _initialItem = initialItem,
+        _initialItemFinder = initialItemFinder,
         _onItemChanged = onItemChanged,
         _itemBuilder = itemBuilder,
         super(key: key);
 
   final Stream<List<T>> _stream;
   final String _emptyListMessage;
-  final T _initialItem;
+  final bool Function(T) _initialItemFinder;
   final Function _onItemChanged;
   final Function(BuildContext, T) _itemBuilder;
 
@@ -391,7 +391,7 @@ class CarouselList<T> extends StatelessWidget {
         return Carousel(
             key: GlobalKey(),
             items: items,
-            initialItem: _initialItem,
+            initialItemFinder: _initialItemFinder,
             onPageChanged: (pos) => _onItemChanged(items[pos]),
             itemHeight: 60.0,
             itemBuilder: (context, pos) => _itemBuilder(context, items[pos]));
