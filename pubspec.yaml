@@ -29,24 +29,24 @@ dependencies:
   moor_flutter: ^3.1.0
   intl:
   charts_flutter: ^0.9.0
-  bloc: ^6.0.3
-  flutter_bloc: ^6.0.5
-  firebase_crashlytics: ^0.1.4+1
-  scrollable_positioned_list: ^0.1.7
+  bloc: ^6.1.0
+  flutter_bloc: ^6.1.1
+  firebase_crashlytics: ^0.2.3
+  scrollable_positioned_list: ^0.1.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^3.2.0
+  moor_generator: ^3.4.0
   build_runner:
-
+  pedantic: ^1.9.2
   googleapis: any
   googleapis_auth: any
-  google_sign_in: ^4.5.1
+  google_sign_in: ^4.5.6
 
-  path_provider: ^1.6.7
+  path_provider: ^1.6.24
 
-  flutter_keyboard_visibility: ^2.0.0
+  flutter_keyboard_visibility: ^3.3.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -26,7 +26,7 @@ import 'data/repository.dart';
 void main(){
   final Repository _repository = Repository();
 
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+ // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   runApp(
       MultiBlocProvider(
