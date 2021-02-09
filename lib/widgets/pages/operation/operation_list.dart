@@ -12,11 +12,12 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends StatelessWidget {
 
-  final Stream<List<Operation>> stream;
+  final Stream<List<Operation>> _stream;
 
-  OperationList(this.stream);
+  OperationList(Stream<List<Operation>> stream) :
+    this._stream = stream;
 
-  Widget listBuilder(BuildContext context, List<Operation> operations) {
+  Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final ItemPositionsListener itemPositionsListener =
     ItemPositionsListener.create();
 
@@ -55,7 +56,7 @@ class OperationList extends StatelessWidget {
               final itemOperation = operations[index];
               return ListTileOperation(
                 itemOperation,
-                onTap: () => onItemTap(context, itemOperation),
+                onTap: () => _onItemTap(context, itemOperation),
               );
             },
             separatorBuilder: (BuildContext context, int index) {
@@ -77,12 +78,12 @@ class OperationList extends StatelessWidget {
     OperationInputPage.open(context);
   }
 
-  void onItemTap(BuildContext context, item) {
+  void _onItemTap(BuildContext context, item) {
     OperationEditPage.open(context, item.id);
   }
 
   @override
-  Widget emptyListHint(BuildContext context) {
+  Widget _emptyListHint(BuildContext context) {
     return EmptyListHint(
       title: AppLocalizations
           .of(context)
@@ -96,18 +97,18 @@ class OperationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Operation>>(
-      stream: stream,
+      stream: _stream,
       builder:
           (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
-          return emptyListHint(context);
+          return _emptyListHint(context);
         }
 
         final List<Operation> items = snapshot.data ?? List<Operation>();
 
-        return listBuilder(context, items);
+        return _listBuilder(context, items);
       },
     );
   }
