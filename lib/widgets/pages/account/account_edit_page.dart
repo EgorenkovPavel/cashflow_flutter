@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
           actions: <Widget>[appBarIcon()],
           bottom: TabBar(
             tabs: [
-              Tab(text: 'Operations')
+              Tab(text: AppLocalizations.of(context).operations)
             ],
           ),
         ),
