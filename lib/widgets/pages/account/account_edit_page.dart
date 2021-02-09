@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
-import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +62,10 @@ class _AccountEditPageState extends State<AccountEditPage> {
            OperationList(Provider.of<Repository>(context, listen: false)
                 .watchAllOperationsByAccount(widget.id))
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+          onPressed: () => OperationList.addItem(context),
         ),
       ),
     );
