@@ -5,6 +5,7 @@ import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
+import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -59,31 +60,11 @@ class _AccountEditPageState extends State<AccountEditPage> {
         ),
         body: TabBarView(
           children: <Widget>[
-            buildOperationList(context),
+           OperationList(Provider.of<Repository>(context, listen: false)
+                .watchAllOperationsByAccount(widget.id))
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildOperationList(BuildContext context) {
-    return StreamBuilder<List<Operation>>(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return SizedBox();
-        }
-
-        List<Operation> operations = snapshot.data;
-
-        return ListView.builder(
-          itemBuilder: (context, pos) {
-            return ListTileOperation(operations[pos]);
-          },
-          itemCount: operations.length,
-        );
-      },
-      stream: Provider.of<Repository>(context, listen: false)
-          .watchAllOperationsByAccount(widget.id),
     );
   }
 
