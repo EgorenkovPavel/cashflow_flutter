@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/pages/budget/budget_card.dart';
 import 'package:cashflow/widgets/pages/budget/list_tile_budget.dart';
-import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
+import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,8 +68,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           actions: <Widget>[appBarIcon()],
           bottom: TabBar(
             tabs: [
-              Tab(text: 'Budget'),
-              Tab(text: 'Operations')
+              Tab(text: AppLocalizations.of(context).titleBudget),
+              Tab(text: AppLocalizations.of(context).operations)
             ],
             controller: _tabController,
           ),
@@ -79,24 +78,21 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           controller: _tabController,
           children: <Widget>[
             buildBudgetList(context),
-            buildOperationList(context),
+            //buildOperationList(context),
+            OperationList(Provider.of<Repository>(context, listen: false)
+                .watchAllOperationsByCategory(widget.id))
           ],
         ),
-        floatingActionButton: AnimatedBuilder(
-          animation: _tabController.animation,
-          builder: (BuildContext context, Widget child) {
-            return Transform.scale(
-              scale: 1 - _tabController.animation.value,
-              child: FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    BudgetCard.open(context, widget.id);
-                  }
-              ),
-            );
-          },
-
-        )
+       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){
+          if (_tabController.index == 0){
+            BudgetCard.open(context, widget.id);
+          }else if (_tabController.index == 1){
+            OperationList.addItem(context);
+          }
+        },
+      ),
 
     );
   }
@@ -128,27 +124,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
       },
       stream: Provider.of<Repository>(context, listen: false)
           .watchBudgetByCategory(widget.id),
-    );
-  }
-
-  Widget buildOperationList(BuildContext context) {
-    return StreamBuilder<List<Operation>>(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return SizedBox();
-        }
-
-        List<Operation> operations = snapshot.data;
-
-        return ListView.builder(
-          itemBuilder: (context, pos) {
-            return ListTileOperation(operations[pos]);
-          },
-          itemCount: operations.length,
-        );
-      },
-      stream: Provider.of<Repository>(context, listen: false)
-          .watchAllOperationsByCategory(widget.id),
     );
   }
 
