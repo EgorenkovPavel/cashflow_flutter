@@ -64,8 +64,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: header(context),
-          actions: <Widget>[appBarIcon()],
+          title: _header(context),
+          actions: <Widget>[_appBarIcon()],
           bottom: TabBar(
             tabs: [
               Tab(text: AppLocalizations.of(context).titleBudget),
@@ -77,7 +77,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            buildBudgetList(context),
+            _buildBudgetList(context),
             //buildOperationList(context),
             OperationList(Provider.of<Repository>(context, listen: false)
                 .watchAllOperationsByCategory(widget.id))
@@ -97,17 +97,17 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     );
   }
 
-  Widget buildBudgetList(BuildContext context) {
+  Widget _buildBudgetList(BuildContext context) {
     return StreamBuilder<List<BudgetData>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
-          return emptyBudgetListHint(context);
+          return _emptyBudgetListHint(context);
         }
 
         List<BudgetData> list = snapshot.data;
 
         if(list.isEmpty){
-          return emptyBudgetListHint(context);
+          return _emptyBudgetListHint(context);
         }
 
         return ListView.builder(
@@ -127,7 +127,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     );
   }
 
-  IconButton appBarIcon() {
+  IconButton _appBarIcon() {
     if (_editTitleMode) {
       return IconButton(
         icon: Icon(
@@ -158,7 +158,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     }
   }
 
-  Widget header(BuildContext context) {
+  Widget _header(BuildContext context) {
     if (_editTitleMode) {
       return TextField(
         controller: _titleController,
@@ -184,7 +184,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     }
   }
 
-  Widget emptyBudgetListHint(BuildContext context) {
+  Widget _emptyBudgetListHint(BuildContext context) {
     return EmptyListHint(
       title: AppLocalizations.of(context).emptyListBudgets,
       hint: AppLocalizations.of(context).hintEmptyList,
