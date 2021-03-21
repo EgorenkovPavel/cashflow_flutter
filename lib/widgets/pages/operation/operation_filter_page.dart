@@ -61,7 +61,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   }
 
   Widget _periodChoise(OperationFilter filter) {
-    if (filter.date != null) {
+    if (filter?.date != null) {
       return InputChip(
         label: Text(
             '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
