@@ -76,6 +76,12 @@ class AppLocalizations {
       'no_operations': 'No operations',
       'item_menu_service': 'Service',
       'item_bar_main': 'Main',
+      'period': 'Period',
+      'choose_period': 'Choose period',
+      'choose_account': 'Choose account',
+      'choose_category': 'Choose category',
+      'input_category': 'Input category',
+      'output_category': 'Output category',
 
       'yes': 'Yes',
       'cancel': 'Cancel',
@@ -164,6 +170,12 @@ class AppLocalizations {
       'no_operations': 'Нет операций',
       'item_menu_service': 'Сервис',
       'item_bar_main': 'Главная',
+      'period': 'Период',
+      'choose_period': 'Выберите период',
+      'choose_account': 'Выберите счет',
+      'choose_category': 'Выберите категорию',
+      'input_category': 'Категория прихода',
+      'output_category': 'Категория расхода',
 
       'yes': 'Да',
       'cancel': 'Отмена',
@@ -253,6 +265,12 @@ class AppLocalizations {
   String get noOperations => _localizedValues[locale.languageCode]['no_operations'];
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
   String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
+  String get period => _localizedValues[locale.languageCode]['period'];
+  String get choosePeriod => _localizedValues[locale.languageCode]['choose_period'];
+  String get chooseAccount => _localizedValues[locale.languageCode]['choose_account'];
+  String get chooseCategory => _localizedValues[locale.languageCode]['choose_category'];
+  String get inputCategory => _localizedValues[locale.languageCode]['input_category'];
+  String get outputCategory => _localizedValues[locale.languageCode]['output_category'];
 
   String get yes => _localizedValues[locale.languageCode]['yes'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
