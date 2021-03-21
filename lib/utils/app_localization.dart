@@ -82,6 +82,9 @@ class AppLocalizations {
       'choose_category': 'Choose category',
       'input_category': 'Input category',
       'output_category': 'Output category',
+      'output_category': 'Output category',
+      'source': 'Source',
+      'receiver': 'Receiver',
 
       'yes': 'Yes',
       'cancel': 'Cancel',
@@ -176,6 +179,8 @@ class AppLocalizations {
       'choose_category': 'Выберите категорию',
       'input_category': 'Категория прихода',
       'output_category': 'Категория расхода',
+      'source': 'Источник',
+      'receiver': 'Приемник',
 
       'yes': 'Да',
       'cancel': 'Отмена',
@@ -271,6 +276,8 @@ class AppLocalizations {
   String get chooseCategory => _localizedValues[locale.languageCode]['choose_category'];
   String get inputCategory => _localizedValues[locale.languageCode]['input_category'];
   String get outputCategory => _localizedValues[locale.languageCode]['output_category'];
+  String get source => _localizedValues[locale.languageCode]['source'];
+  String get receiver => _localizedValues[locale.languageCode]['receiver'];
 
   String get yes => _localizedValues[locale.languageCode]['yes'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];

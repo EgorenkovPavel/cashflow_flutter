@@ -143,7 +143,7 @@ class _OperationInputPageState extends State<OperationInputPage>
             () => CategoryInputPage.open(context, type: OperationType.OUTPUT),
             categoryOutPageView(context));
       case OperationType.TRANSFER:
-        return buildList(AppLocalizations.of(context).accounts,
+        return buildList(AppLocalizations.of(context).receiver,
             () => AccountInputPage.open(context), recAccountPageView(context));
       default:
         return SizedBox();
@@ -252,7 +252,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                   child: Row(
                     children: <Widget>[
                       buildList(
-                          AppLocalizations.of(context).accounts,
+                          (state as DataState).type == OperationType.TRANSFER ? AppLocalizations.of(context).source : AppLocalizations.of(context).accounts,
                           () => AccountInputPage.open(context),
                           accountPageView(context)),
                       buildAnalylicList((state as DataState).type),
