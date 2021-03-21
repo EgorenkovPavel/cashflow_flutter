@@ -29,12 +29,11 @@ class HomePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: PopupMenuButton<AppMenu>(
-        child: Icon(Icons.more_vert),
         itemBuilder: (context) => [
           PopupMenuItem<AppMenu>(
+            value: AppMenu.BACKUP,
             child: Text(
                 AppLocalizations.of(context).itemMenuService.toUpperCase()),
-            value: AppMenu.BACKUP,
           )
         ],
         onSelected: (value) {
@@ -46,6 +45,7 @@ class HomePage extends StatelessWidget {
               }
           }
         },
+        child: Icon(Icons.more_vert),
       ),
     );
   }
@@ -73,8 +73,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => OperationList.addItem(context)),
+          onPressed: () => OperationList.addItem(context),
+          child: Icon(Icons.add),),
     );
   }
 }

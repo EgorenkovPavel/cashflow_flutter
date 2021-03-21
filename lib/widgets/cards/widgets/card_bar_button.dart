@@ -9,13 +9,13 @@ class CardBarButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
+      onPressed: onPressed,
       child: Text(
         title.toUpperCase(),
         style: DefaultTextStyle.of(context).style.copyWith(
             color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
       ),
-      onPressed: onPressed,
     );
   }
 

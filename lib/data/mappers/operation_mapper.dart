@@ -7,6 +7,7 @@ import 'package:cashflow/data/objects/operation.dart';
 class OperationMapper extends Mapper<Operation, OperationItem> {
   const OperationMapper();
 
+  @override
   OperationItem mapToSql(Operation o) {
     return OperationItem(
         mapToOperationData(o),
@@ -15,6 +16,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         o.recAccount == null ? null : const AccountMapper().mapToSql(o.recAccount));
   }
 
+  @override
   Operation mapToDart(OperationItem o) {
     return o == null ? null : Operation(
         id: o.operationData.id,

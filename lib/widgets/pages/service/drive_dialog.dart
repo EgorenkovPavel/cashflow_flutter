@@ -34,11 +34,11 @@ class DriveDialog extends StatefulWidget {
 class _DriveDialogState extends State<DriveDialog> {
   lib.Stack<DriveFile> rootFolder = lib.Stack();
   List<drive.File> folderList = [];
-  ScrollController _listController = ScrollController();
+  final ScrollController _listController = ScrollController();
 
   void loadFolders() async {
     try {
-      drive.FileList data = await drive.DriveApi(widget.httpClient).files.list(
+      var data = await drive.DriveApi(widget.httpClient).files.list(
           orderBy: 'folder,name,modifiedTime',
           spaces: 'drive',
           q: "'${rootFolder.top().id}' in parents and trashed = false",
@@ -89,7 +89,7 @@ class _DriveDialogState extends State<DriveDialog> {
               },
               itemBuilder: (BuildContext context, int index) {
                 var f = folderList[index];
-                bool isFolder =
+                var isFolder =
                     f.mimeType == 'application/vnd.google-apps.folder';
                 return ListTile(
                   leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
@@ -114,22 +114,20 @@ class _DriveDialogState extends State<DriveDialog> {
             )),
             ButtonBar(
               children: <Widget>[
-                FlatButton(
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
                   child:
                       Text(AppLocalizations.of(context).cancel.toUpperCase()),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
                 ),
-                RaisedButton(
-                  child: Text(AppLocalizations.of(context).choose.toUpperCase(),
-                      style: TextStyle(color: Colors.white)),
-                  color: Theme.of(context).primaryColor,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                   onPressed: () {
                     if (widget.mode == DialogMode.CHOOSE_FOLDER) {
                       Navigator.of(context).pop<DriveFile>(rootFolder.top());
                     }
                   },
+                  child: Text(AppLocalizations.of(context).choose.toUpperCase(),
+                      style: TextStyle(color: Colors.white)),
                 )
               ],
             )

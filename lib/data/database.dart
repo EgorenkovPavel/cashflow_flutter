@@ -281,13 +281,13 @@ class Database extends _$Database {
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> getDbData() async {
-    Map<String, List<Map<String, dynamic>>> data = {};
+    var data = <String, List<Map<String, dynamic>>>{};
 
-    List<AccountEntityData> accounts = await accountDao.getAllAccounts();
-    List<CategoryEntityData> categories = await categoryDao.getAllCategories();
-    List<OperationEntityData> operations =
+    var accounts = await accountDao.getAllAccounts();
+    var categories = await categoryDao.getAllCategories();
+    var operations =
         await operationDao.getAllOperations();
-    List<BudgetData> budgets = await budgetDao.getAllBudgets();
+    var budgets = await budgetDao.getAllBudgets();
 
     data.putIfAbsent(
         'account',
@@ -321,7 +321,7 @@ class Database extends _$Database {
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
-        List<AccountEntityData> accounts = [];
+        var accounts = <AccountEntityData>[];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('account_title')) {
@@ -338,7 +338,7 @@ class Database extends _$Database {
         });
         await accountDao.batchInsert(accounts);
       } else if (key == 'category') {
-        List<CategoryEntityData> categories = [];
+        var categories = <CategoryEntityData>[];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('category_title')) {
@@ -357,7 +357,7 @@ class Database extends _$Database {
         });
         await categoryDao.batchInsert(categories);
       } else if (key == 'operation') {
-        List<OperationEntityData> operations = [];
+        var operations = <OperationEntityData>[];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('operation_date')) {
@@ -380,7 +380,7 @@ class Database extends _$Database {
         });
         await operationDao.batchInsert(operations);
       } else if (key == 'budget') {
-        List<BudgetData> budgets = [];
+        var budgets = <BudgetData>[];
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             budgets.add(
@@ -548,8 +548,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowBudgetEntity>> watchAllCategoryCashflowBudget(
       DateTime date) {
-    DateTime monthStart = DateTime(date.year, date.month);
-    DateTime monthEnd = date.month < 12
+    var monthStart = DateTime(date.year, date.month);
+    var monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
         : DateTime(date.year + 1, 1);
 
@@ -579,8 +579,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowBudgetEntity>> watchCategoryCashflowBudgetByType(
       DateTime date, OperationType type) {
-    DateTime monthStart = DateTime(date.year, date.month);
-    DateTime monthEnd = date.month < 12
+    var monthStart = DateTime(date.year, date.month);
+    var monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
         : DateTime(date.year + 1, 1);
 
@@ -774,21 +774,21 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     var sel = select(operationEntity);
     if (start != null) {
-      sel..where((t) => t.date.isBiggerOrEqualValue(start));
+      sel.where((t) => t.date.isBiggerOrEqualValue(start));
     }
 
     if (end != null) {
-      sel..where((t) => t.date.isSmallerOrEqualValue(end));
+      sel.where((t) => t.date.isSmallerOrEqualValue(end));
     }
 
     if (accountIds?.isNotEmpty ?? false) {
       sel
-        ..where(
+        .where(
             (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
     }
 
     if (categoriesIds?.isNotEmpty ?? false) {
-      sel..where((t) => t.category.isIn(categoriesIds));
+      sel.where((t) => t.category.isIn(categoriesIds));
     }
 
     return (sel
@@ -1011,18 +1011,18 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
-      int id = await into(operationEntity).insert(entity.operationData);
+      var id = await into(operationEntity).insert(entity.operationData);
 
-      OperationEntityData operationData = entity.operationData.copyWith(id: id);
+      var operationData = entity.operationData.copyWith(id: id);
       await _insertAnalytic(operationData);
     });
   }
 
   Future<int> insertOperation(OperationEntityData entity) {
     return transaction(() async {
-      int id = await into(operationEntity).insert(entity);
+      var id = await into(operationEntity).insert(entity);
 
-      OperationEntityData operationData = entity.copyWith(id: id);
+      var operationData = entity.copyWith(id: id);
       await _insertAnalytic(operationData);
       return id;
     });
@@ -1052,8 +1052,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<void> batchInsert(List<OperationEntityData> operationData) async {
-    List<CashflowEntityData> cashflowData = [];
-    List<BalanceEntityData> balanceData = [];
+    var cashflowData = <CashflowEntityData>[];
+    var balanceData = <BalanceEntityData>[];
 
     operationData.forEach((operation) {
       switch (operation.operationType) {
@@ -1187,7 +1187,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future _deleteAnalytic(OperationEntityData operation) async {
-    _deleteAnalyticByOperationId(operation.id);
+    await _deleteAnalyticByOperationId(operation.id);
   }
 
   Future _deleteAnalyticByOperationId(int operationId) async {
@@ -1211,7 +1211,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   }
 
   Future<BudgetData> getBudget(int categoryId, DateTime date) {
-    DateTime monthStart = DateTime(date.year, date.month);
+    var monthStart = DateTime(date.year, date.month);
     return (select(budget)
           ..where((tbl) =>
               budget.category.equals(categoryId) &
@@ -1220,7 +1220,7 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   }
 
   Stream<List<BudgetData>> watchBudget(DateTime date) {
-    DateTime monthStart = DateTime(date.year, date.month);
+    var monthStart = DateTime(date.year, date.month);
     return (select(budget)..where((t) => budget.date.equals(monthStart)))
         .watch();
   }
@@ -1248,13 +1248,13 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   }
 
   Future<void> insertBudget(BudgetData entity) {
-    DateTime monthStart = DateTime(entity.date.year, entity.date.month);
+    var monthStart = DateTime(entity.date.year, entity.date.month);
     return into(budget).insert(entity.copyWith(date: monthStart),
         mode: InsertMode.insertOrReplace);
   }
 
   Future<void> updateBudget(BudgetData entity) {
-    DateTime monthStart = DateTime(entity.date.year, entity.date.month);
+    var monthStart = DateTime(entity.date.year, entity.date.month);
     return update(budget).replace(entity.copyWith(date: monthStart));
   }
 

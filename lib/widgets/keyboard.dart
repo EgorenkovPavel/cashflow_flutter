@@ -16,10 +16,10 @@ class Keyboard extends StatelessWidget {
         width: width *0.75,//24.0*_ratio,
         child: RawMaterialButton(
           shape: CircleBorder(),
-          child: child,
           elevation: 2.0,
           fillColor: Colors.white,
           onPressed: onPressed,
+          child: child,
         ),
       ),
     );
@@ -43,7 +43,7 @@ class Keyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, constrains) {
-        double _col = constrains.maxWidth / 3;
+        var _col = constrains.maxWidth / 3;
         return Column(
           children: <Widget>[
             _rowButton(<Widget>[

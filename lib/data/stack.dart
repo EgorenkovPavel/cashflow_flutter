@@ -1,7 +1,7 @@
 
 class Stack<T>{
 
-  List<T> list = List();
+  List<T> list = [];
 
   void push(T item){
     list.add(item);

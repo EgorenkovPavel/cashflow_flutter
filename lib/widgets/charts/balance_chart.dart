@@ -16,7 +16,7 @@ class BalanceChart extends StatelessWidget {
       bloc: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
       builder: (context, state) {
         if (state is BalanceChartState) {
-          List<charts.Series<ValueOnDate, DateTime>> balanceSeries = [
+          var balanceSeries = <charts.Series<ValueOnDate, DateTime>>[
             charts.Series<ValueOnDate, DateTime>(
               id: 'Balance',
               data: state.balance,
@@ -27,7 +27,7 @@ class BalanceChart extends StatelessWidget {
             )
           ];
 
-          List<charts.Series<ValueOnDate, DateTime>> budgetSeries = [
+          var budgetSeries = <charts.Series<ValueOnDate, DateTime>>[
             charts.Series<ValueOnDate, DateTime>(
               id: 'Budget',
               data: state.budget,
@@ -42,10 +42,10 @@ class BalanceChart extends StatelessWidget {
 
           return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
               animate: false,
-              primaryMeasureAxis: new charts.NumericAxisSpec(
-                  tickProviderSpec: new charts.BasicNumericTickProviderSpec(
+              primaryMeasureAxis: charts.NumericAxisSpec(
+                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
                       zeroBound: false)),
-              domainAxis: new charts.EndPointsTimeAxisSpec(
+              domainAxis: charts.EndPointsTimeAxisSpec(
                   showAxisLine: false,
                   tickProviderSpec: StaticDateTimeTickProviderSpec(state.dates
                       .map((d) => TickSpec<DateTime>(d,
@@ -55,11 +55,11 @@ class BalanceChart extends StatelessWidget {
                               .capitalize()))
                       .toList())),
               behaviors: [
-                new charts.RangeAnnotation(state.dates
+                charts.RangeAnnotation(state.dates
                     .map((d) => charts.LineAnnotationSegment(
                         d, charts.RangeAnnotationAxisType.domain))
                     .toList()),
-                new charts.SeriesLegend(
+                charts.SeriesLegend(
                   position: charts.BehaviorPosition.bottom,
                 )
               ]);
@@ -96,10 +96,10 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
   List<ValueOnDate> _balanceByPeriod = [];
 
   void calcBalance() {
-    List<ValueOnDate> balances = [];
+    var balances = <ValueOnDate>[];
     balances.add(ValueOnDate(dates[0], startBalance));
 
-    int currentBalance = startBalance;
+    var currentBalance = startBalance;
     _balanceByPeriod.forEach((element) {
       currentBalance += element.value;
       balances.add(ValueOnDate(element.date, currentBalance));
@@ -121,7 +121,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
   }
 
   BalanceChartBloc(this._repository) : super(BalanceChartState([], [], [])) {
-    DateTime _now = DateTime.now();
+    var _now = DateTime.now();
 
     dates = [
       lastMonth(_now),
@@ -138,7 +138,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
     });
 
     _repository.watchBalance(dates[0])
-      ..listen((d) {
+      .listen((d) {
           startBalance = d.sum;
         add(Fetch());
 
@@ -146,7 +146,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
       });
 
     _repository.watchBalance(dates[1])
-      ..listen((d) {
+      .listen((d) {
           budget[0] = ValueOnDate(d.date, d.sum);
           budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
 
@@ -154,7 +154,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
       });
 
     _repository.watchBudgetSum(dates[2])
-      ..listen((d) {
+      .listen((d) {
         budgetSum = d;
           budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
 

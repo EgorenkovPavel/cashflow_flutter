@@ -25,23 +25,23 @@ class OperationTypeRadioButton extends StatelessWidget {
         child: Row(
           children: items
               .map((item) => Flexible(
+                    flex: 1,
+                    fit: FlexFit.tight,
                     child: RawMaterialButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       elevation: 0.0,
-                      child: Text(
-                        getOperationTitle(context, item).toUpperCase(),
-                        style: TextStyle(
-                            color: item == type ? Colors.white : Colors.black),
-                      ),
                       fillColor: item == type
                           ? Theme.of(context).primaryColor
                           : Colors.white,
                       onPressed: () {
                         onChange(item);
                       },
+                      child: Text(
+                        getOperationTitle(context, item).toUpperCase(),
+                        style: TextStyle(
+                            color: item == type ? Colors.white : Colors.black),
+                      ),
                     ),
-                    flex: 1,
-                    fit: FlexFit.tight,
                   ))
               .toList(),
         ),
@@ -50,7 +50,7 @@ class OperationTypeRadioButton extends StatelessWidget {
   }
 
   BorderRadiusGeometry getBorderRadius(item) {
-    int index = items.indexOf(item);
+    var index = items.indexOf(item);
     if (index == 0) {
       return BorderRadius.horizontal(left: Radius.circular(14.0));
     } else if (index == items.length - 1) {

@@ -18,11 +18,11 @@ class CategoryInputPage extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
               child: CategoryInputPage(
                 type: type,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
+              ),);
         });
   }
 
@@ -52,6 +52,9 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   Widget build(BuildContext context) {
     return ItemCard(
       title: AppLocalizations.of(context).newCategoryCardTitle,
+      onSave: (context) {
+        _bloc.add(Save(titleController.text));
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -94,9 +97,6 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
           ),
         ],
       ),
-      onSave: (context) {
-        _bloc.add(Save(titleController.text));
-      },
     );
   }
 }
@@ -138,7 +138,7 @@ class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryInputPageState> {
       _type = event.type;
       yield InitialState(_type);
     } else if (event is Save) {
-      _repository.insertCategory(Category(title: event.title, type: _type));
+      await _repository.insertCategory(Category(title: event.title, type: _type));
       yield Saved();
     }
   }

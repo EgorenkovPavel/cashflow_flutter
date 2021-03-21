@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class OperationEditPage extends StatefulWidget {
   static const routeName = '/operation';
 
-  static open(BuildContext context, int operationId) {
+  static void open(BuildContext context, int operationId) {
     Navigator.of(context)
         .pushNamed(OperationEditPage.routeName, arguments: operationId);
   }
@@ -37,7 +37,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
   Account _account;
   Category _category;
   Account _recAccount;
-  TextEditingController _sumController = TextEditingController();
+  final TextEditingController _sumController = TextEditingController();
   StreamSubscription<Operation> subscription;
 
   Repository model;
@@ -181,24 +181,25 @@ class _OperationEditPageState extends State<OperationEditPage> {
           ),
         ),
         persistentFooterButtons: <Widget>[
-          FlatButton(
-            child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
+            child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
           ),
-          RaisedButton(
-            child: Text(
-              AppLocalizations.of(context).save.toUpperCase(),
-              style: TextStyle(color: Colors.white),
-            ),
-            color: Theme.of(context).primaryColor,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).primaryColor),
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _saveOperation(context);
                 Navigator.pop(context);
               }
             },
+            child: Text(
+              AppLocalizations.of(context).save.toUpperCase(),
+              style: TextStyle(color: Colors.white),
+            ),
           )
         ],
       ),
@@ -259,7 +260,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
     _date =
         DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     if (_type == OperationType.TRANSFER) {
-      Operation operation = Operation(
+      var operation = Operation(
           id: widget.id,
           date: _date,
           type: _type,
@@ -270,7 +271,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
       await Provider.of<Repository>(context, listen: false)
           .insertOperation(operation);
     } else {
-      Operation operation = Operation(
+      var operation = Operation(
           id: widget.id,
           date: _date,
           type: _type,
@@ -284,35 +285,39 @@ class _OperationEditPageState extends State<OperationEditPage> {
   }
 
   void _selectDate() async {
-    final DateTime picked = await showDatePicker(
+    final picked = await showDatePicker(
       context: context,
       initialDate: _date,
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _date)
+    if (picked != null && picked != _date) {
       setState(() {
         _date = picked;
       });
+    }
   }
 
   void _selectTime() async {
-    final TimeOfDay picked =
-        await showTimePicker(context: context, initialTime: _time);
-    if (picked != null && picked != _time)
+    final picked = await showTimePicker(context: context, initialTime: _time);
+    if (picked != null && picked != _time) {
       setState(() {
         _time = picked;
       });
+    }
   }
 
   Widget dateButtom(IconData icon, String text, Function() onPressed) {
     final color = Theme.of(context).primaryColor;
 
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          side: BorderSide(color: color)),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    return TextButton(
+      style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+            side: BorderSide(color: color),
+          ),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+      onPressed: onPressed,
       child: Row(
         children: <Widget>[
           Icon(
@@ -325,7 +330,6 @@ class _OperationEditPageState extends State<OperationEditPage> {
           ),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

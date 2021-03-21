@@ -151,7 +151,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   @override
   Stream<MasterState> mapEventToState(MasterEvent event) async* {
     if (event is Start) {
-      Operation op = await _repository.getLastOperation();
+      var op = await _repository.getLastOperation();
 
       if (op == null) {
         return;
@@ -251,7 +251,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         return;
       }
 
-      int opId = await _saveOperation();
+      var opId = await _saveOperation();
       print(opId.toString());
       _data = _data.copyWith(operationId: opId);
 
@@ -299,6 +299,9 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
 
           return _repository.insertOperation(operation);
         }
+      default:{
+        throw 'Unknown value';
+      }
     }
   }
 }

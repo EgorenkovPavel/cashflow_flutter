@@ -5,10 +5,12 @@ import 'package:cashflow/data/objects/category.dart';
 class CategoryMapper extends Mapper<Category, CategoryEntityData>{
   const CategoryMapper();
 
+  @override
   CategoryEntityData mapToSql(Category c){
     return CategoryEntityData(id: c.id, title: c.title, archive: c.archive, operationType: c.type);
   }
 
+  @override
   Category mapToDart(CategoryEntityData c){
     return Category(id: c.id, title: c.title, archive: c.archive, type: c.operationType);
   }

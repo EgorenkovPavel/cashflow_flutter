@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class CategoryListPage extends StatefulWidget {
   static const String routeName = '/categories';
 
-  static open(BuildContext context) {
+  static void open(BuildContext context) {
     Navigator.of(context).pushNamed(CategoryListPage.routeName);
   }
 
@@ -32,7 +32,7 @@ class _CategoryListPageState extends State<CategoryListPage>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: tabTypes.length);
+    _tabController = TabController(vsync: this, length: tabTypes.length);
   }
 
   @override
@@ -58,9 +58,9 @@ class _CategoryListPageState extends State<CategoryListPage>
         children: tabTypes.map((type) => buildList(context, type)).toList(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: () => CategoryInputPage.open(context,
             type: tabTypes[_tabController.index]),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -77,7 +77,7 @@ class _CategoryListPageState extends State<CategoryListPage>
           return emptyListHint(context);
         }
 
-        final Map<Category, int> items = snapshot.data ?? Map<Category, int>();
+        final items = snapshot.data ?? <Category, int>{};
 
         return listBuilder(context, items);
       },

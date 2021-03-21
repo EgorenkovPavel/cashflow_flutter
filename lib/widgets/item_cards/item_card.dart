@@ -30,24 +30,22 @@ class ItemCard extends StatelessWidget {
             ),
             child,
             Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-              FlatButton(
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
                 child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
               ),
-              RaisedButton(
-                child: Text(
-                  AppLocalizations.of(context).save.toUpperCase(),
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Theme.of(context).primaryColor,
+              ElevatedButton(
                 onPressed: () {
                   if(_formKey.currentState.validate()){
                     onSave(context);
                     Navigator.of(context).pop(true);
                   }
                 },
+                style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
+                child: Text(
+                  AppLocalizations.of(context).save.toUpperCase(),
+                  style: TextStyle(color: Colors.white),
+                ),
               )
             ])
           ],

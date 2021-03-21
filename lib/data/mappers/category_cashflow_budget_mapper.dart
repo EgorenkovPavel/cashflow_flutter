@@ -6,6 +6,7 @@ class CategoryCashflowBudgetMapper
     extends Mapper<CategoryCashflowBudget, CategoryCashflowBudgetEntity> {
   const CategoryCashflowBudgetMapper();
 
+  @override
   CategoryCashflowBudgetEntity mapToSql(CategoryCashflowBudget c) {
     return CategoryCashflowBudgetEntity(
         c.year,
@@ -19,6 +20,7 @@ class CategoryCashflowBudgetMapper
         c.cashflow);
   }
 
+  @override
   CategoryCashflowBudget mapToDart(CategoryCashflowBudgetEntity c) {
     return CategoryCashflowBudget(
         id: c.category.id,

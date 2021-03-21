@@ -10,7 +10,7 @@ class OperationListPage extends StatefulWidget {
 
   const OperationListPage({Key key}) : super(key: key);
 
-  static open(BuildContext context) {
+  static void open(BuildContext context) {
     Navigator.of(context).pushNamed(routeName);
   }
 
@@ -42,8 +42,8 @@ class _OperationListPageState extends State<OperationListPage> {
         Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: () => OperationList.addItem(context),
+        child: Icon(Icons.add),
       ),
     );
   }

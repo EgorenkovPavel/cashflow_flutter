@@ -16,7 +16,6 @@ import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:cashflow/widgets/pages/service/backup_page.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,7 +24,7 @@ import 'package:provider/provider.dart';
 import 'data/repository.dart';
 
 void main(){
-  final Repository _repository = Repository();
+  final _repository = Repository();
 
  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
