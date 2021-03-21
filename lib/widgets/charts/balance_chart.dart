@@ -13,7 +13,7 @@ class BalanceChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BalanceChartBloc, BalanceChartState>(
-      cubit: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
+      bloc: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
       builder: (context, state) {
         if (state is BalanceChartState) {
           List<charts.Series<ValueOnDate, DateTime>> balanceSeries = [
