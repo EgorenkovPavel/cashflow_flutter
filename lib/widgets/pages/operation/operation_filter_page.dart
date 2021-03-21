@@ -75,7 +75,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     } else {
       return InputChip(
         avatar: Icon(Icons.mode_edit),
-        label: Text('Choose period'),
+        label: Text(AppLocalizations.of(context).choosePeriod),
         onPressed: () async {
           var date = await showDateRangePicker(
               context: context,
@@ -108,7 +108,6 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     final _categoryInKey = GlobalKey<State<OperationFilterPage>>();
     final _categoryOutKey = GlobalKey<State<OperationFilterPage>>();
 
-
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).titleFilters),
@@ -122,16 +121,16 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
               SizedBox(
                 height: 8.0,
               ),
-              Text('Period'),
+              Text(AppLocalizations.of(context).period),
               _periodChoise(widget.filter),
               SizedBox(
                 height: 8.0,
               ),
-              Text('Accounts'),
+              Text(AppLocalizations.of(context).accounts),
               InputChip(
                 key: _accountKey,
                 avatar: Icon(Icons.mode_edit),
-                label: Text('Choose account'),
+                label: Text(AppLocalizations.of(context).chooseAccount),
                 onPressed: () async {
                   final result = await showMenu<Account>(
                       context: context,
@@ -166,20 +165,21 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
               SizedBox(
                 height: 8.0,
               ),
-              Text('Input categories'),
+              Text(AppLocalizations.of(context).inputCategory),
               InputChip(
                 key: _categoryInKey,
                 avatar: Icon(Icons.mode_edit),
-                label: Text('Choose category'),
+                label: Text(AppLocalizations.of(context).chooseCategory),
                 onPressed: () async {
                   final result = await showMenu<Category>(
                       context: context,
-                      position: buttonMenuPosition(_categoryInKey.currentContext),
+                      position:
+                          buttonMenuPosition(_categoryInKey.currentContext),
                       items: categoryInList
                           .map((c) => PopupMenuItem<Category>(
-                        value: c,
-                        child: Text(c.title),
-                      ))
+                                value: c,
+                                child: Text(c.title),
+                              ))
                           .toList());
                   if (result != null) {
                     setState(() {
@@ -206,20 +206,21 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
               SizedBox(
                 height: 8.0,
               ),
-              Text('Output categories'),
+              Text(AppLocalizations.of(context).outputCategory),
               InputChip(
                 key: _categoryOutKey,
                 avatar: Icon(Icons.mode_edit),
-                label: Text('Choose category'),
+                label: Text(AppLocalizations.of(context).chooseCategory),
                 onPressed: () async {
                   final result = await showMenu<Category>(
                       context: context,
-                      position: buttonMenuPosition(_categoryOutKey.currentContext),
+                      position:
+                          buttonMenuPosition(_categoryOutKey.currentContext),
                       items: categoryOutList
                           .map((c) => PopupMenuItem<Category>(
-                        value: c,
-                        child: Text(c.title),
-                      ))
+                                value: c,
+                                child: Text(c.title),
+                              ))
                           .toList());
                   if (result != null) {
                     setState(() {
@@ -256,9 +257,9 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
           child: Text(AppLocalizations.of(context).reset.toUpperCase()),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-          onPressed: () =>
-            Navigator.pop(context, widget.filter),
+          style:
+              ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+          onPressed: () => Navigator.pop(context, widget.filter),
           child: Text(
             AppLocalizations.of(context).apply.toUpperCase(),
             style: TextStyle(color: Colors.white),
