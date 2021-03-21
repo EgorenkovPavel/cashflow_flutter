@@ -16,6 +16,7 @@ class BalanceChart extends StatelessWidget {
       bloc: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
       builder: (context, state) {
         if (state is BalanceChartState) {
+          if (state.balance.isEmpty && state.budget.isEmpty) return SizedBox();
           var balanceSeries = <charts.Series<ValueOnDate, DateTime>>[
             charts.Series<ValueOnDate, DateTime>(
               id: 'Balance',
