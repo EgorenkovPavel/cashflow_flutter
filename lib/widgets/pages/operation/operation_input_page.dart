@@ -34,7 +34,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItemFinder: (account) => account.id == _bloc.account.id,
+      initialItemFinder: (account) => _bloc.account != null && account.id == _bloc.account.id,
       onItemChanged: (account) => _bloc.add(OnAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -55,7 +55,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryInStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItemFinder: (category) => category.id == _bloc.categoryIn.id,
+      initialItemFinder: (category) => _bloc.categoryIn != null && category.id == _bloc.categoryIn.id,
       onItemChanged: (category) => _bloc.add(OnCategoryInChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -67,7 +67,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryOutStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItemFinder: (category) => category.id == _bloc.categoryOut.id,
+      initialItemFinder: (category) => _bloc.categoryOut != null && category.id == _bloc.categoryOut.id,
       onItemChanged: (category) => _bloc.add(OnCategoryOutChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -79,7 +79,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItemFinder:(account) => account.id == _bloc.recAccount.id,
+      initialItemFinder:(account) => _bloc.recAccount != null && account.id == _bloc.recAccount.id,
       onItemChanged: (account) => _bloc.add(OnRecAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
