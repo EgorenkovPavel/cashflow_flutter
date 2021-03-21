@@ -16,7 +16,7 @@ class AccountBalance {
         balance: balance ?? this.balance,
       );
 
-  Account getAccount() => Account(id: this.id, title: this.title, archive: this.archive);
+  Account getAccount() => Account(id: id, title: title, archive: archive);
 
   @override
   bool operator ==(Object other) =>

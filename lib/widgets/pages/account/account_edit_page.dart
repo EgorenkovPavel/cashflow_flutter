@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class AccountEditPage extends StatefulWidget {
   static const routeName = '/account';
 
-  static open(BuildContext context, int accountId) {
+  static void open(BuildContext context, int accountId) {
     Navigator.of(context)
         .pushNamed(AccountEditPage.routeName, arguments: accountId);
   }
@@ -28,7 +28,7 @@ class AccountEditPage extends StatefulWidget {
 class _AccountEditPageState extends State<AccountEditPage> {
 
   AccountEditPageBloc _bloc;
-  TextEditingController _titleController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
@@ -64,8 +64,8 @@ class _AccountEditPageState extends State<AccountEditPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
           onPressed: () => OperationList.addItem(context),
+          child: Icon(Icons.add),
         ),
       ),
     );
@@ -164,7 +164,7 @@ class AccountEditPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
         _account = _account.copyWith(title: event.title);
         yield AccountEditPageState(_editTitleMode, _account.title);
 
-        _repository.updateAccount(_account);
+        await _repository.updateAccount(_account);
     }
   }
 

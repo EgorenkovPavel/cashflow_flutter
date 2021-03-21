@@ -20,11 +20,11 @@ class BudgetCard extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
               child: BudgetCard(
                 categoryId: categoryId,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
+              ),);
         });
   }
 
@@ -34,12 +34,12 @@ class BudgetCard extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
               child: BudgetCard(
                 categoryId: categoryId,
                 date: date,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
+              ),);
         });
   }
 
@@ -53,6 +53,9 @@ class _BudgetCardState extends State<BudgetCard> {
 
   Widget yearInput() {
     return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black38),
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
         child: Row(
           children: <Widget>[
             IconButton(
@@ -76,14 +79,15 @@ class _BudgetCardState extends State<BudgetCard> {
               onPressed: () => _bloc.add(IncYear()),
             ),
           ],
-        ),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black38),
-            borderRadius: BorderRadius.all(Radius.circular(4.0))));
+        ),);
   }
 
   Widget monthInput() {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black38),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: BlocBuilder<BudgetCardBloc, BudgetCardState>(
         buildWhen: (BudgetCardState previous, BudgetCardState current) {
           return current is DataState;
@@ -94,10 +98,10 @@ class _BudgetCardState extends State<BudgetCard> {
               items: BudgetCardBloc.months
                   .map(
                     (m) => DropdownMenuItem<int>(
+                      value: m,
                       child: Text(DateFormat.MMMM(
                               Localizations.localeOf(context).languageCode)
                           .format(DateTime(1970, m, 1))),
-                      value: m,
                     ),
                   )
                   .toList(),
@@ -110,10 +114,6 @@ class _BudgetCardState extends State<BudgetCard> {
           }
         },
       ),
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black38),
-          borderRadius: BorderRadius.all(Radius.circular(4.0))),
     );
   }
 
@@ -142,6 +142,7 @@ class _BudgetCardState extends State<BudgetCard> {
       },
       child: ItemCard(
           title: AppLocalizations.of(context).titleBudget,
+          onSave: (context) => _bloc.add(Save(sumController.text)),
           child: Column(
             children: <Widget>[
               Row(
@@ -169,8 +170,7 @@ class _BudgetCardState extends State<BudgetCard> {
                 },
               ),
             ],
-          ),
-          onSave: (context) => _bloc.add(Save(sumController.text))),
+          ),),
     );
   }
 }
@@ -230,7 +230,7 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
     if (event is Initial) {
       categoryId = event.categoryId;
 
-      DateTime date = event.date ?? DateTime.now();
+      var date = event.date ?? DateTime.now();
       _month = date.month;
       _year = date.year;
       yield DataState(_month, _year);
@@ -256,7 +256,7 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
         await _repository.deleteBudget(_oldBudgetData);
         _oldBudgetData = null;
       }
-      _repository.insertBudget(BudgetData(
+      await _repository.insertBudget(BudgetData(
           date: DateTime(_year, _month),
           category: categoryId,
           sum: int.parse(event.sum)));

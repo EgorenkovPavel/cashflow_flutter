@@ -6,11 +6,13 @@ import 'package:cashflow/data/objects/account_balance.dart';
 class AccountBalanceMapper extends Mapper<AccountBalance, AccountBalanceEntity>{
   const AccountBalanceMapper();
 
+  @override
   AccountBalanceEntity mapToSql(AccountBalance a) {
     return AccountBalanceEntity(
         AccountEntityData(id: a.id, title: a.title, archive: a.archive), a.balance);
   }
 
+  @override
   AccountBalance mapToDart(AccountBalanceEntity a) {
     return AccountBalance(
         id: a.account.id,

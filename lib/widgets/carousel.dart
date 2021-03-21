@@ -52,7 +52,7 @@ class Carousel<T> extends StatelessWidget {
                 itemBuilder: (context, pos) {
                   return AnimatedBuilder(
                     builder: (BuildContext context, Widget child) {
-                      double page = !_pageController.position.haveDimensions
+                      var page = !_pageController.position.haveDimensions
                           ? _pageController.initialPage.toDouble()
                           : _pageController.page;
 //                      return Transform(
@@ -72,6 +72,11 @@ class Carousel<T> extends StatelessWidget {
                     },
                     animation: _pageController,
                     child: GestureDetector(
+                      onTap: () {
+                        _pageController.animateToPage(pos,
+                            duration: Duration(seconds: 1),
+                            curve: ElasticOutCurve());
+                      },
                       child: Container(
 //                          margin: const EdgeInsets.symmetric(
 //                              horizontal: 8.0, vertical: 4.0),
@@ -83,11 +88,6 @@ class Carousel<T> extends StatelessWidget {
                           ),
                           height: 20.0,
                           child: itemBuilder(context, pos)),
-                      onTap: () {
-                        _pageController.animateToPage(pos,
-                            duration: Duration(seconds: 1),
-                            curve: ElasticOutCurve());
-                      },
                     ),
                   );
                 }),

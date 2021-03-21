@@ -39,33 +39,33 @@ class BackupPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      RaisedButton(
-                        color: Theme.of(context).primaryColor,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                        onPressed: () => _backup(context),
                         child: Text(
                           AppLocalizations.of(context).backup.toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () => _backup(context),
                       ),
-                      RaisedButton(
-                        color: Theme.of(context).primaryColor,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                        onPressed: () => _restore(context),
                         child: Text(
                           AppLocalizations.of(context).restore.toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () => _restore(context),
                       ),
                     ],
                   ),
                   sectionTitle(
                       context, AppLocalizations.of(context).titleDataControl),
-                  RaisedButton(
-                    color: Theme.of(context).accentColor,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
+                    onPressed: () => _deleteAll(context),
                     child: Text(
                       AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () => _deleteAll(context),
                   ),
                   BlocConsumer<BackupPageBloc, BackupPageState>(buildWhen:
                       (BackupPageState previosState,
@@ -84,19 +84,19 @@ class BackupPage extends StatelessWidget {
                     }
                   }, listener: (BuildContext context, BackupPageState state) {
                     if (state is BackupSuccessState) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(AppLocalizations.of(context)
                               .mesDatabaseBackuped)));
                     } else if (state is RestoreSuccessState) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(AppLocalizations.of(context)
                               .mesDatabaseRestored)));
                     } else if (state is DeleteSuccessState) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(AppLocalizations.of(context)
                               .mesDatabaseDeleted)));
                     } else if (state is GetHttpClientError) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
                             AppLocalizations.of(context).errorNoGPServices),
                       ));
@@ -109,12 +109,12 @@ class BackupPage extends StatelessWidget {
         ));
   }
 
-  _backup(BuildContext context) async {
+  Future _backup(BuildContext context) async {
     var httpClient;
     try {
       httpClient = await GoogleHttpClient.getClient();
     } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).errorNoGPServices),
       ));
       print(e.toString());
@@ -122,19 +122,19 @@ class BackupPage extends StatelessWidget {
     }
     if (httpClient == null) return;
 
-    showDialog(
+    await showDialog(
         context: context,
         builder: (context) => BackupDialog(
               httpClient: httpClient,
             ));
   }
 
-  _restore(BuildContext context) async {
+  Future _restore(BuildContext context) async {
     var httpClient;
     try {
       httpClient = await GoogleHttpClient.getClient();
     } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).errorNoGPServices),
       ));
       print(e.toString());
@@ -142,26 +142,26 @@ class BackupPage extends StatelessWidget {
     }
     if (httpClient == null) return;
 
-    showDialog(
+    await showDialog(
         context: context,
         builder: (context) => RestoreDialog(
               httpClient: httpClient,
             ));
   }
 
-  _deleteAll(BuildContext context) {
-    showDialog(
+  Future _deleteAll(BuildContext context) async{
+    await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context).btnDeleteAll),
         content: Text(AppLocalizations.of(context).mesAreYouSure),
         actions: <Widget>[
-          FlatButton(
-            child: Text(AppLocalizations.of(context).yes),
+          TextButton(
             onPressed: () {
               BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
               Navigator.of(context).pop();
             },
+            child: Text(AppLocalizations.of(context).yes),
           ),
         ],
       ),
@@ -179,7 +179,7 @@ class BackupDialog extends StatefulWidget {
 }
 
 class _BackupDialogState extends State<BackupDialog> {
-  TextEditingController _controller =
+  final TextEditingController _controller =
       TextEditingController(text: 'Cashflow backup');
 
   DriveFile _folder = DriveFile(id: 'root', title: 'Root', isFolder: true);
@@ -230,13 +230,12 @@ class _BackupDialogState extends State<BackupDialog> {
       ),
       contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
-        FlatButton(
-          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
+          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
         ),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          child: Text(AppLocalizations.of(context).backup.toUpperCase(),),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           onPressed: () async {
             if (_folder == null || _controller.text.isEmpty) {
               return;
@@ -247,6 +246,7 @@ class _BackupDialogState extends State<BackupDialog> {
 
             Navigator.of(context).pop();
           },
+          child: Text(AppLocalizations.of(context).backup.toUpperCase(),),
         )
       ],
     );
@@ -294,13 +294,12 @@ class _RestoreDialogState extends State<RestoreDialog> {
       ),
       contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
-        FlatButton(
-          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
+          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
         ),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          child: Text(AppLocalizations.of(context).restore.toUpperCase()),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           onPressed: () {
             if (_file == null) {
               return;
@@ -311,6 +310,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
 
             Navigator.of(context).pop();
           },
+          child: Text(AppLocalizations.of(context).restore.toUpperCase()),
         )
       ],
     );

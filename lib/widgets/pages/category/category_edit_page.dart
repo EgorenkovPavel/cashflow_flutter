@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class CategoryEditPage extends StatefulWidget {
   static const routeName = '/category';
 
-  static open(BuildContext context, int categoryId) {
+  static void open(BuildContext context, int categoryId) {
     Navigator.of(context)
         .pushNamed(CategoryEditPage.routeName, arguments: categoryId);
   }
@@ -35,11 +35,11 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   TabController _tabController;
 
   bool _editTitleMode = false;
-  TextEditingController _titleController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
-    _tabController = new TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
 
     super.initState();
     subscription = Provider.of<Repository>(context, listen: false)
@@ -84,7 +84,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           ],
         ),
        floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: (){
           if (_tabController.index == 0){
             BudgetCard.open(context, widget.id);
@@ -92,6 +91,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
             OperationList.addItem(context);
           }
         },
+        child: Icon(Icons.add),
       ),
 
     );

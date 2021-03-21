@@ -61,7 +61,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   }
 
   Widget _periodChoise(OperationFilter filter) {
-    if (filter.date != null)
+    if (filter.date != null) {
       return InputChip(
         label: Text(
             '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
@@ -72,12 +72,12 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
           });
         },
       );
-    else
+    } else {
       return InputChip(
         avatar: Icon(Icons.mode_edit),
         label: Text('Choose period'),
         onPressed: () async {
-          DateTimeRange date = await showDateRangePicker(
+          var date = await showDateRangePicker(
               context: context,
               firstDate: DateTime(2020), //TODO
               lastDate: DateTime.now());
@@ -86,12 +86,13 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
           });
         },
       );
+    }
   }
 
   RelativeRect buttonMenuPosition(BuildContext c) {
     final RenderBox bar = c.findRenderObject();
     final RenderBox overlay = Overlay.of(c).context.findRenderObject();
-    final RelativeRect position = RelativeRect.fromRect(
+    final position = RelativeRect.fromRect(
       Rect.fromPoints(
         bar.localToGlobal(bar.size.bottomLeft(Offset.zero), ancestor: overlay),
         bar.localToGlobal(bar.size.bottomRight(Offset.zero), ancestor: overlay),
@@ -137,8 +138,8 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                       position: buttonMenuPosition(_accountKey.currentContext),
                       items: accountList
                           .map((a) => PopupMenuItem<Account>(
-                                child: Text(a.title),
                                 value: a,
+                                child: Text(a.title),
                               ))
                           .toList());
                   if (result != null) {
@@ -176,8 +177,8 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                       position: buttonMenuPosition(_categoryInKey.currentContext),
                       items: categoryInList
                           .map((c) => PopupMenuItem<Category>(
-                        child: Text(c.title),
                         value: c,
+                        child: Text(c.title),
                       ))
                           .toList());
                   if (result != null) {
@@ -216,8 +217,8 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                       position: buttonMenuPosition(_categoryOutKey.currentContext),
                       items: categoryOutList
                           .map((c) => PopupMenuItem<Category>(
-                        child: Text(c.title),
                         value: c,
+                        child: Text(c.title),
                       ))
                           .toList());
                   if (result != null) {
@@ -247,22 +248,21 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         ),
       ),
       persistentFooterButtons: [
-        FlatButton(
-          child: Text(AppLocalizations.of(context).reset.toUpperCase()),
+        TextButton(
           onPressed: () {
             widget.filter.reset();
             Navigator.pop(context, widget.filter);
           },
+          child: Text(AppLocalizations.of(context).reset.toUpperCase()),
         ),
-        RaisedButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+          onPressed: () =>
+            Navigator.pop(context, widget.filter),
           child: Text(
             AppLocalizations.of(context).apply.toUpperCase(),
             style: TextStyle(color: Colors.white),
           ),
-          color: Theme.of(context).primaryColor,
-          onPressed: () {
-            Navigator.pop(context, widget.filter);
-          },
         ),
       ],
     );

@@ -17,17 +17,17 @@ class MonthCashflowChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.BarChart(
+    return charts.BarChart(
       _seriesList(context),
       animate: animate,
       barGroupingType: charts.BarGroupingType.grouped,
       vertical: false,
-      barRendererDecorator: new charts.BarLabelDecorator<String>(),
+      barRendererDecorator: charts.BarLabelDecorator<String>(),
       // Hide domain axis.
       // domainAxis:
       //  new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
       behaviors: [
-        new charts.SeriesLegend(
+        charts.SeriesLegend(
           position: charts.BehaviorPosition.bottom,
         )
       ],
@@ -62,7 +62,7 @@ class MonthCashflowChart extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<Value, String>(
+      charts.Series<Value, String>(
           id: AppLocalizations.of(context).titleFact,
           domainFn: (Value sales, _) => sales.title,
           measureFn: (Value sales, _) => sales.sum,
@@ -71,7 +71,7 @@ class MonthCashflowChart extends StatelessWidget {
           charts.MaterialPalette.deepOrange.shadeDefault,
           // Set a label accessor to control the text of the bar label.
           labelAccessorFn: (Value sales, _) => '${sales.sum.toString()}'),
-      new charts.Series<Value, String>(
+      charts.Series<Value, String>(
           id: AppLocalizations.of(context).titleBudget,
           domainFn: (Value sales, _) => sales.title,
           measureFn: (Value sales, _) => sales.sum,

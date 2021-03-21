@@ -14,9 +14,9 @@ class AccountInputPage extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
-              child: AccountInputPage(),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))));
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              child: AccountInputPage(),);
         });
   }
 
@@ -45,6 +45,9 @@ class _AccountInputPageState extends State<AccountInputPage> {
   Widget build(BuildContext context) {
     return ItemCard(
       title: AppLocalizations.of(context).newAccountCardTitle,
+      onSave: (context) {
+        _bloc.add(Save(title: _controller.text));
+      },
       child: TextFormField(
         autofocus: true,
         controller: _controller,
@@ -60,9 +63,6 @@ class _AccountInputPageState extends State<AccountInputPage> {
           return null;
         },
       ),
-      onSave: (context) {
-        _bloc.add(Save(title: _controller.text));
-      },
     );
   }
 }

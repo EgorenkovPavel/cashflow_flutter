@@ -33,11 +33,11 @@ class CashflowCardBloc extends Bloc<CashflowCardEvent, CashflowCardState> {
       if (categories.isEmpty) {
         yield Empty();
       } else {
-        List<CategoryCashflowBudget> categoriesInput = categories
+        var categoriesInput = categories
             .where((category) => category.type == OperationType.INPUT)
             .toList();
 
-        List<CategoryCashflowBudget> categoriesOutput = categories
+        var categoriesOutput = categories
             .where((category) => category.type == OperationType.OUTPUT)
             .toList();
 

@@ -16,7 +16,7 @@ import 'package:intl/intl.dart';
 class OperationInputPage extends StatefulWidget {
   static const routeName = '/masterPageNew';
 
-  static open(BuildContext context) {
+  static void open(BuildContext context) {
     Navigator.of(context).pushNamed(routeName);
   }
 
@@ -180,23 +180,23 @@ class _OperationInputPageState extends State<OperationInputPage>
     } else if (state is HideKeyBoard) {
       _animationController.reverse();
     } else if (state is EmptyAccountMessage) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyAccountError),
       ));
     } else if (state is EmptyCategoryMessage) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyCategoryError),
       ));
     } else if (state is EmptyRecAccountMessage) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptyRecAccountError),
       ));
     } else if (state is EmptySumMessage) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).emptySumError),
       ));
     } else if (state is OperationCreatedMessage) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).mesOperationCreated),
         action: SnackBarAction(
           label: AppLocalizations.of(context).cancel,
@@ -206,7 +206,7 @@ class _OperationInputPageState extends State<OperationInputPage>
         ),
       ));
     } else if (state is OperationCanceled) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context).mesOperationCanceled),
       ));
     }
@@ -281,11 +281,11 @@ class _OperationInputPageState extends State<OperationInputPage>
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          FlatButton(
+                          TextButton(
+                            onPressed: () => _bloc.add(OnMoreTap()),
                             child: Text(AppLocalizations.of(context)
                                 .more
                                 .toUpperCase()),
-                            onPressed: () => _bloc.add(OnMoreTap()),
                           ),
                           Expanded(
                             child: Column(
@@ -296,14 +296,6 @@ class _OperationInputPageState extends State<OperationInputPage>
                                   child: GestureDetector(
                                     onTap: () => _bloc.add(OnSumTap()),
                                     child: Container(
-                                      child: Text(
-                                        NumberFormat()
-                                            .format((state as DataState).sum),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4
-                                            .copyWith(color: Colors.black),
-                                      ),
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(4.0),
@@ -318,6 +310,14 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       width: double.infinity,
                                       height: 48.0,
                                       alignment: Alignment.center,
+                                      child: Text(
+                                        NumberFormat()
+                                            .format((state as DataState).sum),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4
+                                            .copyWith(color: Colors.black),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -334,11 +334,11 @@ class _OperationInputPageState extends State<OperationInputPage>
                               ],
                             ),
                           ),
-                          FlatButton(
+                          TextButton(
+                            onPressed: () => _bloc.add(OnNextTap()),
                             child: Text(AppLocalizations.of(context)
                                 .create
                                 .toUpperCase()),
-                            onPressed: () => _bloc.add(OnNextTap()),
                           ),
                         ],
                       ),
@@ -375,6 +375,7 @@ class CarouselList<T> extends StatelessWidget {
   final Function _onItemChanged;
   final Function(BuildContext, T) _itemBuilder;
 
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _stream,
@@ -386,7 +387,7 @@ class CarouselList<T> extends StatelessWidget {
           );
         }
 
-        List<T> items = snapshot.data;
+        var items = snapshot.data;
 
         return Carousel(
             key: GlobalKey(),

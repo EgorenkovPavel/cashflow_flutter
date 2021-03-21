@@ -155,7 +155,7 @@ class Repository extends ChangeNotifier {
   }
 
   Future duplicateOperation(Operation entity) {
-    Operation newOperation = Operation(
+    var newOperation = Operation(
       date: DateTime.now(),
       type: entity.type,
       account: entity.account,
@@ -200,12 +200,12 @@ class Repository extends ChangeNotifier {
 
   Future backup(GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
-    var localFile = new File('${directory.path}/$fileName.txt');
+    var localFile = File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(await getDbData()));
 
-    var media = new drive.Media(localFile.openRead(), localFile.lengthSync());
+    var media = drive.Media(localFile.openRead(), localFile.lengthSync());
 
-    drive.File file = drive.File();
+    var file = drive.File();
     file.name = fileName;
     file.parents = [catalogId];
     file.mimeType = 'application/json';
@@ -227,16 +227,16 @@ class Repository extends ChangeNotifier {
           .get(fileId, downloadOptions: drive.DownloadOptions.FullMedia);
 
       final directory = await getTemporaryDirectory();
-      var saveFile = new File('${directory.path}/test.json');
+      var saveFile = File('${directory.path}/test.json');
 
-      List<int> dataStore = [];
+      var dataStore = <int>[];
       file.stream.listen((data) {
-        print("DataReceived: ${data.length}");
+        print('DataReceived: ${data.length}');
         dataStore.insertAll(dataStore.length, data);
       }, onDone: () async {
-        print("Task Done");
+        print('Task Done');
         await saveFile.writeAsBytes(dataStore);
-        print("File saved at ${saveFile.path}");
+        print('File saved at ${saveFile.path}');
 
         await deleteAll();
 
@@ -245,7 +245,7 @@ class Repository extends ChangeNotifier {
 
         await loadData(data);
       }, onError: (error) {
-        print("Some Error");
+        print('Some Error');
       });
     } catch (e) {
       print(e);

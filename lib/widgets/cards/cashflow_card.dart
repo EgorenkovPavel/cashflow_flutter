@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CashflowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CashflowCardBloc>(context)..add(Fetch());
+    BlocProvider.of<CashflowCardBloc>(context).add(Fetch());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -59,8 +59,8 @@ class CashflowCard extends StatelessWidget {
       child: categoriesInput.isEmpty && categoriesOutput.isEmpty
           ? EmptyCardHint(title: AppLocalizations.of(context).noCategories,)
           : SizedBox(
-              child: MonthCashflowChart(categoriesInput, categoriesOutput),
               height: 200,
+              child: MonthCashflowChart(categoriesInput, categoriesOutput),
             ),
     );
   }

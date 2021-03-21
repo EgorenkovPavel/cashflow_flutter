@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LastOperationsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<LastOperationsBloc>(context)..add(Fetch());
+    BlocProvider.of<LastOperationsBloc>(context).add(Fetch());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -50,7 +50,7 @@ class LastOperationsCard extends StatelessWidget {
     return Column(
       children: operations
           .map((op) {
-            int index = operations.indexOf(op);
+            var index = operations.indexOf(op);
 
             Widget divider = Divider();
             if (index == 0) {
