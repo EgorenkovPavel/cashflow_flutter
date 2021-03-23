@@ -126,7 +126,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard>
         CardBarButton(
           title: AppLocalizations.of(context).btnAddAccount,
           onPressed: () => AccountInputPage.open(context).then((res) {
-            if (res) {
+            if (res != null) {
               _bloc.add(AddAccount());
             }
           }),

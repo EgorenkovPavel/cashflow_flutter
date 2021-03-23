@@ -50,7 +50,7 @@ class Repository extends ChangeNotifier {
   Future<Account> getAccountById(int id) async =>
       const AccountMapper().mapToDart(await db.accountDao.getAccountById(id));
 
-  Future insertAccount(Account account) =>
+  Future<int> insertAccount(Account account) =>
       db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
 
   Future updateAccount(Account account) =>
@@ -100,7 +100,7 @@ class Repository extends ChangeNotifier {
       db.categoryDao.watchCashflowBudgetByCategory(categoryId).map(
           (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
 
-  Future insertCategory(Category entity) =>
+  Future<int> insertCategory(Category entity) =>
       db.categoryDao.insertCategory(const CategoryMapper().mapToSql(entity));
 
   Future updateCategory(Category entity) =>

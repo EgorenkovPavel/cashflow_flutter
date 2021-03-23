@@ -1,13 +1,13 @@
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
-class ItemCard extends StatelessWidget {
+class ItemCard<T> extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
   final String title;
   final Widget child;
-  final Function onSave;
+  final T Function(BuildContext context) onSave;
 
   ItemCard({Key key, this.title, @required this.child, this.onSave})
       : super(key: key);
@@ -31,14 +31,14 @@ class ItemCard extends StatelessWidget {
             child,
             Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
               TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
+                onPressed: () => Navigator.of(context).pop(null),
                 child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
               ),
               ElevatedButton(
                 onPressed: () {
                   if(_formKey.currentState.validate()){
-                    onSave(context);
-                    Navigator.of(context).pop(true);
+                    var t = onSave(context);
+                    //Navigator.of(context).pop(t);
                   }
                 },
                 style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
