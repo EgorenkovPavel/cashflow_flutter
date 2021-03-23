@@ -7,7 +7,7 @@ class ItemCard<T> extends StatelessWidget {
 
   final String title;
   final Widget child;
-  final T Function(BuildContext context) onSave;
+  final void Function(BuildContext context) onSave;
 
   ItemCard({Key key, this.title, @required this.child, this.onSave})
       : super(key: key);
@@ -37,8 +37,7 @@ class ItemCard<T> extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if(_formKey.currentState.validate()){
-                    var t = onSave(context);
-                    //Navigator.of(context).pop(t);
+                    onSave(context);
                   }
                 },
                 style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),

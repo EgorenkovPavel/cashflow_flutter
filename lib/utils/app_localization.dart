@@ -82,7 +82,6 @@ class AppLocalizations {
       'choose_category': 'Choose category',
       'input_category': 'Input category',
       'output_category': 'Output category',
-      'output_category': 'Output category',
       'source': 'Source',
       'receiver': 'Receiver',
 
