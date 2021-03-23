@@ -11,7 +11,7 @@ class ItemCard<T> extends StatelessWidget {
 
   ItemCard({Key key, this.title, @required this.child, this.onSave})
       : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return Form(
