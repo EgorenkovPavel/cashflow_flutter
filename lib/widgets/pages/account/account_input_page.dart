@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountInputPage extends StatefulWidget {
 
-  static Future<bool> open(BuildContext context){
-    return showDialog<bool>(
+  static Future<Account> open(BuildContext context){
+    return showDialog<Account>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -43,25 +43,33 @@ class _AccountInputPageState extends State<AccountInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ItemCard(
-      title: AppLocalizations.of(context).newAccountCardTitle,
-      onSave: (context) {
-        _bloc.add(Save(title: _controller.text));
+    return BlocListener<AccountCardBloc, AccountInputPageState>(
+      bloc: _bloc,
+      listener: (context, state){
+        if (state is CloseState){
+          Navigator.of(context).pop(state.account);
+        }
       },
-      child: TextFormField(
-        autofocus: true,
-        controller: _controller,
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: AppLocalizations.of(context).title,
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return AppLocalizations.of(context).emptyTitleError;
-          }
-          return null;
+      child: ItemCard<Account>(
+        title: AppLocalizations.of(context).newAccountCardTitle,
+        onSave: (context) {
+          _bloc.add(Save(title: _controller.text));
         },
+        child: TextFormField(
+          autofocus: true,
+          controller: _controller,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: AppLocalizations.of(context).title,
+          ),
+          validator: (value) {
+            if (value.isEmpty) {
+              return AppLocalizations.of(context).emptyTitleError;
+            }
+            return null;
+          },
+        ),
       ),
     );
   }
@@ -79,7 +87,11 @@ abstract class AccountInputPageState{}
 
 class EmptyState extends AccountInputPageState{}
 
-class CloseState extends AccountInputPageState{}
+class CloseState extends AccountInputPageState{
+  final Account account;
+
+  CloseState(this.account);
+}
 
 class AccountCardBloc extends Bloc<AccountCardEvent, AccountInputPageState>{
 
@@ -91,9 +103,14 @@ class AccountCardBloc extends Bloc<AccountCardEvent, AccountInputPageState>{
   Stream<AccountInputPageState> mapEventToState(AccountCardEvent event) async* {
 
     if (event is Save){
-      await _repository.insertAccount(Account(title: event.title));
-      yield CloseState();
+      var account = Account(title: event.title);
+      var id = await _repository.insertAccount(account);
+      yield CloseState(account.copyWith(id: id));
     }
 
   }
 }
+
+
+
+

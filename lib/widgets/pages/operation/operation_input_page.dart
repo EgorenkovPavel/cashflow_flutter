@@ -135,16 +135,17 @@ class _OperationInputPageState extends State<OperationInputPage>
       case OperationType.INPUT:
         return buildList(
             AppLocalizations.of(context).categories,
-            () => CategoryInputPage.open(context, type: OperationType.INPUT),
+            addNewInCategory,
             categoryInPageView(context));
       case OperationType.OUTPUT:
         return buildList(
             AppLocalizations.of(context).categories,
-            () => CategoryInputPage.open(context, type: OperationType.OUTPUT),
+            addNewOutCategory,
             categoryOutPageView(context));
       case OperationType.TRANSFER:
         return buildList(AppLocalizations.of(context).receiver,
-            () => AccountInputPage.open(context), recAccountPageView(context));
+            addNewRecAccount,
+            recAccountPageView(context));
       default:
         return SizedBox();
     }
@@ -212,6 +213,36 @@ class _OperationInputPageState extends State<OperationInputPage>
     }
   }
 
+  Future<void> addNewAccount() async {
+    var account = await AccountInputPage.open(context);
+    if (account != null){
+      var accountBalance = AccountBalance(id: account.id, title: account.title, balance: 0);
+      _bloc.add(OnAccountChanged(accountBalance));
+    }
+  }
+
+  Future<void> addNewInCategory() async {
+    var category = await CategoryInputPage.open(context, type: OperationType.INPUT);
+    if (category != null){
+      _bloc.add(OnCategoryInChanged(category));
+    }
+  }
+
+  Future<void> addNewOutCategory() async {
+    var category = await CategoryInputPage.open(context, type: OperationType.OUTPUT);
+    if (category != null){
+      _bloc.add(OnCategoryOutChanged(category));
+    }
+  }
+
+  Future<void> addNewRecAccount() async {
+    var account = await AccountInputPage.open(context);
+    if (account != null){
+      var accountBalance = AccountBalance(id: account.id, title: account.title, balance: 0);
+      _bloc.add(OnRecAccountChanged(accountBalance));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -253,7 +284,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                     children: <Widget>[
                       buildList(
                           (state as DataState).type == OperationType.TRANSFER ? AppLocalizations.of(context).source : AppLocalizations.of(context).accounts,
-                          () => AccountInputPage.open(context),
+                          addNewAccount,
                           accountPageView(context)),
                       buildAnalylicList((state as DataState).type),
                     ],

@@ -12,8 +12,8 @@ class CategoryInputPage extends StatefulWidget {
 
   CategoryInputPage({this.type});
 
-  static void open(BuildContext context, {OperationType type}) {
-    showDialog(
+  static Future<Category> open(BuildContext context, {OperationType type}) {
+    return showDialog<Category>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -50,52 +50,60 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ItemCard(
-      title: AppLocalizations.of(context).newCategoryCardTitle,
-      onSave: (context) {
-        _bloc.add(Save(titleController.text));
+    return BlocListener<CategoryCardBloc, CategoryInputPageState>(
+      bloc: _bloc,
+      listener: (context, state){
+        if (state is Saved){
+          Navigator.of(context).pop(state.category);
+        }
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  AppLocalizations.of(context).titleType,
-                  style: Theme.of(context).textTheme.caption,
+      child: ItemCard(
+        title: AppLocalizations.of(context).newCategoryCardTitle,
+        onSave: (context) {
+          _bloc.add(Save(titleController.text));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    AppLocalizations.of(context).titleType,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BlocBuilder<CategoryCardBloc, CategoryInputPageState>(
-                    builder: (context, state) {
-                  if (state is InitialState) {
-                    return Text(getOperationTitle(context, widget.type));
-                  }else{
-                    return SizedBox();
-                  }
-                }),
-              )
-            ],
-          ),
-          TextFormField(
-            autofocus: true,
-            controller: titleController,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: AppLocalizations.of(context).title,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BlocBuilder<CategoryCardBloc, CategoryInputPageState>(
+                      builder: (context, state) {
+                    if (state is InitialState) {
+                      return Text(getOperationTitle(context, widget.type));
+                    }else{
+                      return SizedBox();
+                    }
+                  }),
+                )
+              ],
             ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return AppLocalizations.of(context).emptyTitleError;
-              }
-              return null;
-            },
-          ),
-        ],
+            TextFormField(
+              autofocus: true,
+              controller: titleController,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: AppLocalizations.of(context).title,
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return AppLocalizations.of(context).emptyTitleError;
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -123,7 +131,11 @@ class InitialState extends CategoryInputPageState {
   InitialState(this.type);
 }
 
-class Saved extends CategoryInputPageState {}
+class Saved extends CategoryInputPageState {
+  final Category category;
+
+  Saved(this.category);
+}
 
 class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryInputPageState> {
   final Repository _repository;
@@ -138,8 +150,9 @@ class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryInputPageState> {
       _type = event.type;
       yield InitialState(_type);
     } else if (event is Save) {
-      await _repository.insertCategory(Category(title: event.title, type: _type));
-      yield Saved();
+      var category = Category(title: event.title, type: _type);
+      var id = await _repository.insertCategory(category);
+      yield Saved(category.copyWith(id: id));
     }
   }
 }
