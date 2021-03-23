@@ -34,7 +34,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<AccountEditPageBloc>(context);
-    _bloc.add(Fetch(widget.id));
+    _bloc.fetch(widget.id);
   }
 
   @override
@@ -101,7 +101,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
               Icons.check,
               color: Colors.white,
             ),
-            onPressed: () => _bloc.add(SaveTitle(_titleController.text)),
+            onPressed: () => _bloc.saveTitle(_titleController.text),
           );
         } else {
           return IconButton(
@@ -109,28 +109,12 @@ class _AccountEditPageState extends State<AccountEditPage> {
               Icons.edit,
               color: Colors.white,
             ),
-            onPressed: () => _bloc.add(EditTitle()),
+            onPressed: () => _bloc.editTitle(),
           );
         }
       },
     );
   }
-}
-
-abstract class AccountPageEvent{}
-
-class Fetch extends AccountPageEvent{
-  final int id;
-
-  Fetch(this.id);
-}
-
-class EditTitle extends AccountPageEvent{}
-
-class SaveTitle extends AccountPageEvent{
-  final String title;
-
-  SaveTitle(this.title);
 }
 
 class AccountEditPageState{
@@ -140,7 +124,7 @@ class AccountEditPageState{
   AccountEditPageState(this.editTitleMode, this.accountTitle);
 }
 
-class AccountEditPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
+class AccountEditPageBloc extends Cubit<AccountEditPageState>{
 
   final Repository _repository;
 
@@ -149,23 +133,22 @@ class AccountEditPageBloc extends Bloc<AccountPageEvent, AccountEditPageState>{
 
   AccountEditPageBloc(this._repository) : super(AccountEditPageState(false, ''));
 
-  @override
-  Stream<AccountEditPageState> mapEventToState(AccountPageEvent event) async* {
+  Future<void> fetch(int id) async {
+    _account = await _repository.getAccountById(id);
+    emit(AccountEditPageState(_editTitleMode, _account.title));
+  }
 
-    if(event is Fetch){
-      print(event.id);
-      _account = await _repository.getAccountById(event.id);
-      yield AccountEditPageState(_editTitleMode, _account.title);
-    }else if(event is EditTitle){
-      _editTitleMode = true;
-      yield AccountEditPageState(_editTitleMode, _account.title);
-    }else if(event is SaveTitle){
-        _editTitleMode = false;
-        _account = _account.copyWith(title: event.title);
-        yield AccountEditPageState(_editTitleMode, _account.title);
+  void editTitle(){
+    _editTitleMode = true;
+    emit(AccountEditPageState(_editTitleMode, _account.title));
+  }
 
-        await _repository.updateAccount(_account);
-    }
+  Future<void> saveTitle(String title) async {
+    _editTitleMode = false;
+    _account = _account.copyWith(title: title);
+
+    await _repository.updateAccount(_account);
+    emit(AccountEditPageState(_editTitleMode, _account.title));
   }
 
 }
