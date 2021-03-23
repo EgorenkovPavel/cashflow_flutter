@@ -39,7 +39,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
   void dispose() {
     super.dispose();
     _controller.dispose();
-    _bloc.close();
+    //_bloc.close();
   }
 
   @override
