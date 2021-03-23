@@ -39,6 +39,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _bloc.close();
   }
 
   @override
@@ -53,7 +54,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
       child: ItemCard<Account>(
         title: AppLocalizations.of(context).newAccountCardTitle,
         onSave: (context) {
-          _bloc.add(Save(title: _controller.text));
+          _bloc.save(_controller.text);
         },
         child: TextFormField(
           autofocus: true,
@@ -75,14 +76,6 @@ class _AccountInputPageState extends State<AccountInputPage> {
   }
 }
 
-abstract class AccountCardEvent{}
-
-class Save extends AccountCardEvent{
-  final String title;
-
-  Save({this.title});
-}
-
 abstract class AccountInputPageState{}
 
 class EmptyState extends AccountInputPageState{}
@@ -93,21 +86,16 @@ class CloseState extends AccountInputPageState{
   CloseState(this.account);
 }
 
-class AccountCardBloc extends Bloc<AccountCardEvent, AccountInputPageState>{
+class AccountCardBloc extends Cubit<AccountInputPageState>{
 
   final Repository _repository;
 
   AccountCardBloc(this._repository) : super(EmptyState());
 
-  @override
-  Stream<AccountInputPageState> mapEventToState(AccountCardEvent event) async* {
-
-    if (event is Save){
-      var account = Account(title: event.title);
-      var id = await _repository.insertAccount(account);
-      yield CloseState(account.copyWith(id: id));
-    }
-
+  Future<void> save(String title) async {
+    var account = Account(title: title);
+    var id = await _repository.insertAccount(account);
+    emit(CloseState(account.copyWith(id: id)));
   }
 }
 
