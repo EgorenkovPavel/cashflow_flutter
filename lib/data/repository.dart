@@ -69,9 +69,8 @@ class Repository extends ChangeNotifier {
           .watchAllCategories(archive: archive)
           .map((list) => const CategoryMapper().mapListToDart(list));
 
-  Stream<Category> getCategoryById(int id) => db.categoryDao
-      .getCategoryById(id)
-      .map((a) => const CategoryMapper().mapToDart(a));
+  Future<Category> getCategoryById(int id) async => const CategoryMapper()
+      .mapToDart(await db.categoryDao.getCategoryById(id));
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
@@ -198,7 +197,8 @@ class Repository extends ChangeNotifier {
 
   //INTERNAL operations backup
 
-  Future backup(GoogleHttpClient httpClient, String catalogId, String fileName) async {
+  Future backup(
+      GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(await getDbData()));

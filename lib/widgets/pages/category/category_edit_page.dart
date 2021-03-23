@@ -10,6 +10,7 @@ import 'package:cashflow/widgets/pages/budget/budget_card.dart';
 import 'package:cashflow/widgets/pages/budget/list_tile_budget.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class CategoryEditPage extends StatefulWidget {
@@ -29,40 +30,33 @@ class CategoryEditPage extends StatefulWidget {
 }
 
 class _CategoryEditPageState extends State<CategoryEditPage>
-    with SingleTickerProviderStateMixin{
-  Category category;
-  StreamSubscription<Category> subscription;
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
+  CategoryBloc _bloc;
 
-  bool _editTitleMode = false;
   final TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-
     super.initState();
-    subscription = Provider.of<Repository>(context, listen: false)
-        .getCategoryById(widget.id)
-        .listen((Category data) {
-      setState(() {
-        category = data;
-      });
-      _titleController.text = category.title;
-    });
+    _tabController = TabController(length: 2, vsync: this);
+    _bloc = CategoryBloc(Provider.of<Repository>(context, listen: false))..fetch(widget.id);
   }
 
   @override
   void dispose() {
-    super.dispose();
-    subscription.cancel();
     _titleController.dispose();
     _tabController.dispose();
+    _bloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<CategoryBloc, CategoryState>(
+      bloc: _bloc,
+      listener: (context, state) {},
+      child: Scaffold(
         appBar: AppBar(
           title: _header(context),
           actions: <Widget>[_appBarIcon()],
@@ -83,17 +77,17 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                 .watchAllOperationsByCategory(widget.id))
           ],
         ),
-       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          if (_tabController.index == 0){
-            BudgetCard.open(context, widget.id);
-          }else if (_tabController.index == 1){
-            OperationList.addItem(context);
-          }
-        },
-        child: Icon(Icons.add),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (_tabController.index == 0) {
+              BudgetCard.open(context, widget.id);
+            } else if (_tabController.index == 1) {
+              OperationList.addItem(context);
+            }
+          },
+          child: Icon(Icons.add),
+        ),
       ),
-
     );
   }
 
@@ -106,7 +100,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
         List<BudgetData> list = snapshot.data;
 
-        if(list.isEmpty){
+        if (list.isEmpty) {
           return _emptyBudgetListHint(context);
         }
 
@@ -127,61 +121,69 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     );
   }
 
-  IconButton _appBarIcon() {
-    if (_editTitleMode) {
-      return IconButton(
-        icon: Icon(
-          Icons.check,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          setState(() {
-            _editTitleMode = false;
-            category = category.copyWith(title: _titleController.text);
-          });
-          Provider.of<Repository>(context, listen: false)
-              .updateCategory(category.copyWith(title: _titleController.text));
-        },
-      );
-    } else {
-      return IconButton(
-        icon: Icon(
-          Icons.edit,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          setState(() {
-            _editTitleMode = true;
-          });
-        },
-      );
-    }
+  Widget _appBarIcon() {
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        if (state.editTitleMode) {
+          return IconButton(
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _bloc.saveTitle(_titleController.text);
+            },
+          );
+        } else {
+          return IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _bloc.editTitle();
+            },
+          );
+        }
+      },
+    );
   }
 
   Widget _header(BuildContext context) {
-    if (_editTitleMode) {
-      return TextField(
-        controller: _titleController,
-        style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
-        autofocus: true,
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(category?.title ?? ''),
-          Text(
-            category == null
-                ? ''
-                : getOperationTitle(context, category.type),
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        _titleController.text = state.category?.title ?? '';
+
+        if (state.editTitleMode) {
+          return TextField(
+            controller: _titleController,
             style: Theme.of(context)
                 .textTheme
-                .caption
+                .headline6
                 .copyWith(color: Colors.white),
-          ),
-        ],
-      );
-    }
+            autofocus: true,
+          );
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(state.category?.title ?? ''),
+              Text(
+                state.category == null
+                    ? ''
+                    : getOperationTitle(context, state.category.type),
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    .copyWith(color: Colors.white),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 
   Widget _emptyBudgetListHint(BuildContext context) {
@@ -189,5 +191,38 @@ class _CategoryEditPageState extends State<CategoryEditPage>
       title: AppLocalizations.of(context).emptyListBudgets,
       hint: AppLocalizations.of(context).hintEmptyList,
     );
+  }
+}
+
+class CategoryState {
+  final Category category;
+  final bool editTitleMode;
+
+  CategoryState(this.editTitleMode, this.category);
+}
+
+class CategoryBloc extends Cubit<CategoryState> {
+  final Repository _repositiry;
+
+  Category _category;
+  bool _editTitleMode = false;
+
+  CategoryBloc(this._repositiry) : super(CategoryState(false, null));
+
+  Future<void> fetch(int id) async {
+    _category = await _repositiry.getCategoryById(id);
+    emit(CategoryState(_editTitleMode, _category));
+  }
+
+  void editTitle() {
+    _editTitleMode = true;
+    emit(CategoryState(_editTitleMode, _category));
+  }
+
+  Future<void> saveTitle(String title) async {
+    _editTitleMode = false;
+    _category = _category.copyWith(title: title);
+    await _repositiry.updateCategory(_category);
+    emit(CategoryState(_editTitleMode, _category));
   }
 }
