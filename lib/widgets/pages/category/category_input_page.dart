@@ -38,7 +38,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<CategoryCardBloc>(context)
-      ..add(Initial(widget.type));
+      ..initial(widget.type);
   }
 
   @override
@@ -60,7 +60,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
       child: ItemCard(
         title: AppLocalizations.of(context).newCategoryCardTitle,
         onSave: (context) {
-          _bloc.add(Save(titleController.text));
+          _bloc.save(titleController.text);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,20 +109,6 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   }
 }
 
-abstract class CategoryCardEvent {}
-
-class Save extends CategoryCardEvent {
-  final String title;
-
-  Save(this.title);
-}
-
-class Initial extends CategoryCardEvent {
-  final OperationType type;
-
-  Initial(this.type);
-}
-
 abstract class CategoryInputPageState {}
 
 class InitialState extends CategoryInputPageState {
@@ -137,22 +123,20 @@ class Saved extends CategoryInputPageState {
   Saved(this.category);
 }
 
-class CategoryCardBloc extends Bloc<CategoryCardEvent, CategoryInputPageState> {
+class CategoryCardBloc extends Cubit<CategoryInputPageState> {
   final Repository _repository;
 
   OperationType _type;
 
   CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
 
-  @override
-  Stream<CategoryInputPageState> mapEventToState(CategoryCardEvent event) async* {
-    if (event is Initial) {
-      _type = event.type;
-      yield InitialState(_type);
-    } else if (event is Save) {
-      var category = Category(title: event.title, type: _type);
-      var id = await _repository.insertCategory(category);
-      yield Saved(category.copyWith(id: id));
-    }
+  void initial(OperationType type){
+    _type = type;
+  }
+
+  Future<void> save(String title) async {
+    var category = Category(title: title, type: _type);
+    var id = await _repository.insertCategory(category);
+    emit(Saved(category.copyWith(id: id)));
   }
 }
