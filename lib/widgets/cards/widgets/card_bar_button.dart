@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardBarButton extends StatelessWidget{
 
   final String title;
-  final Function onPressed;
+  final void Function() onPressed;
 
   const CardBarButton({this.title, this.onPressed});
 
