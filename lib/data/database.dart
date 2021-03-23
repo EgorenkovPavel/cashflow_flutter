@@ -534,8 +534,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Future<List<CategoryEntityData>> getAllCategories() =>
       select(categoryEntity).get();
 
-  Stream<CategoryEntityData> getCategoryById(int id) =>
-      (select(categoryEntity)..where((c) => c.id.equals(id))).watchSingle();
+  Future<CategoryEntityData> getCategoryById(int id) =>
+      (select(categoryEntity)..where((c) => c.id.equals(id))).getSingle();
 
   Stream<List<CategoryEntityData>> watchAllCategoriesByType(OperationType type,
           {bool archive = false}) =>
