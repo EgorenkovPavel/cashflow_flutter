@@ -12,7 +12,7 @@ class CategoryInputPage extends StatefulWidget {
 
   CategoryInputPage({this.type});
 
-  static Future<Category> open(BuildContext context, {OperationType type}) {
+  static Future<Category> open(BuildContext context, {@required OperationType type}) {
     return showDialog<Category>(
         context: context,
         barrierDismissible: false,
