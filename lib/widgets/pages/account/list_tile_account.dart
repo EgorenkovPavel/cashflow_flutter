@@ -18,25 +18,6 @@ class ListTileAccount extends StatelessWidget {
         style: Theme.of(context).textTheme.headline6,
       ),
       onTap: onTap,
-      onLongPress: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.delete),
-                title: Text(_account.archive ? 'UNARCHIVE' : 'ARCHIVE'),
-                onTap: () {
-                  Provider.of<Repository>(context, listen: false).updateAccount(
-                      _account.getAccount().copyWith(archive: !_account.archive));
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
