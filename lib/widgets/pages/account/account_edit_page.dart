@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 class AccountEditPage extends StatefulWidget {
   static const routeName = '/account';
 
-  static void open(BuildContext context, int accountId) {
-    Navigator.of(context)
+  static Future open(BuildContext context, int accountId) {
+    return Navigator.of(context)
         .pushNamed(AccountEditPage.routeName, arguments: accountId);
   }
 

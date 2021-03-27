@@ -1,7 +1,6 @@
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_bloc.dart';
 import 'package:cashflow/widgets/cards/last_operations_bloc.dart';
-import 'package:cashflow/widgets/cards/total_balance_bloc.dart';
 import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
 import 'package:cashflow/widgets/pages/budget/budget_card.dart';
@@ -31,9 +30,6 @@ void main(){
   runApp(
       MultiBlocProvider(
         providers: [
-          BlocProvider<TotalBalanceBloc>(
-            create: (BuildContext context) => TotalBalanceBloc(_repository),
-          ),
           BlocProvider<LastOperationsBloc>(
             create: (BuildContext context) => LastOperationsBloc(_repository),
           ),
