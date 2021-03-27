@@ -458,6 +458,26 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     });
   }
 
+  Future<List<AccountBalanceEntity>> getAllAccountsBalance() async {
+    final sumBalance = balanceEntity.sum.sum();
+
+    final query = db.select(accountEntity).join([
+      leftOuterJoin(
+        balanceEntity,
+        balanceEntity.account.equalsExp(accountEntity.id),
+        useColumns: false,
+      )
+    ]);
+    query
+      ..addColumns([sumBalance])
+      ..groupBy([accountEntity.id])
+      ..orderBy([OrderingTerm(expression: accountEntity.title)]);
+
+    var result = await query.get();
+    return result.map((row) => AccountBalanceEntity(
+          row.readTable(accountEntity), row.read(sumBalance) ?? 0)).toList();
+  }
+
   Future<void> batchInsert(List<AccountEntityData> accounts) async {
     await batch((batch) {
       batch.insertAll(
