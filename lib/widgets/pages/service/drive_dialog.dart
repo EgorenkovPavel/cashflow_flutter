@@ -120,7 +120,7 @@ class _DriveDialogState extends State<DriveDialog> {
                       Text(AppLocalizations.of(context).cancel.toUpperCase()),
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                  //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                   onPressed: () {
                     if (widget.mode == DialogMode.CHOOSE_FOLDER) {
                       Navigator.of(context).pop<DriveFile>(rootFolder.top());
