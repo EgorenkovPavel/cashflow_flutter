@@ -165,6 +165,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       controller: _sumController,
+                      //style: ,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: AppLocalizations.of(context).titleSum,

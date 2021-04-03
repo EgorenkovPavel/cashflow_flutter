@@ -13,17 +13,20 @@ class OperationTypeRadioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return ToggleButtons(
-          isSelected: items.map((e) => e == type).toList(),
-          children: items
-              .map((e) =>
-              Container(
-                padding: EdgeInsets.all(16),
-                  child: Text(getOperationTitle(context, e).toUpperCase())))
-              .toList(),
-          onPressed: (index) => onChange(items[index]),
-          borderRadius: BorderRadius.all(Radius.circular(14.0)),
-
+    return ToggleButtons(
+      isSelected: items.map((e) => e == type).toList(),
+      onPressed: (index) => onChange(items[index]),
+      borderRadius: BorderRadius.all(Radius.circular(14.0)),
+      children: items
+          .map(
+            (e) => Container(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                getOperationTitle(context, e).toUpperCase(),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
