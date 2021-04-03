@@ -1,4 +1,4 @@
-import 'package:cashflow/start_page.dart';
+import 'package:cashflow/widgets/start_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_bloc.dart';
 import 'package:cashflow/widgets/cards/last_operations_bloc.dart';
@@ -72,7 +72,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
         title: 'Cashflow',
         theme: ThemeData(
-            primarySwatch: Colors.green, accentColor: Colors.deepOrangeAccent),
+          brightness: Brightness.dark,
+            primaryColor: Colors.grey[900],
+            primarySwatch: Colors.grey,
+            accentColor: Colors.deepOrangeAccent,
+        ),
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,

@@ -1,10 +1,7 @@
-
-
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 
 class BudgetList extends StatelessWidget {
-
   const BudgetList();
 
   @override
@@ -15,8 +12,9 @@ class BudgetList extends StatelessWidget {
         BudgetListHeader(
           title: 'Month budgets',
         ),
-        SliverList(delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
             return BudgetListTile();
           },
           childCount: 10,
@@ -24,8 +22,9 @@ class BudgetList extends StatelessWidget {
         BudgetListHeader(
           title: 'Year budgets',
         ),
-        SliverList(delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
             return BudgetListTile();
           },
           childCount: 10,
@@ -49,7 +48,9 @@ class BudgetListHeader extends StatelessWidget {
       delegate: SliverHeaderDelegate(
         minHeight: 60,
         maxHeight: 60,
-        child: Container(color: Colors.white, child: Center(child: Text(_title))),
+        child: Container(
+            color: Theme.of(context).backgroundColor,
+            child: Center(child: Text(_title))),
       ),
     );
   }
@@ -71,11 +72,7 @@ class BudgetListTile extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('0.0'),
-                Text('1000'),
-                Text('10000')
-              ],
+              children: [Text('0.0'), Text('1000'), Text('10000')],
             ),
             Text('Rest: 9000')
           ],

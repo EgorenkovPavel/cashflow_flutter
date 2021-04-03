@@ -40,10 +40,10 @@ class ItemCard<T> extends StatelessWidget {
                     onSave(context);
                   }
                 },
-                style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
+                //style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
                 child: Text(
                   AppLocalizations.of(context).save.toUpperCase(),
-                  style: TextStyle(color: Colors.white),
+                  //style: TextStyle(color: Colors.white),
                 ),
               )
             ])
