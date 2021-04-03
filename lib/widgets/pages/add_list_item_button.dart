@@ -1,3 +1,4 @@
+import 'package:cashflow/widgets/pages/list_card.dart';
 import 'package:flutter/material.dart';
 
 class AddButton extends StatelessWidget {
@@ -8,10 +9,9 @@ class AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ListCard(
       onTap: _onTap,
-      child: Card(
-        child: Center(child: const Icon(Icons.add)),
+      child: Center(child: const Icon(Icons.add),
       ),
     );
   }
