@@ -30,26 +30,28 @@ class AccountList extends StatelessWidget {
               AccountListHeader(
                 balance: _balance,
               ),
-              SliverGrid(
+              SliverPadding(padding: EdgeInsets.all(16.0),
+              sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 2.0,
                     crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20.0,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16.0,
                     mainAxisExtent: 100.0),
                 delegate: SliverChildListDelegate.fixed(
                   _accounts
                       .map<Widget>((e) => AccountTile(
-                            account: e,
-                          ))
+                    account: e,
+                  ))
                       .toList()
-                        ..add(
-                          AddButton(
-                            onTap: () => AccountInputPage.open(context),
-                          ),
-                        ),
+                    ..add(
+                      AddButton(
+                        onTap: () => AccountInputPage.open(context),
+                      ),
+                    ),
                 ),
-              ),
+              ),),
+
             ],
           );
         });

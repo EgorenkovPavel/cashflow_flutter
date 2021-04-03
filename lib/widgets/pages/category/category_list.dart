@@ -99,23 +99,26 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 2.0,
-          crossAxisCount: 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20.0,
-          mainAxisExtent: 100.0),
-      delegate: SliverChildListDelegate.fixed(_categories
-          .map<Widget>((e) => CategoryListTile(
-                category: e,
-              ))
-          .toList()
-            ..add(AddButton(
-              onTap: () {
-                CategoryInputPage.open(context, type: _type);
-              },
-            ))),
+    return SliverPadding(
+      padding: EdgeInsets.all(16.0),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 2.0,
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16.0,
+            mainAxisExtent: 100.0),
+        delegate: SliverChildListDelegate.fixed(_categories
+            .map<Widget>((e) => CategoryListTile(
+                  category: e,
+                ))
+            .toList()
+              ..add(AddButton(
+                onTap: () {
+                  CategoryInputPage.open(context, type: _type);
+                },
+              ))),
+      ),
     );
   }
 }
