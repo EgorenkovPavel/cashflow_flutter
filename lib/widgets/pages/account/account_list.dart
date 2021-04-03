@@ -20,10 +20,12 @@ class AccountList extends StatelessWidget {
           if (state.hasData) {
             _accounts = state.data;
           }
+          var _balance = _accounts.fold(
+              0, (previousValue, element) => previousValue + element.balance);
           return CustomScrollView(
             slivers: [
               AccountListHeader(
-                title: 'Total balance',
+                balance: _balance,
               ),
               SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -38,9 +40,7 @@ class AccountList extends StatelessWidget {
                         ))
                     .toList()
                       ..add(AddButton(
-                        onTap: () {
-                          AccountInputPage.open(context);
-                        },
+                        onTap: () => AccountInputPage.open(context),
                       ))),
               ),
             ],
@@ -50,11 +50,11 @@ class AccountList extends StatelessWidget {
 }
 
 class AccountListHeader extends StatelessWidget {
-  const AccountListHeader({Key key, @required String title})
-      : _title = title,
+  const AccountListHeader({Key key, @required int balance})
+      : _balance = balance,
         super(key: key);
 
-  final String _title;
+  final int _balance;
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,21 @@ class AccountListHeader extends StatelessWidget {
       delegate: SliverHeaderDelegate(
         minHeight: 60,
         maxHeight: 60,
-        child:
-            Container(color: Colors.white, child: Center(child: Text(_title))),
+        child: Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Total balance',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  _balance.toString(),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            )),
       ),
     );
   }
