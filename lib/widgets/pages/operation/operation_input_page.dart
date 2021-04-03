@@ -16,8 +16,8 @@ import 'package:intl/intl.dart';
 class OperationInputPage extends StatefulWidget {
   static const routeName = '/masterPageNew';
 
-  static void open(BuildContext context) {
-    Navigator.of(context).pushNamed(routeName);
+  static Future open(BuildContext context) {
+    return Navigator.of(context).pushNamed(routeName);
   }
 
   @override

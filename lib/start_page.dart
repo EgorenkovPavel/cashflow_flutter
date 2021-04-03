@@ -19,8 +19,6 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     AccountList(),
     CategoryList(),
@@ -83,10 +81,10 @@ class _StartPageState extends State<StartPage> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: (){
           OperationInputPage.open(context);
         },
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
