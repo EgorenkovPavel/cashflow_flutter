@@ -433,12 +433,13 @@ class CarouselList<T> extends StatelessWidget {
         var items = snapshot.data;
 
         return Carousel(
-            key: GlobalKey(),
-            items: items,
-            initialItemFinder: _initialItemFinder,
-            onPageChanged: (pos) => _onItemChanged(items[pos]),
-            itemHeight: 60.0,
-            itemBuilder: (context, pos) => _itemBuilder(context, items[pos]));
+          key: GlobalKey(),
+          items: items,
+          initialItemFinder: _initialItemFinder,
+          onPageChanged: (pos) => _onItemChanged(items[pos]),
+          itemHeight: 60.0,
+          itemBuilder: (context, pos) => _itemBuilder(context, items[pos]),
+        );
       },
     );
   }
