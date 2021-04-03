@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class BudgetCard extends StatefulWidget {
   final int categoryId;
-  DateTime date;
+  final DateTime date;
 
   BudgetCard({@required this.categoryId, this.date});
 
