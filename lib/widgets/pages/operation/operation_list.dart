@@ -13,7 +13,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class OperationList extends StatelessWidget {
   final Stream<List<Operation>> _stream;
 
-  OperationList(Stream<List<Operation>> stream) : _stream = stream;
+  const OperationList(Stream<List<Operation>> stream) : _stream = stream;
 
   Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
@@ -70,19 +70,12 @@ class OperationList extends StatelessWidget {
     );
   }
 
-  static void addItem(BuildContext context) {
-    OperationInputPage.open(context);
+  static Future addItem(BuildContext context) async {
+    await OperationInputPage.open(context);
   }
 
-  void _onItemTap(BuildContext context, item) {
-    OperationEditPage.open(context, item.id);
-  }
-
-  Widget _emptyListHint(BuildContext context) {
-    return EmptyListHint(
-      title: AppLocalizations.of(context).emptyListOperations,
-      hint: AppLocalizations.of(context).hintEmptyList,
-    );
+  static Future _onItemTap(BuildContext context, item) async {
+    await OperationEditPage.open(context, item.id);
   }
 
   @override
@@ -93,13 +86,27 @@ class OperationList extends StatelessWidget {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
-          return _emptyListHint(context);
+          return _EmptyListHint();
         }
 
         final items = snapshot.data ?? <Operation>[];
 
         return _listBuilder(context, items);
       },
+    );
+  }
+}
+
+class _EmptyListHint extends StatelessWidget {
+  const _EmptyListHint({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return EmptyListHint(
+      title: AppLocalizations.of(context).emptyListOperations,
+      hint: AppLocalizations.of(context).hintEmptyList,
     );
   }
 }

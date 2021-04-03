@@ -5,6 +5,7 @@ import 'package:cashflow/widgets/cards/widgets/card_bar_button.dart';
 import 'package:cashflow/widgets/cards/widgets/empty_card_hint.dart';
 import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
+import 'package:cashflow/widgets/pages/account/list_tile_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,7 @@ class TotalBalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var stream = context.watch<Repository>().watchAllAccountsBalance();
+    var stream = context.read<Repository>().watchAllAccountsBalance();
     return StreamBuilder<List<AccountBalance>>(
       stream: stream,
       builder: (context, state) {
@@ -66,22 +67,11 @@ class TotalBalanceCard extends StatelessWidget {
           style: Theme.of(context).textTheme.headline6,
         ),
         children: accounts
-            .map((account) => accountItem(context, account))
+            .map((account) => ListTileAccount(account))
             .expand((element) => [Divider(), element])
             .toList()
               ..add(Divider()),
       );
     }
-  }
-
-  Widget accountItem(BuildContext context, AccountBalance account) {
-    return ListTile(
-      title: Text(account.title),
-      trailing: Text(
-        NumberFormat().format(account.balance),
-        style: Theme.of(context).textTheme.headline6,
-      ),
-      onTap: () => AccountEditPage.open(context, account.id),
-    );
   }
 }
