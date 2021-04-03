@@ -74,6 +74,7 @@ class AppLocalizations {
       'no_categories': 'No categories',
       'operations': 'Operations',
       'no_operations': 'No operations',
+      'budgets': 'Budgets',
       'item_menu_service': 'Service',
       'item_bar_main': 'Main',
       'period': 'Period',
@@ -170,6 +171,7 @@ class AppLocalizations {
       'no_categories': 'Нет категорий',
       'operations': 'Операции',
       'no_operations': 'Нет операций',
+      'budgets': 'Бюджеты',
       'item_menu_service': 'Сервис',
       'item_bar_main': 'Главная',
       'period': 'Период',
@@ -267,6 +269,7 @@ class AppLocalizations {
   String get noCategories => _localizedValues[locale.languageCode]['no_categories'];
   String get operations => _localizedValues[locale.languageCode]['operations'];
   String get noOperations => _localizedValues[locale.languageCode]['no_operations'];
+  String get budgets => _localizedValues[locale.languageCode]['budgets'];
   String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
   String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
   String get period => _localizedValues[locale.languageCode]['period'];

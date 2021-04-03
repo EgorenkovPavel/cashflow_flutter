@@ -1,11 +1,13 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
 import 'package:cashflow/widgets/pages/add_list_item_button.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class AccountList extends StatelessWidget {
   const AccountList();
@@ -34,14 +36,18 @@ class AccountList extends StatelessWidget {
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20.0,
                     mainAxisExtent: 100.0),
-                delegate: SliverChildListDelegate.fixed(_accounts
-                    .map<Widget>((e) => AccountTile(
-                          account: e,
-                        ))
-                    .toList()
-                      ..add(AddButton(
-                        onTap: () => AccountInputPage.open(context),
-                      ))),
+                delegate: SliverChildListDelegate.fixed(
+                  _accounts
+                      .map<Widget>((e) => AccountTile(
+                            account: e,
+                          ))
+                      .toList()
+                        ..add(
+                          AddButton(
+                            onTap: () => AccountInputPage.open(context),
+                          ),
+                        ),
+                ),
               ),
             ],
           );
@@ -64,20 +70,21 @@ class AccountListHeader extends StatelessWidget {
         minHeight: 60,
         maxHeight: 60,
         child: Container(
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Total balance',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                Text(
-                  _balance.toString(),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            )),
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                AppLocalizations.of(context).titleTotalBalance,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Text(
+                NumberFormat().format(_balance),
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -97,16 +104,19 @@ class AccountTile extends StatelessWidget {
       child: Card(
         //color: Colors.amber,
         child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              account.title,
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-            Text(account.balance.toString()),
-          ],
-        )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                account.title,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              Text(
+                NumberFormat().format(account.balance),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
