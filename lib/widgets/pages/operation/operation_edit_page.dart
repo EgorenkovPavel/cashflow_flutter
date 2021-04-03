@@ -188,8 +188,8 @@ class _OperationEditPageState extends State<OperationEditPage> {
             child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor),
+            // style: ElevatedButton.styleFrom(
+            //     primary: Theme.of(context).primaryColor),
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _saveOperation(context);
@@ -198,7 +198,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
             },
             child: Text(
               AppLocalizations.of(context).save.toUpperCase(),
-              style: TextStyle(color: Colors.white),
+              //style: TextStyle(color: Colors.white),
             ),
           )
         ],

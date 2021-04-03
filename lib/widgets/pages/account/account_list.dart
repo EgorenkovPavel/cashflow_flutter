@@ -71,7 +71,7 @@ class AccountListHeader extends StatelessWidget {
         minHeight: 60,
         maxHeight: 60,
         child: Container(
-          color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

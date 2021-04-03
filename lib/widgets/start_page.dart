@@ -34,7 +34,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         title: Text(
           'Money tracker',
           style: Theme.of(context).textTheme.headline6,
@@ -86,9 +86,9 @@ class SettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(
+      icon: Icon(
         Icons.settings,
-        color: Colors.black,
+        color: Theme.of(context).appBarTheme.color,
       ),
       onPressed: () => BackupPage.open(context),
     );
