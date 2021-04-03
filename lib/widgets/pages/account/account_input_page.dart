@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/item_cards/item_card.dart';
+import 'package:cashflow/widgets/pages/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
