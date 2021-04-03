@@ -66,7 +66,7 @@ class _StartPageState extends State<StartPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        //selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
