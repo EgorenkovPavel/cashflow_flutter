@@ -23,6 +23,25 @@ class _StartPageState extends State<StartPage> {
     _OperationList(),
   ];
 
+  static const _barItems = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Accounts',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.business),
+      label: 'Categories',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.school),
+      label: 'Budgets',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.school),
+      label: 'Operations',
+    ),
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,50 +54,24 @@ class _StartPageState extends State<StartPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Cashflow',
+          'Money tracker',
           style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
-          IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                BackupPage.open(context);
-              })
+          SettingsButton(),
         ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 30.0,
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Accounts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Budgets',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Operations',
-          ),
-        ],
+        items: _barItems,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          OperationInputPage.open(context);
-        },
+        onPressed: () => OperationInputPage.open(context),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -86,13 +79,28 @@ class _StartPageState extends State<StartPage> {
   }
 }
 
-class _OperationList extends StatelessWidget{
+class SettingsButton extends StatelessWidget {
+  const SettingsButton({
+    Key key,
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(
+        Icons.settings,
+        color: Colors.black,
+      ),
+      onPressed: () => BackupPage.open(context),
+    );
+  }
+}
+
+class _OperationList extends StatelessWidget {
   const _OperationList();
 
   @override
   Widget build(BuildContext context) {
     return OperationList(context.read<Repository>().watchAllOperations());
   }
-
 }

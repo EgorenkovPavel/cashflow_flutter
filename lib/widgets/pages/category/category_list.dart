@@ -1,4 +1,3 @@
-
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
@@ -17,29 +16,39 @@ class CategoryList extends StatelessWidget {
     return CustomScrollView(
       semanticChildCount: 2,
       slivers: <Widget>[
-         CategoryListHeader(
+        CategoryListHeader(
           title: 'Input categories',
         ),
         StreamBuilder<List<Category>>(
-            stream: context.read<Repository>().watchAllCategoriesByType(OperationType.INPUT),
+            stream: context
+                .read<Repository>()
+                .watchAllCategoriesByType(OperationType.INPUT),
             builder: (context, state) {
               var _categories = <Category>[];
               if (state.hasData) {
                 _categories = state.data;
               }
-              return CategoryGrid(categories: _categories, type: OperationType.INPUT,);
+              return CategoryGrid(
+                categories: _categories,
+                type: OperationType.INPUT,
+              );
             }),
         CategoryListHeader(
           title: 'Output categories',
         ),
         StreamBuilder<List<Category>>(
-            stream: context.read<Repository>().watchAllCategoriesByType(OperationType.OUTPUT),
+            stream: context
+                .read<Repository>()
+                .watchAllCategoriesByType(OperationType.OUTPUT),
             builder: (context, state) {
               var _categories = <Category>[];
               if (state.hasData) {
                 _categories = state.data;
               }
-              return CategoryGrid(categories: _categories, type: OperationType.OUTPUT,);
+              return CategoryGrid(
+                categories: _categories,
+                type: OperationType.OUTPUT,
+              );
             }),
       ],
     );
@@ -60,7 +69,15 @@ class CategoryListHeader extends StatelessWidget {
       delegate: SliverHeaderDelegate(
         minHeight: 60,
         maxHeight: 60,
-        child: Container(color: Colors.white, child: Center(child: Text(_title))),
+        child: Container(
+          color: Colors.white,
+          child: Center(
+            child: Text(
+              _title,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -89,12 +106,14 @@ class CategoryGrid extends StatelessWidget {
           mainAxisExtent: 100.0),
       delegate: SliverChildListDelegate.fixed(_categories
           .map<Widget>((e) => CategoryListTile(
-        category: e,
-      ))
+                category: e,
+              ))
           .toList()
-        ..add(AddButton(onTap: (){
-          CategoryInputPage.open(context, type: _type);
-        },))),
+            ..add(AddButton(
+              onTap: () {
+                CategoryInputPage.open(context, type: _type);
+              },
+            ))),
     );
   }
 }
@@ -107,7 +126,9 @@ class CategoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){CategoryEditPage.open(context, category.id);},
+      onTap: () {
+        CategoryEditPage.open(context, category.id);
+      },
       child: Card(
         child: Center(
           child: Text(category.title),
