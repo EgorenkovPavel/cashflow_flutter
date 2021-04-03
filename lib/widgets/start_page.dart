@@ -49,19 +49,19 @@ class _StartPageState extends State<StartPage> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.account_balance_wallet),
             label: AppLocalizations.of(context).accounts,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.label),
             label: AppLocalizations.of(context).categories,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.analytics),
             label: AppLocalizations.of(context).budgets,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.view_list),
             label: AppLocalizations.of(context).operations,
           ),
         ],
