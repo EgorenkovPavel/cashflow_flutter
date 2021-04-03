@@ -5,6 +5,7 @@ import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/add_list_item_button.dart';
 import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:cashflow/widgets/pages/category/category_input_page.dart';
+import 'package:cashflow/widgets/pages/list_card.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,12 +127,10 @@ class CategoryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ListCard(
       onTap: () => CategoryEditPage.open(context, category.id),
-      child: Card(
-        child: Center(
-          child: Text(category.title),
-        ),
+      child: Center(
+        child: Text(category.title),
       ),
     );
   }
