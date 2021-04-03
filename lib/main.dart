@@ -4,12 +4,10 @@ import 'package:cashflow/widgets/pages/account/account_input_page.dart';
 import 'package:cashflow/widgets/pages/budget/budget_card.dart';
 import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:cashflow/widgets/pages/category/category_input_page.dart';
-import 'package:cashflow/widgets/pages/category/category_list_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_input_bloc.dart';
 import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
-import 'package:cashflow/widgets/pages/operation/operation_list_page.dart';
 import 'package:cashflow/widgets/pages/reports_page.dart';
 import 'package:cashflow/widgets/pages/service/backup_page.dart';
 import 'package:cashflow/widgets/start_page.dart';
@@ -76,13 +74,9 @@ class MyApp extends StatelessWidget {
       initialRoute: StartPage.routeName,
       routes: <String, WidgetBuilder>{
         StartPage.routeName: (BuildContext context) => StartPage(), //HomePage(),
-        CategoryListPage.routeName: (BuildContext context) =>
-            CategoryListPage(),
         OperationInputPage.routeName: (BuildContext context) =>
             OperationInputPage(),
         BackupPage.routeName: (BuildContext context) => BackupPage(),
-        OperationListPage.routeName: (BuildContext context) =>
-            OperationListPage(),
         ReportsPage.routeName: (BuildContext context) => ReportsPage(),
         OperationFilterPage.routeName: (BuildContext context) =>
             OperationFilterPage(),
