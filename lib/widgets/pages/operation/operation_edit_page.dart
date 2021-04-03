@@ -206,7 +206,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
     );
   }
 
-  Padding title(String text) {
+  Widget title(String text) {
     return Padding(
       padding: const EdgeInsets.only(left: 0.0, top: 8.0),
       child: Text(
@@ -308,25 +308,17 @@ class _OperationEditPageState extends State<OperationEditPage> {
   }
 
   Widget dateButtom(IconData icon, String text, Function() onPressed) {
-    final color = Theme.of(context).primaryColor;
 
-    return TextButton(
-      style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
-            side: BorderSide(color: color),
-          ),
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-      onPressed: onPressed,
+    return ElevatedButton(onPressed: onPressed,
       child: Row(
         children: <Widget>[
           Icon(
             icon,
-            color: color,
+            //color: color,
           ),
           Text(
             text,
-            style: TextStyle(color: color),
+            //style: TextStyle(color: color),
           ),
         ],
       ),
