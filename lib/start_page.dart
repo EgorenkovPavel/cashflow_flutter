@@ -49,9 +49,7 @@ class _StartPageState extends State<StartPage> {
               })
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 30.0,
         type: BottomNavigationBarType.fixed,
