@@ -70,8 +70,8 @@ class OperationList extends StatelessWidget {
     );
   }
 
-  static Future addItem(BuildContext context) async {
-    await OperationInputPage.open(context);
+  static Future addItem(BuildContext context) {
+    return OperationInputPage.open(context);
   }
 
   static Future _onItemTap(BuildContext context, item) async {
