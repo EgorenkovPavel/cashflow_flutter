@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 class OperationEditPage extends StatefulWidget {
   static const routeName = '/operation';
 
-  static void open(BuildContext context, int operationId) {
-    Navigator.of(context)
+  static Future open(BuildContext context, int operationId) async {
+    await Navigator.of(context)
         .pushNamed(OperationEditPage.routeName, arguments: operationId);
   }
 

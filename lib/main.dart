@@ -1,3 +1,4 @@
+import 'package:cashflow/start_page.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/cards/cashflow_bloc.dart';
 import 'package:cashflow/widgets/cards/last_operations_bloc.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         ],
         initialRoute: HomePage.routeName,
         routes: <String, WidgetBuilder>{
-          HomePage.routeName: (BuildContext context) => HomePage(),
+          HomePage.routeName: (BuildContext context) => StartPage(),//HomePage(),
           CategoryListPage.routeName: (BuildContext context) => CategoryListPage(),
           OperationInputPage.routeName: (BuildContext context) => OperationInputPage(),
           BackupPage.routeName: (BuildContext context) => BackupPage(),
