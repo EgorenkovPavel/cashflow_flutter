@@ -1,4 +1,5 @@
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/account/account_list.dart';
 import 'package:cashflow/widgets/pages/budget/budeget_list.dart';
 import 'package:cashflow/widgets/pages/category/category_list.dart';
@@ -21,25 +22,6 @@ class _StartPageState extends State<StartPage> {
     CategoryList(),
     BudgetList(),
     _OperationList(),
-  ];
-
-  static const _barItems = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Accounts',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.business),
-      label: 'Categories',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.school),
-      label: 'Budgets',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.school),
-      label: 'Operations',
-    ),
   ];
 
   void _onItemTapped(int index) {
@@ -65,7 +47,24 @@ class _StartPageState extends State<StartPage> {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 30.0,
         type: BottomNavigationBarType.fixed,
-        items: _barItems,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: AppLocalizations.of(context).accounts,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: AppLocalizations.of(context).categories,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: AppLocalizations.of(context).budgets,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: AppLocalizations.of(context).operations,
+          ),
+        ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,

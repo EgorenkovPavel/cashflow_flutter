@@ -1,6 +1,7 @@
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/add_list_item_button.dart';
 import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
 import 'package:cashflow/widgets/pages/category/category_input_page.dart';
@@ -17,7 +18,7 @@ class CategoryList extends StatelessWidget {
       semanticChildCount: 2,
       slivers: <Widget>[
         CategoryListHeader(
-          title: 'Input categories',
+          title: AppLocalizations.of(context).typeInput,
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -34,7 +35,7 @@ class CategoryList extends StatelessWidget {
               );
             }),
         CategoryListHeader(
-          title: 'Output categories',
+          title: AppLocalizations.of(context).typeOutput,
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -126,9 +127,7 @@ class CategoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        CategoryEditPage.open(context, category.id);
-      },
+      onTap: () => CategoryEditPage.open(context, category.id),
       child: Card(
         child: Center(
           child: Text(category.title),
