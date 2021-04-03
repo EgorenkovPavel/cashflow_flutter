@@ -80,7 +80,9 @@ class Carousel<T> extends StatelessWidget {
                       child: Container(
 //                          margin: const EdgeInsets.symmetric(
 //                              horizontal: 8.0, vertical: 4.0),
+
                           decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(
                                 width: 1.0,

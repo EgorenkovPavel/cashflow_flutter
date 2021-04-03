@@ -14,10 +14,10 @@ class Keyboard extends StatelessWidget {
       child: SizedBox(
         height: width *0.75,//24.0*_ratio,
         width: width *0.75,//24.0*_ratio,
-        child: RawMaterialButton(
+        child: child == null ? null : RawMaterialButton(
           shape: CircleBorder(),
           elevation: 2.0,
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).buttonColor,//Colors.white,
           onPressed: onPressed,
           child: child,
         ),
@@ -62,7 +62,7 @@ class Keyboard extends StatelessWidget {
               _digitButton(context, 9, _col),
             ]),
             _rowButton(<Widget>[
-              _button(context, SizedBox(), null, _col),
+              _button(context, null, null, _col),
               _digitButton(context, 0, _col),
               _button(context, Icon(Icons.arrow_back), onBackPressed, _col),
             ]),

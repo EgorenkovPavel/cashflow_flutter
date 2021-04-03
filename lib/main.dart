@@ -23,98 +23,105 @@ import 'package:provider/provider.dart';
 
 import 'data/repository.dart';
 
-void main(){
+void main() {
   final _repository = Repository();
 
- // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  runApp(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<LastOperationsBloc>(
-            create: (BuildContext context) => LastOperationsBloc(_repository),
-          ),
-          BlocProvider<CashflowCardBloc>(
-            create: (BuildContext context) => CashflowCardBloc(_repository),
-          ),
-          BlocProvider<AccountCardBloc>(
-            create: (BuildContext context) => AccountCardBloc(_repository),
-          ),
-          BlocProvider<CategoryCardBloc>(
-            create: (BuildContext context) => CategoryCardBloc(_repository),
-          ),
-          BlocProvider<BudgetCardBloc>(
-            create: (BuildContext context) => BudgetCardBloc(_repository),
-          ),
-          BlocProvider<AccountEditPageBloc>(
-            create: (BuildContext context) => AccountEditPageBloc(_repository),
-          ),
-          BlocProvider<BackupPageBloc>(
-            create: (BuildContext context) => BackupPageBloc(_repository),
-          ),
-          BlocProvider<MasterBloc>(
-            create: (BuildContext context) => MasterBloc(_repository),
-          ),
-        ],
-        child: MultiProvider(
-          providers: [ChangeNotifierProvider(create: (context) => _repository)],
-          child: MyApp(),
-        )
-      )
-  );
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<LastOperationsBloc>(
+          create: (BuildContext context) => LastOperationsBloc(_repository),
+        ),
+        BlocProvider<CashflowCardBloc>(
+          create: (BuildContext context) => CashflowCardBloc(_repository),
+        ),
+        BlocProvider<AccountCardBloc>(
+          create: (BuildContext context) => AccountCardBloc(_repository),
+        ),
+        BlocProvider<CategoryCardBloc>(
+          create: (BuildContext context) => CategoryCardBloc(_repository),
+        ),
+        BlocProvider<BudgetCardBloc>(
+          create: (BuildContext context) => BudgetCardBloc(_repository),
+        ),
+        BlocProvider<AccountEditPageBloc>(
+          create: (BuildContext context) => AccountEditPageBloc(_repository),
+        ),
+        BlocProvider<BackupPageBloc>(
+          create: (BuildContext context) => BackupPageBloc(_repository),
+        ),
+        BlocProvider<MasterBloc>(
+          create: (BuildContext context) => MasterBloc(_repository),
+        ),
+      ],
+      child: MultiProvider(
+        providers: [ChangeNotifierProvider(create: (context) => _repository)],
+        child: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        title: 'Cashflow',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-            primaryColor: Colors.grey[900],
-            primarySwatch: Colors.grey,
-            accentColor: Colors.deepOrangeAccent,
-        ),
-        localizationsDelegates: [
-          const AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en'),
-          const Locale('ru'),
-        ],
-        initialRoute: HomePage.routeName,
-        routes: <String, WidgetBuilder>{
-          HomePage.routeName: (BuildContext context) => StartPage(),//HomePage(),
-          CategoryListPage.routeName: (BuildContext context) => CategoryListPage(),
-          OperationInputPage.routeName: (BuildContext context) => OperationInputPage(),
-          BackupPage.routeName: (BuildContext context) => BackupPage(),
-          OperationListPage.routeName: (BuildContext context) => OperationListPage(),
-          ReportsPage.routeName: (BuildContext context) => ReportsPage(),
-          OperationFilterPage.routeName: (BuildContext context) => OperationFilterPage(),
-          //CashflowPage.routeName: (BuildContext context) => CashflowPage(),
-          //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
-        },
-        onGenerateRoute: (settings) {
-          switch (settings.name){
-            case AccountEditPage.routeName: {
+      title: 'Cashflow',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.grey[900],
+        primarySwatch: Colors.grey,
+        accentColor: Colors.deepOrangeAccent,
+      ),
+      localizationsDelegates: [
+        const AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('ru'),
+      ],
+      initialRoute: HomePage.routeName,
+      routes: <String, WidgetBuilder>{
+        HomePage.routeName: (BuildContext context) => StartPage(), //HomePage(),
+        CategoryListPage.routeName: (BuildContext context) =>
+            CategoryListPage(),
+        OperationInputPage.routeName: (BuildContext context) =>
+            OperationInputPage(),
+        BackupPage.routeName: (BuildContext context) => BackupPage(),
+        OperationListPage.routeName: (BuildContext context) =>
+            OperationListPage(),
+        ReportsPage.routeName: (BuildContext context) => ReportsPage(),
+        OperationFilterPage.routeName: (BuildContext context) =>
+            OperationFilterPage(),
+        //CashflowPage.routeName: (BuildContext context) => CashflowPage(),
+        //BudgetPage.routeName: (BuildContext context) => BudgetPage(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case AccountEditPage.routeName:
+            {
               return MaterialPageRoute(
-                  builder: (context) => AccountEditPage(id: settings.arguments));
+                  builder: (context) =>
+                      AccountEditPage(id: settings.arguments));
             }
-            case CategoryEditPage.routeName: {
+          case CategoryEditPage.routeName:
+            {
               return MaterialPageRoute(
-                  builder: (context) => CategoryEditPage(id: settings.arguments));
+                  builder: (context) =>
+                      CategoryEditPage(id: settings.arguments));
             }
-            case OperationEditPage.routeName: {
+          case OperationEditPage.routeName:
+            {
               return MaterialPageRoute(
-                  builder: (context) => OperationEditPage(id: settings.arguments));
+                  builder: (context) =>
+                      OperationEditPage(id: settings.arguments));
             }
-            default: return null;
-          }
-        },
+          default:
+            return null;
+        }
+      },
     );
   }
 }

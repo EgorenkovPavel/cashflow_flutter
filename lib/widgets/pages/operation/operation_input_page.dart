@@ -34,7 +34,8 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItemFinder: (account) => _bloc.account != null && account.id == _bloc.account.id,
+      initialItemFinder: (account) =>
+          _bloc.account != null && account.id == _bloc.account.id,
       onItemChanged: (account) => _bloc.add(OnAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -55,7 +56,8 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryInStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItemFinder: (category) => _bloc.categoryIn != null && category.id == _bloc.categoryIn.id,
+      initialItemFinder: (category) =>
+          _bloc.categoryIn != null && category.id == _bloc.categoryIn.id,
       onItemChanged: (category) => _bloc.add(OnCategoryInChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -67,7 +69,8 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<data.Category>(
       stream: _bloc.categoryOutStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
-      initialItemFinder: (category) => _bloc.categoryOut != null && category.id == _bloc.categoryOut.id,
+      initialItemFinder: (category) =>
+          _bloc.categoryOut != null && category.id == _bloc.categoryOut.id,
       onItemChanged: (category) => _bloc.add(OnCategoryOutChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -79,7 +82,8 @@ class _OperationInputPageState extends State<OperationInputPage>
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
-      initialItemFinder:(account) => _bloc.recAccount != null && account.id == _bloc.recAccount.id,
+      initialItemFinder: (account) =>
+          _bloc.recAccount != null && account.id == _bloc.recAccount.id,
       onItemChanged: (account) => _bloc.add(OnRecAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -113,7 +117,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                 IconButton(
                   icon: Icon(
                     Icons.add,
-                    color: Theme.of(context).primaryColor,
+                    //color: Theme.of(context).primaryColor,
                   ),
                   onPressed: () {
                     _bloc.add(OnAddNewItem());
@@ -123,7 +127,11 @@ class _OperationInputPageState extends State<OperationInputPage>
               ],
             ),
             Divider(),
-            Flexible(child: Container(child: list)),
+            Flexible(
+              child: Container(
+                child: list,
+              ),
+            ),
           ],
         ),
       ),
@@ -133,19 +141,14 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget buildAnalylicList(OperationType type) {
     switch (type) {
       case OperationType.INPUT:
-        return buildList(
-            AppLocalizations.of(context).categories,
-            addNewInCategory,
-            categoryInPageView(context));
+        return buildList(AppLocalizations.of(context).categories,
+            addNewInCategory, categoryInPageView(context));
       case OperationType.OUTPUT:
-        return buildList(
-            AppLocalizations.of(context).categories,
-            addNewOutCategory,
-            categoryOutPageView(context));
+        return buildList(AppLocalizations.of(context).categories,
+            addNewOutCategory, categoryOutPageView(context));
       case OperationType.TRANSFER:
         return buildList(AppLocalizations.of(context).receiver,
-            addNewRecAccount,
-            recAccountPageView(context));
+            addNewRecAccount, recAccountPageView(context));
       default:
         return SizedBox();
     }
@@ -215,30 +218,34 @@ class _OperationInputPageState extends State<OperationInputPage>
 
   Future<void> addNewAccount() async {
     var account = await AccountInputPage.open(context);
-    if (account != null){
-      var accountBalance = AccountBalance(id: account.id, title: account.title, balance: 0);
+    if (account != null) {
+      var accountBalance =
+          AccountBalance(id: account.id, title: account.title, balance: 0);
       _bloc.add(OnAccountChanged(accountBalance));
     }
   }
 
   Future<void> addNewInCategory() async {
-    var category = await CategoryInputPage.open(context, type: OperationType.INPUT);
-    if (category != null){
+    var category =
+        await CategoryInputPage.open(context, type: OperationType.INPUT);
+    if (category != null) {
       _bloc.add(OnCategoryInChanged(category));
     }
   }
 
   Future<void> addNewOutCategory() async {
-    var category = await CategoryInputPage.open(context, type: OperationType.OUTPUT);
-    if (category != null){
+    var category =
+        await CategoryInputPage.open(context, type: OperationType.OUTPUT);
+    if (category != null) {
       _bloc.add(OnCategoryOutChanged(category));
     }
   }
 
   Future<void> addNewRecAccount() async {
     var account = await AccountInputPage.open(context);
-    if (account != null){
-      var accountBalance = AccountBalance(id: account.id, title: account.title, balance: 0);
+    if (account != null) {
+      var accountBalance =
+          AccountBalance(id: account.id, title: account.title, balance: 0);
       _bloc.add(OnRecAccountChanged(accountBalance));
     }
   }
@@ -283,7 +290,9 @@ class _OperationInputPageState extends State<OperationInputPage>
                   child: Row(
                     children: <Widget>[
                       buildList(
-                          (state as DataState).type == OperationType.TRANSFER ? AppLocalizations.of(context).source : AppLocalizations.of(context).accounts,
+                          (state as DataState).type == OperationType.TRANSFER
+                              ? AppLocalizations.of(context).source
+                              : AppLocalizations.of(context).accounts,
                           addNewAccount,
                           accountPageView(context)),
                       buildAnalylicList((state as DataState).type),
@@ -299,7 +308,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(16.0)),
-                        color: Colors.white,
+                        color: Theme.of(context)
+                            .dialogBackgroundColor, //Colors.white,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey,
@@ -328,6 +338,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                                     onTap: () => _bloc.add(OnSumTap()),
                                     child: Container(
                                       decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .bottomAppBarColor,
                                           borderRadius:
                                               BorderRadius.circular(4.0),
                                           border: Border.all(
@@ -342,13 +354,13 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       height: 48.0,
                                       alignment: Alignment.center,
                                       child: Text(
-                                        NumberFormat()
-                                            .format((state as DataState).sum),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4
-                                            .copyWith(color: Colors.black),
-                                      ),
+                                          NumberFormat()
+                                              .format((state as DataState).sum),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4
+                                          //.copyWith(color: Colors.black),
+                                          ),
                                     ),
                                   ),
                                 ),
