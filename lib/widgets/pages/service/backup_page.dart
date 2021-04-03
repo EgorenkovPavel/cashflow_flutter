@@ -9,14 +9,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BackupPage extends StatelessWidget {
   static const routeName = '/backup';
 
-  static void open(BuildContext context) {
-    Navigator.of(context).pushNamed(routeName);
+  static Future open(BuildContext context) {
+    return Navigator.of(context).pushNamed(routeName);
   }
 
   Widget sectionTitle(BuildContext context, String text) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.headline6,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.headline6,
+      ),
     );
   }
 
@@ -40,19 +43,19 @@ class BackupPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                        //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                         onPressed: () => _backup(context),
                         child: Text(
                           AppLocalizations.of(context).backup.toUpperCase(),
-                          style: TextStyle(color: Colors.white),
+                          //style: TextStyle(color: Colors.white),
                         ),
                       ),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                        //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                         onPressed: () => _restore(context),
                         child: Text(
                           AppLocalizations.of(context).restore.toUpperCase(),
-                          style: TextStyle(color: Colors.white),
+                          //style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],
@@ -60,11 +63,11 @@ class BackupPage extends StatelessWidget {
                   sectionTitle(
                       context, AppLocalizations.of(context).titleDataControl),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
+                    //style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
                     onPressed: () => _deleteAll(context),
                     child: Text(
                       AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
-                      style: TextStyle(color: Colors.white),
+                      //style: TextStyle(color: Colors.white),
                     ),
                   ),
                   BlocConsumer<BackupPageBloc, BackupPageState>(buildWhen:
@@ -235,7 +238,7 @@ class _BackupDialogState extends State<BackupDialog> {
           child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+          //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           onPressed: () async {
             if (_folder == null || _controller.text.isEmpty) {
               return;
@@ -299,7 +302,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+          //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           onPressed: () {
             if (_file == null) {
               return;
