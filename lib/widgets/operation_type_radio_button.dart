@@ -16,17 +16,34 @@ class OperationTypeRadioButton extends StatelessWidget {
     return ToggleButtons(
       isSelected: items.map((e) => e == type).toList(),
       onPressed: (index) => onChange(items[index]),
-      borderRadius: BorderRadius.all(Radius.circular(14.0)),
+      borderRadius: const BorderRadius.all(Radius.circular(14.0)),
       children: items
           .map(
-            (e) => Container(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                getOperationTitle(context, e).toUpperCase(),
-              ),
+            (e) => _OperationTypeItem(
+              type: e,
             ),
           )
           .toList(),
+    );
+  }
+}
+
+class _OperationTypeItem extends StatelessWidget {
+  const _OperationTypeItem({
+    Key key,
+    type,
+  })  : _type = type,
+        super(key: key);
+
+  final OperationType _type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        getOperationTitle(context, _type).toUpperCase(),
+      ),
     );
   }
 }

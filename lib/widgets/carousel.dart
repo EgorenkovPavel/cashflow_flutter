@@ -33,8 +33,6 @@ class Carousel<T> extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Container(
-//                margin:
-//                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 height: itemHeight - 0.0, // - 16.0,
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -43,54 +41,42 @@ class Carousel<T> extends StatelessWidget {
               ),
             ),
             PageView.builder(
-                controller: _pageController,
-                scrollDirection: Axis.vertical,
-                itemCount: items.length,
-                onPageChanged: onPageChanged,
-                itemBuilder: (context, pos) {
-                  return AnimatedBuilder(
-                    builder: (BuildContext context, Widget child) {
-                      var page = !_pageController.position.haveDimensions
-                          ? _pageController.initialPage.toDouble()
-                          : _pageController.page;
-//                      return Transform(
-//                        transform: Matrix4.identity()
-//                          ..setEntry(3, 2, 0.01)
-//                          ..rotateX((pos - page)/10),
-//                        alignment: FractionalOffset.center,
-//                        child: Transform.scale(
-//                          scale: 1 - ((pos - page).abs()) / 10,
-//                          child: child,
-//                        ),
-//                      );
-                      return Transform.scale(
-                        scale: 1 - (min((pos - page).abs(), 1)) / 10,
-                        child: child,
-                      );
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              itemCount: items.length,
+              onPageChanged: onPageChanged,
+              itemBuilder: (context, pos) {
+                return AnimatedBuilder(
+                  builder: (BuildContext context, Widget child) {
+                    var page = !_pageController.position.haveDimensions
+                        ? _pageController.initialPage.toDouble()
+                        : _pageController.page;
+                    return Transform.scale(
+                      scale: 1 - (min((pos - page).abs(), 1)) / 10,
+                      child: child,
+                    );
+                  },
+                  animation: _pageController,
+                  child: GestureDetector(
+                    onTap: () {
+                      _pageController.animateToPage(pos,
+                          duration: Duration(seconds: 1),
+                          curve: ElasticOutCurve());
                     },
-                    animation: _pageController,
-                    child: GestureDetector(
-                      onTap: () {
-                        _pageController.animateToPage(pos,
-                            duration: Duration(seconds: 1),
-                            curve: ElasticOutCurve());
-                      },
-                      child: Container(
-//                          margin: const EdgeInsets.symmetric(
-//                              horizontal: 8.0, vertical: 4.0),
-
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(8.0),
-                            border: Border.all(
-                                width: 1.0,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          height: 20.0,
-                          child: itemBuilder(context, pos)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                            width: 1.0, color: Theme.of(context).primaryColor),
+                      ),
+                      height: 20.0,
+                      child: itemBuilder(context, pos),
                     ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           ],
         );
       },
