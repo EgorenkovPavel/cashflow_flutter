@@ -90,27 +90,16 @@ class OperationList extends StatelessWidget {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.data.isEmpty) {
-          return _EmptyListHint();
+          return EmptyListHint(
+            title: AppLocalizations.of(context).emptyListOperations,
+            hint: AppLocalizations.of(context).hintEmptyList,
+          );
         }
 
         final items = snapshot.data ?? <Operation>[];
 
         return _listBuilder(context, items);
       },
-    );
-  }
-}
-
-class _EmptyListHint extends StatelessWidget {
-  const _EmptyListHint({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return EmptyListHint(
-      title: AppLocalizations.of(context).emptyListOperations,
-      hint: AppLocalizations.of(context).hintEmptyList,
     );
   }
 }
