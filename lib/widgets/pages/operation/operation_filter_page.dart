@@ -1,5 +1,6 @@
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/operation_list_filter.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -12,14 +13,14 @@ class OperationFilterPage extends StatefulWidget {
 
   OperationFilterPage({Key key, this.filter}) : super(key: key);
 
-  static Future<OperationFilter> open(
-      BuildContext context, OperationFilter filter) async {
+  static Future<OperationListFilter> open(
+      BuildContext context, OperationListFilter filter) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) =>
             OperationFilterPage(filter: filter)));
   }
 
-  final OperationFilter filter;
+  final OperationListFilter filter;
 
   @override
   _OperationFilterPageState createState() => _OperationFilterPageState();
@@ -30,6 +31,13 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   List<Account> accountList;
   List<Category> categoryInList;
   List<Category> categoryOutList;
+  OperationListFilter filter;
+
+  @override
+  void initState() {
+    super.initState();
+    filter = widget.filter;
+  }
 
   @override
   void didChangeDependencies() {
@@ -60,7 +68,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     });
   }
 
-  Widget _periodChoise(OperationFilter filter) {
+  Widget _periodChoise(OperationListFilter filter) {
     if (filter?.date != null) {
       return InputChip(
         label: Text(
@@ -68,7 +76,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         deleteIcon: Icon(Icons.cancel),
         onDeleted: () {
           setState(() {
-            widget.filter.date = null;
+            filter = filter.copyWith(date: null);
           });
         },
       );
@@ -82,7 +90,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
               firstDate: DateTime(2020), //TODO
               lastDate: DateTime.now());
           setState(() {
-            widget.filter.date = date;
+            filter = filter.copyWith(date: date);
           });
         },
       );
@@ -143,20 +151,20 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      widget.filter.accounts.add(result);
+                      filter = filter.copyWith(accountsIds: filter.accountsIds..add(result.id));
                     });
                   }
                 },
               ),
               Wrap(
                 children: [
-                  for (var account in widget.filter.accounts)
+                  for (var account in widget.filter.accountsIds)
                     InputChip(
-                      label: Text(account.title),
+                      label: Text(accountList.firstWhere((element) => element.id == account).title),
                       deleteIcon: Icon(Icons.cancel),
                       onDeleted: () {
                         setState(() {
-                          widget.filter.accounts.remove(account);
+                          widget.filter.accountsIds.remove(account);
                         });
                       },
                     ),
@@ -183,21 +191,21 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      widget.filter.categories.add(result);
+                      widget.filter.categoriesIds.add(result.id);
                     });
                   }
                 },
               ),
               Wrap(
-                  children: widget.filter.categories
-                      .where((element) => element.type == OperationType.INPUT)
+                  children: categoryInList
+                      .where((element) => filter.categoriesIds.contains(element.id))
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
                           deleteIcon: Icon(Icons.cancel),
                           onDeleted: () {
                             setState(() {
-                              widget.filter.categories.remove(category);
+                              widget.filter.categoriesIds.remove(category.id);
                             });
                           },
                         ),
@@ -224,21 +232,21 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      widget.filter.categories.add(result);
+                      widget.filter.categoriesIds.add(result.id);
                     });
                   }
                 },
               ),
               Wrap(
-                  children: widget.filter.categories
-                      .where((element) => element.type == OperationType.OUTPUT)
+                  children: categoryOutList
+                      .where((element) => filter.categoriesIds.contains(element.id))
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
                           deleteIcon: Icon(Icons.cancel),
                           onDeleted: () {
                             setState(() {
-                              widget.filter.categories.remove(category);
+                              widget.filter.categoriesIds.remove(category.id);
                             });
                           },
                         ),
@@ -251,15 +259,14 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       persistentFooterButtons: [
         TextButton(
           onPressed: () {
-            widget.filter.reset();
-            Navigator.pop(context, widget.filter);
+            Navigator.pop(context, OperationListFilter());
           },
           child: Text(AppLocalizations.of(context).reset.toUpperCase()),
         ),
         ElevatedButton(
           style:
               ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-          onPressed: () => Navigator.pop(context, widget.filter),
+          onPressed: () => Navigator.pop(context, filter),
           child: Text(
             AppLocalizations.of(context).apply.toUpperCase(),
             style: TextStyle(color: Colors.white),
@@ -267,17 +274,5 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         ),
       ],
     );
-  }
-}
-
-class OperationFilter {
-  DateTimeRange date;
-  final Set<Account> accounts = {};
-  final Set<Category> categories = {};
-
-  void reset() {
-    date = null;
-    accounts.clear();
-    categories.clear();
   }
 }

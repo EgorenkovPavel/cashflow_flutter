@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/objects/account.dart';
+import 'package:cashflow/data/objects/operation_list_filter.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class AccountEditPage extends StatefulWidget {
   static const routeName = '/account';
@@ -59,8 +59,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
         ),
         body: TabBarView(
           children: <Widget>[
-           OperationList(Provider.of<Repository>(context, listen: false)
-                .watchAllOperationsByAccount(widget.id))
+           OperationList(filter: OperationListFilter(accountsIds: {widget.id}))
           ],
         ),
         floatingActionButton: FloatingActionButton(

@@ -1,4 +1,3 @@
-import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/account/account_list.dart';
 import 'package:cashflow/widgets/pages/budget/budeget_list.dart';
@@ -7,7 +6,6 @@ import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_list.dart';
 import 'package:cashflow/widgets/pages/service/backup_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StartPage extends StatefulWidget {
   static const routeName = '/';
@@ -23,7 +21,7 @@ class _StartPageState extends State<StartPage> {
     AccountList(),
     CategoryList(),
     BudgetList(),
-    _OperationList(),
+    OperationList(),
   ];
 
   void _onItemTapped(int index) {
@@ -94,14 +92,5 @@ class SettingsButton extends StatelessWidget {
       ),
       onPressed: () => BackupPage.open(context),
     );
-  }
-}
-
-class _OperationList extends StatelessWidget {
-  const _OperationList();
-
-  @override
-  Widget build(BuildContext context) {
-    return OperationList(context.read<Repository>().watchAllOperations());
   }
 }
