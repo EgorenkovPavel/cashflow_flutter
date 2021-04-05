@@ -7,12 +7,12 @@ import 'package:cashflow/data/mappers/operation_mapper.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/objects/operation.dart';
+import 'package:cashflow/data/objects/operation_list_filter.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/utils/google_http_client.dart';
-import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:path_provider/path_provider.dart';
 
 import 'database.dart';
 import 'mappers/account_balance_mapper.dart';
@@ -118,13 +118,13 @@ class Repository extends ChangeNotifier {
       .watchAllOperationItems()
       .map((list) => const OperationMapper().mapListToDart(list));
 
-  Stream<List<Operation>> watchAllOperationsByFilter(OperationFilter filter) =>
+  Stream<List<Operation>> watchAllOperationsByFilter(OperationListFilter filter) =>
       db.operationDao
           .watchAllOperationItemsByFilter(
-              start: filter.date?.start,
-              end: filter.date?.end,
-              accountIds: filter.accounts.map((e) => e.id).toSet(),
-              categoriesIds: filter.categories.map((e) => e.id).toSet())
+              start: filter?.date?.start,
+              end: filter?.date?.end,
+              accountIds: filter?.accountsIds,
+              categoriesIds: filter?.categoriesIds)
           .map((list) => const OperationMapper().mapListToDart(list));
 
   Stream<Operation> getOperationById(int id) => db.operationDao

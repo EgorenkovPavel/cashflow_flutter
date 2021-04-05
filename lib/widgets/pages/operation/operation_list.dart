@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cashflow/data/objects/operation.dart';
+import 'package:cashflow/data/objects/operation_list_filter.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
 import 'package:cashflow/widgets/pages/operation/list_divider_operation.dart';
@@ -8,12 +10,14 @@ import 'package:cashflow/widgets/pages/operation/list_tile_operation.dart';
 import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
 import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends StatelessWidget {
-  final Stream<List<Operation>> _stream;
 
-  const OperationList(Stream<List<Operation>> stream) : _stream = stream;
+  final OperationListFilter _filter;
+
+  const OperationList({OperationListFilter filter}) : _filter = filter;
 
   Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
@@ -81,7 +85,7 @@ class OperationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Operation>>(
-      stream: _stream,
+      stream: Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
       builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());

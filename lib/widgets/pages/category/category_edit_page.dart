@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cashflow/data/database.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/operation_list_filter.dart';
 import 'package:cashflow/data/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
@@ -73,8 +74,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           children: <Widget>[
             _buildBudgetList(context),
             //buildOperationList(context),
-            OperationList(Provider.of<Repository>(context, listen: false)
-                .watchAllOperationsByCategory(widget.id))
+            OperationList(filter: OperationListFilter(categoriesIds: {widget.id}))
           ],
         ),
         floatingActionButton: FloatingActionButton(
