@@ -1,6 +1,6 @@
 
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;

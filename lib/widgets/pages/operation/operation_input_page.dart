@@ -1,6 +1,6 @@
 import 'package:cashflow/data/objects/account_balance.dart';
 import 'package:cashflow/data/objects/category.dart' as data;
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/carousel.dart';
 import 'package:cashflow/widgets/keyboard.dart';

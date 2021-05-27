@@ -1,18 +1,18 @@
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/category.dart';
 
-class CategoryMapper extends Mapper<Category, CategoryEntityData>{
+class CategoryMapper extends Mapper<Category, CategoryDB>{
   const CategoryMapper();
 
   @override
-  CategoryEntityData mapToSql(Category c){
-    return CategoryEntityData(id: c.id, title: c.title, archive: c.archive, operationType: c.type);
+  CategoryDB mapToSql(Category c){
+    return CategoryDB(id: c.id, title: c.title, operationType: c.type);
   }
 
   @override
-  Category mapToDart(CategoryEntityData c){
-    return Category(id: c.id, title: c.title, archive: c.archive, type: c.operationType);
+  Category mapToDart(CategoryDB c){
+    return Category(id: c.id, title: c.title, type: c.operationType);
   }
 
   MapEntry<Category, int> mapCategoryBudgetToDart(CategoryBudgetEntity c){

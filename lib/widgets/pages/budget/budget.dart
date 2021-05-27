@@ -1,3 +1,6 @@
+import 'package:cashflow/data/objects/budget.dart';
+import 'package:cashflow/data/objects/budget_type.dart';
+import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +18,16 @@ class BudgetList extends StatelessWidget {
         SliverList(
             delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return BudgetListTile();
+            return _BudgetListTile(
+              budget: Budget(
+                type: BudgetType.MONTH,
+                category: Category(title: 'Food'),
+                sum: 1000
+              ),
+              spend: 100,
+            );
           },
-          childCount: 10,
+          childCount: 1,
         )),
         BudgetListHeader(
           title: 'Year budgets',
@@ -25,9 +35,16 @@ class BudgetList extends StatelessWidget {
         SliverList(
             delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return BudgetListTile();
+            return _BudgetListTile(
+              budget: Budget(
+                  type: BudgetType.YEAR,
+                  category: Category(title: 'Food'),
+                  sum: 10000
+              ),
+              spend: 100,
+            );
           },
-          childCount: 10,
+          childCount: 1,
         )),
       ],
     );
@@ -56,7 +73,13 @@ class BudgetListHeader extends StatelessWidget {
   }
 }
 
-class BudgetListTile extends StatelessWidget {
+class _BudgetListTile extends StatelessWidget {
+
+  final Budget budget;
+  final int spend;
+
+  const _BudgetListTile({Key key, @required this.budget, @required this.spend}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -65,16 +88,16 @@ class BudgetListTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Food'),
+            Text(budget.category.title),
             LinearProgressIndicator(
               minHeight: 10.0,
-              value: 0.5,
+              value: budget.sum == 0 ? 1.0 : spend / budget.sum,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('0.0'), Text('1000'), Text('10000')],
+              children: [Text('0'), Text('$spend'), Text('${budget.sum}')],
             ),
-            Text('Rest: 9000')
+            Text('Rest: ${budget.sum - spend}')
           ],
         ),
       ),

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/dropdown_list.dart';
@@ -51,14 +51,14 @@ class _OperationEditPageState extends State<OperationEditPage> {
 
     model = Provider.of<Repository>(context);
 
-    model.watchAllAccounts(archive: true).forEach((list) {
+    model.watchAllAccounts().forEach((list) {
       setState(() {
         accountList = list;
       });
     });
 
     model
-        .watchAllCategoriesByType(OperationType.INPUT, archive: true)
+        .watchAllCategoriesByType(OperationType.INPUT)
         .forEach((list) {
       setState(() {
         categoryInList = list;
@@ -66,7 +66,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
     });
 
     model
-        .watchAllCategoriesByType(OperationType.OUTPUT, archive: true)
+        .watchAllCategoriesByType(OperationType.OUTPUT)
         .forEach((list) {
       setState(() {
         categoryOutList = list;

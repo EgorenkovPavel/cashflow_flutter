@@ -1,6 +1,6 @@
 import 'package:cashflow/data/objects/account.dart';
 import 'package:cashflow/data/objects/category.dart';
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 
 class Operation {
   final int id;

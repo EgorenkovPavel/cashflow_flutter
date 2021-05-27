@@ -7,26 +7,19 @@ part of 'database.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class AccountEntityData extends DataClass
-    implements Insertable<AccountEntityData> {
+class AccountDB extends DataClass implements Insertable<AccountDB> {
   final int id;
   final String title;
-  final bool archive;
-  AccountEntityData(
-      {@required this.id, @required this.title, @required this.archive});
-  factory AccountEntityData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  AccountDB({@required this.id, @required this.title});
+  factory AccountDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    final boolType = db.typeSystem.forDartType<bool>();
-    return AccountEntityData(
+    return AccountDB(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
-      archive:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}archive']),
     );
   }
   @override
@@ -38,30 +31,23 @@ class AccountEntityData extends DataClass
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
     }
-    if (!nullToAbsent || archive != null) {
-      map['archive'] = Variable<bool>(archive);
-    }
     return map;
   }
 
-  AccountEntityCompanion toCompanion(bool nullToAbsent) {
-    return AccountEntityCompanion(
+  AccountsCompanion toCompanion(bool nullToAbsent) {
+    return AccountsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
-      archive: archive == null && nullToAbsent
-          ? const Value.absent()
-          : Value(archive),
     );
   }
 
-  factory AccountEntityData.fromJson(Map<String, dynamic> json,
+  factory AccountDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return AccountEntityData(
+    return AccountDB(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      archive: serializer.fromJson<bool>(json['archive']),
     );
   }
   @override
@@ -70,70 +56,55 @@ class AccountEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'archive': serializer.toJson<bool>(archive),
     };
   }
 
-  AccountEntityData copyWith({int id, String title, bool archive}) =>
-      AccountEntityData(
+  AccountDB copyWith({int id, String title}) => AccountDB(
         id: id ?? this.id,
         title: title ?? this.title,
-        archive: archive ?? this.archive,
       );
   @override
   String toString() {
-    return (StringBuffer('AccountEntityData(')
+    return (StringBuffer('AccountDB(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('archive: $archive')
+          ..write('title: $title')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(title.hashCode, archive.hashCode)));
+  int get hashCode => $mrjf($mrjc(id.hashCode, title.hashCode));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is AccountEntityData &&
-          other.id == this.id &&
-          other.title == this.title &&
-          other.archive == this.archive);
+      (other is AccountDB && other.id == this.id && other.title == this.title);
 }
 
-class AccountEntityCompanion extends UpdateCompanion<AccountEntityData> {
+class AccountsCompanion extends UpdateCompanion<AccountDB> {
   final Value<int> id;
   final Value<String> title;
-  final Value<bool> archive;
-  const AccountEntityCompanion({
+  const AccountsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
-    this.archive = const Value.absent(),
   });
-  AccountEntityCompanion.insert({
+  AccountsCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
-    this.archive = const Value.absent(),
   }) : title = Value(title);
-  static Insertable<AccountEntityData> custom({
+  static Insertable<AccountDB> custom({
     Expression<int> id,
     Expression<String> title,
-    Expression<bool> archive,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
-      if (archive != null) 'archive': archive,
     });
   }
 
-  AccountEntityCompanion copyWith(
-      {Value<int> id, Value<String> title, Value<bool> archive}) {
-    return AccountEntityCompanion(
+  AccountsCompanion copyWith({Value<int> id, Value<String> title}) {
+    return AccountsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
-      archive: archive ?? this.archive,
     );
   }
 
@@ -146,28 +117,24 @@ class AccountEntityCompanion extends UpdateCompanion<AccountEntityData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (archive.present) {
-      map['archive'] = Variable<bool>(archive.value);
-    }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('AccountEntityCompanion(')
+    return (StringBuffer('AccountsCompanion(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('archive: $archive')
+          ..write('title: $title')
           ..write(')'))
         .toString();
   }
 }
 
-class $AccountEntityTable extends AccountEntity
-    with TableInfo<$AccountEntityTable, AccountEntityData> {
+class $AccountsTable extends Accounts
+    with TableInfo<$AccountsTable, AccountDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $AccountEntityTable(this._db, [this._alias]);
+  $AccountsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -189,25 +156,16 @@ class $AccountEntityTable extends AccountEntity
     );
   }
 
-  final VerificationMeta _archiveMeta = const VerificationMeta('archive');
-  GeneratedBoolColumn _archive;
   @override
-  GeneratedBoolColumn get archive => _archive ??= _constructArchive();
-  GeneratedBoolColumn _constructArchive() {
-    return GeneratedBoolColumn('archive', $tableName, false,
-        defaultValue: const Constant(false));
-  }
-
+  List<GeneratedColumn> get $columns => [id, title];
   @override
-  List<GeneratedColumn> get $columns => [id, title, archive];
-  @override
-  $AccountEntityTable get asDslTable => this;
+  $AccountsTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'accounts';
   @override
   final String actualTableName = 'accounts';
   @override
-  VerificationContext validateIntegrity(Insertable<AccountEntityData> instance,
+  VerificationContext validateIntegrity(Insertable<AccountDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -220,52 +178,39 @@ class $AccountEntityTable extends AccountEntity
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('archive')) {
-      context.handle(_archiveMeta,
-          archive.isAcceptableOrUnknown(data['archive'], _archiveMeta));
-    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  AccountEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
+  AccountDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return AccountEntityData.fromData(data, _db, prefix: effectivePrefix);
+    return AccountDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $AccountEntityTable createAlias(String alias) {
-    return $AccountEntityTable(_db, alias);
+  $AccountsTable createAlias(String alias) {
+    return $AccountsTable(_db, alias);
   }
 }
 
-class CategoryEntityData extends DataClass
-    implements Insertable<CategoryEntityData> {
+class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final int id;
   final String title;
-  final bool archive;
   final OperationType operationType;
-  CategoryEntityData(
-      {@required this.id,
-      @required this.title,
-      @required this.archive,
-      @required this.operationType});
-  factory CategoryEntityData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  CategoryDB(
+      {@required this.id, @required this.title, @required this.operationType});
+  factory CategoryDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    final boolType = db.typeSystem.forDartType<bool>();
-    return CategoryEntityData(
+    return CategoryDB(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
-      archive:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}archive']),
-      operationType: $CategoryEntityTable.$converter0.mapToDart(intType
+      operationType: $CategoriesTable.$converter0.mapToDart(intType
           .mapFromDatabaseResponse(data['${effectivePrefix}operation_type'])),
     );
   }
@@ -278,37 +223,30 @@ class CategoryEntityData extends DataClass
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
     }
-    if (!nullToAbsent || archive != null) {
-      map['archive'] = Variable<bool>(archive);
-    }
     if (!nullToAbsent || operationType != null) {
-      final converter = $CategoryEntityTable.$converter0;
+      final converter = $CategoriesTable.$converter0;
       map['operation_type'] = Variable<int>(converter.mapToSql(operationType));
     }
     return map;
   }
 
-  CategoryEntityCompanion toCompanion(bool nullToAbsent) {
-    return CategoryEntityCompanion(
+  CategoriesCompanion toCompanion(bool nullToAbsent) {
+    return CategoriesCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
-      archive: archive == null && nullToAbsent
-          ? const Value.absent()
-          : Value(archive),
       operationType: operationType == null && nullToAbsent
           ? const Value.absent()
           : Value(operationType),
     );
   }
 
-  factory CategoryEntityData.fromJson(Map<String, dynamic> json,
+  factory CategoryDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return CategoryEntityData(
+    return CategoryDB(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      archive: serializer.fromJson<bool>(json['archive']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
     );
   }
@@ -318,84 +256,72 @@ class CategoryEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'archive': serializer.toJson<bool>(archive),
       'operationType': serializer.toJson<OperationType>(operationType),
     };
   }
 
-  CategoryEntityData copyWith(
-          {int id, String title, bool archive, OperationType operationType}) =>
-      CategoryEntityData(
+  CategoryDB copyWith({int id, String title, OperationType operationType}) =>
+      CategoryDB(
         id: id ?? this.id,
         title: title ?? this.title,
-        archive: archive ?? this.archive,
         operationType: operationType ?? this.operationType,
       );
   @override
   String toString() {
-    return (StringBuffer('CategoryEntityData(')
+    return (StringBuffer('CategoryDB(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('archive: $archive, ')
           ..write('operationType: $operationType')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(title.hashCode, $mrjc(archive.hashCode, operationType.hashCode))));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(title.hashCode, operationType.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is CategoryEntityData &&
+      (other is CategoryDB &&
           other.id == this.id &&
           other.title == this.title &&
-          other.archive == this.archive &&
           other.operationType == this.operationType);
 }
 
-class CategoryEntityCompanion extends UpdateCompanion<CategoryEntityData> {
+class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<int> id;
   final Value<String> title;
-  final Value<bool> archive;
   final Value<OperationType> operationType;
-  const CategoryEntityCompanion({
+  const CategoriesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
-    this.archive = const Value.absent(),
     this.operationType = const Value.absent(),
   });
-  CategoryEntityCompanion.insert({
+  CategoriesCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
-    this.archive = const Value.absent(),
     @required OperationType operationType,
   })  : title = Value(title),
         operationType = Value(operationType);
-  static Insertable<CategoryEntityData> custom({
+  static Insertable<CategoryDB> custom({
     Expression<int> id,
     Expression<String> title,
-    Expression<bool> archive,
-    Expression<int> operationType,
+    Expression<OperationType> operationType,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
-      if (archive != null) 'archive': archive,
       if (operationType != null) 'operation_type': operationType,
     });
   }
 
-  CategoryEntityCompanion copyWith(
+  CategoriesCompanion copyWith(
       {Value<int> id,
       Value<String> title,
-      Value<bool> archive,
       Value<OperationType> operationType}) {
-    return CategoryEntityCompanion(
+    return CategoriesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
-      archive: archive ?? this.archive,
       operationType: operationType ?? this.operationType,
     );
   }
@@ -409,11 +335,8 @@ class CategoryEntityCompanion extends UpdateCompanion<CategoryEntityData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (archive.present) {
-      map['archive'] = Variable<bool>(archive.value);
-    }
     if (operationType.present) {
-      final converter = $CategoryEntityTable.$converter0;
+      final converter = $CategoriesTable.$converter0;
       map['operation_type'] =
           Variable<int>(converter.mapToSql(operationType.value));
     }
@@ -422,21 +345,20 @@ class CategoryEntityCompanion extends UpdateCompanion<CategoryEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('CategoryEntityCompanion(')
+    return (StringBuffer('CategoriesCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('archive: $archive, ')
           ..write('operationType: $operationType')
           ..write(')'))
         .toString();
   }
 }
 
-class $CategoryEntityTable extends CategoryEntity
-    with TableInfo<$CategoryEntityTable, CategoryEntityData> {
+class $CategoriesTable extends Categories
+    with TableInfo<$CategoriesTable, CategoryDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $CategoryEntityTable(this._db, [this._alias]);
+  $CategoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -456,15 +378,6 @@ class $CategoryEntityTable extends CategoryEntity
       $tableName,
       false,
     );
-  }
-
-  final VerificationMeta _archiveMeta = const VerificationMeta('archive');
-  GeneratedBoolColumn _archive;
-  @override
-  GeneratedBoolColumn get archive => _archive ??= _constructArchive();
-  GeneratedBoolColumn _constructArchive() {
-    return GeneratedBoolColumn('archive', $tableName, false,
-        defaultValue: const Constant(false));
   }
 
   final VerificationMeta _operationTypeMeta =
@@ -482,15 +395,15 @@ class $CategoryEntityTable extends CategoryEntity
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, title, archive, operationType];
+  List<GeneratedColumn> get $columns => [id, title, operationType];
   @override
-  $CategoryEntityTable get asDslTable => this;
+  $CategoriesTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'categories';
   @override
   final String actualTableName = 'categories';
   @override
-  VerificationContext validateIntegrity(Insertable<CategoryEntityData> instance,
+  VerificationContext validateIntegrity(Insertable<CategoryDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -503,10 +416,6 @@ class $CategoryEntityTable extends CategoryEntity
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('archive')) {
-      context.handle(_archiveMeta,
-          archive.isAcceptableOrUnknown(data['archive'], _archiveMeta));
-    }
     context.handle(_operationTypeMeta, const VerificationResult.success());
     return context;
   }
@@ -514,22 +423,21 @@ class $CategoryEntityTable extends CategoryEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  CategoryEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
+  CategoryDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return CategoryEntityData.fromData(data, _db, prefix: effectivePrefix);
+    return CategoryDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $CategoryEntityTable createAlias(String alias) {
-    return $CategoryEntityTable(_db, alias);
+  $CategoriesTable createAlias(String alias) {
+    return $CategoriesTable(_db, alias);
   }
 
   static TypeConverter<OperationType, int> $converter0 =
       const OperationTypeConverter();
 }
 
-class OperationEntityData extends DataClass
-    implements Insertable<OperationEntityData> {
+class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int id;
   final DateTime date;
   final OperationType operationType;
@@ -537,7 +445,7 @@ class OperationEntityData extends DataClass
   final int category;
   final int recAccount;
   final int sum;
-  OperationEntityData(
+  OperationDB(
       {@required this.id,
       @required this.date,
       @required this.operationType,
@@ -545,17 +453,16 @@ class OperationEntityData extends DataClass
       this.category,
       this.recAccount,
       @required this.sum});
-  factory OperationEntityData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory OperationDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
-    return OperationEntityData(
+    return OperationDB(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
-      operationType: $OperationEntityTable.$converter0.mapToDart(intType
+      operationType: $OperationsTable.$converter0.mapToDart(intType
           .mapFromDatabaseResponse(data['${effectivePrefix}operation_type'])),
       account:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}account']),
@@ -576,7 +483,7 @@ class OperationEntityData extends DataClass
       map['date'] = Variable<DateTime>(date);
     }
     if (!nullToAbsent || operationType != null) {
-      final converter = $OperationEntityTable.$converter0;
+      final converter = $OperationsTable.$converter0;
       map['operation_type'] = Variable<int>(converter.mapToSql(operationType));
     }
     if (!nullToAbsent || account != null) {
@@ -594,8 +501,8 @@ class OperationEntityData extends DataClass
     return map;
   }
 
-  OperationEntityCompanion toCompanion(bool nullToAbsent) {
-    return OperationEntityCompanion(
+  OperationsCompanion toCompanion(bool nullToAbsent) {
+    return OperationsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
       operationType: operationType == null && nullToAbsent
@@ -614,10 +521,10 @@ class OperationEntityData extends DataClass
     );
   }
 
-  factory OperationEntityData.fromJson(Map<String, dynamic> json,
+  factory OperationDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return OperationEntityData(
+    return OperationDB(
       id: serializer.fromJson<int>(json['id']),
       date: serializer.fromJson<DateTime>(json['date']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
@@ -641,7 +548,7 @@ class OperationEntityData extends DataClass
     };
   }
 
-  OperationEntityData copyWith(
+  OperationDB copyWith(
           {int id,
           DateTime date,
           OperationType operationType,
@@ -649,7 +556,7 @@ class OperationEntityData extends DataClass
           int category,
           int recAccount,
           int sum}) =>
-      OperationEntityData(
+      OperationDB(
         id: id ?? this.id,
         date: date ?? this.date,
         operationType: operationType ?? this.operationType,
@@ -660,7 +567,7 @@ class OperationEntityData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('OperationEntityData(')
+    return (StringBuffer('OperationDB(')
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('operationType: $operationType, ')
@@ -686,7 +593,7 @@ class OperationEntityData extends DataClass
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is OperationEntityData &&
+      (other is OperationDB &&
           other.id == this.id &&
           other.date == this.date &&
           other.operationType == this.operationType &&
@@ -696,7 +603,7 @@ class OperationEntityData extends DataClass
           other.sum == this.sum);
 }
 
-class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
+class OperationsCompanion extends UpdateCompanion<OperationDB> {
   final Value<int> id;
   final Value<DateTime> date;
   final Value<OperationType> operationType;
@@ -704,7 +611,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
   final Value<int> category;
   final Value<int> recAccount;
   final Value<int> sum;
-  const OperationEntityCompanion({
+  const OperationsCompanion({
     this.id = const Value.absent(),
     this.date = const Value.absent(),
     this.operationType = const Value.absent(),
@@ -713,7 +620,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
     this.recAccount = const Value.absent(),
     this.sum = const Value.absent(),
   });
-  OperationEntityCompanion.insert({
+  OperationsCompanion.insert({
     this.id = const Value.absent(),
     @required DateTime date,
     @required OperationType operationType,
@@ -725,10 +632,10 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
         operationType = Value(operationType),
         account = Value(account),
         sum = Value(sum);
-  static Insertable<OperationEntityData> custom({
+  static Insertable<OperationDB> custom({
     Expression<int> id,
     Expression<DateTime> date,
-    Expression<int> operationType,
+    Expression<OperationType> operationType,
     Expression<int> account,
     Expression<int> category,
     Expression<int> recAccount,
@@ -745,7 +652,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
     });
   }
 
-  OperationEntityCompanion copyWith(
+  OperationsCompanion copyWith(
       {Value<int> id,
       Value<DateTime> date,
       Value<OperationType> operationType,
@@ -753,7 +660,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
       Value<int> category,
       Value<int> recAccount,
       Value<int> sum}) {
-    return OperationEntityCompanion(
+    return OperationsCompanion(
       id: id ?? this.id,
       date: date ?? this.date,
       operationType: operationType ?? this.operationType,
@@ -774,7 +681,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
       map['date'] = Variable<DateTime>(date.value);
     }
     if (operationType.present) {
-      final converter = $OperationEntityTable.$converter0;
+      final converter = $OperationsTable.$converter0;
       map['operation_type'] =
           Variable<int>(converter.mapToSql(operationType.value));
     }
@@ -795,7 +702,7 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('OperationEntityCompanion(')
+    return (StringBuffer('OperationsCompanion(')
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('operationType: $operationType, ')
@@ -808,11 +715,11 @@ class OperationEntityCompanion extends UpdateCompanion<OperationEntityData> {
   }
 }
 
-class $OperationEntityTable extends OperationEntity
-    with TableInfo<$OperationEntityTable, OperationEntityData> {
+class $OperationsTable extends Operations
+    with TableInfo<$OperationsTable, OperationDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $OperationEntityTable(this._db, [this._alias]);
+  $OperationsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -891,14 +798,13 @@ class $OperationEntityTable extends OperationEntity
   List<GeneratedColumn> get $columns =>
       [id, date, operationType, account, category, recAccount, sum];
   @override
-  $OperationEntityTable get asDslTable => this;
+  $OperationsTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'operations';
   @override
   final String actualTableName = 'operations';
   @override
-  VerificationContext validateIntegrity(
-      Insertable<OperationEntityData> instance,
+  VerificationContext validateIntegrity(Insertable<OperationDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -940,38 +846,36 @@ class $OperationEntityTable extends OperationEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  OperationEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
+  OperationDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return OperationEntityData.fromData(data, _db, prefix: effectivePrefix);
+    return OperationDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $OperationEntityTable createAlias(String alias) {
-    return $OperationEntityTable(_db, alias);
+  $OperationsTable createAlias(String alias) {
+    return $OperationsTable(_db, alias);
   }
 
   static TypeConverter<OperationType, int> $converter0 =
       const OperationTypeConverter();
 }
 
-class BalanceEntityData extends DataClass
-    implements Insertable<BalanceEntityData> {
+class BalanceDB extends DataClass implements Insertable<BalanceDB> {
   final DateTime date;
   final int operation;
   final int account;
   final int sum;
-  BalanceEntityData(
+  BalanceDB(
       {@required this.date,
       @required this.operation,
       @required this.account,
       @required this.sum});
-  factory BalanceEntityData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory BalanceDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final intType = db.typeSystem.forDartType<int>();
-    return BalanceEntityData(
+    return BalanceDB(
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
       operation:
@@ -999,8 +903,8 @@ class BalanceEntityData extends DataClass
     return map;
   }
 
-  BalanceEntityCompanion toCompanion(bool nullToAbsent) {
-    return BalanceEntityCompanion(
+  BalancesCompanion toCompanion(bool nullToAbsent) {
+    return BalancesCompanion(
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
       operation: operation == null && nullToAbsent
           ? const Value.absent()
@@ -1012,10 +916,10 @@ class BalanceEntityData extends DataClass
     );
   }
 
-  factory BalanceEntityData.fromJson(Map<String, dynamic> json,
+  factory BalanceDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return BalanceEntityData(
+    return BalanceDB(
       date: serializer.fromJson<DateTime>(json['date']),
       operation: serializer.fromJson<int>(json['operation']),
       account: serializer.fromJson<int>(json['account']),
@@ -1033,9 +937,8 @@ class BalanceEntityData extends DataClass
     };
   }
 
-  BalanceEntityData copyWith(
-          {DateTime date, int operation, int account, int sum}) =>
-      BalanceEntityData(
+  BalanceDB copyWith({DateTime date, int operation, int account, int sum}) =>
+      BalanceDB(
         date: date ?? this.date,
         operation: operation ?? this.operation,
         account: account ?? this.account,
@@ -1043,7 +946,7 @@ class BalanceEntityData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('BalanceEntityData(')
+    return (StringBuffer('BalanceDB(')
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('account: $account, ')
@@ -1058,25 +961,25 @@ class BalanceEntityData extends DataClass
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is BalanceEntityData &&
+      (other is BalanceDB &&
           other.date == this.date &&
           other.operation == this.operation &&
           other.account == this.account &&
           other.sum == this.sum);
 }
 
-class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
+class BalancesCompanion extends UpdateCompanion<BalanceDB> {
   final Value<DateTime> date;
   final Value<int> operation;
   final Value<int> account;
   final Value<int> sum;
-  const BalanceEntityCompanion({
+  const BalancesCompanion({
     this.date = const Value.absent(),
     this.operation = const Value.absent(),
     this.account = const Value.absent(),
     this.sum = const Value.absent(),
   });
-  BalanceEntityCompanion.insert({
+  BalancesCompanion.insert({
     @required DateTime date,
     @required int operation,
     @required int account,
@@ -1085,7 +988,7 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
         operation = Value(operation),
         account = Value(account),
         sum = Value(sum);
-  static Insertable<BalanceEntityData> custom({
+  static Insertable<BalanceDB> custom({
     Expression<DateTime> date,
     Expression<int> operation,
     Expression<int> account,
@@ -1099,12 +1002,12 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
     });
   }
 
-  BalanceEntityCompanion copyWith(
+  BalancesCompanion copyWith(
       {Value<DateTime> date,
       Value<int> operation,
       Value<int> account,
       Value<int> sum}) {
-    return BalanceEntityCompanion(
+    return BalancesCompanion(
       date: date ?? this.date,
       operation: operation ?? this.operation,
       account: account ?? this.account,
@@ -1132,7 +1035,7 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('BalanceEntityCompanion(')
+    return (StringBuffer('BalancesCompanion(')
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('account: $account, ')
@@ -1142,11 +1045,11 @@ class BalanceEntityCompanion extends UpdateCompanion<BalanceEntityData> {
   }
 }
 
-class $BalanceEntityTable extends BalanceEntity
-    with TableInfo<$BalanceEntityTable, BalanceEntityData> {
+class $BalancesTable extends Balances
+    with TableInfo<$BalancesTable, BalanceDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $BalanceEntityTable(this._db, [this._alias]);
+  $BalancesTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   GeneratedDateTimeColumn _date;
   @override
@@ -1192,13 +1095,13 @@ class $BalanceEntityTable extends BalanceEntity
   @override
   List<GeneratedColumn> get $columns => [date, operation, account, sum];
   @override
-  $BalanceEntityTable get asDslTable => this;
+  $BalancesTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'balance';
   @override
   final String actualTableName = 'balance';
   @override
-  VerificationContext validateIntegrity(Insertable<BalanceEntityData> instance,
+  VerificationContext validateIntegrity(Insertable<BalanceDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1232,35 +1135,33 @@ class $BalanceEntityTable extends BalanceEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {operation, account};
   @override
-  BalanceEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
+  BalanceDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return BalanceEntityData.fromData(data, _db, prefix: effectivePrefix);
+    return BalanceDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $BalanceEntityTable createAlias(String alias) {
-    return $BalanceEntityTable(_db, alias);
+  $BalancesTable createAlias(String alias) {
+    return $BalancesTable(_db, alias);
   }
 }
 
-class CashflowEntityData extends DataClass
-    implements Insertable<CashflowEntityData> {
+class CashflowDB extends DataClass implements Insertable<CashflowDB> {
   final DateTime date;
   final int operation;
   final int category;
   final int sum;
-  CashflowEntityData(
+  CashflowDB(
       {@required this.date,
       @required this.operation,
       @required this.category,
       @required this.sum});
-  factory CashflowEntityData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory CashflowDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final intType = db.typeSystem.forDartType<int>();
-    return CashflowEntityData(
+    return CashflowDB(
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
       operation:
@@ -1288,8 +1189,8 @@ class CashflowEntityData extends DataClass
     return map;
   }
 
-  CashflowEntityCompanion toCompanion(bool nullToAbsent) {
-    return CashflowEntityCompanion(
+  CashflowsCompanion toCompanion(bool nullToAbsent) {
+    return CashflowsCompanion(
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
       operation: operation == null && nullToAbsent
           ? const Value.absent()
@@ -1301,10 +1202,10 @@ class CashflowEntityData extends DataClass
     );
   }
 
-  factory CashflowEntityData.fromJson(Map<String, dynamic> json,
+  factory CashflowDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return CashflowEntityData(
+    return CashflowDB(
       date: serializer.fromJson<DateTime>(json['date']),
       operation: serializer.fromJson<int>(json['operation']),
       category: serializer.fromJson<int>(json['category']),
@@ -1322,9 +1223,8 @@ class CashflowEntityData extends DataClass
     };
   }
 
-  CashflowEntityData copyWith(
-          {DateTime date, int operation, int category, int sum}) =>
-      CashflowEntityData(
+  CashflowDB copyWith({DateTime date, int operation, int category, int sum}) =>
+      CashflowDB(
         date: date ?? this.date,
         operation: operation ?? this.operation,
         category: category ?? this.category,
@@ -1332,7 +1232,7 @@ class CashflowEntityData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('CashflowEntityData(')
+    return (StringBuffer('CashflowDB(')
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('category: $category, ')
@@ -1347,25 +1247,25 @@ class CashflowEntityData extends DataClass
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is CashflowEntityData &&
+      (other is CashflowDB &&
           other.date == this.date &&
           other.operation == this.operation &&
           other.category == this.category &&
           other.sum == this.sum);
 }
 
-class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
+class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
   final Value<DateTime> date;
   final Value<int> operation;
   final Value<int> category;
   final Value<int> sum;
-  const CashflowEntityCompanion({
+  const CashflowsCompanion({
     this.date = const Value.absent(),
     this.operation = const Value.absent(),
     this.category = const Value.absent(),
     this.sum = const Value.absent(),
   });
-  CashflowEntityCompanion.insert({
+  CashflowsCompanion.insert({
     @required DateTime date,
     @required int operation,
     @required int category,
@@ -1374,7 +1274,7 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
         operation = Value(operation),
         category = Value(category),
         sum = Value(sum);
-  static Insertable<CashflowEntityData> custom({
+  static Insertable<CashflowDB> custom({
     Expression<DateTime> date,
     Expression<int> operation,
     Expression<int> category,
@@ -1388,12 +1288,12 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
     });
   }
 
-  CashflowEntityCompanion copyWith(
+  CashflowsCompanion copyWith(
       {Value<DateTime> date,
       Value<int> operation,
       Value<int> category,
       Value<int> sum}) {
-    return CashflowEntityCompanion(
+    return CashflowsCompanion(
       date: date ?? this.date,
       operation: operation ?? this.operation,
       category: category ?? this.category,
@@ -1421,7 +1321,7 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
 
   @override
   String toString() {
-    return (StringBuffer('CashflowEntityCompanion(')
+    return (StringBuffer('CashflowsCompanion(')
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('category: $category, ')
@@ -1431,11 +1331,11 @@ class CashflowEntityCompanion extends UpdateCompanion<CashflowEntityData> {
   }
 }
 
-class $CashflowEntityTable extends CashflowEntity
-    with TableInfo<$CashflowEntityTable, CashflowEntityData> {
+class $CashflowsTable extends Cashflows
+    with TableInfo<$CashflowsTable, CashflowDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $CashflowEntityTable(this._db, [this._alias]);
+  $CashflowsTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   GeneratedDateTimeColumn _date;
   @override
@@ -1481,13 +1381,13 @@ class $CashflowEntityTable extends CashflowEntity
   @override
   List<GeneratedColumn> get $columns => [date, operation, category, sum];
   @override
-  $CashflowEntityTable get asDslTable => this;
+  $CashflowsTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'cashflow';
   @override
   final String actualTableName = 'cashflow';
   @override
-  VerificationContext validateIntegrity(Insertable<CashflowEntityData> instance,
+  VerificationContext validateIntegrity(Insertable<CashflowDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1521,44 +1421,58 @@ class $CashflowEntityTable extends CashflowEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {operation, category};
   @override
-  CashflowEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
+  CashflowDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return CashflowEntityData.fromData(data, _db, prefix: effectivePrefix);
+    return CashflowDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $CashflowEntityTable createAlias(String alias) {
-    return $CashflowEntityTable(_db, alias);
+  $CashflowsTable createAlias(String alias) {
+    return $CashflowsTable(_db, alias);
   }
 }
 
-class BudgetData extends DataClass implements Insertable<BudgetData> {
-  final DateTime date;
+class BudgetDB extends DataClass implements Insertable<BudgetDB> {
+  final int year;
+  final int month;
   final int category;
+  final BudgetType budgetType;
   final int sum;
-  BudgetData(
-      {@required this.date, @required this.category, @required this.sum});
-  factory BudgetData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  BudgetDB(
+      {@required this.year,
+      @required this.month,
+      @required this.category,
+      @required this.budgetType,
+      @required this.sum});
+  factory BudgetDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final intType = db.typeSystem.forDartType<int>();
-    return BudgetData(
-      date:
-          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+    return BudgetDB(
+      year: intType.mapFromDatabaseResponse(data['${effectivePrefix}year']),
+      month: intType.mapFromDatabaseResponse(data['${effectivePrefix}month']),
       category:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      budgetType: $BudgetsTable.$converter0.mapToDart(intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}budget_type'])),
       sum: intType.mapFromDatabaseResponse(data['${effectivePrefix}sum']),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || date != null) {
-      map['date'] = Variable<DateTime>(date);
+    if (!nullToAbsent || year != null) {
+      map['year'] = Variable<int>(year);
+    }
+    if (!nullToAbsent || month != null) {
+      map['month'] = Variable<int>(month);
     }
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<int>(category);
+    }
+    if (!nullToAbsent || budgetType != null) {
+      final converter = $BudgetsTable.$converter0;
+      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType));
     }
     if (!nullToAbsent || sum != null) {
       map['sum'] = Variable<int>(sum);
@@ -1566,22 +1480,29 @@ class BudgetData extends DataClass implements Insertable<BudgetData> {
     return map;
   }
 
-  BudgetCompanion toCompanion(bool nullToAbsent) {
-    return BudgetCompanion(
-      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+  BudgetsCompanion toCompanion(bool nullToAbsent) {
+    return BudgetsCompanion(
+      year: year == null && nullToAbsent ? const Value.absent() : Value(year),
+      month:
+          month == null && nullToAbsent ? const Value.absent() : Value(month),
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
+      budgetType: budgetType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(budgetType),
       sum: sum == null && nullToAbsent ? const Value.absent() : Value(sum),
     );
   }
 
-  factory BudgetData.fromJson(Map<String, dynamic> json,
+  factory BudgetDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return BudgetData(
-      date: serializer.fromJson<DateTime>(json['date']),
+    return BudgetDB(
+      year: serializer.fromJson<int>(json['year']),
+      month: serializer.fromJson<int>(json['month']),
       category: serializer.fromJson<int>(json['category']),
+      budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
       sum: serializer.fromJson<int>(json['sum']),
     );
   }
@@ -1589,72 +1510,106 @@ class BudgetData extends DataClass implements Insertable<BudgetData> {
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'date': serializer.toJson<DateTime>(date),
+      'year': serializer.toJson<int>(year),
+      'month': serializer.toJson<int>(month),
       'category': serializer.toJson<int>(category),
+      'budgetType': serializer.toJson<BudgetType>(budgetType),
       'sum': serializer.toJson<int>(sum),
     };
   }
 
-  BudgetData copyWith({DateTime date, int category, int sum}) => BudgetData(
-        date: date ?? this.date,
+  BudgetDB copyWith(
+          {int year,
+          int month,
+          int category,
+          BudgetType budgetType,
+          int sum}) =>
+      BudgetDB(
+        year: year ?? this.year,
+        month: month ?? this.month,
         category: category ?? this.category,
+        budgetType: budgetType ?? this.budgetType,
         sum: sum ?? this.sum,
       );
   @override
   String toString() {
-    return (StringBuffer('BudgetData(')
-          ..write('date: $date, ')
+    return (StringBuffer('BudgetDB(')
+          ..write('year: $year, ')
+          ..write('month: $month, ')
           ..write('category: $category, ')
+          ..write('budgetType: $budgetType, ')
           ..write('sum: $sum')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(date.hashCode, $mrjc(category.hashCode, sum.hashCode)));
+  int get hashCode => $mrjf($mrjc(
+      year.hashCode,
+      $mrjc(month.hashCode,
+          $mrjc(category.hashCode, $mrjc(budgetType.hashCode, sum.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is BudgetData &&
-          other.date == this.date &&
+      (other is BudgetDB &&
+          other.year == this.year &&
+          other.month == this.month &&
           other.category == this.category &&
+          other.budgetType == this.budgetType &&
           other.sum == this.sum);
 }
 
-class BudgetCompanion extends UpdateCompanion<BudgetData> {
-  final Value<DateTime> date;
+class BudgetsCompanion extends UpdateCompanion<BudgetDB> {
+  final Value<int> year;
+  final Value<int> month;
   final Value<int> category;
+  final Value<BudgetType> budgetType;
   final Value<int> sum;
-  const BudgetCompanion({
-    this.date = const Value.absent(),
+  const BudgetsCompanion({
+    this.year = const Value.absent(),
+    this.month = const Value.absent(),
     this.category = const Value.absent(),
+    this.budgetType = const Value.absent(),
     this.sum = const Value.absent(),
   });
-  BudgetCompanion.insert({
-    @required DateTime date,
+  BudgetsCompanion.insert({
+    @required int year,
+    @required int month,
     @required int category,
+    @required BudgetType budgetType,
     @required int sum,
-  })  : date = Value(date),
+  })  : year = Value(year),
+        month = Value(month),
         category = Value(category),
+        budgetType = Value(budgetType),
         sum = Value(sum);
-  static Insertable<BudgetData> custom({
-    Expression<DateTime> date,
+  static Insertable<BudgetDB> custom({
+    Expression<int> year,
+    Expression<int> month,
     Expression<int> category,
+    Expression<BudgetType> budgetType,
     Expression<int> sum,
   }) {
     return RawValuesInsertable({
-      if (date != null) 'date': date,
+      if (year != null) 'year': year,
+      if (month != null) 'month': month,
       if (category != null) 'category': category,
+      if (budgetType != null) 'budget_type': budgetType,
       if (sum != null) 'sum': sum,
     });
   }
 
-  BudgetCompanion copyWith(
-      {Value<DateTime> date, Value<int> category, Value<int> sum}) {
-    return BudgetCompanion(
-      date: date ?? this.date,
+  BudgetsCompanion copyWith(
+      {Value<int> year,
+      Value<int> month,
+      Value<int> category,
+      Value<BudgetType> budgetType,
+      Value<int> sum}) {
+    return BudgetsCompanion(
+      year: year ?? this.year,
+      month: month ?? this.month,
       category: category ?? this.category,
+      budgetType: budgetType ?? this.budgetType,
       sum: sum ?? this.sum,
     );
   }
@@ -1662,11 +1617,18 @@ class BudgetCompanion extends UpdateCompanion<BudgetData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (date.present) {
-      map['date'] = Variable<DateTime>(date.value);
+    if (year.present) {
+      map['year'] = Variable<int>(year.value);
+    }
+    if (month.present) {
+      map['month'] = Variable<int>(month.value);
     }
     if (category.present) {
       map['category'] = Variable<int>(category.value);
+    }
+    if (budgetType.present) {
+      final converter = $BudgetsTable.$converter0;
+      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType.value));
     }
     if (sum.present) {
       map['sum'] = Variable<int>(sum.value);
@@ -1676,26 +1638,40 @@ class BudgetCompanion extends UpdateCompanion<BudgetData> {
 
   @override
   String toString() {
-    return (StringBuffer('BudgetCompanion(')
-          ..write('date: $date, ')
+    return (StringBuffer('BudgetsCompanion(')
+          ..write('year: $year, ')
+          ..write('month: $month, ')
           ..write('category: $category, ')
+          ..write('budgetType: $budgetType, ')
           ..write('sum: $sum')
           ..write(')'))
         .toString();
   }
 }
 
-class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
+class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, BudgetDB> {
   final GeneratedDatabase _db;
   final String _alias;
-  $BudgetTable(this._db, [this._alias]);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
-  GeneratedDateTimeColumn _date;
+  $BudgetsTable(this._db, [this._alias]);
+  final VerificationMeta _yearMeta = const VerificationMeta('year');
+  GeneratedIntColumn _year;
   @override
-  GeneratedDateTimeColumn get date => _date ??= _constructDate();
-  GeneratedDateTimeColumn _constructDate() {
-    return GeneratedDateTimeColumn(
-      'date',
+  GeneratedIntColumn get year => _year ??= _constructYear();
+  GeneratedIntColumn _constructYear() {
+    return GeneratedIntColumn(
+      'year',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _monthMeta = const VerificationMeta('month');
+  GeneratedIntColumn _month;
+  @override
+  GeneratedIntColumn get month => _month ??= _constructMonth();
+  GeneratedIntColumn _constructMonth() {
+    return GeneratedIntColumn(
+      'month',
       $tableName,
       false,
     );
@@ -1708,6 +1684,18 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   GeneratedIntColumn _constructCategory() {
     return GeneratedIntColumn('category', $tableName, false,
         $customConstraints: 'NULL REFERENCES category(id)');
+  }
+
+  final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
+  GeneratedIntColumn _budgetType;
+  @override
+  GeneratedIntColumn get budgetType => _budgetType ??= _constructBudgetType();
+  GeneratedIntColumn _constructBudgetType() {
+    return GeneratedIntColumn(
+      'budget_type',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
@@ -1723,23 +1711,30 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   }
 
   @override
-  List<GeneratedColumn> get $columns => [date, category, sum];
+  List<GeneratedColumn> get $columns =>
+      [year, month, category, budgetType, sum];
   @override
-  $BudgetTable get asDslTable => this;
+  $BudgetsTable get asDslTable => this;
   @override
   String get $tableName => _alias ?? 'budgets';
   @override
   final String actualTableName = 'budgets';
   @override
-  VerificationContext validateIntegrity(Insertable<BudgetData> instance,
+  VerificationContext validateIntegrity(Insertable<BudgetDB> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('date')) {
+    if (data.containsKey('year')) {
       context.handle(
-          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
+          _yearMeta, year.isAcceptableOrUnknown(data['year'], _yearMeta));
     } else if (isInserting) {
-      context.missing(_dateMeta);
+      context.missing(_yearMeta);
+    }
+    if (data.containsKey('month')) {
+      context.handle(
+          _monthMeta, month.isAcceptableOrUnknown(data['month'], _monthMeta));
+    } else if (isInserting) {
+      context.missing(_monthMeta);
     }
     if (data.containsKey('category')) {
       context.handle(_categoryMeta,
@@ -1747,6 +1742,7 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
+    context.handle(_budgetTypeMeta, const VerificationResult.success());
     if (data.containsKey('sum')) {
       context.handle(
           _sumMeta, sum.isAcceptableOrUnknown(data['sum'], _sumMeta));
@@ -1757,38 +1753,36 @@ class $BudgetTable extends Budget with TableInfo<$BudgetTable, BudgetData> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {date, category};
+  Set<GeneratedColumn> get $primaryKey => {year, month, category, budgetType};
   @override
-  BudgetData map(Map<String, dynamic> data, {String tablePrefix}) {
+  BudgetDB map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return BudgetData.fromData(data, _db, prefix: effectivePrefix);
+    return BudgetDB.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $BudgetTable createAlias(String alias) {
-    return $BudgetTable(_db, alias);
+  $BudgetsTable createAlias(String alias) {
+    return $BudgetsTable(_db, alias);
   }
+
+  static TypeConverter<BudgetType, int> $converter0 =
+      const BudgetTypeConverter();
 }
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $AccountEntityTable _accountEntity;
-  $AccountEntityTable get accountEntity =>
-      _accountEntity ??= $AccountEntityTable(this);
-  $CategoryEntityTable _categoryEntity;
-  $CategoryEntityTable get categoryEntity =>
-      _categoryEntity ??= $CategoryEntityTable(this);
-  $OperationEntityTable _operationEntity;
-  $OperationEntityTable get operationEntity =>
-      _operationEntity ??= $OperationEntityTable(this);
-  $BalanceEntityTable _balanceEntity;
-  $BalanceEntityTable get balanceEntity =>
-      _balanceEntity ??= $BalanceEntityTable(this);
-  $CashflowEntityTable _cashflowEntity;
-  $CashflowEntityTable get cashflowEntity =>
-      _cashflowEntity ??= $CashflowEntityTable(this);
-  $BudgetTable _budget;
-  $BudgetTable get budget => _budget ??= $BudgetTable(this);
+  $AccountsTable _accounts;
+  $AccountsTable get accounts => _accounts ??= $AccountsTable(this);
+  $CategoriesTable _categories;
+  $CategoriesTable get categories => _categories ??= $CategoriesTable(this);
+  $OperationsTable _operations;
+  $OperationsTable get operations => _operations ??= $OperationsTable(this);
+  $BalancesTable _balances;
+  $BalancesTable get balances => _balances ??= $BalancesTable(this);
+  $CashflowsTable _cashflows;
+  $CashflowsTable get cashflows => _cashflows ??= $CashflowsTable(this);
+  $BudgetsTable _budgets;
+  $BudgetsTable get budgets => _budgets ??= $BudgetsTable(this);
   AccountDao _accountDao;
   AccountDao get accountDao => _accountDao ??= AccountDao(this as Database);
   CategoryDao _categoryDao;
@@ -1801,14 +1795,8 @@ abstract class _$Database extends GeneratedDatabase {
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [
-        accountEntity,
-        categoryEntity,
-        operationEntity,
-        balanceEntity,
-        cashflowEntity,
-        budget
-      ];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [accounts, categories, operations, balances, cashflows, budgets];
 }
 
 // **************************************************************************
@@ -1816,21 +1804,21 @@ abstract class _$Database extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$AccountDaoMixin on DatabaseAccessor<Database> {
-  $AccountEntityTable get accountEntity => attachedDatabase.accountEntity;
-  $BalanceEntityTable get balanceEntity => attachedDatabase.balanceEntity;
+  $AccountsTable get accounts => attachedDatabase.accounts;
+  $BalancesTable get balances => attachedDatabase.balances;
 }
 mixin _$CategoryDaoMixin on DatabaseAccessor<Database> {
-  $CategoryEntityTable get categoryEntity => attachedDatabase.categoryEntity;
-  $BudgetTable get budget => attachedDatabase.budget;
-  $CashflowEntityTable get cashflowEntity => attachedDatabase.cashflowEntity;
+  $CategoriesTable get categories => attachedDatabase.categories;
+  $BudgetsTable get budgets => attachedDatabase.budgets;
+  $CashflowsTable get cashflows => attachedDatabase.cashflows;
 }
 mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
-  $AccountEntityTable get accountEntity => attachedDatabase.accountEntity;
-  $CategoryEntityTable get categoryEntity => attachedDatabase.categoryEntity;
-  $OperationEntityTable get operationEntity => attachedDatabase.operationEntity;
-  $BalanceEntityTable get balanceEntity => attachedDatabase.balanceEntity;
-  $CashflowEntityTable get cashflowEntity => attachedDatabase.cashflowEntity;
+  $AccountsTable get accounts => attachedDatabase.accounts;
+  $CategoriesTable get categories => attachedDatabase.categories;
+  $OperationsTable get operations => attachedDatabase.operations;
+  $BalancesTable get balances => attachedDatabase.balances;
+  $CashflowsTable get cashflows => attachedDatabase.cashflows;
 }
 mixin _$BudgetDaoMixin on DatabaseAccessor<Database> {
-  $BudgetTable get budget => attachedDatabase.budget;
+  $BudgetsTable get budgets => attachedDatabase.budgets;
 }
