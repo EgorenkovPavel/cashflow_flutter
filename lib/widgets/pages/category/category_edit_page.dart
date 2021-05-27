@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation_list_filter.dart';
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/empty_list_hint.dart';
@@ -92,13 +92,13 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   }
 
   Widget _buildBudgetList(BuildContext context) {
-    return StreamBuilder<List<BudgetData>>(
+    return StreamBuilder<List<BudgetDB>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return _emptyBudgetListHint(context);
         }
 
-        List<BudgetData> list = snapshot.data;
+        List<BudgetDB> list = snapshot.data;
 
         if (list.isEmpty) {
           return _emptyBudgetListHint(context);

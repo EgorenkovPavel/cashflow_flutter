@@ -1,4 +1,4 @@
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/mappers/category_mapper.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
@@ -28,8 +28,8 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         sum: o.operationData.sum);
   }
 
-  OperationEntityData mapToOperationData(Operation o){
-    return OperationEntityData(
+  OperationDB mapToOperationData(Operation o){
+    return OperationDB(
         id: o.id,
         date: o.date,
         operationType: o.type,

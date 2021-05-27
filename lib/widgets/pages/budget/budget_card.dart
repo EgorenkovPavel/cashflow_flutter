@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/item_card.dart';
@@ -10,9 +10,10 @@ import 'package:intl/intl.dart';
 
 class BudgetCard extends StatefulWidget {
   final int categoryId;
-  final DateTime date;
+  final int month;
+  final int year;
 
-  BudgetCard({@required this.categoryId, this.date});
+  BudgetCard({@required this.categoryId, this.month, this.year});
 
   static void open(BuildContext context, int categoryId) {
     showDialog(
@@ -28,7 +29,7 @@ class BudgetCard extends StatefulWidget {
         });
   }
 
-  static void openExists(BuildContext context, int categoryId, DateTime date) {
+  static void openExists(BuildContext context, int categoryId, int month, int year) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -38,7 +39,8 @@ class BudgetCard extends StatefulWidget {
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: BudgetCard(
                 categoryId: categoryId,
-                date: date,
+                month: month,
+                year: year,
               ),);
         });
   }
@@ -120,7 +122,7 @@ class _BudgetCardState extends State<BudgetCard> {
   @override
   void initState() {
     _bloc = BlocProvider.of<BudgetCardBloc>(context)
-      ..add(Initial(widget.categoryId, widget.date));
+      ..add(Initial(widget.categoryId, widget.month, widget.year));
 
     super.initState();
   }
@@ -179,9 +181,10 @@ abstract class BudgetCardEvent {}
 
 class Initial extends BudgetCardEvent {
   final int categoryId;
-  DateTime date;
+  final int month;
+  final int year;
 
-  Initial(this.categoryId, this.date);
+  Initial(this.categoryId, this.month, this.year);
 }
 
 class Save extends BudgetCardEvent {
@@ -221,7 +224,7 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
   int categoryId;
   int _month;
   int _year;
-  BudgetData _oldBudgetData;
+  BudgetDB _oldBudgetData;
 
   BudgetCardBloc(this._repository) : super(DataState(1, 1));
 
@@ -230,18 +233,16 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
     if (event is Initial) {
       categoryId = event.categoryId;
 
-      var date = event.date ?? DateTime.now();
-      _month = date.month;
-      _year = date.year;
+      _month = event.month;
+      _year = event.year;
       yield DataState(_month, _year);
 
-      if (event.date != null) {
         _oldBudgetData =
-            await _repository.getBudget(event.categoryId, event.date);
+            await _repository.getBudget(event.categoryId, event.month, event.year);
         if (_oldBudgetData != null) {
           yield SumLoaded(_oldBudgetData.sum);
         }
-      }
+
     } else if (event is IncYear) {
       ++_year;
       yield DataState(_month, _year);
@@ -256,8 +257,9 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
         await _repository.deleteBudget(_oldBudgetData);
         _oldBudgetData = null;
       }
-      await _repository.insertBudget(BudgetData(
-          date: DateTime(_year, _month),
+      await _repository.insertBudget(BudgetDB(
+          month: _month,
+          year: _year,
           category: categoryId,
           sum: int.parse(event.sum)));
     }

@@ -1,0 +1,1 @@
+enum BudgetType {MONTH, YEAR}

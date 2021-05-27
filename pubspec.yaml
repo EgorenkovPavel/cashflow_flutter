@@ -26,7 +26,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
-  moor_flutter: ^3.1.0
+
+  moor: ^4.2.1
+  sqlite3_flutter_libs: ^0.4.1
+  path_provider:
+  path:
+
   intl: ^0.17.0
   charts_flutter: ^0.10.0
   bloc: ^7.0.0
@@ -37,7 +42,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^3.4.0
+  moor_generator: ^4.2.1
   build_runner:
   pedantic: ^1.11.0
   googleapis: any

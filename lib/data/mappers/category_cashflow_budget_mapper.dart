@@ -1,4 +1,4 @@
-import 'package:cashflow/data/database.dart';
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/mappers/mapper.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 
@@ -11,11 +11,10 @@ class CategoryCashflowBudgetMapper
     return CategoryCashflowBudgetEntity(
         c.year,
         c.month,
-        CategoryEntityData(
+        CategoryDB(
             id: c.id,
             title: c.title,
-            operationType: c.type,
-            archive: c.archive),
+            operationType: c.type,),
         c.budget,
         c.cashflow);
   }
@@ -25,7 +24,6 @@ class CategoryCashflowBudgetMapper
     return CategoryCashflowBudget(
         id: c.category.id,
         title: c.category.title,
-        archive: c.category.archive,
         type: c.category.operationType,
         year: c.year,
         month: c.month,

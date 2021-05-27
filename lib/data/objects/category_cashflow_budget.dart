@@ -1,4 +1,4 @@
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 
 class CategoryCashflowBudget {
   final int id;

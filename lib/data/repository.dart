@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cashflow/data/database/database.dart' as dbs;
 import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/mappers/category_cashflow_budget_mapper.dart';
 import 'package:cashflow/data/mappers/operation_mapper.dart';
@@ -8,22 +9,22 @@ import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/objects/operation_list_filter.dart';
-import 'package:cashflow/data/operation_type.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/utils/google_http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:path_provider/path_provider.dart';
 
-import 'database.dart';
+import 'database/database.dart';
 import 'mappers/account_balance_mapper.dart';
 import 'mappers/category_mapper.dart';
 import 'objects/account.dart';
 import 'objects/account_balance.dart';
 
 class Repository extends ChangeNotifier {
-  final Database db;
+  final dbs.Database db;
 
-  Repository() : db = Database();
+  Repository() : db = dbs.Database();
 
   Future deleteAll() => db.deleteAll();
 
@@ -32,9 +33,9 @@ class Repository extends ChangeNotifier {
   Future loadData(Map<String, dynamic> data) => db.loadData(data);
 
   //Accounts
-  Stream<List<Account>> watchAllAccounts({bool archive = false}) =>
+  Stream<List<Account>> watchAllAccounts() =>
       db.accountDao
-          .watchAllAccounts(archive: archive)
+          .watchAllAccounts()
           .map((list) => const AccountMapper().mapListToDart(list));
 
   Stream<List<AccountBalance>> watchAllAccountsBalance(
@@ -62,26 +63,25 @@ class Repository extends ChangeNotifier {
   Future updateAccount(Account account) =>
       db.accountDao.updateAccount(const AccountMapper().mapToSql(account));
 
-  Stream<BalanceOnDate> watchBalance(DateTime date) =>
+  Stream<dbs.BalanceOnDate> watchBalance(DateTime date) =>
       db.accountDao.watchBalance(date);
 
-  Stream<List<BalanceOnDate>> watchBalanceOnPeriod(
+  Stream<List<dbs.BalanceOnDate>> watchBalanceOnPeriod(
           DateTime start, DateTime end) =>
       db.accountDao.watchBalanceOnPeriod(start, end);
 
   //Categories
-  Stream<List<Category>> watchAllCategories({bool archive = false}) =>
+  Stream<List<Category>> watchAllCategories() =>
       db.categoryDao
-          .watchAllCategories(archive: archive)
+          .watchAllCategories()
           .map((list) => const CategoryMapper().mapListToDart(list));
 
   Future<Category> getCategoryById(int id) async => const CategoryMapper()
       .mapToDart(await db.categoryDao.getCategoryById(id));
 
-  Stream<List<Category>> watchAllCategoriesByType(OperationType type,
-          {bool archive = false}) =>
+  Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       db.categoryDao
-          .watchAllCategoriesByType(type, archive: archive)
+          .watchAllCategoriesByType(type)
           .map((list) => const CategoryMapper().mapListToDart(list));
 
   Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
@@ -180,25 +180,25 @@ class Repository extends ChangeNotifier {
 
   //Budget
 
-  Future<BudgetData> getBudget(int categoryId, DateTime date) =>
-      db.budgetDao.getBudget(categoryId, date);
-
-  Stream<List<BalanceOnDate>> watchMonthBudget() =>
-      db.budgetDao.watchMonthBudget();
-
-  Stream<List<BudgetData>> watchBudgetByCategory(int categoryId) =>
+  Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
+      db.budgetDao.getBudget(categoryId, month, year);
+  //
+  // Stream<List<BalanceOnDate>> watchMonthBudget() =>
+  //     db.budgetDao.watchMonthBudget();
+  //
+  Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
       db.budgetDao.watchBudgetByCategory(categoryId);
-
-  Stream<List<BudgetData>> watchBudget(DateTime date) =>
-      db.budgetDao.watchBudget(date);
-
-  Future<void> insertBudget(BudgetData entity) =>
+  //
+  // Stream<List<BudgetData>> watchBudget(DateTime date) =>
+  //     db.budgetDao.watchBudget(date);
+  //
+  Future<void> insertBudget(BudgetDB entity) =>
       db.budgetDao.insertBudget(entity);
 
-  Future<void> updateBudget(BudgetData entity) =>
+  Future<void> updateBudget(BudgetDB entity) =>
       db.budgetDao.updateBudget(entity);
 
-  Future<void> deleteBudget(BudgetData entity) =>
+  Future<void> deleteBudget(BudgetDB entity) =>
       db.budgetDao.deleteBudget(entity);
 
   //INTERNAL operations backup
