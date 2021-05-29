@@ -983,7 +983,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         );
   }
 
-  Future<OperationItem> getLastOperationItem() {
+  Future<OperationItem?> getLastOperationItem() {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
 
