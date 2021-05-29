@@ -794,11 +794,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
+              var op = row.readTable(operations);
               return OperationItem(
-                  operation: row.readTable(operations),
+                  operation: op,
                   account: row.readTable(acc),
-                  category: row.readTable(categories),
-                  recAccount: row.readTable(rec));
+                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
             },
           ).toList(),
         );
@@ -894,11 +895,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
+              var op = row.readTable(operations);
               return OperationItem(
-                  operation: row.readTable(operations),
+                  operation: op,
                   account: row.readTable(acc),
-                  category: row.readTable(categories),
-                  recAccount: row.readTable(rec));
+                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
             },
           ).toList(),
         );
@@ -934,11 +936,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
+              var op = row.readTable(operations);
               return OperationItem(
-                  operation: row.readTable(operations),
+                  operation: op,
                   account: row.readTable(acc),
-                  category: row.readTable(categories),
-                  recAccount: row.readTable(rec));
+                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
             },
           ).toList(),
         );
@@ -973,11 +976,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (rows) => rows.map(
             (row) {
+              var op = row.readTable(operations);
               return OperationItem(
-                  operation: row.readTable(operations),
+                  operation: op,
                   account: row.readTable(acc),
-                  category: row.readTable(categories),
-                  recAccount: row.readTable(rec));
+                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
             },
           ).toList(),
         );
@@ -1009,11 +1013,13 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ],
         )
         .getSingle()
-        .then((row) => OperationItem(
-        operation: row.readTable(operations),
+        .then((row) { var op = row.readTable(operations);
+    return OperationItem(
+        operation: op,
         account: row.readTable(acc),
-        category: row.readTable(categories),
-        recAccount: row.readTable(rec),));
+        category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+        recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+    });
   }
 
   Future<List<OperationDB>> getAllOperations() => select(operations).get();
@@ -1041,12 +1047,13 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         )
         .watchSingle()
         .map((row) {
-          return OperationItem(
-              operation: row.readTable(operations),
-              account: row.readTable(acc),
-              category: row.readTable(categories),
-              recAccount: row.readTable(rec));
-        });
+      var op = row.readTable(operations);
+      return OperationItem(
+          operation: op,
+          account: row.readTable(acc),
+          category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
+          recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+    });
   }
 
   Future insertOperationItem(OperationItem entity) {
