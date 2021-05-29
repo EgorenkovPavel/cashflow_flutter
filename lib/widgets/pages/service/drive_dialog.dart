@@ -11,7 +11,7 @@ class DriveDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
   final DialogMode mode;
 
-  const DriveDialog({this.httpClient, this.mode});
+  const DriveDialog({required this.httpClient, required this.mode});
 
   static Future<DriveFile> chooseFile(
       BuildContext context, GoogleHttpClient httpClient) async {
@@ -46,7 +46,7 @@ class _DriveDialogState extends State<DriveDialog> {
           $fields: 'files(id,name,parents,mimeType,modifiedTime)');
 
       setState(() {
-        folderList = data.files.toList();
+        folderList = data.files!.toList();
         _listController.jumpTo(0);
       });
     } catch (e) {
@@ -93,20 +93,20 @@ class _DriveDialogState extends State<DriveDialog> {
                     f.mimeType == 'application/vnd.google-apps.folder';
                 return ListTile(
                   leading: isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
-                  title: Text(f.name),
+                  title: Text(f.name!),
                   subtitle: Text(
-                      'Last changes ${DateFormat.yMMMd().format(f.modifiedTime)}'),
+                      'Last changes ${DateFormat.yMMMd().format(f.modifiedTime!)}'),
                   enabled: isFolder ||
                       f.mimeType == 'application/json' ||
                       f.mimeType == 'text/plain',
                   onTap: () {
                     if (isFolder) {
                       rootFolder.push(DriveFile(
-                          id: f.id, title: f.name, isFolder: isFolder));
+                          id: f.id!, title: f.name!, isFolder: isFolder));
                       loadFolders();
                     } else if (widget.mode == DialogMode.CHOOSE_FILE) {
                       Navigator.of(context).pop<DriveFile>(
-                          DriveFile(id: f.id, title: f.name, isFolder: false));
+                          DriveFile(id: f.id!, title: f.name!, isFolder: false));
                     }
                   },
                 );
@@ -143,5 +143,5 @@ class DriveFile {
   final String id;
   final bool isFolder;
 
-  DriveFile({this.title, this.id, this.isFolder});
+  DriveFile({required this.title, required this.id, required this.isFolder});
 }

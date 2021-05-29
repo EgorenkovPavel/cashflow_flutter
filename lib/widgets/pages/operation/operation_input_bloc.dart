@@ -66,33 +66,33 @@ abstract class MasterState {}
 
 class DataState extends MasterState {
   final OperationType type;
-  final AccountBalance account;
-  final Category categoryIn;
-  final Category categoryOut;
-  final AccountBalance recAccount;
+  final AccountBalance? account;
+  final Category? categoryIn;
+  final Category? categoryOut;
+  final AccountBalance? recAccount;
   final int sum;
   final bool showKeyboard;
-  final int operationId;
+  final int? operationId;
 
   DataState(
-      {this.type,
-        this.account,
-        this.categoryIn,
-        this.categoryOut,
-        this.recAccount,
-        this.sum,
-        this.showKeyboard,
-        this.operationId});
+      { required this.type,
+         this.account,
+         this.categoryIn,
+         this.categoryOut,
+         this.recAccount,
+         required this.sum,
+         required this.showKeyboard,
+         this.operationId});
 
   DataState copyWith(
-      {OperationType type,
-        AccountBalance account,
-        Category categoryIn,
-        Category categoryOut,
-        AccountBalance recAccount,
-        int sum,
-        bool showKeyboard,
-        int operationId}) =>
+      {OperationType? type,
+        AccountBalance? account,
+        Category? categoryIn,
+        Category? categoryOut,
+        AccountBalance? recAccount,
+        int? sum,
+        bool? showKeyboard,
+        int? operationId}) =>
       DataState(
         type: type ?? this.type,
         account: account ?? this.account,
@@ -140,13 +140,13 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         _repository.watchAllCategoriesByType(OperationType.OUTPUT),
         super(_data);
 
-  AccountBalance get account => _data.account;
+  AccountBalance? get account => _data.account;
 
-  Category get categoryIn => _data.categoryIn;
+  Category? get categoryIn => _data.categoryIn;
 
-  Category get categoryOut => _data.categoryOut;
+  Category? get categoryOut => _data.categoryOut;
 
-  AccountBalance get recAccount => _data.recAccount;
+  AccountBalance? get recAccount => _data.recAccount;
 
   @override
   Stream<MasterState> mapEventToState(MasterEvent event) async* {
@@ -161,7 +161,6 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           account: AccountBalance(
               id: op.account.id,
               title: op.account.title,
-              archive: op.account.archive,
               balance: 0),
           type: op.type);
       switch (op.type) {
@@ -174,9 +173,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         case OperationType.TRANSFER:
           _data = _data.copyWith(
               recAccount: AccountBalance(
-                  id: op.recAccount.id,
-                  title: op.recAccount.title,
-                  archive: op.recAccount.archive,
+                  id: op.recAccount!.id,
+                  title: op.recAccount!.title,
                   balance: 0));
           break;
       }
@@ -222,7 +220,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       _data = _data.copyWith(recAccount: event.account);
       return;
     } else if (event is CancelOperation) {
-      await _repository.deleteOperationById(_data.operationId);
+      await _repository.deleteOperationById(_data.operationId!);
       _data = _data.copyWith(operationId: null);
       yield OperationCanceled();
     } else if (event is OnNextTap) {
@@ -270,7 +268,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: _data.type,
-              account: const AccountBalanceMapper().mapToAccount(_data.account),
+              account: const AccountBalanceMapper().mapToAccount(_data.account!),
               category: _data.categoryIn,
               sum: _data.sum);
 
@@ -281,7 +279,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: _data.type,
-              account: const AccountBalanceMapper().mapToAccount(_data.account),
+              account: const AccountBalanceMapper().mapToAccount(_data.account!),
               category: _data.categoryOut,
               sum: _data.sum);
 
@@ -292,9 +290,9 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: _data.type,
-              account: const AccountBalanceMapper().mapToAccount(_data.account),
+              account: const AccountBalanceMapper().mapToAccount(_data.account!),
               recAccount:
-              const AccountBalanceMapper().mapToAccount(_data.recAccount),
+              const AccountBalanceMapper().mapToAccount(_data.recAccount!),
               sum: _data.sum);
 
           return _repository.insertOperation(operation);

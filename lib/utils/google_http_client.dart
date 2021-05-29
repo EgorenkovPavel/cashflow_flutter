@@ -8,7 +8,7 @@ class GoogleHttpClient extends IOClient {
 
   GoogleHttpClient(this._headers) : super();
 
-  static Future<GoogleHttpClient> getClient() async {
+  static Future<GoogleHttpClient?> getClient() async {
     var _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -19,8 +19,9 @@ class GoogleHttpClient extends IOClient {
     var googleAccount = await _googleSignIn.signIn();
     if (googleAccount == null) return null;
 
-    final authHeaders = await _googleSignIn.currentUser.authHeaders;
+    final authHeaders = await _googleSignIn.currentUser?.authHeaders;
 
+    if (authHeaders == null) return null;
     // custom IOClient from below
     return GoogleHttpClient(authHeaders);
   }
@@ -30,6 +31,6 @@ class GoogleHttpClient extends IOClient {
       super.send(request..headers.addAll(_headers));
 
   @override
-  Future<Response> head(Object url, {Map<String, String> headers}) =>
-      super.head(url, headers: headers..addAll(_headers));
+  Future<Response> head(Uri url, {Map<String, String>? headers}) =>
+      super.head(url, headers: headers?..addAll(_headers));
 }

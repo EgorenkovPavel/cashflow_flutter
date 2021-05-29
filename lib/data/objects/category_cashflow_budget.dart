@@ -3,7 +3,6 @@ import 'package:cashflow/data/objects/operation_type.dart';
 class CategoryCashflowBudget {
   final int id;
   final String title;
-  final bool archive;
   final OperationType type;
 
   final int year;
@@ -12,13 +11,12 @@ class CategoryCashflowBudget {
   final int cashflow;
 
   const CategoryCashflowBudget(
-      {this.id,
-      this.title,
-      this.archive,
-      this.type,
-      this.year,
-      this.month,
-      this.budget,
-      this.cashflow});
+      {required this.id,
+      required this.title,
+      required this.type,
+      required this.year,
+      required this.month,
+      required this.budget,
+      required this.cashflow});
 
 }

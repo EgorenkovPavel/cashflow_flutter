@@ -27,8 +27,8 @@ class CategoryList extends StatelessWidget {
                 .watchAllCategoriesByType(OperationType.INPUT),
             builder: (context, state) {
               var _categories = <Category>[];
-              if (state.hasData) {
-                _categories = state.data;
+              if (state.hasData && state.data != null) {
+                _categories = state.data!;
               }
               return CategoryGrid(
                 categories: _categories,
@@ -44,8 +44,8 @@ class CategoryList extends StatelessWidget {
                 .watchAllCategoriesByType(OperationType.OUTPUT),
             builder: (context, state) {
               var _categories = <Category>[];
-              if (state.hasData) {
-                _categories = state.data;
+              if (state.hasData && state.data != null) {
+                _categories = state.data!;
               }
               return CategoryGrid(
                 categories: _categories,
@@ -58,7 +58,7 @@ class CategoryList extends StatelessWidget {
 }
 
 class CategoryListHeader extends StatelessWidget {
-  const CategoryListHeader({Key key, @required String title})
+  const CategoryListHeader({Key? key, required String title})
       : _title = title,
         super(key: key);
 
@@ -87,9 +87,9 @@ class CategoryListHeader extends StatelessWidget {
 
 class CategoryGrid extends StatelessWidget {
   const CategoryGrid({
-    Key key,
-    @required List<Category> categories,
-    @required OperationType type,
+    Key? key,
+    required List<Category> categories,
+    required OperationType type,
   })  : _categories = categories,
         _type = type,
         super(key: key);
@@ -126,7 +126,7 @@ class CategoryGrid extends StatelessWidget {
 class CategoryListTile extends StatelessWidget {
   final Category category;
 
-  const CategoryListTile({Key key, this.category}) : super(key: key);
+  const CategoryListTile({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

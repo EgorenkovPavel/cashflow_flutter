@@ -14,10 +14,9 @@ import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends StatelessWidget {
-
   final OperationListFilter _filter;
 
-  const OperationList({OperationListFilter filter}) : _filter = filter;
+  const OperationList({OperationListFilter filter = const OperationListFilter()}) : _filter = filter;
 
   Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
@@ -26,7 +25,7 @@ class OperationList extends StatelessWidget {
       return ValueListenableBuilder<Iterable<ItemPosition>>(
         valueListenable: itemPositionsListener.itemPositions,
         builder: (context, positions, child) {
-          int min;
+          int? min;
           if (positions.isNotEmpty) {
             min = positions
                 .where((ItemPosition position) => position.itemTrailingEdge > 0)
@@ -85,11 +84,12 @@ class OperationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Operation>>(
-      stream: Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
+      stream:
+          Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
       builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
-        } else if (snapshot.data.isEmpty) {
+        } else if (snapshot.data!.isEmpty) {
           return EmptyListHint(
             title: AppLocalizations.of(context).emptyListOperations,
             hint: AppLocalizations.of(context).hintEmptyList,

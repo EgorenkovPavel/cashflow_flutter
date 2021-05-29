@@ -22,7 +22,7 @@ class OperationEditPage extends StatefulWidget {
 
   final int id;
 
-  const OperationEditPage({Key key, this.id}) : super(key: key);
+  const OperationEditPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _OperationEditPageState createState() => _OperationEditPageState();
@@ -31,19 +31,19 @@ class OperationEditPage extends StatefulWidget {
 class _OperationEditPageState extends State<OperationEditPage> {
   final _formKey = GlobalKey<FormState>();
 
-  OperationType _type;
+  late OperationType _type;
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
-  Account _account;
-  Category _category;
-  Account _recAccount;
+  late Account _account;
+  Category? _category;
+  Account? _recAccount;
   final TextEditingController _sumController = TextEditingController();
-  StreamSubscription<Operation> subscription;
+  late StreamSubscription<Operation> subscription;
 
-  Repository model;
-  List<Account> accountList;
-  List<Category> categoryInList;
-  List<Category> categoryOutList;
+  late Repository model;
+  late List<Account> accountList;
+  late List<Category> categoryInList;
+  late List<Category> categoryOutList;
 
   @override
   void didChangeDependencies() {
@@ -152,9 +152,11 @@ class _OperationEditPageState extends State<OperationEditPage> {
                     hint: AppLocalizations.of(context).hintAccount,
                     items: accountList,
                     onChange: (newValue) {
-                      setState(() {
-                        _account = newValue;
-                      });
+                      if (newValue != null) {
+                        setState(() {
+                          _account = newValue;
+                        });
+                      }
                     },
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
@@ -171,7 +173,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
                         labelText: AppLocalizations.of(context).titleSum,
                       ),
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return AppLocalizations.of(context).emptySumError;
                         }
                         return null;
@@ -192,7 +194,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
             // style: ElevatedButton.styleFrom(
             //     primary: Theme.of(context).primaryColor),
             onPressed: () {
-              if (_formKey.currentState.validate()) {
+              if (_formKey.currentState!.validate()) {
                 _saveOperation(context);
                 Navigator.pop(context);
               }
@@ -223,10 +225,12 @@ class _OperationEditPageState extends State<OperationEditPage> {
         return DropdownList<Category>(
             value: _category,
             hint: AppLocalizations.of(context).hintCategory,
-            onChange: (Category newValue) {
-              setState(() {
-                _category = newValue;
-              });
+            onChange: (Category? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  _category = newValue;
+                });
+              }
             },
             items: categoryInList,
             getListItem: (item) => ListTile(title: Text(item.title)));
@@ -234,10 +238,12 @@ class _OperationEditPageState extends State<OperationEditPage> {
         return DropdownList<Category>(
             value: _category,
             hint: AppLocalizations.of(context).hintCategory,
-            onChange: (Category newValue) {
-              setState(() {
-                _category = newValue;
-              });
+            onChange: (Category? newValue) {
+              if(newValue != null) {
+                setState(() {
+                  _category = newValue;
+                });
+              }
             },
             items: categoryOutList,
             getListItem: (item) => ListTile(title: Text(item.title)));
@@ -245,10 +251,12 @@ class _OperationEditPageState extends State<OperationEditPage> {
         return DropdownList<Account>(
             value: _recAccount,
             hint: AppLocalizations.of(context).hintAccount,
-            onChange: (Account newValue) {
-              setState(() {
-                _recAccount = newValue;
-              });
+            onChange: (Account? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  _recAccount = newValue;
+                });
+              }
             },
             items: accountList,
             getListItem: (item) => ListTile(title: Text(item.title)));

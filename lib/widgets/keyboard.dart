@@ -5,10 +5,10 @@ class Keyboard extends StatelessWidget {
   final ValueSetter<int> onDigitPressed;
   final VoidCallback onBackPressed;
 
-  const Keyboard({Key key, this.onDigitPressed, this.onBackPressed})
+  const Keyboard({Key? key, required this.onDigitPressed, required this.onBackPressed})
       : super(key: key);
 
-  Widget _button(BuildContext context, Widget child, onPressed, double width) {
+  Widget _button(BuildContext context, Widget? child, onPressed, double width) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width*0.1, vertical: width*0.05),
       child: SizedBox(

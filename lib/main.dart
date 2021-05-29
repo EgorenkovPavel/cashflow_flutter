@@ -89,19 +89,19 @@ class MyApp extends StatelessWidget {
             {
               return MaterialPageRoute(
                   builder: (context) =>
-                      AccountEditPage(id: settings.arguments));
+                      AccountEditPage(id: settings.arguments as int));
             }
           case CategoryEditPage.routeName:
             {
               return MaterialPageRoute(
                   builder: (context) =>
-                      CategoryEditPage(id: settings.arguments));
+                      CategoryEditPage(id: settings.arguments as int));
             }
           case OperationEditPage.routeName:
             {
               return MaterialPageRoute(
                   builder: (context) =>
-                      OperationEditPage(id: settings.arguments));
+                      OperationEditPage(id: settings.arguments as int));
             }
           default:
             return null;

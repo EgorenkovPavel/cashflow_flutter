@@ -1,6 +1,8 @@
+
 import 'package:cashflow/data/objects/budget.dart';
 import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
+import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +23,8 @@ class BudgetList extends StatelessWidget {
             return _BudgetListTile(
               budget: Budget(
                 type: BudgetType.MONTH,
-                category: Category(title: 'Food'),
-                sum: 1000
+                category: Category(title: 'Food', type: OperationType.OUTPUT),
+                sum: 1000, date: DateTime.now(),
               ),
               spend: 100,
             );
@@ -38,8 +40,8 @@ class BudgetList extends StatelessWidget {
             return _BudgetListTile(
               budget: Budget(
                   type: BudgetType.YEAR,
-                  category: Category(title: 'Food'),
-                  sum: 10000
+                  category: Category(title: 'Food', type: OperationType.OUTPUT),
+                  sum: 10000, date: DateTime.now(),
               ),
               spend: 100,
             );
@@ -52,7 +54,7 @@ class BudgetList extends StatelessWidget {
 }
 
 class BudgetListHeader extends StatelessWidget {
-  const BudgetListHeader({Key key, @required String title})
+  const BudgetListHeader({Key? key, required String title})
       : _title = title,
         super(key: key);
 
@@ -78,7 +80,7 @@ class _BudgetListTile extends StatelessWidget {
   final Budget budget;
   final int spend;
 
-  const _BudgetListTile({Key key, @required this.budget, @required this.spend}) : super(key: key);
+  const _BudgetListTile({Key? key, required this.budget, required this.spend}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

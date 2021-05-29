@@ -121,10 +121,10 @@ class Repository extends ChangeNotifier {
   Stream<List<Operation>> watchAllOperationsByFilter(OperationListFilter filter) =>
       db.operationDao
           .watchAllOperationItemsByFilter(
-              start: filter?.date?.start,
-              end: filter?.date?.end,
-              accountIds: filter?.accountsIds,
-              categoriesIds: filter?.categoriesIds)
+              start: filter.date?.start,
+              end: filter.date?.end,
+              accountIds: filter.accountsIds,
+              categoriesIds: filter.categoriesIds)
           .map((list) => const OperationMapper().mapListToDart(list));
 
   Stream<Operation> getOperationById(int id) => db.operationDao
@@ -150,7 +150,7 @@ class Repository extends ChangeNotifier {
       .then((value) => const OperationMapper().mapToDart(value));
 
   Future<int> insertOperation(Operation entity) {
-    if ((entity.id ?? 0) == 0) {
+    if ((entity.id) == 0) {
       return db.operationDao
           .insertOperation(const OperationMapper().mapToOperationData(entity));
     } else {
@@ -161,6 +161,7 @@ class Repository extends ChangeNotifier {
 
   Future duplicateOperation(Operation entity) {
     var newOperation = Operation(
+      id: 0,
       date: DateTime.now(),
       type: entity.type,
       account: entity.account,
@@ -230,7 +231,7 @@ class Repository extends ChangeNotifier {
     try {
       drive.Media file = await drive.DriveApi(httpClient)
           .files
-          .get(fileId, downloadOptions: drive.DownloadOptions.FullMedia);
+          .get(fileId, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
       final directory = await getTemporaryDirectory();
       var saveFile = File('${directory.path}/test.json');

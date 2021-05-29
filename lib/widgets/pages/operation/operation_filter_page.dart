@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class OperationFilterPage extends StatefulWidget {
   static const routeName = '/operationFilter';
 
-  OperationFilterPage({Key key, this.filter}) : super(key: key);
+  OperationFilterPage({Key? key, this.filter}) : super(key: key);
 
   static Future<OperationListFilter> open(
       BuildContext context, OperationListFilter filter) async {
@@ -20,23 +20,23 @@ class OperationFilterPage extends StatefulWidget {
             OperationFilterPage(filter: filter)));
   }
 
-  final OperationListFilter filter;
+  final OperationListFilter? filter;
 
   @override
   _OperationFilterPageState createState() => _OperationFilterPageState();
 }
 
 class _OperationFilterPageState extends State<OperationFilterPage> {
-  Repository model;
-  List<Account> accountList;
-  List<Category> categoryInList;
-  List<Category> categoryOutList;
-  OperationListFilter filter;
+  late Repository model;
+  late List<Account> accountList;
+  late List<Category> categoryInList;
+  late List<Category> categoryOutList;
+  late OperationListFilter filter;
 
   @override
   void initState() {
     super.initState();
-    filter = widget.filter;
+    filter = widget.filter ?? OperationListFilter();
   }
 
   @override
@@ -51,17 +51,13 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.INPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.INPUT).forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.OUTPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.OUTPUT).forEach((list) {
       setState(() {
         categoryOutList = list;
       });
@@ -69,10 +65,10 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   }
 
   Widget _periodChoise(OperationListFilter filter) {
-    if (filter?.date != null) {
+    if (filter.date != null) {
       return InputChip(
         label: Text(
-            '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(widget.filter.date.end)}'),
+            '${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(filter.date!.start)} - ${DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(filter.date!.end)}'),
         deleteIcon: Icon(Icons.cancel),
         onDeleted: () {
           setState(() {
@@ -98,8 +94,9 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   }
 
   RelativeRect buttonMenuPosition(BuildContext c) {
-    final RenderBox bar = c.findRenderObject();
-    final RenderBox overlay = Overlay.of(c).context.findRenderObject();
+    final RenderBox bar = c.findRenderObject() as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(c)!.context.findRenderObject() as RenderBox;
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
         bar.localToGlobal(bar.size.bottomLeft(Offset.zero), ancestor: overlay),
@@ -130,7 +127,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                 height: 8.0,
               ),
               Text(AppLocalizations.of(context).period),
-              _periodChoise(widget.filter),
+              _periodChoise(filter),
               SizedBox(
                 height: 8.0,
               ),
@@ -142,7 +139,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                 onPressed: () async {
                   final result = await showMenu<Account>(
                       context: context,
-                      position: buttonMenuPosition(_accountKey.currentContext),
+                      position: buttonMenuPosition(_accountKey.currentContext!),
                       items: accountList
                           .map((a) => PopupMenuItem<Account>(
                                 value: a,
@@ -151,20 +148,23 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      filter = filter.copyWith(accountsIds: filter.accountsIds..add(result.id));
+                      filter = filter.copyWith(
+                          accountsIds: filter.accountsIds..add(result.id));
                     });
                   }
                 },
               ),
               Wrap(
                 children: [
-                  for (var account in widget.filter.accountsIds)
+                  for (var account in widget.filter!.accountsIds)
                     InputChip(
-                      label: Text(accountList.firstWhere((element) => element.id == account).title),
+                      label: Text(accountList
+                          .firstWhere((element) => element.id == account)
+                          .title),
                       deleteIcon: Icon(Icons.cancel),
                       onDeleted: () {
                         setState(() {
-                          widget.filter.accountsIds.remove(account);
+                          widget.filter!.accountsIds.remove(account);
                         });
                       },
                     ),
@@ -182,7 +182,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                   final result = await showMenu<Category>(
                       context: context,
                       position:
-                          buttonMenuPosition(_categoryInKey.currentContext),
+                          buttonMenuPosition(_categoryInKey.currentContext!),
                       items: categoryInList
                           .map((c) => PopupMenuItem<Category>(
                                 value: c,
@@ -191,21 +191,22 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      widget.filter.categoriesIds.add(result.id);
+                      widget.filter!.categoriesIds.add(result.id);
                     });
                   }
                 },
               ),
               Wrap(
                   children: categoryInList
-                      .where((element) => filter.categoriesIds.contains(element.id))
+                      .where((element) =>
+                          filter.categoriesIds.contains(element.id))
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
                           deleteIcon: Icon(Icons.cancel),
                           onDeleted: () {
                             setState(() {
-                              widget.filter.categoriesIds.remove(category.id);
+                              widget.filter!.categoriesIds.remove(category.id);
                             });
                           },
                         ),
@@ -223,7 +224,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                   final result = await showMenu<Category>(
                       context: context,
                       position:
-                          buttonMenuPosition(_categoryOutKey.currentContext),
+                          buttonMenuPosition(_categoryOutKey.currentContext!),
                       items: categoryOutList
                           .map((c) => PopupMenuItem<Category>(
                                 value: c,
@@ -232,21 +233,23 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                           .toList());
                   if (result != null) {
                     setState(() {
-                      widget.filter.categoriesIds.add(result.id);
+                      widget.filter!.categoriesIds.add(result.id);
                     });
                   }
                 },
               ),
               Wrap(
                   children: categoryOutList
-                      .where((element) => filter.categoriesIds.contains(element.id))
+                      .where((element) =>
+                          filter.categoriesIds != null &&
+                          filter.categoriesIds.contains(element.id))
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
                           deleteIcon: Icon(Icons.cancel),
                           onDeleted: () {
                             setState(() {
-                              widget.filter.categoriesIds.remove(category.id);
+                              widget.filter!.categoriesIds.remove(category.id);
                             });
                           },
                         ),

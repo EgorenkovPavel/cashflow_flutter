@@ -2,8 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/extensions.dart';
-import 'package:charts_flutter/flutter.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -12,63 +10,64 @@ import 'package:provider/provider.dart';
 class BalanceChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BalanceChartBloc, BalanceChartState>(
-      bloc: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
-      builder: (context, state) {
-        if (state is BalanceChartState) {
-          if (state.balance.isEmpty && state.budget.isEmpty) return SizedBox();
-          var balanceSeries = <charts.Series<ValueOnDate, DateTime>>[
-            charts.Series<ValueOnDate, DateTime>(
-              id: 'Balance',
-              data: state.balance,
-              displayName: AppLocalizations.of(context).titleTotalBalance,
-              domainFn: (ValueOnDate datum, int index) => datum.date,
-              measureFn: (ValueOnDate datum, int index) => datum.value,
-              colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-            )
-          ];
-
-          var budgetSeries = <charts.Series<ValueOnDate, DateTime>>[
-            charts.Series<ValueOnDate, DateTime>(
-              id: 'Budget',
-              data: state.budget,
-              displayName: AppLocalizations.of(context).titleBudget,
-              domainFn: (ValueOnDate datum, int index) => datum.date,
-              measureFn: (ValueOnDate datum, int index) => datum.value,
-              colorFn: (_, __) =>
-                  charts.MaterialPalette.deepOrange.shadeDefault,
-              dashPatternFn: (_, __) => [4, 2],
-            )
-          ];
-
-          return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
-              animate: false,
-              primaryMeasureAxis: charts.NumericAxisSpec(
-                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                      zeroBound: false)),
-              domainAxis: charts.EndPointsTimeAxisSpec(
-                  showAxisLine: false,
-                  tickProviderSpec: StaticDateTimeTickProviderSpec(state.dates
-                      .map((d) => TickSpec<DateTime>(d,
-                          label: DateFormat.MMM(
-                                  Localizations.localeOf(context).languageCode)
-                              .format(d)
-                              .capitalize()))
-                      .toList())),
-              behaviors: [
-                charts.RangeAnnotation(state.dates
-                    .map((d) => charts.LineAnnotationSegment(
-                        d, charts.RangeAnnotationAxisType.domain))
-                    .toList()),
-                charts.SeriesLegend(
-                  position: charts.BehaviorPosition.bottom,
-                )
-              ]);
-        } else {
-          return SizedBox();
-        }
-      },
-    );
+    // return BlocBuilder<BalanceChartBloc, BalanceChartState>(
+    //   bloc: BalanceChartBloc(Provider.of<Repository>(context))..add(Fetch()),
+    //   builder: (context, state) {
+    //     if (state is BalanceChartState) {
+    //       if (state.balance.isEmpty && state.budget.isEmpty) return SizedBox();
+    //       var balanceSeries = <charts.Series<ValueOnDate, DateTime>>[
+    //         charts.Series<ValueOnDate, DateTime>(
+    //           id: 'Balance',
+    //           data: state.balance,
+    //           displayName: AppLocalizations.of(context).titleTotalBalance,
+    //           domainFn: (ValueOnDate datum, int index) => datum.date,
+    //           measureFn: (ValueOnDate datum, int index) => datum.value,
+    //           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+    //         )
+    //       ];
+    //
+    //       var budgetSeries = <charts.Series<ValueOnDate, DateTime>>[
+    //         charts.Series<ValueOnDate, DateTime>(
+    //           id: 'Budget',
+    //           data: state.budget,
+    //           displayName: AppLocalizations.of(context).titleBudget,
+    //           domainFn: (ValueOnDate datum, int index) => datum.date,
+    //           measureFn: (ValueOnDate datum, int index) => datum.value,
+    //           colorFn: (_, __) =>
+    //               charts.MaterialPalette.deepOrange.shadeDefault,
+    //           dashPatternFn: (_, __) => [4, 2],
+    //         )
+    //       ];
+    //
+    //       return charts.TimeSeriesChart(balanceSeries..addAll(budgetSeries),
+    //           animate: false,
+    //           primaryMeasureAxis: charts.NumericAxisSpec(
+    //               tickProviderSpec: charts.BasicNumericTickProviderSpec(
+    //                   zeroBound: false)),
+    //           domainAxis: charts.EndPointsTimeAxisSpec(
+    //               showAxisLine: false,
+    //               tickProviderSpec: StaticDateTimeTickProviderSpec(state.dates
+    //                   .map((d) => TickSpec<DateTime>(d,
+    //                       label: DateFormat.MMM(
+    //                               Localizations.localeOf(context).languageCode)
+    //                           .format(d)
+    //                           .capitalize()))
+    //                   .toList())),
+    //           behaviors: [
+    //             charts.RangeAnnotation(state.dates
+    //                 .map((d) => charts.LineAnnotationSegment(
+    //                     d, charts.RangeAnnotationAxisType.domain))
+    //                 .toList()),
+    //             charts.SeriesLegend(
+    //               position: charts.BehaviorPosition.bottom,
+    //             )
+    //           ]);
+    //     } else {
+    //       return SizedBox();
+    //     }
+    //   },
+    // );
+    return SizedBox();
   }
 }
 

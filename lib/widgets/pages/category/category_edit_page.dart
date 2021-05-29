@@ -24,7 +24,7 @@ class CategoryEditPage extends StatefulWidget {
 
   final int id;
 
-  const CategoryEditPage({Key key, this.id}) : super(key: key);
+  const CategoryEditPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _CategoryEditPageState createState() => _CategoryEditPageState();
@@ -32,8 +32,8 @@ class CategoryEditPage extends StatefulWidget {
 
 class _CategoryEditPageState extends State<CategoryEditPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  CategoryBloc _bloc;
+  late TabController _tabController;
+  late CategoryBloc _bloc;
 
   final TextEditingController _titleController = TextEditingController();
 
@@ -161,7 +161,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
             controller: _titleController,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(color: Colors.white),
             autofocus: true,
           );
@@ -173,10 +173,10 @@ class _CategoryEditPageState extends State<CategoryEditPage>
               Text(
                 state.category == null
                     ? ''
-                    : getOperationTitle(context, state.category.type),
+                    : getOperationTitle(context, state.category!.type),
                 style: Theme.of(context)
                     .textTheme
-                    .caption
+                    .caption!
                     .copyWith(color: Colors.white),
               ),
             ],
@@ -195,7 +195,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 }
 
 class CategoryState {
-  final Category category;
+  final Category? category;
   final bool editTitleMode;
 
   CategoryState(this.editTitleMode, this.category);
@@ -204,7 +204,7 @@ class CategoryState {
 class CategoryBloc extends Cubit<CategoryState> {
   final Repository _repositiry;
 
-  Category _category;
+  late Category _category;
   bool _editTitleMode = false;
 
   CategoryBloc(this._repositiry) : super(CategoryState(false, null));

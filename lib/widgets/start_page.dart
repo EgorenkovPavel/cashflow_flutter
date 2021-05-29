@@ -80,7 +80,7 @@ class _StartPageState extends State<StartPage> {
 
 class SettingsButton extends StatelessWidget {
   const SettingsButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

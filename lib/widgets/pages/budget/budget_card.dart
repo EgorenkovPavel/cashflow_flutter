@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/database/database.dart';
+import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/item_card.dart';
@@ -10,10 +11,10 @@ import 'package:intl/intl.dart';
 
 class BudgetCard extends StatefulWidget {
   final int categoryId;
-  final int month;
-  final int year;
+  final int? month;
+  final int? year;
 
-  BudgetCard({@required this.categoryId, this.month, this.year});
+  BudgetCard({required this.categoryId, this.month, this.year});
 
   static void open(BuildContext context, int categoryId) {
     showDialog(
@@ -50,7 +51,7 @@ class BudgetCard extends StatefulWidget {
 }
 
 class _BudgetCardState extends State<BudgetCard> {
-  BudgetCardBloc _bloc;
+  late BudgetCardBloc _bloc;
   final TextEditingController sumController = TextEditingController();
 
   Widget yearInput() {
@@ -109,7 +110,7 @@ class _BudgetCardState extends State<BudgetCard> {
                   .toList(),
               underline: SizedBox(),
               value: state.month,
-              onChanged: (value) => _bloc.add(SetMonth(value)),
+              onChanged: (value){ if (value != null) {_bloc.add(SetMonth(value));}},
             );
           } else {
             return SizedBox();
@@ -165,7 +166,7 @@ class _BudgetCardState extends State<BudgetCard> {
                   labelText: AppLocalizations.of(context).titleSum,
                 ),
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return AppLocalizations.of(context).emptyTitleError;
                   }
                   return null;
@@ -181,8 +182,8 @@ abstract class BudgetCardEvent {}
 
 class Initial extends BudgetCardEvent {
   final int categoryId;
-  final int month;
-  final int year;
+  final int? month;
+  final int? year;
 
   Initial(this.categoryId, this.month, this.year);
 }
@@ -206,8 +207,8 @@ class SetMonth extends BudgetCardEvent {
 abstract class BudgetCardState {}
 
 class DataState extends BudgetCardState {
-  final int month;
-  final int year;
+  final int? month;
+  final int? year;
 
   DataState(this.month, this.year);
 }
@@ -221,10 +222,10 @@ class SumLoaded extends BudgetCardState {
 class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
   final Repository _repository;
   static List<int> months = List.generate(12, (index) => index + 1);
-  int categoryId;
-  int _month;
-  int _year;
-  BudgetDB _oldBudgetData;
+  late int categoryId;
+  late int _month;
+  late int _year;
+  BudgetDB? _oldBudgetData;
 
   BudgetCardBloc(this._repository) : super(DataState(1, 1));
 
@@ -233,14 +234,14 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
     if (event is Initial) {
       categoryId = event.categoryId;
 
-      _month = event.month;
-      _year = event.year;
+      _month = event.month!;
+      _year = event.year!;
       yield DataState(_month, _year);
 
         _oldBudgetData =
-            await _repository.getBudget(event.categoryId, event.month, event.year);
+            await _repository.getBudget(event.categoryId, event.month!, event.year!);
         if (_oldBudgetData != null) {
-          yield SumLoaded(_oldBudgetData.sum);
+          yield SumLoaded(_oldBudgetData!.sum);
         }
 
     } else if (event is IncYear) {
@@ -254,14 +255,14 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
       yield DataState(_month, _year);
     } else if (event is Save) {
       if(_oldBudgetData != null) {
-        await _repository.deleteBudget(_oldBudgetData);
+        await _repository.deleteBudget(_oldBudgetData!);
         _oldBudgetData = null;
       }
       await _repository.insertBudget(BudgetDB(
           month: _month,
           year: _year,
           category: categoryId,
-          sum: int.parse(event.sum)));
+          sum: int.parse(event.sum), budgetType: BudgetType.MONTH));
     }
   }
 }

@@ -20,10 +20,10 @@ class AccountList extends StatelessWidget {
         stream: stream,
         builder: (context, state) {
           var _accounts = <AccountBalance>[];
-          if (state.hasData) {
-            _accounts = state.data;
+          if (state.hasData && state.data != null) {
+            _accounts = state.data!;
           }
-          var _balance = _accounts.fold(
+          int _balance = _accounts.fold(
               0, (previousValue, element) => previousValue + element.balance);
           return CustomScrollView(
             slivers: [
@@ -59,7 +59,7 @@ class AccountList extends StatelessWidget {
 }
 
 class AccountListHeader extends StatelessWidget {
-  const AccountListHeader({Key key, @required int balance})
+  const AccountListHeader({Key? key, required int balance})
       : _balance = balance,
         super(key: key);
 
@@ -96,7 +96,7 @@ class AccountListHeader extends StatelessWidget {
 class AccountTile extends StatelessWidget {
   final AccountBalance account;
 
-  const AccountTile({Key key, this.account}) : super(key: key);
+  const AccountTile({Key? key, required this.account}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

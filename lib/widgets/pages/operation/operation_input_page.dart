@@ -26,16 +26,16 @@ class OperationInputPage extends StatefulWidget {
 
 class _OperationInputPageState extends State<OperationInputPage>
     with SingleTickerProviderStateMixin {
-  MasterBloc _bloc;
-  AnimationController _animationController;
-  Animation<double> _animation;
+  late MasterBloc _bloc;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   Widget accountPageView(BuildContext context) {
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
       initialItemFinder: (account) =>
-          _bloc.account != null && account.id == _bloc.account.id,
+          _bloc.account != null && account.id == _bloc.account!.id,
       onItemChanged: (account) => _bloc.add(OnAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -57,7 +57,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       stream: _bloc.categoryInStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
-          _bloc.categoryIn != null && category.id == _bloc.categoryIn.id,
+          _bloc.categoryIn != null && category.id == _bloc.categoryIn!.id,
       onItemChanged: (category) => _bloc.add(OnCategoryInChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -70,7 +70,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       stream: _bloc.categoryOutStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
-          _bloc.categoryOut != null && category.id == _bloc.categoryOut.id,
+          _bloc.categoryOut != null && category.id == _bloc.categoryOut!.id,
       onItemChanged: (category) => _bloc.add(OnCategoryOutChanged(category)),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
@@ -83,7 +83,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       stream: _bloc.accountStream,
       emptyListMessage: AppLocalizations.of(context).noAccounts,
       initialItemFinder: (account) =>
-          _bloc.recAccount != null && account.id == _bloc.recAccount.id,
+          _bloc.recAccount != null && account.id == _bloc.recAccount!.id,
       onItemChanged: (account) => _bloc.add(OnRecAccountChanged(account)),
       itemBuilder: (context, account) {
         return Column(
@@ -399,12 +399,12 @@ class _OperationInputPageState extends State<OperationInputPage>
 
 class CarouselList<T> extends StatelessWidget {
   CarouselList({
-    Key key,
-    Stream<List<T>> stream,
-    String emptyListMessage,
-    bool Function(T) initialItemFinder,
-    Function(T) onItemChanged,
-    Function(BuildContext, T) itemBuilder,
+    Key? key,
+    required Stream<List<T>> stream,
+    required String emptyListMessage,
+    required bool Function(T) initialItemFinder,
+    required Function(T) onItemChanged,
+    required Function(BuildContext, T) itemBuilder,
   })  : _emptyListMessage = emptyListMessage,
         _stream = stream,
         _initialItemFinder = initialItemFinder,
@@ -424,7 +424,7 @@ class CarouselList<T> extends StatelessWidget {
       stream: _stream,
       initialData: <T>[],
       builder: (BuildContext context, AsyncSnapshot<List<T>> snapshot) {
-        if (!snapshot.hasData || snapshot.data.isEmpty) {
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(
             child: Text(_emptyListMessage),
           );
@@ -434,7 +434,7 @@ class CarouselList<T> extends StatelessWidget {
 
         return Carousel(
           key: GlobalKey(),
-          items: items,
+          items: items!,
           initialItemFinder: _initialItemFinder,
           onPageChanged: (pos) => _onItemChanged(items[pos]),
           itemHeight: 60.0,

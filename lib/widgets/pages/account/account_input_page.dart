@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountInputPage extends StatefulWidget {
 
-  static Future<Account> open(BuildContext context){
+  static Future<Account?> open(BuildContext context){
     return showDialog<Account>(
         context: context,
         barrierDismissible: false,
@@ -27,7 +27,7 @@ class AccountInputPage extends StatefulWidget {
 class _AccountInputPageState extends State<AccountInputPage> {
 
   final TextEditingController _controller = TextEditingController();
-  AccountCardBloc _bloc;
+  late AccountCardBloc _bloc;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
             labelText: AppLocalizations.of(context).title,
           ),
           validator: (value) {
-            if (value.isEmpty) {
+            if (value == null || value.isEmpty) {
               return AppLocalizations.of(context).emptyTitleError;
             }
             return null;

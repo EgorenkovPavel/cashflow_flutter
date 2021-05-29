@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ListDividerOperation extends StatelessWidget {
-  final Operation operation1;
+  final Operation? operation1;
   final Operation operation2;
 
-  const ListDividerOperation(this.operation1, this.operation2, {Key key})
+  const ListDividerOperation(this.operation1, this.operation2, {Key? key})
       : super(key: key);
 
   Widget _operationTitle(BuildContext context, DateTime date) {
     return Text(
       DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-          .format(date ?? DateTime.now()),
+          .format(date),
       style: Theme.of(context).textTheme.caption,
       textAlign: TextAlign.center,
     );
