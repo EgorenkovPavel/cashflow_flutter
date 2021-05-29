@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cashflow/data/database/database.dart' as dbs;
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/mappers/account_mapper.dart';
 import 'package:cashflow/data/mappers/category_cashflow_budget_mapper.dart';
 import 'package:cashflow/data/mappers/operation_mapper.dart';
@@ -22,140 +22,230 @@ import 'objects/account.dart';
 import 'objects/account_balance.dart';
 
 class Repository extends ChangeNotifier {
-  final dbs.Database db;
+  final _AccountRepo _accountRepo;
+  final _CategoryRepo _categoryRepo;
+  final _OperationRepo _operationRepo;
+  final _BudgetRepo _budgetRepo;
+  final _Backuper _backuper;
 
-  Repository() : db = dbs.Database();
-
-  Future deleteAll() => db.deleteAll();
-
-  Future<Map<String, List<Map<String, dynamic>>>> getDbData() => db.getDbData();
-
-  Future loadData(Map<String, dynamic> data) => db.loadData(data);
+  Repository(Database db)
+      : _accountRepo = _AccountRepo(db),
+        _categoryRepo = _CategoryRepo(db),
+        _operationRepo = _OperationRepo(db),
+        _budgetRepo = _BudgetRepo(db),
+        _backuper = _Backuper(db);
 
   //Accounts
-  Stream<List<Account>> watchAllAccounts() =>
-      db.accountDao
-          .watchAllAccounts()
-          .map((list) => const AccountMapper().mapListToDart(list));
 
-  Stream<List<AccountBalance>> watchAllAccountsBalance(
-          {bool archive = false}) =>
-      db.accountDao
-          .watchAllAccountsWithBalance(archive: archive)
-          .map((list) => const AccountBalanceMapper().mapListToDart(list));
+  Stream<List<Account>> watchAllAccounts() => _accountRepo.watchAllAccounts();
 
-  Future<List<AccountBalance>> getAllAccountsBalance() async {
-    var result = await db.accountDao
-        .getAllAccountsBalance();
-    return result.map((e) => const AccountBalanceMapper().mapToDart(e)).toList();
-  }
+  Stream<List<AccountBalance>> watchAllAccountsBalance() =>
+      _accountRepo.watchAllAccountsBalance();
 
-  Stream<Account> watchAccountById(int id) => db.accountDao
-      .watchAccountById(id)
-      .map((a) => const AccountMapper().mapToDart(a));
+  Future<List<AccountBalance>> getAllAccountsBalance() =>
+      _accountRepo.getAllAccountsBalance();
 
-  Future<Account> getAccountById(int id) async =>
-      const AccountMapper().mapToDart(await db.accountDao.getAccountById(id));
+  Stream<Account> watchAccountById(int id) => _accountRepo.watchAccountById(id);
+
+  Future<Account> getAccountById(int id) => _accountRepo.getAccountById(id);
 
   Future<int> insertAccount(Account account) =>
-      db.accountDao.insertAccount(const AccountMapper().mapToSql(account));
+      _accountRepo.insertAccount(account);
 
-  Future updateAccount(Account account) =>
-      db.accountDao.updateAccount(const AccountMapper().mapToSql(account));
+  Future updateAccount(Account account) => _accountRepo.updateAccount(account);
 
-  Stream<dbs.BalanceOnDate> watchBalance(DateTime date) =>
-      db.accountDao.watchBalance(date);
+  //Category
 
-  Stream<List<dbs.BalanceOnDate>> watchBalanceOnPeriod(
-          DateTime start, DateTime end) =>
-      db.accountDao.watchBalanceOnPeriod(start, end);
-
-  //Categories
   Stream<List<Category>> watchAllCategories() =>
-      db.categoryDao
-          .watchAllCategories()
-          .map((list) => const CategoryMapper().mapListToDart(list));
+      _categoryRepo.watchAllCategories();
 
-  Future<Category> getCategoryById(int id) async => const CategoryMapper()
-      .mapToDart(await db.categoryDao.getCategoryById(id));
+  Future<Category> getCategoryById(int id) => _categoryRepo.getCategoryById(id);
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
-      db.categoryDao
-          .watchAllCategoriesByType(type)
-          .map((list) => const CategoryMapper().mapListToDart(list));
-
-  Stream<List<CategoryCashflowBudget>> watchAllCategoryCashflowBudget(
-          DateTime date) =>
-      db.categoryDao.watchAllCategoryCashflowBudget(date).map(
-          (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
-
-  Stream<List<CategoryCashflowBudget>> watchCategoryCashflowBudgetByType(
-          DateTime date, OperationType type) =>
-      db.categoryDao.watchCategoryCashflowBudgetByType(date, type).map(
-          (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
-
-  Stream<Map<Category, int>> watchCategoryBudgetByType(OperationType type) => db
-      .categoryDao
-      .watchCategoryBudgetByType(type)
-      .map((list) => Map.fromEntries(
-          list.map((c) => const CategoryMapper().mapCategoryBudgetToDart(c))));
-
-  Stream<List<CategoryCashflowBudget>> watchCashflowBudgetByCategory(
-          int categoryId) =>
-      db.categoryDao.watchCashflowBudgetByCategory(categoryId).map(
-          (list) => const CategoryCashflowBudgetMapper().mapListToDart(list));
+      _categoryRepo.watchAllCategoriesByType(type);
 
   Future<int> insertCategory(Category entity) =>
-      db.categoryDao.insertCategory(const CategoryMapper().mapToSql(entity));
+      _categoryRepo.insertCategory(entity);
 
   Future updateCategory(Category entity) =>
-      db.categoryDao.updateCategory(const CategoryMapper().mapToSql(entity));
+      _categoryRepo.updateCategory(entity);
 
-  Stream<int> watchBudgetSum(DateTime date) => db.categoryDao.watchBudget(date);
+  //Operation
 
-  //Operations
-  Stream<List<Operation>> watchAllOperations() => db.operationDao
-      .watchAllOperationItems()
-      .map((list) => const OperationMapper().mapListToDart(list));
+  Stream<List<Operation>> watchAllOperations() => _operationRepo.watchAllOperations();
 
-  Stream<List<Operation>> watchAllOperationsByFilter(OperationListFilter filter) =>
+  Stream<List<Operation>> watchAllOperationsByFilter(
+      OperationListFilter filter) => _operationRepo.watchAllOperationsByFilter(filter);
+
+  Stream<Operation> getOperationById(int id) => _operationRepo.getOperationById(id);
+
+  Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
+  _operationRepo.watchAllOperationsByAccount(accountId);
+
+  Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
+  _operationRepo.watchAllOperationsByCategory(categoryId);
+
+  Stream<List<Operation>> watchLastOperations(int limit) =>
+  _operationRepo.watchLastOperations(limit);
+
+  Future<Operation?> getLastOperation() => _operationRepo.getLastOperation();
+
+  Future<int> insertOperation(Operation entity) => _operationRepo.insertOperation(entity);
+
+  Future duplicateOperation(Operation entity) => _operationRepo.duplicateOperation(entity);
+
+  Future deleteOperation(Operation entity) => _operationRepo.deleteOperation(entity);
+
+  Future deleteOperationById(int operationId) => _operationRepo.deleteOperationById(operationId);
+
+  //Budget
+
+  Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
+  _budgetRepo.getBudget(categoryId, month, year);
+
+  Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
+  _budgetRepo.watchBudgetByCategory(categoryId);
+
+  Future<void> insertBudget(BudgetDB entity) => _budgetRepo.insertBudget(entity);
+
+  Future<void> updateBudget(BudgetDB entity) => _budgetRepo.updateBudget(entity);
+
+  Future<void> deleteBudget(BudgetDB entity) => _budgetRepo.deleteBudget(entity);
+
+  //Backup
+
+  Future deleteAll() => _backuper.deleteAll();
+
+  Future backup(
+      GoogleHttpClient httpClient, String catalogId, String fileName) =>
+      _backuper.backup(httpClient, catalogId, fileName);
+
+  Future restore(GoogleHttpClient httpClient, String fileId) =>
+      _backuper.restore(httpClient, fileId);
+}
+
+class _AccountRepo {
+  final Database db;
+
+  _AccountRepo(this.db);
+
+  final List<Account> Function(List<AccountDB>) _mapAccountList =
+      (list) => const AccountMapper().mapListToDart(list);
+
+  final Account Function(AccountDB) _mapAccount =
+      (item) => const AccountMapper().mapToDart(item);
+
+  final AccountDB Function(Account) _mapAccountDB =
+      (item) => const AccountMapper().mapToSql(item);
+
+  final List<AccountBalance> Function(List<AccountBalanceEntity>)
+      _mapAccountBalanceList =
+      (list) => const AccountBalanceMapper().mapListToDart(list);
+
+  Stream<List<Account>> watchAllAccounts() =>
+      db.accountDao.watchAllAccounts().map(_mapAccountList);
+
+  Stream<List<AccountBalance>> watchAllAccountsBalance() =>
+      db.accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);
+
+  Future<List<AccountBalance>> getAllAccountsBalance() async =>
+      _mapAccountBalanceList(await db.accountDao.getAllAccountsBalance());
+
+  Stream<Account> watchAccountById(int id) =>
+      db.accountDao.watchAccountById(id).map(_mapAccount);
+
+  Future<Account> getAccountById(int id) async =>
+      _mapAccount(await db.accountDao.getAccountById(id));
+
+  Future<int> insertAccount(Account account) =>
+      db.accountDao.insertAccount(_mapAccountDB(account));
+
+  Future updateAccount(Account account) =>
+      db.accountDao.updateAccount(_mapAccountDB(account));
+}
+
+class _CategoryRepo {
+  final Database db;
+
+  _CategoryRepo(this.db);
+
+  final List<Category> Function(List<CategoryDB>) _mapCategoryList =
+      (list) => const CategoryMapper().mapListToDart(list);
+
+  final Category Function(CategoryDB) _mapCategory =
+      (item) => const CategoryMapper().mapToDart(item);
+
+  final CategoryDB Function(Category) _mapCategoryDB =
+      (item) => const CategoryMapper().mapToSql(item);
+
+  Stream<List<Category>> watchAllCategories() =>
+      db.categoryDao.watchAllCategories().map(_mapCategoryList);
+
+  Future<Category> getCategoryById(int id) async =>
+      _mapCategory(await db.categoryDao.getCategoryById(id));
+
+  Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
+      db.categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);
+
+  Future<int> insertCategory(Category entity) =>
+      db.categoryDao.insertCategory(_mapCategoryDB(entity));
+
+  Future updateCategory(Category entity) =>
+      db.categoryDao.updateCategory(_mapCategoryDB(entity));
+}
+
+class _OperationRepo {
+  final Database db;
+
+  _OperationRepo(this.db);
+
+  final List<Operation> Function(List<OperationItem>) _mapOperationList =
+      (list) => const OperationMapper().mapListToDart(list);
+
+  final Operation Function(OperationItem) _mapOperation =
+      (item) => const OperationMapper().mapToDart(item);
+
+  final OperationDB Function(Operation) _mapOperationDB =
+      (item) => const OperationMapper().mapToOperationData(item);
+
+  Stream<List<Operation>> watchAllOperations() =>
+      db.operationDao.watchAllOperationItems().map(_mapOperationList);
+
+  Stream<List<Operation>> watchAllOperationsByFilter(
+          OperationListFilter filter) =>
       db.operationDao
           .watchAllOperationItemsByFilter(
               start: filter.date?.start,
               end: filter.date?.end,
               accountIds: filter.accountsIds,
               categoriesIds: filter.categoriesIds)
-          .map((list) => const OperationMapper().mapListToDart(list));
+          .map(_mapOperationList);
 
-  Stream<Operation> getOperationById(int id) => db.operationDao
-      .getOperationById(id)
-      .map((o) => const OperationMapper().mapToDart(o));
+  Stream<Operation> getOperationById(int id) =>
+      db.operationDao.getOperationById(id).map(_mapOperation);
 
   Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
       db.operationDao
           .watchAllOperationItemsByAccount(accountId)
-          .map((list) => const OperationMapper().mapListToDart(list));
+          .map(_mapOperationList);
 
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
       db.operationDao
           .watchAllOperationItemsByCategory(categoryId)
-          .map((list) => const OperationMapper().mapListToDart(list));
+          .map(_mapOperationList);
 
-  Stream<List<Operation>> watchLastOperations(int limit) => db.operationDao
-      .watchLastOperationItems(limit)
-      .map((list) => const OperationMapper().mapListToDart(list));
+  Stream<List<Operation>> watchLastOperations(int limit) =>
+      db.operationDao.watchLastOperationItems(limit).map(_mapOperationList);
 
   Future<Operation?> getLastOperation() => db.operationDao
       .getLastOperationItem()
-      .then((value) => value == null ? null : const OperationMapper().mapToDart(value));
+      .then((value) => value == null ? null : _mapOperation(value));
 
   Future<int> insertOperation(Operation entity) {
     if ((entity.id) == 0) {
-      return db.operationDao
-          .insertOperation(const OperationMapper().mapToOperationData(entity));
+      return db.operationDao.insertOperation(_mapOperationDB(entity));
     } else {
-      return db.operationDao
-          .updateOperation(const OperationMapper().mapToOperationData(entity));
+      return db.operationDao.updateOperation(_mapOperationDB(entity));
     }
   }
 
@@ -169,26 +259,31 @@ class Repository extends ChangeNotifier {
       recAccount: entity.recAccount,
       sum: entity.sum,
     );
-    return db.operationDao.insertOperation(
-        const OperationMapper().mapToOperationData(newOperation));
+    return db.operationDao.insertOperation(_mapOperationDB(newOperation));
   }
 
-  Future deleteOperation(Operation entity) => db.operationDao
-      .deleteOperation(const OperationMapper().mapToOperationData(entity));
+  Future deleteOperation(Operation entity) =>
+      db.operationDao.deleteOperation(_mapOperationDB(entity));
 
   Future deleteOperationById(int operationId) =>
       db.operationDao.deleteOperationById(operationId);
+}
 
-  //Budget
+class _BudgetRepo {
+  final Database db;
+
+  _BudgetRepo(this.db);
 
   Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
       db.budgetDao.getBudget(categoryId, month, year);
+
   //
   // Stream<List<BalanceOnDate>> watchMonthBudget() =>
   //     db.budgetDao.watchMonthBudget();
   //
   Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
       db.budgetDao.watchBudgetByCategory(categoryId);
+
   //
   // Stream<List<BudgetData>> watchBudget(DateTime date) =>
   //     db.budgetDao.watchBudget(date);
@@ -201,14 +296,24 @@ class Repository extends ChangeNotifier {
 
   Future<void> deleteBudget(BudgetDB entity) =>
       db.budgetDao.deleteBudget(entity);
+}
 
-  //INTERNAL operations backup
+class _Backuper {
+  final Database db;
+
+  _Backuper(this.db);
+
+  Future deleteAll() => db.deleteAll();
+
+  Future<Map<String, List<Map<String, dynamic>>>> _getDbData() => db.getDbData();
+
+  Future _loadData(Map<String, dynamic> data) => db.loadData(data);
 
   Future backup(
       GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
-    await localFile.writeAsString(jsonEncode(await getDbData()));
+    await localFile.writeAsString(jsonEncode(await _getDbData()));
 
     var media = drive.Media(localFile.openRead(), localFile.lengthSync());
 
@@ -229,9 +334,8 @@ class Repository extends ChangeNotifier {
 
   Future restore(GoogleHttpClient httpClient, String fileId) async {
     try {
-      var file = await drive.DriveApi(httpClient)
-          .files
-          .get(fileId, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+      var file = await drive.DriveApi(httpClient).files.get(fileId,
+          downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
       final directory = await getTemporaryDirectory();
       var saveFile = File('${directory.path}/test.json');
@@ -250,7 +354,7 @@ class Repository extends ChangeNotifier {
         Map<String, dynamic> data = jsonDecode(saveFile.readAsStringSync());
         print(data.toString());
 
-        await loadData(data);
+        await _loadData(data);
       }, onError: (error) {
         print('Some Error');
       });
