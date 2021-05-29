@@ -115,6 +115,21 @@ class Budgets extends Table {
   Set<Column> get primaryKey => {year, month, category, budgetType};
 }
 
+class BudgetItem {
+  final int year;
+  final int month;
+  final CategoryDB category;
+  final BudgetType budgetType;
+  final int sum;
+
+  BudgetItem(
+      {required this.year,
+      required this.month,
+      required this.category,
+      required this.budgetType,
+      required this.sum});
+}
+
 class BalanceOnDate {
   DateTime date;
   int sum;
@@ -183,7 +198,11 @@ class OperationItem {
   CategoryDB? category;
   AccountDB? recAccount;
 
-  OperationItem({required this.operation, required this.account, this.category, this.recAccount});
+  OperationItem(
+      {required this.operation,
+      required this.account,
+      this.category,
+      this.recAccount});
 
   //TODO rewrite to date, type, account, category, recAccount sum
   OperationDB get operationData {
@@ -532,7 +551,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Stream<List<BalanceOnDate>> watchBalanceOnPeriod(
       DateTime start, DateTime end) {
-
     final sumBalance = balances.sum.sum().cast<int>();
     //final date = CustomExpression<DateTime>("DATE(balance.date, 'start of day')");
 
@@ -593,7 +611,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Stream<List<CategoryDB>> watchAllCategoriesByType(OperationType type) =>
       (select(categories)
             ..where((cat) => cat.operationType
-                .equals(OperationTypeConverter().mapToSql(type)))
+                .equals(const OperationTypeConverter().mapToSql(type)))
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
@@ -720,7 +738,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     });
   }
 
-  Future<int> insertCategory(CategoryDB entity) => into(categories).insert(entity);
+  Future<int> insertCategory(CategoryDB entity) =>
+      into(categories).insert(entity);
 
   Future updateCategory(CategoryDB entity) =>
       update(categories).replace(entity);
@@ -798,8 +817,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               return OperationItem(
                   operation: op,
                   account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
             },
           ).toList(),
         );
@@ -807,9 +830,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Stream<List<OperationItem>> watchAllOperationItemsByFilter(
       {required DateTime? start,
-        required DateTime? end,
-        required Set<int> accountIds,
-        required Set<int> categoriesIds}) {
+      required DateTime? end,
+      required Set<int> accountIds,
+      required Set<int> categoriesIds}) {
     final acc = alias(accounts, 'aсс');
     final rec = alias(accounts, 'rec');
 
@@ -859,8 +882,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               return OperationItem(
                   operation: op,
                   account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
             },
           ).toList(),
         );
@@ -899,8 +926,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               return OperationItem(
                   operation: op,
                   account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
             },
           ).toList(),
         );
@@ -940,8 +971,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               return OperationItem(
                   operation: op,
                   account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
             },
           ).toList(),
         );
@@ -980,8 +1015,12 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               return OperationItem(
                   operation: op,
                   account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
             },
           ).toList(),
         );
@@ -1013,13 +1052,18 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ],
         )
         .getSingle()
-        .then((row) { var op = row.readTable(operations);
-    return OperationItem(
-        operation: op,
-        account: row.readTable(acc),
-        category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-        recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
-    });
+        .then((row) {
+          var op = row.readTable(operations);
+          return OperationItem(
+              operation: op,
+              account: row.readTable(acc),
+              category: op.operationType == OperationType.TRANSFER
+                  ? null
+                  : row.readTable(categories),
+              recAccount: op.operationType == OperationType.TRANSFER
+                  ? row.readTable(rec)
+                  : null);
+        });
   }
 
   Future<List<OperationDB>> getAllOperations() => select(operations).get();
@@ -1047,13 +1091,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         )
         .watchSingle()
         .map((row) {
-      var op = row.readTable(operations);
-      return OperationItem(
-          operation: op,
-          account: row.readTable(acc),
-          category: op.operationType == OperationType.TRANSFER ? null : row.readTable(categories),
-          recAccount: op.operationType == OperationType.TRANSFER ? row.readTable(rec) : null);
-    });
+          var op = row.readTable(operations);
+          return OperationItem(
+              operation: op,
+              account: row.readTable(acc),
+              category: op.operationType == OperationType.TRANSFER
+                  ? null
+                  : row.readTable(categories),
+              recAccount: op.operationType == OperationType.TRANSFER
+                  ? row.readTable(rec)
+                  : null);
+        });
   }
 
   Future insertOperationItem(OperationItem entity) {
@@ -1246,12 +1294,32 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 }
 
-@UseDao(tables: [Budgets])
+@UseDao(tables: [Budgets, Categories])
 class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   BudgetDao(Database db) : super(db);
 
-  Future<List<BudgetDB>> getAllBudgets() {
+  Future<List<BudgetDB>> getAllBudgets() async {
     return select(budgets).get();
+  }
+
+  Future<List<BudgetItem>> getAllBudgetItems() async {
+    var result = await select(budgets).join([
+      innerJoin(
+        categories,
+        categories.id.equalsExp(budgets.category),
+      ),
+    ]).get();
+
+    return result.map((row) {
+      var budget = row.readTable(budgets);
+      var category = row.readTable(categories);
+      return BudgetItem(
+          year: budget.year,
+          month: budget.month,
+          category: category,
+          budgetType: budget.budgetType,
+          sum: budget.sum);
+    }).toList();
   }
 
   Future<BudgetDB> getBudget(int categoryId, int month, int year) {
@@ -1268,11 +1336,34 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
         .watch();
   }
 
+  Stream<List<BudgetItem>> watchBudgetByType(BudgetType type) {
+    return (select(budgets)
+          ..where((tbl) => tbl.budgetType
+              .equals(const BudgetTypeConverter().mapToSql(type))))
+        .join([
+          innerJoin(
+            categories,
+            categories.id.equalsExp(budgets.category),
+          ),
+        ])
+        .watch()
+        .map((rows) => rows.map((row) {
+              var budget = row.readTable(budgets);
+              var category = row.readTable(categories);
+              return BudgetItem(
+                  year: budget.year,
+                  month: budget.month,
+                  category: category,
+                  budgetType: budget.budgetType,
+                  sum: budget.sum);
+            }).toList());
+  }
+
   Future<int> insertBudget(BudgetDB entity) {
     return into(budgets).insert(entity);
   }
 
-  Future<bool> updateBudget(BudgetDB entity){
+  Future<bool> updateBudget(BudgetDB entity) {
     return update(budgets).replace(entity);
   }
 
@@ -1311,7 +1402,7 @@ class _DefaultValueSerializer extends ValueSerializer {
   @override
   T fromJson<T>(dynamic json) {
     if (T == DateTime) {
-        return DateTime.fromMillisecondsSinceEpoch(json as int) as T;
+      return DateTime.fromMillisecondsSinceEpoch(json as int) as T;
     } else if (T == OperationType) {
       return _converter.mapToDart(json as int) as T;
     }

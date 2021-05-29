@@ -1722,4 +1722,5 @@ mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
 }
 mixin _$BudgetDaoMixin on DatabaseAccessor<Database> {
   $BudgetsTable get budgets => attachedDatabase.budgets;
+  $CategoriesTable get categories => attachedDatabase.categories;
 }

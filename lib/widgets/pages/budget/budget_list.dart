@@ -1,10 +1,11 @@
-
 import 'package:cashflow/data/objects/budget.dart';
 import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation_type.dart';
+import 'package:cashflow/data/repository.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BudgetList extends StatelessWidget {
   const BudgetList();
@@ -17,37 +18,52 @@ class BudgetList extends StatelessWidget {
         BudgetListHeader(
           title: 'Month budgets',
         ),
-        SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            return _BudgetListTile(
-              budget: Budget(
-                type: BudgetType.MONTH,
-                category: Category(title: 'Food', type: OperationType.OUTPUT),
-                sum: 1000, date: DateTime.now(),
-              ),
-              spend: 100,
-            );
-          },
-          childCount: 1,
-        )),
+        StreamBuilder<List<Budget>>(
+            stream: Provider.of<Repository>(context)
+                .watchBudgetByType(BudgetType.MONTH),
+            builder: (context, snapshot) {
+
+              List<Budget> budgets = [];
+
+              if (snapshot.hasData){
+                budgets.addAll(snapshot.data!);
+              }
+
+              return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return _BudgetListTile(
+                    budget: budgets[index],
+                    spend: 100,
+                  );
+                },
+                childCount: budgets.length,
+              ));
+            }),
         BudgetListHeader(
           title: 'Year budgets',
         ),
-        SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            return _BudgetListTile(
-              budget: Budget(
-                  type: BudgetType.YEAR,
-                  category: Category(title: 'Food', type: OperationType.OUTPUT),
-                  sum: 10000, date: DateTime.now(),
-              ),
-              spend: 100,
-            );
-          },
-          childCount: 1,
-        )),
+        StreamBuilder<List<Budget>>(
+            stream: Provider.of<Repository>(context)
+                .watchBudgetByType(BudgetType.YEAR),
+            builder: (context, snapshot) {
+              List<Budget> budgets = [];
+
+              if (snapshot.hasData){
+                budgets.addAll(snapshot.data!);
+              }
+
+              return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return _BudgetListTile(
+                    budget: budgets[index],
+                    spend: 100,
+                  );
+                },
+                childCount: budgets.length,
+              ));
+            }),
       ],
     );
   }
@@ -76,11 +92,11 @@ class BudgetListHeader extends StatelessWidget {
 }
 
 class _BudgetListTile extends StatelessWidget {
-
   final Budget budget;
   final int spend;
 
-  const _BudgetListTile({Key? key, required this.budget, required this.spend}) : super(key: key);
+  const _BudgetListTile({Key? key, required this.budget, required this.spend})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
