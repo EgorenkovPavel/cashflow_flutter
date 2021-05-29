@@ -128,34 +128,34 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
     budget.add(ValueOnDate(dates[1], 0));
     budget.add(ValueOnDate(dates[2], 0));
 
-    _repository.watchBalanceOnPeriod(dates[0], dates[2]).listen((event) {
-      _balanceByPeriod = event.map((e) => ValueOnDate(e.date, e.sum)).toList();
-      calcBalance();
-    });
-
-    _repository.watchBalance(dates[0])
-      .listen((d) {
-          startBalance = d.sum;
-        add(Fetch());
-
-        calcBalance();
-      });
-
-    _repository.watchBalance(dates[1])
-      .listen((d) {
-          budget[0] = ValueOnDate(d.date, d.sum);
-          budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
-
-        add(Fetch());
-      });
-
-    _repository.watchBudgetSum(dates[2])
-      .listen((d) {
-        budgetSum = d;
-          budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
-
-        add(Fetch());
-      });
+    // _repository.watchBalanceOnPeriod(dates[0], dates[2]).listen((event) {
+    //   _balanceByPeriod = event.map((e) => ValueOnDate(e.date, e.sum)).toList();
+    //   calcBalance();
+    // });
+    //
+    // _repository.watchBalance(dates[0])
+    //   .listen((d) {
+    //       startBalance = d.sum;
+    //     add(Fetch());
+    //
+    //     calcBalance();
+    //   });
+    //
+    // _repository.watchBalance(dates[1])
+    //   .listen((d) {
+    //       budget[0] = ValueOnDate(d.date, d.sum);
+    //       budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
+    //
+    //     add(Fetch());
+    //   });
+    //
+    // _repository.watchBudgetSum(dates[2])
+    //   .listen((d) {
+    //     budgetSum = d;
+    //       budget[1] = ValueOnDate(dates[2], budget[0].value + budgetSum);
+    //
+    //     add(Fetch());
+    //   });
   }
 
   @override

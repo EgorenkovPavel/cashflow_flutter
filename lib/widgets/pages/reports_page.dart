@@ -17,26 +17,26 @@ class ReportsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).titleReports),
       ),
-      body: StreamBuilder<List<CategoryCashflowBudget>>(
-        stream: Provider.of<Repository>(context)
-            .watchAllCategoryCashflowBudget(DateTime.now()),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<CategoryCashflowBudget>> snapshot) {
-          if (!snapshot.hasData) {
-            return SizedBox();
-          }
-
-          var categories = snapshot.data!
-              .where((element) => element.budget > 0 || element.cashflow > 0)
-              .toList();
-          categories.sort((a,b) => b.cashflow.compareTo(a.cashflow));
-
-          return SingleChildScrollView(
-              child: SizedBox(
-                  height: 50.0 * categories.length,
-                  child: MonthCashflowChartByCategories(categories)));
-        },
-      ),
+      // body: StreamBuilder<List<CategoryCashflowBudget>>(
+      //   stream: Provider.of<Repository>(context)
+      //       .watchAllCategoryCashflowBudget(DateTime.now()),
+      //   builder: (BuildContext context,
+      //       AsyncSnapshot<List<CategoryCashflowBudget>> snapshot) {
+      //     if (!snapshot.hasData) {
+      //       return SizedBox();
+      //     }
+      //
+      //     var categories = snapshot.data!
+      //         .where((element) => element.budget > 0 || element.cashflow > 0)
+      //         .toList();
+      //     categories.sort((a,b) => b.cashflow.compareTo(a.cashflow));
+      //
+      //     return SingleChildScrollView(
+      //         child: SizedBox(
+      //             height: 50.0 * categories.length,
+      //             child: MonthCashflowChartByCategories(categories)));
+      //   },
+      // ),
     );
   }
 }

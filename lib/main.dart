@@ -1,3 +1,4 @@
+import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
 import 'package:cashflow/widgets/pages/account/account_input_page.dart';
@@ -19,7 +20,7 @@ import 'package:provider/provider.dart';
 import 'data/repository.dart';
 
 void main() {
-  final _repository = Repository();
+  final _repository = Repository(Database());
 
   // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
