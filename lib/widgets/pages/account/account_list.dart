@@ -23,7 +23,7 @@ class AccountList extends StatelessWidget {
           if (state.hasData && state.data != null) {
             _accounts = state.data!;
           }
-          int _balance = _accounts.fold(
+          var _balance = _accounts.fold<int>(
               0, (previousValue, element) => previousValue + element.balance);
           return CustomScrollView(
             slivers: [

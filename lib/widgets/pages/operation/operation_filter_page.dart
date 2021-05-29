@@ -94,8 +94,8 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   }
 
   RelativeRect buttonMenuPosition(BuildContext c) {
-    final RenderBox bar = c.findRenderObject() as RenderBox;
-    final RenderBox overlay =
+    final bar = c.findRenderObject() as RenderBox;
+    final overlay =
         Overlay.of(c)!.context.findRenderObject() as RenderBox;
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
@@ -241,7 +241,6 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
               Wrap(
                   children: categoryOutList
                       .where((element) =>
-                          filter.categoriesIds != null &&
                           filter.categoriesIds.contains(element.id))
                       .map(
                         (category) => InputChip(

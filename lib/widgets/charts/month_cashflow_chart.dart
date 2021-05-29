@@ -1,7 +1,5 @@
 
 import 'package:cashflow/data/objects/category_cashflow_budget.dart';
-import 'package:cashflow/data/objects/operation_type.dart';
-import 'package:cashflow/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class MonthCashflowChart extends StatelessWidget {
@@ -33,17 +31,17 @@ class MonthCashflowChart extends StatelessWidget {
     return SizedBox();
   }
 
-  int _cashflow(List<CategoryCashflowBudget> categories) {
-    return categories
-        .map((category) => category.cashflow)
-        .fold(0, (a, b) => a + b);
-  }
-
-  int _budget(List<CategoryCashflowBudget> categories) {
-    return categories
-        .map((category) => category.budget)
-        .fold(0, (a, b) => a + b);
-  }
+  // int _cashflow(List<CategoryCashflowBudget> categories) {
+  //   return categories
+  //       .map((category) => category.cashflow)
+  //       .fold(0, (a, b) => a + b);
+  // }
+  //
+  // int _budget(List<CategoryCashflowBudget> categories) {
+  //   return categories
+  //       .map((category) => category.budget)
+  //       .fold(0, (a, b) => a + b);
+  // }
 
   // List<charts.Series<Value, String>> _seriesList(BuildContext context) {
   //   final fact = [

@@ -13,14 +13,14 @@ class DriveDialog extends StatefulWidget {
 
   const DriveDialog({required this.httpClient, required this.mode});
 
-  static Future<DriveFile> chooseFile(
+  static Future<DriveFile?> chooseFile(
       BuildContext context, GoogleHttpClient httpClient) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             DriveDialog(httpClient: httpClient, mode: DialogMode.CHOOSE_FILE)));
   }
 
-  static Future<DriveFile> chooseFolder(
+  static Future<DriveFile?> chooseFolder(
       BuildContext context, GoogleHttpClient httpClient) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DriveDialog(

@@ -277,7 +277,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 8.0),
                   child: OperationTypeRadioButton(
-                    type: (state as DataState).type,
+                    type: state.type,
                     items: [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
@@ -290,12 +290,12 @@ class _OperationInputPageState extends State<OperationInputPage>
                   child: Row(
                     children: <Widget>[
                       buildList(
-                          (state as DataState).type == OperationType.TRANSFER
+                          state.type == OperationType.TRANSFER
                               ? AppLocalizations.of(context).source
                               : AppLocalizations.of(context).accounts,
                           addNewAccount,
                           accountPageView(context)),
-                      buildAnalylicList((state as DataState).type),
+                      buildAnalylicList(state.type),
                     ],
                   ),
                 ),
@@ -343,8 +343,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                           borderRadius:
                                               BorderRadius.circular(4.0),
                                           border: Border.all(
-                                              color: (state as DataState)
-                                                      .showKeyboard
+                                              color: state.showKeyboard
                                                   ? Theme.of(context)
                                                       .accentColor
                                                   : Theme.of(context)
@@ -355,7 +354,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       alignment: Alignment.center,
                                       child: Text(
                                           NumberFormat()
-                                              .format((state as DataState).sum),
+                                              .format(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4

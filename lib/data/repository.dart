@@ -145,9 +145,9 @@ class Repository extends ChangeNotifier {
       .watchLastOperationItems(limit)
       .map((list) => const OperationMapper().mapListToDart(list));
 
-  Future<Operation> getLastOperation() => db.operationDao
+  Future<Operation?> getLastOperation() => db.operationDao
       .getLastOperationItem()
-      .then((value) => const OperationMapper().mapToDart(value));
+      .then((value) => value == null ? null : const OperationMapper().mapToDart(value));
 
   Future<int> insertOperation(Operation entity) {
     if ((entity.id) == 0) {
@@ -229,7 +229,7 @@ class Repository extends ChangeNotifier {
 
   Future restore(GoogleHttpClient httpClient, String fileId) async {
     try {
-      drive.Media file = await drive.DriveApi(httpClient)
+      var file = await drive.DriveApi(httpClient)
           .files
           .get(fileId, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
