@@ -3,7 +3,10 @@ import 'dart:io';
 
 import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/mappers/account_mapper.dart';
+import 'package:cashflow/data/mappers/budget_mapper.dart';
 import 'package:cashflow/data/mappers/operation_mapper.dart';
+import 'package:cashflow/data/objects/budget.dart';
+import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation.dart';
 import 'package:cashflow/data/objects/operation_list_filter.dart';
@@ -103,6 +106,8 @@ class Repository extends ChangeNotifier {
 
   Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
   _budgetRepo.watchBudgetByCategory(categoryId);
+
+  Stream<List<Budget>> watchBudgetByType(BudgetType type) => _budgetRepo.watchBudgetByType(type);
 
   Future<void> insertBudget(BudgetDB entity) => _budgetRepo.insertBudget(entity);
 
@@ -272,6 +277,9 @@ class _BudgetRepo {
 
   _BudgetRepo(this.db);
 
+  final List<Budget> Function(List<BudgetItem>) _mapBudgetList =
+  (list) => const BudgetMapper().mapListToDart(list);
+
   Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
       db.budgetDao.getBudget(categoryId, month, year);
 
@@ -281,6 +289,9 @@ class _BudgetRepo {
   //
   Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
       db.budgetDao.watchBudgetByCategory(categoryId);
+
+  Stream<List<Budget>> watchBudgetByType(BudgetType type) =>
+      db.budgetDao.watchBudgetByType(type).map(_mapBudgetList);
 
   //
   // Stream<List<BudgetData>> watchBudget(DateTime date) =>
