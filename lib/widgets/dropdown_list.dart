@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 typedef WidgetByItem<T> = Widget Function(T value);
 
 class DropdownList<T> extends StatelessWidget {
-  final T value;
+  final T? value;
   final String hint;
-  final Function onChange;
+  final void Function(T?)? onChange;
   final List<T> items;
   final WidgetByItem<T> getListItem;
 
   const DropdownList(
-      {Key key,
+      {Key? key,
       this.value,
       this.hint = '',
       this.onChange,
-      this.items,
-      this.getListItem})
+      required this.items,
+      required this.getListItem})
       : super(key: key);
 
   @override
@@ -36,13 +36,15 @@ class DropdownList<T> extends StatelessWidget {
         iconSize: 24,
         elevation: 16,
         underline: SizedBox(),
-        onChanged: (T newValue) {
-          onChange(newValue);
+        onChanged: (T? newValue) {
+          if (onChange != null) {
+            onChange!(newValue);
+          }
         },
         items: items
-            ?.map((item) =>
+            .map((item) =>
                 DropdownMenuItem<T>(value: item, child: getListItem(item)))
-            ?.toList(),
+            .toList(),
       ),
     );
   }

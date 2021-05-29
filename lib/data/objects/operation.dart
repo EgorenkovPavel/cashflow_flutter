@@ -7,27 +7,27 @@ class Operation {
   final DateTime date;
   final OperationType type;
   final Account account;
-  final Category category;
-  final Account recAccount;
+  final Category? category;
+  final Account? recAccount;
   final int sum;
 
   const Operation(
-      {this.id,
-      this.date,
-      this.type,
-      this.account,
+      {this.id = 0,
+      required this.date,
+      required this.type,
+      required this.account,
       this.category,
       this.recAccount,
-      this.sum});
+      required this.sum});
 
   Operation copyWith(
-          {int id,
-          DateTime date,
-          OperationType type,
-          Account account,
-          Category category,
-          Account recAccount,
-          int sum}) =>
+          {int? id,
+          DateTime? date,
+          OperationType? type,
+          Account? account,
+          Category? category,
+          Account? recAccount,
+          int? sum}) =>
       Operation(
         id: id ?? this.id,
         date: date ?? this.date,

@@ -8,7 +8,7 @@ class OperationTypeRadioButton extends StatelessWidget {
   final List<OperationType> items;
 
   const OperationTypeRadioButton(
-      {Key key, this.onChange, this.type, this.items})
+      {Key? key, required this.onChange, required this.type, required this.items})
       : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class OperationTypeRadioButton extends StatelessWidget {
 
 class _OperationTypeItem extends StatelessWidget {
   const _OperationTypeItem({
-    Key key,
+    Key? key,
     type,
   })  : _type = type,
         super(key: key);

@@ -9,22 +9,23 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
 
   @override
   OperationItem mapToSql(Operation o) {
+
     return OperationItem(
-        mapToOperationData(o),
-        const AccountMapper().mapToSql(o.account),
-        o.category == null ? null : const CategoryMapper().mapToSql(o.category),
-        o.recAccount == null ? null : const AccountMapper().mapToSql(o.recAccount));
+        operation: mapToOperationData(o),
+        account: const AccountMapper().mapToSql(o.account),
+        category: o.category == null ? null : const CategoryMapper().mapToSql(o.category!),
+        recAccount: o.recAccount == null ? null : const AccountMapper().mapToSql(o.recAccount!));
   }
 
   @override
   Operation mapToDart(OperationItem o) {
-    return o == null ? null : Operation(
+    return Operation(
         id: o.operationData.id,
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),
-        category: o.category == null ? null : const CategoryMapper().mapToDart(o.category),
-        recAccount: o.recAccount == null ? null : const AccountMapper().mapToDart(o.recAccount),
+        category: o.category == null ? null : const CategoryMapper().mapToDart(o.category!),
+        recAccount: o.recAccount == null ? null : const AccountMapper().mapToDart(o.recAccount!),
         sum: o.operationData.sum);
   }
 

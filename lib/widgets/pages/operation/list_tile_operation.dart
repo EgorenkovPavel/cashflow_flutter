@@ -10,7 +10,7 @@ class ListTileOperation extends StatelessWidget {
   final Operation _operation;
   final GestureTapCallback onTap;
 
-  const ListTileOperation(this._operation, {Key key, this.onTap})
+  const ListTileOperation(this._operation, {Key? key, required this.onTap})
       : super(key: key);
 
   void onLongPress(BuildContext context) {
@@ -47,13 +47,13 @@ class ListTileOperation extends StatelessWidget {
     return ListTile(
       subtitle: Text(_operation.account.title),
       title: _operation.type == OperationType.TRANSFER
-          ? Text(_operation.recAccount.title)
-          : Text(_operation.category.title),
+          ? Text(_operation.recAccount!.title)
+          : Text(_operation.category!.title),
       trailing: Text(
         NumberFormat().format(_operation.sum),
         style: Theme.of(context)
             .textTheme
-            .headline5
+            .headline5!
             .copyWith(color: getOperationColor(_operation.type)),
       ),
       onTap: onTap,

@@ -12,12 +12,12 @@ class Carousel<T> extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
 
   Carousel(
-      {Key key,
-      this.items,
-      this.onPageChanged,
-      this.itemBuilder,
-      this.initialItemFinder,
-      this.itemHeight})
+      {Key? key,
+      required this.items,
+      required this.onPageChanged,
+      required this.itemBuilder,
+      required this.initialItemFinder,
+      required this.itemHeight})
       : super(key: key);
 
   @override
@@ -47,12 +47,12 @@ class Carousel<T> extends StatelessWidget {
               onPageChanged: onPageChanged,
               itemBuilder: (context, pos) {
                 return AnimatedBuilder(
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     var page = !_pageController.position.haveDimensions
                         ? _pageController.initialPage.toDouble()
                         : _pageController.page;
                     return Transform.scale(
-                      scale: 1 - (min((pos - page).abs(), 1)) / 10,
+                      scale: 1 - (min((pos - page!.toInt()).abs(), 1)) / 10,
                       child: child,
                     );
                   },

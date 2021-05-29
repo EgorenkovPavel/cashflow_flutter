@@ -9,7 +9,7 @@ class ItemCard<T> extends StatelessWidget {
   final Widget child;
   final void Function(BuildContext context) onSave;
 
-  ItemCard({Key key, this.title, @required this.child, this.onSave})
+  ItemCard({Key? key, required this.title, required this.child, required this.onSave})
       : super(key: key);
   
   @override
@@ -36,7 +36,7 @@ class ItemCard<T> extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if(_formKey.currentState.validate()){
+                  if(_formKey.currentState!.validate()){
                     onSave(context);
                   }
                 },

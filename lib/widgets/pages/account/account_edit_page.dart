@@ -19,7 +19,7 @@ class AccountEditPage extends StatefulWidget {
 
   final int id;
 
-  const AccountEditPage({Key key, this.id}) : super(key: key);
+  const AccountEditPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _AccountEditPageState createState() => _AccountEditPageState();
@@ -27,7 +27,7 @@ class AccountEditPage extends StatefulWidget {
 
 class _AccountEditPageState extends State<AccountEditPage> {
 
-  AccountEditPageBloc _bloc;
+  late AccountEditPageBloc _bloc;
   final TextEditingController _titleController = TextEditingController();
 
   @override
@@ -79,7 +79,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
         if (state.editTitleMode) {
           return TextField(
             controller: _titleController,
-            style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white),
             autofocus: true,
           );
         } else {
@@ -128,7 +128,7 @@ class AccountEditPageBloc extends Cubit<AccountEditPageState>{
   final Repository _repository;
 
   bool _editTitleMode = false;
-  Account _account;
+  late Account _account;
 
   AccountEditPageBloc(this._repository) : super(AccountEditPageState(false, ''));
 

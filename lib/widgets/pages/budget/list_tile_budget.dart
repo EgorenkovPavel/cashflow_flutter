@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class ListTileBudget extends StatelessWidget {
   final BudgetDB _budget;
 
-  const ListTileBudget(this._budget, {Key key}) : super(key: key);
+  const ListTileBudget(this._budget, {Key? key}) : super(key: key);
 
   void onLongPress(BuildContext context) {
     showModalBottomSheet(

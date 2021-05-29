@@ -10,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CategoryInputPage extends StatefulWidget {
   final OperationType type;
 
-  CategoryInputPage({this.type});
+  CategoryInputPage({required this.type});
 
-  static Future<Category> open(BuildContext context, {@required OperationType type}) {
+  static Future<Category?> open(BuildContext context, {required OperationType type}) {
     return showDialog<Category>(
         context: context,
         barrierDismissible: false,
@@ -31,7 +31,7 @@ class CategoryInputPage extends StatefulWidget {
 }
 
 class _CategoryInputPageState extends State<CategoryInputPage> {
-  CategoryCardBloc _bloc;
+  late CategoryCardBloc _bloc;
   final TextEditingController titleController = TextEditingController();
 
   @override
@@ -96,7 +96,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                 labelText: AppLocalizations.of(context).title,
               ),
               validator: (value) {
-                if (value.isEmpty) {
+                if (value == null || value.isEmpty) {
                   return AppLocalizations.of(context).emptyTitleError;
                 }
                 return null;
@@ -126,7 +126,7 @@ class Saved extends CategoryInputPageState {
 class CategoryCardBloc extends Cubit<CategoryInputPageState> {
   final Repository _repository;
 
-  OperationType _type;
+  late OperationType _type;
 
   CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
 

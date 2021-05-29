@@ -175,7 +175,7 @@ class BackupPage extends StatelessWidget {
 class BackupDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
 
-  BackupDialog({Key key, this.httpClient}) : super(key: key);
+  BackupDialog({Key? key, required this.httpClient}) : super(key: key);
 
   @override
   _BackupDialogState createState() => _BackupDialogState();
@@ -259,14 +259,14 @@ class _BackupDialogState extends State<BackupDialog> {
 class RestoreDialog extends StatefulWidget {
   final GoogleHttpClient httpClient;
 
-  const RestoreDialog({Key key, this.httpClient}) : super(key: key);
+  const RestoreDialog({Key? key, required this.httpClient}) : super(key: key);
 
   @override
   _RestoreDialogState createState() => _RestoreDialogState();
 }
 
 class _RestoreDialogState extends State<RestoreDialog> {
-  DriveFile _file;
+  DriveFile? _file;
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +309,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
             }
 
             BlocProvider.of<BackupPageBloc>(context)
-                .add(Restore(widget.httpClient, _file.id));
+                .add(Restore(widget.httpClient, _file!.id));
 
             Navigator.of(context).pop();
           },
@@ -378,8 +378,8 @@ class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
     }
   }
 
-  Future<GoogleHttpClient> getHttpClient() async {
-    GoogleHttpClient httpClient;
+  Future<GoogleHttpClient?> getHttpClient() async {
+    GoogleHttpClient? httpClient;
     try {
       httpClient = await GoogleHttpClient.getClient();
     } catch (e) {

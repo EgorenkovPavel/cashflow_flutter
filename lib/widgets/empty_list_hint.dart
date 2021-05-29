@@ -4,7 +4,7 @@ class EmptyListHint extends StatelessWidget {
   final String title;
   final String hint;
 
-  const EmptyListHint({this.title, this.hint});
+  const EmptyListHint({required this.title, required this.hint});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,14 @@ class EmptyListHint extends StatelessWidget {
             title,
             style: Theme.of(context)
                 .textTheme
-                .headline5
+                .headline5!
                 .copyWith(color: Colors.grey),
           ),
           Text(
             hint,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2
+                .subtitle2!
                 .copyWith(color: Colors.grey),
           ),
         ],

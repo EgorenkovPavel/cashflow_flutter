@@ -5,7 +5,7 @@ class AddButton extends StatelessWidget {
 
   final void Function() _onTap;
 
-  const AddButton({Key key, onTap}) : _onTap = onTap, super(key: key);
+  const AddButton({Key? key, onTap}) : _onTap = onTap, super(key: key);
 
   @override
   Widget build(BuildContext context) {

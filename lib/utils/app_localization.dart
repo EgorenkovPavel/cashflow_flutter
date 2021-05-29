@@ -7,7 +7,7 @@ class AppLocalizations {
   final Locale locale;
 
   static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
   static final Map<String, Map<String, String>> _localizedValues = {
@@ -207,101 +207,101 @@ class AppLocalizations {
     },
   };
 
-  String get title => _localizedValues[locale.languageCode]['title'];
-  String get titleType => _localizedValues[locale.languageCode]['title_type'];
-  String get titleBudget => _localizedValues[locale.languageCode]['title_budget'];
-  String get titleFact => _localizedValues[locale.languageCode]['title_fact'];
-  String get titleDate => _localizedValues[locale.languageCode]['title_date'];
-  String get titleAccount => _localizedValues[locale.languageCode]['title_account'];
-  String get titleCategory => _localizedValues[locale.languageCode]['title_category'];
-  String get titleAnalytic => _localizedValues[locale.languageCode]['title_analytic'];
-  String get titleSum => _localizedValues[locale.languageCode]['title_sum'];
-  String get titleTotalSum => _localizedValues[locale.languageCode]['title_total_sum'];
-  String get titleMaster => _localizedValues[locale.languageCode]['title_master'];
-  String get titleTotalBalance => _localizedValues[locale.languageCode]['title_total_balance'];
-  String get titleCashflow => _localizedValues[locale.languageCode]['title_cashflow'];
-  String get titleLastOperations => _localizedValues[locale.languageCode]['title_last_operations'];
-  String get titleDataControl => _localizedValues[locale.languageCode]['title_data_control'];
-  String get titleReports => _localizedValues[locale.languageCode]['title_reports'];
-  String get titleFilters => _localizedValues[locale.languageCode]['title_filters'];
+  String get title => _localizedValues[locale.languageCode]!['title']!;
+  String get titleType => _localizedValues[locale.languageCode]!['title_type']!;
+  String get titleBudget => _localizedValues[locale.languageCode]!['title_budget']!;
+  String get titleFact => _localizedValues[locale.languageCode]!['title_fact']!;
+  String get titleDate => _localizedValues[locale.languageCode]!['title_date']!;
+  String get titleAccount => _localizedValues[locale.languageCode]!['title_account']!;
+  String get titleCategory => _localizedValues[locale.languageCode]!['title_category']!;
+  String get titleAnalytic => _localizedValues[locale.languageCode]!['title_analytic']!;
+  String get titleSum => _localizedValues[locale.languageCode]!['title_sum']!;
+  String get titleTotalSum => _localizedValues[locale.languageCode]!['title_total_sum']!;
+  String get titleMaster => _localizedValues[locale.languageCode]!['title_master']!;
+  String get titleTotalBalance => _localizedValues[locale.languageCode]!['title_total_balance']!;
+  String get titleCashflow => _localizedValues[locale.languageCode]!['title_cashflow']!;
+  String get titleLastOperations => _localizedValues[locale.languageCode]!['title_last_operations']!;
+  String get titleDataControl => _localizedValues[locale.languageCode]!['title_data_control']!;
+  String get titleReports => _localizedValues[locale.languageCode]!['title_reports']!;
+  String get titleFilters => _localizedValues[locale.languageCode]!['title_filters']!;
 
-  String get emptyTitleError => _localizedValues[locale.languageCode]['empty_title_error'];
-  String get emptyBudgetError => _localizedValues[locale.languageCode]['empty_budget_error'];
-  String get emptyAccountError => _localizedValues[locale.languageCode]['empty_account_error'];
-  String get emptyCategoryError => _localizedValues[locale.languageCode]['empty_category_error'];
-  String get emptyRecAccountError => _localizedValues[locale.languageCode]['empty_rec_account_error'];
-  String get emptySumError => _localizedValues[locale.languageCode]['empty_sum_error'];
-  String get errorNoGPServices => _localizedValues[locale.languageCode]['error_no_gp_services'];
+  String get emptyTitleError => _localizedValues[locale.languageCode]!['empty_title_error']!;
+  String get emptyBudgetError => _localizedValues[locale.languageCode]!['empty_budget_error']!;
+  String get emptyAccountError => _localizedValues[locale.languageCode]!['empty_account_error']!;
+  String get emptyCategoryError => _localizedValues[locale.languageCode]!['empty_category_error']!;
+  String get emptyRecAccountError => _localizedValues[locale.languageCode]!['empty_rec_account_error']!;
+  String get emptySumError => _localizedValues[locale.languageCode]!['empty_sum_error']!;
+  String get errorNoGPServices => _localizedValues[locale.languageCode]!['error_no_gp_services']!;
 
-  String get typeInput => _localizedValues[locale.languageCode]['type_input'];
-  String get typeOutput => _localizedValues[locale.languageCode]['type_output'];
-  String get typeTransfer => _localizedValues[locale.languageCode]['type_transfer'];
+  String get typeInput => _localizedValues[locale.languageCode]!['type_input']!;
+  String get typeOutput => _localizedValues[locale.languageCode]!['type_output']!;
+  String get typeTransfer => _localizedValues[locale.languageCode]!['type_transfer']!;
 
-  String get accountCardTitle => _localizedValues[locale.languageCode]['account_card_title'];
-  String get categoryCardTitle => _localizedValues[locale.languageCode]['category_card_title'];
-  String get operationCardTitle => _localizedValues[locale.languageCode]['operation_card_title'];
+  String get accountCardTitle => _localizedValues[locale.languageCode]!['account_card_title']!;
+  String get categoryCardTitle => _localizedValues[locale.languageCode]!['category_card_title']!;
+  String get operationCardTitle => _localizedValues[locale.languageCode]!['operation_card_title']!;
 
-  String get newAccountCardTitle => _localizedValues[locale.languageCode]['new_account_card_title'];
-  String get newCategoryCardTitle => _localizedValues[locale.languageCode]['new_category_card_title'];
-  String get newOperationCardTitle => _localizedValues[locale.languageCode]['new_operation_card_title'];
+  String get newAccountCardTitle => _localizedValues[locale.languageCode]!['new_account_card_title']!;
+  String get newCategoryCardTitle => _localizedValues[locale.languageCode]!['new_category_card_title']!;
+  String get newOperationCardTitle => _localizedValues[locale.languageCode]!['new_operation_card_title']!;
 
-  String get hintAccount => _localizedValues[locale.languageCode]['hint_account'];
-  String get hintCategory => _localizedValues[locale.languageCode]['hint_category'];
-  String get hintEmptyList => _localizedValues[locale.languageCode]['hint_empty_list'];
-  String get emptyListAccounts => _localizedValues[locale.languageCode]['empty_list_accounts'];
-  String get emptyListCategories => _localizedValues[locale.languageCode]['empty_list_categories'];
-  String get emptyListOperations => _localizedValues[locale.languageCode]['empty_list_operations'];
-  String get emptyListBudgets => _localizedValues[locale.languageCode]['empty_list_budgets'];
+  String get hintAccount => _localizedValues[locale.languageCode]!['hint_account']!;
+  String get hintCategory => _localizedValues[locale.languageCode]!['hint_category']!;
+  String get hintEmptyList => _localizedValues[locale.languageCode]!['hint_empty_list']!;
+  String get emptyListAccounts => _localizedValues[locale.languageCode]!['empty_list_accounts']!;
+  String get emptyListCategories => _localizedValues[locale.languageCode]!['empty_list_categories']!;
+  String get emptyListOperations => _localizedValues[locale.languageCode]!['empty_list_operations']!;
+  String get emptyListBudgets => _localizedValues[locale.languageCode]!['empty_list_budgets']!;
 
-  String get mesOperationDeleted => _localizedValues[locale.languageCode]['mes_operation_deleted'];
-  String get mesOperationCreated => _localizedValues[locale.languageCode]['mes_operation_created'];
-  String get mesOperationCanceled => _localizedValues[locale.languageCode]['mes_operation_canceled'];
-  String get mesDatabaseBackuped => _localizedValues[locale.languageCode]['mes_database_backuped'];
-  String get mesDatabaseRestored => _localizedValues[locale.languageCode]['mes_database_restored'];
-  String get mesDatabaseDeleted => _localizedValues[locale.languageCode]['mes_database_deleted'];
-  String get mesAccountArchived => _localizedValues[locale.languageCode]['mes_account_archived'];
-  String get mesCategoryArchived => _localizedValues[locale.languageCode]['mes_category_archived'];
-  String get mesAreYouSure => _localizedValues[locale.languageCode]['mes_are_you_sure'];
+  String get mesOperationDeleted => _localizedValues[locale.languageCode]!['mes_operation_deleted']!;
+  String get mesOperationCreated => _localizedValues[locale.languageCode]!['mes_operation_created']!;
+  String get mesOperationCanceled => _localizedValues[locale.languageCode]!['mes_operation_canceled']!;
+  String get mesDatabaseBackuped => _localizedValues[locale.languageCode]!['mes_database_backuped']!;
+  String get mesDatabaseRestored => _localizedValues[locale.languageCode]!['mes_database_restored']!;
+  String get mesDatabaseDeleted => _localizedValues[locale.languageCode]!['mes_database_deleted']!;
+  String get mesAccountArchived => _localizedValues[locale.languageCode]!['mes_account_archived']!;
+  String get mesCategoryArchived => _localizedValues[locale.languageCode]!['mes_category_archived']!;
+  String get mesAreYouSure => _localizedValues[locale.languageCode]!['mes_are_you_sure']!;
 
-  String get accounts => _localizedValues[locale.languageCode]['accounts'];
-  String get noAccounts => _localizedValues[locale.languageCode]['no_accounts'];
-  String get categories => _localizedValues[locale.languageCode]['categories'];
-  String get noCategories => _localizedValues[locale.languageCode]['no_categories'];
-  String get operations => _localizedValues[locale.languageCode]['operations'];
-  String get noOperations => _localizedValues[locale.languageCode]['no_operations'];
-  String get budgets => _localizedValues[locale.languageCode]['budgets'];
-  String get itemMenuService => _localizedValues[locale.languageCode]['item_menu_service'];
-  String get itemBarMain => _localizedValues[locale.languageCode]['item_bar_main'];
-  String get period => _localizedValues[locale.languageCode]['period'];
-  String get choosePeriod => _localizedValues[locale.languageCode]['choose_period'];
-  String get chooseAccount => _localizedValues[locale.languageCode]['choose_account'];
-  String get chooseCategory => _localizedValues[locale.languageCode]['choose_category'];
-  String get inputCategory => _localizedValues[locale.languageCode]['input_category'];
-  String get outputCategory => _localizedValues[locale.languageCode]['output_category'];
-  String get source => _localizedValues[locale.languageCode]['source'];
-  String get receiver => _localizedValues[locale.languageCode]['receiver'];
+  String get accounts => _localizedValues[locale.languageCode]!['accounts']!;
+  String get noAccounts => _localizedValues[locale.languageCode]!['no_accounts']!;
+  String get categories => _localizedValues[locale.languageCode]!['categories']!;
+  String get noCategories => _localizedValues[locale.languageCode]!['no_categories']!;
+  String get operations => _localizedValues[locale.languageCode]!['operations']!;
+  String get noOperations => _localizedValues[locale.languageCode]!['no_operations']!;
+  String get budgets => _localizedValues[locale.languageCode]!['budgets']!;
+  String get itemMenuService => _localizedValues[locale.languageCode]!['item_menu_service']!;
+  String get itemBarMain => _localizedValues[locale.languageCode]!['item_bar_main']!;
+  String get period => _localizedValues[locale.languageCode]!['period']!;
+  String get choosePeriod => _localizedValues[locale.languageCode]!['choose_period']!;
+  String get chooseAccount => _localizedValues[locale.languageCode]!['choose_account']!;
+  String get chooseCategory => _localizedValues[locale.languageCode]!['choose_category']!;
+  String get inputCategory => _localizedValues[locale.languageCode]!['input_category']!;
+  String get outputCategory => _localizedValues[locale.languageCode]!['output_category']!;
+  String get source => _localizedValues[locale.languageCode]!['source']!;
+  String get receiver => _localizedValues[locale.languageCode]!['receiver']!;
 
-  String get yes => _localizedValues[locale.languageCode]['yes'];
-  String get cancel => _localizedValues[locale.languageCode]['cancel'];
-  String get create => _localizedValues[locale.languageCode]['create'];
-  String get save => _localizedValues[locale.languageCode]['save'];
-  String get delete => _localizedValues[locale.languageCode]['delete'];
-  String get duplicate => _localizedValues[locale.languageCode]['duplicate'];
-  String get next => _localizedValues[locale.languageCode]['next'];
-  String get more => _localizedValues[locale.languageCode]['more'];
-  String get backup => _localizedValues[locale.languageCode]['backup'];
-  String get restore => _localizedValues[locale.languageCode]['restore'];
-  String get choose => _localizedValues[locale.languageCode]['choose'];
-  String get archive => _localizedValues[locale.languageCode]['archive'];
-  String get expand => _localizedValues[locale.languageCode]['expand'];
-  String get collapse => _localizedValues[locale.languageCode]['collapse'];
-  String get apply => _localizedValues[locale.languageCode]['apply'];
-  String get reset => _localizedValues[locale.languageCode]['reset'];
+  String get yes => _localizedValues[locale.languageCode]!['yes']!;
+  String get cancel => _localizedValues[locale.languageCode]!['cancel']!;
+  String get create => _localizedValues[locale.languageCode]!['create']!;
+  String get save => _localizedValues[locale.languageCode]!['save']!;
+  String get delete => _localizedValues[locale.languageCode]!['delete']!;
+  String get duplicate => _localizedValues[locale.languageCode]!['duplicate']!;
+  String get next => _localizedValues[locale.languageCode]!['next']!;
+  String get more => _localizedValues[locale.languageCode]!['more']!;
+  String get backup => _localizedValues[locale.languageCode]!['backup']!;
+  String get restore => _localizedValues[locale.languageCode]!['restore']!;
+  String get choose => _localizedValues[locale.languageCode]!['choose']!;
+  String get archive => _localizedValues[locale.languageCode]!['archive']!;
+  String get expand => _localizedValues[locale.languageCode]!['expand']!;
+  String get collapse => _localizedValues[locale.languageCode]!['collapse']!;
+  String get apply => _localizedValues[locale.languageCode]!['apply']!;
+  String get reset => _localizedValues[locale.languageCode]!['reset']!;
 
-  String get btnAddAccount => _localizedValues[locale.languageCode]['btn_add_account'];
-  String get btnShowAll => _localizedValues[locale.languageCode]['btn_show_all'];
-  String get btnShowReports => _localizedValues[locale.languageCode]['btn_show_reports'];
-  String get btnDeleteAll => _localizedValues[locale.languageCode]['btn_delete_all'];
+  String get btnAddAccount => _localizedValues[locale.languageCode]!['btn_add_account']!;
+  String get btnShowAll => _localizedValues[locale.languageCode]!['btn_show_all']!;
+  String get btnShowReports => _localizedValues[locale.languageCode]!['btn_show_reports']!;
+  String get btnDeleteAll => _localizedValues[locale.languageCode]!['btn_delete_all']!;
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

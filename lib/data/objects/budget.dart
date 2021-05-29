@@ -7,5 +7,5 @@ class Budget{
   final DateTime date;
   final int sum;
 
-  Budget({this.type, this.category, this.date, this.sum});
+  Budget({required this.type, required this.category, required this.date, required this.sum});
 }

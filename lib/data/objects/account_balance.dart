@@ -3,20 +3,18 @@ import 'package:cashflow/data/objects/account.dart';
 class AccountBalance {
   final int id;
   final String title;
-  final bool archive;
   final int balance;
 
-  const AccountBalance({this.id, this.title, this.archive, this.balance});
+  const AccountBalance({required this.id, required this.title, required this.balance});
 
-  AccountBalance copyWith({int id, String title, bool archive, int balance}) =>
+  AccountBalance copyWith({int? id, String? title, int? balance}) =>
       AccountBalance(
         id: id ?? this.id,
         title: title ?? this.title,
-        archive: archive ?? this.archive,
         balance: balance ?? this.balance,
       );
 
-  Account getAccount() => Account(id: id, title: title, archive: archive);
+  Account getAccount() => Account(id: id, title: title);
 
   @override
   bool operator ==(Object other) =>
