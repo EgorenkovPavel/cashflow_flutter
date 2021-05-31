@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:cashflow/data/database/database.dart';
 import 'package:cashflow/data/objects/budget.dart';
 import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
@@ -14,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BudgetCard extends StatefulWidget {
-  Category? category;
+  late final Category? category;
   late int month;
   late int year;
   late final BudgetType budgetType;
@@ -76,8 +75,7 @@ class _BudgetCardState extends State<BudgetCard> {
   @override
   void initState() {
     _bloc = BlocProvider.of<BudgetCardBloc>(context)
-      ..add(Initial(
-          widget.category, widget.budgetType, widget.month, widget.year));
+      ..init(widget.category, widget.budgetType, widget.month, widget.year);
 
     super.initState();
   }
@@ -95,19 +93,19 @@ class _BudgetCardState extends State<BudgetCard> {
       listener: (BuildContext context, state) {
         if (state is SumLoaded) {
           sumController.text = state.sum.toString();
-        }else if(state is Close){
+        } else if (state is Close) {
           Navigator.of(context).pop();
         }
       },
       child: ItemCard(
         title: AppLocalizations.of(context).titleBudget,
-        onSave: (context) => _bloc.add(Save(sumController.text)),
+        onSave: (context) => _bloc.save(int.parse(sumController.text)),
         child: Column(
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                MonthInput(onChange: (value) => _bloc.add(SetMonth(value))),
+                MonthInput(onChange: (value) => _bloc.setMonth(value)),
                 BlocBuilder<BudgetCardBloc, BudgetCardState>(
                   buildWhen:
                       (BudgetCardState previous, BudgetCardState current) {
@@ -117,8 +115,8 @@ class _BudgetCardState extends State<BudgetCard> {
                     if (state is DataState) {
                       return YearInput(
                           year: state.year,
-                          onInc: () => _bloc.add(IncYear()),
-                          onDec: () => _bloc.add(DecYear()));
+                          onInc: () => _bloc.incrementYear(),
+                          onDec: () => _bloc.decrementYear());
                     } else {
                       return SizedBox();
                     }
@@ -147,8 +145,7 @@ class _BudgetCardState extends State<BudgetCard> {
                           return CategoryList(
                             category: state.category,
                             categories: categories,
-                            onChange: (category) =>
-                                _bloc.add(SetCategory(category)),
+                            onChange: (category) => _bloc.setCategory(category),
                           );
                         });
                   } else {
@@ -298,39 +295,6 @@ class CategoryList extends StatelessWidget {
   }
 }
 
-abstract class BudgetCardEvent {}
-
-class Initial extends BudgetCardEvent {
-  final Category? category;
-  final BudgetType budgetType;
-  final int month;
-  final int year;
-
-  Initial(this.category, this.budgetType, this.month, this.year);
-}
-
-class Save extends BudgetCardEvent {
-  final String sum;
-
-  Save(this.sum);
-}
-
-class IncYear extends BudgetCardEvent {}
-
-class DecYear extends BudgetCardEvent {}
-
-class SetMonth extends BudgetCardEvent {
-  final int month;
-
-  SetMonth(this.month);
-}
-
-class SetCategory extends BudgetCardEvent {
-  final Category category;
-
-  SetCategory(this.category);
-}
-
 abstract class BudgetCardState {}
 
 class DataState extends BudgetCardState {
@@ -349,10 +313,10 @@ class SumLoaded extends BudgetCardState {
 
 class Close extends BudgetCardState {}
 
-class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
+class BudgetCardBloc extends Cubit<BudgetCardState> {
   final Repository _repository;
   static List<int> months = List.generate(12, (index) => index + 1);
-  late Category? category;
+  late Category? _category;
   late int _month;
   late int _year;
   late BudgetType _budgetType;
@@ -360,48 +324,55 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
 
   BudgetCardBloc(this._repository) : super(DataState(1, 1, null));
 
-  @override
-  Stream<BudgetCardState> mapEventToState(BudgetCardEvent event) async* {
-    if (event is Initial) {
-      category = event.category;
+  Future<void> init(
+      Category? category, BudgetType budgetType, int month, int year) async {
+    _category = category;
+    _month = month;
+    _year = year;
+    _budgetType = budgetType;
 
-      _month = event.month;
-      _year = event.year;
-      _budgetType = event.budgetType;
+    emit(DataState(_month, _year, category));
 
-      yield DataState(_month, _year, category);
-
-      if (event.category != null) {
-        _oldBudgetData = await _repository.getBudget(
-            event.category!.id, event.budgetType, event.month, event.year);
-        if (_oldBudgetData != null) {
-          yield SumLoaded(_oldBudgetData!.sum);
-        }
-      }
-    } else if (event is IncYear) {
-      ++_year;
-      yield DataState(_month, _year, category);
-    } else if (event is DecYear) {
-      --_year;
-      yield DataState(_month, _year, category);
-    } else if (event is SetMonth) {
-      _month = event.month;
-      yield DataState(_month, _year, category);
-    } else if (event is SetCategory) {
-      category = event.category;
-      yield DataState(_month, _year, category);
-    } else if (event is Save) {
+    if (_category != null) {
+      _oldBudgetData = await _repository.getBudget(
+          _category!.id, _budgetType, _month, _year);
       if (_oldBudgetData != null) {
-        await _repository.deleteBudget(_oldBudgetData!);
-        _oldBudgetData = null;
+        emit(SumLoaded(_oldBudgetData!.sum));
       }
-      await _repository.insertBudget(Budget(
-          month: _month,
-          year: _year,
-          category: category!,
-          sum: int.parse(event.sum),
-          type: _budgetType));
-      yield Close();
     }
+  }
+
+  void incrementYear() {
+    ++_year;
+    emit(DataState(_month, _year, _category));
+  }
+
+  void decrementYear() {
+    --_year;
+    emit(DataState(_month, _year, _category));
+  }
+
+  void setMonth(int month) {
+    _month = month;
+    emit(DataState(_month, _year, _category));
+  }
+
+  void setCategory(Category category) {
+    _category = _category;
+    emit(DataState(_month, _year, _category));
+  }
+
+  Future<void> save(int sum) async {
+    if (_oldBudgetData != null) {
+      await _repository.deleteBudget(_oldBudgetData!);
+      _oldBudgetData = null;
+    }
+    await _repository.insertBudget(Budget(
+        month: _month,
+        year: _year,
+        category: _category!,
+        sum: sum,
+        type: _budgetType));
+    emit(Close());
   }
 }
