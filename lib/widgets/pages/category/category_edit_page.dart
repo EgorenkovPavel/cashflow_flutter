@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cashflow/data/database/database.dart';
+import 'package:cashflow/data/objects/budget.dart';
+import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation_list_filter.dart';
 import 'package:cashflow/data/objects/operation_type.dart';
@@ -80,7 +82,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_tabController.index == 0) {
-              BudgetCard.open(context, widget.id);
+              BudgetCard.add(context, BudgetType.MONTH);
             } else if (_tabController.index == 1) {
               OperationList.addItem(context);
             }
@@ -92,13 +94,13 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   }
 
   Widget _buildBudgetList(BuildContext context) {
-    return StreamBuilder<List<BudgetDB>>(
+    return StreamBuilder<List<Budget>>(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return _emptyBudgetListHint(context);
         }
 
-        List<BudgetDB> list = snapshot.data;
+        List<Budget> list = snapshot.data;
 
         if (list.isEmpty) {
           return _emptyBudgetListHint(context);

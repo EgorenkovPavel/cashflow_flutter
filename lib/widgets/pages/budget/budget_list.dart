@@ -22,10 +22,9 @@ class BudgetList extends StatelessWidget {
             stream: Provider.of<Repository>(context)
                 .watchBudgetByType(BudgetType.MONTH),
             builder: (context, snapshot) {
-
               List<Budget> budgets = [];
 
-              if (snapshot.hasData){
+              if (snapshot.hasData) {
                 budgets.addAll(snapshot.data!);
               }
 
@@ -49,7 +48,7 @@ class BudgetList extends StatelessWidget {
             builder: (context, snapshot) {
               List<Budget> budgets = [];
 
-              if (snapshot.hasData){
+              if (snapshot.hasData) {
                 budgets.addAll(snapshot.data!);
               }
 
@@ -85,7 +84,12 @@ class BudgetListHeader extends StatelessWidget {
         maxHeight: 60,
         child: Container(
             color: Theme.of(context).backgroundColor,
-            child: Center(child: Text(_title))),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+              Text(_title),
+              IconButton(icon: Icon(Icons.add),onPressed: (){},)
+            ])),
       ),
     );
   }
