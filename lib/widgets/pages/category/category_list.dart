@@ -20,6 +20,7 @@ class CategoryList extends StatelessWidget {
       slivers: <Widget>[
         CategoryListHeader(
           title: AppLocalizations.of(context).typeInput,
+          onAdd: () => CategoryInputPage.open(context, type: OperationType.INPUT),
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -37,6 +38,7 @@ class CategoryList extends StatelessWidget {
             }),
         CategoryListHeader(
           title: AppLocalizations.of(context).typeOutput,
+          onAdd: () => CategoryInputPage.open(context, type: OperationType.OUTPUT),
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -58,11 +60,12 @@ class CategoryList extends StatelessWidget {
 }
 
 class CategoryListHeader extends StatelessWidget {
-  const CategoryListHeader({Key? key, required String title})
+  const CategoryListHeader({Key? key, required String title, required this.onAdd})
       : _title = title,
         super(key: key);
 
   final String _title;
+  final void Function() onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +76,16 @@ class CategoryListHeader extends StatelessWidget {
         maxHeight: 60,
         child: Container(
           color: Theme.of(context).backgroundColor,
-          child: Center(
-            child: Text(
-              _title,
-              style: Theme.of(context).textTheme.headline6,
+          child: Stack(
+              alignment: Alignment.center,
+            children: [Center(
+              child: Text(
+                _title,
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
+              Positioned(child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,), right: 0.0,)
+            ]
           ),
         ),
       ),
@@ -113,11 +121,12 @@ class CategoryGrid extends StatelessWidget {
                   category: e,
                 ))
             .toList()
-              ..add(AddButton(
-                onTap: () {
-                  CategoryInputPage.open(context, type: _type);
-                },
-              ))),
+              // ..add(AddButton(
+              //   onTap: () {
+              //     CategoryInputPage.open(context, type: _type);
+              //   },
+              // )),
+        ),
       ),
     );
   }

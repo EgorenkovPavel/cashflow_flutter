@@ -603,7 +603,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       (select(categories)..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<CategoryDB>> getAllCategories() => select(categories).get();
+  Future<List<CategoryDB>> getAllCategories() =>
+      (select(categories)..orderBy([(t) => OrderingTerm(expression: t.title)]))
+          .get();
 
   Future<CategoryDB> getCategoryById(int id) =>
       (select(categories)..where((c) => c.id.equals(id))).getSingle();

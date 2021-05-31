@@ -60,6 +60,9 @@ class Repository extends ChangeNotifier {
   Stream<List<Category>> watchAllCategories() =>
       _categoryRepo.watchAllCategories();
 
+  Future<List<Category>> getAllCategories() =>
+      _categoryRepo.getAllCategories();
+
   Future<Category> getCategoryById(int id) => _categoryRepo.getCategoryById(id);
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
@@ -183,6 +186,9 @@ class _CategoryRepo {
 
   Stream<List<Category>> watchAllCategories() =>
       db.categoryDao.watchAllCategories().map(_mapCategoryList);
+
+  Future<List<Category>> getAllCategories() async =>
+      _mapCategoryList(await db.categoryDao.getAllCategories());
 
   Future<Category> getCategoryById(int id) async =>
       _mapCategory(await db.categoryDao.getCategoryById(id));
