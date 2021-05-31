@@ -14,10 +14,10 @@ class Carousel<T> extends StatelessWidget {
   Carousel(
       {Key? key,
       required this.items,
-      required this.onPageChanged,
-      required this.itemBuilder,
-      required this.initialItemFinder,
-      required this.itemHeight})
+        required this.onPageChanged,
+        required this.itemBuilder,
+        required this.initialItemFinder,
+        required this.itemHeight})
       : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class Carousel<T> extends StatelessWidget {
                         ? _pageController.initialPage.toDouble()
                         : _pageController.page;
                     return Transform.scale(
-                      scale: 1 - (min((pos - page!.toInt()).abs(), 1)) / 10,
+                      scale: 1 - (min((pos - (page ?? 0)).abs(), 1)) / 10,
                       child: child,
                     );
                   },
