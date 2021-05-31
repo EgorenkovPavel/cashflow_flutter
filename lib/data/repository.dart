@@ -101,10 +101,10 @@ class Repository extends ChangeNotifier {
 
   //Budget
 
-  Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
-  _budgetRepo.getBudget(categoryId, month, year);
+  Future<Budget> getBudget(int categoryId, BudgetType type, int month, int year) =>
+  _budgetRepo.getBudget(categoryId, type, month, year);
 
-  Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
+  Stream<List<Budget>> watchBudgetByCategory(int categoryId) =>
   _budgetRepo.watchBudgetByCategory(categoryId);
 
   Stream<List<Budget>> watchBudgetByType(BudgetType type) => _budgetRepo.watchBudgetByType(type);
@@ -113,7 +113,7 @@ class Repository extends ChangeNotifier {
 
   Future<void> updateBudget(BudgetDB entity) => _budgetRepo.updateBudget(entity);
 
-  Future<void> deleteBudget(BudgetDB entity) => _budgetRepo.deleteBudget(entity);
+  Future<void> deleteBudget(Budget entity) => _budgetRepo.deleteBudget(entity);
 
   //Backup
 
@@ -280,15 +280,21 @@ class _BudgetRepo {
   final List<Budget> Function(List<BudgetItem>) _mapBudgetList =
   (list) => const BudgetMapper().mapListToDart(list);
 
-  Future<BudgetDB> getBudget(int categoryId, int month, int year) =>
-      db.budgetDao.getBudget(categoryId, month, year);
+  final Budget Function(BudgetItem) _mapBudget =
+      (list) => const BudgetMapper().mapToDart(list);
+
+  final BudgetDB Function(Budget) _mapBudgetDB =
+  (item) => BudgetDB(year: item.year, month: item.month, category: item.category.id, budgetType: item.type, sum: item.sum);
+
+  Future<Budget> getBudget(int categoryId, BudgetType type, int month, int year) async =>
+      _mapBudget(await db.budgetDao.getBudget(categoryId, type, month, year));
 
   //
   // Stream<List<BalanceOnDate>> watchMonthBudget() =>
   //     db.budgetDao.watchMonthBudget();
   //
-  Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) =>
-      db.budgetDao.watchBudgetByCategory(categoryId);
+  Stream<List<Budget>> watchBudgetByCategory(int categoryId) =>
+      db.budgetDao.watchBudgetByCategory(categoryId).map(_mapBudgetList);
 
   Stream<List<Budget>> watchBudgetByType(BudgetType type) =>
       db.budgetDao.watchBudgetByType(type).map(_mapBudgetList);
@@ -303,8 +309,8 @@ class _BudgetRepo {
   Future<void> updateBudget(BudgetDB entity) =>
       db.budgetDao.updateBudget(entity);
 
-  Future<void> deleteBudget(BudgetDB entity) =>
-      db.budgetDao.deleteBudget(entity);
+  Future<void> deleteBudget(Budget entity) =>
+      db.budgetDao.deleteBudget(_mapBudgetDB(entity));
 }
 
 class _Backuper {

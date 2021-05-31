@@ -1322,18 +1322,52 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
     }).toList();
   }
 
-  Future<BudgetDB> getBudget(int categoryId, int month, int year) {
-    return (select(budgets)
+  Future<BudgetItem> getBudget(
+      int categoryId, BudgetType type, int month, int year) async {
+    var row = await (select(budgets)
           ..where((tbl) =>
+              tbl.budgetType
+                  .equals(const BudgetTypeConverter().mapToSql(type)) &
               tbl.category.equals(categoryId) &
               tbl.month.equals(month) &
               tbl.year.equals(year)))
-        .getSingle();
+        .join([
+      innerJoin(
+        categories,
+        categories.id.equalsExp(budgets.category),
+      ),
+    ]).getSingle();
+
+    var budget = row.readTable(budgets);
+    var category = row.readTable(categories);
+    return BudgetItem(
+        year: budget.year,
+        month: budget.month,
+        category: category,
+        budgetType: budget.budgetType,
+        sum: budget.sum);
   }
 
-  Stream<List<BudgetDB>> watchBudgetByCategory(int categoryId) {
-    return (select(budgets)..where((tbl) => tbl.category.equals(categoryId)))
-        .watch();
+  Stream<List<BudgetItem>> watchBudgetByCategory(int categoryId) {
+    return (select(budgets)
+      ..where((tbl) => tbl.category.equals(categoryId)))
+        .join([
+      innerJoin(
+        categories,
+        categories.id.equalsExp(budgets.category),
+      ),
+    ])
+        .watch()
+        .map((rows) => rows.map((row) {
+      var budget = row.readTable(budgets);
+      var category = row.readTable(categories);
+      return BudgetItem(
+          year: budget.year,
+          month: budget.month,
+          category: category,
+          budgetType: budget.budgetType,
+          sum: budget.sum);
+    }).toList());
   }
 
   Stream<List<BudgetItem>> watchBudgetByType(BudgetType type) {
@@ -1370,6 +1404,8 @@ class BudgetDao extends DatabaseAccessor<Database> with _$BudgetDaoMixin {
   Future<int> deleteBudget(BudgetDB entity) {
     return (delete(budgets)
           ..where((tbl) =>
+              tbl.budgetType.equals(
+                  const BudgetTypeConverter().mapToSql(entity.budgetType)) &
               tbl.category.equals(entity.category) &
               tbl.month.equals(entity.month) &
               tbl.year.equals(entity.year)))
