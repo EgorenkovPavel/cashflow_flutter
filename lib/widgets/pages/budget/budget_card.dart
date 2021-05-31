@@ -395,12 +395,12 @@ class BudgetCardBloc extends Bloc<BudgetCardEvent, BudgetCardState> {
         await _repository.deleteBudget(_oldBudgetData!);
         _oldBudgetData = null;
       }
-      await _repository.insertBudget(BudgetDB(
+      await _repository.insertBudget(Budget(
           month: _month,
           year: _year,
-          category: category!.id,
+          category: category!,
           sum: int.parse(event.sum),
-          budgetType: _budgetType));
+          type: _budgetType));
       yield Close();
     }
   }

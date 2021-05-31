@@ -112,9 +112,9 @@ class Repository extends ChangeNotifier {
 
   Stream<List<Budget>> watchBudgetByType(BudgetType type) => _budgetRepo.watchBudgetByType(type);
 
-  Future<void> insertBudget(BudgetDB entity) => _budgetRepo.insertBudget(entity);
+  Future<void> insertBudget(Budget entity) => _budgetRepo.insertBudget(entity);
 
-  Future<void> updateBudget(BudgetDB entity) => _budgetRepo.updateBudget(entity);
+  Future<void> updateBudget(Budget entity) => _budgetRepo.updateBudget(entity);
 
   Future<void> deleteBudget(Budget entity) => _budgetRepo.deleteBudget(entity);
 
@@ -309,11 +309,11 @@ class _BudgetRepo {
   // Stream<List<BudgetData>> watchBudget(DateTime date) =>
   //     db.budgetDao.watchBudget(date);
   //
-  Future<void> insertBudget(BudgetDB entity) =>
-      db.budgetDao.insertBudget(entity);
+  Future<void> insertBudget(Budget entity) =>
+      db.budgetDao.insertBudget(_mapBudgetDB(entity));
 
-  Future<void> updateBudget(BudgetDB entity) =>
-      db.budgetDao.updateBudget(entity);
+  Future<void> updateBudget(Budget entity) =>
+      db.budgetDao.updateBudget(_mapBudgetDB(entity));
 
   Future<void> deleteBudget(Budget entity) =>
       db.budgetDao.deleteBudget(_mapBudgetDB(entity));
