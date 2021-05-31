@@ -3,6 +3,7 @@ import 'package:cashflow/data/objects/budget_type.dart';
 import 'package:cashflow/data/objects/category.dart';
 import 'package:cashflow/data/objects/operation_type.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/widgets/pages/budget/budget_card.dart';
 import 'package:cashflow/widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class BudgetList extends StatelessWidget {
       slivers: <Widget>[
         BudgetListHeader(
           title: 'Month budgets',
+          onAdd: () => BudgetCard.add(context, BudgetType.MONTH),
         ),
         StreamBuilder<List<Budget>>(
             stream: Provider.of<Repository>(context)
@@ -41,6 +43,7 @@ class BudgetList extends StatelessWidget {
             }),
         BudgetListHeader(
           title: 'Year budgets',
+          onAdd: () => BudgetCard.add(context, BudgetType.YEAR),
         ),
         StreamBuilder<List<Budget>>(
             stream: Provider.of<Repository>(context)
@@ -69,11 +72,12 @@ class BudgetList extends StatelessWidget {
 }
 
 class BudgetListHeader extends StatelessWidget {
-  const BudgetListHeader({Key? key, required String title})
+  const BudgetListHeader({Key? key, required String title, this.onAdd})
       : _title = title,
         super(key: key);
 
   final String _title;
+  final void Function()? onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +88,11 @@ class BudgetListHeader extends StatelessWidget {
         maxHeight: 60,
         child: Container(
             color: Theme.of(context).backgroundColor,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
+              alignment: Alignment.center,
                 children: [
-              Text(_title),
-              IconButton(icon: Icon(Icons.add),onPressed: (){},)
+              Center(child: Text(_title, style: Theme.of(context).textTheme.headline6,)),
+              Positioned(child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,), right: 0.0,)
             ])),
       ),
     );

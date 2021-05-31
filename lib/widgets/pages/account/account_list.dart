@@ -29,6 +29,7 @@ class AccountList extends StatelessWidget {
             slivers: [
               AccountListHeader(
                 balance: _balance,
+                onAdd: () => AccountInputPage.open(context),
               ),
               SliverPadding(padding: EdgeInsets.all(16.0),
               sliver: SliverGrid(
@@ -44,11 +45,11 @@ class AccountList extends StatelessWidget {
                     account: e,
                   ))
                       .toList()
-                    ..add(
-                      AddButton(
-                        onTap: () => AccountInputPage.open(context),
-                      ),
-                    ),
+                    // ..add(
+                    //   AddButton(
+                    //     onTap: () => AccountInputPage.open(context),
+                    //   ),
+                    // ),
                 ),
               ),),
 
@@ -59,11 +60,12 @@ class AccountList extends StatelessWidget {
 }
 
 class AccountListHeader extends StatelessWidget {
-  const AccountListHeader({Key? key, required int balance})
+  const AccountListHeader({Key? key, required int balance, required this.onAdd})
       : _balance = balance,
         super(key: key);
 
   final int _balance;
+  final void Function() onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -74,18 +76,23 @@ class AccountListHeader extends StatelessWidget {
         maxHeight: 60,
         child: Container(
           color: Theme.of(context).backgroundColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                AppLocalizations.of(context).titleTotalBalance,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              Text(
-                NumberFormat().format(_balance),
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ],
+          child: Stack(
+            alignment: Alignment.center,
+            children: [Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  AppLocalizations.of(context).titleTotalBalance,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  NumberFormat().format(_balance),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+              Positioned(child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,), right: 0.0,)
+            ]
           ),
         ),
       ),
