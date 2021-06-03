@@ -46,9 +46,32 @@ void main() {
         ),
       ],
       child: MultiProvider(
-        providers: [ChangeNotifierProvider(create: (context) => _repository)],
+        providers: [
+          ChangeNotifierProvider(create: (context) => _repository),
+          ChangeNotifierProvider(create: (context) => ThemeModel())
+        ],
         child: MyApp(),
       )));
+}
+
+class ThemeModel with ChangeNotifier {
+  ThemeMode _mode;
+
+  ThemeMode get mode => _mode;
+
+  ThemeModel({ThemeMode mode = ThemeMode.light}) : _mode = mode;
+
+  void toggleMode() {
+    _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+
+  void setMode(ThemeMode mode){
+    if(_mode != mode){
+      _mode = mode;
+      notifyListeners();
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -58,11 +81,36 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cashflow',
       theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.grey[900],
+        primarySwatch: Colors.grey,
+        accentColor: Colors.deepOrangeAccent,
+        primaryTextTheme: TextTheme(
+
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            backgroundColor: Colors.black,
+
+          ),
+          iconTheme: IconThemeData(
+              color: Colors.black
+          ),
+          actionsIconTheme: IconThemeData(
+            color: Colors.black
+          ),
+          //brightness: Brightness.light,
+        ),
+      ),
+      darkTheme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.grey[900],
         primarySwatch: Colors.grey,
         accentColor: Colors.deepOrangeAccent,
-      ),
+       ),
+      themeMode: context.watch<ThemeModel>()._mode,
       localizationsDelegates: [
         const AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -74,7 +122,8 @@ class MyApp extends StatelessWidget {
       ],
       initialRoute: StartPage.routeName,
       routes: <String, WidgetBuilder>{
-        StartPage.routeName: (BuildContext context) => StartPage(), //HomePage(),
+        StartPage.routeName: (BuildContext context) => StartPage(),
+        //HomePage(),
         OperationInputPage.routeName: (BuildContext context) =>
             OperationInputPage(),
         BackupPage.routeName: (BuildContext context) => BackupPage(),

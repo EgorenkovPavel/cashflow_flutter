@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashflow/data/repository.dart';
+import 'package:cashflow/main.dart';
 import 'package:cashflow/utils/app_localization.dart';
 import 'package:cashflow/utils/google_http_client.dart';
+import 'package:cashflow/widgets/pages/mode_toggle_button.dart';
 import 'package:cashflow/widgets/pages/service/drive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +20,7 @@ class BackupPage extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.headline6,
+        // style: Theme.of(context).textTheme.headline6,
       ),
     );
   }
@@ -27,7 +29,11 @@ class BackupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).itemMenuService),
+
+          title: Text(AppLocalizations.of(context).itemMenuService,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+
         ),
         body: Builder(
           builder: (BuildContext context) {
@@ -36,6 +42,7 @@ class BackupPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  ModeToggleButton(mode: context.watch<ThemeModel>().mode, onPressed: (mode) => context.read<ThemeModel>().setMode(mode)),
                   sectionTitle(context, 'Google drive'),
                   Flex(
                     direction: Axis.horizontal,

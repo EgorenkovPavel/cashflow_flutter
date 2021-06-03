@@ -49,6 +49,7 @@ dev_dependencies:
   google_sign_in: ^5.0.4
 
   path_provider: ^2.0.2
+  shared_preferences: ^2.0.6
 
   flutter_keyboard_visibility: ^5.0.0
 # For information on the generic Dart part of this file, see the

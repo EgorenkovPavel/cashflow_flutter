@@ -34,6 +34,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //brightness: Brightness.light,
         //backgroundColor: Colors.white,
         title: Text(
           'Money tracker',
@@ -88,7 +89,7 @@ class SettingsButton extends StatelessWidget {
     return IconButton(
       icon: Icon(
         Icons.settings,
-        color: Theme.of(context).appBarTheme.color,
+        //color: Theme.of(context).appBarTheme.color,
       ),
       onPressed: () => BackupPage.open(context),
     );
