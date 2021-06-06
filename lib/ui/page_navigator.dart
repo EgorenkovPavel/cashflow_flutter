@@ -9,8 +9,10 @@ import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
+import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 import 'package:money_tracker/ui/pages/start_page.dart';
+import 'package:money_tracker/utils/google_http_client.dart';
 
 class PageNavigator {
   static const routeAccountName = '/account';
@@ -82,6 +84,18 @@ class PageNavigator {
   static void openReportsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(routeReportsName);
 
+  static const routeGoogleDrive = '/google_drive';
+
+  static Future<DriveFile?> chooseFile(
+          BuildContext context, GoogleHttpClient httpClient) =>
+      Navigator.of(context).pushNamed(routeGoogleDrive,
+          arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FILE});
+
+  static Future<DriveFile?> chooseFolder(
+          BuildContext context, GoogleHttpClient httpClient) =>
+      Navigator.of(context).pushNamed(routeGoogleDrive,
+          arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FOLDER});
+
   static const routeRootName = '/';
 
   static Map<String, Widget Function(BuildContext)> routes =
@@ -120,6 +134,16 @@ class PageNavigator {
           return MaterialPageRoute(
             builder: (context) => OperationFilterPage(
                 filter: settings.arguments as OperationListFilter),
+          );
+        }
+      case routeGoogleDrive:
+        {
+          var args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => DriveDialog(
+              httpClient: args['client'],
+              mode: args['mode'],
+            ),
           );
         }
       default:
