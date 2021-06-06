@@ -1,23 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/domain/models/budget.dart';
-import 'package:money_tracker/domain/models/budget_type.dart';
-import 'package:money_tracker/domain/models/category.dart';
-import 'package:money_tracker/domain/models/operation_list_filter.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget/list_tile_budget.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class CategoryEditPage extends StatefulWidget {
-
   final int id;
 
   const CategoryEditPage({Key? key, required this.id}) : super(key: key);
@@ -37,7 +30,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _bloc = CategoryBloc(Provider.of<Repository>(context, listen: false))..fetch(widget.id);
+    _bloc = CategoryBloc(Provider.of<Repository>(context, listen: false))
+      ..fetch(widget.id);
   }
 
   @override
@@ -70,7 +64,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           children: <Widget>[
             _buildBudgetList(context),
             //buildOperationList(context),
-            OperationList(filter: OperationListFilter(categoriesIds: {widget.id}))
+            OperationList(
+                filter: OperationListFilter(categoriesIds: {widget.id}))
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -127,9 +122,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
               Icons.check,
               color: Colors.white,
             ),
-            onPressed: () {
-              _bloc.saveTitle(_titleController.text);
-            },
+            onPressed: () => _bloc.saveTitle(_titleController.text),
           );
         } else {
           return IconButton(
@@ -137,9 +130,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
               Icons.edit,
               color: Colors.white,
             ),
-            onPressed: () {
-              _bloc.editTitle();
-            },
+            onPressed: () => _bloc.editTitle(),
           );
         }
       },
@@ -189,4 +180,3 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     );
   }
 }
-

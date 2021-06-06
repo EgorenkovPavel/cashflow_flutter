@@ -28,6 +28,9 @@ class CategoryRepository {
   Stream<List<Category>> watchAllByType(OperationType type) =>
       db.categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);
 
+  Future<List<Category>> getAllByType(OperationType type) async =>
+      _mapCategoryList(await db.categoryDao.getAllCategoriesByType(type));
+
   Future<int> insert(Category entity) =>
       db.categoryDao.insertCategory(_mapCategoryDB(entity));
 

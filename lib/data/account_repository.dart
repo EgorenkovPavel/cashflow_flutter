@@ -1,4 +1,3 @@
-
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
@@ -19,11 +18,14 @@ class AccountRepository {
       (item) => const AccountMapper().mapToSql(item);
 
   final List<AccountBalance> Function(List<AccountBalanceEntity>)
-  _mapAccountBalanceList =
+      _mapAccountBalanceList =
       (list) => const AccountBalanceMapper().mapListToDart(list);
 
   Stream<List<Account>> watchAll() =>
       db.accountDao.watchAllAccounts().map(_mapAccountList);
+
+  Future<List<Account>> getAll() async =>
+      _mapAccountList(await db.accountDao.getAllAccounts());
 
   Stream<List<AccountBalance>> watchAllBalance() =>
       db.accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);

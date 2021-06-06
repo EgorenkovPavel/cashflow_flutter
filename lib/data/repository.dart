@@ -21,6 +21,8 @@ class Repository extends ChangeNotifier {
 
   Stream<List<Account>> watchAllAccounts() => _accountRepo.watchAll();
 
+  Future<List<Account>> getAllAccounts() => _accountRepo.getAll();
+
   Stream<List<AccountBalance>> watchAllAccountsBalance() =>
       _accountRepo.watchAllBalance();
 
@@ -45,6 +47,9 @@ class Repository extends ChangeNotifier {
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _categoryRepo.watchAllByType(type);
+
+  Future<List<Category>> getAllCategoriesByType(OperationType type) =>
+      _categoryRepo.getAllByType(type);
 
   Future<int> insertCategory(Category entity) => _categoryRepo.insert(entity);
 
