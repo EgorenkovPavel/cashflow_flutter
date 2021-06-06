@@ -1,6 +1,6 @@
 
 import 'package:money_tracker/data/database/database.dart';
-import 'package:money_tracker/domain/models/category.dart';
+import 'package:money_tracker/domain/models.dart';
 
 import 'mapper.dart';
 

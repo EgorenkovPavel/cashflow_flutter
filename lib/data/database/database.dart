@@ -480,7 +480,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Future<int> insertAccount(AccountDB entity) => into(accounts).insert(entity);
 
-  Future updateAccount(AccountDB entity) => update(accounts).replace(entity);
+  Future<bool> updateAccount(AccountDB entity) => update(accounts).replace(entity);
 
   Stream<int> getTotalBalance() {
     return customSelect(

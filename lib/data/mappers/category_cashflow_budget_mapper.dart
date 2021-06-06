@@ -1,6 +1,6 @@
 
 import 'package:money_tracker/data/database/database.dart';
-import 'package:money_tracker/domain/models/category_cashflow_budget.dart';
+import 'package:money_tracker/domain/models.dart';
 
 import 'mapper.dart';
 
