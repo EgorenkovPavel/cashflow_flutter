@@ -1,6 +1,8 @@
-import 'package:cashflow/data/database/database.dart';
-import 'package:cashflow/data/mappers/mapper.dart';
-import 'package:cashflow/data/objects/category.dart';
+
+import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/domain/models/category.dart';
+
+import 'mapper.dart';
 
 class CategoryMapper extends Mapper<Category, CategoryDB>{
   const CategoryMapper();

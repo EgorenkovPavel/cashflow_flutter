@@ -1,8 +1,10 @@
-import 'package:cashflow/data/database/database.dart';
-import 'package:cashflow/data/mappers/account_mapper.dart';
-import 'package:cashflow/data/mappers/category_mapper.dart';
-import 'package:cashflow/data/mappers/mapper.dart';
-import 'package:cashflow/data/objects/operation.dart';
+
+import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/domain/models/operation.dart';
+
+import 'account_mapper.dart';
+import 'category_mapper.dart';
+import 'mapper.dart';
 
 class OperationMapper extends Mapper<Operation, OperationItem> {
   const OperationMapper();

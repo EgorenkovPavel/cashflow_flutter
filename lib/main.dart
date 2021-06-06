@@ -1,20 +1,21 @@
-import 'package:cashflow/data/database/database.dart';
-import 'package:cashflow/utils/app_localization.dart';
-import 'package:cashflow/widgets/pages/account/account_edit_page.dart';
-import 'package:cashflow/widgets/pages/account/account_input_page.dart';
-import 'package:cashflow/widgets/pages/budget/budget_card.dart';
-import 'package:cashflow/widgets/pages/category/category_edit_page.dart';
-import 'package:cashflow/widgets/pages/category/category_input_page.dart';
-import 'package:cashflow/widgets/pages/operation/operation_edit_page.dart';
-import 'package:cashflow/widgets/pages/operation/operation_filter_page.dart';
-import 'package:cashflow/widgets/pages/operation/operation_input_bloc.dart';
-import 'package:cashflow/widgets/pages/operation/operation_input_page.dart';
-import 'package:cashflow/widgets/pages/reports_page.dart';
-import 'package:cashflow/widgets/pages/service/backup_page.dart';
-import 'package:cashflow/widgets/start_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/ui/pages/account/account_edit_page.dart';
+import 'package:money_tracker/ui/pages/account/account_input_page.dart';
+import 'package:money_tracker/ui/pages/budget/budget_card.dart';
+import 'package:money_tracker/ui/pages/category/category_edit_page.dart';
+import 'package:money_tracker/ui/pages/category/category_input_page.dart';
+import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
+import 'package:money_tracker/ui/pages/operation/operation_filter_page.dart';
+import 'package:money_tracker/ui/pages/operation/operation_input_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/operation_input_page.dart';
+import 'package:money_tracker/ui/pages/reports_page.dart';
+import 'package:money_tracker/ui/pages/service/backup_page.dart';
+import 'package:money_tracker/ui/pages/start_page.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repository.dart';
