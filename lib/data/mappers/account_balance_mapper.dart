@@ -1,7 +1,6 @@
 
 import 'package:money_tracker/data/database/database.dart';
-import 'package:money_tracker/domain/models/account.dart';
-import 'package:money_tracker/domain/models/account_balance.dart';
+import 'package:money_tracker/domain/models.dart';
 
 import 'mapper.dart';
 

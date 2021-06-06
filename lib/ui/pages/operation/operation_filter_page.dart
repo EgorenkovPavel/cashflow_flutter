@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/domain/models/account.dart';
-import 'package:money_tracker/domain/models/category.dart';
-import 'package:money_tracker/domain/models/operation_list_filter.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 

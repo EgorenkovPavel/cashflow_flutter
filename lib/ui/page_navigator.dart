@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/domain/models/account.dart';
-import 'package:money_tracker/domain/models/budget.dart';
-import 'package:money_tracker/domain/models/budget_type.dart';
-import 'package:money_tracker/domain/models/category.dart';
-import 'package:money_tracker/domain/models/operation_list_filter.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/account/account_edit_page.dart';
 import 'package:money_tracker/ui/pages/account/account_input_page.dart';
 import 'package:money_tracker/ui/pages/budget/budget_card.dart';
