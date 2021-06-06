@@ -1,9 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/theme_model.dart';
-import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -228,7 +227,7 @@ class _BackupDialogState extends State<BackupDialog> {
                   IconButton(
                     icon: Icon(Icons.arrow_drop_down),
                     onPressed: () async {
-                      var newFolder = await DriveDialog.chooseFolder(
+                      var newFolder = await PageNavigator.chooseFolder(
                           context, widget.httpClient);
                       if (newFolder != null) {
                         setState(() {
@@ -300,7 +299,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
               icon: Icon(Icons.arrow_drop_down),
               onPressed: () async {
                 var newFile =
-                    await DriveDialog.chooseFile(context, widget.httpClient);
+                    await PageNavigator.chooseFile(context, widget.httpClient);
                 if (newFile != null) {
                   setState(
                     () {

@@ -13,7 +13,7 @@ import 'package:money_tracker/ui/pages/account/input_page/account_input_page_blo
 import 'package:money_tracker/ui/pages/budget/budget_card.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
-import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
+import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repository.dart';

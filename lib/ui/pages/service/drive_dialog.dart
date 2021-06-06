@@ -1,4 +1,5 @@
 import 'package:money_tracker/data/stack.dart' as lib;
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:money_tracker/utils/google_http_client.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +13,6 @@ class DriveDialog extends StatefulWidget {
   final DialogMode mode;
 
   const DriveDialog({required this.httpClient, required this.mode});
-
-  static Future<DriveFile?> chooseFile(
-      BuildContext context, GoogleHttpClient httpClient) async {
-    return await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            DriveDialog(httpClient: httpClient, mode: DialogMode.CHOOSE_FILE)));
-  }
-
-  static Future<DriveFile?> chooseFolder(
-      BuildContext context, GoogleHttpClient httpClient) async {
-    return await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => DriveDialog(
-            httpClient: httpClient, mode: DialogMode.CHOOSE_FOLDER)));
-  }
 
   @override
   _DriveDialogState createState() => _DriveDialogState();
@@ -106,7 +93,8 @@ class _DriveDialogState extends State<DriveDialog> {
                       loadFolders();
                     } else if (widget.mode == DialogMode.CHOOSE_FILE) {
                       Navigator.of(context).pop<DriveFile>(
-                          DriveFile(id: f.id!, title: f.name!, isFolder: false));
+                        DriveFile(id: f.id!, title: f.name!, isFolder: false),
+                      );
                     }
                   },
                 );
@@ -116,18 +104,23 @@ class _DriveDialogState extends State<DriveDialog> {
               children: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child:
-                      Text(AppLocalizations.of(context).cancel.toUpperCase()),
+                  child: Text(
+                    AppLocalizations.of(context).cancel.toUpperCase(),
+                  ),
                 ),
                 ElevatedButton(
                   //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                   onPressed: () {
                     if (widget.mode == DialogMode.CHOOSE_FOLDER) {
-                      Navigator.of(context).pop<DriveFile>(rootFolder.top());
+                      Navigator.of(context).pop<DriveFile>(
+                        rootFolder.top(),
+                      );
                     }
                   },
-                  child: Text(AppLocalizations.of(context).choose.toUpperCase(),
-                      style: TextStyle(color: Colors.white)),
+                  child: Text(
+                    AppLocalizations.of(context).choose.toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
               ],
             )
@@ -136,12 +129,4 @@ class _DriveDialogState extends State<DriveDialog> {
       ),
     );
   }
-}
-
-class DriveFile {
-  final String title;
-  final String id;
-  final bool isFolder;
-
-  DriveFile({required this.title, required this.id, required this.isFolder});
 }
