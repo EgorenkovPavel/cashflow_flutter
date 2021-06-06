@@ -1,7 +1,9 @@
-import 'package:cashflow/data/database/database.dart';
-import 'package:cashflow/data/mappers/category_mapper.dart';
-import 'package:cashflow/data/mappers/mapper.dart';
-import 'package:cashflow/data/objects/budget.dart';
+
+import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/domain/models/budget.dart';
+
+import 'category_mapper.dart';
+import 'mapper.dart';
 
 class BudgetMapper extends Mapper<Budget, BudgetItem> {
 

@@ -1,6 +1,8 @@
-import 'package:cashflow/data/database/database.dart';
-import 'package:cashflow/data/mappers/mapper.dart';
-import 'package:cashflow/data/objects/account.dart';
+
+import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/domain/models/account.dart';
+
+import 'mapper.dart';
 
 class AccountMapper extends Mapper<Account, AccountDB>{
   const AccountMapper();

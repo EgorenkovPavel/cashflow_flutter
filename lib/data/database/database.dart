@@ -1,11 +1,10 @@
-import 'package:cashflow/data/objects/operation_type.dart';
+import 'package:money_tracker/domain/models/budget_type.dart';
+import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:moor/ffi.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:moor/moor.dart';
 import 'dart:io';
-
-import '../objects/budget_type.dart';
 
 part 'database.g.dart';
 
