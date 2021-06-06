@@ -106,23 +106,19 @@ class _OperationEditPageState extends State<OperationEditPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  title(AppLocalizations.of(context).titleDate),
+                  Title(text: AppLocalizations.of(context).titleDate),
                   Row(
                     children: <Widget>[
-                      dateButtom(
-                          Icons.calendar_today,
-                          DateFormat.yMMMd(
+                      DateButton(icon: Icons.calendar_today, text: DateFormat.yMMMd(
                                   Localizations.localeOf(context).languageCode)
-                              .format(_date),
-                          _selectDate),
+                              .format(_date), onPressed: _selectDate),
                       SizedBox(
                         width: 16.0,
                       ),
-                      dateButtom(Icons.access_time, _time.format(context),
-                          _selectTime),
+                      DateButton(icon: Icons.access_time, text: _time.format(context), onPressed: _selectTime),
                     ],
                   ),
-                  title(AppLocalizations.of(context).titleType),
+                  Title(text: AppLocalizations.of(context).titleType),
                   OperationTypeRadioButton(
                     type: _type,
                     onChange: (newValue) {
@@ -137,7 +133,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
                       OperationType.TRANSFER
                     ],
                   ),
-                  title(AppLocalizations.of(context).titleAccount),
+                  Title(text: AppLocalizations.of(context).titleAccount),
                   DropdownList<Account>(
                     value: _account,
                     hint: AppLocalizations.of(context).hintAccount,
@@ -151,7 +147,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
                     },
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
-                  title(AppLocalizations.of(context).titleAnalytic),
+                  Title(text: AppLocalizations.of(context).titleAnalytic),
                   analyticMenu(),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -196,16 +192,6 @@ class _OperationEditPageState extends State<OperationEditPage> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget title(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 0.0, top: 8.0),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.caption,
       ),
     );
   }
@@ -306,8 +292,22 @@ class _OperationEditPageState extends State<OperationEditPage> {
       });
     }
   }
+}
 
-  Widget dateButtom(IconData icon, String text, Function() onPressed) {
+class DateButton extends StatelessWidget {
+  const DateButton({
+    Key? key,
+    required this.icon,
+    required this.text,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final IconData icon;
+  final String text;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
 
     return ElevatedButton(onPressed: onPressed,
       child: Row(
@@ -321,6 +321,26 @@ class _OperationEditPageState extends State<OperationEditPage> {
             //style: TextStyle(color: color),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Title extends StatelessWidget {
+  const Title({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0.0, top: 8.0),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.caption,
       ),
     );
   }

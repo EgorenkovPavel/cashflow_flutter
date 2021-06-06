@@ -9,7 +9,7 @@ import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
-import 'package:money_tracker/ui/pages/service/settings_page.dart';
+import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 import 'package:money_tracker/ui/pages/start_page.dart';
 
 class PageNavigator {

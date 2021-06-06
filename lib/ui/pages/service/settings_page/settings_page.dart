@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/theme_model.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
+import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:money_tracker/utils/google_http_client.dart';
 
 class SettingsPage extends StatelessWidget {
-
   Widget sectionTitle(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -24,11 +24,10 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-
-          title: Text(AppLocalizations.of(context).itemMenuService,
+          title: Text(
+            AppLocalizations.of(context).itemMenuService,
             style: Theme.of(context).textTheme.headline6,
           ),
-
         ),
         body: Builder(
           builder: (BuildContext context) {
@@ -37,7 +36,10 @@ class SettingsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ModeToggleButton(mode: context.watch<ThemeModel>().mode, onPressed: (mode) => context.read<ThemeModel>().setMode(mode)),
+                  ModeToggleButton(
+                      mode: context.watch<ThemeModel>().mode,
+                      onPressed: (mode) =>
+                          context.read<ThemeModel>().setMode(mode)),
                   sectionTitle(context, 'Google drive'),
                   Flex(
                     direction: Axis.horizontal,
@@ -128,10 +130,11 @@ class SettingsPage extends StatelessWidget {
     if (httpClient == null) return;
 
     await showDialog(
-        context: context,
-        builder: (context) => BackupDialog(
-              httpClient: httpClient,
-            ));
+      context: context,
+      builder: (context) => BackupDialog(
+        httpClient: httpClient,
+      ),
+    );
   }
 
   Future _restore(BuildContext context) async {
@@ -139,22 +142,27 @@ class SettingsPage extends StatelessWidget {
     try {
       httpClient = await GoogleHttpClient.getClient();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).errorNoGPServices),
-      ));
-      print(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).errorNoGPServices),
+        ),
+      );
+      print(
+        e.toString(),
+      );
       return;
     }
     if (httpClient == null) return;
 
     await showDialog(
-        context: context,
-        builder: (context) => RestoreDialog(
-              httpClient: httpClient,
-            ));
+      context: context,
+      builder: (context) => RestoreDialog(
+        httpClient: httpClient,
+      ),
+    );
   }
 
-  Future _deleteAll(BuildContext context) async{
+  Future _deleteAll(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -163,7 +171,7 @@ class SettingsPage extends StatelessWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              BlocProvider.of<BackupPageBloc>(context).add(DeleteAll());
+              BlocProvider.of<BackupPageBloc>(context).deleteAll();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context).yes),
@@ -210,7 +218,9 @@ class _BackupDialogState extends State<BackupDialog> {
             Container(
               padding: EdgeInsets.only(left: 8.0),
               width: double.infinity,
-              decoration: BoxDecoration(border: Border.all(width: 1), borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -247,11 +257,13 @@ class _BackupDialogState extends State<BackupDialog> {
             }
 
             BlocProvider.of<BackupPageBloc>(context)
-                .add(Backup(widget.httpClient, _folder.id, _controller.text));
+                .backup(widget.httpClient, _folder.id, _controller.text);
 
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context).backup.toUpperCase(),),
+          child: Text(
+            AppLocalizations.of(context).backup.toUpperCase(),
+          ),
         )
       ],
     );
@@ -277,7 +289,9 @@ class _RestoreDialogState extends State<RestoreDialog> {
       content: Container(
         padding: EdgeInsets.only(left: 8.0),
         width: double.infinity,
-        decoration: BoxDecoration(border: Border.all(width: 1), borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -288,9 +302,11 @@ class _RestoreDialogState extends State<RestoreDialog> {
                 var newFile =
                     await DriveDialog.chooseFile(context, widget.httpClient);
                 if (newFile != null) {
-                  setState(() {
-                    _file = newFile;
-                  });
+                  setState(
+                    () {
+                      _file = newFile;
+                    },
+                  );
                 }
               },
             ),
@@ -301,7 +317,9 @@ class _RestoreDialogState extends State<RestoreDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+          child: Text(
+            AppLocalizations.of(context).cancel.toUpperCase(),
+          ),
         ),
         ElevatedButton(
           //style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
@@ -311,82 +329,15 @@ class _RestoreDialogState extends State<RestoreDialog> {
             }
 
             BlocProvider.of<BackupPageBloc>(context)
-                .add(Restore(widget.httpClient, _file!.id));
+                .restore(widget.httpClient, _file!.id);
 
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context).restore.toUpperCase()),
+          child: Text(
+            AppLocalizations.of(context).restore.toUpperCase(),
+          ),
         )
       ],
     );
-  }
-}
-
-abstract class BackupPageEvent {}
-
-class Backup extends BackupPageEvent {
-  final GoogleHttpClient client;
-  final String catalogId;
-  final String fileName;
-
-  Backup(this.client, this.catalogId, this.fileName);
-}
-
-class Restore extends BackupPageEvent {
-  final GoogleHttpClient client;
-  final String fileId;
-
-  Restore(this.client, this.fileId);
-}
-
-class DeleteAll extends BackupPageEvent {}
-
-abstract class BackupPageState {}
-
-class InitialState extends BackupPageState {}
-
-class ProgressState extends BackupPageState {}
-
-class GetHttpClientError extends BackupPageState {}
-
-class BackupSuccessState extends BackupPageState {}
-
-class RestoreSuccessState extends BackupPageState {}
-
-class DeleteSuccessState extends BackupPageState {}
-
-class BackupPageBloc extends Bloc<BackupPageEvent, BackupPageState> {
-  final Repository _repository;
-
-  BackupPageBloc(this._repository) : super(InitialState());
-
-  @override
-  Stream<BackupPageState> mapEventToState(BackupPageEvent event) async* {
-    if (event is Backup) {
-      yield ProgressState();
-      await _repository.backup(event.client, event.catalogId, event.fileName);
-      yield BackupSuccessState();
-      yield InitialState();
-    } else if (event is Restore) {
-      yield ProgressState();
-      await _repository.restore(event.client, event.fileId);
-      yield RestoreSuccessState();
-      yield InitialState();
-    } else if (event is DeleteAll) {
-      yield ProgressState();
-      await _repository.deleteAll();
-      yield DeleteSuccessState();
-      yield InitialState();
-    }
-  }
-
-  Future<GoogleHttpClient?> getHttpClient() async {
-    GoogleHttpClient? httpClient;
-    try {
-      httpClient = await GoogleHttpClient.getClient();
-    } catch (e) {
-      return null;
-    }
-    return httpClient;
   }
 }
