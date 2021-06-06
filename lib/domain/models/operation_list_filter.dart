@@ -5,12 +5,20 @@ class OperationListFilter {
   final Set<int> accountsIds;
   final Set<int> categoriesIds;
 
-  const OperationListFilter({this.date, this.accountsIds = const {}, this.categoriesIds = const {}});
+  const OperationListFilter({
+    this.date,
+    this.accountsIds = const {},
+    this.categoriesIds = const {},
+  });
 
   OperationListFilter copyWith({
-          DateTimeRange? date, Set<int>? accountsIds, Set<int>? categoriesIds}) =>
+    DateTimeRange? date,
+    Set<int>? accountsIds,
+    Set<int>? categoriesIds,
+  }) =>
       OperationListFilter(
-          date: date ?? this.date,
-          accountsIds: accountsIds ?? this.accountsIds,
-          categoriesIds: categoriesIds ?? this.categoriesIds);
+        date: date ?? this.date,
+        accountsIds: accountsIds ?? this.accountsIds,
+        categoriesIds: categoriesIds ?? this.categoriesIds,
+      );
 }
