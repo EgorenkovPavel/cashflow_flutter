@@ -7,19 +7,6 @@ import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class AccountInputPage extends StatefulWidget {
-
-  static Future<Account?> open(BuildContext context){
-    return showDialog<Account>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-              child: AccountInputPage(),);
-        });
-  }
-
   @override
   _AccountInputPageState createState() => _AccountInputPageState();
 }

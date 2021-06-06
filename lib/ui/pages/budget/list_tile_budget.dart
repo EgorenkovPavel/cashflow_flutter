@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/budget.dart';
-import 'package:money_tracker/ui/pages/budget/budget_card.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class ListTileBudget extends StatelessWidget {
       title: Text(DateFormat.yMMMM(Localizations.localeOf(context).languageCode)
           .format(DateTime(_budget.year, _budget.month))),
       trailing: Text(_budget.sum.toString()),
-      onTap: () => BudgetCard.open(context, _budget),
+      onTap: () => PageNavigator.openBudget(context, _budget),
       onLongPress: () => onLongPress(context),
     );
   }

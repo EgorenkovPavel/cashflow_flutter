@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/ui/pages/category/category_list.dart';
 import 'package:money_tracker/ui/pages/account/account_list.dart';
 import 'package:money_tracker/ui/pages/budget/budget_list.dart';
-import 'package:money_tracker/ui/pages/operation/operation_input_page.dart';
+import 'package:money_tracker/ui/pages/category/category_list.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/ui/pages/service/backup_page.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class StartPage extends StatefulWidget {
-  static const routeName = '/';
 
   @override
   _StartPageState createState() => _StartPageState();
@@ -71,7 +69,7 @@ class _StartPageState extends State<StartPage> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => OperationInputPage.open(context),
+        onPressed: () => PageNavigator.openOperationInputPage(context),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -91,7 +89,7 @@ class SettingsButton extends StatelessWidget {
         Icons.settings,
         //color: Theme.of(context).appBarTheme.color,
       ),
-      onPressed: () => BackupPage.open(context),
+      onPressed: () => PageNavigator.openBackupPage(context),
     );
   }
 }

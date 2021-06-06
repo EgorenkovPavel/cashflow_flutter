@@ -1,19 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/main.dart';
-import 'package:money_tracker/utils/app_localization.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
-import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
-import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/domain/theme_model.dart';
+import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
+import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
+import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/google_http_client.dart';
 
-class BackupPage extends StatelessWidget {
-  static const routeName = '/backup';
-
-  static Future open(BuildContext context) {
-    return Navigator.of(context).pushNamed(routeName);
-  }
+class SettingsPage extends StatelessWidget {
 
   Widget sectionTitle(BuildContext context, String text) {
     return Padding(
@@ -78,7 +73,7 @@ class BackupPage extends StatelessWidget {
                     ),
                   ),
                   BlocConsumer<BackupPageBloc, BackupPageState>(buildWhen:
-                      (BackupPageState previosState,
+                      (BackupPageState previousState,
                           BackupPageState currentState) {
                     return currentState is InitialState ||
                         currentState is ProgressState;

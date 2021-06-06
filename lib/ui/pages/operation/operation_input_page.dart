@@ -1,24 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:money_tracker/domain/models/category.dart' as data;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
+import 'package:money_tracker/domain/models/category.dart' as data;
 import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/ui/pages/operation/operation_input_bloc.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/carousel.dart';
 import 'package:money_tracker/ui/widgets/keyboard.dart';
 import 'package:money_tracker/ui/widgets/operation_type_radio_button.dart';
-import 'package:money_tracker/ui/pages/account/account_input_page.dart';
-import 'package:money_tracker/ui/pages/category/category_input_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_input_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class OperationInputPage extends StatefulWidget {
-  static const routeName = '/masterPageNew';
-
-  static Future open(BuildContext context) {
-    return Navigator.of(context).pushNamed(routeName);
-  }
 
   @override
   _OperationInputPageState createState() => _OperationInputPageState();
@@ -138,7 +132,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     );
   }
 
-  Widget buildAnalylicList(OperationType type) {
+  Widget buildAnalyticList(OperationType type) {
     switch (type) {
       case OperationType.INPUT:
         return buildList(AppLocalizations.of(context).categories,
@@ -217,7 +211,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewAccount() async {
-    var account = await AccountInputPage.open(context);
+    var account = await PageNavigator.openAccountInputPage(context);
     if (account != null) {
       var accountBalance =
           AccountBalance(id: account.id, title: account.title, balance: 0);
@@ -227,7 +221,7 @@ class _OperationInputPageState extends State<OperationInputPage>
 
   Future<void> addNewInCategory() async {
     var category =
-        await CategoryInputPage.open(context, type: OperationType.INPUT);
+        await PageNavigator.openCategoryInputPage(context, type: OperationType.INPUT);
     if (category != null) {
       _bloc.add(OnCategoryInChanged(category));
     }
@@ -235,14 +229,14 @@ class _OperationInputPageState extends State<OperationInputPage>
 
   Future<void> addNewOutCategory() async {
     var category =
-        await CategoryInputPage.open(context, type: OperationType.OUTPUT);
+        await PageNavigator.openCategoryInputPage(context, type: OperationType.OUTPUT);
     if (category != null) {
       _bloc.add(OnCategoryOutChanged(category));
     }
   }
 
   Future<void> addNewRecAccount() async {
-    var account = await AccountInputPage.open(context);
+    var account = await PageNavigator.openAccountInputPage(context);
     if (account != null) {
       var accountBalance =
           AccountBalance(id: account.id, title: account.title, balance: 0);
@@ -295,7 +289,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                               : AppLocalizations.of(context).accounts,
                           addNewAccount,
                           accountPageView(context)),
-                      buildAnalylicList(state.type),
+                      buildAnalyticList(state.type),
                     ],
                   ),
                 ),

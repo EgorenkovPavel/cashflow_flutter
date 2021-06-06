@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
-import 'package:money_tracker/ui/pages/account/account_edit_page.dart';
-import 'package:money_tracker/ui/pages/account/account_input_page.dart';
 import 'package:money_tracker/ui/pages/list_card.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/sliver_header_delegate.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -29,7 +28,7 @@ class AccountList extends StatelessWidget {
             slivers: [
               AccountListHeader(
                 balance: _balance,
-                onAdd: () => AccountInputPage.open(context),
+                onAdd: () => PageNavigator.openAccountInputPage(context),
               ),
               SliverPadding(padding: EdgeInsets.all(16.0),
               sliver: SliverGrid(
@@ -108,7 +107,7 @@ class AccountTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListCard(
-      onTap: () => AccountEditPage.open(context, account.id),
+      onTap: () => PageNavigator.openAccountEditPage(context, account.id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

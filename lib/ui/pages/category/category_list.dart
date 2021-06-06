@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/ui/pages/category/category_edit_page.dart';
-import 'package:money_tracker/ui/pages/category/category_input_page.dart';
 import 'package:money_tracker/ui/pages/list_card.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/sliver_header_delegate.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -20,7 +19,7 @@ class CategoryList extends StatelessWidget {
       slivers: <Widget>[
         CategoryListHeader(
           title: AppLocalizations.of(context).typeInput,
-          onAdd: () => CategoryInputPage.open(context, type: OperationType.INPUT),
+          onAdd: () => PageNavigator.openCategoryInputPage(context, type: OperationType.INPUT),
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -38,7 +37,7 @@ class CategoryList extends StatelessWidget {
             }),
         CategoryListHeader(
           title: AppLocalizations.of(context).typeOutput,
-          onAdd: () => CategoryInputPage.open(context, type: OperationType.OUTPUT),
+          onAdd: () => PageNavigator.openCategoryInputPage(context, type: OperationType.OUTPUT),
         ),
         StreamBuilder<List<Category>>(
             stream: context
@@ -140,7 +139,7 @@ class CategoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListCard(
-      onTap: () => CategoryEditPage.open(context, category.id),
+      onTap: () => PageNavigator.openCategoryEditPage(context, category.id),
       child: Center(
         child: Text(category.title),
       ),

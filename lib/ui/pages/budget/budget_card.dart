@@ -15,10 +15,10 @@ import 'package:provider/provider.dart';
 
 class BudgetCard extends StatefulWidget {
   late final Category? category;
-  late int month;
-  late int year;
+  late final int month;
+  late final int year;
   late final BudgetType budgetType;
-  late int sum;
+  late final int sum;
 
   BudgetCard({required this.budgetType}) {
     sum = 0;
@@ -35,35 +35,6 @@ class BudgetCard extends StatefulWidget {
     sum = budget.sum;
   }
 
-  static void add(BuildContext context, BudgetType budgetType) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: BudgetCard(
-              budgetType: budgetType,
-            ),
-          );
-        });
-  }
-
-  static void open(BuildContext context, Budget budget) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: BudgetCard.budget(
-              budget: budget,
-            ),
-          );
-        });
-  }
 
   @override
   _BudgetCardState createState() => _BudgetCardState();

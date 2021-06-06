@@ -10,12 +10,6 @@ import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class AccountEditPage extends StatefulWidget {
-  static const routeName = '/account';
-
-  static Future open(BuildContext context, int accountId) {
-    return Navigator.of(context)
-        .pushNamed(AccountEditPage.routeName, arguments: accountId);
-  }
 
   final int id;
 
