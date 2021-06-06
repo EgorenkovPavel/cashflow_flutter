@@ -616,6 +616,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
+  Future<List<CategoryDB>> getAllCategoriesByType(OperationType type) =>
+      (select(categories)
+        ..where((cat) => cat.operationType
+            .equals(const OperationTypeConverter().mapToSql(type)))
+        ..orderBy([(t) => OrderingTerm(expression: t.title)]))
+          .get();
+
   Stream<List<CategoryCashflowBudgetEntity>> watchAllCategoryCashflowBudget(
       DateTime date) {
     var monthStart = DateTime(date.year, date.month);

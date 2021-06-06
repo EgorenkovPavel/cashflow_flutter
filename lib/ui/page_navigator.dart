@@ -6,7 +6,7 @@ import 'package:money_tracker/ui/pages/budget/budget_card.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_filter_page.dart';
+import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
