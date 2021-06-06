@@ -1,8 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/pages/account/input_page/account_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -14,12 +13,12 @@ class AccountInputPage extends StatefulWidget {
 class _AccountInputPageState extends State<AccountInputPage> {
 
   final TextEditingController _controller = TextEditingController();
-  late AccountCardBloc _bloc;
+  late AccountInputPageBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<AccountCardBloc>(context);
+    _bloc = BlocProvider.of<AccountInputPageBloc>(context);
   }
 
   @override
@@ -31,7 +30,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AccountCardBloc, AccountInputPageState>(
+    return BlocListener<AccountInputPageBloc, AccountInputPageState>(
       bloc: _bloc,
       listener: (context, state){
         if (state is CloseState){
@@ -63,28 +62,6 @@ class _AccountInputPageState extends State<AccountInputPage> {
   }
 }
 
-abstract class AccountInputPageState{}
-
-class EmptyState extends AccountInputPageState{}
-
-class CloseState extends AccountInputPageState{
-  final Account account;
-
-  CloseState(this.account);
-}
-
-class AccountCardBloc extends Cubit<AccountInputPageState>{
-
-  final Repository _repository;
-
-  AccountCardBloc(this._repository) : super(EmptyState());
-
-  Future<void> save(String title) async {
-    var account = Account(title: title);
-    var id = await _repository.insertAccount(account);
-    emit(CloseState(account.copyWith(id: id)));
-  }
-}
 
 
 
