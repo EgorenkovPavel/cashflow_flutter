@@ -8,11 +8,11 @@ import 'package:money_tracker/data/operation_repository.dart';
 import 'package:money_tracker/data/service_repository.dart';
 import 'package:money_tracker/domain/theme_model.dart';
 import 'package:money_tracker/ui/app.dart';
-import 'package:money_tracker/ui/pages/account/account_edit_page.dart';
-import 'package:money_tracker/ui/pages/account/account_input_page.dart';
+import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page_bloc.dart';
+import 'package:money_tracker/ui/pages/account/input_page/account_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/budget/budget_card.dart';
-import 'package:money_tracker/ui/pages/category/category_input_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_input_bloc.dart';
+import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/pages/service/settings_page.dart';
 import 'package:provider/provider.dart';
 
@@ -35,11 +35,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<AccountCardBloc>(
-          create: (BuildContext context) => AccountCardBloc(_repository),
+        BlocProvider<AccountInputPageBloc>(
+          create: (BuildContext context) => AccountInputPageBloc(_repository),
         ),
-        BlocProvider<CategoryCardBloc>(
-          create: (BuildContext context) => CategoryCardBloc(_repository),
+        BlocProvider<CategoryInputPageBloc>(
+          create: (BuildContext context) => CategoryInputPageBloc(_repository),
         ),
         BlocProvider<BudgetCardBloc>(
           create: (BuildContext context) => BudgetCardBloc(_repository),

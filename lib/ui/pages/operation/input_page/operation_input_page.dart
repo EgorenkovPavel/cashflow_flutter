@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
 import 'package:money_tracker/domain/models/category.dart' as data;
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/ui/pages/operation/operation_input_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/carousel.dart';
 import 'package:money_tracker/ui/widgets/keyboard.dart';

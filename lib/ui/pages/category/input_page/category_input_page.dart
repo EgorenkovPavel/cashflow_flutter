@@ -1,9 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -17,13 +15,13 @@ class CategoryInputPage extends StatefulWidget {
 }
 
 class _CategoryInputPageState extends State<CategoryInputPage> {
-  late CategoryCardBloc _bloc;
+  late CategoryInputPageBloc _bloc;
   final TextEditingController titleController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<CategoryCardBloc>(context)
+    _bloc = BlocProvider.of<CategoryInputPageBloc>(context)
       ..initial(widget.type);
   }
 
@@ -36,7 +34,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CategoryCardBloc, CategoryInputPageState>(
+    return BlocListener<CategoryInputPageBloc, CategoryInputPageState>(
       bloc: _bloc,
       listener: (context, state){
         if (state is Saved){
@@ -62,7 +60,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: BlocBuilder<CategoryCardBloc, CategoryInputPageState>(
+                  child: BlocBuilder<CategoryInputPageBloc, CategoryInputPageState>(
                       builder: (context, state) {
                     if (state is InitialState) {
                       return Text(getOperationTitle(context, widget.type));
@@ -95,34 +93,3 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   }
 }
 
-abstract class CategoryInputPageState {}
-
-class InitialState extends CategoryInputPageState {
-  final OperationType type;
-
-  InitialState(this.type);
-}
-
-class Saved extends CategoryInputPageState {
-  final Category category;
-
-  Saved(this.category);
-}
-
-class CategoryCardBloc extends Cubit<CategoryInputPageState> {
-  final Repository _repository;
-
-  late OperationType _type;
-
-  CategoryCardBloc(this._repository) : super(InitialState(OperationType.INPUT));
-
-  void initial(OperationType type){
-    _type = type;
-  }
-
-  Future<void> save(String title) async {
-    var category = Category(title: title, type: _type);
-    var id = await _repository.insertCategory(category);
-    emit(Saved(category.copyWith(id: id)));
-  }
-}

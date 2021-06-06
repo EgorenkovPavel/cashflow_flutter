@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -16,21 +15,22 @@ class AccountList extends StatelessWidget {
   Widget build(BuildContext context) {
     var stream = context.read<Repository>().watchAllAccountsBalance();
     return StreamBuilder<List<AccountBalance>>(
-        stream: stream,
-        builder: (context, state) {
-          var _accounts = <AccountBalance>[];
-          if (state.hasData && state.data != null) {
-            _accounts = state.data!;
-          }
-          var _balance = _accounts.fold<int>(
-              0, (previousValue, element) => previousValue + element.balance);
-          return CustomScrollView(
-            slivers: [
-              AccountListHeader(
-                balance: _balance,
-                onAdd: () => PageNavigator.openAccountInputPage(context),
-              ),
-              SliverPadding(padding: EdgeInsets.all(16.0),
+      stream: stream,
+      builder: (context, state) {
+        var _accounts = <AccountBalance>[];
+        if (state.hasData && state.data != null) {
+          _accounts = state.data!;
+        }
+        var _balance = _accounts.fold<int>(
+            0, (previousValue, element) => previousValue + element.balance);
+        return CustomScrollView(
+          slivers: [
+            AccountListHeader(
+              balance: _balance,
+              onAdd: () => PageNavigator.openAccountInputPage(context),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.all(16.0),
               sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 2.0,
@@ -40,21 +40,19 @@ class AccountList extends StatelessWidget {
                     mainAxisExtent: 100.0),
                 delegate: SliverChildListDelegate.fixed(
                   _accounts
-                      .map<Widget>((e) => AccountTile(
-                    account: e,
-                  ))
-                      .toList()
-                    // ..add(
-                    //   AddButton(
-                    //     onTap: () => AccountInputPage.open(context),
-                    //   ),
-                    // ),
+                      .map<Widget>(
+                        (e) => AccountTile(
+                          account: e,
+                        ),
+                      )
+                      .toList(),
                 ),
-              ),),
-
-            ],
-          );
-        });
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -75,9 +73,8 @@ class AccountListHeader extends StatelessWidget {
         maxHeight: 60,
         child: Container(
           color: Theme.of(context).backgroundColor,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [Row(
+          child: Stack(alignment: Alignment.center, children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
@@ -90,9 +87,14 @@ class AccountListHeader extends StatelessWidget {
                 ),
               ],
             ),
-              Positioned(right: 0.0,child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,),)
-            ]
-          ),
+            Positioned(
+              right: 0.0,
+              child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: onAdd,
+              ),
+            )
+          ]),
         ),
       ),
     );

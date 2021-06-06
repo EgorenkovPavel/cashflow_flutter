@@ -1,10 +1,8 @@
-import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -107,40 +105,4 @@ class _AccountEditPageState extends State<AccountEditPage> {
       },
     );
   }
-}
-
-class AccountEditPageState{
-  final bool editTitleMode;
-  final String accountTitle;
-
-  AccountEditPageState(this.editTitleMode, this.accountTitle);
-}
-
-class AccountEditPageBloc extends Cubit<AccountEditPageState>{
-
-  final Repository _repository;
-
-  bool _editTitleMode = false;
-  late Account _account;
-
-  AccountEditPageBloc(this._repository) : super(AccountEditPageState(false, ''));
-
-  Future<void> fetch(int id) async {
-    _account = await _repository.getAccountById(id);
-    emit(AccountEditPageState(_editTitleMode, _account.title));
-  }
-
-  void editTitle(){
-    _editTitleMode = true;
-    emit(AccountEditPageState(_editTitleMode, _account.title));
-  }
-
-  Future<void> saveTitle(String title) async {
-    _editTitleMode = false;
-    _account = _account.copyWith(title: title);
-
-    await _repository.updateAccount(_account);
-    emit(AccountEditPageState(_editTitleMode, _account.title));
-  }
-
 }

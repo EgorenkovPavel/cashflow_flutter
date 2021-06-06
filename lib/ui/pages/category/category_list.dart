@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
@@ -19,47 +18,52 @@ class CategoryList extends StatelessWidget {
       slivers: <Widget>[
         CategoryListHeader(
           title: AppLocalizations.of(context).typeInput,
-          onAdd: () => PageNavigator.openCategoryInputPage(context, type: OperationType.INPUT),
+          onAdd: () => PageNavigator.openCategoryInputPage(context,
+              type: OperationType.INPUT),
         ),
         StreamBuilder<List<Category>>(
-            stream: context
-                .read<Repository>()
-                .watchAllCategoriesByType(OperationType.INPUT),
-            builder: (context, state) {
-              var _categories = <Category>[];
-              if (state.hasData && state.data != null) {
-                _categories = state.data!;
-              }
-              return CategoryGrid(
-                categories: _categories,
-                type: OperationType.INPUT,
-              );
-            }),
+          stream: context
+              .read<Repository>()
+              .watchAllCategoriesByType(OperationType.INPUT),
+          builder: (context, state) {
+            var _categories = <Category>[];
+            if (state.hasData && state.data != null) {
+              _categories = state.data!;
+            }
+            return CategoryGrid(
+              categories: _categories,
+              type: OperationType.INPUT,
+            );
+          },
+        ),
         CategoryListHeader(
           title: AppLocalizations.of(context).typeOutput,
-          onAdd: () => PageNavigator.openCategoryInputPage(context, type: OperationType.OUTPUT),
+          onAdd: () => PageNavigator.openCategoryInputPage(context,
+              type: OperationType.OUTPUT),
         ),
         StreamBuilder<List<Category>>(
-            stream: context
-                .read<Repository>()
-                .watchAllCategoriesByType(OperationType.OUTPUT),
-            builder: (context, state) {
-              var _categories = <Category>[];
-              if (state.hasData && state.data != null) {
-                _categories = state.data!;
-              }
-              return CategoryGrid(
-                categories: _categories,
-                type: OperationType.OUTPUT,
-              );
-            }),
+          stream: context
+              .read<Repository>()
+              .watchAllCategoriesByType(OperationType.OUTPUT),
+          builder: (context, state) {
+            var _categories = <Category>[];
+            if (state.hasData && state.data != null) {
+              _categories = state.data!;
+            }
+            return CategoryGrid(
+              categories: _categories,
+              type: OperationType.OUTPUT,
+            );
+          },
+        ),
       ],
     );
   }
 }
 
 class CategoryListHeader extends StatelessWidget {
-  const CategoryListHeader({Key? key, required String title, required this.onAdd})
+  const CategoryListHeader(
+      {Key? key, required String title, required this.onAdd})
       : _title = title,
         super(key: key);
 
@@ -76,15 +80,22 @@ class CategoryListHeader extends StatelessWidget {
         child: Container(
           color: Theme.of(context).backgroundColor,
           child: Stack(
-              alignment: Alignment.center,
-            children: [Center(
-              child: Text(
-                _title,
-                style: Theme.of(context).textTheme.headline6,
+            alignment: Alignment.center,
+            children: [
+              Center(
+                child: Text(
+                  _title,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
               ),
-            ),
-              Positioned(right: 0.0,child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,),)
-            ]
+              Positioned(
+                right: 0.0,
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: onAdd,
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -98,11 +109,9 @@ class CategoryGrid extends StatelessWidget {
     required List<Category> categories,
     required OperationType type,
   })  : _categories = categories,
-        _type = type,
         super(key: key);
 
   final List<Category> _categories;
-  final OperationType _type;
 
   @override
   Widget build(BuildContext context) {
@@ -115,16 +124,14 @@ class CategoryGrid extends StatelessWidget {
             crossAxisSpacing: 16,
             mainAxisSpacing: 16.0,
             mainAxisExtent: 100.0),
-        delegate: SliverChildListDelegate.fixed(_categories
-            .map<Widget>((e) => CategoryListTile(
+        delegate: SliverChildListDelegate.fixed(
+          _categories
+              .map<Widget>(
+                (e) => CategoryListTile(
                   category: e,
-                ))
-            .toList()
-              // ..add(AddButton(
-              //   onTap: () {
-              //     CategoryInputPage.open(context, type: _type);
-              //   },
-              // )),
+                ),
+              )
+              .toList(),
         ),
       ),
     );

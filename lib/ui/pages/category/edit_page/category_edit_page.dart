@@ -9,6 +9,7 @@ import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_list_filter.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/budget/list_tile_budget.dart';
+import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
@@ -189,35 +190,3 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   }
 }
 
-class CategoryState {
-  final Category? category;
-  final bool editTitleMode;
-
-  CategoryState(this.editTitleMode, this.category);
-}
-
-class CategoryBloc extends Cubit<CategoryState> {
-  final Repository _repository;
-
-  late Category _category;
-  bool _editTitleMode = false;
-
-  CategoryBloc(this._repository) : super(CategoryState(false, null));
-
-  Future<void> fetch(int id) async {
-    _category = await _repository.getCategoryById(id);
-    emit(CategoryState(_editTitleMode, _category));
-  }
-
-  void editTitle() {
-    _editTitleMode = true;
-    emit(CategoryState(_editTitleMode, _category));
-  }
-
-  Future<void> saveTitle(String title) async {
-    _editTitleMode = false;
-    _category = _category.copyWith(title: title);
-    await _repository.updateCategory(_category);
-    emit(CategoryState(_editTitleMode, _category));
-  }
-}
