@@ -13,12 +13,6 @@ import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class OperationEditPage extends StatefulWidget {
-  static const routeName = '/operation';
-
-  static Future open(BuildContext context, int operationId) async {
-    await Navigator.of(context)
-        .pushNamed(OperationEditPage.routeName, arguments: operationId);
-  }
 
   final int id;
 

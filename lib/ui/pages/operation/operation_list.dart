@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/operation.dart';
 import 'package:money_tracker/domain/models/operation_list_filter.dart';
-import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_input_page.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -74,11 +73,11 @@ class OperationList extends StatelessWidget {
   }
 
   static Future addItem(BuildContext context) {
-    return OperationInputPage.open(context);
+    return PageNavigator.openOperationInputPage(context);
   }
 
-  static Future _onItemTap(BuildContext context, item) async {
-    await OperationEditPage.open(context, item.id);
+  static Future _onItemTap(BuildContext context, item) {
+    return PageNavigator.openOperationEditPage(context, item.id);
   }
 
   @override

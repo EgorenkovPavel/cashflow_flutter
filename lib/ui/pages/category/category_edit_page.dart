@@ -8,20 +8,14 @@ import 'package:money_tracker/domain/models/budget_type.dart';
 import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_list_filter.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
-import 'package:money_tracker/ui/pages/budget/budget_card.dart';
 import 'package:money_tracker/ui/pages/budget/list_tile_budget.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class CategoryEditPage extends StatefulWidget {
-  static const routeName = '/category';
-
-  static void open(BuildContext context, int categoryId) {
-    Navigator.of(context)
-        .pushNamed(CategoryEditPage.routeName, arguments: categoryId);
-  }
 
   final int id;
 
@@ -81,7 +75,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_tabController.index == 0) {
-              BudgetCard.add(context, BudgetType.MONTH);
+              PageNavigator.addBudget(context, BudgetType.MONTH);
             } else if (_tabController.index == 1) {
               OperationList.addItem(context);
             }

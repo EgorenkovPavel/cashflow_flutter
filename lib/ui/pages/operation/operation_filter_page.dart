@@ -9,16 +9,8 @@ import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class OperationFilterPage extends StatefulWidget {
-  static const routeName = '/operationFilter';
 
   OperationFilterPage({Key? key, this.filter}) : super(key: key);
-
-  static Future<OperationListFilter> open(
-      BuildContext context, OperationListFilter filter) async {
-    return await Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) =>
-            OperationFilterPage(filter: filter)));
-  }
 
   final OperationListFilter? filter;
 
@@ -64,7 +56,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     });
   }
 
-  Widget _periodChoise(OperationListFilter filter) {
+  Widget _periodChoice(OperationListFilter filter) {
     if (filter.date != null) {
       return InputChip(
         label: Text(
@@ -127,7 +119,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
                 height: 8.0,
               ),
               Text(AppLocalizations.of(context).period),
-              _periodChoise(filter),
+              _periodChoice(filter),
               SizedBox(
                 height: 8.0,
               ),

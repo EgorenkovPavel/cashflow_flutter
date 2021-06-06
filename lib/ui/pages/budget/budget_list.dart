@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/budget.dart';
 import 'package:money_tracker/domain/models/budget_type.dart';
-import 'package:money_tracker/ui/pages/budget/budget_card.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/sliver_header_delegate.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class BudgetList extends StatelessWidget {
       slivers: <Widget>[
         BudgetListHeader(
           title: 'Month budgets',
-          onAdd: () => BudgetCard.add(context, BudgetType.MONTH),
+          onAdd: () => PageNavigator.addBudget(context, BudgetType.MONTH),
         ),
         StreamBuilder<List<Budget>>(
             stream: Provider.of<Repository>(context)
@@ -42,7 +42,7 @@ class BudgetList extends StatelessWidget {
             }),
         BudgetListHeader(
           title: 'Year budgets',
-          onAdd: () => BudgetCard.add(context, BudgetType.YEAR),
+          onAdd: () => PageNavigator.addBudget(context, BudgetType.YEAR),
         ),
         StreamBuilder<List<Budget>>(
             stream: Provider.of<Repository>(context)

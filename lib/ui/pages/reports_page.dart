@@ -4,11 +4,6 @@ import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class ReportsPage extends StatelessWidget {
-  static const routeName = '/reports';
-
-  static void open(BuildContext context) {
-    Navigator.of(context).pushNamed(ReportsPage.routeName);
-  }
 
   @override
   Widget build(BuildContext context) {

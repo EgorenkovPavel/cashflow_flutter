@@ -12,20 +12,6 @@ class CategoryInputPage extends StatefulWidget {
 
   CategoryInputPage({required this.type});
 
-  static Future<Category?> open(BuildContext context, {required OperationType type}) {
-    return showDialog<Category>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-              child: CategoryInputPage(
-                type: type,
-              ),);
-        });
-  }
-
   @override
   _CategoryInputPageState createState() => _CategoryInputPageState();
 }
