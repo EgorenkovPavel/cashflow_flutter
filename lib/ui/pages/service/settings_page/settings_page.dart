@@ -289,8 +289,11 @@ class _RestoreDialogState extends State<RestoreDialog> {
         padding: EdgeInsets.only(left: 8.0),
         width: double.infinity,
         decoration: BoxDecoration(
-            border: Border.all(width: 1),
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+          border: Border.all(width: 1),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8.0),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
