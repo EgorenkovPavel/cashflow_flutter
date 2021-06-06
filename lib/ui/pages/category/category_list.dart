@@ -84,7 +84,7 @@ class CategoryListHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
-              Positioned(child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,), right: 0.0,)
+              Positioned(right: 0.0,child: IconButton(icon: Icon(Icons.add),onPressed: onAdd,),)
             ]
           ),
         ),
