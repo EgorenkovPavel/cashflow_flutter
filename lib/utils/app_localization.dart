@@ -29,6 +29,8 @@ class AppLocalizations {
       'title_data_control': 'Data control',
       'title_reports': 'Reports',
       'title_filters': 'Filters',
+      'title_month_budgets': 'Month budgets',
+      'title_year_budgets': 'Year budgets',
 
       'empty_title_error': 'Enter title',
       'empty_budget_error': 'Enter budget',
@@ -126,6 +128,8 @@ class AppLocalizations {
       'title_data_control': 'Управление данными',
       'title_reports': 'Отчеты',
       'title_filters': 'Отборы',
+      'title_month_budgets': 'По месяцам',
+      'title_year_budgets': 'Годовые',
 
       'empty_title_error': 'Введите имя',
       'empty_budget_error': 'Введите бюджет',
@@ -224,6 +228,8 @@ class AppLocalizations {
   String get titleDataControl => _localizedValues[locale.languageCode]!['title_data_control']!;
   String get titleReports => _localizedValues[locale.languageCode]!['title_reports']!;
   String get titleFilters => _localizedValues[locale.languageCode]!['title_filters']!;
+  String get titleMonthBudgets => _localizedValues[locale.languageCode]!['title_month_budgets']!;
+  String get titleYearBudgets => _localizedValues[locale.languageCode]!['title_year_budgets']!;
 
   String get emptyTitleError => _localizedValues[locale.languageCode]!['empty_title_error']!;
   String get emptyBudgetError => _localizedValues[locale.languageCode]!['empty_budget_error']!;
