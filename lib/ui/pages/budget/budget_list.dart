@@ -5,6 +5,7 @@ import 'package:money_tracker/domain/models/budget.dart';
 import 'package:money_tracker/domain/models/budget_type.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/sliver_header_delegate.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class BudgetList extends StatelessWidget {
@@ -16,7 +17,7 @@ class BudgetList extends StatelessWidget {
       semanticChildCount: 2,
       slivers: <Widget>[
         BudgetListHeader(
-          title: 'Month budgets',
+          title: AppLocalizations.of(context).titleMonthBudgets,
           onAdd: () => PageNavigator.addBudget(context, BudgetType.MONTH),
         ),
         StreamBuilder<List<Budget>>(
@@ -41,7 +42,7 @@ class BudgetList extends StatelessWidget {
               ));
             }),
         BudgetListHeader(
-          title: 'Year budgets',
+          title: AppLocalizations.of(context).titleYearBudgets,
           onAdd: () => PageNavigator.addBudget(context, BudgetType.YEAR),
         ),
         StreamBuilder<List<Budget>>(
