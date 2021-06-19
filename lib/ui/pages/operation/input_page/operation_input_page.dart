@@ -13,7 +13,6 @@ import 'package:money_tracker/ui/widgets/operation_type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class OperationInputPage extends StatefulWidget {
-
   @override
   _OperationInputPageState createState() => _OperationInputPageState();
 }
@@ -220,16 +219,16 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewInCategory() async {
-    var category =
-        await PageNavigator.openCategoryInputPage(context, type: OperationType.INPUT);
+    var category = await PageNavigator.openCategoryInputPage(context,
+        type: OperationType.INPUT);
     if (category != null) {
       _bloc.add(OnCategoryInChanged(category));
     }
   }
 
   Future<void> addNewOutCategory() async {
-    var category =
-        await PageNavigator.openCategoryInputPage(context, type: OperationType.OUTPUT);
+    var category = await PageNavigator.openCategoryInputPage(context,
+        type: OperationType.OUTPUT);
     if (category != null) {
       _bloc.add(OnCategoryOutChanged(category));
     }
@@ -253,7 +252,10 @@ class _OperationInputPageState extends State<OperationInputPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).titleMaster),
+          title: Text(
+            AppLocalizations.of(context).titleMaster,
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         body: BlocConsumer<MasterBloc, MasterState>(
           listener: (BuildContext context, MasterState state) =>
@@ -347,8 +349,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       height: 48.0,
                                       alignment: Alignment.center,
                                       child: Text(
-                                          NumberFormat()
-                                              .format(state.sum),
+                                          NumberFormat().format(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4
