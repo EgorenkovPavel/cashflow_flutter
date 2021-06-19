@@ -25,6 +25,7 @@ class BudgetCard extends StatefulWidget {
     var date = DateTime.now();
     month = date.month;
     year = date.year;
+    category = null;
   }
 
   BudgetCard.budget({required Budget budget}) {
@@ -34,7 +35,6 @@ class BudgetCard extends StatefulWidget {
     budgetType = budget.type;
     sum = budget.sum;
   }
-
 
   @override
   _BudgetCardState createState() => _BudgetCardState();
@@ -77,7 +77,9 @@ class _BudgetCardState extends State<BudgetCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                MonthInput(onChange: (value) => _bloc.setMonth(value)),
+                widget.budgetType == BudgetType.MONTH
+                    ? MonthInput(onChange: (value) => _bloc.setMonth(value))
+                    : SizedBox(),
                 BlocBuilder<BudgetCardBloc, BudgetCardState>(
                   buildWhen:
                       (BudgetCardState previous, BudgetCardState current) {
