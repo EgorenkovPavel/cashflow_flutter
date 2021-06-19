@@ -10,7 +10,6 @@ import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class OperationEditPage extends StatefulWidget {
-
   final int id;
 
   const OperationEditPage({Key? key, required this.id}) : super(key: key);
@@ -48,17 +47,13 @@ class _OperationEditPageState extends State<OperationEditPage> {
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.INPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.INPUT).forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model
-        .watchAllCategoriesByType(OperationType.OUTPUT)
-        .forEach((list) {
+    model.watchAllCategoriesByType(OperationType.OUTPUT).forEach((list) {
       setState(() {
         categoryOutList = list;
       });
@@ -98,7 +93,10 @@ class _OperationEditPageState extends State<OperationEditPage> {
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).operationCardTitle),
+          title: Text(
+            AppLocalizations.of(context).operationCardTitle,
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -109,13 +107,19 @@ class _OperationEditPageState extends State<OperationEditPage> {
                   Title(text: AppLocalizations.of(context).titleDate),
                   Row(
                     children: <Widget>[
-                      DateButton(icon: Icons.calendar_today, text: DateFormat.yMMMd(
+                      DateButton(
+                          icon: Icons.calendar_today,
+                          text: DateFormat.yMMMd(
                                   Localizations.localeOf(context).languageCode)
-                              .format(_date), onPressed: _selectDate),
+                              .format(_date),
+                          onPressed: _selectDate),
                       SizedBox(
                         width: 16.0,
                       ),
-                      DateButton(icon: Icons.access_time, text: _time.format(context), onPressed: _selectTime),
+                      DateButton(
+                          icon: Icons.access_time,
+                          text: _time.format(context),
+                          onPressed: _selectTime),
                     ],
                   ),
                   Title(text: AppLocalizations.of(context).titleType),
@@ -216,7 +220,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
             value: _category,
             hint: AppLocalizations.of(context).hintCategory,
             onChange: (Category? newValue) {
-              if(newValue != null) {
+              if (newValue != null) {
                 setState(() {
                   _category = newValue;
                 });
@@ -308,8 +312,8 @@ class DateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return ElevatedButton(onPressed: onPressed,
+    return ElevatedButton(
+      onPressed: onPressed,
       child: Row(
         children: <Widget>[
           Icon(
