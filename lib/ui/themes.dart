@@ -14,4 +14,7 @@ ThemeData theme() => ThemeData(
         brightness: Brightness.dark,
         actionsIconTheme: IconThemeData(color: Colors.white),
       ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: _primaryColor,
+      ),
     );

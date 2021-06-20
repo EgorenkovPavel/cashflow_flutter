@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -201,48 +202,51 @@ class _AccountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 10),
-            blurRadius: 20.0,
-            color: Colors.black38,
-          )
-        ],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      padding: EdgeInsets.all(16.0),
-      height: _itemSize,
-      width: 200.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            account.title,
-            style: Theme
-                .of(context)
-                .textTheme
-                .caption!
-                .copyWith(
-              fontSize: 13,
-              color: Colors.black87,
+    return GestureDetector(
+      onTap: () => PageNavigator.openAccountEditPage(context, account.id),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 10),
+              blurRadius: 20.0,
+              color: Colors.black38,
+            )
+          ],
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        padding: EdgeInsets.all(16.0),
+        height: _itemSize,
+        width: 200.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              account.title,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(
+                fontSize: 13,
+                color: Colors.black87,
+              ),
             ),
-          ),
-          Text(
-            NumberFormat().format(account.balance),
-            style: Theme
-                .of(context)
-                .textTheme
-                .headline6!
-                .copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              NumberFormat().format(account.balance),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6!
+                  .copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
