@@ -38,7 +38,6 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => PageNavigator.openOperationInputPage(context),
-        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
     );
