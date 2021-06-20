@@ -15,7 +15,7 @@ import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart'
 import 'package:money_tracker/utils/google_http_client.dart';
 
 class PageNavigator {
-  static const routeAccountName = '/account';
+  static const _routeAccountName = '/account';
 
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
@@ -24,12 +24,13 @@ class PageNavigator {
       );
 
   static Future openAccountEditPage(BuildContext context, int accountId) =>
-      Navigator.of(context).pushNamed(routeAccountName, arguments: accountId);
+      Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
 
-  static const routeCategoryName = '/category';
+  static const _routeCategoryName = '/category';
 
   static void openCategoryEditPage(BuildContext context, int categoryId) =>
-      Navigator.of(context).pushNamed(routeCategoryName, arguments: categoryId);
+      Navigator.of(context)
+          .pushNamed(_routeCategoryName, arguments: categoryId);
 
   static Future<Category?> openCategoryInputPage(BuildContext context,
           {required OperationType type}) =>
@@ -40,51 +41,49 @@ class PageNavigator {
         ),
       );
 
-  static const routeOperationName = '/operation';
+  static const _routeOperationName = '/operation';
 
   static Future openOperationEditPage(BuildContext context, int operationId) =>
       Navigator.of(context)
-          .pushNamed(routeOperationName, arguments: operationId);
+          .pushNamed(_routeOperationName, arguments: operationId);
 
-  static const routeOperationFilterName = '/operationFilter';
+  static const _routeOperationFilterName = '/operationFilter';
 
   static Future<OperationListFilter?> openOperationFilterPage(
           BuildContext context, OperationListFilter filter) =>
       Navigator.of(context)
-          .pushNamed(routeOperationFilterName, arguments: filter);
+          .pushNamed(_routeOperationFilterName, arguments: filter);
 
-  static const routeOperationListName = '/operationListPage';
+  static const _routeOperationListName = '/operationListPage';
 
-  static Future openOperationListPage(
-      BuildContext context) =>
-      Navigator.of(context)
-          .pushNamed(routeOperationListName);
+  static Future openOperationListPage(BuildContext context) =>
+      Navigator.of(context).pushNamed(_routeOperationListName);
 
-  static const routeOperationInputName = '/masterPageNew';
+  static const _routeOperationInputName = '/masterPageNew';
 
   static Future openOperationInputPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(routeOperationInputName);
+      Navigator.of(context).pushNamed(_routeOperationInputName);
 
-  static const routeBackupName = '/backup';
+  static const _routeSettingsName = '/backup';
 
   static Future openSettingsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(routeBackupName);
+      Navigator.of(context).pushNamed(_routeSettingsName);
 
-  static const routeReportsName = '/reports';
+  static const _routeReportsName = '/reports';
 
   static void openReportsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(routeReportsName);
+      Navigator.of(context).pushNamed(_routeReportsName);
 
-  static const routeGoogleDrive = '/google_drive';
+  static const _routeGoogleDrive = '/google_drive';
 
   static Future<DriveFile?> chooseFile(
           BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed(routeGoogleDrive,
+      Navigator.of(context).pushNamed(_routeGoogleDrive,
           arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FILE});
 
   static Future<DriveFile?> chooseFolder(
           BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed(routeGoogleDrive,
+      Navigator.of(context).pushNamed(_routeGoogleDrive,
           arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FOLDER});
 
   static const routeRootName = '/';
@@ -92,43 +91,43 @@ class PageNavigator {
   static Map<String, Widget Function(BuildContext)> routes =
       <String, WidgetBuilder>{
     routeRootName: (context) => HomePage(),
-        routeOperationListName: (context) => OperationListPage(),
-    routeOperationInputName: (context) => OperationInputPage(),
-    routeBackupName: (context) => SettingsPage(),
-    routeReportsName: (context) => ReportsPage(),
+    _routeOperationListName: (context) => OperationListPage(),
+    _routeOperationInputName: (context) => OperationInputPage(),
+    _routeSettingsName: (context) => SettingsPage(),
+    _routeReportsName: (context) => ReportsPage(),
   };
 
   static Route<dynamic>? Function(RouteSettings)? onGenerateRoute = (settings) {
     switch (settings.name) {
-      case routeAccountName:
+      case _routeAccountName:
         {
           return MaterialPageRoute(
             builder: (context) =>
                 AccountEditPage(id: settings.arguments as int),
           );
         }
-      case routeCategoryName:
+      case _routeCategoryName:
         {
           return MaterialPageRoute(
             builder: (context) =>
                 CategoryEditPage(id: settings.arguments as int),
           );
         }
-      case routeOperationName:
+      case _routeOperationName:
         {
           return MaterialPageRoute(
             builder: (context) =>
                 OperationEditPage(id: settings.arguments as int),
           );
         }
-      case routeOperationFilterName:
+      case _routeOperationFilterName:
         {
           return MaterialPageRoute(
             builder: (context) => OperationFilterPage(
                 filter: settings.arguments as OperationListFilter),
           );
         }
-      case routeGoogleDrive:
+      case _routeGoogleDrive:
         {
           var args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
@@ -148,19 +147,14 @@ class _Card<T> {
   const _Card();
 
   Future<T?> open(BuildContext context, Widget child) {
-    return showDialog<T>(
+    return showModalBottomSheet<T>(
       context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-          ),
-          child: child,
-        );
-      },
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: child,
+      ),
     );
   }
 }
