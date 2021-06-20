@@ -1,28 +1,40 @@
+import 'package:money_tracker/domain/models.dart';
 
 import 'operation_type.dart';
 
-class Category{
-
+class Category {
   final int id;
   final String title;
   final OperationType type;
+  final BudgetType budgetType;
+  final int budget;
 
-  const Category({this.id = 0, required this.title, required this.type});
+  const Category(
+      {required this.budgetType,
+      required this.budget,
+      this.id = 0,
+      required this.title,
+      required this.type});
 
-  Category copyWith({int? id, String? title, OperationType? type}) => Category(
-    id: id ?? this.id,
-    title: title ?? this.title,
-    type: type ?? this.type,
-  );
+  Category copyWith(
+          {int? id,
+          String? title,
+          OperationType? type,
+          BudgetType? budgetType,
+          int? budget}) =>
+      Category(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        type: type ?? this.type,
+        budgetType: budgetType ?? this.budgetType,
+        budget: budget ?? this.budget,
+      );
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Category &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is Category && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
-
 }

@@ -191,8 +191,14 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final int id;
   final String title;
   final OperationType operationType;
+  final BudgetType budgetType;
+  final int budget;
   CategoryDB(
-      {required this.id, required this.title, required this.operationType});
+      {required this.id,
+      required this.title,
+      required this.operationType,
+      required this.budgetType,
+      required this.budget});
   factory CategoryDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -203,6 +209,10 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       operationType: $CategoriesTable.$converter0.mapToDart(const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}operation_type']))!,
+      budgetType: $CategoriesTable.$converter1.mapToDart(const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}budget_type']))!,
+      budget: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}budget'])!,
     );
   }
   @override
@@ -214,6 +224,11 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       final converter = $CategoriesTable.$converter0;
       map['operation_type'] = Variable<int>(converter.mapToSql(operationType)!);
     }
+    {
+      final converter = $CategoriesTable.$converter1;
+      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType)!);
+    }
+    map['budget'] = Variable<int>(budget);
     return map;
   }
 
@@ -222,6 +237,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       id: Value(id),
       title: Value(title),
       operationType: Value(operationType),
+      budgetType: Value(budgetType),
+      budget: Value(budget),
     );
   }
 
@@ -232,6 +249,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
+      budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
+      budget: serializer.fromJson<int>(json['budget']),
     );
   }
   @override
@@ -241,72 +260,105 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
       'operationType': serializer.toJson<OperationType>(operationType),
+      'budgetType': serializer.toJson<BudgetType>(budgetType),
+      'budget': serializer.toJson<int>(budget),
     };
   }
 
-  CategoryDB copyWith({int? id, String? title, OperationType? operationType}) =>
+  CategoryDB copyWith(
+          {int? id,
+          String? title,
+          OperationType? operationType,
+          BudgetType? budgetType,
+          int? budget}) =>
       CategoryDB(
         id: id ?? this.id,
         title: title ?? this.title,
         operationType: operationType ?? this.operationType,
+        budgetType: budgetType ?? this.budgetType,
+        budget: budget ?? this.budget,
       );
   @override
   String toString() {
     return (StringBuffer('CategoryDB(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('operationType: $operationType')
+          ..write('operationType: $operationType, ')
+          ..write('budgetType: $budgetType, ')
+          ..write('budget: $budget')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(title.hashCode, operationType.hashCode)));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          title.hashCode,
+          $mrjc(operationType.hashCode,
+              $mrjc(budgetType.hashCode, budget.hashCode)))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CategoryDB &&
           other.id == this.id &&
           other.title == this.title &&
-          other.operationType == this.operationType);
+          other.operationType == this.operationType &&
+          other.budgetType == this.budgetType &&
+          other.budget == this.budget);
 }
 
 class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<int> id;
   final Value<String> title;
   final Value<OperationType> operationType;
+  final Value<BudgetType> budgetType;
+  final Value<int> budget;
   const CategoriesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.operationType = const Value.absent(),
+    this.budgetType = const Value.absent(),
+    this.budget = const Value.absent(),
   });
   CategoriesCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required OperationType operationType,
+    required BudgetType budgetType,
+    required int budget,
   })  : title = Value(title),
-        operationType = Value(operationType);
+        operationType = Value(operationType),
+        budgetType = Value(budgetType),
+        budget = Value(budget);
   static Insertable<CategoryDB> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<OperationType>? operationType,
+    Expression<BudgetType>? budgetType,
+    Expression<int>? budget,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (operationType != null) 'operation_type': operationType,
+      if (budgetType != null) 'budget_type': budgetType,
+      if (budget != null) 'budget': budget,
     });
   }
 
   CategoriesCompanion copyWith(
       {Value<int>? id,
       Value<String>? title,
-      Value<OperationType>? operationType}) {
+      Value<OperationType>? operationType,
+      Value<BudgetType>? budgetType,
+      Value<int>? budget}) {
     return CategoriesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       operationType: operationType ?? this.operationType,
+      budgetType: budgetType ?? this.budgetType,
+      budget: budget ?? this.budget,
     );
   }
 
@@ -324,6 +376,13 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       map['operation_type'] =
           Variable<int>(converter.mapToSql(operationType.value)!);
     }
+    if (budgetType.present) {
+      final converter = $CategoriesTable.$converter1;
+      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType.value)!);
+    }
+    if (budget.present) {
+      map['budget'] = Variable<int>(budget.value);
+    }
     return map;
   }
 
@@ -332,7 +391,9 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     return (StringBuffer('CategoriesCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('operationType: $operationType')
+          ..write('operationType: $operationType, ')
+          ..write('budgetType: $budgetType, ')
+          ..write('budget: $budget')
           ..write(')'))
         .toString();
   }
@@ -374,8 +435,31 @@ class $CategoriesTable extends Categories
     );
   }
 
+  final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
   @override
-  List<GeneratedColumn> get $columns => [id, title, operationType];
+  late final GeneratedIntColumn budgetType = _constructBudgetType();
+  GeneratedIntColumn _constructBudgetType() {
+    return GeneratedIntColumn(
+      'budget_type',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _budgetMeta = const VerificationMeta('budget');
+  @override
+  late final GeneratedIntColumn budget = _constructBudget();
+  GeneratedIntColumn _constructBudget() {
+    return GeneratedIntColumn(
+      'budget',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, operationType, budgetType, budget];
   @override
   $CategoriesTable get asDslTable => this;
   @override
@@ -397,6 +481,13 @@ class $CategoriesTable extends Categories
       context.missing(_titleMeta);
     }
     context.handle(_operationTypeMeta, const VerificationResult.success());
+    context.handle(_budgetTypeMeta, const VerificationResult.success());
+    if (data.containsKey('budget')) {
+      context.handle(_budgetMeta,
+          budget.isAcceptableOrUnknown(data['budget']!, _budgetMeta));
+    } else if (isInserting) {
+      context.missing(_budgetMeta);
+    }
     return context;
   }
 
@@ -415,6 +506,8 @@ class $CategoriesTable extends Categories
 
   static TypeConverter<OperationType, int> $converter0 =
       const OperationTypeConverter();
+  static TypeConverter<BudgetType, int> $converter1 =
+      const BudgetTypeConverter();
 }
 
 class OperationDB extends DataClass implements Insertable<OperationDB> {
@@ -1360,327 +1453,6 @@ class $CashflowsTable extends Cashflows
   }
 }
 
-class BudgetDB extends DataClass implements Insertable<BudgetDB> {
-  final int year;
-  final int month;
-  final int category;
-  final BudgetType budgetType;
-  final int sum;
-  BudgetDB(
-      {required this.year,
-      required this.month,
-      required this.category,
-      required this.budgetType,
-      required this.sum});
-  factory BudgetDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return BudgetDB(
-      year: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}year'])!,
-      month: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}month'])!,
-      category: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}category'])!,
-      budgetType: $BudgetsTable.$converter0.mapToDart(const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}budget_type']))!,
-      sum: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}sum'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['year'] = Variable<int>(year);
-    map['month'] = Variable<int>(month);
-    map['category'] = Variable<int>(category);
-    {
-      final converter = $BudgetsTable.$converter0;
-      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType)!);
-    }
-    map['sum'] = Variable<int>(sum);
-    return map;
-  }
-
-  BudgetsCompanion toCompanion(bool nullToAbsent) {
-    return BudgetsCompanion(
-      year: Value(year),
-      month: Value(month),
-      category: Value(category),
-      budgetType: Value(budgetType),
-      sum: Value(sum),
-    );
-  }
-
-  factory BudgetDB.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return BudgetDB(
-      year: serializer.fromJson<int>(json['year']),
-      month: serializer.fromJson<int>(json['month']),
-      category: serializer.fromJson<int>(json['category']),
-      budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
-      sum: serializer.fromJson<int>(json['sum']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'year': serializer.toJson<int>(year),
-      'month': serializer.toJson<int>(month),
-      'category': serializer.toJson<int>(category),
-      'budgetType': serializer.toJson<BudgetType>(budgetType),
-      'sum': serializer.toJson<int>(sum),
-    };
-  }
-
-  BudgetDB copyWith(
-          {int? year,
-          int? month,
-          int? category,
-          BudgetType? budgetType,
-          int? sum}) =>
-      BudgetDB(
-        year: year ?? this.year,
-        month: month ?? this.month,
-        category: category ?? this.category,
-        budgetType: budgetType ?? this.budgetType,
-        sum: sum ?? this.sum,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('BudgetDB(')
-          ..write('year: $year, ')
-          ..write('month: $month, ')
-          ..write('category: $category, ')
-          ..write('budgetType: $budgetType, ')
-          ..write('sum: $sum')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => $mrjf($mrjc(
-      year.hashCode,
-      $mrjc(month.hashCode,
-          $mrjc(category.hashCode, $mrjc(budgetType.hashCode, sum.hashCode)))));
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is BudgetDB &&
-          other.year == this.year &&
-          other.month == this.month &&
-          other.category == this.category &&
-          other.budgetType == this.budgetType &&
-          other.sum == this.sum);
-}
-
-class BudgetsCompanion extends UpdateCompanion<BudgetDB> {
-  final Value<int> year;
-  final Value<int> month;
-  final Value<int> category;
-  final Value<BudgetType> budgetType;
-  final Value<int> sum;
-  const BudgetsCompanion({
-    this.year = const Value.absent(),
-    this.month = const Value.absent(),
-    this.category = const Value.absent(),
-    this.budgetType = const Value.absent(),
-    this.sum = const Value.absent(),
-  });
-  BudgetsCompanion.insert({
-    required int year,
-    required int month,
-    required int category,
-    required BudgetType budgetType,
-    required int sum,
-  })  : year = Value(year),
-        month = Value(month),
-        category = Value(category),
-        budgetType = Value(budgetType),
-        sum = Value(sum);
-  static Insertable<BudgetDB> custom({
-    Expression<int>? year,
-    Expression<int>? month,
-    Expression<int>? category,
-    Expression<BudgetType>? budgetType,
-    Expression<int>? sum,
-  }) {
-    return RawValuesInsertable({
-      if (year != null) 'year': year,
-      if (month != null) 'month': month,
-      if (category != null) 'category': category,
-      if (budgetType != null) 'budget_type': budgetType,
-      if (sum != null) 'sum': sum,
-    });
-  }
-
-  BudgetsCompanion copyWith(
-      {Value<int>? year,
-      Value<int>? month,
-      Value<int>? category,
-      Value<BudgetType>? budgetType,
-      Value<int>? sum}) {
-    return BudgetsCompanion(
-      year: year ?? this.year,
-      month: month ?? this.month,
-      category: category ?? this.category,
-      budgetType: budgetType ?? this.budgetType,
-      sum: sum ?? this.sum,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (year.present) {
-      map['year'] = Variable<int>(year.value);
-    }
-    if (month.present) {
-      map['month'] = Variable<int>(month.value);
-    }
-    if (category.present) {
-      map['category'] = Variable<int>(category.value);
-    }
-    if (budgetType.present) {
-      final converter = $BudgetsTable.$converter0;
-      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType.value)!);
-    }
-    if (sum.present) {
-      map['sum'] = Variable<int>(sum.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('BudgetsCompanion(')
-          ..write('year: $year, ')
-          ..write('month: $month, ')
-          ..write('category: $category, ')
-          ..write('budgetType: $budgetType, ')
-          ..write('sum: $sum')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, BudgetDB> {
-  final GeneratedDatabase _db;
-  final String? _alias;
-  $BudgetsTable(this._db, [this._alias]);
-  final VerificationMeta _yearMeta = const VerificationMeta('year');
-  @override
-  late final GeneratedIntColumn year = _constructYear();
-  GeneratedIntColumn _constructYear() {
-    return GeneratedIntColumn(
-      'year',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _monthMeta = const VerificationMeta('month');
-  @override
-  late final GeneratedIntColumn month = _constructMonth();
-  GeneratedIntColumn _constructMonth() {
-    return GeneratedIntColumn(
-      'month',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  @override
-  late final GeneratedIntColumn category = _constructCategory();
-  GeneratedIntColumn _constructCategory() {
-    return GeneratedIntColumn('category', $tableName, false,
-        $customConstraints: 'NULL REFERENCES category(id)');
-  }
-
-  final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
-  @override
-  late final GeneratedIntColumn budgetType = _constructBudgetType();
-  GeneratedIntColumn _constructBudgetType() {
-    return GeneratedIntColumn(
-      'budget_type',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _sumMeta = const VerificationMeta('sum');
-  @override
-  late final GeneratedIntColumn sum = _constructSum();
-  GeneratedIntColumn _constructSum() {
-    return GeneratedIntColumn(
-      'sum',
-      $tableName,
-      false,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns =>
-      [year, month, category, budgetType, sum];
-  @override
-  $BudgetsTable get asDslTable => this;
-  @override
-  String get $tableName => _alias ?? 'budgets';
-  @override
-  final String actualTableName = 'budgets';
-  @override
-  VerificationContext validateIntegrity(Insertable<BudgetDB> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('year')) {
-      context.handle(
-          _yearMeta, year.isAcceptableOrUnknown(data['year']!, _yearMeta));
-    } else if (isInserting) {
-      context.missing(_yearMeta);
-    }
-    if (data.containsKey('month')) {
-      context.handle(
-          _monthMeta, month.isAcceptableOrUnknown(data['month']!, _monthMeta));
-    } else if (isInserting) {
-      context.missing(_monthMeta);
-    }
-    if (data.containsKey('category')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
-    }
-    context.handle(_budgetTypeMeta, const VerificationResult.success());
-    if (data.containsKey('sum')) {
-      context.handle(
-          _sumMeta, sum.isAcceptableOrUnknown(data['sum']!, _sumMeta));
-    } else if (isInserting) {
-      context.missing(_sumMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {year, month, category, budgetType};
-  @override
-  BudgetDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return BudgetDB.fromData(data, _db,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $BudgetsTable createAlias(String alias) {
-    return $BudgetsTable(_db, alias);
-  }
-
-  static TypeConverter<BudgetType, int> $converter0 =
-      const BudgetTypeConverter();
-}
-
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $AccountsTable accounts = $AccountsTable(this);
@@ -1688,16 +1460,14 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
-  late final $BudgetsTable budgets = $BudgetsTable(this);
   late final AccountDao accountDao = AccountDao(this as Database);
   late final CategoryDao categoryDao = CategoryDao(this as Database);
   late final OperationDao operationDao = OperationDao(this as Database);
-  late final BudgetDao budgetDao = BudgetDao(this as Database);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [accounts, categories, operations, balances, cashflows, budgets];
+      [accounts, categories, operations, balances, cashflows];
 }
 
 // **************************************************************************
@@ -1710,7 +1480,6 @@ mixin _$AccountDaoMixin on DatabaseAccessor<Database> {
 }
 mixin _$CategoryDaoMixin on DatabaseAccessor<Database> {
   $CategoriesTable get categories => attachedDatabase.categories;
-  $BudgetsTable get budgets => attachedDatabase.budgets;
   $CashflowsTable get cashflows => attachedDatabase.cashflows;
 }
 mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
@@ -1719,8 +1488,4 @@ mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
   $OperationsTable get operations => attachedDatabase.operations;
   $BalancesTable get balances => attachedDatabase.balances;
   $CashflowsTable get cashflows => attachedDatabase.cashflows;
-}
-mixin _$BudgetDaoMixin on DatabaseAccessor<Database> {
-  $BudgetsTable get budgets => attachedDatabase.budgets;
-  $CategoriesTable get categories => attachedDatabase.categories;
 }

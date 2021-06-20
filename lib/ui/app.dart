@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:money_tracker/domain/theme_model.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -12,9 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Money tracker',
-      theme: lightTheme(),
-      darkTheme: darkTheme(),
-      themeMode: context.watch<ThemeModel>().mode,
+      theme: theme(),
       localizationsDelegates: [
         const AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,

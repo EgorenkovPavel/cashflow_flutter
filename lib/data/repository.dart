@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_tracker/data/account_repository.dart';
-import 'package:money_tracker/data/budget_repository.dart';
 import 'package:money_tracker/data/category_repository.dart';
 import 'package:money_tracker/data/operation_repository.dart';
 import 'package:money_tracker/data/service_repository.dart';
@@ -12,10 +11,9 @@ class Repository extends ChangeNotifier {
   final AccountRepository _accountRepo;
   final CategoryRepository _categoryRepo;
   final OperationRepository _operationRepo;
-  final BudgetRepository _budgetRepo;
   final ServiceRepository _serviceRepo;
 
-  Repository(this._accountRepo, this._categoryRepo, this._operationRepo, this._budgetRepo, this._serviceRepo);
+  Repository(this._accountRepo, this._categoryRepo, this._operationRepo, this._serviceRepo);
 
   //Accounts
 
@@ -47,6 +45,9 @@ class Repository extends ChangeNotifier {
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _categoryRepo.watchAllByType(type);
+
+  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
+      DateTime date, OperationType type) => _categoryRepo.watchCategoryCashflowByType(date, type);
 
   Future<List<Category>> getAllCategoriesByType(OperationType type) =>
       _categoryRepo.getAllByType(type);
@@ -86,24 +87,6 @@ class Repository extends ChangeNotifier {
 
   Future deleteOperationById(int operationId) =>
       _operationRepo.deleteById(operationId);
-
-  //Budget
-
-  Future<Budget> getBudget(
-          int categoryId, BudgetType type, int month, int year) =>
-      _budgetRepo.get(categoryId, type, month, year);
-
-  Stream<List<Budget>> watchBudgetByCategory(int categoryId) =>
-      _budgetRepo.watchByCategory(categoryId);
-
-  Stream<List<Budget>> watchBudgetByType(BudgetType type) =>
-      _budgetRepo.watchByType(type);
-
-  Future<void> insertBudget(Budget entity) => _budgetRepo.insert(entity);
-
-  Future<void> updateBudget(Budget entity) => _budgetRepo.update(entity);
-
-  Future<void> deleteBudget(Budget entity) => _budgetRepo.delete(entity);
 
   //Backup
 

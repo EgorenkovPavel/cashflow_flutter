@@ -1,4 +1,5 @@
 import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -16,11 +17,24 @@ class CategoryRepository {
   final CategoryDB Function(Category) _mapCategoryDB =
       (item) => const CategoryMapper().mapToSql(item);
 
+  final CategoryCashflow Function(CategoryCashflowEntity)
+      _mapCategoryCashflowBudget =
+      (item) => const CategoryCashflowMapper().mapToDart(item);
+
+  final List<CategoryCashflow> Function(
+          List<CategoryCashflowEntity>) _mapCategoryCashflowList =
+      (list) => const CategoryCashflowMapper().mapListToDart(list);
+
   Stream<List<Category>> watchAll() =>
       db.categoryDao.watchAllCategories().map(_mapCategoryList);
 
   Future<List<Category>> getAll() async =>
       _mapCategoryList(await db.categoryDao.getAllCategories());
+
+  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(DateTime date, OperationType type) =>
+      db.categoryDao
+          .watchCategoryCashflowByType(date, type)
+          .map(_mapCategoryCashflowList);
 
   Future<Category> getById(int id) async =>
       _mapCategory(await db.categoryDao.getCategoryById(id));
