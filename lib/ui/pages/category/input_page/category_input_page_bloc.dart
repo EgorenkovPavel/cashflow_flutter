@@ -21,14 +21,20 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
 
   late OperationType _type;
 
-  CategoryInputPageBloc(this._repository) : super(InitialState(OperationType.INPUT));
+  CategoryInputPageBloc(this._repository)
+      : super(InitialState(OperationType.INPUT));
 
-  void initial(OperationType type){
+  void initial(OperationType type) {
     _type = type;
   }
 
   Future<void> save(String title) async {
-    var category = Category(title: title, type: _type);
+    var category = Category(
+      title: title,
+      type: _type,
+      budgetType: BudgetType.MONTH,
+      budget: 0,
+    );
     var id = await _repository.insertCategory(category);
     emit(Saved(category.copyWith(id: id)));
   }

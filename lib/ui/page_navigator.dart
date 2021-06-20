@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
-import 'package:money_tracker/ui/pages/budget/budget_card.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
+import 'package:money_tracker/ui/pages/home/home_page.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
+import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
+import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
-import 'package:money_tracker/ui/pages/start_page.dart';
 import 'package:money_tracker/utils/google_http_client.dart';
 
 class PageNavigator {
@@ -25,22 +25,6 @@ class PageNavigator {
 
   static Future openAccountEditPage(BuildContext context, int accountId) =>
       Navigator.of(context).pushNamed(routeAccountName, arguments: accountId);
-
-  static void addBudget(BuildContext context, BudgetType budgetType) =>
-      const _Card<Budget>().open(
-        context,
-        BudgetCard(
-          budgetType: budgetType,
-        ),
-      );
-
-  static void openBudget(BuildContext context, Budget budget) =>
-      const _Card<Budget>().open(
-        context,
-        BudgetCard.budget(
-          budget: budget,
-        ),
-      );
 
   static const routeCategoryName = '/category';
 
@@ -69,6 +53,13 @@ class PageNavigator {
       Navigator.of(context)
           .pushNamed(routeOperationFilterName, arguments: filter);
 
+  static const routeOperationListName = '/operationListPage';
+
+  static Future openOperationListPage(
+      BuildContext context) =>
+      Navigator.of(context)
+          .pushNamed(routeOperationListName);
+
   static const routeOperationInputName = '/masterPageNew';
 
   static Future openOperationInputPage(BuildContext context) =>
@@ -76,7 +67,7 @@ class PageNavigator {
 
   static const routeBackupName = '/backup';
 
-  static Future openBackupPage(BuildContext context) =>
+  static Future openSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(routeBackupName);
 
   static const routeReportsName = '/reports';
@@ -100,7 +91,8 @@ class PageNavigator {
 
   static Map<String, Widget Function(BuildContext)> routes =
       <String, WidgetBuilder>{
-    routeRootName: (context) => StartPage(),
+    routeRootName: (context) => HomePage(),
+        routeOperationListName: (context) => OperationListPage(),
     routeOperationInputName: (context) => OperationInputPage(),
     routeBackupName: (context) => SettingsPage(),
     routeReportsName: (context) => ReportsPage(),

@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/budget/list_tile_budget.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -62,7 +59,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            _buildBudgetList(context),
+            SizedBox(),
             //buildOperationList(context),
             OperationList(
                 filter: OperationListFilter(categoriesIds: {widget.id}))
@@ -71,7 +68,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_tabController.index == 0) {
-              PageNavigator.addBudget(context, BudgetType.MONTH);
+              //PageNavigator.addBudget(context, BudgetType.MONTH);
             } else if (_tabController.index == 1) {
               OperationList.addItem(context);
             }
@@ -79,36 +76,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           child: Icon(Icons.add),
         ),
       ),
-    );
-  }
-
-  Widget _buildBudgetList(BuildContext context) {
-    return StreamBuilder<List<Budget>>(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return _emptyBudgetListHint(context);
-        }
-
-        List<Budget> list = snapshot.data;
-
-        if (list.isEmpty) {
-          return _emptyBudgetListHint(context);
-        }
-
-        return ListView.builder(
-          itemBuilder: (context, pos) {
-            return Column(
-              children: <Widget>[
-                ListTileBudget(list[pos]),
-                Divider(),
-              ],
-            );
-          },
-          itemCount: list.length,
-        );
-      },
-      stream: Provider.of<Repository>(context, listen: false)
-          .watchBudgetByCategory(widget.id),
     );
   }
 
@@ -170,13 +137,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           );
         }
       },
-    );
-  }
-
-  Widget _emptyBudgetListHint(BuildContext context) {
-    return EmptyListHint(
-      title: AppLocalizations.of(context).emptyListBudgets,
-      hint: AppLocalizations.of(context).hintEmptyList,
     );
   }
 }

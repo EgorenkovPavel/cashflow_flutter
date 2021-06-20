@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/domain/models/category_cashflow_budget.dart';
+import 'package:money_tracker/domain/models/category_cashflow.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class ReportsPage extends StatelessWidget {
@@ -35,7 +35,7 @@ class ReportsPage extends StatelessWidget {
 }
 
 class MonthCashflowChartByCategories extends StatelessWidget {
-  final List<CategoryCashflowBudget> categories;
+  final List<CategoryCashflow> categories;
 
   final bool animate;
 
