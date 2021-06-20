@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/theme_model.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
@@ -35,10 +34,6 @@ class SettingsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ModeToggleButton(
-                      mode: context.watch<ThemeModel>().mode,
-                      onPressed: (mode) =>
-                          context.read<ThemeModel>().setMode(mode)),
                   sectionTitle(context, 'Google drive'),
                   Flex(
                     direction: Axis.horizontal,
