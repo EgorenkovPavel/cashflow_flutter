@@ -2,6 +2,7 @@ import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:moor/moor.dart';
 
 class CategoryRepository {
   final Database db;
@@ -21,8 +22,8 @@ class CategoryRepository {
       _mapCategoryCashflowBudget =
       (item) => const CategoryCashflowMapper().mapToDart(item);
 
-  final List<CategoryCashflow> Function(
-          List<CategoryCashflowEntity>) _mapCategoryCashflowList =
+  final List<CategoryCashflow> Function(List<CategoryCashflowEntity>)
+      _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
 
   Stream<List<Category>> watchAll() =>
@@ -31,10 +32,16 @@ class CategoryRepository {
   Future<List<Category>> getAll() async =>
       _mapCategoryList(await db.categoryDao.getAllCategories());
 
-  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(DateTime date, OperationType type) =>
+  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
+          DateTime date, OperationType type) =>
       db.categoryDao
           .watchCategoryCashflowByType(date, type)
           .map(_mapCategoryCashflowList);
+
+  Future<List<CategoryCashflow>> getCategoryCashflowByType(
+      DateTime date, OperationType type) async =>
+      _mapCategoryCashflowList(await db.categoryDao
+          .getCategoryCashflowByType(date, type));
 
   Future<Category> getById(int id) async =>
       _mapCategory(await db.categoryDao.getCategoryById(id));
@@ -46,7 +53,12 @@ class CategoryRepository {
       _mapCategoryList(await db.categoryDao.getAllCategoriesByType(type));
 
   Future<int> insert(Category entity) =>
-      db.categoryDao.insertCategory(_mapCategoryDB(entity));
+      db.categoryDao.insertCategory(CategoriesCompanion(
+        title: Value(entity.title),
+        operationType: Value(entity.type),
+        budgetType: Value(entity.budgetType),
+        budget: Value(entity.budget),
+      ));
 
   Future update(Category entity) =>
       db.categoryDao.updateCategory(_mapCategoryDB(entity));

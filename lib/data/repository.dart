@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:money_tracker/data/account_repository.dart';
 import 'package:money_tracker/data/category_repository.dart';
@@ -13,7 +12,8 @@ class Repository extends ChangeNotifier {
   final OperationRepository _operationRepo;
   final ServiceRepository _serviceRepo;
 
-  Repository(this._accountRepo, this._categoryRepo, this._operationRepo, this._serviceRepo);
+  Repository(this._accountRepo, this._categoryRepo, this._operationRepo,
+      this._serviceRepo);
 
   //Accounts
 
@@ -47,7 +47,12 @@ class Repository extends ChangeNotifier {
       _categoryRepo.watchAllByType(type);
 
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
-      DateTime date, OperationType type) => _categoryRepo.watchCategoryCashflowByType(date, type);
+          DateTime date, OperationType type) =>
+      _categoryRepo.watchCategoryCashflowByType(date, type);
+
+  Future<List<CategoryCashflow>> getCategoryCashflowByType(
+          DateTime date, OperationType type) =>
+      _categoryRepo.getCategoryCashflowByType(date, type);
 
   Future<List<Category>> getAllCategoriesByType(OperationType type) =>
       _categoryRepo.getAllByType(type);
@@ -99,4 +104,3 @@ class Repository extends ChangeNotifier {
   Future restore(GoogleHttpClient httpClient, String fileId) =>
       _serviceRepo.restore(httpClient, fileId);
 }
-

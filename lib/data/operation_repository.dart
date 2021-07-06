@@ -1,6 +1,7 @@
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/operation_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:moor/moor.dart';
 
 class OperationRepository {
   final Database db;
@@ -51,23 +52,31 @@ class OperationRepository {
 
   Future<int> insert(Operation entity) {
     if ((entity.id) == 0) {
-      return db.operationDao.insertOperation(_mapOperationDB(entity));
+      return db.operationDao.insertOperation(
+        OperationsCompanion(
+          date: Value(entity.date),
+          operationType: Value(entity.type),
+          account: Value(entity.account.id),
+          category: Value(entity.category?.id),
+          recAccount: Value(entity.recAccount?.id),
+          sum: Value(entity.sum)
+        )
+      );
     } else {
       return db.operationDao.updateOperation(_mapOperationDB(entity));
     }
   }
 
   Future duplicate(Operation entity) {
-    var newOperation = Operation(
-      id: 0,
-      date: DateTime.now(),
-      type: entity.type,
-      account: entity.account,
-      category: entity.category,
-      recAccount: entity.recAccount,
-      sum: entity.sum,
+    var newOperation = OperationsCompanion(
+      date: Value(DateTime.now()),
+      operationType: Value(entity.type),
+      account: Value(entity.account.id),
+      category: Value(entity.category?.id),
+      recAccount: Value(entity.recAccount?.id),
+      sum: Value(entity.sum),
     );
-    return db.operationDao.insertOperation(_mapOperationDB(newOperation));
+    return db.operationDao.insertOperation(newOperation);
   }
 
   Future delete(Operation entity) =>
