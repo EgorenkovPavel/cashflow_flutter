@@ -443,7 +443,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   Future<AccountDB> getAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).getSingle();
 
-  Future<int> insertAccount(AccountDB entity) => into(accounts).insert(entity);
+  Future<int> insertAccount(AccountsCompanion entity) => into(accounts).insert(entity);
 
   Future<bool> updateAccount(AccountDB entity) =>
       update(accounts).replace(entity);
@@ -639,8 +639,37 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       return rows
           .map((row) => CategoryCashflowEntity(
                 category: CategoryDB.fromData(row.data, db),
-                cashflow: row.read<int>('cashflow'),
+                cashflow: row.read<int?>('cashflow') ?? 0,
               ))
+          .toList();
+    });
+  }
+
+  Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
+      DateTime date, OperationType type) {
+    var monthStart = DateTime(date.year, date.month);
+    var monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return customSelect(
+      'SELECT *, '
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+          'FROM categories c '
+          'WHERE operation_type = ? '
+          'ORDER BY title;',
+      variables: [
+        Variable.withDateTime(monthStart),
+        Variable.withDateTime(monthEnd),
+        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+      ],
+      readsFrom: {categories, cashflows},
+    ).get().then((rows) {
+      return rows
+          .map((row) => CategoryCashflowEntity(
+        category: CategoryDB.fromData(row.data, db),
+        cashflow: row.read<int?>('cashflow') ?? 0,
+      ))
           .toList();
     });
   }
@@ -666,7 +695,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     });
   }
 
-  Future<int> insertCategory(CategoryDB entity) =>
+  Future<int> insertCategory(CategoriesCompanion entity) =>
       into(categories).insert(entity);
 
   Future updateCategory(CategoryDB entity) =>
@@ -1038,18 +1067,31 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
-      var id = await into(operations).insert(entity.operationData);
 
-      var operationData = entity.operationData.copyWith(id: id);
+      var operationData = OperationsCompanion(
+        date: Value(entity.date),
+        operationType: Value(entity.type),
+        account: Value(entity.account.id),
+        category: Value(entity.category?.id),
+        recAccount: Value(entity.recAccount?.id),
+        sum: Value(entity.sum),
+      );
+
+      var id = await into(operations).insert(
+        operationData
+      );
+
+      operationData = operationData.copyWith(id:  Value(id));
+
       await _insertAnalytic(operationData);
     });
   }
 
-  Future<int> insertOperation(OperationDB entity) {
+  Future<int> insertOperation(OperationsCompanion entity) {
     return transaction(() async {
       var id = await into(operations).insert(entity);
 
-      var operationData = entity.copyWith(id: id);
+      var operationData = entity.copyWith(id: Value(id));
       await _insertAnalytic(operationData);
       return id;
     });
@@ -1058,7 +1100,15 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future<int> updateOperation(OperationDB entity) {
     return transaction(() async {
       await deleteOperation(entity);
-      return await insertOperation(entity);
+      return await insertOperation(OperationsCompanion(
+        id: Value(entity.id),
+        date: Value(entity.date),
+        operationType: Value(entity.operationType),
+        account: Value(entity.account),
+        category: Value(entity.category),
+        recAccount: Value(entity.recAccount),
+        sum: Value(entity.sum),
+      ));
     });
   }
 
@@ -1165,48 +1215,48 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
-  Future _insertAnalytic(OperationDB operation) async {
-    switch (operation.operationType) {
+  Future _insertAnalytic(OperationsCompanion operation) async {
+    switch (operation.operationType.value) {
       case OperationType.INPUT:
         {
           await into(balances).insert(BalanceDB(
-              date: operation.date,
-              operation: operation.id,
-              account: operation.account,
-              sum: operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              account: operation.account.value,
+              sum: operation.sum.value));
           await into(cashflows).insert(CashflowDB(
-              date: operation.date,
-              operation: operation.id,
-              category: operation.category!,
-              sum: operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              category: operation.category.value!,
+              sum: operation.sum.value));
           break;
         }
       case OperationType.OUTPUT:
         {
           await into(balances).insert(BalanceDB(
-              date: operation.date,
-              operation: operation.id,
-              account: operation.account,
-              sum: -1 * operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              account: operation.account.value,
+              sum: -1 * operation.sum.value));
           await into(cashflows).insert(CashflowDB(
-              date: operation.date,
-              operation: operation.id,
-              category: operation.category!,
-              sum: operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              category: operation.category.value!,
+              sum: operation.sum.value));
           break;
         }
       case OperationType.TRANSFER:
         {
           await into(balances).insert(BalanceDB(
-              date: operation.date,
-              operation: operation.id,
-              account: operation.account,
-              sum: -1 * operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              account: operation.account.value,
+              sum: -1 * operation.sum.value));
           await into(balances).insert(BalanceDB(
-              date: operation.date,
-              operation: operation.id,
-              account: operation.recAccount!,
-              sum: operation.sum));
+              date: operation.date.value,
+              operation: operation.id.value,
+              account: operation.recAccount.value!,
+              sum: operation.sum.value));
           break;
         }
     }

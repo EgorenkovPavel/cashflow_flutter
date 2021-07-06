@@ -15,7 +15,9 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class OperationList extends StatelessWidget {
   final OperationListFilter _filter;
 
-  const OperationList({OperationListFilter filter = const OperationListFilter()}) : _filter = filter;
+  const OperationList(
+      {OperationListFilter filter = const OperationListFilter()})
+      : _filter = filter;
 
   Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final itemPositionsListener = ItemPositionsListener.create();

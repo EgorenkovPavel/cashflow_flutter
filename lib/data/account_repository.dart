@@ -2,6 +2,7 @@ import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:moor/moor.dart';
 
 class AccountRepository {
   final Database db;
@@ -40,7 +41,9 @@ class AccountRepository {
       _mapAccount(await db.accountDao.getAccountById(id));
 
   Future<int> insert(Account account) =>
-      db.accountDao.insertAccount(_mapAccountDB(account));
+      db.accountDao.insertAccount(AccountsCompanion(
+        title: Value(account.title)
+      ));
 
   Future update(Account account) =>
       db.accountDao.updateAccount(_mapAccountDB(account));

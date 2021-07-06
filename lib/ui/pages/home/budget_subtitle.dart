@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/subtitle.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +46,7 @@ class BudgetSubtitle extends StatelessWidget {
               ],
             ),
           ),
-          onPress: () {},
+          onPress: () => PageNavigator.openBudgetPage(context, type),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
