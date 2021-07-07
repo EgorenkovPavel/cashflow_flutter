@@ -14,10 +14,10 @@ class Carousel<T> extends StatelessWidget {
   Carousel(
       {Key? key,
       required this.items,
-        required this.onPageChanged,
-        required this.itemBuilder,
-        required this.initialItemFinder,
-        required this.itemHeight})
+      required this.onPageChanged,
+      required this.itemBuilder,
+      required this.initialItemFinder,
+      required this.itemHeight})
       : super(key: key);
 
   @override
@@ -35,9 +35,12 @@ class Carousel<T> extends StatelessWidget {
               child: Container(
                 height: itemHeight - 0.0, // - 16.0,
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 3.0, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(8.0)),
+                  border: Border.all(
+                    width: 3.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ),
             PageView.builder(
@@ -63,15 +66,18 @@ class Carousel<T> extends StatelessWidget {
                           duration: Duration(seconds: 1),
                           curve: ElasticOutCurve());
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(
-                            width: 1.0, color: Theme.of(context).primaryColor),
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(
+                              width: 1.0, color: Theme.of(context).primaryColor),
+                        ),
+                        height: 20.0,
+                        child: itemBuilder(context, pos),
                       ),
-                      height: 20.0,
-                      child: itemBuilder(context, pos),
                     ),
                   ),
                 );

@@ -29,7 +29,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       emptyListMessage: AppLocalizations.of(context).noAccounts,
       initialItemFinder: (account) =>
           _bloc.account != null && account.id == _bloc.account!.id,
-      onItemChanged: (account) => _bloc.add(OnAccountChanged(account)),
+      onItemChanged: (account) => _bloc.onAccountChanged(account),
       itemBuilder: (context, account) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryIn != null && category.id == _bloc.categoryIn!.id,
-      onItemChanged: (category) => _bloc.add(OnCategoryInChanged(category)),
+      onItemChanged: (category) => _bloc.onCategoryInChanged(category),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
       },
@@ -64,7 +64,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryOut != null && category.id == _bloc.categoryOut!.id,
-      onItemChanged: (category) => _bloc.add(OnCategoryOutChanged(category)),
+      onItemChanged: (category) => _bloc.onCategoryOutChanged(category),
       itemBuilder: (context, category) {
         return Center(child: Text(category.title));
       },
@@ -77,7 +77,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       emptyListMessage: AppLocalizations.of(context).noAccounts,
       initialItemFinder: (account) =>
           _bloc.recAccount != null && account.id == _bloc.recAccount!.id,
-      onItemChanged: (account) => _bloc.add(OnRecAccountChanged(account)),
+      onItemChanged: (account) => _bloc.onRecAccountChanged(account),
       itemBuilder: (context, account) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +113,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                     //color: Theme.of(context).primaryColor,
                   ),
                   onPressed: () {
-                    _bloc.add(OnAddNewItem());
+                    _bloc.onAddNewItem();
                     onAdd();
                   },
                 )
@@ -151,7 +151,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<MasterBloc>(context);
-    _bloc.add(Start());
+    _bloc.start();
 
     _animationController = AnimationController(
       vsync: this,
@@ -198,7 +198,7 @@ class _OperationInputPageState extends State<OperationInputPage>
         action: SnackBarAction(
           label: AppLocalizations.of(context).cancel,
           onPressed: () {
-            _bloc.add(CancelOperation());
+            _bloc.cancelOperation();
           },
         ),
       ));
@@ -214,7 +214,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     if (account != null) {
       var accountBalance =
           AccountBalance(id: account.id, title: account.title, balance: 0);
-      _bloc.add(OnAccountChanged(accountBalance));
+      _bloc.onAccountChanged(accountBalance);
     }
   }
 
@@ -222,7 +222,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     var category = await PageNavigator.openCategoryInputPage(context,
         type: OperationType.INPUT);
     if (category != null) {
-      _bloc.add(OnCategoryInChanged(category));
+      _bloc.onCategoryInChanged(category);
     }
   }
 
@@ -230,7 +230,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     var category = await PageNavigator.openCategoryInputPage(context,
         type: OperationType.OUTPUT);
     if (category != null) {
-      _bloc.add(OnCategoryOutChanged(category));
+      _bloc.onCategoryOutChanged(category);
     }
   }
 
@@ -239,7 +239,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     if (account != null) {
       var accountBalance =
           AccountBalance(id: account.id, title: account.title, balance: 0);
-      _bloc.add(OnRecAccountChanged(accountBalance));
+      _bloc.onRecAccountChanged(accountBalance);
     }
   }
 
@@ -247,14 +247,13 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        _bloc.add(BackPressed());
+        _bloc.backpressed();
         return Future(() => false);
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context).titleMaster,
-            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         body: BlocConsumer<MasterBloc, MasterState>(
@@ -279,7 +278,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                       OperationType.OUTPUT,
                       OperationType.TRANSFER
                     ],
-                    onChange: (newValue) => _bloc.add(TypeChanged(newValue)),
+                    onChange: (newValue) => _bloc.onTypeChanged(newValue),
                   ),
                 ),
                 Expanded(
@@ -316,10 +315,10 @@ class _OperationInputPageState extends State<OperationInputPage>
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           TextButton(
-                            onPressed: () => _bloc.add(OnMoreTap()),
+                            onPressed: () => _bloc.onMoreTap(),
                             child: Text(AppLocalizations.of(context)
                                 .more
                                 .toUpperCase()),
@@ -331,7 +330,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: GestureDetector(
-                                    onTap: () => _bloc.add(OnSumTap()),
+                                    onTap: () => _bloc.onSumTap(),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Theme.of(context)
@@ -363,16 +362,16 @@ class _OperationInputPageState extends State<OperationInputPage>
                                   sizeFactor: _animation,
                                   child: Keyboard(
                                     onDigitPressed: (int digit) =>
-                                        _bloc.add(OnDigitTap(digit)),
+                                        _bloc.onDigitTap(digit),
                                     onBackPressed: () =>
-                                        _bloc.add(OnBackKeyTap()),
+                                        _bloc.onBackKeyTap(),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           TextButton(
-                            onPressed: () => _bloc.add(OnNextTap()),
+                            onPressed: () => _bloc.onNextTap(),
                             child: Text(AppLocalizations.of(context)
                                 .create
                                 .toUpperCase()),
