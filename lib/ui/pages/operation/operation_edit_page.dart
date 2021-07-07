@@ -95,7 +95,6 @@ class _OperationEditPageState extends State<OperationEditPage> {
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context).operationCardTitle,
-            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         body: Padding(
@@ -179,7 +178,10 @@ class _OperationEditPageState extends State<OperationEditPage> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+            child: Text(
+              AppLocalizations.of(context).cancel.toUpperCase(),
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
           ),
           ElevatedButton(
             // style: ElevatedButton.styleFrom(
@@ -190,6 +192,8 @@ class _OperationEditPageState extends State<OperationEditPage> {
                 Navigator.pop(context);
               }
             },
+            style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor),
             child: Text(
               AppLocalizations.of(context).save.toUpperCase(),
               //style: TextStyle(color: Colors.white),
@@ -313,12 +317,17 @@ class DateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style:
+          TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       onPressed: onPressed,
       child: Row(
         children: <Widget>[
           Icon(
             icon,
             //color: color,
+          ),
+          SizedBox(
+            width: 4.0,
           ),
           Text(
             text,
