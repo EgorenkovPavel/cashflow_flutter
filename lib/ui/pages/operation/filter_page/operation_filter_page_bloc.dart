@@ -71,9 +71,9 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   }
 
   void addCategory(Category category) {
-    if (category.type == OperationType.INPUT) {
+    if (category.operationType == OperationType.INPUT) {
       state.categoryIn.add(category);
-    } else if (category.type == OperationType.OUTPUT) {
+    } else if (category.operationType == OperationType.OUTPUT) {
       state.categoryOut.add(category);
     }
     ;
@@ -82,9 +82,9 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   }
 
   void removeCategory(Category category) {
-    if (category.type == OperationType.INPUT) {
+    if (category.operationType == OperationType.INPUT) {
       state.categoryIn.removeWhere((element) => element.id == category.id);
-    } else if (category.type == OperationType.OUTPUT) {
+    } else if (category.operationType == OperationType.OUTPUT) {
       state.categoryOut.removeWhere((element) => element.id == category.id);
     }
 

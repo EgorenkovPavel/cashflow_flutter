@@ -31,7 +31,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   Future<void> save(String title) async {
     var category = Category(
       title: title,
-      type: _type,
+      operationType: _type,
       budgetType: BudgetType.MONTH,
       budget: 0,
     );
