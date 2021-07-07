@@ -177,35 +177,47 @@ class _OperationInputPageState extends State<OperationInputPage>
     } else if (state is HideKeyBoard) {
       _animationController.reverse();
     } else if (state is EmptyAccountMessage) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).emptyAccountError),
-      ));
-    } else if (state is EmptyCategoryMessage) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).emptyCategoryError),
-      ));
-    } else if (state is EmptyRecAccountMessage) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).emptyRecAccountError),
-      ));
-    } else if (state is EmptySumMessage) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).emptySumError),
-      ));
-    } else if (state is OperationCreatedMessage) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).mesOperationCreated),
-        action: SnackBarAction(
-          label: AppLocalizations.of(context).cancel,
-          onPressed: () {
-            _bloc.cancelOperation();
-          },
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).emptyAccountError),
         ),
-      ));
+      );
+    } else if (state is EmptyCategoryMessage) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).emptyCategoryError),
+        ),
+      );
+    } else if (state is EmptyRecAccountMessage) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).emptyRecAccountError),
+        ),
+      );
+    } else if (state is EmptySumMessage) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).emptySumError),
+        ),
+      );
+    } else if (state is OperationCreatedMessage) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).mesOperationCreated),
+          action: SnackBarAction(
+            label: AppLocalizations.of(context).cancel,
+            onPressed: () {
+              _bloc.cancelOperation();
+            },
+          ),
+        ),
+      );
     } else if (state is OperationCanceled) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).mesOperationCanceled),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).mesOperationCanceled),
+        ),
+      );
     }
   }
 
@@ -276,7 +288,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                     items: [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
-                      OperationType.TRANSFER
+                      OperationType.TRANSFER,
                     ],
                     onChange: (newValue) => _bloc.onTypeChanged(newValue),
                   ),
@@ -294,45 +306,47 @@ class _OperationInputPageState extends State<OperationInputPage>
                     ],
                   ),
                 ),
-                Builder(builder: (BuildContext context) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 6.0),
-                      //Same as `blurRadius` i guess
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(16.0)),
-                        color: Theme.of(context)
-                            .dialogBackgroundColor, //Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: () => _bloc.onMoreTap(),
-                            child: Text(AppLocalizations.of(context)
-                                .more
-                                .toUpperCase()),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () => _bloc.onSumTap(),
-                                    child: Container(
-                                      decoration: BoxDecoration(
+                Builder(
+                  builder: (BuildContext context) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(5.0),
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 6.0),
+                        //Same as `blurRadius` i guess
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(16.0)),
+                          color: Theme.of(context)
+                              .dialogBackgroundColor, //Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(
+                              onPressed: () => _bloc.onMoreTap(),
+                              child: Text(
+                                AppLocalizations.of(context).more.toUpperCase(),
+                                style: TextStyle(color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () => _bloc.onSumTap(),
+                                      child: Container(
+                                        decoration: BoxDecoration(
                                           color: Theme.of(context)
                                               .bottomAppBarColor,
                                           borderRadius:
@@ -343,44 +357,47 @@ class _OperationInputPageState extends State<OperationInputPage>
                                                       .accentColor
                                                   : Theme.of(context)
                                                       .primaryColor,
-                                              width: 2.0)),
-                                      width: double.infinity,
-                                      height: 48.0,
-                                      alignment: Alignment.center,
-                                      child: Text(
+                                              width: 2.0),
+                                        ),
+                                        width: double.infinity,
+                                        height: 48.0,
+                                        alignment: Alignment.center,
+                                        child: Text(
                                           NumberFormat().format(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline4
-                                          //.copyWith(color: Colors.black),
-                                          ),
+                                              .headline4,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizeTransition(
-                                  axis: Axis.vertical,
-                                  sizeFactor: _animation,
-                                  child: Keyboard(
-                                    onDigitPressed: (int digit) =>
-                                        _bloc.onDigitTap(digit),
-                                    onBackPressed: () =>
-                                        _bloc.onBackKeyTap(),
+                                  SizeTransition(
+                                    axis: Axis.vertical,
+                                    sizeFactor: _animation,
+                                    child: Keyboard(
+                                      onDigitPressed: (int digit) =>
+                                          _bloc.onDigitTap(digit),
+                                      onBackPressed: () => _bloc.onBackKeyTap(),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () => _bloc.onNextTap(),
-                            child: Text(AppLocalizations.of(context)
-                                .create
-                                .toUpperCase()),
-                          ),
-                        ],
+                            TextButton(
+                              onPressed: () => _bloc.onNextTap(),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .create
+                                    .toUpperCase(),
+                                style: TextStyle(color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                ),
               ],
             );
           },
