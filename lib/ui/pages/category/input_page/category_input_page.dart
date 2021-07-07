@@ -76,7 +76,11 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
               controller: titleController,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+
                 labelText: AppLocalizations.of(context).title,
               ),
               validator: (value) {

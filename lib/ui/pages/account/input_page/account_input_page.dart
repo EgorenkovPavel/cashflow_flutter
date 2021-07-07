@@ -11,7 +11,6 @@ class AccountInputPage extends StatefulWidget {
 }
 
 class _AccountInputPageState extends State<AccountInputPage> {
-
   final TextEditingController _controller = TextEditingController();
   late AccountInputPageBloc _bloc;
 
@@ -32,8 +31,8 @@ class _AccountInputPageState extends State<AccountInputPage> {
   Widget build(BuildContext context) {
     return BlocListener<AccountInputPageBloc, AccountInputPageState>(
       bloc: _bloc,
-      listener: (context, state){
-        if (state is CloseState){
+      listener: (context, state) {
+        if (state is CloseState) {
           Navigator.of(context).pop(state.account);
         }
       },
@@ -47,7 +46,10 @@ class _AccountInputPageState extends State<AccountInputPage> {
           controller: _controller,
           textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+            ),
+            labelStyle: TextStyle(color: Theme.of(context).primaryColor),
             labelText: AppLocalizations.of(context).title,
           ),
           validator: (value) {
@@ -61,8 +63,3 @@ class _AccountInputPageState extends State<AccountInputPage> {
     );
   }
 }
-
-
-
-
-
