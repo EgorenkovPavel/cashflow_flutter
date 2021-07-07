@@ -18,6 +18,9 @@ class OperationTypeRadioButton extends StatelessWidget {
       isSelected: items.map((e) => e == type).toList(),
       onPressed: (index) => onChange(items[index]),
       borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+      borderColor: Theme.of(context).primaryColor,
+      selectedColor: Colors.white,
+      fillColor: Theme.of(context).primaryColor,
       children: items
           .map(
             (e) => _OperationTypeItem(
