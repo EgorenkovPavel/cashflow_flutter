@@ -55,7 +55,7 @@ class CategoryRepository {
   Future<int> insert(Category entity) =>
       db.categoryDao.insertCategory(CategoriesCompanion(
         title: Value(entity.title),
-        operationType: Value(entity.type),
+        operationType: Value(entity.operationType),
         budgetType: Value(entity.budgetType),
         budget: Value(entity.budget),
       ));

@@ -5,7 +5,7 @@ import 'operation_type.dart';
 class Category {
   final int id;
   final String title;
-  final OperationType type;
+  final OperationType operationType;
   final BudgetType budgetType;
   final int budget;
 
@@ -14,7 +14,7 @@ class Category {
       required this.budget,
       this.id = 0,
       required this.title,
-      required this.type});
+      required this.operationType});
 
   Category copyWith(
           {int? id,
@@ -25,7 +25,7 @@ class Category {
       Category(
         id: id ?? this.id,
         title: title ?? this.title,
-        type: type ?? this.type,
+        operationType: type ?? this.operationType,
         budgetType: budgetType ?? this.budgetType,
         budget: budget ?? this.budget,
       );

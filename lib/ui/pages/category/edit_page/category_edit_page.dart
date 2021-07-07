@@ -127,7 +127,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
               Text(
                 state.category == null
                     ? ''
-                    : getOperationTitle(context, state.category!.type),
+                    : getOperationTitle(context, state.category!.operationType),
                 style: Theme.of(context)
                     .textTheme
                     .caption!

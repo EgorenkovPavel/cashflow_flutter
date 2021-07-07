@@ -11,7 +11,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
     return CategoryDB(
       id: c.id,
       title: c.title,
-      operationType: c.type,
+      operationType: c.operationType,
       budgetType: c.budgetType,
       budget: c.budget,
     );
@@ -22,7 +22,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
     return Category(
       id: c.id,
       title: c.title,
-      type: c.operationType,
+      operationType: c.operationType,
       budgetType: c.budgetType,
       budget: c.budget,
     );
