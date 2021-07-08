@@ -17,4 +17,7 @@ ThemeData theme() => ThemeData(
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: _primaryColor,
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(_primaryColor))
+      ),
     );
