@@ -24,7 +24,6 @@ class SettingsPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context).itemMenuService,
-            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         body: Builder(
