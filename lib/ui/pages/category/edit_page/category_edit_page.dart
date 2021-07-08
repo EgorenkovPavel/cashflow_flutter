@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +41,52 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     super.dispose();
   }
 
+  //TODO add sliver list
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('Title'),
+            TextField(),
+            Text('Budget'),
+            TextField(),
+            Text('Statistics'),
+            Placeholder(),
+            StreamBuilder(
+              stream: context
+                  .read<Repository>()
+                  .watchAllOperationsByCategory(widget.id),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Operation>> snapshot) {
+                var list = <Operation>[];
+                if (snapshot.hasData) {
+                  list = snapshot.data!;
+                }
+
+                return Column(
+                  children: list
+                      .map((e) => ListTileOperation(e,
+                          onTap: () => PageNavigator.openOperationEditPage(
+                              context, e.id)))
+                      .toList(),
+                );
+              },
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          PageNavigator.openOperationInputPage(context);
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+
     return BlocListener<CategoryBloc, CategoryState>(
       bloc: _bloc,
       listener: (context, state) {},
@@ -70,7 +116,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
             if (_tabController.index == 0) {
               //PageNavigator.addBudget(context, BudgetType.MONTH);
             } else if (_tabController.index == 1) {
-              OperationList.addItem(context);
+              PageNavigator.openOperationInputPage(context);
             }
           },
           child: Icon(Icons.add),

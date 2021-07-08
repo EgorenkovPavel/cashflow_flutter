@@ -74,10 +74,6 @@ class OperationList extends StatelessWidget {
     );
   }
 
-  static Future addItem(BuildContext context) {
-    return PageNavigator.openOperationInputPage(context);
-  }
-
   static Future _onItemTap(BuildContext context, item) {
     return PageNavigator.openOperationEditPage(context, item.id);
   }
