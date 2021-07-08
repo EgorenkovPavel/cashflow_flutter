@@ -1,9 +1,9 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatelessWidget {
@@ -34,28 +34,29 @@ class BudgetPage extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<List<CategoryCashflow>>(
-        future: context.read<Repository>().getCategoryCashflowByType(DateTime.now(), type),
+        future: context
+            .read<Repository>()
+            .getCategoryCashflowByType(DateTime.now(), type),
         initialData: [],
-        builder: (context, snapshot){
-
+        builder: (context, snapshot) {
           List<CategoryCashflow> list = [];
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             list = snapshot.data!;
           }
           list.sort((c1, c2) => c2.cashflow - c1.cashflow);
 
           return Column(
-             mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              PieDiagram(),
-              ...list.map<Widget>((e) =>
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CategoryItem(
-                      category: e
+              PieDiagram(list: list),
+              ...list
+                  .map<Widget>(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryItem(category: e),
                     ),
-                  ),
-              ).toList(),
+                  )
+                  .toList(),
               // OperationList(),
             ],
           );
@@ -66,9 +67,9 @@ class BudgetPage extends StatelessWidget {
 }
 
 class PieDiagram extends StatelessWidget {
-  const PieDiagram({Key? key}) : super(key: key);
+  const PieDiagram({Key? key, required this.list}) : super(key: key);
 
-  static const double _height = 80.0;
+  final List<CategoryCashflow> list;
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +80,17 @@ class PieDiagram extends StatelessWidget {
           onPressed: () {},
           icon: Icon(Icons.arrow_back_ios),
         ),
-        Container(
-          margin: const EdgeInsets.all(16.0),
-          width: _height,
-          height: _height,
-          decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-            borderRadius: BorderRadius.circular(_height / 2),
-          ),
+        SizedBox(
+          width: 200.0,
+          height: 200.0,
+          child: charts.PieChart([
+            charts.Series<CategoryCashflow, int>(
+              id: 'Cashflow',
+              domainFn: (CategoryCashflow sales, _) => sales.category.id,
+              measureFn: (CategoryCashflow sales, _) => sales.cashflow,
+              data: list,
+            )
+          ], animate: false),
         ),
         IconButton(
           onPressed: () {},
@@ -110,7 +114,8 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => PageNavigator.openCategoryEditPage(context, category.category.id),
+      onTap: () =>
+          PageNavigator.openCategoryEditPage(context, category.category.id),
       child: TweenAnimationBuilder<int>(
         tween: IntTween(
           begin: 0,
@@ -155,12 +160,13 @@ class CategoryItem extends StatelessWidget {
                   ),
                   Container(
                     width: constraints.maxWidth *
-                        (cashflow > category.category.budget || category.category.budget == 0
+                        (cashflow > category.category.budget ||
+                                category.category.budget == 0
                             ? 1
                             : cashflow / category.category.budget),
                     height: _height,
-                    padding:
-                        const EdgeInsets.only(left: _borderWidth + _leftPadding),
+                    padding: const EdgeInsets.only(
+                        left: _borderWidth + _leftPadding),
                     decoration: BoxDecoration(
                       color: Theme.of(context).accentColor,
                       borderRadius: BorderRadius.circular(_borderRadius),

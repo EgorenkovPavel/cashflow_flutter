@@ -130,32 +130,21 @@ class $AccountsTable extends Accounts
   final String? _alias;
   $AccountsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedIntColumn id = _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedTextColumn title = _constructTitle();
-  GeneratedTextColumn _constructTitle() {
-    return GeneratedTextColumn(
-      'title',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+      'title', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, title];
   @override
-  $AccountsTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'accounts';
   @override
-  String get $tableName => _alias ?? 'accounts';
-  @override
-  final String actualTableName = 'accounts';
+  String get actualTableName => 'accounts';
   @override
   VerificationContext validateIntegrity(Insertable<AccountDB> instance,
       {bool isInserting = false}) {
@@ -405,67 +394,38 @@ class $CategoriesTable extends Categories
   final String? _alias;
   $CategoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedIntColumn id = _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedTextColumn title = _constructTitle();
-  GeneratedTextColumn _constructTitle() {
-    return GeneratedTextColumn(
-      'title',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+      'title', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
-  @override
-  late final GeneratedIntColumn operationType = _constructOperationType();
-  GeneratedIntColumn _constructOperationType() {
-    return GeneratedIntColumn(
-      'operation_type',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumnWithTypeConverter<OperationType, int?>
+      operationType = GeneratedColumn<int?>(
+              'operation_type', aliasedName, false,
+              typeName: 'INTEGER', requiredDuringInsert: true)
+          .withConverter<OperationType>($CategoriesTable.$converter0);
   final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
-  @override
-  late final GeneratedIntColumn budgetType = _constructBudgetType();
-  GeneratedIntColumn _constructBudgetType() {
-    return GeneratedIntColumn(
-      'budget_type',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumnWithTypeConverter<BudgetType, int?> budgetType =
+      GeneratedColumn<int?>('budget_type', aliasedName, false,
+              typeName: 'INTEGER', requiredDuringInsert: true)
+          .withConverter<BudgetType>($CategoriesTable.$converter1);
   final VerificationMeta _budgetMeta = const VerificationMeta('budget');
-  @override
-  late final GeneratedIntColumn budget = _constructBudget();
-  GeneratedIntColumn _constructBudget() {
-    return GeneratedIntColumn(
-      'budget',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> budget = GeneratedColumn<int?>(
+      'budget', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, title, operationType, budgetType, budget];
   @override
-  $CategoriesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'categories';
   @override
-  String get $tableName => _alias ?? 'categories';
-  @override
-  final String actualTableName = 'categories';
+  String get actualTableName => 'categories';
   @override
   VerificationContext validateIntegrity(Insertable<CategoryDB> instance,
       {bool isInserting = false}) {
@@ -782,80 +742,51 @@ class $OperationsTable extends Operations
   final String? _alias;
   $OperationsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedIntColumn id = _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedDateTimeColumn date = _constructDate();
-  GeneratedDateTimeColumn _constructDate() {
-    return GeneratedDateTimeColumn(
-      'date',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+      'date', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
-  @override
-  late final GeneratedIntColumn operationType = _constructOperationType();
-  GeneratedIntColumn _constructOperationType() {
-    return GeneratedIntColumn(
-      'operation_type',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumnWithTypeConverter<OperationType, int?>
+      operationType = GeneratedColumn<int?>(
+              'operation_type', aliasedName, false,
+              typeName: 'INTEGER', requiredDuringInsert: true)
+          .withConverter<OperationType>($OperationsTable.$converter0);
   final VerificationMeta _accountMeta = const VerificationMeta('account');
-  @override
-  late final GeneratedIntColumn account = _constructAccount();
-  GeneratedIntColumn _constructAccount() {
-    return GeneratedIntColumn('account', $tableName, false,
-        $customConstraints: 'NULL REFERENCES account(id)');
-  }
-
+  late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
+      'account', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  @override
-  late final GeneratedIntColumn category = _constructCategory();
-  GeneratedIntColumn _constructCategory() {
-    return GeneratedIntColumn('category', $tableName, true,
-        $customConstraints: 'NULL REFERENCES category(id)');
-  }
-
+  late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
+      'category', aliasedName, true,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL REFERENCES category(id)');
   final VerificationMeta _recAccountMeta = const VerificationMeta('recAccount');
-  @override
-  late final GeneratedIntColumn recAccount = _constructRecAccount();
-  GeneratedIntColumn _constructRecAccount() {
-    return GeneratedIntColumn('rec_account', $tableName, true,
-        $customConstraints: 'NULL REFERENCES account(id)');
-  }
-
+  late final GeneratedColumn<int?> recAccount = GeneratedColumn<int?>(
+      'rec_account', aliasedName, true,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
-  @override
-  late final GeneratedIntColumn sum = _constructSum();
-  GeneratedIntColumn _constructSum() {
-    return GeneratedIntColumn(
-      'sum',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+      'sum', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, date, operationType, account, category, recAccount, sum];
   @override
-  $OperationsTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'operations';
   @override
-  String get $tableName => _alias ?? 'operations';
-  @override
-  final String actualTableName = 'operations';
+  String get actualTableName => 'operations';
   @override
   VerificationContext validateIntegrity(Insertable<OperationDB> instance,
       {bool isInserting = false}) {
@@ -1092,51 +1023,31 @@ class $BalancesTable extends Balances
   final String? _alias;
   $BalancesTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedDateTimeColumn date = _constructDate();
-  GeneratedDateTimeColumn _constructDate() {
-    return GeneratedDateTimeColumn(
-      'date',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+      'date', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _operationMeta = const VerificationMeta('operation');
-  @override
-  late final GeneratedIntColumn operation = _constructOperation();
-  GeneratedIntColumn _constructOperation() {
-    return GeneratedIntColumn('operation', $tableName, false,
-        $customConstraints: 'NULL REFERENCES operation(id)');
-  }
-
+  late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
+      'operation', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NULL REFERENCES operation(id)');
   final VerificationMeta _accountMeta = const VerificationMeta('account');
-  @override
-  late final GeneratedIntColumn account = _constructAccount();
-  GeneratedIntColumn _constructAccount() {
-    return GeneratedIntColumn('account', $tableName, false,
-        $customConstraints: 'NULL REFERENCES account(id)');
-  }
-
+  late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
+      'account', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
-  @override
-  late final GeneratedIntColumn sum = _constructSum();
-  GeneratedIntColumn _constructSum() {
-    return GeneratedIntColumn(
-      'sum',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+      'sum', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, account, sum];
   @override
-  $BalancesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'balance';
   @override
-  String get $tableName => _alias ?? 'balance';
-  @override
-  final String actualTableName = 'balance';
+  String get actualTableName => 'balance';
   @override
   VerificationContext validateIntegrity(Insertable<BalanceDB> instance,
       {bool isInserting = false}) {
@@ -1362,51 +1273,31 @@ class $CashflowsTable extends Cashflows
   final String? _alias;
   $CashflowsTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedDateTimeColumn date = _constructDate();
-  GeneratedDateTimeColumn _constructDate() {
-    return GeneratedDateTimeColumn(
-      'date',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+      'date', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _operationMeta = const VerificationMeta('operation');
-  @override
-  late final GeneratedIntColumn operation = _constructOperation();
-  GeneratedIntColumn _constructOperation() {
-    return GeneratedIntColumn('operation', $tableName, false,
-        $customConstraints: 'NULL REFERENCES operation(id)');
-  }
-
+  late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
+      'operation', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NULL REFERENCES operation(id)');
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  @override
-  late final GeneratedIntColumn category = _constructCategory();
-  GeneratedIntColumn _constructCategory() {
-    return GeneratedIntColumn('category', $tableName, false,
-        $customConstraints: 'NULL REFERENCES category(id)');
-  }
-
+  late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
+      'category', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NULL REFERENCES category(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
-  @override
-  late final GeneratedIntColumn sum = _constructSum();
-  GeneratedIntColumn _constructSum() {
-    return GeneratedIntColumn(
-      'sum',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+      'sum', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, category, sum];
   @override
-  $CashflowsTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'cashflow';
   @override
-  String get $tableName => _alias ?? 'cashflow';
-  @override
-  final String actualTableName = 'cashflow';
+  String get actualTableName => 'cashflow';
   @override
   VerificationContext validateIntegrity(Insertable<CashflowDB> instance,
       {bool isInserting = false}) {
