@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -54,7 +55,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => OperationList.addItem(context),
+          onPressed: () => PageNavigator.openOperationInputPage(context),
           child: Icon(Icons.add),
         ),
       ),
