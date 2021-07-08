@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,7 @@ class BudgetPage extends StatelessWidget {
           if(snapshot.hasData){
             list = snapshot.data!;
           }
+          list.sort((c1, c2) => c2.cashflow - c1.cashflow);
 
           return Column(
              mainAxisSize: MainAxisSize.min,
@@ -107,85 +109,88 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder<int>(
-      tween: IntTween(
-        begin: 0,
-        end: category.cashflow,
+    return GestureDetector(
+      onTap: () => PageNavigator.openCategoryEditPage(context, category.category.id),
+      child: TweenAnimationBuilder<int>(
+        tween: IntTween(
+          begin: 0,
+          end: category.cashflow,
+        ),
+        duration: const Duration(seconds: 1),
+        builder: (context, cashflow, _) {
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return Stack(
+                alignment: AlignmentDirectional.centerStart,
+                children: [
+                  Container(
+                    width: constraints.maxWidth,
+                    height: _height,
+                    padding: const EdgeInsets.only(left: _leftPadding),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(_borderRadius),
+                      border: Border.all(
+                          color: Theme.of(context).accentColor,
+                          width: _borderWidth),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${category.category.title} ',
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                            TextSpan(
+                              text: NumberFormat().format(cashflow),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: constraints.maxWidth *
+                        (cashflow > category.category.budget || category.category.budget == 0
+                            ? 1
+                            : cashflow / category.category.budget),
+                    height: _height,
+                    padding:
+                        const EdgeInsets.only(left: _borderWidth + _leftPadding),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.circular(_borderRadius),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        overflow: TextOverflow.clip,
+                        softWrap: false,
+                        maxLines: 1,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(text: '${category.category.title} '),
+                            TextSpan(
+                              text: NumberFormat().format(cashflow),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
       ),
-      duration: const Duration(seconds: 1),
-      builder: (context, cashflow, _) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return Stack(
-              alignment: AlignmentDirectional.centerStart,
-              children: [
-                Container(
-                  width: constraints.maxWidth,
-                  height: _height,
-                  padding: const EdgeInsets.only(left: _leftPadding),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(_borderRadius),
-                    border: Border.all(
-                        color: Theme.of(context).accentColor,
-                        width: _borderWidth),
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${category.category.title} ',
-                            style: TextStyle(color: Colors.black87),
-                          ),
-                          TextSpan(
-                            text: NumberFormat().format(cashflow),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: constraints.maxWidth *
-                      (cashflow > category.category.budget || category.category.budget == 0
-                          ? 1
-                          : cashflow / category.category.budget),
-                  height: _height,
-                  padding:
-                      const EdgeInsets.only(left: _borderWidth + _leftPadding),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    borderRadius: BorderRadius.circular(_borderRadius),
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: RichText(
-                      overflow: TextOverflow.clip,
-                      softWrap: false,
-                      maxLines: 1,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: '${category.category.title} '),
-                          TextSpan(
-                            text: NumberFormat().format(cashflow),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
     );
   }
 }
