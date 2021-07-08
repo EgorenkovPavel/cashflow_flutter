@@ -101,76 +101,77 @@ class _OperationEditPageState extends State<OperationEditPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SingleChildScrollView(
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Title(text: AppLocalizations.of(context).titleDate),
-                  Row(
-                    children: <Widget>[
-                      DateButton(
-                          icon: Icons.calendar_today,
-                          text: DateFormat.yMMMd(
-                                  Localizations.localeOf(context).languageCode)
-                              .format(_date),
-                          onPressed: _selectDate),
-                      SizedBox(
-                        width: 16.0,
-                      ),
-                      DateButton(
-                          icon: Icons.access_time,
-                          text: _time.format(context),
-                          onPressed: _selectTime),
-                    ],
-                  ),
-                  Title(text: AppLocalizations.of(context).titleType),
-                  OperationTypeRadioButton(
-                    type: _type,
-                    onChange: (newValue) {
-                      setState(() {
-                        _type = newValue;
-                        _category = null;
-                      });
-                    },
-                    items: [
-                      OperationType.INPUT,
-                      OperationType.OUTPUT,
-                      OperationType.TRANSFER
-                    ],
-                  ),
-                  Title(text: AppLocalizations.of(context).titleAccount),
-                  DropdownList<Account>(
-                    value: _account,
-                    hint: AppLocalizations.of(context).hintAccount,
-                    items: accountList,
-                    onChange: (newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          _account = newValue;
-                        });
-                      }
-                    },
-                    getListItem: (data) => ListTile(title: Text(data.title)),
-                  ),
-                  Title(text: AppLocalizations.of(context).titleAnalytic),
-                  analyticMenu(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: _sumController,
-                      //style: ,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context).titleSum,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context).emptySumError;
-                        }
-                        return null;
-                      },
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Title(text: AppLocalizations.of(context).titleDate),
+                Row(
+                  children: <Widget>[
+                    DateButton(
+                        icon: Icons.calendar_today,
+                        text: DateFormat.yMMMd(
+                                Localizations.localeOf(context).languageCode)
+                            .format(_date),
+                        onPressed: _selectDate),
+                    SizedBox(
+                      width: 16.0,
                     ),
-                  )
-                ]),
+                    DateButton(
+                        icon: Icons.access_time,
+                        text: _time.format(context),
+                        onPressed: _selectTime),
+                  ],
+                ),
+                Title(text: AppLocalizations.of(context).titleType),
+                OperationTypeRadioButton(
+                  type: _type,
+                  onChange: (newValue) {
+                    setState(() {
+                      _type = newValue;
+                      _category = null;
+                    });
+                  },
+                  items: [
+                    OperationType.INPUT,
+                    OperationType.OUTPUT,
+                    OperationType.TRANSFER
+                  ],
+                ),
+                Title(text: AppLocalizations.of(context).titleAccount),
+                DropdownList<Account>(
+                  value: _account,
+                  hint: AppLocalizations.of(context).hintAccount,
+                  items: accountList,
+                  onChange: (newValue) {
+                    if (newValue != null) {
+                      setState(() {
+                        _account = newValue;
+                      });
+                    }
+                  },
+                  getListItem: (data) => ListTile(title: Text(data.title)),
+                ),
+                Title(text: AppLocalizations.of(context).titleAnalytic),
+                analyticMenu(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _sumController,
+                    //style: ,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context).titleSum,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context).emptySumError;
+                      }
+                      return null;
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         persistentFooterButtons: <Widget>[
