@@ -7,8 +7,6 @@ import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -31,7 +29,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   @override
   void initState() {
     super.initState();
-    _bloc = CategoryBloc(Provider.of<Repository>(context, listen: false))
+    _bloc = CategoryBloc(context.read<Repository>())
       ..fetch(widget.id);
   }
 
@@ -52,52 +50,76 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         title: Text('Category'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _InputField(
-              title: 'Title',
-              textEditingController: _titleController,
-            ),
-            _InputField(
-              title: 'Budget',
-              keyboardType: TextInputType.number,
-              textEditingController: _budgetController,
-            ),
+        child: BlocConsumer<CategoryBloc, CategoryState>(
+          bloc: _bloc,
+          buildWhen: (previousState, currentState){
+            return currentState is DateState;
+          },
+          builder: (context, state){
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Statistics', style: Theme.of(context).textTheme.caption,),
-                  SizedBox(
-                      height: 200.0,
-                      child: _Diagramm(id: widget.id)),
-                ],
-              ),
-            ),
-            StreamBuilder(
-              stream: context
-                  .read<Repository>()
-                  .watchAllOperationsByCategory(widget.id),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Operation>> snapshot) {
-                var list = <Operation>[];
-                if (snapshot.hasData) {
-                  list = snapshot.data!;
-                }
+            _titleController.text = (state as DateState).title;
+            _budgetController.text = (state as DateState).budget.toString();
 
-                return Column(
-                  children: list
-                      .map((e) => ListTileOperation(e,
+            return Column(
+              children: [
+                _InputField(
+                  title: 'Title',
+                  textEditingController: _titleController,
+                ),
+                _InputField(
+                  title: 'Budget',
+                  keyboardType: TextInputType.number,
+                  textEditingController: _budgetController,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Statistics', style: Theme.of(context).textTheme.caption,),
+                      SizedBox(
+                          height: 200.0,
+                          child: _Diagramm(id: widget.id)),
+                    ],
+                  ),
+                ),
+                StreamBuilder(
+                  stream: context
+                      .read<Repository>()
+                      .watchAllOperationsByCategory(widget.id),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Operation>> snapshot) {
+                    var list = <Operation>[];
+                    if (snapshot.hasData) {
+                      list = snapshot.data!;
+                    }
+
+                    return Column(
+                      children: list
+                          .map((e) => ListTileOperation(e,
                           onTap: () => PageNavigator.openOperationEditPage(
                               context, e.id)))
-                      .toList(),
-                );
-              },
-            )
-          ],
+                          .toList(),
+                    );
+                  },
+                )
+              ],
+            );
+          },
+          listener: (context, state){
+            if (state is Close){
+              Navigator.of(context).pop();
+            }
+          },
         ),
+      ),
+      bottomNavigationBar: ButtonBar(
+        children: [
+          ElevatedButton(onPressed: (){
+            _bloc.save(_titleController.text, int.parse(_budgetController.text));
+          }, child: Text('Save'))
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
