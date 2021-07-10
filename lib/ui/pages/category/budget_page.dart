@@ -33,10 +33,10 @@ class BudgetPage extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<List<CategoryCashflow>>(
-        future: context
+      body: StreamBuilder<List<CategoryCashflow>>(
+        stream: context
             .read<Repository>()
-            .getCategoryCashflowByType(DateTime.now(), type),
+            .watchCategoryCashflowByType(DateTime.now(), type),
         initialData: [],
         builder: (context, snapshot) {
           List<CategoryCashflow> list = [];
