@@ -1,74 +1,96 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/pages/budget_page/budget_page_bloc.dart';
 import 'package:provider/provider.dart';
 
-class BudgetPage extends StatelessWidget {
+class BudgetPage extends StatefulWidget {
   const BudgetPage({Key? key, required this.type}) : super(key: key);
 
   final OperationType type;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                  text: type == OperationType.INPUT
-                      ? 'Earning in '
-                      : 'Spending in ',
-                  style: Theme.of(context).textTheme.headline6),
-              TextSpan(
-                  text: DateFormat.MMMM().format(DateTime.now()),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: Theme.of(context).primaryColor)),
-            ],
-          ),
-        ),
-      ),
-      body: StreamBuilder<List<CategoryCashflow>>(
-        stream: context
-            .read<Repository>()
-            .watchCategoryCashflowByType(DateTime.now(), type),
-        initialData: [],
-        builder: (context, snapshot) {
-          List<CategoryCashflow> list = [];
-          if (snapshot.hasData) {
-            list = snapshot.data!;
-          }
-          list.sort((c1, c2) => c2.cashflow - c1.cashflow);
+  _BudgetPageState createState() => _BudgetPageState();
+}
 
-          return Column(
+class _BudgetPageState extends State<BudgetPage> {
+  late BudgetPageBloc _bloc;
+
+  final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BudgetPageBloc(context.read<Repository>())..fetch(widget.type);
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  String _calcTitle(BudgetPageState state) {
+    var start =
+        widget.type == OperationType.INPUT ? 'Earning in' : 'Spending in';
+
+    var date = DateFormat.yMMM().format(state.date);
+
+    var sum = state.items
+        .map((e) => e.cashflow)
+        .fold<int>(0, (previousValue, element) => previousValue + element);
+
+    return '$start $date ${NumberFormat().format(sum)}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BudgetPageBloc, BudgetPageState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(_calcTitle(state)),
+          ),
+          body: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              PieDiagram(list: list),
-              ...list
-                  .map<Widget>(
-                    (e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryItem(category: e),
-                    ),
-                  )
-                  .toList(),
-              // OperationList(),
+              PieDiagram(
+                list: state.items,
+                onBackPressed: _bloc.onBackPressed,
+                onForwardPressed: _bloc.onForwardPressed,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                itemBuilder: (context, index) {
+                  var item = state.items[index];
+                  return Padding(
+                    key: ValueKey(item.category.id),
+                    padding: const EdgeInsets.all(8.0),
+                    child: CategoryItem(category: item),
+                  );
+                },
+                itemCount: state.items.length,
+              ))
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
 class PieDiagram extends StatelessWidget {
-  const PieDiagram({Key? key, required this.list}) : super(key: key);
+  const PieDiagram(
+      {Key? key, required this.list, this.onBackPressed, this.onForwardPressed})
+      : super(key: key);
 
+  final void Function()? onBackPressed;
+  final void Function()? onForwardPressed;
   final List<CategoryCashflow> list;
 
   @override
@@ -77,7 +99,7 @@ class PieDiagram extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: onBackPressed,
           icon: Icon(Icons.arrow_back_ios),
         ),
         SizedBox(
@@ -90,10 +112,10 @@ class PieDiagram extends StatelessWidget {
               measureFn: (CategoryCashflow sales, _) => sales.cashflow,
               data: list,
             )
-          ], animate: false),
+          ], animate: true),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onForwardPressed,
           icon: Icon(Icons.arrow_forward_ios),
         ),
       ],
@@ -110,6 +132,17 @@ class CategoryItem extends StatelessWidget {
   static const double _height = 30.0;
   static const double _borderRadius = 8.0;
   static const double _leftPadding = 8.0;
+
+  double _partOfWidth(int cashflow) {
+    if (cashflow == 0) {
+      return 0;
+    } else if (cashflow > category.category.budget ||
+        category.category.budget == 0) {
+      return cashflow / category.cashflow;
+    } else {
+      return cashflow / category.category.budget;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +192,7 @@ class CategoryItem extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: constraints.maxWidth *
-                        (cashflow > category.category.budget ||
-                                category.category.budget == 0
-                            ? 1
-                            : cashflow / category.category.budget),
+                    width: constraints.maxWidth * _partOfWidth(cashflow),
                     height: _height,
                     padding: const EdgeInsets.only(
                         left: _borderWidth + _leftPadding),
