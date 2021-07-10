@@ -4,6 +4,7 @@ import 'package:money_tracker/data/category_repository.dart';
 import 'package:money_tracker/data/operation_repository.dart';
 import 'package:money_tracker/data/service_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/utils/google_http_client.dart';
 
 class Repository extends ChangeNotifier {
@@ -45,6 +46,9 @@ class Repository extends ChangeNotifier {
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _categoryRepo.watchAllByType(type);
+
+  Stream<List<SumOnDate>> watchCashflowByCategory(int id) =>
+     _categoryRepo.watchCashflowByCategory(id);
 
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>

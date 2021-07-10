@@ -1,5 +1,6 @@
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
 
 part 'category_dao.g.dart';
@@ -10,29 +11,54 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   CategoryDao(Database db) : super(db);
 
   //Future<List<Task>> getAllTasks() => select(tasks).get();
-  Stream<List<CategoryDB>> watchAllCategories() =>
-      (select(categories)..orderBy([(t) => OrderingTerm(expression: t.title)]))
-          .watch();
+  Stream<List<CategoryDB>> watchAllCategories() => (select(categories)
+        ..orderBy(
+          [
+            (t) => OrderingTerm(expression: t.title),
+          ],
+        ))
+      .watch();
 
-  Future<List<CategoryDB>> getAllCategories() =>
-      (select(categories)..orderBy([(t) => OrderingTerm(expression: t.title)]))
-          .get();
+  Future<List<CategoryDB>> getAllCategories() => (select(categories)
+        ..orderBy(
+          [
+            (t) => OrderingTerm(expression: t.title),
+          ],
+        ))
+      .get();
 
-  Future<CategoryDB> getCategoryById(int id) =>
-      (select(categories)..where((c) => c.id.equals(id))).getSingle();
+  Future<CategoryDB> getCategoryById(int id) => (select(categories)
+        ..where(
+          (c) => c.id.equals(id),
+        ))
+      .getSingle();
 
   Stream<List<CategoryDB>> watchAllCategoriesByType(OperationType type) =>
       (select(categories)
-        ..where((cat) => cat.operationType
-            .equals(const OperationTypeConverter().mapToSql(type)))
-        ..orderBy([(t) => OrderingTerm(expression: t.title)]))
+            ..where(
+              (cat) => cat.operationType.equals(
+                const OperationTypeConverter().mapToSql(type),
+              ),
+            )
+            ..orderBy(
+              [
+                (t) => OrderingTerm(expression: t.title),
+              ],
+            ))
           .watch();
 
   Future<List<CategoryDB>> getAllCategoriesByType(OperationType type) =>
       (select(categories)
-        ..where((cat) => cat.operationType
-            .equals(const OperationTypeConverter().mapToSql(type)))
-        ..orderBy([(t) => OrderingTerm(expression: t.title)]))
+            ..where(
+              (cat) => cat.operationType.equals(
+                const OperationTypeConverter().mapToSql(type),
+              ),
+            )
+            ..orderBy(
+              [
+                (t) => OrderingTerm(expression: t.title),
+              ],
+            ))
           .get();
 
   Stream<List<CategoryCashflowEntity>> watchAllCategoryCashflowBudget(
@@ -44,22 +70,24 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-          'FROM categories c ORDER BY title;',
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM categories c ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd)
       ],
       readsFrom: {categories, cashflows},
-    ).watch().map((rows) {
-      return rows
-          .map((row) => CategoryCashflowEntity(
-        category: CategoryDB.fromData(row.data, db),
-        cashflow: row.read<int>('cashflow'),
-      ))
-          .toList();
-    });
+    ).watch().map(
+          (rows) => rows
+              .map(
+                (row) => CategoryCashflowEntity(
+                  category: CategoryDB.fromData(row.data, db),
+                  cashflow: row.read<int>('cashflow'),
+                ),
+              )
+              .toList(),
+        );
   }
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
@@ -71,24 +99,42 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
-    ).watch().map((rows) {
-      return rows
-          .map((row) => CategoryCashflowEntity(
-        category: CategoryDB.fromData(row.data, db),
-        cashflow: row.read<int?>('cashflow') ?? 0,
-      ))
-          .toList();
-    });
+    ).watch().map(
+          (rows) => rows
+              .map(
+                (row) => CategoryCashflowEntity(
+                  category: CategoryDB.fromData(row.data, db),
+                  cashflow: row.read<int?>('cashflow') ?? 0,
+                ),
+              )
+              .toList(),
+        );
+  }
+
+  Stream<List<SumOnDate>> watchCashflowByCategory(int id) {
+    final sum = cashflows.sum.sum();
+    final month = cashflows.date.month;
+    final year = cashflows.date.year;
+
+    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id))).addColumns([sum,month, year]);
+    query.groupBy([month, year]);
+
+    return query.watch().map((rows) => rows
+        .map((row) => SumOnDate(
+            date:
+                DateTime(row.read<int?>(year) ?? 0, row.read<int?>(month) ?? 0),
+            sum: row.read<int?>(sum) ?? 0))
+        .toList());
   }
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
@@ -100,45 +146,51 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
-    ).get().then((rows) {
-      return rows
-          .map((row) => CategoryCashflowEntity(
-        category: CategoryDB.fromData(row.data, db),
-        cashflow: row.read<int?>('cashflow') ?? 0,
-      ))
-          .toList();
-    });
+    ).get().then(
+          (rows) => rows
+              .map(
+                (row) => CategoryCashflowEntity(
+                  category: CategoryDB.fromData(row.data, db),
+                  cashflow: row.read<int?>('cashflow') ?? 0,
+                ),
+              )
+              .toList(),
+        );
   }
 
   Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
       OperationType type) {
     return customSelect(
       'SELECT *, '
-          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(DateTime.now()),
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories},
-    ).watch().map((rows) {
-      return rows
-          .map((row) => CategoryBudgetEntity(
-          CategoryDB.fromData(row.data, db), row.read<int>('budget')))
-          .toList();
-    });
+    ).watch().map(
+          (rows) => rows
+              .map(
+                (row) => CategoryBudgetEntity(
+                  CategoryDB.fromData(row.data, db),
+                  row.read<int>('budget'),
+                ),
+              )
+              .toList(),
+        );
   }
 
   Future<int> insertCategory(CategoriesCompanion entity) =>
@@ -150,37 +202,44 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Stream<int> watchBudget(DateTime date) {
     return customSelect(
       'SELECT c.operation_type, '
-          '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
-          'FROM categories c;',
+      '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
+      'FROM categories c;',
       variables: [
         Variable.withDateTime(date),
       ],
       readsFrom: {categories},
-    ).watch().map((rows) {
-      return rows
-          .map((row) => OperationTypeConverter()
-          .mapToDart(row.read<int>('operation_type')) ==
-          OperationType.INPUT
-          ? row.read<int>('budget')
-          : -(row.read<int>('budget')))
-          .fold(0, (a, b) => a + b);
-    });
+    ).watch().map(
+          (rows) => rows
+              .map(
+                (row) => OperationTypeConverter().mapToDart(
+                          row.read<int>('operation_type'),
+                        ) ==
+                        OperationType.INPUT
+                    ? row.read<int>('budget')
+                    : -(row.read<int>('budget')),
+              )
+              .fold(0, (a, b) => a + b),
+        );
   }
 
-  Future<void> batchInsert(List<CategoryDB> _categories) async {
-    await batch((batch) {
-      batch.insertAll(
-        categories,
-        _categories
-            .map((p) => CategoriesCompanion.insert(
-          id: Value(p.id),
-          title: p.title,
-          operationType: p.operationType,
-          budgetType: p.budgetType,
-          budget: p.budget,
-        ))
-            .toList(),
-      );
-    });
+  Future<void> batchInsert(List<CategoryDB> _categories) {
+    return batch(
+      (batch) {
+        batch.insertAll(
+          categories,
+          _categories
+              .map(
+                (p) => CategoriesCompanion.insert(
+                  id: Value(p.id),
+                  title: p.title,
+                  operationType: p.operationType,
+                  budgetType: p.budgetType,
+                  budget: p.budget,
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
   }
 }

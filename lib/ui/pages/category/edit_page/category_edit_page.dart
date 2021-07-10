@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class CategoryEditPage extends StatefulWidget {
   final int id;
@@ -20,15 +23,14 @@ class CategoryEditPage extends StatefulWidget {
 
 class _CategoryEditPageState extends State<CategoryEditPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
   late CategoryBloc _bloc;
 
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _budgetController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _bloc = CategoryBloc(Provider.of<Repository>(context, listen: false))
       ..fetch(widget.id);
   }
@@ -36,7 +38,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   @override
   void dispose() {
     _titleController.dispose();
-    _tabController.dispose();
+    _budgetController.dispose();
     _bloc.close();
     super.dispose();
   }
@@ -46,16 +48,34 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Category'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text('Title'),
-            TextField(),
-            Text('Budget'),
-            TextField(),
-            Text('Statistics'),
-            Placeholder(),
+            _InputField(
+              title: 'Title',
+              textEditingController: _titleController,
+            ),
+            _InputField(
+              title: 'Budget',
+              keyboardType: TextInputType.number,
+              textEditingController: _budgetController,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Statistics', style: Theme.of(context).textTheme.caption,),
+                  SizedBox(
+                      height: 200.0,
+                      child: _Diagramm(id: widget.id)),
+                ],
+              ),
+            ),
             StreamBuilder(
               stream: context
                   .read<Repository>()
@@ -87,102 +107,85 @@ class _CategoryEditPageState extends State<CategoryEditPage>
       ),
     );
 
-    return BlocListener<CategoryBloc, CategoryState>(
-      bloc: _bloc,
-      listener: (context, state) {},
-      child: Scaffold(
-        appBar: AppBar(
-          title: _header(context),
-          actions: <Widget>[_appBarIcon()],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: AppLocalizations.of(context).titleBudget),
-              Tab(text: AppLocalizations.of(context).operations)
-            ],
-            controller: _tabController,
-          ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            SizedBox(),
-            //buildOperationList(context),
-            OperationList(
-                filter: OperationListFilter(categoriesIds: {widget.id}))
+  }
+}
+
+
+class _Diagramm extends StatelessWidget{
+
+  final int id;
+
+  const _Diagramm({Key? key, required this.id}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<SumOnDate>>(
+      stream: context.read<Repository>().watchCashflowByCategory(id),
+      builder: (context, snapshot) {
+
+        var data = <SumOnDate>[];
+        if(snapshot.hasData){
+          data = snapshot.data!;
+        }
+
+        return charts.BarChart(
+          [
+            charts.Series<SumOnDate, String>(
+              id: 'Cashflow',
+              colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+              domainFn: (SumOnDate sales, _) => DateFormat.yM().format(sales.date),
+              measureFn: (SumOnDate sales, _) => sales.sum,
+              data: data,
+            )
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (_tabController.index == 0) {
-              //PageNavigator.addBudget(context, BudgetType.MONTH);
-            } else if (_tabController.index == 1) {
-              PageNavigator.openOperationInputPage(context);
-            }
-          },
-          child: Icon(Icons.add),
-        ),
+          animate: false,
+          behaviors: [
+        new charts.RangeAnnotation([
+            charts.LineAnnotationSegment(
+                300, charts.RangeAnnotationAxisType.measure,
+                startLabel: 'Measure 2 Start',
+                endLabel: 'Measure 2 End',
+                color: charts.MaterialPalette.gray.shade400),
+        ]),
+          ],
+        );
+      }
+    );
+  }
+
+}
+
+class _InputField extends StatelessWidget {
+  final String title;
+  final TextInputType? keyboardType;
+  final TextEditingController textEditingController;
+
+  const _InputField({
+    Key? key,
+    required this.title,
+    this.keyboardType, required this.textEditingController,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.caption,
+          ),
+          TextField(
+            controller: textEditingController,
+            keyboardType: keyboardType,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget _appBarIcon() {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      bloc: _bloc,
-      builder: (context, state) {
-        if (state.editTitleMode) {
-          return IconButton(
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-            onPressed: () => _bloc.saveTitle(_titleController.text),
-          );
-        } else {
-          return IconButton(
-            icon: Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            onPressed: () => _bloc.editTitle(),
-          );
-        }
-      },
-    );
-  }
-
-  Widget _header(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      bloc: _bloc,
-      builder: (context, state) {
-        _titleController.text = state.category?.title ?? '';
-
-        if (state.editTitleMode) {
-          return TextField(
-            controller: _titleController,
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: Colors.white),
-            autofocus: true,
-          );
-        } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(state.category?.title ?? ''),
-              Text(
-                state.category == null
-                    ? ''
-                    : getOperationTitle(context, state.category!.operationType),
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white),
-              ),
-            ],
-          );
-        }
-      },
     );
   }
 }

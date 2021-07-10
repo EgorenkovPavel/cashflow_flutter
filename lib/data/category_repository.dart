@@ -3,6 +3,7 @@ import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
 
 class CategoryRepository {
@@ -26,6 +27,9 @@ class CategoryRepository {
   final List<CategoryCashflow> Function(List<CategoryCashflowEntity>)
       _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
+
+  Stream<List<SumOnDate>> watchCashflowByCategory(int id) =>
+      categoryDao.watchCashflowByCategory(id);
 
   Stream<List<Category>> watchAll() =>
       categoryDao.watchAllCategories().map(_mapCategoryList);

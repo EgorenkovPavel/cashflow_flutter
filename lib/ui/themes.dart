@@ -8,6 +8,7 @@ const Color _primaryColor = Color(0xFF236F57);
 const Color _accentColor = Color(0xFFF15931);
 
 ThemeData theme() => ThemeData(
+      primarySwatch: Colors.green,
       primaryColor: _primaryColor,
       accentColor: _accentColor,
       appBarTheme: AppBarTheme(
