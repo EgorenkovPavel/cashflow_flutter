@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/account_repository.dart';
 import 'package:money_tracker/data/category_repository.dart';
+import 'package:money_tracker/data/database/account_dao.dart';
+import 'package:money_tracker/data/database/category_dao.dart';
 import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/database/operation_dao.dart';
 import 'package:money_tracker/data/operation_repository.dart';
 import 'package:money_tracker/data/service_repository.dart';
 import 'package:money_tracker/ui/app.dart';
@@ -19,9 +22,9 @@ import 'data/repository.dart';
 void main() {
   final db = Database();
 
-  final _accountRepo = AccountRepository(db);
-  final _categoryRepo = CategoryRepository(db);
-  final _operationRepo = OperationRepository(db);
+  final _accountRepo = AccountRepository(AccountDao(db));
+  final _categoryRepo = CategoryRepository(CategoryDao(db));
+  final _operationRepo = OperationRepository(OperationDao(db));
   final _serviceRepo = ServiceRepository(db);
 
   final _repository =
