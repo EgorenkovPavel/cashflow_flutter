@@ -1351,32 +1351,9 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
-  late final AccountDao accountDao = AccountDao(this as Database);
-  late final CategoryDao categoryDao = CategoryDao(this as Database);
-  late final OperationDao operationDao = OperationDao(this as Database);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [accounts, categories, operations, balances, cashflows];
-}
-
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
-mixin _$AccountDaoMixin on DatabaseAccessor<Database> {
-  $AccountsTable get accounts => attachedDatabase.accounts;
-  $BalancesTable get balances => attachedDatabase.balances;
-}
-mixin _$CategoryDaoMixin on DatabaseAccessor<Database> {
-  $CategoriesTable get categories => attachedDatabase.categories;
-  $CashflowsTable get cashflows => attachedDatabase.cashflows;
-}
-mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
-  $AccountsTable get accounts => attachedDatabase.accounts;
-  $CategoriesTable get categories => attachedDatabase.categories;
-  $OperationsTable get operations => attachedDatabase.operations;
-  $BalancesTable get balances => attachedDatabase.balances;
-  $CashflowsTable get cashflows => attachedDatabase.cashflows;
 }

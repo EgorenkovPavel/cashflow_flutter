@@ -1,3 +1,4 @@
+import 'package:money_tracker/data/database/account_dao.dart';
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
@@ -5,9 +6,9 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:moor/moor.dart';
 
 class AccountRepository {
-  final Database db;
+  final AccountDao accountDao;
 
-  AccountRepository(this.db);
+  AccountRepository(this.accountDao);
 
   final List<Account> Function(List<AccountDB>) _mapAccountList =
       (list) => const AccountMapper().mapListToDart(list);
@@ -23,28 +24,28 @@ class AccountRepository {
       (list) => const AccountBalanceMapper().mapListToDart(list);
 
   Stream<List<Account>> watchAll() =>
-      db.accountDao.watchAllAccounts().map(_mapAccountList);
+      accountDao.watchAllAccounts().map(_mapAccountList);
 
   Future<List<Account>> getAll() async =>
-      _mapAccountList(await db.accountDao.getAllAccounts());
+      _mapAccountList(await accountDao.getAllAccounts());
 
   Stream<List<AccountBalance>> watchAllBalance() =>
-      db.accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);
+      accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);
 
   Future<List<AccountBalance>> getAllBalance() async =>
-      _mapAccountBalanceList(await db.accountDao.getAllAccountsBalance());
+      _mapAccountBalanceList(await accountDao.getAllAccountsBalance());
 
   Stream<Account> watchById(int id) =>
-      db.accountDao.watchAccountById(id).map(_mapAccount);
+      accountDao.watchAccountById(id).map(_mapAccount);
 
   Future<Account> getById(int id) async =>
-      _mapAccount(await db.accountDao.getAccountById(id));
+      _mapAccount(await accountDao.getAccountById(id));
 
   Future<int> insert(Account account) =>
-      db.accountDao.insertAccount(AccountsCompanion(
+      accountDao.insertAccount(AccountsCompanion(
         title: Value(account.title)
       ));
 
   Future update(Account account) =>
-      db.accountDao.updateAccount(_mapAccountDB(account));
+      accountDao.updateAccount(_mapAccountDB(account));
 }

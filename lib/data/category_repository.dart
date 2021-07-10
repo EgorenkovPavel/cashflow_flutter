@@ -1,3 +1,4 @@
+import 'package:money_tracker/data/database/category_dao.dart';
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
@@ -5,9 +6,9 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:moor/moor.dart';
 
 class CategoryRepository {
-  final Database db;
+  final CategoryDao categoryDao;
 
-  CategoryRepository(this.db);
+  CategoryRepository(this.categoryDao);
 
   final List<Category> Function(List<CategoryDB>) _mapCategoryList =
       (list) => const CategoryMapper().mapListToDart(list);
@@ -27,33 +28,33 @@ class CategoryRepository {
       (list) => const CategoryCashflowMapper().mapListToDart(list);
 
   Stream<List<Category>> watchAll() =>
-      db.categoryDao.watchAllCategories().map(_mapCategoryList);
+      categoryDao.watchAllCategories().map(_mapCategoryList);
 
   Future<List<Category>> getAll() async =>
-      _mapCategoryList(await db.categoryDao.getAllCategories());
+      _mapCategoryList(await categoryDao.getAllCategories());
 
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
-      db.categoryDao
+      categoryDao
           .watchCategoryCashflowByType(date, type)
           .map(_mapCategoryCashflowList);
 
   Future<List<CategoryCashflow>> getCategoryCashflowByType(
       DateTime date, OperationType type) async =>
-      _mapCategoryCashflowList(await db.categoryDao
+      _mapCategoryCashflowList(await categoryDao
           .getCategoryCashflowByType(date, type));
 
   Future<Category> getById(int id) async =>
-      _mapCategory(await db.categoryDao.getCategoryById(id));
+      _mapCategory(await categoryDao.getCategoryById(id));
 
   Stream<List<Category>> watchAllByType(OperationType type) =>
-      db.categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);
+      categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);
 
   Future<List<Category>> getAllByType(OperationType type) async =>
-      _mapCategoryList(await db.categoryDao.getAllCategoriesByType(type));
+      _mapCategoryList(await categoryDao.getAllCategoriesByType(type));
 
   Future<int> insert(Category entity) =>
-      db.categoryDao.insertCategory(CategoriesCompanion(
+      categoryDao.insertCategory(CategoriesCompanion(
         title: Value(entity.title),
         operationType: Value(entity.operationType),
         budgetType: Value(entity.budgetType),
@@ -61,5 +62,5 @@ class CategoryRepository {
       ));
 
   Future update(Category entity) =>
-      db.categoryDao.updateCategory(_mapCategoryDB(entity));
+      categoryDao.updateCategory(_mapCategoryDB(entity));
 }
