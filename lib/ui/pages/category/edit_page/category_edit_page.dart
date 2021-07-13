@@ -6,6 +6,7 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -52,11 +53,10 @@ class _CategoryEditPageState extends State<CategoryEditPage>
       body: SingleChildScrollView(
         child: BlocConsumer<CategoryBloc, CategoryState>(
           bloc: _bloc,
-          buildWhen: (previousState, currentState){
+          buildWhen: (previousState, currentState) {
             return currentState is DateState;
           },
-          builder: (context, state){
-
+          builder: (context, state) {
             _titleController.text = (state as DateState).title;
             _budgetController.text = (state as DateState).budget.toString();
 
@@ -71,16 +71,19 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                   keyboardType: TextInputType.number,
                   textEditingController: _budgetController,
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Statistics', style: Theme.of(context).textTheme.caption,),
-                      SizedBox(
-                          height: 200.0,
-                          child: _Diagramm(id: widget.id)),
+                      Text(
+                        'Statistics',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .caption,
+                      ),
+                      SizedBox(height: 200.0, child: _Diagramm(id: widget.id)),
                     ],
                   ),
                 ),
@@ -97,9 +100,19 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
                     return Column(
                       children: list
-                          .map((e) => ListTileOperation(e,
-                          onTap: () => PageNavigator.openOperationEditPage(
-                              context, e.id)))
+                          .expand(
+                            (e) =>
+                        [
+                          if (list.indexOf(e) == 0) ListDividerOperation.month(
+                              null, e) else
+                            ListDividerOperation.month(
+                                list[list.indexOf(e) - 1], e),
+                          ListTileOperation(e,
+                              onTap: () =>
+                                  PageNavigator.openOperationEditPage(
+                                      context, e.id))
+                        ],
+                      )
                           .toList(),
                     );
                   },
@@ -107,8 +120,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
               ],
             );
           },
-          listener: (context, state){
-            if (state is Close){
+          listener: (context, state) {
+            if (state is Close) {
               Navigator.of(context).pop();
             }
           },
@@ -116,9 +129,12 @@ class _CategoryEditPageState extends State<CategoryEditPage>
       ),
       bottomNavigationBar: ButtonBar(
         children: [
-          ElevatedButton(onPressed: (){
-            _bloc.save(_titleController.text, int.parse(_budgetController.text));
-          }, child: Text('Save'))
+          ElevatedButton(
+              onPressed: () {
+                _bloc.save(
+                    _titleController.text, int.parse(_budgetController.text));
+              },
+              child: Text('Save'))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -128,13 +144,10 @@ class _CategoryEditPageState extends State<CategoryEditPage>
         child: Icon(Icons.add),
       ),
     );
-
   }
 }
 
-
-class _Diagramm extends StatelessWidget{
-
+class _Diagramm extends StatelessWidget {
   final int id;
 
   const _Diagramm({Key? key, required this.id}) : super(key: key);
@@ -142,39 +155,44 @@ class _Diagramm extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<SumOnDate>>(
-      stream: context.read<Repository>().watchCashflowByCategory(id),
-      builder: (context, snapshot) {
+        stream: context.read<Repository>().watchCashflowByCategory(id),
+        builder: (context, snapshot) {
+          var data = <SumOnDate>[];
+          if (snapshot.hasData) {
+            data = snapshot.data!;
+          }
 
-        var data = <SumOnDate>[];
-        if(snapshot.hasData){
-          data = snapshot.data!;
-        }
-
-        return charts.BarChart(
-          [
-            charts.Series<SumOnDate, String>(
-              id: 'Cashflow',
-              colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-              domainFn: (SumOnDate sales, _) => DateFormat.yM().format(sales.date),
-              measureFn: (SumOnDate sales, _) => sales.sum,
-              data: data,
-            )
-          ],
-          animate: false,
-          behaviors: [
-        new charts.RangeAnnotation([
-            charts.LineAnnotationSegment(
-                300, charts.RangeAnnotationAxisType.measure,
-                startLabel: 'Measure 2 Start',
-                endLabel: 'Measure 2 End',
-                color: charts.MaterialPalette.gray.shade400),
-        ]),
-          ],
-        );
-      }
-    );
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: snapshot.data!.length * 20,
+              child: charts.BarChart(
+                [
+                  charts.Series<SumOnDate, String>(
+                    id: 'Cashflow',
+                    colorFn: (_, __) =>
+                    charts.MaterialPalette.blue.shadeDefault,
+                    domainFn: (SumOnDate sales, _) =>
+                        DateFormat.yM().format(sales.date),
+                    measureFn: (SumOnDate sales, _) => sales.sum,
+                    data: data,
+                  )
+                ],
+                animate: false,
+                behaviors: [
+                  new charts.RangeAnnotation([
+                    charts.LineAnnotationSegment(
+                        200000, charts.RangeAnnotationAxisType.measure,
+                        startLabel: 'Measure 2 Start',
+                        endLabel: 'Measure 2 End',
+                        color: charts.MaterialPalette.gray.shade400),
+                  ]),
+                ],
+              ),
+            ),
+          );
+        });
   }
-
 }
 
 class _InputField extends StatelessWidget {
@@ -185,7 +203,8 @@ class _InputField extends StatelessWidget {
   const _InputField({
     Key? key,
     required this.title,
-    this.keyboardType, required this.textEditingController,
+    this.keyboardType,
+    required this.textEditingController,
   }) : super(key: key);
 
   @override
@@ -197,7 +216,10 @@ class _InputField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme
+                .of(context)
+                .textTheme
+                .caption,
           ),
           TextField(
             controller: textEditingController,
