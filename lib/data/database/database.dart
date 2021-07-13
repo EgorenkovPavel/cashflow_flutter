@@ -406,17 +406,6 @@ class Database extends _$Database {
         });
         await OperationDao(this).batchInsert(operations);
       }
-      //TODO
-      // else if (key == 'budget') {
-      //   var budgets = <BudgetDB>[];
-      //   value.forEach((dynamic d) async {
-      //     if (d is Map<String, dynamic>) {
-      //       budgets.add(
-      //           BudgetDB.fromJson(d, serializer: _DefaultValueSerializer()));
-      //     }
-      //   });
-      //   await budgetDao.batchInsert(budgets);
-      // }
     });
   }
 
@@ -432,14 +421,23 @@ class Database extends _$Database {
 class _DefaultValueSerializer extends ValueSerializer {
   const _DefaultValueSerializer();
 
-  final _converter = const OperationTypeConverter();
+  final _operationTypeConverter = const OperationTypeConverter();
+  final _budgetTypeConverter = const BudgetTypeConverter();
+
 
   @override
   T fromJson<T>(dynamic json) {
     if (T == DateTime) {
       return DateTime.fromMillisecondsSinceEpoch(json as int) as T;
     } else if (T == OperationType) {
-      return _converter.mapToDart(json as int) as T;
+      return _operationTypeConverter.mapToDart(json as int) as T;
+    } else if (T == BudgetType) {
+      if (json == null){
+        return BudgetType.MONTH as T;
+      }
+      return _budgetTypeConverter.mapToDart(json as int) as T;
+    } else if (T == int && json == null){
+      return 0 as T;
     }
 
     return json as T;
@@ -450,7 +448,9 @@ class _DefaultValueSerializer extends ValueSerializer {
     if (value is DateTime) {
       return value.millisecondsSinceEpoch;
     } else if (value is OperationType) {
-      return _converter.mapToSql(value);
+      return _operationTypeConverter.mapToSql(value);
+    } else if (value is BudgetType) {
+      return _budgetTypeConverter.mapToSql(value);
     }
 
     return value;
