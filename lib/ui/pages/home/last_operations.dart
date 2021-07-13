@@ -3,6 +3,7 @@ import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/subtitle.dart';
+import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class LastOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Subtitle(
           leading:
@@ -20,7 +22,7 @@ class LastOperations extends StatelessWidget {
         StreamBuilder<List<Operation>>(
             stream: context.read<Repository>().watchLastOperations(5),
             builder: (context, snapshot) {
-              if(snapshot.hasError){
+              if (snapshot.hasError) {
                 print(snapshot.error);
               }
 
@@ -28,12 +30,21 @@ class LastOperations extends StatelessWidget {
                 return SizedBox();
               }
 
+              var items = snapshot.data!;
+
               return Column(
-                children: snapshot.data!
-                    .map((e) => ListTileOperation(
-                          e,
-                          onTap: () {},
-                        ))
+                children: items
+                    .expand((e) => [
+                          if (items.indexOf(e) == 0)
+                            ListDividerOperation(null, e)
+                          else
+                            ListDividerOperation(
+                                items[items.indexOf(e) - 1], e),
+                          ListTileOperation(
+                            e,
+                            onTap: () {},
+                          ),
+                        ])
                     .toList(),
               );
             }),
