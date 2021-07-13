@@ -84,12 +84,12 @@ class PageNavigator {
 
   static Future<DriveFile?> chooseFile(
           BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed(_routeGoogleDrive,
+      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDrive,
           arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FILE});
 
   static Future<DriveFile?> chooseFolder(
           BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed(_routeGoogleDrive,
+      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDrive,
           arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FOLDER});
 
   static const routeRootName = '/';
@@ -143,7 +143,7 @@ class PageNavigator {
       case _routeGoogleDrive:
         {
           var args = settings.arguments as Map<String, dynamic>;
-          return MaterialPageRoute(
+          return MaterialPageRoute<DriveFile?>(
             builder: (context) => DriveDialog(
               httpClient: args['client'],
               mode: args['mode'],
