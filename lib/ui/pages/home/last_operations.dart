@@ -36,9 +36,9 @@ class LastOperations extends StatelessWidget {
                 children: items
                     .expand((e) => [
                           if (items.indexOf(e) == 0)
-                            ListDividerOperation(null, e)
+                            ListDividerOperation.day(null, e)
                           else
-                            ListDividerOperation(
+                            ListDividerOperation.day(
                                 items[items.indexOf(e) - 1], e),
                           ListTileOperation(
                             e,
