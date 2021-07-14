@@ -34,7 +34,7 @@ class _BudgetPageState extends State<BudgetPage> {
     super.dispose();
   }
 
-  String _calcTitle(BudgetPageState state) {
+  Widget _calcTitle(BudgetPageState state) {
     var start =
         widget.type == OperationType.INPUT ? 'Earning in' : 'Spending in';
 
@@ -44,7 +44,13 @@ class _BudgetPageState extends State<BudgetPage> {
         .map((e) => e.cashflow)
         .fold<int>(0, (previousValue, element) => previousValue + element);
 
-    return '$start $date ${NumberFormat().format(sum)}';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('$start $date'),
+        Text('${NumberFormat().format(sum)}'),
+      ],
+    ) ;
   }
 
   @override
@@ -54,7 +60,7 @@ class _BudgetPageState extends State<BudgetPage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(_calcTitle(state)),
+            title: _calcTitle(state),
           ),
           body: Column(
             mainAxisSize: MainAxisSize.min,
