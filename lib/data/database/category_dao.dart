@@ -1,5 +1,7 @@
+import 'package:money_tracker/data/database/budget_type_converter.dart';
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/database/operation_type_converter.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
@@ -93,6 +95,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
       DateTime date, OperationType type) {
+    var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -102,12 +105,23 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       'SELECT *, '
       '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
       'FROM categories c '
-      'WHERE operation_type = ? '
+      'WHERE operation_type = ? AND budget_type = ? '
+      'UNION '
+      'SELECT *, '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      'FROM categories c '
+      'WHERE operation_type = ?  AND budget_type = ? '
       'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(BudgetTypeConverter().mapToSql(BudgetType.MONTH)!),
+
+        Variable.withDateTime(yearStart),
+        Variable.withDateTime(monthEnd),
+        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(BudgetTypeConverter().mapToSql(BudgetType.YEAR)!),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
