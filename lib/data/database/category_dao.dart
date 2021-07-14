@@ -1,4 +1,5 @@
 import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
