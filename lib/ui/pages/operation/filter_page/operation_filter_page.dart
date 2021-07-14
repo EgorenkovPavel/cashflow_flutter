@@ -101,85 +101,83 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: BlocBuilder<OperationFilterPageBloc, StateBloc>(
-            bloc: _bloc,
-            builder: (context, state) {
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(AppLocalizations.of(context).period),
-                  PeriodButton(
-                    date: state.dateRange,
-                    onPressed: (date) => _bloc.setPeriod(date),
-                    onDelete: () => _bloc.clearPeriod(),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(AppLocalizations.of(context).accounts),
-                  InputChip(
-                      key: _accountKey,
+              bloc: _bloc,
+              builder: (context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(AppLocalizations.of(context).period),
+                    PeriodButton(
+                      date: state.dateRange,
+                      onPressed: (date) => _bloc.setPeriod(date),
+                      onDelete: () => _bloc.clearPeriod(),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(AppLocalizations.of(context).accounts),
+                    InputChip(
+                        key: _accountKey,
+                        avatar: Icon(Icons.mode_edit),
+                        label: Text(AppLocalizations.of(context).chooseAccount),
+                        onPressed: _onAccountChipPressed),
+                    Wrap(
+                      children: state.accounts
+                          .map(
+                            (account) => InputChip(
+                              label: Text(account.title),
+                              deleteIcon: Icon(Icons.cancel),
+                              onDeleted: () => _bloc.removeAccount(account),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(AppLocalizations.of(context).inputCategory),
+                    InputChip(
+                      key: _categoryInKey,
                       avatar: Icon(Icons.mode_edit),
-                      label: Text(AppLocalizations.of(context).chooseAccount),
-                      onPressed: _onAccountChipPressed),
-                  Wrap(
-                    children: [
-                      for (var account in state.accounts)
-                        InputChip(
-                          label: Text(account.title),
-                          deleteIcon: Icon(Icons.cancel),
-                          onDeleted: () => _bloc.removeAccount(account),
-                        ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(AppLocalizations.of(context).inputCategory),
-                  InputChip(
-                    key: _categoryInKey,
-                    avatar: Icon(Icons.mode_edit),
-                    label: Text(AppLocalizations.of(context).chooseCategory),
-                    onPressed: _onCategoryInPressed,
-                  ),
-                  Wrap(
-                      children:
-                              state.categoryIn
-                          .map(
-                            (category) => InputChip(
-                              label: Text(category.title),
-                              deleteIcon: Icon(Icons.cancel),
-                              onDeleted: () => _bloc.removeCategory(category),
-                            ),
-                          )
-                          .toList()),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(AppLocalizations.of(context).outputCategory),
-                  InputChip(
-                    key: _categoryOutKey,
-                    avatar: Icon(Icons.mode_edit),
-                    label: Text(AppLocalizations.of(context).chooseCategory),
-                    onPressed: _onCategoryOutPressed,
-                  ),
-                  Wrap(
-                      children: state.categoryOut
-                          .map(
-                            (category) => InputChip(
-                              label: Text(category.title),
-                              deleteIcon: Icon(Icons.cancel),
-                              onDeleted: () => _bloc.removeCategory(category),
-                            ),
-                          )
-                          .toList()),
-                ],
-              );
-            }
-          ),
+                      label: Text(AppLocalizations.of(context).chooseCategory),
+                      onPressed: _onCategoryInPressed,
+                    ),
+                    Wrap(
+                        children: state.categoryIn
+                            .map(
+                              (category) => InputChip(
+                                label: Text(category.title),
+                                deleteIcon: Icon(Icons.cancel),
+                                onDeleted: () => _bloc.removeCategory(category),
+                              ),
+                            )
+                            .toList()),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(AppLocalizations.of(context).outputCategory),
+                    InputChip(
+                      key: _categoryOutKey,
+                      avatar: Icon(Icons.mode_edit),
+                      label: Text(AppLocalizations.of(context).chooseCategory),
+                      onPressed: _onCategoryOutPressed,
+                    ),
+                    Wrap(
+                        children: state.categoryOut
+                            .map(
+                              (category) => InputChip(
+                                label: Text(category.title),
+                                deleteIcon: Icon(Icons.cancel),
+                                onDeleted: () => _bloc.removeCategory(category),
+                              ),
+                            )
+                            .toList()),
+                  ],
+                );
+              }),
         ),
       ),
       persistentFooterButtons: [
@@ -247,4 +245,3 @@ class PeriodButton extends StatelessWidget {
     }
   }
 }
-
