@@ -14,19 +14,39 @@ class BudgetSubtitle extends StatelessWidget {
     required this.type,
   }) : super(key: key);
 
+  int _calcCashflow(List<CategoryCashflow> list){
+    return list.fold(
+        0, (previousValue, element) => previousValue + element.cashflow);
+  }
+
+  int _calcBudget(List<CategoryCashflow> list){
+    return
+        list.where((element) => element.category.budgetType == BudgetType.MONTH).fold<int>(
+            0,
+                (previousValue, element) =>
+            previousValue + element.category.budget)
+        +
+            list.where((element) => element.category.budgetType == BudgetType.YEAR).fold<int>(
+                0,
+                    (previousValue, element) =>
+                previousValue + (element.category.budget / 12).floor());
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CategoryCashflow>>(
-      stream: context.read<Repository>().watchCategoryCashflowByType(DateTime.now(), type),
+      stream: context
+          .read<Repository>()
+          .watchCategoryCashflowByType(DateTime.now(), type),
       builder: (context, snapshot) {
         var _cashflow = 0;
         var _budget = 0;
-        if (snapshot.hasError){
+        if (snapshot.hasError) {
           print(snapshot.error);
         }
-        if(snapshot.hasData){
-          _cashflow = snapshot.data!.fold(0, (previousValue, element) => previousValue + element.cashflow);
-          _budget = snapshot.data!.fold(0, (previousValue, element) => previousValue + element.category.budget);
+        if (snapshot.hasData) {
+          _cashflow = _calcCashflow(snapshot.data!);
+          _budget = _calcBudget(snapshot.data!);
         }
         return Subtitle(
           leading: RichText(
@@ -53,9 +73,9 @@ class BudgetSubtitle extends StatelessWidget {
               Text(
                 NumberFormat().format(_cashflow),
                 style: Theme.of(context).textTheme.headline6!.copyWith(
-                  fontSize: 15,
-                  color: Theme.of(context).primaryColor.withOpacity(0.8),
-                ),
+                      fontSize: 15,
+                      color: Theme.of(context).primaryColor.withOpacity(0.8),
+                    ),
               ),
               Text(
                 'of ${NumberFormat().format(_budget)}',
@@ -64,7 +84,7 @@ class BudgetSubtitle extends StatelessWidget {
             ],
           ),
         );
-      }
+      },
     );
   }
 }
