@@ -9,12 +9,22 @@ class StateBloc {
   final List<Category> categoryIn;
   final List<Category> categoryOut;
 
-  StateBloc([
+  StateBloc({
     this.dateRange,
     this.accounts = const [],
     this.categoryIn = const [],
     this.categoryOut = const [],
-  ]);
+  });
+
+  copyWith({DateTimeRange? date, List<Account>? accounts, List<Category>? categoriesIn, List<Category>? categoriesOut}){
+    return StateBloc(
+      dateRange: date ?? this.dateRange,
+      accounts: accounts ?? this.accounts,
+      categoryIn: categoriesIn ?? this.categoryIn,
+      categoryOut: categoriesOut ?? this.categoryOut,
+    );
+
+  }
 }
 
 class OperationFilterPageBloc extends Cubit<StateBloc> {
@@ -22,7 +32,7 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   late List<Account> accountList;
   late List<Category> categoryInList;
   late List<Category> categoryOutList;
-  late StateBloc state;
+  StateBloc _state = StateBloc();
 
   OperationFilterPageBloc(this.model) : super(StateBloc());
 
@@ -33,70 +43,67 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
 
     categoryOutList = await model.getAllCategoriesByType(OperationType.OUTPUT);
 
-    state = StateBloc(
-      filter.date,
-      accountList
+    _state = StateBloc(
+      dateRange: filter.date,
+      accounts: accountList
           .where((element) => filter.accountsIds.contains(element.id))
           .toList(),
-      categoryInList
+      categoryIn: categoryInList
           .where((element) => filter.categoriesIds.contains(element.id))
           .toList(),
-      categoryOutList
+      categoryOut: categoryOutList
           .where((element) => filter.categoriesIds.contains(element.id))
           .toList(),
     );
-    emit(state);
+    emit(_state);
   }
 
   void clearPeriod() {
-    state =
-        StateBloc(null, state.accounts, state.categoryIn, state.categoryOut);
-    emit(state);
+    _state = _state.copyWith(date: null);
+    emit(_state);
   }
 
   void setPeriod(DateTimeRange date) {
-    state =
-        StateBloc(date, state.accounts, state.categoryIn, state.categoryOut);
-    emit(state);
+    _state = _state.copyWith(date: date);
+    emit(_state);
   }
 
   void addAccount(Account account) {
-    state.accounts.add(account);
-    emit(state);
+    _state = _state.copyWith(accounts: _state.accounts..add(account));
+    emit(_state);
   }
 
   void removeAccount(Account account) {
-    state.accounts.removeWhere((element) => element.id == account.id);
-    emit(state);
+    _state = _state.copyWith(accounts: _state.accounts..removeWhere((element) => element.id == account.id));
+    emit(_state);
   }
 
   void addCategory(Category category) {
     if (category.operationType == OperationType.INPUT) {
-      state.categoryIn.add(category);
+      _state = _state.copyWith(categoriesIn: _state.categoryIn..add(category));
     } else if (category.operationType == OperationType.OUTPUT) {
-      state.categoryOut.add(category);
-    }
-    ;
+      _state = _state.copyWith(categoriesOut: _state.categoryOut..add(category));
+    };
 
-    emit(state);
+    emit(_state);
   }
 
   void removeCategory(Category category) {
     if (category.operationType == OperationType.INPUT) {
-      state.categoryIn.removeWhere((element) => element.id == category.id);
+      _state = _state.copyWith(categoriesIn: _state.categoryIn..removeWhere((element) => element.id == category.id));
     } else if (category.operationType == OperationType.OUTPUT) {
-      state.categoryOut.removeWhere((element) => element.id == category.id);
+      _state = _state.copyWith(categoriesOut: _state.categoryOut..removeWhere((element) => element.id == category.id));
     }
 
-    emit(state);
+    emit(_state);
   }
 
   OperationListFilter getFilter() {
     return OperationListFilter(
-      date: state.dateRange,
-      accountsIds: state.accounts.map((e) => e.id).toSet(),
-      categoriesIds: state.categoryIn.map((e) => e.id).toSet()
-        ..addAll(state.categoryOut.map((e) => e.id)),
+      date: _state.dateRange,
+      accountsIds: _state.accounts.map((e) => e.id).toSet(),
+      categoriesIds: _state.categoryIn.map((e) => e.id).toSet()
+        ..addAll(_state.categoryOut.map((e) => e.id)),
     );
   }
 }

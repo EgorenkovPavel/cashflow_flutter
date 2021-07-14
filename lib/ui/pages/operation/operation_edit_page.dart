@@ -21,7 +21,7 @@ class OperationEditPage extends StatefulWidget {
 class _OperationEditPageState extends State<OperationEditPage> {
   final _formKey = GlobalKey<FormState>();
 
-  late OperationType _type;
+  OperationType _type = OperationType.INPUT;
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
   late Account _account;

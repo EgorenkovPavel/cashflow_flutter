@@ -53,7 +53,7 @@ class PageNavigator {
   static Future<OperationListFilter?> openOperationFilterPage(
           BuildContext context, OperationListFilter filter) =>
       Navigator.of(context)
-          .pushNamed(_routeOperationFilterName, arguments: filter);
+          .pushNamed<OperationListFilter?>(_routeOperationFilterName, arguments: filter);
 
   static const _routeOperationListName = '/operationListPage';
 
@@ -128,7 +128,7 @@ class PageNavigator {
         }
       case _routeOperationFilterName:
         {
-          return MaterialPageRoute(
+          return MaterialPageRoute<OperationListFilter?>(
             builder: (context) => OperationFilterPage(
                 filter: settings.arguments as OperationListFilter),
           );
