@@ -62,27 +62,60 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
             return Column(
               children: [
-                _InputField(
-                  title: 'Title',
-                  textEditingController: _titleController,
-                ),
-                // DropdownList<BudgetType>(
-                //     value: state.budgetType,
-                //     onChange: (type) {
-                //       if (type != null) {
-                //         _bloc.onBudgetTypeChanged(type);
-                //       }
-                //     },
-                //     hint: 'Budget type',
-                //     items: [BudgetType.MONTH, BudgetType.YEAR],
-                //     getListItem: (data) => ListTile(
-                //           title: Text(getBudgetTypeTitle(data)),
-                //         )),
-                _InputField(
-                  title: 'Budget',
-                  keyboardType: TextInputType.number,
-                  textEditingController: _budgetController,
-                ),
+
+                    Container(
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: [
+                          _InputField(
+                            title: 'Title',
+                            textEditingController: _titleController,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: _InputField(
+                                  title: 'Budget',
+                                  keyboardType: TextInputType.number,
+                                  textEditingController: _budgetController,
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: DropdownList<BudgetType>(
+                                    value: state.budgetType,
+                                    onChange: (type) {
+                                      if (type != null) {
+                                        _bloc.onBudgetTypeChanged(type);
+                                      }
+                                    },
+                                    hint: 'Budget type',
+                                    items: [BudgetType.MONTH, BudgetType.YEAR],
+                                    getListItem: (data) => ListTile(
+                                      title: Text(getBudgetTypeTitle(data)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ButtonBar(
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _bloc.save(
+                                        _titleController.text, int.parse(_budgetController.text));
+                                  },
+                                  child: Text('Save'))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -136,16 +169,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           },
         ),
       ),
-      bottomNavigationBar: ButtonBar(
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                _bloc.save(
-                    _titleController.text, int.parse(_budgetController.text));
-              },
-              child: Text('Save'))
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           PageNavigator.openOperationInputPage(context);
@@ -169,14 +192,14 @@ class _Diagramm extends StatelessWidget {
           var data = <SumOnDate>[];
           if (snapshot.hasData) {
             data = snapshot.data!;
-          }else{
+          } else {
             return SizedBox(
               height: 60.0,
               child: CircularProgressIndicator(),
             );
           }
 
-          if (data.isEmpty){
+          if (data.isEmpty) {
             return SizedBox(
               height: 60.0,
               child: Text('No data'),
@@ -237,12 +260,14 @@ class _InputField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
           ),
           TextField(
             controller: textEditingController,
             keyboardType: keyboardType,
             decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               border: OutlineInputBorder(),
             ),
           ),
