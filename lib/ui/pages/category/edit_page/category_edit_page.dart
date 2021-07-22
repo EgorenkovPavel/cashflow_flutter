@@ -62,60 +62,57 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
             return Column(
               children: [
-
-                    Container(
-                      color: Theme.of(context).primaryColor,
-                      child: Column(
+                Container(
+                  color: Theme.of(context).primaryColor,
+                  child: Column(
+                    children: [
+                      _InputField(
+                        title: 'Title',
+                        textEditingController: _titleController,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          _InputField(
-                            title: 'Title',
-                            textEditingController: _titleController,
+                          Expanded(
+                            child: _InputField(
+                              title: 'Budget',
+                              keyboardType: TextInputType.number,
+                              textEditingController: _budgetController,
+                            ),
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: _InputField(
-                                  title: 'Budget',
-                                  keyboardType: TextInputType.number,
-                                  textEditingController: _budgetController,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: DropdownList<BudgetType>(
+                                value: state.budgetType,
+                                onChange: (type) {
+                                  if (type != null) {
+                                    _bloc.onBudgetTypeChanged(type);
+                                  }
+                                },
+                                hint: 'Budget type',
+                                items: [BudgetType.MONTH, BudgetType.YEAR],
+                                getListItem: (data) => ListTile(
+                                  title: Text(getBudgetTypeTitle(data)),
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: DropdownList<BudgetType>(
-                                    value: state.budgetType,
-                                    onChange: (type) {
-                                      if (type != null) {
-                                        _bloc.onBudgetTypeChanged(type);
-                                      }
-                                    },
-                                    hint: 'Budget type',
-                                    items: [BudgetType.MONTH, BudgetType.YEAR],
-                                    getListItem: (data) => ListTile(
-                                      title: Text(getBudgetTypeTitle(data)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          ButtonBar(
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _bloc.save(
-                                        _titleController.text, int.parse(_budgetController.text));
-                                  },
-                                  child: Text('Save'))
-                            ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-
-
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                _bloc.save(_titleController.text,
+                                    int.parse(_budgetController.text));
+                              },
+                              child: Text('Save'))
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -187,55 +184,62 @@ class _Diagramm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<SumOnDate>>(
-        stream: context.read<Repository>().watchCashflowByCategory(id),
-        builder: (context, snapshot) {
-          var data = <SumOnDate>[];
-          if (snapshot.hasData) {
-            data = snapshot.data!;
-          } else {
-            return SizedBox(
-              height: 60.0,
-              child: CircularProgressIndicator(),
-            );
-          }
+      stream: context.read<Repository>().watchCashflowByCategory(id),
+      builder: (context, snapshot) {
+        var data = <SumOnDate>[];
+        if (snapshot.hasData) {
+          data = snapshot.data!;
+        } else {
+          return SizedBox(
+            height: 60.0,
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          if (data.isEmpty) {
-            return SizedBox(
-              height: 60.0,
-              child: Text('No data'),
-            );
-          }
+        if (data.isEmpty) {
+          return SizedBox(
+            height: 60.0,
+            child: Text('No data'),
+          );
+        }
 
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: data.length * 20,
-              child: charts.BarChart(
-                [
-                  charts.Series<SumOnDate, String>(
-                    id: 'Cashflow',
-                    colorFn: (_, __) =>
-                        charts.MaterialPalette.blue.shadeDefault,
-                    domainFn: (SumOnDate sales, _) =>
-                        DateFormat.yM().format(sales.date),
-                    measureFn: (SumOnDate sales, _) => sales.sum,
-                    data: data,
-                  )
-                ],
-                animate: false,
-                behaviors: [
-                  new charts.RangeAnnotation([
+        data.sort((s1, s2) =>
+            s1.date.microsecondsSinceEpoch - s2.date.microsecondsSinceEpoch);
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: data.length * 50,
+            child: charts.BarChart(
+              [
+                charts.Series<SumOnDate, String>(
+                  id: 'Cashflow',
+                  colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                  domainFn: (SumOnDate sales, _) =>
+                      DateFormat.yM().format(sales.date),
+                  measureFn: (SumOnDate sales, _) => sales.sum,
+                  data: data,
+                )
+              ],
+              animate: false,
+              primaryMeasureAxis:
+                  charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+              behaviors: [
+                charts.RangeAnnotation(
+                  [
                     charts.LineAnnotationSegment(
                         200000, charts.RangeAnnotationAxisType.measure,
                         startLabel: 'Measure 2 Start',
                         endLabel: 'Measure 2 End',
                         color: charts.MaterialPalette.gray.shade400),
-                  ]),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -260,7 +264,10 @@ class _InputField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .caption!
+                .copyWith(color: Colors.white),
           ),
           TextField(
             controller: textEditingController,
