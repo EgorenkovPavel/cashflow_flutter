@@ -8,6 +8,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
+import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -30,8 +31,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
   @override
   void initState() {
     super.initState();
-    _bloc = CategoryBloc(context.read<Repository>())
-      ..fetch(widget.id);
+    _bloc = CategoryBloc(context.read<Repository>())..fetch(widget.id);
   }
 
   @override
@@ -66,6 +66,18 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                   title: 'Title',
                   textEditingController: _titleController,
                 ),
+                // DropdownList<BudgetType>(
+                //     value: state.budgetType,
+                //     onChange: (type) {
+                //       if (type != null) {
+                //         _bloc.onBudgetTypeChanged(type);
+                //       }
+                //     },
+                //     hint: 'Budget type',
+                //     items: [BudgetType.MONTH, BudgetType.YEAR],
+                //     getListItem: (data) => ListTile(
+                //           title: Text(getBudgetTypeTitle(data)),
+                //         )),
                 _InputField(
                   title: 'Budget',
                   keyboardType: TextInputType.number,
@@ -78,10 +90,7 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                     children: [
                       Text(
                         'Statistics',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .caption,
+                        style: Theme.of(context).textTheme.caption,
                       ),
                       SizedBox(height: 200.0, child: _Diagramm(id: widget.id)),
                     ],
@@ -101,18 +110,18 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                     return Column(
                       children: list
                           .expand(
-                            (e) =>
-                        [
-                          if (list.indexOf(e) == 0) ListDividerOperation.month(
-                              null, e) else
-                            ListDividerOperation.month(
-                                list[list.indexOf(e) - 1], e),
-                          ListTileOperation(e,
-                              onTap: () =>
-                                  PageNavigator.openOperationEditPage(
-                                      context, e.id))
-                        ],
-                      )
+                            (e) => [
+                              if (list.indexOf(e) == 0)
+                                ListDividerOperation.month(null, e)
+                              else
+                                ListDividerOperation.month(
+                                    list[list.indexOf(e) - 1], e),
+                              ListTileOperation(e,
+                                  onTap: () =>
+                                      PageNavigator.openOperationEditPage(
+                                          context, e.id))
+                            ],
+                          )
                           .toList(),
                     );
                   },
@@ -160,18 +169,30 @@ class _Diagramm extends StatelessWidget {
           var data = <SumOnDate>[];
           if (snapshot.hasData) {
             data = snapshot.data!;
+          }else{
+            return SizedBox(
+              height: 60.0,
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (data.isEmpty){
+            return SizedBox(
+              height: 60.0,
+              child: Text('No data'),
+            );
           }
 
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: snapshot.data!.length * 20,
+              width: data.length * 20,
               child: charts.BarChart(
                 [
                   charts.Series<SumOnDate, String>(
                     id: 'Cashflow',
                     colorFn: (_, __) =>
-                    charts.MaterialPalette.blue.shadeDefault,
+                        charts.MaterialPalette.blue.shadeDefault,
                     domainFn: (SumOnDate sales, _) =>
                         DateFormat.yM().format(sales.date),
                     measureFn: (SumOnDate sales, _) => sales.sum,
@@ -216,10 +237,7 @@ class _InputField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme
-                .of(context)
-                .textTheme
-                .caption,
+            style: Theme.of(context).textTheme.caption,
           ),
           TextField(
             controller: textEditingController,
