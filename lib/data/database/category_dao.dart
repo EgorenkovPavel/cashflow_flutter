@@ -1,4 +1,3 @@
-import 'package:money_tracker/data/database/budget_type_converter.dart';
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -7,6 +6,28 @@ import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
 
 part 'category_dao.g.dart';
+
+class CategoryCashflowEntity {
+  CategoryDB category;
+  int monthCashflow;
+  int yearCashflow;
+
+  CategoryCashflowEntity({
+    required this.category,
+    required this.monthCashflow,
+    required this.yearCashflow,
+  });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is CategoryCashflowEntity &&
+              runtimeType == other.runtimeType &&
+              category == other.category;
+
+  @override
+  int get hashCode => category.hashCode;
+}
 
 @UseDao(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
@@ -66,6 +87,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowEntity>> watchAllCategoryCashflowBudget(
       DateTime date) {
+
+    var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -73,12 +96,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-      'FROM categories c ORDER BY title;',
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
+          'FROM categories c '
+          'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
-        Variable.withDateTime(monthStart),
-        Variable.withDateTime(monthEnd)
+        Variable.withDateTime(monthEnd),
+
+        Variable.withDateTime(yearStart),
+        Variable.withDateTime(monthEnd),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
@@ -86,7 +113,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               .map(
                 (row) => CategoryCashflowEntity(
                   category: CategoryDB.fromData(row.data, db),
-                  cashflow: row.read<int>('cashflow'),
+                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
               )
               .toList(),
@@ -103,25 +131,19 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
       'FROM categories c '
-      'WHERE operation_type = ? AND budget_type = ? '
-      'UNION '
-      'SELECT *, '
-      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-      'FROM categories c '
-      'WHERE operation_type = ?  AND budget_type = ? '
+      'WHERE operation_type = ? '
       'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
-        Variable.withInt(BudgetTypeConverter().mapToSql(BudgetType.MONTH)!),
 
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
+
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
-        Variable.withInt(BudgetTypeConverter().mapToSql(BudgetType.YEAR)!),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
@@ -129,7 +151,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               .map(
                 (row) => CategoryCashflowEntity(
                   category: CategoryDB.fromData(row.data, db),
-                  cashflow: row.read<int?>('cashflow') ?? 0,
+                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
               )
               .toList(),
@@ -154,6 +177,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
       DateTime date, OperationType type) {
+    var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -161,13 +185,18 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "cashflow" '
-      'FROM categories c '
-      'WHERE operation_type = ? '
-      'ORDER BY title;',
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
+          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
+          'FROM categories c '
+          'WHERE operation_type = ? '
+          'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
+
+        Variable.withDateTime(yearStart),
+        Variable.withDateTime(monthEnd),
+
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
@@ -176,7 +205,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               .map(
                 (row) => CategoryCashflowEntity(
                   category: CategoryDB.fromData(row.data, db),
-                  cashflow: row.read<int?>('cashflow') ?? 0,
+                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
               )
               .toList(),

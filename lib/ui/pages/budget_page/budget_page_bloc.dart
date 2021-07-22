@@ -48,7 +48,7 @@ class BudgetPageBloc extends Cubit<BudgetPageState> {
   Future<void> watchCashflow() async {
     await _subscription?.cancel();
     _subscription = repo.watchCategoryCashflowByType(_date, _type).listen((items) {
-      items.sort((c1, c2) => c2.cashflow - c1.cashflow);
+      items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow);
       emit(BudgetPageState(date: _date, items: items));
     });
   }

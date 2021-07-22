@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/database/category_dao.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -12,7 +12,8 @@ class CategoryCashflowMapper
   CategoryCashflowEntity mapToSql(CategoryCashflow c) {
     return CategoryCashflowEntity(
       category: const CategoryMapper().mapToSql(c.category),
-      cashflow: c.cashflow,
+      monthCashflow: c.monthCashflow,
+      yearCashflow: c.yearCashflow,
     );
   }
 
@@ -20,7 +21,8 @@ class CategoryCashflowMapper
   CategoryCashflow mapToDart(CategoryCashflowEntity c) {
     return CategoryCashflow(
       category: const CategoryMapper().mapToDart(c.category),
-      cashflow: c.cashflow,
+      monthCashflow: c.monthCashflow,
+      yearCashflow: c.yearCashflow,
     );
   }
 }

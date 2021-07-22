@@ -2,9 +2,12 @@ import 'package:money_tracker/domain/models/category.dart';
 
 class CategoryCashflow {
   final Category category;
-  final int cashflow;
+  final int monthCashflow;
+  final int yearCashflow;
 
-  const CategoryCashflow(
-      {required this.category,
-      required this.cashflow});
+  const CategoryCashflow({
+    required this.category,
+    required this.monthCashflow,
+    required this.yearCashflow,
+  });
 }
