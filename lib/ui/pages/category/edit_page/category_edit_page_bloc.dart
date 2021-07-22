@@ -37,6 +37,7 @@ class CategoryBloc extends Cubit<CategoryState> {
 
   void onBudgetTypeChanged(BudgetType type){
     _budgetType = type;
+    emit(DateState(title: _title, budget: _budget, budgetType: _budgetType));
   }
 
   Future<void> save(String title, int budget) async {
