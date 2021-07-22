@@ -144,25 +144,7 @@ class CategoryBudgetEntity {
   int get hashCode => category.hashCode;
 }
 
-class CategoryCashflowEntity {
-  CategoryDB category;
-  int cashflow;
 
-  CategoryCashflowEntity({
-    required this.category,
-    required this.cashflow,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryCashflowEntity &&
-          runtimeType == other.runtimeType &&
-          category == other.category;
-
-  @override
-  int get hashCode => category.hashCode;
-}
 
 class OperationItem {
   OperationDB operation;

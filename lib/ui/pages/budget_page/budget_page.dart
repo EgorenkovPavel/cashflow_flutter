@@ -20,8 +20,6 @@ class BudgetPage extends StatefulWidget {
 class _BudgetPageState extends State<BudgetPage> {
   late BudgetPageBloc _bloc;
 
-  final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +39,7 @@ class _BudgetPageState extends State<BudgetPage> {
     var date = DateFormat.yMMM().format(state.date);
 
     var sum = state.items
-        .map((e) => e.cashflow)
+        .map((e) => e.monthCashflow)
         .fold<int>(0, (previousValue, element) => previousValue + element);
 
     return Row(
@@ -115,7 +113,7 @@ class PieDiagram extends StatelessWidget {
             charts.Series<CategoryCashflow, int>(
               id: 'Cashflow',
               domainFn: (CategoryCashflow sales, _) => sales.category.id,
-              measureFn: (CategoryCashflow sales, _) => sales.cashflow,
+              measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
               data: list,
             )
           ], animate: true),
@@ -144,7 +142,7 @@ class CategoryItem extends StatelessWidget {
       return 0;
     } else if (cashflow > category.category.budget ||
         category.category.budget == 0) {
-      return cashflow / category.cashflow;
+      return cashflow / category.monthCashflow;
     } else {
       return cashflow / category.category.budget;
     }
@@ -158,7 +156,7 @@ class CategoryItem extends StatelessWidget {
       child: TweenAnimationBuilder<int>(
         tween: IntTween(
           begin: 0,
-          end: category.cashflow,
+          end: category.monthCashflow,
         ),
         duration: const Duration(seconds: 1),
         builder: (context, cashflow, _) {

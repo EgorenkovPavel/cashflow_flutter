@@ -16,7 +16,7 @@ class BudgetSubtitle extends StatelessWidget {
 
   int _calcCashflow(List<CategoryCashflow> list){
     return list.fold(
-        0, (previousValue, element) => previousValue + element.cashflow);
+        0, (previousValue, element) => previousValue + element.monthCashflow);
   }
 
   int _calcBudget(List<CategoryCashflow> list){
