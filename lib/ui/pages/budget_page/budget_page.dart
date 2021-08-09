@@ -48,7 +48,7 @@ class _BudgetPageState extends State<BudgetPage> {
         Text('$start $date'),
         Text('${NumberFormat().format(sum)}'),
       ],
-    ) ;
+    );
   }
 
   @override
@@ -81,10 +81,10 @@ class _BudgetPageState extends State<BudgetPage> {
                 itemCount: state.items.length,
               )),
               TextButton(
-                onPressed: (){
-                  if (state.showAll){
+                onPressed: () {
+                  if (state.showAll) {
                     _bloc.collapse();
-                  }else{
+                  } else {
                     _bloc.expand();
                   }
                 },
@@ -116,17 +116,27 @@ class PieDiagram extends StatelessWidget {
           onPressed: onBackPressed,
           icon: Icon(Icons.arrow_back_ios),
         ),
-        SizedBox(
-          width: 200.0,
-          height: 200.0,
-          child: charts.PieChart([
-            charts.Series<CategoryCashflow, int>(
-              id: 'Cashflow',
-              domainFn: (CategoryCashflow sales, _) => sales.category.id,
-              measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
-              data: list,
-            )
-          ], animate: true),
+        Column(
+          children: [
+            SizedBox(
+              width: 200.0,
+              height: 200.0,
+              child: charts.PieChart([
+                charts.Series<CategoryCashflow, int>(
+                  id: 'Cashflow',
+                  domainFn: (CategoryCashflow sales, _) => sales.category.id,
+                  measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
+                  data: list,
+                )
+              ], animate: true),
+            ),
+            Center(
+              child: Text(
+                '${list.fold<int>(0, (previousValue, element) => previousValue + element.monthCashflow)}',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+          ],
         ),
         IconButton(
           onPressed: onForwardPressed,
