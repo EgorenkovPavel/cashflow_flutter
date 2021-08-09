@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/home/budget_subtitle.dart';
 import 'package:money_tracker/ui/pages/home/last_operations.dart';
+import 'package:money_tracker/ui/pages/home/month_operations.dart';
 import 'package:money_tracker/ui/pages/home/top_header.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,8 +30,9 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             TopHeader(),
-            BudgetSubtitle(type: OperationType.INPUT),
-            BudgetSubtitle(type: OperationType.OUTPUT),
+            MonthOperations(),
+            // BudgetSubtitle(type: OperationType.INPUT),
+            // BudgetSubtitle(type: OperationType.OUTPUT),
             LastOperations(),
             SizedBox(height: 80.0),
           ],
@@ -43,4 +45,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
