@@ -68,59 +68,60 @@ class TopHeader extends StatelessWidget {
                     SizedBox(
                       height: 16.0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Available ',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
-                                color: Colors.white.withOpacity(0.5),
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'today',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ]),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '????',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(
-                                  color: Colors.white,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'of ????',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    //TODO
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     RichText(
+                    //       text: TextSpan(children: [
+                    //         TextSpan(
+                    //           text: 'Available ',
+                    //           style: Theme
+                    //               .of(context)
+                    //               .textTheme
+                    //               .headline6!
+                    //               .copyWith(
+                    //             color: Colors.white.withOpacity(0.5),
+                    //           ),
+                    //         ),
+                    //         TextSpan(
+                    //           text: 'today',
+                    //           style: Theme
+                    //               .of(context)
+                    //               .textTheme
+                    //               .headline6!
+                    //               .copyWith(
+                    //             color: Colors.white,
+                    //           ),
+                    //         ),
+                    //       ]),
+                    //     ),
+                    //     Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.end,
+                    //       children: [
+                    //         Text(
+                    //           '????',
+                    //           style: Theme
+                    //               .of(context)
+                    //               .textTheme
+                    //               .headline4!
+                    //               .copyWith(
+                    //               color: Colors.white,
+                    //               fontSize: 28,
+                    //               fontWeight: FontWeight.bold),
+                    //         ),
+                    //         Text(
+                    //           'of ????',
+                    //           style: Theme
+                    //               .of(context)
+                    //               .textTheme
+                    //               .caption!
+                    //               .copyWith(color: Colors.white, fontSize: 15),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
