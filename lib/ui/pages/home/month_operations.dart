@@ -16,29 +16,32 @@ class MonthOperations extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(
-            height: 8.0,
-          ),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                    text: 'Operations in ',
-                    style: Theme.of(context).textTheme.headline6),
-                TextSpan(
-                    text: DateFormat.MMMM().format(DateTime.now()),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Theme.of(context).primaryColor)),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'Operations in ',
+                      style: Theme.of(context).textTheme.headline6),
+                  TextSpan(
+                      text: DateFormat.MMMM().format(DateTime.now()),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(color: Theme.of(context).primaryColor)),
+                ],
+              ),
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(width: Dimensions.padding,),
               _MonthOperation(operationType: OperationType.INPUT),
-              _MonthOperation(operationType: OperationType.OUTPUT)
+              SizedBox(width: Dimensions.padding,),
+              _MonthOperation(operationType: OperationType.OUTPUT),
+              SizedBox(width: Dimensions.padding,),
             ],
           ),
         ],
@@ -94,7 +97,6 @@ class _MonthOperation extends StatelessWidget {
           child: InkWell(
             onTap: () => PageNavigator.openBudgetPage(context, operationType),
             child: Container(
-              margin: EdgeInsets.all(Dimensions.padding),
               padding: EdgeInsets.all(Dimensions.padding),
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).primaryColor),
