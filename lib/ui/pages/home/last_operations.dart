@@ -42,7 +42,7 @@ class LastOperations extends StatelessWidget {
                                 items[items.indexOf(e) - 1], e),
                           ListTileOperation(
                             e,
-                            onTap: () {},
+                            onTap: () => PageNavigator.openOperationEditPage(context, e.id),
                           ),
                         ])
                     .toList(),
