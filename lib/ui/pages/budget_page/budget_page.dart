@@ -79,7 +79,17 @@ class _BudgetPageState extends State<BudgetPage> {
                   );
                 },
                 itemCount: state.items.length,
-              ))
+              )),
+              TextButton(
+                onPressed: (){
+                  if (state.showAll){
+                    _bloc.collapse();
+                  }else{
+                    _bloc.expand();
+                  }
+                },
+                child: Text(!state.showAll ? 'Show all' : 'Collapse'),
+              ),
             ],
           ),
         );
