@@ -7,20 +7,23 @@ import 'package:money_tracker/domain/models.dart';
 class BudgetPageState {
   final DateTime date;
   final List<CategoryCashflow> items;
+  final bool showAll;
 
-  BudgetPageState({required this.date, required this.items});
+  BudgetPageState({required this.showAll, required this.date, required this.items});
 }
 
 class BudgetPageBloc extends Cubit<BudgetPageState> {
   final Repository repo;
 
-  DateTime _date =DateTime(DateTime.now().year, DateTime.now().month);
+  DateTime _date = DateTime(DateTime.now().year, DateTime.now().month);
   late OperationType _type;
+  bool _showAll = false;
+  List<CategoryCashflow> _items = [];
 
   StreamSubscription<List<CategoryCashflow>>? _subscription;
 
   BudgetPageBloc(this.repo)
-      : super(BudgetPageState(date: DateTime.now(), items: []));
+      : super(BudgetPageState(date: DateTime.now(), items: [], showAll: false));
 
   void fetch(OperationType type) {
     _type = type;
@@ -45,12 +48,28 @@ class BudgetPageBloc extends Cubit<BudgetPageState> {
     watchCashflow();
   }
 
+  void expand(){
+    _showAll = true;
+    _emitState();
+  }
+
+  void collapse(){
+    _showAll = false;
+    _emitState();
+  }
+
   Future<void> watchCashflow() async {
     await _subscription?.cancel();
     _subscription = repo.watchCategoryCashflowByType(_date, _type).listen((items) {
       items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow);
-      emit(BudgetPageState(date: _date, items: items));
+
+      _items = items;
+      _emitState();
     });
+  }
+
+  void _emitState(){
+    emit(BudgetPageState(date: _date, items: _items.where((element) => _showAll || element.monthCashflow > 0).toList(), showAll: _showAll));
   }
 
   @override
