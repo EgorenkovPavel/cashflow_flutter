@@ -160,14 +160,19 @@ class _Card<T> {
   const _Card();
 
   Future<T?> open(BuildContext context, Widget child) {
-    return showModalBottomSheet<T>(
+    return showDialog<T>(
       context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: child,
-      ),
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: child,
+        );
+      },
     );
   }
 }

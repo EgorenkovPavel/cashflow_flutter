@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/home/subtitle.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +14,6 @@ class LastOperations extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Subtitle(
-          leading:
-              Text('History', style: Theme.of(context).textTheme.headline6),
-        ),
         StreamBuilder<List<Operation>>(
             stream: context.read<Repository>().watchLastOperations(5),
             builder: (context, snapshot) {
@@ -42,15 +37,36 @@ class LastOperations extends StatelessWidget {
                                 items[items.indexOf(e) - 1], e),
                           ListTileOperation(
                             e,
-                            onTap: () => PageNavigator.openOperationEditPage(context, e.id),
+                            onTap: () => PageNavigator.openOperationEditPage(
+                                context, e.id),
                           ),
                         ])
                     .toList(),
               );
             }),
-        Subtitle(
-          onPress: () => PageNavigator.openOperationListPage(context),
-          child: Text('Show all'),
+        Align(
+          alignment: Alignment.center,
+          child: TextButton(
+            onPressed: () => PageNavigator.openOperationListPage(context),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Show all'.toUpperCase(),
+                    style: TextStyle()
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  ),
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );
