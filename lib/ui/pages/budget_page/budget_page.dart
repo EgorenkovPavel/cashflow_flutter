@@ -17,6 +17,8 @@ class BudgetPage extends StatefulWidget {
   _BudgetPageState createState() => _BudgetPageState();
 }
 
+final _duration = const Duration(seconds: 1);
+
 class _BudgetPageState extends State<BudgetPage> {
   late BudgetPageBloc _bloc;
 
@@ -36,19 +38,15 @@ class _BudgetPageState extends State<BudgetPage> {
     var start =
         widget.type == OperationType.INPUT ? 'Earning in' : 'Spending in';
 
-    var date = DateFormat.yMMM().format(state.date);
+    var date = DateFormat.yMMMM().format(state.date);
 
-    var sum = state.items
+    return Text('$start $date');
+  }
+
+  int _cashflow(List<CategoryCashflow> items) {
+    return items
         .map((e) => e.monthCashflow)
         .fold<int>(0, (previousValue, element) => previousValue + element);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('$start $date'),
-        Text('${NumberFormat().format(sum)}'),
-      ],
-    );
   }
 
   @override
@@ -63,37 +61,98 @@ class _BudgetPageState extends State<BudgetPage> {
           body: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Cashflow',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    TweenAnimationBuilder<int>(
+                        tween: IntTween(
+                          begin: 0,
+                          end: _cashflow(state.items),
+                        ),
+                        duration: _duration,
+                        builder: (context, cashflow, _) {
+                          return Text(
+                            NumberFormat().format(cashflow),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    color: Theme.of(context).primaryColor),
+                          );
+                        }),
+                  ],
+                ),
+              ),
               PieDiagram(
-                list: state.items,
+                list: state.items
+                    .where((item) => item.monthCashflow > 0)
+                    .toList(),
                 onBackPressed: _bloc.onBackPressed,
                 onForwardPressed: _bloc.onForwardPressed,
               ),
               Expanded(
-                  child: ListView.builder(
-                itemBuilder: (context, index) {
-                  var item = state.items[index];
-                  return Padding(
-                    key: ValueKey(item.category.id),
-                    padding: const EdgeInsets.all(8.0),
-                    child: CategoryItem(category: item),
-                  );
-                },
-                itemCount: state.items.length,
-              )),
-              TextButton(
-                onPressed: () {
-                  if (state.showAll) {
-                    _bloc.collapse();
-                  } else {
-                    _bloc.expand();
-                  }
-                },
-                child: Text(!state.showAll ? 'Show all' : 'Collapse'),
+                child: ListView(
+                  children: state.items
+                      .map<Widget>(
+                        (item) => Padding(
+                          key: ValueKey(item.category.id),
+                          padding: const EdgeInsets.all(8.0),
+                          child: CategoryItem(category: item),
+                        ),
+                      )
+                      .toList()
+                        ..add(
+                          //TODO add animation
+                          _ShowAllButton(
+                              onPressed: state.showAll
+                                  ? () => _bloc.collapse()
+                                  : () => _bloc.expand(),
+                              showAll: !state.showAll),
+                        ),
+                ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _ShowAllButton extends StatelessWidget {
+  const _ShowAllButton(
+      {Key? key, required this.onPressed, required this.showAll})
+      : super(key: key);
+
+  final void Function() onPressed;
+  final bool showAll;
+
+  @override
+  Widget build(BuildContext context) {
+    var _icon = showAll ? Icons.arrow_downward : Icons.arrow_upward;
+    var _title = showAll ? 'Show all' : 'Collapse';
+
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            _icon,
+            color: Theme.of(context).primaryColor,
+          ),
+          Text(
+            _title.toUpperCase(),
+            style: TextStyle().copyWith(color: Theme.of(context).primaryColor),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -116,27 +175,21 @@ class PieDiagram extends StatelessWidget {
           onPressed: onBackPressed,
           icon: Icon(Icons.arrow_back_ios),
         ),
-        Column(
-          children: [
-            SizedBox(
-              width: 200.0,
-              height: 200.0,
-              child: charts.PieChart([
-                charts.Series<CategoryCashflow, int>(
-                  id: 'Cashflow',
-                  domainFn: (CategoryCashflow sales, _) => sales.category.id,
-                  measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
-                  data: list,
-                )
-              ], animate: true),
-            ),
-            Center(
-              child: Text(
-                '${list.fold<int>(0, (previousValue, element) => previousValue + element.monthCashflow)}',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-          ],
+        SizedBox(
+          width: 200.0,
+          height: 200.0,
+          child: charts.PieChart(
+            [
+              charts.Series<CategoryCashflow, int>(
+                id: 'Cashflow',
+                domainFn: (CategoryCashflow sales, _) => sales.category.id,
+                measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
+                data: list,
+              )
+            ],
+            animate: true,
+            animationDuration: _duration,
+          ),
         ),
         IconButton(
           onPressed: onForwardPressed,
@@ -178,7 +231,7 @@ class CategoryItem extends StatelessWidget {
           begin: 0,
           end: category.monthCashflow,
         ),
-        duration: const Duration(seconds: 1),
+        duration: _duration,
         builder: (context, cashflow, _) {
           return LayoutBuilder(
             builder: (context, constraints) {
