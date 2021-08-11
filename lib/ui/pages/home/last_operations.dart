@@ -51,18 +51,19 @@ class LastOperations extends StatelessWidget {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Column(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   Text(
                     'Show all'.toUpperCase(),
                     style: TextStyle()
                         .copyWith(color: Theme.of(context).primaryColor),
                   ),
-                  Icon(
-                    Icons.arrow_downward,
-                    color: Theme.of(context).primaryColor,
-                  ),
+
                 ],
               ),
             ),
