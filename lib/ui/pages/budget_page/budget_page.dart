@@ -62,7 +62,8 @@ class _BudgetPageState extends State<BudgetPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
+                padding:
+                    const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -118,6 +119,11 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
               ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () =>
+                PageNavigator.openCategoryInputPage(context, type: widget.type),
+            child: Icon(Icons.add),
           ),
         );
       },
