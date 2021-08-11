@@ -5,7 +5,6 @@ import 'package:money_tracker/ui/pages/home/last_operations.dart';
 import 'package:money_tracker/ui/pages/home/month_operations.dart';
 import 'package:money_tracker/ui/pages/home/top_header.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -30,17 +29,54 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             TopHeader(),
+            _AddButton(
+              title: 'Add account',
+              onPressed: () => PageNavigator.openAccountInputPage(context),
+            ),
             MonthOperations(),
-            // BudgetSubtitle(type: OperationType.INPUT),
-            // BudgetSubtitle(type: OperationType.OUTPUT),
+            SizedBox(height: 8.0,),
             LastOperations(),
-            SizedBox(height: 80.0),
+            // SizedBox(height: 80.0),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => PageNavigator.openOperationInputPage(context),
         child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class _AddButton extends StatelessWidget {
+  const _AddButton({
+    Key? key,
+    required this.onPressed,
+    required this.title,
+  }) : super(key: key);
+
+  final void Function() onPressed;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: onPressed,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.add,
+              color: Theme.of(context).accentColor,
+            ),
+            Text(
+              title.toUpperCase(),
+              style: TextStyle().copyWith(color: Theme.of(context).accentColor),
+            ),
+          ],
+        ),
       ),
     );
   }

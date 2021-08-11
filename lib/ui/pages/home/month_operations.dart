@@ -93,6 +93,15 @@ class _MonthOperation extends StatelessWidget {
           _budget = _calcBudget(snapshot.data!);
         }
 
+        double _progress = 0;
+        if(_cashflow == 0){
+          _progress = 0;
+        }else if(_cashflow > _budget || _budget == 0){
+          _progress = 1;
+        }else{
+          _progress = _cashflow / _budget;
+        }
+
         return Expanded(
           child: InkWell(
             onTap: () => PageNavigator.openBudgetPage(context, operationType),
@@ -109,29 +118,15 @@ class _MonthOperation extends StatelessWidget {
                           ? 'Earning'
                           : 'Spending',
                       style: Theme.of(context).textTheme.headline6),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: NumberFormat().format(_cashflow),
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    fontSize: 15,
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.8),
-                                  ),
-                        ),
-                        TextSpan(
-                          text: ' of ${NumberFormat().format(_budget)}',
-                          style: Theme.of(context).textTheme.caption,
-                        )
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: LinearProgressIndicator(
+                      minHeight: 10,
+                      color: Theme.of(context).accentColor,
+                      value: _progress,
                     ),
                   ),
+                  Text(NumberFormat().format(_cashflow)),
                 ],
               ),
             ),
