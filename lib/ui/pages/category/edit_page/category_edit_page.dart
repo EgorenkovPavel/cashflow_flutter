@@ -49,6 +49,12 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     return Scaffold(
       appBar: AppBar(
         title: Text('Category'),
+        actions: [
+          IconButton(
+              onPressed: () =>
+                  PageNavigator.openCategoryEditPage(context, id: widget.id),
+              icon: Icon(Icons.edit))
+        ],
       ),
       body: SingleChildScrollView(
         child: BlocConsumer<CategoryBloc, CategoryState>(
@@ -62,57 +68,57 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
             return Column(
               children: [
-                Container(
-                  color: Theme.of(context).primaryColor,
-                  child: Column(
-                    children: [
-                      _InputField(
-                        title: 'Title',
-                        textEditingController: _titleController,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: _InputField(
-                              title: 'Budget',
-                              keyboardType: TextInputType.number,
-                              textEditingController: _budgetController,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: DropdownList<BudgetType>(
-                                value: state.budgetType,
-                                onChange: (type) {
-                                  if (type != null) {
-                                    _bloc.onBudgetTypeChanged(type);
-                                  }
-                                },
-                                hint: 'Budget type',
-                                items: [BudgetType.MONTH, BudgetType.YEAR],
-                                getListItem: (data) => ListTile(
-                                  title: Text(getBudgetTypeTitle(data)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ButtonBar(
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                _bloc.save(_titleController.text,
-                                    int.parse(_budgetController.text));
-                              },
-                              child: Text('Save'))
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   color: Theme.of(context).primaryColor,
+                //   child: Column(
+                //     children: [
+                //       _InputField(
+                //         title: 'Title',
+                //         textEditingController: _titleController,
+                //       ),
+                //       Row(
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Expanded(
+                //             child: _InputField(
+                //               title: 'Budget',
+                //               keyboardType: TextInputType.number,
+                //               textEditingController: _budgetController,
+                //             ),
+                //           ),
+                //           Expanded(
+                //             child: Padding(
+                //               padding: const EdgeInsets.only(right: 8.0),
+                //               child: DropdownList<BudgetType>(
+                //                 value: state.budgetType,
+                //                 onChange: (type) {
+                //                   if (type != null) {
+                //                     _bloc.onBudgetTypeChanged(type);
+                //                   }
+                //                 },
+                //                 hint: 'Budget type',
+                //                 items: [BudgetType.MONTH, BudgetType.YEAR],
+                //                 getListItem: (data) => ListTile(
+                //                   title: Text(getBudgetTypeTitle(data)),
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       ButtonBar(
+                //         children: [
+                //           ElevatedButton(
+                //               onPressed: () {
+                //                 _bloc.save(_titleController.text,
+                //                     int.parse(_budgetController.text));
+                //               },
+                //               child: Text('Save'))
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
