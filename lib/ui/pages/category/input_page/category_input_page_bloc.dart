@@ -4,10 +4,11 @@ import 'package:money_tracker/domain/models.dart';
 
 abstract class CategoryInputPageState {}
 
-class InitialState extends CategoryInputPageState {
+class InputState extends CategoryInputPageState {
   final OperationType type;
+  final BudgetType budgetType;
 
-  InitialState(this.type);
+  InputState(this.type, this.budgetType);
 }
 
 class Saved extends CategoryInputPageState {
@@ -20,20 +21,26 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   final Repository _repository;
 
   late OperationType _type;
+  BudgetType _budgetType = BudgetType.MONTH;
 
   CategoryInputPageBloc(this._repository)
-      : super(InitialState(OperationType.INPUT));
+      : super(InputState(OperationType.INPUT, BudgetType.MONTH));
 
   void initial(OperationType type) {
     _type = type;
   }
 
-  Future<void> save(String title) async {
+  void setbudgetType(BudgetType budgetType){
+    _budgetType = budgetType;
+    emit(InputState(_type, _budgetType));
+  }
+
+  Future<void> save(String title, String budget) async {
     var category = Category(
       title: title,
       operationType: _type,
-      budgetType: BudgetType.MONTH,
-      budget: 0,
+      budgetType: _budgetType,
+      budget: int.parse(budget),
     );
     var id = await _repository.insertCategory(category);
     emit(Saved(category.copyWith(id: id)));
