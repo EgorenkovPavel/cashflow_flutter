@@ -29,7 +29,7 @@ class PageNavigator {
 
   static const _routeCategoryName = '/category';
 
-  static void openCategoryEditPage(BuildContext context, int categoryId) =>
+  static void openCategoryPage(BuildContext context, int categoryId) =>
       Navigator.of(context)
           .pushNamed(_routeCategoryName, arguments: categoryId);
 
@@ -37,8 +37,17 @@ class PageNavigator {
           {required OperationType type}) =>
       const _Card<Category>().open(
         context,
-        CategoryInputPage(
+        CategoryInputPage.byType(
           type: type,
+        ),
+      );
+
+  static Future<Category?> openCategoryEditPage(BuildContext context,
+      {required int id}) =>
+      const _Card<Category>().open(
+        context,
+        CategoryInputPage.edit(
+          id: id,
         ),
       );
 

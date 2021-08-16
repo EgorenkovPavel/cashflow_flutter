@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -7,8 +8,11 @@ abstract class CategoryInputPageState {}
 class InputState extends CategoryInputPageState {
   final OperationType type;
   final BudgetType budgetType;
+  final String? title;
+  final int? budget;
 
-  InputState(this.type, this.budgetType);
+  InputState(
+      {required this.type, required this.budgetType, this.title, this.budget});
 }
 
 class Saved extends CategoryInputPageState {
@@ -20,19 +24,32 @@ class Saved extends CategoryInputPageState {
 class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   final Repository _repository;
 
-  late OperationType _type;
+  int? _id;
+  OperationType _type = OperationType.INPUT;
   BudgetType _budgetType = BudgetType.MONTH;
 
   CategoryInputPageBloc(this._repository)
-      : super(InputState(OperationType.INPUT, BudgetType.MONTH));
+      : super(
+      InputState(type: OperationType.INPUT, budgetType: BudgetType.MONTH));
 
-  void initial(OperationType type) {
+  void initialByType(OperationType type) {
     _type = type;
   }
 
-  void setbudgetType(BudgetType budgetType){
+  Future<void> initialById(int id) async {
+    _id = id;
+    var category = await _repository.getCategoryById(id);
+    _type = category.operationType;
+    _budgetType = category.budgetType;
+    emit(InputState(type: _type,
+        budgetType: _budgetType,
+        title: category.title,
+        budget: category.budget));
+    }
+
+  void setbudgetType(BudgetType budgetType) {
     _budgetType = budgetType;
-    emit(InputState(_type, _budgetType));
+    emit(InputState(type: _type, budgetType: _budgetType));
   }
 
   Future<void> save(String title, String budget) async {

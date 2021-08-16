@@ -317,7 +317,7 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () =>
-          PageNavigator.openCategoryEditPage(context, category.category.id),
+          PageNavigator.openCategoryPage(context, category.category.id),
       child: TweenAnimationBuilder<int>(
         tween: IntTween(
           begin: 0,
@@ -420,7 +420,7 @@ class _CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () =>
-          PageNavigator.openCategoryEditPage(context, category.category.id),
+          PageNavigator.openCategoryPage(context, category.category.id),
       child: Container(
         padding: const EdgeInsets.all(8.0),
         child: Column(
