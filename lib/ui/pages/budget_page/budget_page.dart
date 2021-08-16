@@ -58,66 +58,26 @@ class _BudgetPageState extends State<BudgetPage> {
           appBar: AppBar(
             title: _calcTitle(state),
           ),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Cashflow',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    TweenAnimationBuilder<int>(
-                        tween: IntTween(
-                          begin: 0,
-                          end: _cashflow(state.items),
-                        ),
-                        duration: _duration,
-                        builder: (context, cashflow, _) {
-                          return Text(
-                            NumberFormat().format(cashflow),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(
-                                    color: Theme.of(context).primaryColor),
-                          );
-                        }),
-                  ],
-                ),
+          body: CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(
+                //pinned: true,
+                delegate: TitleDelegate(
+                    items: state.items,),
               ),
-              PieDiagram(
-                list: state.items
-                    .where((item) => item.monthCashflow > 0)
-                    .toList(),
-                onBackPressed: _bloc.onBackPressed,
-                onForwardPressed: _bloc.onForwardPressed,
+              SliverPersistentHeader(delegate: DiagammDelegate(items: state.items,
+                  onBackPressed: _bloc.onBackPressed,
+                  onForwardPressed: _bloc.onForwardPressed)),
+              SliverList(
+                delegate: SliverChildListDelegate(state.items
+                    .map((e) => _CategoryItem(category: e))
+                    .toList()),
               ),
-              Expanded(
-                child: ListView(
-                  children: state.items
-                      .map<Widget>(
-                        (item) => Padding(
-                          key: ValueKey(item.category.id),
-                          padding: const EdgeInsets.all(8.0),
-                          child: CategoryItem(category: item),
-                        ),
-                      )
-                      .toList()
-                        ..add(
-                          //TODO add animation
-                          _ShowAllButton(
-                              onPressed: state.showAll
-                                  ? () => _bloc.collapse()
-                                  : () => _bloc.expand(),
-                              showAll: !state.showAll),
-                        ),
-                ),
-              ),
+              SliverPersistentHeader(delegate: ShowButtonDelegate(
+                showAll: state.showAll,
+                collapse: _bloc.collapse,
+                expand: _bloc.expand,
+              ))
             ],
           ),
           floatingActionButton: FloatingActionButton(
@@ -128,6 +88,132 @@ class _BudgetPageState extends State<BudgetPage> {
         );
       },
     );
+  }
+}
+
+class ShowButtonDelegate extends SliverPersistentHeaderDelegate{
+
+  final bool showAll;
+  final void Function() collapse;
+  final void Function() expand;
+
+  ShowButtonDelegate({required this.showAll, required this.collapse, required this.expand});
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return _ShowAllButton(
+                            onPressed: showAll
+                                ? collapse
+                                : expand,
+                            showAll: !showAll)
+                      ;
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 50;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 50;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+
+}
+
+class DiagammDelegate extends SliverPersistentHeaderDelegate{
+
+  final List<CategoryCashflow> items;
+  final void Function() onBackPressed;
+  final void Function() onForwardPressed;
+
+  DiagammDelegate(
+      {required this.items,
+        required this.onBackPressed,
+        required this.onForwardPressed});
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return
+    PieDiagram(
+      list: items.where((item) => item.monthCashflow > 0).toList(),
+      onBackPressed: onBackPressed,
+      onForwardPressed: onForwardPressed,
+    );
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 200;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 200;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+
+}
+
+class TitleDelegate extends SliverPersistentHeaderDelegate {
+  final List<CategoryCashflow> items;
+
+  TitleDelegate(
+      {required this.items,});
+
+  int _cashflow(List<CategoryCashflow> items) {
+    return items
+        .map((e) => e.monthCashflow)
+        .fold<int>(0, (previousValue, element) => previousValue + element);
+  }
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Cashflow',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              TweenAnimationBuilder<int>(
+                  tween: IntTween(
+                    begin: 0,
+                    end: _cashflow(items),
+                  ),
+                  duration: _duration,
+                  builder: (context, cashflow, _) {
+                    return Text(
+                      NumberFormat().format(cashflow),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    );
+                  }),
+            ],
+          ),
+        );
+  }
+
+  @override
+  double get maxExtent => 50;
+
+  @override
+  double get minExtent => 50;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }
 
@@ -308,6 +394,50 @@ class CategoryItem extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final CategoryCashflow category;
+
+  const _CategoryItem({Key? key, required this.category}) : super(key: key);
+
+  double _progress() {
+    var _cashflow = category.monthCashflow;
+    var _budget = category.category.budget;
+    if (_cashflow == 0) {
+      return 0;
+    } else if (_cashflow > _budget || _budget == 0) {
+      return 1;
+    } else {
+      return _cashflow / _budget;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category.category.title,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              Text(NumberFormat().format(category.monthCashflow)),
+            ],
+          ),
+          LinearProgressIndicator(
+            minHeight: 10,
+            color: Theme.of(context).accentColor,
+            value: _progress(),
+          ),
+        ],
       ),
     );
   }
