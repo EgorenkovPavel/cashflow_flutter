@@ -418,26 +418,30 @@ class _CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                category.category.title,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-              Text(NumberFormat().format(category.monthCashflow)),
-            ],
-          ),
-          LinearProgressIndicator(
-            minHeight: 10,
-            color: Theme.of(context).accentColor,
-            value: _progress(),
-          ),
-        ],
+    return InkWell(
+      onTap: () =>
+          PageNavigator.openCategoryEditPage(context, category.category.id),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  category.category.title,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                Text(NumberFormat().format(category.monthCashflow)),
+              ],
+            ),
+            LinearProgressIndicator(
+              minHeight: 10,
+              color: Theme.of(context).accentColor,
+              value: _progress(),
+            ),
+          ],
+        ),
       ),
     );
   }
