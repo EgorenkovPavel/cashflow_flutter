@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page_bloc.dart';
@@ -25,7 +26,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<AccountEditPageBloc>(context);
+    _bloc = AccountEditPageBloc(context.read<Repository>());
     _bloc.fetch(widget.id);
   }
 
@@ -33,6 +34,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
   void dispose() {
     super.dispose();
     _titleController.dispose();
+    _bloc.close();
   }
 
   @override
@@ -64,6 +66,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
 
   Widget header(BuildContext context) {
     return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
+      bloc: _bloc,
       builder: (BuildContext context, AccountEditPageState state) {
 
         _titleController.text = state.accountTitle;
@@ -85,6 +88,7 @@ class _AccountEditPageState extends State<AccountEditPage> {
   Widget appBarIcon() {
 
     return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
+      bloc: _bloc,
       builder: (BuildContext context, AccountEditPageState state) {
         if (state.editTitleMode) {
           return IconButton(
