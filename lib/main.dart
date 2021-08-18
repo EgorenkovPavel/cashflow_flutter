@@ -41,9 +41,9 @@ void main() {
         BlocProvider<CategoryInputPageBloc>(
           create: (BuildContext context) => CategoryInputPageBloc(_repository),
         ),
-        BlocProvider<AccountEditPageBloc>(
-          create: (BuildContext context) => AccountEditPageBloc(_repository),
-        ),
+        // BlocProvider<AccountEditPageBloc>(
+        //   create: (BuildContext context) => AccountEditPageBloc(_repository),
+        // ),
         BlocProvider<BackupPageBloc>(
           create: (BuildContext context) => BackupPageBloc(_repository),
         ),
