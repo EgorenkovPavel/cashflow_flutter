@@ -53,13 +53,27 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   }
 
   Future<void> save(String title, String budget) async {
-    var category = Category(
-      title: title,
-      operationType: _type,
-      budgetType: _budgetType,
-      budget: int.parse(budget),
-    );
-    var id = await _repository.insertCategory(category);
-    emit(Saved(category.copyWith(id: id)));
+    if (_id == null) {
+      var category = Category(
+        title: title,
+        operationType: _type,
+        budgetType: _budgetType,
+        budget: int.parse(budget),
+      );
+
+      var id = await _repository.insertCategory(category);
+      emit(Saved(category.copyWith(id: id)));
+    }else{
+      var category = Category(
+        id: _id!,
+        title: title,
+        operationType: _type,
+        budgetType: _budgetType,
+        budget: int.parse(budget),
+      );
+
+      var id = await _repository.updateCategory(category);
+      emit(Saved(category));
+    }
   }
 }

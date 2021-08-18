@@ -44,11 +44,16 @@ class Repository extends ChangeNotifier {
 
   Future<Category> getCategoryById(int id) => _categoryRepo.getById(id);
 
+  Stream<Category> watchCategoryById(int id) => _categoryRepo.watchById(id);
+
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _categoryRepo.watchAllByType(type);
 
-  Stream<List<SumOnDate>> watchCashflowByCategory(int id) =>
-     _categoryRepo.watchCashflowByCategory(id);
+  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
+     _categoryRepo.watchCashflowByCategoryByMonth(id);
+
+  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
+      _categoryRepo.watchCashflowByCategoryByYear(id);
 
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
