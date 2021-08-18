@@ -25,9 +25,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
     with SingleTickerProviderStateMixin {
   late CategoryBloc _bloc;
 
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _budgetController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -36,8 +33,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
   @override
   void dispose() {
-    _titleController.dispose();
-    _budgetController.dispose();
     _bloc.close();
     super.dispose();
   }
@@ -46,79 +41,30 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Category'),
-        actions: [
-          IconButton(
-              onPressed: () =>
-                  PageNavigator.openCategoryEditPage(context, id: widget.id),
-              icon: Icon(Icons.edit))
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: BlocConsumer<CategoryBloc, CategoryState>(
-          bloc: _bloc,
-          buildWhen: (previousState, currentState) {
-            return currentState is DateState;
-          },
-          builder: (context, state) {
-            _titleController.text = (state as DateState).title;
-            _budgetController.text = (state as DateState).budget.toString();
-
-            return Column(
+    return BlocConsumer<CategoryBloc, CategoryState>(
+      bloc: _bloc,
+      buildWhen: (previousState, currentState) {
+        return currentState is DateState;
+      },
+      listener: (context, state) {
+        if (state is Close) {
+          Navigator.of(context).pop();
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text((state as DateState).title),
+            actions: [
+              IconButton(
+                  onPressed: () =>
+                      PageNavigator.openCategoryEditPage(context, id: widget.id),
+                  icon: Icon(Icons.edit))
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Column(
               children: [
-                // Container(
-                //   color: Theme.of(context).primaryColor,
-                //   child: Column(
-                //     children: [
-                //       _InputField(
-                //         title: 'Title',
-                //         textEditingController: _titleController,
-                //       ),
-                //       Row(
-                //         crossAxisAlignment: CrossAxisAlignment.center,
-                //         children: [
-                //           Expanded(
-                //             child: _InputField(
-                //               title: 'Budget',
-                //               keyboardType: TextInputType.number,
-                //               textEditingController: _budgetController,
-                //             ),
-                //           ),
-                //           Expanded(
-                //             child: Padding(
-                //               padding: const EdgeInsets.only(right: 8.0),
-                //               child: DropdownList<BudgetType>(
-                //                 value: state.budgetType,
-                //                 onChange: (type) {
-                //                   if (type != null) {
-                //                     _bloc.onBudgetTypeChanged(type);
-                //                   }
-                //                 },
-                //                 hint: 'Budget type',
-                //                 items: [BudgetType.MONTH, BudgetType.YEAR],
-                //                 getListItem: (data) => ListTile(
-                //                   title: Text(getBudgetTypeTitle(data)),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       ButtonBar(
-                //         children: [
-                //           ElevatedButton(
-                //               onPressed: () {
-                //                 _bloc.save(_titleController.text,
-                //                     int.parse(_budgetController.text));
-                //               },
-                //               child: Text('Save'))
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -128,7 +74,13 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                         'Statistics',
                         style: Theme.of(context).textTheme.caption,
                       ),
-                      SizedBox(height: 200.0, child: _Diagramm(id: widget.id)),
+                      SizedBox(
+                          height: 200.0,
+                          child: _Diagramm(
+                            id: widget.id,
+                            budget: (state as DateState).budget,
+                            budgetType: (state as DateState).budgetType,
+                          )),
                     ],
                   ),
                 ),
@@ -147,50 +99,53 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                       children: list
                           .expand(
                             (e) => [
-                              if (list.indexOf(e) == 0)
-                                ListDividerOperation.month(null, e)
-                              else
-                                ListDividerOperation.month(
-                                    list[list.indexOf(e) - 1], e),
-                              ListTileOperation(e,
-                                  onTap: () =>
-                                      PageNavigator.openOperationEditPage(
-                                          context, e.id))
-                            ],
-                          )
+                          if (list.indexOf(e) == 0)
+                            ListDividerOperation.month(null, e)
+                          else
+                            ListDividerOperation.month(
+                                list[list.indexOf(e) - 1], e),
+                          ListTileOperation(e,
+                              onTap: () =>
+                                  PageNavigator.openOperationEditPage(
+                                      context, e.id))
+                        ],
+                      )
                           .toList(),
                     );
                   },
                 )
               ],
-            );
-          },
-          listener: (context, state) {
-            if (state is Close) {
-              Navigator.of(context).pop();
-            }
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          PageNavigator.openOperationInputPage(context);
-        },
-        child: Icon(Icons.add),
-      ),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => PageNavigator.openOperationInputPage(context),
+            child: Icon(Icons.add),
+          ),
+        );
+      },
+
     );
   }
 }
 
 class _Diagramm extends StatelessWidget {
   final int id;
+  final int budget;
+  final BudgetType budgetType;
 
-  const _Diagramm({Key? key, required this.id}) : super(key: key);
+  const _Diagramm(
+      {Key? key,
+      required this.id,
+      required this.budget,
+      required this.budgetType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<SumOnDate>>(
-      stream: context.read<Repository>().watchCashflowByCategory(id),
+      stream: budgetType == BudgetType.MONTH
+          ? context.read<Repository>().watchCashflowByCategoryByMonth(id)
+          : context.read<Repository>().watchCashflowByCategoryByYear(id),
       builder: (context, snapshot) {
         var data = <SumOnDate>[];
         if (snapshot.hasData) {
@@ -234,9 +189,9 @@ class _Diagramm extends StatelessWidget {
                 charts.RangeAnnotation(
                   [
                     charts.LineAnnotationSegment(
-                        200000, charts.RangeAnnotationAxisType.measure,
-                        startLabel: 'Measure 2 Start',
-                        endLabel: 'Measure 2 End',
+                        budget, charts.RangeAnnotationAxisType.measure,
+                        startLabel: 'budget',
+                        //endLabel: 'Measure 2 End',
                         color: charts.MaterialPalette.gray.shade400),
                   ],
                 ),
@@ -245,47 +200,6 @@ class _Diagramm extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _InputField extends StatelessWidget {
-  final String title;
-  final TextInputType? keyboardType;
-  final TextEditingController textEditingController;
-
-  const _InputField({
-    Key? key,
-    required this.title,
-    this.keyboardType,
-    required this.textEditingController,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .caption!
-                .copyWith(color: Colors.white),
-          ),
-          TextField(
-            controller: textEditingController,
-            keyboardType: keyboardType,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

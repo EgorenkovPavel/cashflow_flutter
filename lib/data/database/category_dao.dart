@@ -21,9 +21,9 @@ class CategoryCashflowEntity {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is CategoryCashflowEntity &&
-              runtimeType == other.runtimeType &&
-              category == other.category;
+      other is CategoryCashflowEntity &&
+          runtimeType == other.runtimeType &&
+          category == other.category;
 
   @override
   int get hashCode => category.hashCode;
@@ -57,6 +57,12 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         ))
       .getSingle();
 
+  Stream<CategoryDB> watchCategoryById(int id) => (select(categories)
+        ..where(
+          (c) => c.id.equals(id),
+        ))
+      .watchSingle();
+
   Stream<List<CategoryDB>> watchAllCategoriesByType(OperationType type) =>
       (select(categories)
             ..where(
@@ -87,7 +93,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowEntity>> watchAllCategoryCashflowBudget(
       DateTime date) {
-
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
@@ -96,14 +101,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
-          'FROM categories c '
-          'ORDER BY title;',
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
+      'FROM categories c '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
-
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
       ],
@@ -139,10 +143,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
-
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
@@ -159,18 +161,34 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         );
   }
 
-  Stream<List<SumOnDate>> watchCashflowByCategory(int id) {
+  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) {
     final sum = cashflows.sum.sum();
     final month = cashflows.date.month;
     final year = cashflows.date.year;
 
-    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id))).addColumns([sum,month, year]);
+    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id)))
+        .addColumns([sum, month, year]);
     query.groupBy([month, year]);
 
     return query.watch().map((rows) => rows
         .map((row) => SumOnDate(
             date:
                 DateTime(row.read<int?>(year) ?? 0, row.read<int?>(month) ?? 0),
+            sum: row.read<int?>(sum) ?? 0))
+        .toList());
+  }
+
+  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) {
+    final sum = cashflows.sum.sum();
+    final year = cashflows.date.year;
+
+    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id)))
+        .addColumns([sum, year]);
+    query.groupBy([year]);
+
+    return query.watch().map((rows) => rows
+        .map((row) => SumOnDate(
+            date: DateTime(row.read<int?>(year) ?? 0),
             sum: row.read<int?>(sum) ?? 0))
         .toList());
   }
@@ -185,18 +203,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return customSelect(
       'SELECT *, '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
-          '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
-          'FROM categories c '
-          'WHERE operation_type = ? '
-          'ORDER BY title;',
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "monthCashflow", '
+      '(SELECT SUM(sum) as sum FROM cashflow WHERE category = c.id AND date BETWEEN ? AND ?) AS "yearCashflow" '
+      'FROM categories c '
+      'WHERE operation_type = ? '
+      'ORDER BY title;',
       variables: [
         Variable.withDateTime(monthStart),
         Variable.withDateTime(monthEnd),
-
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-
         Variable.withInt(OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
