@@ -21,10 +21,16 @@ class PageNavigator {
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
         context,
-        AccountInputPage(),
+        AccountInputPage.input(),
       );
 
-  static Future openAccountEditPage(BuildContext context, int accountId) =>
+  static Future<Account?> openAccountEditPage(BuildContext context, int id) =>
+      const _Card<Account>().open(
+        context,
+        AccountInputPage.edit(id),
+      );
+
+  static Future openAccountPage(BuildContext context, int accountId) =>
       Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
 
   static const _routeCategoryName = '/category';

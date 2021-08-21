@@ -109,7 +109,7 @@ class AccountTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListCard(
-      onTap: () => PageNavigator.openAccountEditPage(context, account.id),
+      onTap: () => PageNavigator.openAccountPage(context, account.id),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

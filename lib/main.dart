@@ -35,15 +35,9 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<AccountInputPageBloc>(
-          create: (BuildContext context) => AccountInputPageBloc(_repository),
-        ),
-        BlocProvider<CategoryInputPageBloc>(
+         BlocProvider<CategoryInputPageBloc>(
           create: (BuildContext context) => CategoryInputPageBloc(_repository),
         ),
-        // BlocProvider<AccountEditPageBloc>(
-        //   create: (BuildContext context) => AccountEditPageBloc(_repository),
-        // ),
         BlocProvider<BackupPageBloc>(
           create: (BuildContext context) => BackupPageBloc(_repository),
         ),
