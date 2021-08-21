@@ -4,18 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class CategoryState {}
-
-class DateState extends CategoryState {
+class CategoryState {
   final String title;
   final int budget;
   final BudgetType budgetType;
 
-  DateState(
+  CategoryState(
       {required this.budgetType, required this.title, required this.budget});
 }
-
-class Close extends CategoryState {}
 
 class CategoryBloc extends Cubit<CategoryState> {
   final Repository _repository;
@@ -23,11 +19,15 @@ class CategoryBloc extends Cubit<CategoryState> {
   StreamSubscription<Category>? sub;
 
   CategoryBloc(this._repository)
-      : super(DateState(title: '', budget: 0, budgetType: BudgetType.MONTH));
+      : super(
+            CategoryState(title: '', budget: 0, budgetType: BudgetType.MONTH));
 
   Future<void> fetch(int id) async {
     sub = _repository.watchCategoryById(id).listen((event) {
-      emit(DateState(title: event.title, budget: event.budget, budgetType: event.budgetType));
+      emit(CategoryState(
+          title: event.title,
+          budget: event.budget,
+          budgetType: event.budgetType));
     });
   }
 

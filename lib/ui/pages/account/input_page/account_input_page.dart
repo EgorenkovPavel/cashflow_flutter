@@ -53,9 +53,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
         }
         return ItemCard<Account>(
           title: AppLocalizations.of(context).newAccountCardTitle,
-          onSave: (context) {
-            _bloc.save(_controller.text);
-          },
+          onSave: (context) => _bloc.save(_controller.text),
           child: TextFormField(
             autofocus: true,
             controller: _controller,
