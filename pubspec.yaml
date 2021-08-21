@@ -23,7 +23,7 @@ dependencies:
   intl: ^0.17.0
   bloc: ^7.0.0
   flutter_bloc: ^7.0.1
-  firebase_crashlytics: ^2.0.5
+  firebase_crashlytics: ^2.2.0
   scrollable_positioned_list: ^ 0.2.0-nullsafety.0
 
   charts_flutter: ^0.11.0
@@ -33,15 +33,13 @@ dev_dependencies:
     sdk: flutter
   moor_generator: ^4.3.1
   build_runner:
-  pedantic: ^1.11.0
+  pedantic: ^1.11.1
   googleapis: any
   googleapis_auth: any
   google_sign_in: ^5.0.4
 
   path_provider: ^2.0.2
   shared_preferences: ^2.0.6
-
-  flutter_keyboard_visibility: ^5.0.2
 
 flutter:
 
