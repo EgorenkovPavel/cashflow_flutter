@@ -1,3 +1,4 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -8,9 +9,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:provider/provider.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class CategoryEditPage extends StatefulWidget {
   final int id;
@@ -41,20 +40,12 @@ class _CategoryEditPageState extends State<CategoryEditPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoryBloc, CategoryState>(
+    return BlocBuilder<CategoryBloc, CategoryState>(
       bloc: _bloc,
-      buildWhen: (previousState, currentState) {
-        return currentState is DateState;
-      },
-      listener: (context, state) {
-        if (state is Close) {
-          Navigator.of(context).pop();
-        }
-      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text((state as DateState).title),
+            title: Text(state.title),
             actions: [
               IconButton(
                   onPressed: () =>
@@ -78,8 +69,8 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                           height: 200.0,
                           child: _Diagramm(
                             id: widget.id,
-                            budget: (state as DateState).budget,
-                            budgetType: (state as DateState).budgetType,
+                            budget: state.budget,
+                            budgetType: state.budgetType,
                           )),
                     ],
                   ),
