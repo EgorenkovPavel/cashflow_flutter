@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
@@ -26,7 +27,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<CategoryInputPageBloc>(context);
+    _bloc = CategoryInputPageBloc(context.read<Repository>());
     if (widget.id != null) {
       _bloc.initialById(widget.id!);
     } else {
@@ -37,7 +38,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   @override
   void dispose() {
     super.dispose();
-    //_bloc.close();
+    _bloc.close();
     titleController.dispose();
     budgetController.dispose();
   }
@@ -84,7 +85,9 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: BlocBuilder<CategoryInputPageBloc,
-                        CategoryInputPageState>(builder: (context, state) {
+                        CategoryInputPageState>(
+                        bloc: _bloc,
+                        builder: (context, state) {
                       if (state is InputState) {
                         return Text(getOperationTitle(context, state.type));
                       } else {
