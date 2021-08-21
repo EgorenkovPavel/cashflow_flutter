@@ -30,8 +30,6 @@ void main() {
   final _repository =
       Repository(_accountRepo, _categoryRepo, _operationRepo, _serviceRepo);
 
-  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
   runApp(
     MultiBlocProvider(
       providers: [
