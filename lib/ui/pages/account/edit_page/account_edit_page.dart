@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
@@ -9,7 +8,6 @@ import 'package:money_tracker/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class AccountEditPage extends StatefulWidget {
-
   final int id;
 
   const AccountEditPage({Key? key, required this.id}) : super(key: key);
@@ -19,9 +17,7 @@ class AccountEditPage extends StatefulWidget {
 }
 
 class _AccountEditPageState extends State<AccountEditPage> {
-
   late AccountEditPageBloc _bloc;
-  final TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
@@ -33,81 +29,27 @@ class _AccountEditPageState extends State<AccountEditPage> {
   @override
   void dispose() {
     super.dispose();
-    _titleController.dispose();
     _bloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 1,
-      child: Scaffold(
-        appBar: AppBar(
-          title: header(context),
-          actions: <Widget>[appBarIcon()],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: AppLocalizations.of(context).operations)
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            return Text(state.accountTitle);
+          },
         ),
-        body: TabBarView(
-          children: <Widget>[
-           OperationList(filter: OperationListFilter(accountsIds: {widget.id}))
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => PageNavigator.openOperationInputPage(context),
-          child: Icon(Icons.add),
-        ),
+        actions: <Widget>[IconButton(onPressed: () => PageNavigator.openAccountEditPage(context, widget.id), icon: Icon(Icons.edit))],
       ),
-    );
-  }
-
-  Widget header(BuildContext context) {
-    return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
-      bloc: _bloc,
-      builder: (BuildContext context, AccountEditPageState state) {
-
-        _titleController.text = state.accountTitle;
-
-        if (state.editTitleMode) {
-          return TextField(
-            controller: _titleController,
-            style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white),
-            autofocus: true,
-          );
-        } else {
-          return Text(state.accountTitle);
-        }
-      },
-    );
-
-  }
-
-  Widget appBarIcon() {
-
-    return BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
-      bloc: _bloc,
-      builder: (BuildContext context, AccountEditPageState state) {
-        if (state.editTitleMode) {
-          return IconButton(
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-            onPressed: () => _bloc.saveTitle(_titleController.text),
-          );
-        } else {
-          return IconButton(
-            icon: Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            onPressed: () => _bloc.editTitle(),
-          );
-        }
-      },
+      body:
+          OperationList(filter: OperationListFilter(accountsIds: {widget.id})),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => PageNavigator.openOperationInputPage(context),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

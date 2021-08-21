@@ -204,7 +204,7 @@ class _AccountItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => PageNavigator.openAccountEditPage(context, account.id),
+      onTap: () => PageNavigator.openAccountPage(context, account.id),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
