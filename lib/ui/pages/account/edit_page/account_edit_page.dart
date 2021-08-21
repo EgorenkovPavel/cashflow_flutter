@@ -38,11 +38,14 @@ class _AccountEditPageState extends State<AccountEditPage> {
       appBar: AppBar(
         title: BlocBuilder<AccountEditPageBloc, AccountEditPageState>(
           bloc: _bloc,
-          builder: (context, state) {
-            return Text(state.accountTitle);
-          },
+          builder: (context, state) => Text(state.accountTitle),
         ),
-        actions: <Widget>[IconButton(onPressed: () => PageNavigator.openAccountEditPage(context, widget.id), icon: Icon(Icons.edit))],
+        actions: <Widget>[
+          IconButton(
+              onPressed: () =>
+                  PageNavigator.openAccountEditPage(context, widget.id),
+              icon: Icon(Icons.edit))
+        ],
       ),
       body:
           OperationList(filter: OperationListFilter(accountsIds: {widget.id})),
