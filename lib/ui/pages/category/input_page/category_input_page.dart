@@ -66,7 +66,9 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
         }
 
         return ItemCard(
-          title: AppLocalizations.of(context).newCategoryCardTitle,
+          title: widget.id == null
+              ? AppLocalizations.of(context).newCategoryCardTitle
+              : AppLocalizations.of(context).categoryCardTitle,
           onSave: (context) {
             _bloc.save(titleController.text, budgetController.text);
           },
@@ -85,15 +87,15 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: BlocBuilder<CategoryInputPageBloc,
-                        CategoryInputPageState>(
+                            CategoryInputPageState>(
                         bloc: _bloc,
                         builder: (context, state) {
-                      if (state is InputState) {
-                        return Text(getOperationTitle(context, state.type));
-                      } else {
-                        return SizedBox();
-                      }
-                    }),
+                          if (state is InputState) {
+                            return Text(getOperationTitle(context, state.type));
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
                   )
                 ],
               ),

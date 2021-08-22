@@ -15,7 +15,6 @@ class AccountInputPage extends StatefulWidget {
   AccountInputPage.input();
 
   AccountInputPage.edit(this.id);
-
 }
 
 class _AccountInputPageState extends State<AccountInputPage> {
@@ -26,7 +25,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
   void initState() {
     super.initState();
     _bloc = AccountInputPageBloc(context.read<Repository>());
-    if (widget.id != null){
+    if (widget.id != null) {
       _bloc.fetch(widget.id!);
     }
   }
@@ -47,12 +46,14 @@ class _AccountInputPageState extends State<AccountInputPage> {
           Navigator.of(context).pop(state.account);
         }
       },
-      builder: (context, state){
-        if (state is AccountState){
+      builder: (context, state) {
+        if (state is AccountState) {
           _controller.text = state.title;
         }
         return ItemCard<Account>(
-          title: AppLocalizations.of(context).newAccountCardTitle,
+          title: widget.id == null
+              ? AppLocalizations.of(context).newAccountCardTitle
+              : AppLocalizations.of(context).accountCardTitle,
           onSave: (context) => _bloc.save(_controller.text),
           child: TextFormField(
             autofocus: true,
