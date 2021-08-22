@@ -1,13 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
-import 'package:money_tracker/domain/models/category.dart' as data;
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/widgets/carousel.dart';
+import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
+import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/widgets/keyboard.dart';
 import 'package:money_tracker/ui/widgets/operation_type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -30,44 +30,29 @@ class _OperationInputPageState extends State<OperationInputPage>
       initialItemFinder: (account) =>
           _bloc.account != null && account.id == _bloc.account!.id,
       onItemChanged: (account) => _bloc.onAccountChanged(account),
-      itemBuilder: (context, account) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(account.title),
-            Text(
-              NumberFormat().format(account.balance),
-              style: Theme.of(context).textTheme.caption,
-            )
-          ],
-        );
-      },
+      itemBuilder: (context, account) => _AccountItem(account: account),
     );
   }
 
   Widget categoryInPageView(BuildContext context) {
-    return CarouselList<data.Category>(
+    return CarouselList<Category>(
       stream: _bloc.categoryInStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryIn != null && category.id == _bloc.categoryIn!.id,
       onItemChanged: (category) => _bloc.onCategoryInChanged(category),
-      itemBuilder: (context, category) {
-        return Center(child: Text(category.title));
-      },
+      itemBuilder: (context, category) => _CategoryItem(category: category),
     );
   }
 
   Widget categoryOutPageView(BuildContext context) {
-    return CarouselList<data.Category>(
+    return CarouselList<Category>(
       stream: _bloc.categoryOutStream,
       emptyListMessage: AppLocalizations.of(context).noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryOut != null && category.id == _bloc.categoryOut!.id,
       onItemChanged: (category) => _bloc.onCategoryOutChanged(category),
-      itemBuilder: (context, category) {
-        return Center(child: Text(category.title));
-      },
+      itemBuilder: (context, category) => _CategoryItem(category: category),
     );
   }
 
@@ -78,18 +63,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       initialItemFinder: (account) =>
           _bloc.recAccount != null && account.id == _bloc.recAccount!.id,
       onItemChanged: (account) => _bloc.onRecAccountChanged(account),
-      itemBuilder: (context, account) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(account.title),
-            Text(
-              NumberFormat().format(account.balance),
-              style: Theme.of(context).textTheme.caption,
-            )
-          ],
-        );
-      },
+      itemBuilder: (context, account) => _AccountItem(account: account),
     );
   }
 
@@ -150,7 +124,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<MasterBloc>(context);
+    _bloc = MasterBloc(context.read<Repository>());
     _bloc.start();
 
     _animationController = AnimationController(
@@ -166,6 +140,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   @override
   void dispose() {
     _animationController.dispose();
+    _bloc.close();
     super.dispose();
   }
 
@@ -269,6 +244,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           ),
         ),
         body: BlocConsumer<MasterBloc, MasterState>(
+          bloc: _bloc,
           listener: (BuildContext context, MasterState state) =>
               stateListener(context, state),
           buildWhen: (oldState, newState) {
@@ -334,7 +310,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                               onPressed: () => _bloc.onMoreTap(),
                               child: Text(
                                 AppLocalizations.of(context).more.toUpperCase(),
-                                style: TextStyle(color: Theme.of(context).primaryColor),
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
                               ),
                             ),
                             Expanded(
@@ -389,7 +366,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                                 AppLocalizations.of(context)
                                     .create
                                     .toUpperCase(),
-                                style: TextStyle(color: Theme.of(context).primaryColor),
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],
@@ -407,50 +385,38 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 }
 
-class CarouselList<T> extends StatelessWidget {
-  CarouselList({
-    Key? key,
-    required Stream<List<T>> stream,
-    required String emptyListMessage,
-    required bool Function(T) initialItemFinder,
-    required Function(T) onItemChanged,
-    required Function(BuildContext, T) itemBuilder,
-  })  : _emptyListMessage = emptyListMessage,
-        _stream = stream,
-        _initialItemFinder = initialItemFinder,
-        _onItemChanged = onItemChanged,
-        _itemBuilder = itemBuilder,
-        super(key: key);
+class _CategoryItem extends StatelessWidget {
+  const _CategoryItem({
+    Key? key, required this.category,
+  }) : super(key: key);
 
-  final Stream<List<T>> _stream;
-  final String _emptyListMessage;
-  final bool Function(T) _initialItemFinder;
-  final Function _onItemChanged;
-  final Function(BuildContext, T) _itemBuilder;
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _stream,
-      initialData: <T>[],
-      builder: (BuildContext context, AsyncSnapshot<List<T>> snapshot) {
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
-            child: Text(_emptyListMessage),
-          );
-        }
+    return Center(child: Text(category.title));
+  }
+}
 
-        var items = snapshot.data;
+class _AccountItem extends StatelessWidget {
+  const _AccountItem({
+    Key? key,
+    required this.account,
+  }) : super(key: key);
 
-        return Carousel(
-          key: GlobalKey(),
-          items: items!,
-          initialItemFinder: _initialItemFinder,
-          onPageChanged: (pos) => _onItemChanged(items[pos]),
-          itemHeight: 60.0,
-          itemBuilder: (context, pos) => _itemBuilder(context, items[pos]),
-        );
-      },
+  final AccountBalance account;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(account.title),
+        Text(
+          NumberFormat().format(account.balance),
+          style: Theme.of(context).textTheme.caption,
+        )
+      ],
     );
   }
 }
