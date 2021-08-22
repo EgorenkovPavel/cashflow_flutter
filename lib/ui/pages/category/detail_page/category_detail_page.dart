@@ -7,6 +7,7 @@ import 'package:money_tracker/ui/pages/category/detail_page/category_cashflow_di
 import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class CategoryDetailPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      'Budget ${state.budget} in ${getBudgetTypeTitle(state.budgetType)}'),
+                      '${AppLocalizations.of(context).budget} ${state.budget} ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(state.budgetType)}'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

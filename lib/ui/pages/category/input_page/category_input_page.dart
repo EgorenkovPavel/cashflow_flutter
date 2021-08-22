@@ -90,7 +90,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                           bloc: _bloc,
                           builder: (context, state) {
                             if (state is InputState) {
-                              return Text(getOperationTitle(context, state.type));
+                              return Text(AppLocalizations.of(context).operationTypeTitle(state.type));
                             } else {
                               return SizedBox();
                             }
@@ -128,7 +128,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                           BorderSide(color: Theme.of(context).primaryColor),
                     ),
                     labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                    labelText: 'budget',
+                    labelText: AppLocalizations.of(context).budget,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -140,7 +140,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                 SizedBox(height: 8.0,),
                 Row(
                   children: [
-                    Text('Budget type'),
+                    Text(AppLocalizations.of(context).budgetType),
                     SizedBox(
                       width: 16.0,
                     ),

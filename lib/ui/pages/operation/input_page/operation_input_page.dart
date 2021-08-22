@@ -413,7 +413,7 @@ class _AccountItem extends StatelessWidget {
       children: <Widget>[
         Text(account.title),
         Text(
-          NumberFormat().format(account.balance),
+          AppLocalizations.of(context).numberFormat(account.balance),
           style: Theme.of(context).textTheme.caption,
         )
       ],

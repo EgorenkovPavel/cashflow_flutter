@@ -50,7 +50,7 @@ class ListTileOperation extends StatelessWidget {
           ? Text(_operation.recAccount!.title)
           : Text(_operation.category!.title),
       trailing: Text(
-        NumberFormat().format(_operation.sum),
+        AppLocalizations.of(context).numberFormat(_operation.sum),
         style: Theme.of(context)
             .textTheme
             .headline5!

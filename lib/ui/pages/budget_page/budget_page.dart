@@ -6,6 +6,7 @@ import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_page_bloc.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -35,10 +36,12 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   Widget _calcTitle(BudgetPageState state) {
-    var start =
-        widget.type == OperationType.INPUT ? 'Earning in' : 'Spending in';
+    var start = widget.type == OperationType.INPUT
+        ? AppLocalizations.of(context).earningIn
+        : AppLocalizations.of(context).spendingIn;
 
-    var date = DateFormat.yMMMM().format(state.date);
+    var date = DateFormat.yMMMM(Localizations.localeOf(context).toString())
+        .format(state.date);
 
     return Text('$start $date');
   }
@@ -61,7 +64,6 @@ class _BudgetPageState extends State<BudgetPage> {
           body: CustomScrollView(
             slivers: [
               SliverPersistentHeader(
-                //pinned: true,
                 delegate: TitleDelegate(
                   items: state.itemsAll,
                 ),
@@ -74,7 +76,8 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                   pinned: true,
                   delegate: BudgetTypeHeaderDelegate(
-                    title: getBudgetTypeTitle(BudgetType.MONTH),
+                    title: AppLocalizations.of(context)
+                        .budgetTypeTitle(BudgetType.MONTH),
                     cashflow: state.itemsMonthBudget.fold(
                         0,
                         (previousValue, element) =>
@@ -89,7 +92,8 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
               SliverPersistentHeader(
                   delegate: BudgetTypeHeaderDelegate(
-                      title: getBudgetTypeTitle(BudgetType.YEAR),
+                      title: AppLocalizations.of(context)
+                          .budgetTypeTitle(BudgetType.YEAR),
                       cashflow: state.itemsYearBudget.fold(
                           0,
                           (previousValue, element) =>
@@ -144,7 +148,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
               Spacer(),
               Text(
-                NumberFormat().format(cashflow),
+                AppLocalizations.of(context).numberFormat(cashflow),
                 style: Theme.of(context).textTheme.headline6,
               ),
               showAll ? Icon(Icons.arrow_drop_down) : Icon(Icons.arrow_drop_up)
@@ -221,7 +225,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Cashflow',
+            AppLocalizations.of(context).titleCashflow,
             style: Theme.of(context).textTheme.headline6,
           ),
           TweenAnimationBuilder<int>(
@@ -232,7 +236,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
               duration: _duration,
               builder: (context, cashflow, _) {
                 return Text(
-                  NumberFormat().format(cashflow),
+                  AppLocalizations.of(context).numberFormat(cashflow),
                   style: Theme.of(context)
                       .textTheme
                       .headline6!
@@ -336,7 +340,8 @@ class _CategoryItem extends StatelessWidget {
                     category.category.title,
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
-                  Text(NumberFormat().format(category.monthCashflow)),
+                  Text(AppLocalizations.of(context)
+                      .numberFormat(category.monthCashflow)),
                 ],
               ),
             ),
