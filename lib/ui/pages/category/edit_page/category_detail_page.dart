@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -6,21 +7,21 @@ import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page_bloc.dart';
+import 'package:money_tracker/ui/pages/category/edit_page/category_detail_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:provider/provider.dart';
 
-class CategoryEditPage extends StatefulWidget {
+class CategoryDetailPage extends StatefulWidget {
   final int id;
 
-  const CategoryEditPage({Key? key, required this.id}) : super(key: key);
+  const CategoryDetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CategoryEditPageState createState() => _CategoryEditPageState();
+  _CategoryDetailPageState createState() => _CategoryDetailPageState();
 }
 
-class _CategoryEditPageState extends State<CategoryEditPage>
+class _CategoryDetailPageState extends State<CategoryDetailPage>
     with SingleTickerProviderStateMixin {
   late CategoryBloc _bloc;
 
@@ -48,14 +49,19 @@ class _CategoryEditPageState extends State<CategoryEditPage>
             title: Text(state.title),
             actions: [
               IconButton(
-                  onPressed: () =>
-                      PageNavigator.openCategoryEditPage(context, id: widget.id),
+                  onPressed: () => PageNavigator.openCategoryEditPage(context,
+                      id: widget.id),
                   icon: Icon(Icons.edit))
             ],
           ),
           body: SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                      'Budget ${state.budget} in ${getBudgetTypeTitle(state.budgetType)}'),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -90,17 +96,17 @@ class _CategoryEditPageState extends State<CategoryEditPage>
                       children: list
                           .expand(
                             (e) => [
-                          if (list.indexOf(e) == 0)
-                            ListDividerOperation.month(null, e)
-                          else
-                            ListDividerOperation.month(
-                                list[list.indexOf(e) - 1], e),
-                          ListTileOperation(e,
-                              onTap: () =>
-                                  PageNavigator.openOperationEditPage(
-                                      context, e.id))
-                        ],
-                      )
+                              if (list.indexOf(e) == 0)
+                                ListDividerOperation.day(null, e)
+                              else
+                                ListDividerOperation.day(
+                                    list[list.indexOf(e) - 1], e),
+                              ListTileOperation(e,
+                                  onTap: () =>
+                                      PageNavigator.openOperationEditPage(
+                                          context, e.id))
+                            ],
+                          )
                           .toList(),
                     );
                   },
@@ -114,7 +120,6 @@ class _CategoryEditPageState extends State<CategoryEditPage>
           ),
         );
       },
-
     );
   }
 }
@@ -161,17 +166,19 @@ class _Diagramm extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: SizedBox(
-            width: data.length * 50,
+            width: data.length * 100,
             child: charts.BarChart(
               [
                 charts.Series<SumOnDate, String>(
-                  id: 'Cashflow',
-                  colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                  domainFn: (SumOnDate sales, _) =>
-                      DateFormat.yM().format(sales.date),
-                  measureFn: (SumOnDate sales, _) => sales.sum,
-                  data: data,
-                )
+                    id: 'Cashflow',
+                    colorFn: (_, __) =>
+                        charts.MaterialPalette.blue.shadeDefault,
+                    domainFn: (SumOnDate sales, _) =>
+                        DateFormat.yMMM().format(sales.date),
+                    measureFn: (SumOnDate sales, _) => sales.sum,
+                    data: data,
+                    labelAccessorFn: (SumOnDate sales, _) =>
+                        '${NumberFormat().format(sales.sum)}')
               ],
               animate: false,
               primaryMeasureAxis:
@@ -181,12 +188,14 @@ class _Diagramm extends StatelessWidget {
                   [
                     charts.LineAnnotationSegment(
                         budget, charts.RangeAnnotationAxisType.measure,
-                        startLabel: 'budget',
+                        //startLabel: 'budget',
                         //endLabel: 'Measure 2 End',
                         color: charts.MaterialPalette.gray.shade400),
                   ],
                 ),
               ],
+              barRendererDecorator: new charts.BarLabelDecorator<String>(),
+              domainAxis: new charts.OrdinalAxisSpec(),
             ),
           ),
         );
