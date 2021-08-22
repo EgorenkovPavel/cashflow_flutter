@@ -5,6 +5,7 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
+import 'package:money_tracker/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class CategoryInputPage extends StatefulWidget {
@@ -143,19 +144,10 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                     SizedBox(
                       width: 16.0,
                     ),
-                    ToggleButtons(
-                      children: BudgetType.values
-                          .map((e) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(getBudgetTypeTitle(e).toUpperCase()),
-                              ))
-                          .toList(),
-                      isSelected: BudgetType.values
-                          .map((e) => e == (state as InputState).budgetType)
-                          .toList(),
-                      onPressed: (pos) =>
-                          _bloc.setbudgetType(BudgetType.values[pos]),
-                    ),
+                    TypeRadioButton<BudgetType>(
+                        onChange: (type) => _bloc.setbudgetType(type),
+                        type: (state as InputState).budgetType,
+                        items: [BudgetType.MONTH, BudgetType.YEAR])
                   ],
                 ),
               ],

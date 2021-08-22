@@ -9,7 +9,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/widgets/keyboard.dart';
-import 'package:money_tracker/ui/widgets/operation_type_radio_button.dart';
+import 'package:money_tracker/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class OperationInputPage extends StatefulWidget {
@@ -259,7 +259,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 8.0),
-                  child: OperationTypeRadioButton(
+                  child: TypeRadioButton<OperationType>(
                     type: state.type,
                     items: [
                       OperationType.INPUT,

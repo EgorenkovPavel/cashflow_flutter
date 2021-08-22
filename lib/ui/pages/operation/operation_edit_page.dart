@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
-import 'package:money_tracker/ui/widgets/operation_type_radio_button.dart';
+import 'package:money_tracker/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -122,7 +122,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
                   ],
                 ),
                 Title(text: AppLocalizations.of(context).titleType),
-                OperationTypeRadioButton(
+                TypeRadioButton<OperationType>(
                   type: _type,
                   onChange: (newValue) {
                     setState(() {
