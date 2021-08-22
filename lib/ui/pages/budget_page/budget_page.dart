@@ -63,21 +63,44 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                 //pinned: true,
                 delegate: TitleDelegate(
-                    items: state.items,),
+                  items: state.itemsAll,
+                ),
               ),
-              SliverPersistentHeader(delegate: DiagammDelegate(items: state.items,
-                  onBackPressed: _bloc.onBackPressed,
-                  onForwardPressed: _bloc.onForwardPressed)),
+              SliverPersistentHeader(
+                  delegate: DiagammDelegate(
+                      items: state.itemsAll,
+                      onBackPressed: _bloc.onBackPressed,
+                      onForwardPressed: _bloc.onForwardPressed)),
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: BudgetTypeHeaderDelegate(
+                    title: getBudgetTypeTitle(BudgetType.MONTH),
+                    cashflow: state.itemsMonthBudget.fold(
+                        0,
+                        (previousValue, element) =>
+                            previousValue + element.monthCashflow),
+                    showAll: state.showAllMonthBudget,
+                    onPressed: () => _bloc.changeShowAll(BudgetType.MONTH),
+                  )),
               SliverList(
-                delegate: SliverChildListDelegate(state.items
-                    .map((e) => _CategoryItem(category: e))
+                delegate: SliverChildListDelegate(state.itemsMonthBudget
+                    .expand((e) => [_CategoryItem(category: e), Divider()])
                     .toList()),
               ),
-              SliverPersistentHeader(delegate: ShowButtonDelegate(
-                showAll: state.showAll,
-                collapse: _bloc.collapse,
-                expand: _bloc.expand,
-              ))
+              SliverPersistentHeader(
+                  delegate: BudgetTypeHeaderDelegate(
+                      title: getBudgetTypeTitle(BudgetType.YEAR),
+                      cashflow: state.itemsYearBudget.fold(
+                          0,
+                          (previousValue, element) =>
+                              previousValue + element.monthCashflow),
+                      showAll: state.showAllYearBudget,
+                      onPressed: () => _bloc.changeShowAll(BudgetType.YEAR))),
+              SliverList(
+                delegate: SliverChildListDelegate(state.itemsYearBudget
+                    .expand((e) => [_CategoryItem(category: e), Divider()])
+                    .toList()),
+              ),
             ],
           ),
           floatingActionButton: FloatingActionButton(
@@ -91,54 +114,73 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 }
 
-class ShowButtonDelegate extends SliverPersistentHeaderDelegate{
-
+class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final String title;
+  final int cashflow;
   final bool showAll;
-  final void Function() collapse;
-  final void Function() expand;
+  final void Function() onPressed;
 
-  ShowButtonDelegate({required this.showAll, required this.collapse, required this.expand});
+  BudgetTypeHeaderDelegate(
+      {required this.cashflow,
+      required this.showAll,
+      required this.onPressed,
+      required this.title});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return _ShowAllButton(
-                            onPressed: showAll
-                                ? collapse
-                                : expand,
-                            showAll: !showAll)
-                      ;
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Spacer(),
+              Text(
+                NumberFormat().format(cashflow),
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              showAll ? Icon(Icons.arrow_drop_down) : Icon(Icons.arrow_drop_up)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => 50;
 
   @override
-  // TODO: implement minExtent
   double get minExtent => 50;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
-
 }
 
-class DiagammDelegate extends SliverPersistentHeaderDelegate{
-
+class DiagammDelegate extends SliverPersistentHeaderDelegate {
   final List<CategoryCashflow> items;
   final void Function() onBackPressed;
   final void Function() onForwardPressed;
 
   DiagammDelegate(
       {required this.items,
-        required this.onBackPressed,
-        required this.onForwardPressed});
+      required this.onBackPressed,
+      required this.onForwardPressed});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return
-    PieDiagram(
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return PieDiagram(
       list: items.where((item) => item.monthCashflow > 0).toList(),
       onBackPressed: onBackPressed,
       onForwardPressed: onForwardPressed,
@@ -146,25 +188,23 @@ class DiagammDelegate extends SliverPersistentHeaderDelegate{
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => 200;
 
   @override
-  // TODO: implement minExtent
   double get minExtent => 200;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
-
 }
 
 class TitleDelegate extends SliverPersistentHeaderDelegate {
   final List<CategoryCashflow> items;
 
-  TitleDelegate(
-      {required this.items,});
+  TitleDelegate({
+    required this.items,
+  });
 
   int _cashflow(List<CategoryCashflow> items) {
     return items
@@ -175,34 +215,33 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return
-        Padding(
-          padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Cashflow',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              TweenAnimationBuilder<int>(
-                  tween: IntTween(
-                    begin: 0,
-                    end: _cashflow(items),
-                  ),
-                  duration: _duration,
-                  builder: (context, cashflow, _) {
-                    return Text(
-                      NumberFormat().format(cashflow),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    );
-                  }),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Cashflow',
+            style: Theme.of(context).textTheme.headline6,
           ),
-        );
+          TweenAnimationBuilder<int>(
+              tween: IntTween(
+                begin: 0,
+                end: _cashflow(items),
+              ),
+              duration: _duration,
+              builder: (context, cashflow, _) {
+                return Text(
+                  NumberFormat().format(cashflow),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                );
+              }),
+        ],
+      ),
+    );
   }
 
   @override
@@ -214,38 +253,6 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
-  }
-}
-
-class _ShowAllButton extends StatelessWidget {
-  const _ShowAllButton(
-      {Key? key, required this.onPressed, required this.showAll})
-      : super(key: key);
-
-  final void Function() onPressed;
-  final bool showAll;
-
-  @override
-  Widget build(BuildContext context) {
-    var _icon = showAll ? Icons.arrow_downward : Icons.arrow_upward;
-    var _title = showAll ? 'Show all' : 'Collapse';
-
-    return TextButton(
-      onPressed: onPressed,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            _icon,
-            color: Theme.of(context).primaryColor,
-          ),
-          Text(
-            _title.toUpperCase(),
-            style: TextStyle().copyWith(color: Theme.of(context).primaryColor),
-          ),
-        ],
-      ),
-    );
   }
 }
 
@@ -292,120 +299,15 @@ class PieDiagram extends StatelessWidget {
   }
 }
 
-class CategoryItem extends StatelessWidget {
-  const CategoryItem({Key? key, required this.category}) : super(key: key);
-
-  final CategoryCashflow category;
-
-  static const double _borderWidth = 2.0;
-  static const double _height = 30.0;
-  static const double _borderRadius = 8.0;
-  static const double _leftPadding = 8.0;
-
-  double _partOfWidth(int cashflow) {
-    if (cashflow == 0) {
-      return 0;
-    } else if (cashflow > category.category.budget ||
-        category.category.budget == 0) {
-      return cashflow / category.monthCashflow;
-    } else {
-      return cashflow / category.category.budget;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () =>
-          PageNavigator.openCategoryPage(context, category.category.id),
-      child: TweenAnimationBuilder<int>(
-        tween: IntTween(
-          begin: 0,
-          end: category.monthCashflow,
-        ),
-        duration: _duration,
-        builder: (context, cashflow, _) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return Stack(
-                alignment: AlignmentDirectional.centerStart,
-                children: [
-                  Container(
-                    width: constraints.maxWidth,
-                    height: _height,
-                    padding: const EdgeInsets.only(left: _leftPadding),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(_borderRadius),
-                      border: Border.all(
-                          color: Theme.of(context).accentColor,
-                          width: _borderWidth),
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '${category.category.title} ',
-                              style: TextStyle(color: Colors.black87),
-                            ),
-                            TextSpan(
-                              text: NumberFormat().format(cashflow),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: constraints.maxWidth * _partOfWidth(cashflow),
-                    height: _height,
-                    padding: const EdgeInsets.only(
-                        left: _borderWidth + _leftPadding),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.circular(_borderRadius),
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        overflow: TextOverflow.clip,
-                        softWrap: false,
-                        maxLines: 1,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(text: '${category.category.title} '),
-                            TextSpan(
-                              text: NumberFormat().format(cashflow),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
 class _CategoryItem extends StatelessWidget {
   final CategoryCashflow category;
 
   const _CategoryItem({Key? key, required this.category}) : super(key: key);
 
   double _progress() {
-    var _cashflow = category.monthCashflow;
+    var _cashflow = category.category.budgetType == BudgetType.MONTH
+        ? category.monthCashflow
+        : category.yearCashflow;
     var _budget = category.category.budget;
     if (_cashflow == 0) {
       return 0;
@@ -422,21 +324,24 @@ class _CategoryItem extends StatelessWidget {
       onTap: () =>
           PageNavigator.openCategoryPage(context, category.category.id),
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  category.category.title,
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-                Text(NumberFormat().format(category.monthCashflow)),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    category.category.title,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Text(NumberFormat().format(category.monthCashflow)),
+                ],
+              ),
             ),
             LinearProgressIndicator(
-              minHeight: 10,
+              minHeight: 5,
               color: Theme.of(context).accentColor,
               value: _progress(),
             ),
