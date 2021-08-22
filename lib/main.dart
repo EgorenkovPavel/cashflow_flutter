@@ -33,9 +33,6 @@ void main() {
         BlocProvider<BackupPageBloc>(
           create: (BuildContext context) => BackupPageBloc(_repository),
         ),
-        BlocProvider<MasterBloc>(
-          create: (BuildContext context) => MasterBloc(_repository),
-        ),
         BlocProvider<OperationFilterPageBloc>(
           create: (BuildContext context) =>
               OperationFilterPageBloc(_repository),
