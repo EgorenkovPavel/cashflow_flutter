@@ -19,41 +19,43 @@ class ItemCard<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            child,
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(null),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  AppLocalizations.of(context).cancel.toUpperCase(),
-                  style: TextStyle(color: Theme.of(context).primaryColor),
+                  title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    onSave(context);
-                  }
-                },
-                style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
-                child: Text(
-                  AppLocalizations.of(context).save.toUpperCase(),
-                  //style: TextStyle(color: Colors.white),
+              child,
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(null),
+                  child: Text(
+                    AppLocalizations.of(context).cancel.toUpperCase(),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
                 ),
-              )
-            ])
-          ],
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      onSave(context);
+                    }
+                  },
+                  style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
+                  child: Text(
+                    AppLocalizations.of(context).save.toUpperCase(),
+                    //style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ])
+            ],
+          ),
         ),
       ),
     );

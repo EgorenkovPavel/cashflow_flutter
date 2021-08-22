@@ -73,91 +73,93 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
             _bloc.save(titleController.text, budgetController.text);
           },
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      AppLocalizations.of(context).titleType,
-                      style: Theme.of(context).textTheme.caption,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        AppLocalizations.of(context).titleType,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      SizedBox(width: 8.0,),
+                      BlocBuilder<CategoryInputPageBloc, CategoryInputPageState>(
+                          bloc: _bloc,
+                          builder: (context, state) {
+                            if (state is InputState) {
+                              return Text(getOperationTitle(context, state.type));
+                            } else {
+                              return SizedBox();
+                            }
+                          }),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 8.0,),
+                TextFormField(
+                  autofocus: true,
+                  controller: titleController,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                     ),
+                    labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                    labelText: AppLocalizations.of(context).title,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<CategoryInputPageBloc,
-                            CategoryInputPageState>(
-                        bloc: _bloc,
-                        builder: (context, state) {
-                          if (state is InputState) {
-                            return Text(getOperationTitle(context, state.type));
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
-                  )
-                ],
-              ),
-              TextFormField(
-                autofocus: true,
-                controller: titleController,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                  labelText: AppLocalizations.of(context).title,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context).emptyTitleError;
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppLocalizations.of(context).emptyTitleError;
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: budgetController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+                SizedBox(height: 8.0,),
+                TextFormField(
+                  controller: budgetController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
+                    labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                    labelText: 'budget',
                   ),
-                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                  labelText: 'budget',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context).emptyTitleError;
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppLocalizations.of(context).emptyTitleError;
-                  }
-                  return null;
-                },
-              ),
-              Row(
-                children: [
-                  Text('Budget type'),
-                  SizedBox(
-                    width: 16.0,
-                  ),
-                  ToggleButtons(
-                    children: BudgetType.values
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(getBudgetTypeTitle(e).toUpperCase()),
-                            ))
-                        .toList(),
-                    isSelected: BudgetType.values
-                        .map((e) => e == (state as InputState).budgetType)
-                        .toList(),
-                    onPressed: (pos) =>
-                        _bloc.setbudgetType(BudgetType.values[pos]),
-                  ),
-                ],
-              ),
-            ],
+                SizedBox(height: 8.0,),
+                Row(
+                  children: [
+                    Text('Budget type'),
+                    SizedBox(
+                      width: 16.0,
+                    ),
+                    ToggleButtons(
+                      children: BudgetType.values
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(getBudgetTypeTitle(e).toUpperCase()),
+                              ))
+                          .toList(),
+                      isSelected: BudgetType.values
+                          .map((e) => e == (state as InputState).budgetType)
+                          .toList(),
+                      onPressed: (pos) =>
+                          _bloc.setbudgetType(BudgetType.values[pos]),
+                    ),
+                  ],
+                ),
+              ],
+
           ),
         );
       },
