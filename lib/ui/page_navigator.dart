@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page.dart';
+import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_page.dart';
-import 'package:money_tracker/ui/pages/category/edit_page/category_detail_page.dart';
+import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
 import 'package:money_tracker/ui/pages/home/home_page.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
@@ -124,7 +124,7 @@ class PageNavigator {
         {
           return MaterialPageRoute(
             builder: (context) =>
-                AccountEditPage(id: settings.arguments as int),
+                AccountDetailPage(id: settings.arguments as int),
           );
         }
       case _routeCategoryName:

@@ -10,12 +10,12 @@ class AccountEditPageState{
   AccountEditPageState(this.accountTitle);
 }
 
-class AccountEditPageBloc extends Cubit<AccountEditPageState>{
+class AccountDetailPageBloc extends Cubit<AccountEditPageState>{
 
   final Repository _repository;
   StreamSubscription? _sub;
 
-  AccountEditPageBloc(this._repository) : super(AccountEditPageState(''));
+  AccountDetailPageBloc(this._repository) : super(AccountEditPageState(''));
 
   Future<void> fetch(int id) async {
     _sub = _repository.watchAccountById(id).listen((event) {
