@@ -35,15 +35,3 @@ IconData getOperationIcon(OperationType type) {
       return Icons.do_not_disturb_on;
   }
 }
-
-String getOperationTitle(BuildContext context, OperationType _type) {
-  switch (_type) {
-    case OperationType.INPUT:
-      return AppLocalizations.of(context).typeInput;
-    case OperationType.OUTPUT:
-      return AppLocalizations.of(context).typeOutput;
-    case OperationType.TRANSFER:
-      return AppLocalizations.of(context).typeTransfer;
-    default: return '';
-  }
-}

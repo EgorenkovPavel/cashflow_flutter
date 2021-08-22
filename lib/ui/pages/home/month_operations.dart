@@ -4,6 +4,7 @@ import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class MonthOperations extends StatelessWidget {
@@ -22,10 +23,12 @@ class MonthOperations extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                      text: 'Operations in ',
+                      text: '${AppLocalizations.of(context).operationsIn} ',
                       style: Theme.of(context).textTheme.headline6),
                   TextSpan(
-                      text: DateFormat.MMMM().format(DateTime.now()),
+                      text: DateFormat.MMMM(
+                              Localizations.localeOf(context).toString())
+                          .format(DateTime.now()),
                       style: Theme.of(context)
                           .textTheme
                           .headline6!
@@ -37,11 +40,17 @@ class MonthOperations extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(width: Dimensions.padding,),
+              SizedBox(
+                width: Dimensions.padding,
+              ),
               _MonthOperation(operationType: OperationType.INPUT),
-              SizedBox(width: Dimensions.padding,),
+              SizedBox(
+                width: Dimensions.padding,
+              ),
               _MonthOperation(operationType: OperationType.OUTPUT),
-              SizedBox(width: Dimensions.padding,),
+              SizedBox(
+                width: Dimensions.padding,
+              ),
             ],
           ),
         ],
@@ -94,11 +103,11 @@ class _MonthOperation extends StatelessWidget {
         }
 
         double _progress = 0;
-        if(_cashflow == 0){
+        if (_cashflow == 0) {
           _progress = 0;
-        }else if(_cashflow > _budget || _budget == 0){
+        } else if (_cashflow > _budget || _budget == 0) {
           _progress = 1;
-        }else{
+        } else {
           _progress = _cashflow / _budget;
         }
 
@@ -115,8 +124,8 @@ class _MonthOperation extends StatelessWidget {
                 children: [
                   Text(
                       operationType == OperationType.INPUT
-                          ? 'Earning'
-                          : 'Spending',
+                          ? AppLocalizations.of(context).earning
+                          : AppLocalizations.of(context).spending,
                       style: Theme.of(context).textTheme.headline6),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -126,7 +135,7 @@ class _MonthOperation extends StatelessWidget {
                       value: _progress,
                     ),
                   ),
-                  Text(NumberFormat().format(_cashflow)),
+                  Text(AppLocalizations.of(context).numberFormat(_cashflow)),
                 ],
               ),
             ),

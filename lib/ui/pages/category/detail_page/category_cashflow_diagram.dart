@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -56,11 +57,11 @@ class CategoryCashflowDiagram extends StatelessWidget {
                     colorFn: (_, __) =>
                         charts.MaterialPalette.blue.shadeDefault,
                     domainFn: (SumOnDate sales, _) =>
-                        DateFormat.yMMM().format(sales.date),
+                        DateFormat.yMMM(Localizations.localeOf(context).toString()).format(sales.date),
                     measureFn: (SumOnDate sales, _) => sales.sum,
                     data: data,
                     labelAccessorFn: (SumOnDate sales, _) =>
-                        '${NumberFormat().format(sales.sum)}')
+                        '${AppLocalizations.of(context).numberFormat(sales.sum)}')
               ],
               animate: false,
               primaryMeasureAxis:

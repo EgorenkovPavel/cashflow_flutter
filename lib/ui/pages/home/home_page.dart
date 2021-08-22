@@ -4,6 +4,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations.dart';
 import 'package:money_tracker/ui/pages/home/month_operations.dart';
 import 'package:money_tracker/ui/pages/home/top_header.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,13 +31,12 @@ class HomePage extends StatelessWidget {
           children: [
             TopHeader(),
             _AddButton(
-              title: 'Add account',
+              title: AppLocalizations.of(context).btnAddAccount,
               onPressed: () => PageNavigator.openAccountInputPage(context),
             ),
             MonthOperations(),
             SizedBox(height: 8.0,),
             LastOperations(),
-            // SizedBox(height: 80.0),
           ],
         ),
       ),

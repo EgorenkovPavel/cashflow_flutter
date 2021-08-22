@@ -4,6 +4,7 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 class LastOperations extends StatelessWidget {
@@ -58,8 +59,7 @@ class LastOperations extends StatelessWidget {
                     Icons.arrow_downward,
                     color: Theme.of(context).primaryColor,
                   ),
-                  Text(
-                    'Show all'.toUpperCase(),
+                  Text(AppLocalizations.of(context).btnShowAll.toUpperCase(),
                     style: TextStyle()
                         .copyWith(color: Theme.of(context).primaryColor),
                   ),
