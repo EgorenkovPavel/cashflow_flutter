@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
@@ -340,7 +339,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                         height: 48.0,
                                         alignment: Alignment.center,
                                         child: Text(
-                                          NumberFormat().format(state.sum),
+                                          AppLocalizations.of(context).numberFormat(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4,
