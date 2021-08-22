@@ -34,6 +34,10 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
 
   void initialByType(OperationType type) {
     _type = type;
+    emit(InputState(type: _type,
+        budgetType: _budgetType,
+        title: '',
+        budget: 0));
   }
 
   Future<void> initialById(int id) async {

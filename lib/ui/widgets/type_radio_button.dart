@@ -1,14 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 
-class OperationTypeRadioButton extends StatelessWidget {
-  final void Function(OperationType) onChange;
-  final OperationType type;
+class TypeRadioButton<T> extends StatelessWidget {
+  final void Function(T) onChange;
+  final T type;
 
-  final List<OperationType> items;
+  final List<T> items;
 
-  const OperationTypeRadioButton(
+  const TypeRadioButton(
       {Key? key, required this.onChange, required this.type, required this.items})
       : super(key: key);
 
@@ -23,7 +24,7 @@ class OperationTypeRadioButton extends StatelessWidget {
       fillColor: Theme.of(context).primaryColor,
       children: items
           .map(
-            (e) => _OperationTypeItem(
+            (e) => _TypeItem<T>(
               type: e,
             ),
           )
@@ -32,21 +33,31 @@ class OperationTypeRadioButton extends StatelessWidget {
   }
 }
 
-class _OperationTypeItem extends StatelessWidget {
-  const _OperationTypeItem({
+class _TypeItem<T> extends StatelessWidget {
+  const _TypeItem({
     Key? key,
     type,
   })  : _type = type,
         super(key: key);
 
-  final OperationType _type;
+  final T _type;
+
+  String getTitle(BuildContext context){
+    if (_type is OperationType){
+      return getOperationTitle(context, _type as OperationType);
+    }else if (_type is BudgetType){
+      return getBudgetTypeTitle(_type as BudgetType);
+    }else{
+      return _type.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Text(
-        getOperationTitle(context, _type).toUpperCase(),
+        getTitle(context).toUpperCase(),
       ),
     );
   }
