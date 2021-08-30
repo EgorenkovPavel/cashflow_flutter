@@ -28,8 +28,11 @@ class CategoryRepository {
       _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
 
-  Stream<List<SumOnDate>> watchCashflowByCategory(int id) =>
-      categoryDao.watchCashflowByCategory(id);
+  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
+      categoryDao.watchCashflowByCategoryByMonth(id);
+
+  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
+      categoryDao.watchCashflowByCategoryByYear(id);
 
   Stream<List<Category>> watchAll() =>
       categoryDao.watchAllCategories().map(_mapCategoryList);
@@ -50,6 +53,9 @@ class CategoryRepository {
 
   Future<Category> getById(int id) async =>
       _mapCategory(await categoryDao.getCategoryById(id));
+
+  Stream<Category> watchById(int id) =>
+      categoryDao.watchCategoryById(id).map(_mapCategory);
 
   Stream<List<Category>> watchAllByType(OperationType type) =>
       categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);

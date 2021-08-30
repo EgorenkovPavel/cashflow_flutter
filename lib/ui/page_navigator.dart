@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/account/edit_page/account_edit_page.dart';
+import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_page.dart';
-import 'package:money_tracker/ui/pages/category/edit_page/category_edit_page.dart';
+import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
 import 'package:money_tracker/ui/pages/home/home_page.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
@@ -21,15 +21,21 @@ class PageNavigator {
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
         context,
-        AccountInputPage(),
+        AccountInputPage.input(),
       );
 
-  static Future openAccountEditPage(BuildContext context, int accountId) =>
+  static Future<Account?> openAccountEditPage(BuildContext context, int id) =>
+      const _Card<Account>().open(
+        context,
+        AccountInputPage.edit(id),
+      );
+
+  static Future openAccountPage(BuildContext context, int accountId) =>
       Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
 
   static const _routeCategoryName = '/category';
 
-  static void openCategoryEditPage(BuildContext context, int categoryId) =>
+  static void openCategoryPage(BuildContext context, int categoryId) =>
       Navigator.of(context)
           .pushNamed(_routeCategoryName, arguments: categoryId);
 
@@ -37,8 +43,17 @@ class PageNavigator {
           {required OperationType type}) =>
       const _Card<Category>().open(
         context,
-        CategoryInputPage(
+        CategoryInputPage.byType(
           type: type,
+        ),
+      );
+
+  static Future<Category?> openCategoryEditPage(BuildContext context,
+      {required int id}) =>
+      const _Card<Category>().open(
+        context,
+        CategoryInputPage.edit(
+          id: id,
         ),
       );
 
@@ -109,14 +124,14 @@ class PageNavigator {
         {
           return MaterialPageRoute(
             builder: (context) =>
-                AccountEditPage(id: settings.arguments as int),
+                AccountDetailPage(id: settings.arguments as int),
           );
         }
       case _routeCategoryName:
         {
           return MaterialPageRoute(
             builder: (context) =>
-                CategoryEditPage(id: settings.arguments as int),
+                CategoryDetailPage(id: settings.arguments as int),
           );
         }
       case _routeOperationName:
@@ -160,14 +175,19 @@ class _Card<T> {
   const _Card();
 
   Future<T?> open(BuildContext context, Widget child) {
-    return showModalBottomSheet<T>(
+    return showDialog<T>(
       context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: child,
-      ),
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: child,
+        );
+      },
     );
   }
 }

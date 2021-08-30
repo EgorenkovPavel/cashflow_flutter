@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models/operation.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
@@ -50,11 +49,11 @@ class ListTileOperation extends StatelessWidget {
           ? Text(_operation.recAccount!.title)
           : Text(_operation.category!.title),
       trailing: Text(
-        NumberFormat().format(_operation.sum),
+        AppLocalizations.of(context).numberFormat(_operation.sum),
         style: Theme.of(context)
             .textTheme
             .headline5!
-            .copyWith(color: getOperationColor(_operation.type)),
+            .copyWith(color: _operation.type.color()),
       ),
       onTap: onTap,
       onLongPress: () => onLongPress(context),

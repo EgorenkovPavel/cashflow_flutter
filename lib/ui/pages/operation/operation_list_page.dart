@@ -33,6 +33,10 @@ class _OperationListPageState extends State<OperationListPage> {
         ],
       ),
       body: OperationList(filter: _filter),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => PageNavigator.openOperationInputPage(context),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

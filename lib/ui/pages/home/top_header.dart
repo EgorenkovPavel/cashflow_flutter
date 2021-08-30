@@ -4,6 +4,7 @@ import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
+import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
 const double _itemSize = 100.0;
@@ -29,9 +30,7 @@ class TopHeader extends StatelessWidget {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(Dimensions.padding),
@@ -42,86 +41,25 @@ class TopHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Total balance',
+                          AppLocalizations.of(context).titleTotalBalance,
                           style:
-                          Theme
-                              .of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(
-                            color: Colors.white.withOpacity(0.5),
-                          ),
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    color: Colors.white.withOpacity(0.5),
+                                  ),
                         ),
                         Text(
-                          NumberFormat().format(_balance),
-                          style: Theme
-                              .of(context)
+                          AppLocalizations.of(context).numberFormat(_balance),
+                          style: Theme.of(context)
                               .textTheme
                               .headline4!
                               .copyWith(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Available ',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
-                                color: Colors.white.withOpacity(0.5),
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'today',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ]),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '????',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(
                                   color: Colors.white,
                                   fontSize: 28,
                                   fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'of ????',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
                         ),
                       ],
                     ),
-                  ],
+                   ],
                 ),
               ),
             ),
@@ -133,9 +71,7 @@ class TopHeader extends StatelessWidget {
                   margin: EdgeInsets.only(
                       bottom: _itemSize / 2 + Dimensions.padding * 1),
                   decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(24.0),
                       bottomRight: Radius.circular(24.0),
@@ -171,7 +107,7 @@ class AccountList extends StatelessWidget {
     var items = <Widget>[];
     var accountItems = accounts.map((e) => _AccountItem(account: e)).toList();
     items.add(SizedBox(width: Dimensions.padding));
-    for (var accountItem in accountItems){
+    for (var accountItem in accountItems) {
       items.add(accountItem);
       items.add(SizedBox(width: Dimensions.padding));
     }
@@ -185,7 +121,7 @@ class AccountList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: Dimensions.padding * 1),
         child: Row(
-            children: _items(),
+          children: _items(),
         ),
       ),
     );
@@ -203,7 +139,7 @@ class _AccountItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => PageNavigator.openAccountEditPage(context, account.id),
+      onTap: () => PageNavigator.openAccountPage(context, account.id),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -225,25 +161,17 @@ class _AccountItem extends StatelessWidget {
           children: [
             Text(
               account.title,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .caption!
-                  .copyWith(
-                fontSize: 13,
-                color: Colors.black87,
-              ),
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                    fontSize: 13,
+                    color: Colors.black87,
+                  ),
             ),
             Text(
-              NumberFormat().format(account.balance),
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline6!
-                  .copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              AppLocalizations.of(context).numberFormat(account.balance),
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),

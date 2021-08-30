@@ -146,7 +146,7 @@ class CategoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListCard(
-      onTap: () => PageNavigator.openCategoryEditPage(context, category.id),
+      onTap: () => PageNavigator.openCategoryPage(context, category.id),
       child: Center(
         child: Text(category.title),
       ),
