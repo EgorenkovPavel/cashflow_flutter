@@ -105,49 +105,6 @@ class Cashflows extends Table {
   Set<Column> get primaryKey => {operation, category};
 }
 
-class BalanceOnDate {
-  DateTime date;
-  int sum;
-
-  BalanceOnDate(this.date, this.sum);
-}
-
-class AccountBalanceEntity {
-  AccountDB account;
-  int sum;
-
-  AccountBalanceEntity(this.account, this.sum);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AccountBalanceEntity &&
-          runtimeType == other.runtimeType &&
-          account == other.account;
-
-  @override
-  int get hashCode => account.hashCode;
-}
-
-class CategoryBudgetEntity {
-  CategoryDB category;
-  int budget;
-
-  CategoryBudgetEntity(this.category, this.budget);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryBudgetEntity &&
-          runtimeType == other.runtimeType &&
-          category == other.category;
-
-  @override
-  int get hashCode => category.hashCode;
-}
-
-
-
 class OperationItem {
   OperationDB operation;
   AccountDB account;

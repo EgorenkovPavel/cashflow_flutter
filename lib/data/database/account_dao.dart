@@ -134,3 +134,28 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         .map((c) => BalanceOnDate(date, c.read(sumBalance) ?? 0));
   }
 }
+
+class BalanceOnDate {
+  DateTime date;
+  int sum;
+
+  BalanceOnDate(this.date, this.sum);
+}
+
+
+class AccountBalanceEntity {
+  AccountDB account;
+  int sum;
+
+  AccountBalanceEntity(this.account, this.sum);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is AccountBalanceEntity &&
+              runtimeType == other.runtimeType &&
+              account == other.account;
+
+  @override
+  int get hashCode => account.hashCode;
+}

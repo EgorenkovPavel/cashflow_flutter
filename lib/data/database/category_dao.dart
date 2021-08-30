@@ -29,6 +29,23 @@ class CategoryCashflowEntity {
   int get hashCode => category.hashCode;
 }
 
+class CategoryBudgetEntity {
+  CategoryDB category;
+  int budget;
+
+  CategoryBudgetEntity(this.category, this.budget);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is CategoryBudgetEntity &&
+              runtimeType == other.runtimeType &&
+              category == other.category;
+
+  @override
+  int get hashCode => category.hashCode;
+}
+
 @UseDao(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
