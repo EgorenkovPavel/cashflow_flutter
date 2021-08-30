@@ -42,36 +42,44 @@ class _AccountInputPageState extends State<AccountInputPage> {
     return BlocConsumer<AccountInputPageBloc, AccountInputPageState>(
       bloc: _bloc,
       listener: (context, state) {
-        if (state is CloseState) {
+        if (state.action == BlocAction.CLOSE) {
           Navigator.of(context).pop(state.account);
         }
       },
       builder: (context, state) {
-        if (state is AccountState) {
-          _controller.text = state.title;
-        }
+        _controller.text = state.title;
         return ItemCard<Account>(
           title: widget.id == null
               ? AppLocalizations.of(context).newAccountCardTitle
               : AppLocalizations.of(context).accountCardTitle,
           onSave: (context) => _bloc.save(_controller.text),
-          child: TextFormField(
-            autofocus: true,
-            controller: _controller,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          child: Column(
+            children: [
+              TextFormField(
+                autofocus: true,
+                controller: _controller,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  labelText: AppLocalizations.of(context).title,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context).emptyTitleError;
+                  }
+                  return null;
+                },
               ),
-              labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-              labelText: AppLocalizations.of(context).title,
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return AppLocalizations.of(context).emptyTitleError;
-              }
-              return null;
-            },
+              Row(
+                children: [
+                  Checkbox(value: state.isDebt, onChanged: (val)=> _bloc.changeIsDebt(val!), ),
+                  Text('Is debt'),
+                ],
+              )
+            ],
           ),
         );
       },

@@ -5,17 +5,19 @@ class AccountBalance {
   final int id;
   final String title;
   final int balance;
+  final bool isDebt;
 
-  const AccountBalance({required this.id, required this.title, required this.balance});
+  const AccountBalance({required this.id, required this.title, required this.balance, this.isDebt = false});
 
-  AccountBalance copyWith({int? id, String? title, int? balance}) =>
+  AccountBalance copyWith({int? id, String? title, bool? isDebt, int? balance}) =>
       AccountBalance(
         id: id ?? this.id,
         title: title ?? this.title,
+        isDebt: isDebt ?? this.isDebt,
         balance: balance ?? this.balance,
       );
 
-  Account getAccount() => Account(id: id, title: title);
+  Account getAccount() => Account(id: id, title: title, isDebt: isDebt);
 
   @override
   bool operator ==(Object other) =>
