@@ -9,11 +9,11 @@ class AccountMapper extends Mapper<Account, AccountDB>{
 
   @override
   AccountDB mapToSql(Account a){
-    return AccountDB(id: a.id, title: a.title, );
+    return AccountDB(id: a.id, title: a.title, isDebt: a.isDebt, );
   }
 
   @override
   Account mapToDart(AccountDB a){
-    return Account(id: a.id, title: a.title, );
+    return Account(id: a.id, title: a.title, isDebt: a.isDebt);
   }
 }

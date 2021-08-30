@@ -22,7 +22,7 @@ class Accounts extends Table {
 
   TextColumn get title => text()();
 
-  BoolColumn get isDebt => boolean()();
+  BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('CategoryDB')
@@ -166,7 +166,21 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+      onCreate: (Migrator m) {
+        return m.createAll();
+      },
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from == 1) {
+          // we added the dueDate property in the change from version 1
+          await m.addColumn(accounts, accounts.isDebt);
+        }
+      }
+  );
+
 
   Future deleteAll() {
     return transaction(() async {
@@ -218,6 +232,7 @@ class Database extends _$Database {
               accounts.add(AccountDB(
                 id: int.parse(d['_id']),
                 title: d['account_title'],
+                isDebt: false,
               ));
             } else {
               accounts.add(

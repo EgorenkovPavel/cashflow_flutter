@@ -10,7 +10,8 @@ part of 'database.dart';
 class AccountDB extends DataClass implements Insertable<AccountDB> {
   final int id;
   final String title;
-  AccountDB({required this.id, required this.title});
+  final bool isDebt;
+  AccountDB({required this.id, required this.title, required this.isDebt});
   factory AccountDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -19,6 +20,8 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       title: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
+      isDebt: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_debt'])!,
     );
   }
   @override
@@ -26,6 +29,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
+    map['is_debt'] = Variable<bool>(isDebt);
     return map;
   }
 
@@ -33,6 +37,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     return AccountsCompanion(
       id: Value(id),
       title: Value(title),
+      isDebt: Value(isDebt),
     );
   }
 
@@ -42,6 +47,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     return AccountDB(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
+      isDebt: serializer.fromJson<bool>(json['isDebt']),
     );
   }
   @override
@@ -50,55 +56,69 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
+      'isDebt': serializer.toJson<bool>(isDebt),
     };
   }
 
-  AccountDB copyWith({int? id, String? title}) => AccountDB(
+  AccountDB copyWith({int? id, String? title, bool? isDebt}) => AccountDB(
         id: id ?? this.id,
         title: title ?? this.title,
+        isDebt: isDebt ?? this.isDebt,
       );
   @override
   String toString() {
     return (StringBuffer('AccountDB(')
           ..write('id: $id, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('isDebt: $isDebt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, title.hashCode));
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(title.hashCode, isDebt.hashCode)));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AccountDB && other.id == this.id && other.title == this.title);
+      (other is AccountDB &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.isDebt == this.isDebt);
 }
 
 class AccountsCompanion extends UpdateCompanion<AccountDB> {
   final Value<int> id;
   final Value<String> title;
+  final Value<bool> isDebt;
   const AccountsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
+    this.isDebt = const Value.absent(),
   });
   AccountsCompanion.insert({
     this.id = const Value.absent(),
     required String title,
+    this.isDebt = const Value.absent(),
   }) : title = Value(title);
   static Insertable<AccountDB> custom({
     Expression<int>? id,
     Expression<String>? title,
+    Expression<bool>? isDebt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
+      if (isDebt != null) 'is_debt': isDebt,
     });
   }
 
-  AccountsCompanion copyWith({Value<int>? id, Value<String>? title}) {
+  AccountsCompanion copyWith(
+      {Value<int>? id, Value<String>? title, Value<bool>? isDebt}) {
     return AccountsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
+      isDebt: isDebt ?? this.isDebt,
     );
   }
 
@@ -111,6 +131,9 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
+    if (isDebt.present) {
+      map['is_debt'] = Variable<bool>(isDebt.value);
+    }
     return map;
   }
 
@@ -118,7 +141,8 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
   String toString() {
     return (StringBuffer('AccountsCompanion(')
           ..write('id: $id, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('isDebt: $isDebt')
           ..write(')'))
         .toString();
   }
@@ -139,8 +163,15 @@ class $AccountsTable extends Accounts
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
       typeName: 'TEXT', requiredDuringInsert: true);
+  final VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
+  late final GeneratedColumn<bool?> isDebt = GeneratedColumn<bool?>(
+      'is_debt', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'CHECK (is_debt IN (0, 1))',
+      defaultValue: const Constant(false));
   @override
-  List<GeneratedColumn> get $columns => [id, title];
+  List<GeneratedColumn> get $columns => [id, title, isDebt];
   @override
   String get aliasedName => _alias ?? 'accounts';
   @override
@@ -158,6 +189,10 @@ class $AccountsTable extends Accounts
           _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
+    }
+    if (data.containsKey('is_debt')) {
+      context.handle(_isDebtMeta,
+          isDebt.isAcceptableOrUnknown(data['is_debt']!, _isDebtMeta));
     }
     return context;
   }
@@ -1351,6 +1386,9 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
+  late final AccountDao accountDao = AccountDao(this as Database);
+  late final CategoryDao categoryDao = CategoryDao(this as Database);
+  late final OperationDao operationDao = OperationDao(this as Database);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
