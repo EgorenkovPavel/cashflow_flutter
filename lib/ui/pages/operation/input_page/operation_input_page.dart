@@ -20,9 +20,11 @@ class _OperationInputPageState extends State<OperationInputPage>
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-  Widget accountPageView(BuildContext context) {
+  Widget accountPageView(BuildContext context, OperationType type) {
     return CarouselList<AccountBalance>(
-      stream: _bloc.accountStream,
+      stream: _bloc.accountStream.map((list) => type == OperationType.TRANSFER
+          ? list
+          : list.where((element) => !element.isDebt).toList()),
       emptyListMessage: AppLocalizations.of(context).noAccounts,
       initialItemFinder: (account) =>
           _bloc.account != null && account.id == _bloc.account!.id,
@@ -160,7 +162,8 @@ class _OperationInputPageState extends State<OperationInputPage>
           content: Text(AppLocalizations.of(context).emptyCategoryError),
         ),
       );
-    } else if (state.action == MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE) {
+    } else if (state.action ==
+        MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).emptyRecAccountError),
@@ -172,7 +175,8 @@ class _OperationInputPageState extends State<OperationInputPage>
           content: Text(AppLocalizations.of(context).emptySumError),
         ),
       );
-    } else if (state.action == MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE) {
+    } else if (state.action ==
+        MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).mesOperationCreated),
@@ -184,7 +188,8 @@ class _OperationInputPageState extends State<OperationInputPage>
           ),
         ),
       );
-    } else if (state.action == MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE) {
+    } else if (state.action ==
+        MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).mesOperationCanceled),
@@ -268,7 +273,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                               ? AppLocalizations.of(context).source
                               : AppLocalizations.of(context).accounts,
                           addNewAccount,
-                          accountPageView(context)),
+                          accountPageView(context, state.type)),
                       buildAnalyticList(state.type),
                     ],
                   ),
@@ -331,7 +336,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                                         height: 48.0,
                                         alignment: Alignment.center,
                                         child: Text(
-                                          AppLocalizations.of(context).numberFormat(state.sum),
+                                          AppLocalizations.of(context)
+                                              .numberFormat(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4,
@@ -378,7 +384,8 @@ class _OperationInputPageState extends State<OperationInputPage>
 
 class _CategoryItem extends StatelessWidget {
   const _CategoryItem({
-    Key? key, required this.category,
+    Key? key,
+    required this.category,
   }) : super(key: key);
 
   final Category category;
