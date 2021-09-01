@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/account_balance.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
@@ -144,37 +142,37 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   void stateListener(BuildContext context, MasterState state) {
-    if (state is ClosePage) {
+    if (state.action == MasterStateAction.CLOSE) {
       Navigator.of(context).pop();
-    } else if (state is ShowKeyboard) {
+    } else if (state.action == MasterStateAction.SHOW_KEYBOARD) {
       _animationController.forward();
-    } else if (state is HideKeyBoard) {
+    } else if (state.action == MasterStateAction.HIDE_KEYBOARD) {
       _animationController.reverse();
-    } else if (state is EmptyAccountMessage) {
+    } else if (state.action == MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).emptyAccountError),
         ),
       );
-    } else if (state is EmptyCategoryMessage) {
+    } else if (state.action == MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).emptyCategoryError),
         ),
       );
-    } else if (state is EmptyRecAccountMessage) {
+    } else if (state.action == MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).emptyRecAccountError),
         ),
       );
-    } else if (state is EmptySumMessage) {
+    } else if (state.action == MasterStateAction.SHOW_EMPTY_SUM_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).emptySumError),
         ),
       );
-    } else if (state is OperationCreatedMessage) {
+    } else if (state.action == MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).mesOperationCreated),
@@ -186,7 +184,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           ),
         ),
       );
-    } else if (state is OperationCanceled) {
+    } else if (state.action == MasterStateAction.SHOW_OPEARTION_CANCELED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).mesOperationCanceled),
@@ -246,13 +244,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           bloc: _bloc,
           listener: (BuildContext context, MasterState state) =>
               stateListener(context, state),
-          buildWhen: (oldState, newState) {
-            return newState is DataState;
-          },
           builder: (BuildContext context, MasterState state) {
-            if (!(state is DataState)) {
-              return SizedBox();
-            }
             return Column(
               children: <Widget>[
                 Padding(
