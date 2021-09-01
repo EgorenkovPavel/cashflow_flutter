@@ -69,7 +69,7 @@ class TopHeader extends StatelessWidget {
                   height: _itemSize / 2,
                   width: double.infinity,
                   margin: EdgeInsets.only(
-                      bottom: _itemSize / 2 + Dimensions.padding * 1),
+                      bottom: _accounts.isEmpty ? 0 : _itemSize / 2 + Dimensions.padding * 1),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.only(
@@ -116,6 +116,10 @@ class AccountList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (accounts.isEmpty){
+      return SizedBox();
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
