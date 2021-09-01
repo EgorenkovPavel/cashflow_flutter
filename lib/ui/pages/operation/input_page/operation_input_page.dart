@@ -184,7 +184,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           ),
         ),
       );
-    } else if (state.action == MasterStateAction.SHOW_OPEARTION_CANCELED_MESSAGE) {
+    } else if (state.action == MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context).mesOperationCanceled),
