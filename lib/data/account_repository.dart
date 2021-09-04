@@ -41,9 +41,21 @@ class AccountRepository {
   Future<Account> getById(int id) async =>
       _mapAccount(await accountDao.getAccountById(id));
 
+  Future<Account?> getByCloudId(String cloudId) async {
+    var _account = await accountDao.getAccountByCloudId(cloudId);
+    if (_account == null){
+      return null;
+    }else{
+      return _mapAccount(_account);
+    }
+  }
+
+
   Future<int> insert(Account account) =>
       accountDao.insertAccount(AccountsCompanion(
-        title: Value(account.title)
+        cloudId: Value(account.cloudId),
+        title: Value(account.title),
+        isDebt: Value(account.isDebt),
       ));
 
   Future update(Account account) =>

@@ -54,6 +54,15 @@ class CategoryRepository {
   Future<Category> getById(int id) async =>
       _mapCategory(await categoryDao.getCategoryById(id));
 
+  Future<Category?> getByCloudId(String cloudId) async {
+    var _category = await categoryDao.getCategoryByCloudId(cloudId);
+    if (_category == null){
+      return null;
+    }else{
+      return _mapCategory(_category);
+    }
+  }
+
   Stream<Category> watchById(int id) =>
       categoryDao.watchCategoryById(id).map(_mapCategory);
 
@@ -65,6 +74,7 @@ class CategoryRepository {
 
   Future<int> insert(Category entity) =>
       categoryDao.insertCategory(CategoriesCompanion(
+        cloudId: Value(entity.cloudId),
         title: Value(entity.title),
         operationType: Value(entity.operationType),
         budgetType: Value(entity.budgetType),

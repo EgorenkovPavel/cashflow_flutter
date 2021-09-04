@@ -28,7 +28,6 @@ class _OperationEditPageState extends State<OperationEditPage> {
   Category? _category;
   Account? _recAccount;
   final TextEditingController _sumController = TextEditingController();
-  late StreamSubscription<Operation> subscription;
 
   late Repository model;
   late List<Account> accountList;
@@ -64,9 +63,9 @@ class _OperationEditPageState extends State<OperationEditPage> {
   void initState() {
     super.initState();
 
-    subscription = Provider.of<Repository>(context, listen: false)
+    Provider.of<Repository>(context, listen: false)
         .getOperationById(widget.id)
-        .listen((Operation data) {
+        .then((Operation data) {
       setState(() {
         _type = data.type;
         _date = data.date;
@@ -83,7 +82,6 @@ class _OperationEditPageState extends State<OperationEditPage> {
   @override
   void dispose() {
     super.dispose();
-    subscription.cancel();
     _sumController.dispose();
   }
 
@@ -275,7 +273,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
           sum: int.parse(_sumController.text));
 
       await Provider.of<Repository>(context, listen: false)
-          .insertOperation(operation);
+          .updateOperation(operation);
     }
   }
 

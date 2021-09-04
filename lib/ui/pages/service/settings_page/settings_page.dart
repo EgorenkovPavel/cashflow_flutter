@@ -5,7 +5,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/ui/widgets/mode_toggle_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
+import 'package:money_tracker/data/google_http_client.dart';
 
 class SettingsPage extends StatelessWidget {
   Widget sectionTitle(BuildContext context, String text) {

@@ -9,15 +9,22 @@ part of 'database.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class AccountDB extends DataClass implements Insertable<AccountDB> {
   final int id;
+  final String cloudId;
   final String title;
   final bool isDebt;
-  AccountDB({required this.id, required this.title, required this.isDebt});
+  AccountDB(
+      {required this.id,
+      required this.cloudId,
+      required this.title,
+      required this.isDebt});
   factory AccountDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return AccountDB(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      cloudId: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
       title: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       isDebt: const BoolType()
@@ -28,6 +35,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
     map['is_debt'] = Variable<bool>(isDebt);
     return map;
@@ -36,6 +44,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   AccountsCompanion toCompanion(bool nullToAbsent) {
     return AccountsCompanion(
       id: Value(id),
+      cloudId: Value(cloudId),
       title: Value(title),
       isDebt: Value(isDebt),
     );
@@ -46,6 +55,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return AccountDB(
       id: serializer.fromJson<int>(json['id']),
+      cloudId: serializer.fromJson<String>(json['cloudId']),
       title: serializer.fromJson<String>(json['title']),
       isDebt: serializer.fromJson<bool>(json['isDebt']),
     );
@@ -55,13 +65,16 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'cloudId': serializer.toJson<String>(cloudId),
       'title': serializer.toJson<String>(title),
       'isDebt': serializer.toJson<bool>(isDebt),
     };
   }
 
-  AccountDB copyWith({int? id, String? title, bool? isDebt}) => AccountDB(
+  AccountDB copyWith({int? id, String? cloudId, String? title, bool? isDebt}) =>
+      AccountDB(
         id: id ?? this.id,
+        cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
         isDebt: isDebt ?? this.isDebt,
       );
@@ -69,6 +82,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   String toString() {
     return (StringBuffer('AccountDB(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
           ..write('isDebt: $isDebt')
           ..write(')'))
@@ -76,47 +90,57 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(title.hashCode, isDebt.hashCode)));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(cloudId.hashCode, $mrjc(title.hashCode, isDebt.hashCode))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AccountDB &&
           other.id == this.id &&
+          other.cloudId == this.cloudId &&
           other.title == this.title &&
           other.isDebt == this.isDebt);
 }
 
 class AccountsCompanion extends UpdateCompanion<AccountDB> {
   final Value<int> id;
+  final Value<String> cloudId;
   final Value<String> title;
   final Value<bool> isDebt;
   const AccountsCompanion({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     this.title = const Value.absent(),
     this.isDebt = const Value.absent(),
   });
   AccountsCompanion.insert({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     required String title,
     this.isDebt = const Value.absent(),
   }) : title = Value(title);
   static Insertable<AccountDB> custom({
     Expression<int>? id,
+    Expression<String>? cloudId,
     Expression<String>? title,
     Expression<bool>? isDebt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (cloudId != null) 'cloud_id': cloudId,
       if (title != null) 'title': title,
       if (isDebt != null) 'is_debt': isDebt,
     });
   }
 
   AccountsCompanion copyWith(
-      {Value<int>? id, Value<String>? title, Value<bool>? isDebt}) {
+      {Value<int>? id,
+      Value<String>? cloudId,
+      Value<String>? title,
+      Value<bool>? isDebt}) {
     return AccountsCompanion(
       id: id ?? this.id,
+      cloudId: cloudId ?? this.cloudId,
       title: title ?? this.title,
       isDebt: isDebt ?? this.isDebt,
     );
@@ -127,6 +151,9 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (cloudId.present) {
+      map['cloud_id'] = Variable<String>(cloudId.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -141,6 +168,7 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
   String toString() {
     return (StringBuffer('AccountsCompanion(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
           ..write('isDebt: $isDebt')
           ..write(')'))
@@ -159,6 +187,12 @@ class $AccountsTable extends Accounts
       typeName: 'INTEGER',
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+      'cloud_id', aliasedName, false,
+      typeName: 'TEXT',
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
@@ -171,7 +205,7 @@ class $AccountsTable extends Accounts
       defaultConstraints: 'CHECK (is_debt IN (0, 1))',
       defaultValue: const Constant(false));
   @override
-  List<GeneratedColumn> get $columns => [id, title, isDebt];
+  List<GeneratedColumn> get $columns => [id, cloudId, title, isDebt];
   @override
   String get aliasedName => _alias ?? 'accounts';
   @override
@@ -183,6 +217,10 @@ class $AccountsTable extends Accounts
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('cloud_id')) {
+      context.handle(_cloudIdMeta,
+          cloudId.isAcceptableOrUnknown(data['cloud_id']!, _cloudIdMeta));
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -213,12 +251,14 @@ class $AccountsTable extends Accounts
 
 class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final int id;
+  final String cloudId;
   final String title;
   final OperationType operationType;
   final BudgetType budgetType;
   final int budget;
   CategoryDB(
       {required this.id,
+      required this.cloudId,
       required this.title,
       required this.operationType,
       required this.budgetType,
@@ -229,6 +269,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     return CategoryDB(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      cloudId: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
       title: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       operationType: $CategoriesTable.$converter0.mapToDart(const IntType()
@@ -243,6 +285,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
     {
       final converter = $CategoriesTable.$converter0;
@@ -259,6 +302,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   CategoriesCompanion toCompanion(bool nullToAbsent) {
     return CategoriesCompanion(
       id: Value(id),
+      cloudId: Value(cloudId),
       title: Value(title),
       operationType: Value(operationType),
       budgetType: Value(budgetType),
@@ -271,6 +315,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return CategoryDB(
       id: serializer.fromJson<int>(json['id']),
+      cloudId: serializer.fromJson<String>(json['cloudId']),
       title: serializer.fromJson<String>(json['title']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
       budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
@@ -282,6 +327,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'cloudId': serializer.toJson<String>(cloudId),
       'title': serializer.toJson<String>(title),
       'operationType': serializer.toJson<OperationType>(operationType),
       'budgetType': serializer.toJson<BudgetType>(budgetType),
@@ -291,12 +337,14 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
 
   CategoryDB copyWith(
           {int? id,
+          String? cloudId,
           String? title,
           OperationType? operationType,
           BudgetType? budgetType,
           int? budget}) =>
       CategoryDB(
         id: id ?? this.id,
+        cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
         operationType: operationType ?? this.operationType,
         budgetType: budgetType ?? this.budgetType,
@@ -306,6 +354,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   String toString() {
     return (StringBuffer('CategoryDB(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
           ..write('operationType: $operationType, ')
           ..write('budgetType: $budgetType, ')
@@ -318,14 +367,17 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
       $mrjc(
-          title.hashCode,
-          $mrjc(operationType.hashCode,
-              $mrjc(budgetType.hashCode, budget.hashCode)))));
+          cloudId.hashCode,
+          $mrjc(
+              title.hashCode,
+              $mrjc(operationType.hashCode,
+                  $mrjc(budgetType.hashCode, budget.hashCode))))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CategoryDB &&
           other.id == this.id &&
+          other.cloudId == this.cloudId &&
           other.title == this.title &&
           other.operationType == this.operationType &&
           other.budgetType == this.budgetType &&
@@ -334,12 +386,14 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
 
 class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<int> id;
+  final Value<String> cloudId;
   final Value<String> title;
   final Value<OperationType> operationType;
   final Value<BudgetType> budgetType;
   final Value<int> budget;
   const CategoriesCompanion({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     this.title = const Value.absent(),
     this.operationType = const Value.absent(),
     this.budgetType = const Value.absent(),
@@ -347,6 +401,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   });
   CategoriesCompanion.insert({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     required String title,
     required OperationType operationType,
     required BudgetType budgetType,
@@ -357,6 +412,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
         budget = Value(budget);
   static Insertable<CategoryDB> custom({
     Expression<int>? id,
+    Expression<String>? cloudId,
     Expression<String>? title,
     Expression<OperationType>? operationType,
     Expression<BudgetType>? budgetType,
@@ -364,6 +420,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (cloudId != null) 'cloud_id': cloudId,
       if (title != null) 'title': title,
       if (operationType != null) 'operation_type': operationType,
       if (budgetType != null) 'budget_type': budgetType,
@@ -373,12 +430,14 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
 
   CategoriesCompanion copyWith(
       {Value<int>? id,
+      Value<String>? cloudId,
       Value<String>? title,
       Value<OperationType>? operationType,
       Value<BudgetType>? budgetType,
       Value<int>? budget}) {
     return CategoriesCompanion(
       id: id ?? this.id,
+      cloudId: cloudId ?? this.cloudId,
       title: title ?? this.title,
       operationType: operationType ?? this.operationType,
       budgetType: budgetType ?? this.budgetType,
@@ -391,6 +450,9 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (cloudId.present) {
+      map['cloud_id'] = Variable<String>(cloudId.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -414,6 +476,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   String toString() {
     return (StringBuffer('CategoriesCompanion(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
           ..write('operationType: $operationType, ')
           ..write('budgetType: $budgetType, ')
@@ -434,6 +497,12 @@ class $CategoriesTable extends Categories
       typeName: 'INTEGER',
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+      'cloud_id', aliasedName, false,
+      typeName: 'TEXT',
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
@@ -456,7 +525,7 @@ class $CategoriesTable extends Categories
       typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, operationType, budgetType, budget];
+      [id, cloudId, title, operationType, budgetType, budget];
   @override
   String get aliasedName => _alias ?? 'categories';
   @override
@@ -468,6 +537,10 @@ class $CategoriesTable extends Categories
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('cloud_id')) {
+      context.handle(_cloudIdMeta,
+          cloudId.isAcceptableOrUnknown(data['cloud_id']!, _cloudIdMeta));
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -507,6 +580,7 @@ class $CategoriesTable extends Categories
 
 class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int id;
+  final String cloudId;
   final DateTime date;
   final OperationType operationType;
   final int account;
@@ -515,6 +589,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int sum;
   OperationDB(
       {required this.id,
+      required this.cloudId,
       required this.date,
       required this.operationType,
       required this.account,
@@ -527,6 +602,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     return OperationDB(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      cloudId: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
       date: const DateTimeType()
           .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
       operationType: $OperationsTable.$converter0.mapToDart(const IntType()
@@ -545,6 +622,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['cloud_id'] = Variable<String>(cloudId);
     map['date'] = Variable<DateTime>(date);
     {
       final converter = $OperationsTable.$converter0;
@@ -564,6 +642,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   OperationsCompanion toCompanion(bool nullToAbsent) {
     return OperationsCompanion(
       id: Value(id),
+      cloudId: Value(cloudId),
       date: Value(date),
       operationType: Value(operationType),
       account: Value(account),
@@ -582,6 +661,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return OperationDB(
       id: serializer.fromJson<int>(json['id']),
+      cloudId: serializer.fromJson<String>(json['cloudId']),
       date: serializer.fromJson<DateTime>(json['date']),
       operationType: serializer.fromJson<OperationType>(json['operationType']),
       account: serializer.fromJson<int>(json['account']),
@@ -595,6 +675,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'cloudId': serializer.toJson<String>(cloudId),
       'date': serializer.toJson<DateTime>(date),
       'operationType': serializer.toJson<OperationType>(operationType),
       'account': serializer.toJson<int>(account),
@@ -606,6 +687,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
 
   OperationDB copyWith(
           {int? id,
+          String? cloudId,
           DateTime? date,
           OperationType? operationType,
           int? account,
@@ -614,6 +696,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           int? sum}) =>
       OperationDB(
         id: id ?? this.id,
+        cloudId: cloudId ?? this.cloudId,
         date: date ?? this.date,
         operationType: operationType ?? this.operationType,
         account: account ?? this.account,
@@ -625,6 +708,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   String toString() {
     return (StringBuffer('OperationDB(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('date: $date, ')
           ..write('operationType: $operationType, ')
           ..write('account: $account, ')
@@ -639,18 +723,21 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
       $mrjc(
-          date.hashCode,
+          cloudId.hashCode,
           $mrjc(
-              operationType.hashCode,
+              date.hashCode,
               $mrjc(
-                  account.hashCode,
-                  $mrjc(category.hashCode,
-                      $mrjc(recAccount.hashCode, sum.hashCode)))))));
+                  operationType.hashCode,
+                  $mrjc(
+                      account.hashCode,
+                      $mrjc(category.hashCode,
+                          $mrjc(recAccount.hashCode, sum.hashCode))))))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is OperationDB &&
           other.id == this.id &&
+          other.cloudId == this.cloudId &&
           other.date == this.date &&
           other.operationType == this.operationType &&
           other.account == this.account &&
@@ -661,6 +748,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
 
 class OperationsCompanion extends UpdateCompanion<OperationDB> {
   final Value<int> id;
+  final Value<String> cloudId;
   final Value<DateTime> date;
   final Value<OperationType> operationType;
   final Value<int> account;
@@ -669,6 +757,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   final Value<int> sum;
   const OperationsCompanion({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     this.date = const Value.absent(),
     this.operationType = const Value.absent(),
     this.account = const Value.absent(),
@@ -678,6 +767,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   });
   OperationsCompanion.insert({
     this.id = const Value.absent(),
+    this.cloudId = const Value.absent(),
     required DateTime date,
     required OperationType operationType,
     required int account,
@@ -690,6 +780,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
         sum = Value(sum);
   static Insertable<OperationDB> custom({
     Expression<int>? id,
+    Expression<String>? cloudId,
     Expression<DateTime>? date,
     Expression<OperationType>? operationType,
     Expression<int>? account,
@@ -699,6 +790,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (cloudId != null) 'cloud_id': cloudId,
       if (date != null) 'date': date,
       if (operationType != null) 'operation_type': operationType,
       if (account != null) 'account': account,
@@ -710,6 +802,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
 
   OperationsCompanion copyWith(
       {Value<int>? id,
+      Value<String>? cloudId,
       Value<DateTime>? date,
       Value<OperationType>? operationType,
       Value<int>? account,
@@ -718,6 +811,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       Value<int>? sum}) {
     return OperationsCompanion(
       id: id ?? this.id,
+      cloudId: cloudId ?? this.cloudId,
       date: date ?? this.date,
       operationType: operationType ?? this.operationType,
       account: account ?? this.account,
@@ -732,6 +826,9 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (cloudId.present) {
+      map['cloud_id'] = Variable<String>(cloudId.value);
     }
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
@@ -760,6 +857,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   String toString() {
     return (StringBuffer('OperationsCompanion(')
           ..write('id: $id, ')
+          ..write('cloudId: $cloudId, ')
           ..write('date: $date, ')
           ..write('operationType: $operationType, ')
           ..write('account: $account, ')
@@ -782,6 +880,12 @@ class $OperationsTable extends Operations
       typeName: 'INTEGER',
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+      'cloud_id', aliasedName, false,
+      typeName: 'TEXT',
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
       'date', aliasedName, false,
@@ -817,7 +921,7 @@ class $OperationsTable extends Operations
       typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, date, operationType, account, category, recAccount, sum];
+      [id, cloudId, date, operationType, account, category, recAccount, sum];
   @override
   String get aliasedName => _alias ?? 'operations';
   @override
@@ -829,6 +933,10 @@ class $OperationsTable extends Operations
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('cloud_id')) {
+      context.handle(_cloudIdMeta,
+          cloudId.isAcceptableOrUnknown(data['cloud_id']!, _cloudIdMeta));
     }
     if (data.containsKey('date')) {
       context.handle(

@@ -1,10 +1,10 @@
-
 import 'account.dart';
 import 'category.dart';
 import 'operation_type.dart';
 
 class Operation {
   final int id;
+  final String cloudId;
   final DateTime date;
   final OperationType type;
   final Account account;
@@ -14,6 +14,7 @@ class Operation {
 
   const Operation(
       {this.id = 0,
+      this.cloudId = '',
       required this.date,
       required this.type,
       required this.account,
@@ -23,6 +24,7 @@ class Operation {
 
   Operation copyWith(
           {int? id,
+          String? cloudId,
           DateTime? date,
           OperationType? type,
           Account? account,
@@ -31,6 +33,7 @@ class Operation {
           int? sum}) =>
       Operation(
         id: id ?? this.id,
+        cloudId: cloudId ?? this.cloudId,
         date: date ?? this.date,
         type: type ?? this.type,
         account: account ?? this.account,

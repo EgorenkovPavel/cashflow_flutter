@@ -21,28 +21,34 @@ class OperationRepository {
   Stream<List<Operation>> watchAll() =>
       operationDao.watchAllOperationItems().map(_mapOperationList);
 
-  Stream<List<Operation>> watchAllByFilter(
-      OperationListFilter filter) =>
+  Stream<List<Operation>> watchAllByFilter(OperationListFilter filter) =>
       operationDao
           .watchAllOperationItemsByFilter(
-          start: filter.date?.start,
-          end: filter.date?.end,
-          accountIds: filter.accountsIds,
-          categoriesIds: filter.categoriesIds)
+              start: filter.date?.start,
+              end: filter.date?.end,
+              accountIds: filter.accountsIds,
+              categoriesIds: filter.categoriesIds)
           .map(_mapOperationList);
 
-  Stream<Operation> getById(int id) =>
-      operationDao.getOperationById(id).map(_mapOperation);
+  Future<Operation> getById(int id) =>
+      operationDao.getOperationById(id).then((value) => _mapOperation(value));
 
-  Stream<List<Operation>> watchAllByAccount(int accountId) =>
-      operationDao
-          .watchAllOperationItemsByAccount(accountId)
-          .map(_mapOperationList);
+  Future<Operation?> getByCloudId(String cloudId) =>
+      operationDao.getOperationByCloudId(cloudId).then((value) {
+        if (value == null) {
+          return null;
+        } else {
+          return _mapOperation(value);
+        }
+      });
 
-  Stream<List<Operation>> watchAllByCategory(int categoryId) =>
-      operationDao
-          .watchAllOperationItemsByCategory(categoryId)
-          .map(_mapOperationList);
+  Stream<List<Operation>> watchAllByAccount(int accountId) => operationDao
+      .watchAllOperationItemsByAccount(accountId)
+      .map(_mapOperationList);
+
+  Stream<List<Operation>> watchAllByCategory(int categoryId) => operationDao
+      .watchAllOperationItemsByCategory(categoryId)
+      .map(_mapOperationList);
 
   Stream<List<Operation>> watchLast(int limit) =>
       operationDao.watchLastOperationItems(limit).map(_mapOperationList);
@@ -52,33 +58,18 @@ class OperationRepository {
       .then((value) => value == null ? null : _mapOperation(value));
 
   Future<int> insert(Operation entity) {
-    if ((entity.id) == 0) {
-      return operationDao.insertOperation(
-        OperationsCompanion(
-          date: Value(entity.date),
-          operationType: Value(entity.type),
-          account: Value(entity.account.id),
-          category: Value(entity.category?.id),
-          recAccount: Value(entity.recAccount?.id),
-          sum: Value(entity.sum)
-        )
-      );
-    } else {
-      return operationDao.updateOperation(_mapOperationDB(entity));
-    }
+    return operationDao.insertOperation(OperationsCompanion(
+        cloudId: Value(entity.cloudId),
+        date: Value(entity.date),
+        operationType: Value(entity.type),
+        account: Value(entity.account.id),
+        category: Value(entity.category?.id),
+        recAccount: Value(entity.recAccount?.id),
+        sum: Value(entity.sum)));
   }
 
-  Future duplicate(Operation entity) {
-    var newOperation = OperationsCompanion(
-      date: Value(DateTime.now()),
-      operationType: Value(entity.type),
-      account: Value(entity.account.id),
-      category: Value(entity.category?.id),
-      recAccount: Value(entity.recAccount?.id),
-      sum: Value(entity.sum),
-    );
-    return operationDao.insertOperation(newOperation);
-  }
+  Future update(Operation operation) =>
+      operationDao.updateOperation(_mapOperationDB(operation));
 
   Future delete(Operation entity) =>
       operationDao.deleteOperation(_mapOperationDB(entity));

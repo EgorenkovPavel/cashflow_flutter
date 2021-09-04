@@ -51,7 +51,7 @@ class MasterBloc extends Cubit<MasterState> {
   Category? _categoryIn;
   Category? _categoryOut;
   AccountBalance? _recAccount;
-  int? _operationId;
+  Operation? _operation;
 
   MasterBloc(this._repository)
       : accountStream = _repository.watchAllAccountsBalance(),
@@ -80,8 +80,12 @@ class MasterBloc extends Cubit<MasterState> {
       return;
     }
 
-    _account =
-        AccountBalance(id: op.account.id, title: op.account.title, balance: 0);
+    _account = AccountBalance(
+      id: op.account.id,
+      cloudId: op.cloudId,
+      title: op.account.title,
+      balance: 0,
+    );
 
     emit(state.copyWith(type: op.type));
     switch (op.type) {
@@ -93,7 +97,11 @@ class MasterBloc extends Cubit<MasterState> {
         break;
       case OperationType.TRANSFER:
         _recAccount = AccountBalance(
-            id: op.recAccount!.id, title: op.recAccount!.title, balance: 0);
+          id: op.recAccount!.id,
+          cloudId: op.recAccount!.cloudId,
+          title: op.recAccount!.title,
+          balance: 0,
+        );
         break;
     }
   }
@@ -154,8 +162,8 @@ class MasterBloc extends Cubit<MasterState> {
   }
 
   Future<void> cancelOperation() async {
-    await _repository.deleteOperationById(_operationId!);
-    _operationId = null;
+    await _repository.deleteOperation(_operation!);
+    _operation = null;
     emit(state.copyWith(
         action: MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE));
   }
@@ -190,7 +198,7 @@ class MasterBloc extends Cubit<MasterState> {
       return;
     }
 
-    _operationId = await _saveOperation();
+    _operation = await _saveOperation();
     emit(state.copyWith(
         action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE));
 
@@ -198,7 +206,7 @@ class MasterBloc extends Cubit<MasterState> {
         action: MasterStateAction.HIDE_KEYBOARD, sum: 0, showKeyboard: false));
   }
 
-  Future<int> _saveOperation() {
+  Future<Operation> _saveOperation() {
     switch (state.type) {
       case OperationType.INPUT:
         {

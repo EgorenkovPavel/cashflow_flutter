@@ -1,6 +1,5 @@
 export 'package:money_tracker/domain/models/account.dart';
 export 'package:money_tracker/domain/models/account_balance.dart';
-export 'package:money_tracker/domain/models/budget.dart';
 export 'package:money_tracker/domain/models/budget_type.dart';
 export 'package:money_tracker/domain/models/category.dart';
 export 'package:money_tracker/domain/models/category_cashflow.dart';

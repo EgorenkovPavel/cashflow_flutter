@@ -38,9 +38,9 @@ class CategoryBudgetEntity {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is CategoryBudgetEntity &&
-              runtimeType == other.runtimeType &&
-              category == other.category;
+      other is CategoryBudgetEntity &&
+          runtimeType == other.runtimeType &&
+          category == other.category;
 
   @override
   int get hashCode => category.hashCode;
@@ -73,6 +73,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (c) => c.id.equals(id),
         ))
       .getSingle();
+
+  Future<CategoryDB?> getCategoryByCloudId(String cloudId) =>
+      (select(categories)
+            ..where(
+              (c) => c.cloudId.equals(cloudId),
+            ))
+          .getSingleOrNull();
 
   Stream<CategoryDB> watchCategoryById(int id) => (select(categories)
         ..where(

@@ -13,6 +13,7 @@ class AccountBalanceMapper
     return AccountBalanceEntity(
         AccountDB(
           id: a.id,
+          cloudId: a.cloudId,
           title: a.title,
           isDebt: a.isDebt,
         ),
@@ -23,6 +24,7 @@ class AccountBalanceMapper
   AccountBalance mapToDart(AccountBalanceEntity a) {
     return AccountBalance(
         id: a.account.id,
+        cloudId: a.account.cloudId,
         title: a.account.title,
         isDebt: a.account.isDebt,
         balance: a.sum);
@@ -31,6 +33,7 @@ class AccountBalanceMapper
   Account mapToAccount(AccountBalance a) {
     return Account(
       id: a.id,
+      cloudId: a.cloudId,
       title: a.title,
       isDebt: a.isDebt,
     );

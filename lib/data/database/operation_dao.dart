@@ -14,49 +14,49 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..orderBy([
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          var op = row.readTable(operations);
-          return OperationItem(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
-        },
-      ).toList(),
-    );
+              var op = row.readTable(operations);
+              return OperationItem(
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<OperationItem>> watchAllOperationItemsByFilter(
       {required DateTime? start,
-        required DateTime? end,
-        required Set<int> accountIds,
-        required Set<int> categoriesIds}) {
+      required DateTime? end,
+      required Set<int> accountIds,
+      required Set<int> categoriesIds}) {
     final acc = alias(accounts, 'aсс');
     final rec = alias(accounts, 'rec');
 
@@ -71,7 +71,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     if (accountIds.isNotEmpty) {
       sel.where(
-              (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
+          (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
     }
 
     if (categoriesIds.isNotEmpty) {
@@ -79,42 +79,42 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     }
 
     return (sel
-      ..orderBy([
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          var op = row.readTable(operations);
-          return OperationItem(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
-        },
-      ).toList(),
-    );
+              var op = row.readTable(operations);
+              return OperationItem(
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<OperationItem>> watchAllOperationItemsByCategory(int categoryId) {
@@ -122,43 +122,43 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..where((t) => t.category.equals(categoryId))
-      ..orderBy([
+          ..where((t) => t.category.equals(categoryId))
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          var op = row.readTable(operations);
-          return OperationItem(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
-        },
-      ).toList(),
-    );
+              var op = row.readTable(operations);
+              return OperationItem(
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<OperationItem>> watchAllOperationItemsByAccount(int accountId) {
@@ -166,44 +166,44 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..where((t) =>
-      t.account.equals(accountId) | t.recAccount.equals(accountId))
-      ..orderBy([
+          ..where((t) =>
+              t.account.equals(accountId) | t.recAccount.equals(accountId))
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
-          var op = row.readTable(operations);
-          return OperationItem(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
-        },
-      ).toList(),
-    );
+              var op = row.readTable(operations);
+              return OperationItem(
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<OperationItem>> watchLastOperationItems(int limit) {
@@ -211,30 +211,72 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..orderBy([
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ])
-      ..limit(limit))
+          ])
+          ..limit(limit))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
+              var op = row.readTable(operations);
+              return OperationItem(
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null);
+            },
+          ).toList(),
+        );
+  }
+
+  Future<OperationItem?> getLastOperationItem() {
+    final acc = alias(accounts, 'a');
+    final rec = alias(accounts, 'rec');
+
+    return (select(operations)
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ])
+          ..limit(1))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
+        .getSingle()
+        .then((row) {
           var op = row.readTable(operations);
           return OperationItem(
               operation: op,
@@ -245,94 +287,90 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null);
-        },
-      ).toList(),
-    );
-  }
-
-  Future<OperationItem?> getLastOperationItem() {
-    final acc = alias(accounts, 'a');
-    final rec = alias(accounts, 'rec');
-
-    return (select(operations)
-      ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ])
-      ..limit(1))
-        .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
-        .getSingle()
-        .then((row) {
-      var op = row.readTable(operations);
-      return OperationItem(
-          operation: op,
-          account: row.readTable(acc),
-          category: op.operationType == OperationType.TRANSFER
-              ? null
-              : row.readTable(categories),
-          recAccount: op.operationType == OperationType.TRANSFER
-              ? row.readTable(rec)
-              : null);
-    }, onError: (e){
-      return null;
-    });
+        }, onError: (e) {
+          return null;
+        });
   }
 
   Future<List<OperationDB>> getAllOperations() => select(operations).get();
 
-  Stream<OperationItem> getOperationById(int id) {
+  Future<OperationItem> getOperationById(int id) {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
 
     return (select(operations)..where((o) => o.id.equals(id)))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
-        .watchSingle()
-        .map((row) {
-      var op = row.readTable(operations);
-      return OperationItem(
-          operation: op,
-          account: row.readTable(acc),
-          category: op.operationType == OperationType.TRANSFER
-              ? null
-              : row.readTable(categories),
-          recAccount: op.operationType == OperationType.TRANSFER
-              ? row.readTable(rec)
-              : null);
-    });
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
+        .getSingle()
+        .then((row) {
+          var op = row.readTable(operations);
+          return OperationItem(
+              operation: op,
+              account: row.readTable(acc),
+              category: op.operationType == OperationType.TRANSFER
+                  ? null
+                  : row.readTable(categories),
+              recAccount: op.operationType == OperationType.TRANSFER
+                  ? row.readTable(rec)
+                  : null);
+        });
+  }
+
+  Future<OperationItem?> getOperationByCloudId(String cloudId) {
+    final acc = alias(accounts, 'a');
+    final rec = alias(accounts, 'rec');
+
+    return (select(operations)..where((o) => o.cloudId.equals(cloudId)))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
+        .getSingleOrNull()
+        .then((row) {
+          if (row == null) {
+            return null;
+          }
+          var op = row.readTable(operations);
+          return OperationItem(
+              operation: op,
+              account: row.readTable(acc),
+              category: op.operationType == OperationType.TRANSFER
+                  ? null
+                  : row.readTable(categories),
+              recAccount: op.operationType == OperationType.TRANSFER
+                  ? row.readTable(rec)
+                  : null);
+        });
   }
 
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
-
       var operationData = OperationsCompanion(
         date: Value(entity.date),
         operationType: Value(entity.type),
@@ -342,11 +380,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         sum: Value(entity.sum),
       );
 
-      var id = await into(operations).insert(
-          operationData
-      );
+      var id = await into(operations).insert(operationData);
 
-      operationData = operationData.copyWith(id:  Value(id));
+      operationData = operationData.copyWith(id: Value(id));
 
       await _insertAnalytic(operationData);
     });
@@ -448,34 +484,34 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         operations,
         operationData
             .map((p) => OperationsCompanion.insert(
-          id: Value(p.id),
-          date: p.date,
-          operationType: p.operationType,
-          account: p.account,
-          category: Value(p.category),
-          recAccount: Value(p.recAccount),
-          sum: p.sum,
-        ))
+                  id: Value(p.id),
+                  date: p.date,
+                  operationType: p.operationType,
+                  account: p.account,
+                  category: Value(p.category),
+                  recAccount: Value(p.recAccount),
+                  sum: p.sum,
+                ))
             .toList(),
       );
       batch.insertAll(
         cashflows,
         cashflowData
             .map((p) => CashflowsCompanion.insert(
-            date: p.date,
-            operation: p.operation,
-            category: p.category,
-            sum: p.sum))
+                date: p.date,
+                operation: p.operation,
+                category: p.category,
+                sum: p.sum))
             .toList(),
       );
       batch.insertAll(
           balances,
           balanceData
               .map((p) => BalancesCompanion.insert(
-              date: p.date,
-              operation: p.operation,
-              account: p.account,
-              sum: p.sum))
+                  date: p.date,
+                  operation: p.operation,
+                  account: p.account,
+                  sum: p.sum))
               .toList());
     });
   }
@@ -533,10 +569,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future _deleteAnalyticByOperationId(int operationId) async {
     await (delete(balances)
-      ..where((entry) => entry.operation.equals(operationId)))
+          ..where((entry) => entry.operation.equals(operationId)))
         .go();
     await (delete(cashflows)
-      ..where((entry) => entry.operation.equals(operationId)))
+          ..where((entry) => entry.operation.equals(operationId)))
         .go();
   }
 }

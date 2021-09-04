@@ -13,7 +13,7 @@ import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
+import 'package:money_tracker/data/google_http_client.dart';
 
 class PageNavigator {
   static const _routeAccountName = '/account';

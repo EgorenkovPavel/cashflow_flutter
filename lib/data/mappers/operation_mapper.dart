@@ -23,6 +23,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
   Operation mapToDart(OperationItem o) {
     return Operation(
         id: o.operationData.id,
+        cloudId: o.operation.cloudId,
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),
@@ -34,6 +35,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
   OperationDB mapToOperationData(Operation o){
     return OperationDB(
         id: o.id,
+        cloudId: o.cloudId,
         date: o.date,
         operationType: o.type,
         account: o.account.id,

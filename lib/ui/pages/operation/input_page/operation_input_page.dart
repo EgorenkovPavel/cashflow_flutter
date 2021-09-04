@@ -201,8 +201,12 @@ class _OperationInputPageState extends State<OperationInputPage>
   Future<void> addNewAccount() async {
     var account = await PageNavigator.openAccountInputPage(context);
     if (account != null) {
-      var accountBalance =
-          AccountBalance(id: account.id, title: account.title, balance: 0);
+      var accountBalance = AccountBalance(
+        id: account.id,
+        cloudId: account.cloudId,
+        title: account.title,
+        balance: 0,
+      );
       _bloc.onAccountChanged(accountBalance);
     }
   }
@@ -226,8 +230,12 @@ class _OperationInputPageState extends State<OperationInputPage>
   Future<void> addNewRecAccount() async {
     var account = await PageNavigator.openAccountInputPage(context);
     if (account != null) {
-      var accountBalance =
-          AccountBalance(id: account.id, title: account.title, balance: 0);
+      var accountBalance = AccountBalance(
+        id: account.id,
+        cloudId: account.cloudId,
+        title: account.title,
+        balance: 0,
+      );
       _bloc.onRecAccountChanged(accountBalance);
     }
   }

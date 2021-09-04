@@ -1,7 +1,7 @@
 import 'package:money_tracker/data/stack.dart' as lib;
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
+import 'package:money_tracker/data/google_http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
