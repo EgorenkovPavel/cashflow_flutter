@@ -114,6 +114,7 @@ class Repository extends ChangeNotifier {
       _categoryRepo.getAllByType(type);
 
   Future<int> insertCategory(Category category) async {
+    //TODO вызывается запись в облако и сразу подписка об изменении в облаке а уже потом запись в базе. получается 2 копии в базе и 1 в облаке
     var _cloudId = await _cloudSource.addCategory(category);
     var _id = await _categoryRepo.insert(category.copyWith(cloudId: _cloudId));
     return _id;
@@ -157,7 +158,7 @@ class Repository extends ChangeNotifier {
     await _operationRepo.update(operation);
   }
 
-  Future duplicateOperation(Operation operation) {
+  Future<Operation> duplicateOperation(Operation operation) {
     var newOperation = operation.copyWith(
       id: 0,
       cloudId: '',
