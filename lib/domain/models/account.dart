@@ -1,24 +1,28 @@
-class Account{
+class Account {
   final int id;
+  final String cloudId;
   final String title;
   final bool isDebt;
 
-  const Account({this.id = 0, required this.title, this.isDebt = false});
+  const Account(
+      {this.id = 0,
+      this.cloudId = '',
+      required this.title,
+      this.isDebt = false});
 
-  Account copyWith({int? id, String? title, bool? isDebt}) => Account(
-    id: id ?? this.id,
-    title: title ?? this.title,
-    isDebt: isDebt ?? this.isDebt,
-  );
+  Account copyWith({int? id, String? cloudId, String? title, bool? isDebt}) =>
+      Account(
+        id: id ?? this.id,
+        cloudId: cloudId ?? this.cloudId,
+        title: title ?? this.title,
+        isDebt: isDebt ?? this.isDebt,
+      );
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Account &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is Account && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
-
 }

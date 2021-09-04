@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:money_tracker/data/database/database.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
+import 'package:money_tracker/data/google_http_client.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 
@@ -14,16 +14,11 @@ class ServiceRepository {
 
   Future deleteAll() => db.deleteAll();
 
-  Future<Map<String, List<Map<String, dynamic>>>> _getDbData() =>
-      db.getDbData();
-
-  Future _loadData(Map<String, dynamic> data) => db.loadData(data);
-
   Future backup(
       GoogleHttpClient httpClient, String catalogId, String fileName) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
-    await localFile.writeAsString(jsonEncode(await _getDbData()));
+    await localFile.writeAsString(jsonEncode(await db.getDbData()));
 
     var media = drive.Media(localFile.openRead(), localFile.lengthSync());
 
@@ -64,7 +59,7 @@ class ServiceRepository {
         Map<String, dynamic> data = jsonDecode(saveFile.readAsStringSync());
         print(data.toString());
 
-        await _loadData(data);
+        await db.loadData(data);
       }, onError: (error) {
         print('Some Error');
       });

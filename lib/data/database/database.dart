@@ -20,6 +20,8 @@ class Accounts extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
+  TextColumn get cloudId => text().withDefault(const Constant(''))();
+
   TextColumn get title => text()();
 
   BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
@@ -31,6 +33,8 @@ class Categories extends Table {
   String get tableName => 'categories';
 
   IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get cloudId => text().withDefault(const Constant(''))();
 
   TextColumn get title => text()();
 
@@ -49,6 +53,8 @@ class Operations extends Table {
   String get tableName => 'operations';
 
   IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get cloudId => text().withDefault(const Constant(''))();
 
   DateTimeColumn get date => dateTime()();
 
@@ -166,7 +172,7 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -177,6 +183,12 @@ class Database extends _$Database {
         if (from == 1) {
           // we added the dueDate property in the change from version 1
           await m.addColumn(accounts, accounts.isDebt);
+        }
+
+        if (from >= 2){
+          await m.addColumn(accounts, accounts.cloudId);
+          await m.addColumn(categories, categories.cloudId);
+          await m.addColumn(operations, operations.cloudId);
         }
       }
   );
@@ -231,6 +243,7 @@ class Database extends _$Database {
             if (d.containsKey('account_title')) {
               accounts.add(AccountDB(
                 id: int.parse(d['_id']),
+                cloudId: '',
                 title: d['account_title'],
                 isDebt: false,
               ));
@@ -248,6 +261,7 @@ class Database extends _$Database {
             if (d.containsKey('category_title')) {
               categories.add(CategoryDB(
                 id: int.parse(d['_id']),
+                cloudId: '',
                 title: d['category_title'],
                 operationType: converter.mapToDart(
                   int.parse(d['category_type']),
@@ -271,6 +285,7 @@ class Database extends _$Database {
             if (d.containsKey('operation_date')) {
               operations.add(OperationDB(
                 id: int.parse(d['_id']),
+                cloudId: '',
                 date: DateTime.fromMillisecondsSinceEpoch(
                     int.parse(d['operation_date'])),
                 operationType:

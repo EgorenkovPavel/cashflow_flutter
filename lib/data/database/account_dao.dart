@@ -20,7 +20,11 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   Future<AccountDB> getAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).getSingle();
 
-  Future<int> insertAccount(AccountsCompanion entity) => into(accounts).insert(entity);
+  Future<AccountDB?> getAccountByCloudId(String cloudId) =>
+      (select(accounts)..where((c) => c.cloudId.equals(cloudId))).getSingleOrNull();
+
+  Future<int> insertAccount(AccountsCompanion entity) =>
+      into(accounts).insert(entity);
 
   Future<bool> updateAccount(AccountDB entity) =>
       update(accounts).replace(entity);
@@ -50,7 +54,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
-          row.readTable(accounts), row.read(sumBalance) ?? 0))
+              row.readTable(accounts), row.read(sumBalance) ?? 0))
           .toList();
     });
   }
@@ -73,7 +77,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     var result = await query.get();
     return result
         .map((row) => AccountBalanceEntity(
-        row.readTable(accounts), row.read(sumBalance) ?? 0))
+            row.readTable(accounts), row.read(sumBalance) ?? 0))
         .toList();
   }
 
@@ -83,9 +87,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         accounts,
         _accounts
             .map((a) => AccountsCompanion.insert(
-          id: Value(a.id),
-          title: a.title,
-        ))
+                  id: Value(a.id),
+                  title: a.title,
+                ))
             .toList(),
       );
     });
@@ -102,7 +106,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
     final query = db.selectOnly(balances)
       ..where(balances.date.isBiggerOrEqualValue(start) &
-      balances.date.isSmallerOrEqualValue(end));
+          balances.date.isSmallerOrEqualValue(end));
 
     query
       ..addColumns([day, month, year, sumBalance])
@@ -116,8 +120,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((list) {
       return list
           .map((c) => BalanceOnDate(
-          DateTime(c.read(year), c.read(month), c.read(day)),
-          c.read(sumBalance)))
+              DateTime(c.read(year), c.read(month), c.read(day)),
+              c.read(sumBalance)))
           .toList();
     });
   }
@@ -142,7 +146,6 @@ class BalanceOnDate {
   BalanceOnDate(this.date, this.sum);
 }
 
-
 class AccountBalanceEntity {
   AccountDB account;
   int sum;
@@ -152,9 +155,9 @@ class AccountBalanceEntity {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AccountBalanceEntity &&
-              runtimeType == other.runtimeType &&
-              account == other.account;
+      other is AccountBalanceEntity &&
+          runtimeType == other.runtimeType &&
+          account == other.account;
 
   @override
   int get hashCode => account.hashCode;

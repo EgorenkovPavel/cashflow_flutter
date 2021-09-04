@@ -5,8 +5,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleHttpClient extends IOClient {
   final Map<String, String> _headers;
+  final String _userId;
 
-  GoogleHttpClient(this._headers) : super();
+  GoogleHttpClient(this._headers, this._userId) : super();
+
+  String get userId => _userId;
 
   static Future<GoogleHttpClient?> getClient() async {
     var _googleSignIn = GoogleSignIn(
@@ -23,7 +26,7 @@ class GoogleHttpClient extends IOClient {
 
     if (authHeaders == null) return null;
     // custom IOClient from below
-    return GoogleHttpClient(authHeaders);
+    return GoogleHttpClient(authHeaders, _googleSignIn.currentUser!.id);
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/utils/google_http_client.dart';
+import 'package:money_tracker/data/google_http_client.dart';
 
 abstract class BackupPageState {}
 
