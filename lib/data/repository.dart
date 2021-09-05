@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/data/account_repository.dart';
 import 'package:money_tracker/data/category_repository.dart';
-import 'package:money_tracker/data/cloud_source.dart';
+import 'package:money_tracker/data/cloud/cloud_account.dart';
+import 'package:money_tracker/data/cloud/cloud_category.dart';
+import 'package:money_tracker/data/cloud/cloud_operation.dart';
+import 'package:money_tracker/data/cloud/cloud_source.dart';
 import 'package:money_tracker/data/operation_repository.dart';
 import 'package:money_tracker/data/service_repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -23,35 +26,77 @@ class Repository extends ChangeNotifier {
 
   Future<void> syncData() async {
     await Future.delayed(Duration(seconds: 10));
-    _cloudSource.accountChanges.listen((list) => list.forEach((account) async {
-          var _account = await _accountRepo.getByCloudId(account.cloudId);
-          if (_account == null) {
-            await _accountRepo.insert(account);
-          } else {
-            await _accountRepo.update(account.copyWith(id: _account.id));
-          }
-        }));
+    _cloudSource.accountChanges
+        .listen((list) => list.forEach((cloudAccount) async {
+              var _account = await _accountRepo.getByCloudId(cloudAccount.id);
+              if (_account == null) {
+                await _accountRepo.insert(Account(
+                  cloudId: cloudAccount.id,
+                  title: cloudAccount.title,
+                ));
+              } else {
+                await _accountRepo
+                    .update(_account.copyWith(title: cloudAccount.title));
+              }
+            }));
 
     _cloudSource.categoryChanges
-        .listen((list) => list.forEach((category) async {
+        .listen((list) => list.forEach((cloudCategory) async {
               var _category =
-                  await _categoryRepo.getByCloudId(category.cloudId);
+                  await _categoryRepo.getByCloudId(cloudCategory.id);
               if (_category == null) {
-                await _categoryRepo.insert(category);
+                await _categoryRepo.insert(Category(
+                  title: cloudCategory.title,
+                  cloudId: cloudCategory.id,
+                  operationType: cloudCategory.operationType,
+                  budgetType: cloudCategory.budgetType,
+                  budget: cloudCategory.budget,
+                ));
               } else {
-                await _categoryRepo.update(category.copyWith(id: _category.id));
+                await _categoryRepo.update(_category.copyWith(
+                  title: cloudCategory.title,
+                  cloudId: cloudCategory.id,
+                  type: cloudCategory.operationType,
+                  budgetType: cloudCategory.budgetType,
+                  budget: cloudCategory.budget,
+                ));
               }
             }));
 
     _cloudSource.operationChanges
-        .listen((list) => list.forEach((operation) async {
+        .listen((list) => list.forEach((cloudOperation) async {
               var _operation =
-                  await _operationRepo.getByCloudId(operation.cloudId);
+                  await _operationRepo.getByCloudId(cloudOperation.id);
+
+              var _account =
+                  await _accountRepo.getByCloudId(cloudOperation.account);
+              var _category = cloudOperation.category == null
+                  ? null
+                  : await _categoryRepo.getByCloudId(cloudOperation.category!);
+              var _recAccount = cloudOperation.recAccount == null
+                  ? null
+                  : await _accountRepo.getByCloudId(cloudOperation.recAccount!);
+
               if (_operation == null) {
-                await _operationRepo.insert(operation);
+                await _operationRepo.insert(Operation(
+                  cloudId: cloudOperation.id,
+                  date: cloudOperation.date,
+                  type: cloudOperation.operationType,
+                  account: _account!,
+                  category: _category,
+                  recAccount: _recAccount,
+                  sum: cloudOperation.sum,
+                ));
               } else {
-                await _operationRepo
-                    .update(operation.copyWith(id: _operation.id));
+                await _operationRepo.update(_operation.copyWith(
+                  cloudId: cloudOperation.id,
+                  date: cloudOperation.date,
+                  type: cloudOperation.operationType,
+                  account: _account!,
+                  category: _category,
+                  recAccount: _recAccount,
+                  sum: cloudOperation.sum,
+                ));
               }
             }));
   }
@@ -73,13 +118,19 @@ class Repository extends ChangeNotifier {
   Future<Account> getAccountById(int id) => _accountRepo.getById(id);
 
   Future<int> insertAccount(Account account) async {
-    var _cloudId = await _cloudSource.addAccount(account);
+    var _cloudId = await _cloudSource.addAccount(CloudAccount(
+      id: account.cloudId,
+      title: account.title,
+    ));
     var _id = await _accountRepo.insert(account.copyWith(cloudId: _cloudId));
     return _id;
   }
 
   Future updateAccount(Account account) async {
-    await _cloudSource.updateAccount(account);
+    await _cloudSource.updateAccount(CloudAccount(
+      id: account.cloudId,
+      title: account.title,
+    ));
     await _accountRepo.update(account);
   }
 
@@ -115,13 +166,25 @@ class Repository extends ChangeNotifier {
 
   Future<int> insertCategory(Category category) async {
     //TODO вызывается запись в облако и сразу подписка об изменении в облаке а уже потом запись в базе. получается 2 копии в базе и 1 в облаке
-    var _cloudId = await _cloudSource.addCategory(category);
+    var _cloudId = await _cloudSource.addCategory(CloudCategory(
+      id: category.cloudId,
+      title: category.title,
+      operationType: category.operationType,
+      budgetType: category.budgetType,
+      budget: category.budget,
+    ));
     var _id = await _categoryRepo.insert(category.copyWith(cloudId: _cloudId));
     return _id;
   }
 
   Future updateCategory(Category category) async {
-    await _cloudSource.updateCategory(category);
+    await _cloudSource.updateCategory(CloudCategory(
+      id: category.cloudId,
+      title: category.title,
+      operationType: category.operationType,
+      budgetType: category.budgetType,
+      budget: category.budget,
+    ));
     await _categoryRepo.update(category);
   }
 
@@ -147,14 +210,30 @@ class Repository extends ChangeNotifier {
   Future<Operation?> getLastOperation() => _operationRepo.getLast();
 
   Future<Operation> insertOperation(Operation operation) async {
-    var _cloudId = await _cloudSource.addOperation(operation);
+    var _cloudId = await _cloudSource.addOperation(CloudOperation(
+      id: operation.cloudId,
+      date: operation.date,
+      operationType: operation.type,
+      account: operation.account.cloudId,
+      category: operation.category?.cloudId ?? '',
+      recAccount: operation.recAccount?.cloudId ?? '',
+      sum: operation.sum,
+    ));
     var _id =
         await _operationRepo.insert(operation.copyWith(cloudId: _cloudId));
     return operation.copyWith(id: _id, cloudId: _cloudId);
   }
 
   Future updateOperation(Operation operation) async {
-    await _cloudSource.updateOperation(operation);
+    await _cloudSource.updateOperation(CloudOperation(
+      id: operation.cloudId,
+      date: operation.date,
+      operationType: operation.type,
+      account: operation.account.cloudId,
+      category: operation.category?.cloudId ?? '',
+      recAccount: operation.recAccount?.cloudId ?? '',
+      sum: operation.sum,
+    ));
     await _operationRepo.update(operation);
   }
 

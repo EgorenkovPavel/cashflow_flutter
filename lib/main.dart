@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/account_repository.dart';
 import 'package:money_tracker/data/category_repository.dart';
-import 'package:money_tracker/data/cloud_source.dart';
+import 'package:money_tracker/data/cloud/cloud_source.dart';
 import 'package:money_tracker/data/database/account_dao.dart';
 import 'package:money_tracker/data/database/category_dao.dart';
 import 'package:money_tracker/data/database/database.dart';
@@ -28,8 +28,9 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   final _firestore = FirebaseFirestore.instance;
-  final _cloudSource = CloudSource(_firestore);
+  final _cloudSource = CloudSource(_firestore, 'USER_ID');
 
   final _repository =
       Repository(_accountRepo, _categoryRepo, _operationRepo, _serviceRepo, _cloudSource);
