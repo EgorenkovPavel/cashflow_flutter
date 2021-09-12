@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -11,8 +10,12 @@ class InputState extends CategoryInputPageState {
   final String? title;
   final int? budget;
 
-  InputState(
-      {required this.type, required this.budgetType, this.title, this.budget});
+  InputState({
+    required this.type,
+    required this.budgetType,
+    this.title,
+    this.budget,
+  });
 }
 
 class Saved extends CategoryInputPageState {
@@ -29,15 +32,13 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   BudgetType _budgetType = BudgetType.MONTH;
 
   CategoryInputPageBloc(this._repository)
-      : super(
-      InputState(type: OperationType.INPUT, budgetType: BudgetType.MONTH));
+      : super(InputState(
+            type: OperationType.INPUT, budgetType: BudgetType.MONTH));
 
   void initialByType(OperationType type) {
     _type = type;
-    emit(InputState(type: _type,
-        budgetType: _budgetType,
-        title: '',
-        budget: 0));
+    emit(
+        InputState(type: _type, budgetType: _budgetType, title: '', budget: 0));
   }
 
   Future<void> initialById(int id) async {
@@ -45,11 +46,12 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
     var category = await _repository.getCategoryById(id);
     _type = category.operationType;
     _budgetType = category.budgetType;
-    emit(InputState(type: _type,
+    emit(InputState(
+        type: _type,
         budgetType: _budgetType,
         title: category.title,
         budget: category.budget));
-    }
+  }
 
   void setbudgetType(BudgetType budgetType) {
     _budgetType = budgetType;
@@ -67,7 +69,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
 
       var id = await _repository.insertCategory(category);
       emit(Saved(category.copyWith(id: id)));
-    }else{
+    } else {
       var category = Category(
         id: _id!,
         title: title,

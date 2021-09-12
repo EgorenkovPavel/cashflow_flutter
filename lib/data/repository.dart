@@ -57,7 +57,7 @@ class Repository extends ChangeNotifier {
                 await _databaseSource.categories.update(_category.copyWith(
                   title: cloudCategory.title,
                   cloudId: cloudCategory.id,
-                  type: cloudCategory.operationType,
+                  operationType: cloudCategory.operationType,
                   budgetType: cloudCategory.budgetType,
                   budget: cloudCategory.budget,
                 ));

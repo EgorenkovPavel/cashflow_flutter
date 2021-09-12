@@ -157,14 +157,12 @@ class PageNavigator {
         }
       case _routeGoogleDriveChooseFile:
         {
-          var args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute<DriveFile?>(
             builder: (context) => DriveDialog.ChooseFile(),
           );
         }
       case _routeGoogleDriveChooseFolder:
         {
-          var args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute<DriveFile?>(
             builder: (context) => DriveDialog.ChooseFolder(),
           );

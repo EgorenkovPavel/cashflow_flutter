@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/domain/models.dart';
 
 class AccountEditPageState{
   final String accountTitle;

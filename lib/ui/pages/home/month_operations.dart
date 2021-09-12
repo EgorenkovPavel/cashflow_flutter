@@ -102,7 +102,7 @@ class _MonthOperation extends StatelessWidget {
           _budget = _calcBudget(snapshot.data!);
         }
 
-        double _progress = 0;
+        var _progress = 0.0;
         if (_cashflow == 0) {
           _progress = 0;
         } else if (_cashflow > _budget || _budget == 0) {

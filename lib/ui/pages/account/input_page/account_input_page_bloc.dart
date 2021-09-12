@@ -38,7 +38,7 @@ class AccountInputPageBloc extends Cubit<AccountInputPageState> {
 
   Future<void> fetch(int id) async {
     _id = id;
-    Account account = await _repository.getAccountById(id);
+    var account = await _repository.getAccountById(id);
     emit(AccountInputPageState(
         action: BlocAction.DATA, title: account.title, isDebt: account.isDebt));
   }

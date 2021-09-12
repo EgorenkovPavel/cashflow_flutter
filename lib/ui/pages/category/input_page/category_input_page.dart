@@ -9,12 +9,12 @@ import 'package:money_tracker/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class CategoryInputPage extends StatefulWidget {
-  OperationType? type;
-  int? id;
+  final OperationType? type;
+  final int? id;
 
-  CategoryInputPage.byType({required this.type});
+  const CategoryInputPage.byType({required this.type}) : id = null;
 
-  CategoryInputPage.edit({required this.id});
+  const CategoryInputPage.edit({required this.id}) : type = null;
 
   @override
   _CategoryInputPageState createState() => _CategoryInputPageState();
