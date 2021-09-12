@@ -106,6 +106,7 @@ class AppLocalizations {
       'item_menu_service': 'Service',
       'item_bar_main': 'Main',
       'period': 'Period',
+      'last_changes': 'Last changes',
       'choose_period': 'Choose period',
       'choose_account': 'Choose account',
       'choose_category': 'Choose category',
@@ -206,6 +207,7 @@ class AppLocalizations {
       'item_menu_service': 'Сервис',
       'item_bar_main': 'Главная',
       'period': 'Период',
+      'last_changes': 'Последние изменения',
       'choose_period': 'Выберите период',
       'choose_account': 'Выберите счет',
       'choose_category': 'Выберите категорию',
@@ -426,6 +428,8 @@ class AppLocalizations {
       _localizedValues[locale.languageCode]!['item_bar_main']!;
 
   String get period => _localizedValues[locale.languageCode]!['period']!;
+
+  String get lastChanges => _localizedValues[locale.languageCode]!['last_changes']!;
 
   String get choosePeriod =>
       _localizedValues[locale.languageCode]!['choose_period']!;
