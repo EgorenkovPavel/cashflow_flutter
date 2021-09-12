@@ -1,54 +1,49 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/repository.dart';
-import 'package:money_tracker/data/google_http_client.dart';
 
-abstract class BackupPageState {}
+class BackupPageState {
+  final bool inProgress;
+  final BackupPageAction action;
 
-class InitialState extends BackupPageState {}
+  BackupPageState({required this.action, required this.inProgress});
 
-class ProgressState extends BackupPageState {}
+  BackupPageState copyWith(BackupPageAction? action, bool? inProgress) {
+    return BackupPageState(
+      action: action ?? this.action,
+      inProgress: inProgress ?? this.inProgress,
+    );
+  }
+}
 
-class GetHttpClientError extends BackupPageState {}
+enum BackupPageAction {
+  INITIAL,
+  ERROR_GET_HTTP_CLIENT,
+  SUCCESS_BACKUP,
+  SUCCESS_RESTORE,
+  SUCCESS_DELETE,
+}
 
-class BackupSuccessState extends BackupPageState {}
-
-class RestoreSuccessState extends BackupPageState {}
-
-class DeleteSuccessState extends BackupPageState {}
-
-class BackupPageBloc extends Cubit<BackupPageState> {
+class SettingsPageBloc extends Cubit<BackupPageState> {
   final Repository _repository;
 
-  BackupPageBloc(this._repository) : super(InitialState());
+  SettingsPageBloc(this._repository)
+      : super(BackupPageState(action: BackupPageAction.INITIAL, inProgress: false));
 
-  Future<void> backup(GoogleHttpClient client, String catalogId, String fileName) async {
-    emit(ProgressState());
-    await _repository.backup(client, catalogId, fileName);
-    emit(BackupSuccessState());
-    emit(InitialState());
+  Future<void> backup(String catalogId, String fileName) async {
+    emit(BackupPageState(action: BackupPageAction.INITIAL, inProgress: true));
+    await _repository.backup(catalogId, fileName);
+    emit(BackupPageState(action: BackupPageAction.SUCCESS_BACKUP, inProgress: false));
   }
 
-  Future<void> restore(GoogleHttpClient client, String fileId) async {
-    emit(ProgressState());
-    await _repository.restore(client, fileId);
-    emit(RestoreSuccessState());
-    emit(InitialState());
+  Future<void> restore(String fileId) async {
+    emit(BackupPageState(action: BackupPageAction.INITIAL, inProgress: true));
+    await _repository.restore(fileId);
+    emit(BackupPageState(action: BackupPageAction.SUCCESS_RESTORE, inProgress: false));
   }
 
   Future<void> deleteAll() async {
-    emit(ProgressState());
+    emit(BackupPageState(action: BackupPageAction.INITIAL, inProgress: true));
     await _repository.deleteAll();
-    emit(DeleteSuccessState());
-    emit(InitialState());
-  }
-
-  Future<GoogleHttpClient?> getHttpClient() async {
-    GoogleHttpClient? httpClient;
-    try {
-      httpClient = await GoogleHttpClient.getClient();
-    } catch (e) {
-      return null;
-    }
-    return httpClient;
+    emit(BackupPageState(action: BackupPageAction.SUCCESS_DELETE, inProgress: false));
   }
 }

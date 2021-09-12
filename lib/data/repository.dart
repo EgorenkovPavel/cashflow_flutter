@@ -1,26 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/account_repository.dart';
-import 'package:money_tracker/data/category_repository.dart';
+import 'package:money_tracker/data/auth.dart';
 import 'package:money_tracker/data/cloud/cloud_account.dart';
 import 'package:money_tracker/data/cloud/cloud_category.dart';
 import 'package:money_tracker/data/cloud/cloud_operation.dart';
 import 'package:money_tracker/data/cloud/cloud_source.dart';
-import 'package:money_tracker/data/operation_repository.dart';
-import 'package:money_tracker/data/service_repository.dart';
+import 'package:money_tracker/data/database/database_source.dart';
+import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
-import 'package:money_tracker/data/google_http_client.dart';
 
 class Repository extends ChangeNotifier {
-  final AccountRepository _accountRepo;
-  final CategoryRepository _categoryRepo;
-  final OperationRepository _operationRepo;
-  final ServiceRepository _serviceRepo;
+  final DatabaseSource _databaseSource;
   final CloudSource _cloudSource;
+  final UserRepository _userRepository;
 
-  Repository(this._accountRepo, this._categoryRepo, this._operationRepo,
-      this._serviceRepo, this._cloudSource) {
+  Repository(
+      {required databaseSource,
+      required cloudSource,
+      required userRepository})
+      : _databaseSource = databaseSource,
+        _cloudSource = cloudSource,
+        _userRepository = userRepository {
     syncData();
   }
 
@@ -28,14 +29,14 @@ class Repository extends ChangeNotifier {
     await Future.delayed(Duration(seconds: 10));
     _cloudSource.accountChanges
         .listen((list) => list.forEach((cloudAccount) async {
-              var _account = await _accountRepo.getByCloudId(cloudAccount.id);
+              var _account = await _databaseSource.accounts.getByCloudId(cloudAccount.id);
               if (_account == null) {
-                await _accountRepo.insert(Account(
+                await _databaseSource.accounts.insert(Account(
                   cloudId: cloudAccount.id,
                   title: cloudAccount.title,
                 ));
               } else {
-                await _accountRepo
+                await _databaseSource.accounts
                     .update(_account.copyWith(title: cloudAccount.title));
               }
             }));
@@ -43,9 +44,9 @@ class Repository extends ChangeNotifier {
     _cloudSource.categoryChanges
         .listen((list) => list.forEach((cloudCategory) async {
               var _category =
-                  await _categoryRepo.getByCloudId(cloudCategory.id);
+                  await _databaseSource.categories.getByCloudId(cloudCategory.id);
               if (_category == null) {
-                await _categoryRepo.insert(Category(
+                await _databaseSource.categories.insert(Category(
                   title: cloudCategory.title,
                   cloudId: cloudCategory.id,
                   operationType: cloudCategory.operationType,
@@ -53,7 +54,7 @@ class Repository extends ChangeNotifier {
                   budget: cloudCategory.budget,
                 ));
               } else {
-                await _categoryRepo.update(_category.copyWith(
+                await _databaseSource.categories.update(_category.copyWith(
                   title: cloudCategory.title,
                   cloudId: cloudCategory.id,
                   type: cloudCategory.operationType,
@@ -66,19 +67,19 @@ class Repository extends ChangeNotifier {
     _cloudSource.operationChanges
         .listen((list) => list.forEach((cloudOperation) async {
               var _operation =
-                  await _operationRepo.getByCloudId(cloudOperation.id);
+                  await _databaseSource.operations.getByCloudId(cloudOperation.id);
 
               var _account =
-                  await _accountRepo.getByCloudId(cloudOperation.account);
+                  await _databaseSource.accounts.getByCloudId(cloudOperation.account);
               var _category = cloudOperation.category == null
                   ? null
-                  : await _categoryRepo.getByCloudId(cloudOperation.category!);
+                  : await _databaseSource.categories.getByCloudId(cloudOperation.category!);
               var _recAccount = cloudOperation.recAccount == null
                   ? null
-                  : await _accountRepo.getByCloudId(cloudOperation.recAccount!);
+                  : await _databaseSource.accounts.getByCloudId(cloudOperation.recAccount!);
 
               if (_operation == null) {
-                await _operationRepo.insert(Operation(
+                await _databaseSource.operations.insert(Operation(
                   cloudId: cloudOperation.id,
                   date: cloudOperation.date,
                   type: cloudOperation.operationType,
@@ -88,7 +89,7 @@ class Repository extends ChangeNotifier {
                   sum: cloudOperation.sum,
                 ));
               } else {
-                await _operationRepo.update(_operation.copyWith(
+                await _databaseSource.operations.update(_operation.copyWith(
                   cloudId: cloudOperation.id,
                   date: cloudOperation.date,
                   type: cloudOperation.operationType,
@@ -103,26 +104,26 @@ class Repository extends ChangeNotifier {
 
   //Accounts
 
-  Stream<List<Account>> watchAllAccounts() => _accountRepo.watchAll();
+  Stream<List<Account>> watchAllAccounts() => _databaseSource.accounts.watchAll();
 
-  Future<List<Account>> getAllAccounts() => _accountRepo.getAll();
+  Future<List<Account>> getAllAccounts() => _databaseSource.accounts.getAll();
 
   Stream<List<AccountBalance>> watchAllAccountsBalance() =>
-      _accountRepo.watchAllBalance();
+      _databaseSource.accounts.watchAllBalance();
 
   Future<List<AccountBalance>> getAllAccountsBalance() =>
-      _accountRepo.getAllBalance();
+      _databaseSource.accounts.getAllBalance();
 
-  Stream<Account> watchAccountById(int id) => _accountRepo.watchById(id);
+  Stream<Account> watchAccountById(int id) => _databaseSource.accounts.watchById(id);
 
-  Future<Account> getAccountById(int id) => _accountRepo.getById(id);
+  Future<Account> getAccountById(int id) => _databaseSource.accounts.getById(id);
 
   Future<int> insertAccount(Account account) async {
     var _cloudId = await _cloudSource.addAccount(CloudAccount(
       id: account.cloudId,
       title: account.title,
     ));
-    var _id = await _accountRepo.insert(account.copyWith(cloudId: _cloudId));
+    var _id = await _databaseSource.accounts.insert(account.copyWith(cloudId: _cloudId));
     return _id;
   }
 
@@ -131,38 +132,38 @@ class Repository extends ChangeNotifier {
       id: account.cloudId,
       title: account.title,
     ));
-    await _accountRepo.update(account);
+    await _databaseSource.accounts.update(account);
   }
 
   //Category
 
-  Stream<List<Category>> watchAllCategories() => _categoryRepo.watchAll();
+  Stream<List<Category>> watchAllCategories() => _databaseSource.categories.watchAll();
 
-  Future<List<Category>> getAllCategories() => _categoryRepo.getAll();
+  Future<List<Category>> getAllCategories() => _databaseSource.categories.getAll();
 
-  Future<Category> getCategoryById(int id) => _categoryRepo.getById(id);
+  Future<Category> getCategoryById(int id) => _databaseSource.categories.getById(id);
 
-  Stream<Category> watchCategoryById(int id) => _categoryRepo.watchById(id);
+  Stream<Category> watchCategoryById(int id) => _databaseSource.categories.watchById(id);
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
-      _categoryRepo.watchAllByType(type);
+      _databaseSource.categories.watchAllByType(type);
 
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
-      _categoryRepo.watchCashflowByCategoryByMonth(id);
+      _databaseSource.categories.watchCashflowByCategoryByMonth(id);
 
   Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
-      _categoryRepo.watchCashflowByCategoryByYear(id);
+      _databaseSource.categories.watchCashflowByCategoryByYear(id);
 
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
-      _categoryRepo.watchCategoryCashflowByType(date, type);
+      _databaseSource.categories.watchCategoryCashflowByType(date, type);
 
   Future<List<CategoryCashflow>> getCategoryCashflowByType(
           DateTime date, OperationType type) =>
-      _categoryRepo.getCategoryCashflowByType(date, type);
+      _databaseSource.categories.getCategoryCashflowByType(date, type);
 
   Future<List<Category>> getAllCategoriesByType(OperationType type) =>
-      _categoryRepo.getAllByType(type);
+      _databaseSource.categories.getAllByType(type);
 
   Future<int> insertCategory(Category category) async {
     //TODO вызывается запись в облако и сразу подписка об изменении в облаке а уже потом запись в базе. получается 2 копии в базе и 1 в облаке
@@ -173,7 +174,7 @@ class Repository extends ChangeNotifier {
       budgetType: category.budgetType,
       budget: category.budget,
     ));
-    var _id = await _categoryRepo.insert(category.copyWith(cloudId: _cloudId));
+    var _id = await _databaseSource.categories.insert(category.copyWith(cloudId: _cloudId));
     return _id;
   }
 
@@ -185,29 +186,29 @@ class Repository extends ChangeNotifier {
       budgetType: category.budgetType,
       budget: category.budget,
     ));
-    await _categoryRepo.update(category);
+    await _databaseSource.categories.update(category);
   }
 
   //Operation
 
-  Stream<List<Operation>> watchAllOperations() => _operationRepo.watchAll();
+  Stream<List<Operation>> watchAllOperations() => _databaseSource.operations.watchAll();
 
   Stream<List<Operation>> watchAllOperationsByFilter(
           OperationListFilter filter) =>
-      _operationRepo.watchAllByFilter(filter);
+      _databaseSource.operations.watchAllByFilter(filter);
 
-  Future<Operation> getOperationById(int id) => _operationRepo.getById(id);
+  Future<Operation> getOperationById(int id) => _databaseSource.operations.getById(id);
 
   Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
-      _operationRepo.watchAllByAccount(accountId);
+      _databaseSource.operations.watchAllByAccount(accountId);
 
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
-      _operationRepo.watchAllByCategory(categoryId);
+      _databaseSource.operations.watchAllByCategory(categoryId);
 
   Stream<List<Operation>> watchLastOperations(int limit) =>
-      _operationRepo.watchLast(limit);
+      _databaseSource.operations.watchLast(limit);
 
-  Future<Operation?> getLastOperation() => _operationRepo.getLast();
+  Future<Operation?> getLastOperation() => _databaseSource.operations.getLast();
 
   Future<Operation> insertOperation(Operation operation) async {
     var _cloudId = await _cloudSource.addOperation(CloudOperation(
@@ -220,7 +221,7 @@ class Repository extends ChangeNotifier {
       sum: operation.sum,
     ));
     var _id =
-        await _operationRepo.insert(operation.copyWith(cloudId: _cloudId));
+        await _databaseSource.operations.insert(operation.copyWith(cloudId: _cloudId));
     return operation.copyWith(id: _id, cloudId: _cloudId);
   }
 
@@ -234,7 +235,7 @@ class Repository extends ChangeNotifier {
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,
     ));
-    await _operationRepo.update(operation);
+    await _databaseSource.operations.update(operation);
   }
 
   Future<Operation> duplicateOperation(Operation operation) {
@@ -248,20 +249,54 @@ class Repository extends ChangeNotifier {
 
   Future deleteOperation(Operation operation) async {
     await _cloudSource.deleteOperation(operation.cloudId);
-    await _operationRepo.deleteById(operation.id);
+    await _databaseSource.operations.deleteById(operation.id);
   }
 
   //Backup
 
   Future deleteAll() async {
     await _cloudSource.deleteAll();
-    await _serviceRepo.deleteAll();
+    await _databaseSource.deleteAll();
   }
 
-  Future backup(
-          GoogleHttpClient httpClient, String catalogId, String fileName) =>
-      _serviceRepo.backup(httpClient, catalogId, fileName);
+  Future backup(String catalogId, String fileName) async {
+    var data = await _databaseSource.exportData();
 
-  Future restore(GoogleHttpClient httpClient, String fileId) =>
-      _serviceRepo.restore(httpClient, fileId);
+    var headers = await _userRepository.getHeaders();
+
+    if (headers == null) return null;
+
+    var driveRepo = DriveRepository(headers);
+
+    await driveRepo.backup(data, catalogId, fileName);
+
+  }
+
+  Future restore(String fileId) async {
+
+    var headers = await _userRepository.getHeaders();
+
+    if (headers == null) return null;
+
+    var driveRepo = DriveRepository(headers);
+
+    var data = await driveRepo.restore(fileId);
+
+    if(data == null) return null;
+
+    await _databaseSource.deleteAll();
+    await _databaseSource.importData(data);
+
+  }
+
+  Future<List<DriveFile>?> getDriveFiles(String catalogId) async {
+    var headers = await _userRepository.getHeaders();
+
+    if (headers == null) return null;
+
+    var driveRepo = DriveRepository(headers);
+
+    return driveRepo.getFiles(catalogId);
+  }
+
 }

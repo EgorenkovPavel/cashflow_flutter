@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/google_http_client.dart';
+
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
@@ -12,7 +12,7 @@ import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page
 import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
-import 'package:money_tracker/ui/pages/service/drive_dialog.dart';
+import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 
 class PageNavigator {
@@ -95,17 +95,17 @@ class PageNavigator {
   static Future openBudgetPage(BuildContext context, OperationType type) =>
       Navigator.of(context).pushNamed(_routeBudgetPageName, arguments: type);
 
-  static const _routeGoogleDrive = '/google_drive';
+  static const _routeGoogleDriveChooseFile = '/google_drive_choose_file';
+
+  static const _routeGoogleDriveChooseFolder = '/google_drive_choose_folder';
 
   static Future<DriveFile?> chooseFile(
-          BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDrive,
-          arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FILE});
+          BuildContext context) =>
+      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDriveChooseFile);
 
   static Future<DriveFile?> chooseFolder(
-          BuildContext context, GoogleHttpClient httpClient) =>
-      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDrive,
-          arguments: {'client': httpClient, 'mode': DialogMode.CHOOSE_FOLDER});
+          BuildContext context) =>
+      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDriveChooseFolder);
 
   static const routeRootName = '/';
 
@@ -155,14 +155,18 @@ class PageNavigator {
                 type: settings.arguments as OperationType),
           );
         }
-      case _routeGoogleDrive:
+      case _routeGoogleDriveChooseFile:
         {
           var args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute<DriveFile?>(
-            builder: (context) => DriveDialog(
-              httpClient: args['client'],
-              mode: args['mode'],
-            ),
+            builder: (context) => DriveDialog.ChooseFile(),
+          );
+        }
+      case _routeGoogleDriveChooseFolder:
+        {
+          var args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute<DriveFile?>(
+            builder: (context) => DriveDialog.ChooseFolder(),
           );
         }
       default:
