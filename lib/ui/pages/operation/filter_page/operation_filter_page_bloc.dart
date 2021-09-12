@@ -16,14 +16,17 @@ class StateBloc {
     this.categoryOut = const [],
   });
 
-  copyWith({DateTimeRange? date, List<Account>? accounts, List<Category>? categoriesIn, List<Category>? categoriesOut}){
+  StateBloc copyWith(
+      {DateTimeRange? dateRange,
+      List<Account>? accounts,
+      List<Category>? categoryIn,
+      List<Category>? categoryOut}) {
     return StateBloc(
-      dateRange: date ?? this.dateRange,
+      dateRange: dateRange ?? this.dateRange,
       accounts: accounts ?? this.accounts,
-      categoryIn: categoriesIn ?? this.categoryIn,
-      categoryOut: categoriesOut ?? this.categoryOut,
+      categoryIn: categoryIn ?? this.categoryIn,
+      categoryOut: categoryOut ?? this.categoryOut,
     );
-
   }
 }
 
@@ -59,12 +62,12 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   }
 
   void clearPeriod() {
-    _state = _state.copyWith(date: null);
+    _state = _state.copyWith(dateRange: null);
     emit(_state);
   }
 
   void setPeriod(DateTimeRange date) {
-    _state = _state.copyWith(date: date);
+    _state = _state.copyWith(dateRange: date);
     emit(_state);
   }
 
@@ -74,25 +77,33 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   }
 
   void removeAccount(Account account) {
-    _state = _state.copyWith(accounts: _state.accounts..removeWhere((element) => element.id == account.id));
+    _state = _state.copyWith(
+        accounts: _state.accounts
+          ..removeWhere((element) => element.id == account.id));
     emit(_state);
   }
 
   void addCategory(Category category) {
     if (category.operationType == OperationType.INPUT) {
-      _state = _state.copyWith(categoriesIn: _state.categoryIn..add(category));
+      _state = _state.copyWith(categoryIn: _state.categoryIn..add(category));
     } else if (category.operationType == OperationType.OUTPUT) {
-      _state = _state.copyWith(categoriesOut: _state.categoryOut..add(category));
-    };
+      _state =
+          _state.copyWith(categoryOut: _state.categoryOut..add(category));
+    }
+    ;
 
     emit(_state);
   }
 
   void removeCategory(Category category) {
     if (category.operationType == OperationType.INPUT) {
-      _state = _state.copyWith(categoriesIn: _state.categoryIn..removeWhere((element) => element.id == category.id));
+      _state = _state.copyWith(
+          categoryIn: _state.categoryIn
+            ..removeWhere((element) => element.id == category.id));
     } else if (category.operationType == OperationType.OUTPUT) {
-      _state = _state.copyWith(categoriesOut: _state.categoryOut..removeWhere((element) => element.id == category.id));
+      _state = _state.copyWith(
+          categoryOut: _state.categoryOut
+            ..removeWhere((element) => element.id == category.id));
     }
 
     emit(_state);

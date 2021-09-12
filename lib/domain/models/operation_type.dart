@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:money_tracker/utils/app_localization.dart';
 
 enum OperationType { INPUT, OUTPUT, TRANSFER }
 

@@ -5,7 +5,6 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/utils/app_localization.dart';
 
 class AccountDetailPage extends StatefulWidget {
   final int id;

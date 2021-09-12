@@ -22,14 +22,14 @@ class Category {
           {int? id,
           String? cloudId,
           String? title,
-          OperationType? type,
+          OperationType? operationType,
           BudgetType? budgetType,
           int? budget}) =>
       Category(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
-        operationType: type ?? this.operationType,
+        operationType: operationType ?? this.operationType,
         budgetType: budgetType ?? this.budgetType,
         budget: budget ?? this.budget,
       );

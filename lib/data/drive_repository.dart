@@ -67,7 +67,7 @@ class DriveRepository {
     var data = await drive.DriveApi(_client).files.list(
         orderBy: 'folder,name,modifiedTime',
         spaces: 'drive',
-        q: "'${catalogId}' in parents and trashed = false",
+        q: '$catalogId in parents and trashed = false',
         //(mimeType = 'application/vnd.google-apps.folder')
         $fields: 'files(id,name,parents,mimeType,modifiedTime)');
 

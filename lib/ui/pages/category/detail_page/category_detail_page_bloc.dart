@@ -38,8 +38,8 @@ class CategoryBloc extends Cubit<CategoryState> {
 
   CategoryBloc(this._repository) : super(CategoryState());
 
-  Future<void> fetch(int id) async {
-    subCategory = await _repository.watchCategoryById(id).listen((event) {
+  void fetch(int id) {
+    subCategory = _repository.watchCategoryById(id).listen((event) {
       emit(state.copyWith(
           title: event.title,
           budget: event.budget,

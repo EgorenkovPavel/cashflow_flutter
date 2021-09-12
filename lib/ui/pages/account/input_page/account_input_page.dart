@@ -10,11 +10,11 @@ class AccountInputPage extends StatefulWidget {
   @override
   _AccountInputPageState createState() => _AccountInputPageState();
 
-  int? id;
+  final int? id;
 
-  AccountInputPage.input();
+  const AccountInputPage.input() : id = null;
 
-  AccountInputPage.edit(this.id);
+  const AccountInputPage.edit(this.id);
 }
 
 class _AccountInputPageState extends State<AccountInputPage> {
