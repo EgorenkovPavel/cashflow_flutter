@@ -18,7 +18,10 @@ class UserRepository {
   }
 
   Future<void> authenticate() async {
-    await _googleSignIn.signIn();
+    var isAuth = await isAuthenticated();
+    if (!isAuth) {
+      await _googleSignIn.signIn();
+    }
   }
 
   Future<String?> getUserId() async {

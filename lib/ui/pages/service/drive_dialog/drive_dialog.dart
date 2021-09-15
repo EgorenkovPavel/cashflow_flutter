@@ -29,6 +29,7 @@ class _DriveDialogState extends State<DriveDialog> {
       repository: context.read<Repository>(),
       mode: widget.mode,
     );
+    _bloc.loadFolders();
   }
 
   @override
