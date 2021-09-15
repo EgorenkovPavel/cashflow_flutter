@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:money_tracker/data/auth.dart';
 import 'package:money_tracker/data/cloud/cloud_account.dart';
@@ -14,14 +13,16 @@ class Repository extends ChangeNotifier {
   final DatabaseSource _databaseSource;
   final CloudSource _cloudSource;
   final UserRepository _userRepository;
+  DriveRepository? _driveRepository;
 
-  Repository(
-      {required databaseSource,
-      required cloudSource,
-      required userRepository})
-      : _databaseSource = databaseSource,
+  Repository({
+    required databaseSource,
+    required cloudSource,
+    required userRepository,
+  })  : _databaseSource = databaseSource,
         _cloudSource = cloudSource,
         _userRepository = userRepository {
+    _initDriveRepo();
     syncData();
   }
 
@@ -29,7 +30,8 @@ class Repository extends ChangeNotifier {
     await Future.delayed(Duration(seconds: 10));
     _cloudSource.accountChanges
         .listen((list) => list.forEach((cloudAccount) async {
-              var _account = await _databaseSource.accounts.getByCloudId(cloudAccount.id);
+              var _account =
+                  await _databaseSource.accounts.getByCloudId(cloudAccount.id);
               if (_account == null) {
                 await _databaseSource.accounts.insert(Account(
                   cloudId: cloudAccount.id,
@@ -43,8 +45,8 @@ class Repository extends ChangeNotifier {
 
     _cloudSource.categoryChanges
         .listen((list) => list.forEach((cloudCategory) async {
-              var _category =
-                  await _databaseSource.categories.getByCloudId(cloudCategory.id);
+              var _category = await _databaseSource.categories
+                  .getByCloudId(cloudCategory.id);
               if (_category == null) {
                 await _databaseSource.categories.insert(Category(
                   title: cloudCategory.title,
@@ -66,17 +68,19 @@ class Repository extends ChangeNotifier {
 
     _cloudSource.operationChanges
         .listen((list) => list.forEach((cloudOperation) async {
-              var _operation =
-                  await _databaseSource.operations.getByCloudId(cloudOperation.id);
+              var _operation = await _databaseSource.operations
+                  .getByCloudId(cloudOperation.id);
 
-              var _account =
-                  await _databaseSource.accounts.getByCloudId(cloudOperation.account);
+              var _account = await _databaseSource.accounts
+                  .getByCloudId(cloudOperation.account);
               var _category = cloudOperation.category == null
                   ? null
-                  : await _databaseSource.categories.getByCloudId(cloudOperation.category!);
+                  : await _databaseSource.categories
+                      .getByCloudId(cloudOperation.category!);
               var _recAccount = cloudOperation.recAccount == null
                   ? null
-                  : await _databaseSource.accounts.getByCloudId(cloudOperation.recAccount!);
+                  : await _databaseSource.accounts
+                      .getByCloudId(cloudOperation.recAccount!);
 
               if (_operation == null) {
                 await _databaseSource.operations.insert(Operation(
@@ -104,7 +108,8 @@ class Repository extends ChangeNotifier {
 
   //Accounts
 
-  Stream<List<Account>> watchAllAccounts() => _databaseSource.accounts.watchAll();
+  Stream<List<Account>> watchAllAccounts() =>
+      _databaseSource.accounts.watchAll();
 
   Future<List<Account>> getAllAccounts() => _databaseSource.accounts.getAll();
 
@@ -114,16 +119,21 @@ class Repository extends ChangeNotifier {
   Future<List<AccountBalance>> getAllAccountsBalance() =>
       _databaseSource.accounts.getAllBalance();
 
-  Stream<Account> watchAccountById(int id) => _databaseSource.accounts.watchById(id);
+  Stream<Account> watchAccountById(int id) =>
+      _databaseSource.accounts.watchById(id);
 
-  Future<Account> getAccountById(int id) => _databaseSource.accounts.getById(id);
+  Future<Account> getAccountById(int id) =>
+      _databaseSource.accounts.getById(id);
 
   Future<int> insertAccount(Account account) async {
-    var _cloudId = await _cloudSource.addAccount(CloudAccount(
-      id: account.cloudId,
-      title: account.title,
-    ));
-    var _id = await _databaseSource.accounts.insert(account.copyWith(cloudId: _cloudId));
+    var _cloudId = await _cloudSource.addAccount(
+      CloudAccount(
+        id: account.cloudId,
+        title: account.title,
+      ),
+    );
+    var _id = await _databaseSource.accounts
+        .insert(account.copyWith(cloudId: _cloudId));
     return _id;
   }
 
@@ -137,13 +147,17 @@ class Repository extends ChangeNotifier {
 
   //Category
 
-  Stream<List<Category>> watchAllCategories() => _databaseSource.categories.watchAll();
+  Stream<List<Category>> watchAllCategories() =>
+      _databaseSource.categories.watchAll();
 
-  Future<List<Category>> getAllCategories() => _databaseSource.categories.getAll();
+  Future<List<Category>> getAllCategories() =>
+      _databaseSource.categories.getAll();
 
-  Future<Category> getCategoryById(int id) => _databaseSource.categories.getById(id);
+  Future<Category> getCategoryById(int id) =>
+      _databaseSource.categories.getById(id);
 
-  Stream<Category> watchCategoryById(int id) => _databaseSource.categories.watchById(id);
+  Stream<Category> watchCategoryById(int id) =>
+      _databaseSource.categories.watchById(id);
 
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _databaseSource.categories.watchAllByType(type);
@@ -174,7 +188,8 @@ class Repository extends ChangeNotifier {
       budgetType: category.budgetType,
       budget: category.budget,
     ));
-    var _id = await _databaseSource.categories.insert(category.copyWith(cloudId: _cloudId));
+    var _id = await _databaseSource.categories
+        .insert(category.copyWith(cloudId: _cloudId));
     return _id;
   }
 
@@ -191,13 +206,15 @@ class Repository extends ChangeNotifier {
 
   //Operation
 
-  Stream<List<Operation>> watchAllOperations() => _databaseSource.operations.watchAll();
+  Stream<List<Operation>> watchAllOperations() =>
+      _databaseSource.operations.watchAll();
 
   Stream<List<Operation>> watchAllOperationsByFilter(
           OperationListFilter filter) =>
       _databaseSource.operations.watchAllByFilter(filter);
 
-  Future<Operation> getOperationById(int id) => _databaseSource.operations.getById(id);
+  Future<Operation> getOperationById(int id) =>
+      _databaseSource.operations.getById(id);
 
   Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
       _databaseSource.operations.watchAllByAccount(accountId);
@@ -220,8 +237,8 @@ class Repository extends ChangeNotifier {
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,
     ));
-    var _id =
-        await _databaseSource.operations.insert(operation.copyWith(cloudId: _cloudId));
+    var _id = await _databaseSource.operations
+        .insert(operation.copyWith(cloudId: _cloudId));
     return operation.copyWith(id: _id, cloudId: _cloudId);
   }
 
@@ -259,44 +276,47 @@ class Repository extends ChangeNotifier {
     await _databaseSource.deleteAll();
   }
 
-  Future backup(String catalogId, String fileName) async {
-    var data = await _databaseSource.exportData();
+  Future<void> _initDriveRepo() async {
+    var isAuth = await _userRepository.isAuthenticated();
+    if (!isAuth) {
+      return;
+    }
 
     var headers = await _userRepository.getHeaders();
 
     if (headers == null) return null;
 
-    var driveRepo = DriveRepository(headers);
+    _driveRepository = DriveRepository(headers);
+  }
 
-    await driveRepo.backup(data, catalogId, fileName);
+  Future backup(String catalogId, String fileName) async {
+    if (_driveRepository == null) {
+      return null;
+    }
 
+    var data = await _databaseSource.exportData();
+
+    await _driveRepository!.backup(data, catalogId, fileName);
   }
 
   Future restore(String fileId) async {
+    if (_driveRepository == null) {
+      return null;
+    }
 
-    var headers = await _userRepository.getHeaders();
+    var data = await _driveRepository!.restore(fileId);
 
-    if (headers == null) return null;
-
-    var driveRepo = DriveRepository(headers);
-
-    var data = await driveRepo.restore(fileId);
-
-    if(data == null) return null;
+    if (data == null) return null;
 
     await _databaseSource.deleteAll();
     await _databaseSource.importData(data);
-
   }
 
   Future<List<DriveFile>?> getDriveFiles(String catalogId) async {
-    var headers = await _userRepository.getHeaders();
+    if (_driveRepository == null) {
+      return null;
+    }
 
-    if (headers == null) return null;
-
-    var driveRepo = DriveRepository(headers);
-
-    return driveRepo.getFiles(catalogId);
+    return _driveRepository!.getFiles(catalogId);
   }
-
 }

@@ -22,8 +22,12 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   final _firestore = FirebaseFirestore.instance;
-  final _cloudSource = CloudSource(_firestore, 'USER_ID');
   final _userRepository = UserRepository();
+
+  await _userRepository.authenticate();
+  var userId = await _userRepository.getUserId();
+
+  final _cloudSource = CloudSource(_firestore, userId!);
 
   final _repository = Repository(
       databaseSource: _databaseSource,

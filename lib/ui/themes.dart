@@ -8,7 +8,7 @@ const Color _primaryColor = Color(0xFF236F57);
 const Color _accentColor = Color(0xFFF15931);
 
 ThemeData theme() => ThemeData(
-      primarySwatch: Colors.green,
+     primarySwatch: Colors.green,
       primaryColor: _primaryColor,
       accentColor: _accentColor,
       appBarTheme: AppBarTheme(
@@ -19,6 +19,6 @@ ThemeData theme() => ThemeData(
         backgroundColor: _primaryColor,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(_primaryColor))
-      ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(_primaryColor))),
     );
