@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
+import 'package:provider/provider.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+
+  late SettingsPageBloc _bloc;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = SettingsPageBloc(context.read<Repository>());
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
   Widget sectionTitle(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
