@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -25,10 +26,17 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = context.read<OperationFilterPageBloc>()
+    _bloc = OperationFilterPageBloc(context.read<Repository>())
       ..init(
         widget.filter ?? OperationListFilter(),
       );
+  }
+
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
   }
 
   RelativeRect buttonMenuPosition(BuildContext c) {
