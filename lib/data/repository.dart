@@ -1,35 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:money_tracker/data/auth.dart';
 import 'package:money_tracker/data/cloud/cloud_account.dart';
 import 'package:money_tracker/data/cloud/cloud_category.dart';
 import 'package:money_tracker/data/cloud/cloud_operation.dart';
 import 'package:money_tracker/data/cloud/cloud_source.dart';
 import 'package:money_tracker/data/database/database_source.dart';
-import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 
-class Repository extends ChangeNotifier {
+class Repository{
   final DatabaseSource _databaseSource;
   final CloudSource _cloudSource;
-  final UserRepository _userRepository;
-  DriveRepository? _driveRepository;
 
   Repository({
     required databaseSource,
     required cloudSource,
-    required userRepository,
   })  : _databaseSource = databaseSource,
-        _cloudSource = cloudSource,
-        _userRepository = userRepository {
-    _initDriveRepo();
+        _cloudSource = cloudSource;
+
+  void logIn(String userId){
+    _cloudSource.logIn(userId);
     syncData();
+  }
+
+  void logOut(){
+    _cloudSource.logOut();
   }
 
   Future<void> syncData() async {
     await Future.delayed(Duration(seconds: 10));
     _cloudSource.accountChanges
-        .listen((list) => list.forEach((cloudAccount) async {
+        ?.listen((list) => list.forEach((cloudAccount) async {
               var _account =
                   await _databaseSource.accounts.getByCloudId(cloudAccount.id);
               if (_account == null) {
@@ -44,7 +43,7 @@ class Repository extends ChangeNotifier {
             }));
 
     _cloudSource.categoryChanges
-        .listen((list) => list.forEach((cloudCategory) async {
+        ?.listen((list) => list.forEach((cloudCategory) async {
               var _category = await _databaseSource.categories
                   .getByCloudId(cloudCategory.id);
               if (_category == null) {
@@ -67,7 +66,7 @@ class Repository extends ChangeNotifier {
             }));
 
     _cloudSource.operationChanges
-        .listen((list) => list.forEach((cloudOperation) async {
+        ?.listen((list) => list.forEach((cloudOperation) async {
               var _operation = await _databaseSource.operations
                   .getByCloudId(cloudOperation.id);
 
@@ -276,47 +275,13 @@ class Repository extends ChangeNotifier {
     await _databaseSource.deleteAll();
   }
 
-  Future<void> _initDriveRepo() async {
-    var isAuth = await _userRepository.isAuthenticated();
-    if (!isAuth) {
-      return;
-    }
-
-    var headers = await _userRepository.getHeaders();
-
-    if (headers == null) return null;
-
-    _driveRepository = DriveRepository(headers);
+  Future<Map<String, List<Map<String, dynamic>>>> exportData(){
+    return  _databaseSource.exportData();
   }
 
-  Future backup(String catalogId, String fileName) async {
-    if (_driveRepository == null) {
-      return null;
-    }
-
-    var data = await _databaseSource.exportData();
-
-    await _driveRepository!.backup(data, catalogId, fileName);
-  }
-
-  Future restore(String fileId) async {
-    if (_driveRepository == null) {
-      return null;
-    }
-
-    var data = await _driveRepository!.restore(fileId);
-
-    if (data == null) return null;
-
+  Future<void> importData(Map<String, dynamic> data) async {
     await _databaseSource.deleteAll();
     await _databaseSource.importData(data);
   }
 
-  Future<List<DriveFile>?> getDriveFiles(String catalogId) async {
-    if (_driveRepository == null) {
-      return null;
-    }
-
-    return _driveRepository!.getFiles(catalogId);
-  }
 }

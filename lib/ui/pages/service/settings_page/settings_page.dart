@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/auth_bloc.dart';
+import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
@@ -13,14 +15,16 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   late SettingsPageBloc _bloc;
-
 
   @override
   void initState() {
     super.initState();
-    _bloc = SettingsPageBloc(context.read<Repository>());
+    _bloc = SettingsPageBloc(
+      context.read<Repository>(),
+      context.read<DriveRepository>(),
+      context.read<AuthBloc>(),
+    );
   }
 
   @override
@@ -67,53 +71,80 @@ class _SettingsPageState extends State<SettingsPage> {
         builder: (BuildContext context) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                sectionTitle(context, 'Google drive'),
-                Flex(
-                  direction: Axis.horizontal,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    ElevatedButton(
-                      onPressed: () => _backup(context),
-                      child: Text(
-                        AppLocalizations.of(context).backup.toUpperCase(),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => _restore(context),
-                      child: Text(
-                        AppLocalizations.of(context).restore.toUpperCase(),
-                      ),
-                    ),
-                  ],
-                ),
-                sectionTitle(
-                    context, AppLocalizations.of(context).titleDataControl),
-                ElevatedButton(
-                  onPressed: () => _deleteAll(context),
-                  child: Text(
-                    AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
-                  ),
-                ),
-                BlocConsumer<SettingsPageBloc, BackupPageState>(
-                  builder: (BuildContext context, BackupPageState state) {
-                    if (state.inProgress) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  },
-                  listener: (BuildContext context, BackupPageState state) {
-                    _showMessage(context, state.action);
-                  },
-                )
-              ],
-            ),
+            child: BlocConsumer<SettingsPageBloc, BackupPageState>(
+                bloc: _bloc,
+                listener: (context, state) {
+                  _showMessage(context, state.action);
+                },
+                builder: (context, state) {
+                  if (state.isAuthenticated) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        sectionTitle(context, 'Google drive'),
+                        ElevatedButton(
+                            onPressed: () {
+                              _bloc.signOut();
+                            },
+                            child: Text('SING OUT' //todo
+                                )),
+                        Flex(
+                          direction: Axis.horizontal,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            ElevatedButton(
+                              onPressed: () => _backup(context),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .backup
+                                    .toUpperCase(),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => _restore(context),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .restore
+                                    .toUpperCase(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        sectionTitle(context,
+                            AppLocalizations.of(context).titleDataControl),
+                        ElevatedButton(
+                          onPressed: () => _deleteAll(context),
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .btnDeleteAll
+                                .toUpperCase(),
+                          ),
+                        ),
+                        BlocBuilder<SettingsPageBloc, BackupPageState>(
+                          bloc: _bloc,
+                          builder:
+                              (BuildContext context, BackupPageState state) {
+                            if (state.inProgress) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        )
+                      ],
+                    );
+                  } else {
+                    return ElevatedButton(
+                        onPressed: () {
+                          _bloc.signIn();
+                        },
+                        child: Text('LOG IN' //TODO
+                            ));
+                  }
+                }),
           );
         },
       ),
@@ -143,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              BlocProvider.of<SettingsPageBloc>(context).deleteAll();
+              _bloc.deleteAll();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context).yes),

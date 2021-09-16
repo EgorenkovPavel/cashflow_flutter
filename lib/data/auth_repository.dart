@@ -1,9 +1,9 @@
 import 'package:google_sign_in/google_sign_in.dart';
 
-class UserRepository {
+class AuthRepository {
   late final GoogleSignIn _googleSignIn;
 
-  UserRepository() {
+  AuthRepository() {
     _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -14,13 +14,28 @@ class UserRepository {
 
   Future<bool> isAuthenticated() async {
     final currentUser = _googleSignIn.currentUser;
-    return currentUser != null;
+    var isSignIn = await _googleSignIn.isSignedIn();
+    return currentUser != null && isSignIn;
   }
 
-  Future<void> authenticate() async {
+  Future<void> signInSilently() async {
+    var isAuth = await isAuthenticated();
+    if (!isAuth) {
+      await _googleSignIn.signInSilently();
+    }
+  }
+
+  Future<void> signIn() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
       await _googleSignIn.signIn();
+    }
+  }
+
+  Future<void> signOut() async {
+    var isAuth = await isAuthenticated();
+    if (isAuth) {
+      await _googleSignIn.signOut();
     }
   }
 
