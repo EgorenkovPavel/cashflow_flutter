@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class DialogDriveState {
@@ -33,12 +33,12 @@ enum DialogMode {
 }
 
 class DialogDriveBloc extends Cubit<DialogDriveState> {
-  final Repository _repository;
+  final DriveRepository _repository;
   final DialogMode mode;
 
   late final rootFolder;
 
-  DialogDriveBloc({required Repository repository, required this.mode})
+  DialogDriveBloc({required DriveRepository repository, required this.mode})
       : _repository = repository,
         super(DialogDriveState(
             action: DialogDriveAction.NO_ACTION, folderList: [])) {
@@ -50,7 +50,7 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
 
   Future<void> loadFolders() async {
     try {
-      var files = await _repository.getDriveFiles(rootFolder.top().id);
+      var files = await _repository.getFiles(rootFolder.top().id);
       if (files == null) {
         return;
       }

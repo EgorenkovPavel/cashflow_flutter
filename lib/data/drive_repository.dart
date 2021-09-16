@@ -8,13 +8,25 @@ import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DriveRepository {
-  late final _GoogleHttpClient _client;
+  _GoogleHttpClient? _client;
 
-  DriveRepository(Map<String, String> headers)
-      : _client = _GoogleHttpClient(headers);
+  DriveRepository();
+
+  void logIn(Map<String, String> headers){
+    _client = _GoogleHttpClient(headers);
+  }
+
+  void logOut(){
+    _client = null;
+  }
 
   Future<void> backup(Map<String, List<Map<String, dynamic>>> data,
       String catalogId, String fileName) async {
+
+    if(_client == null){
+      return Future.value();
+    }
+
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(data));
@@ -28,7 +40,7 @@ class DriveRepository {
 
     try {
       var response =
-          await drive.DriveApi(_client).files.create(file, uploadMedia: media);
+          await drive.DriveApi(_client!).files.create(file, uploadMedia: media);
       print(response);
     } catch (e) {
       print(e);
@@ -36,8 +48,13 @@ class DriveRepository {
   }
 
   Future<Map<String, dynamic>?> restore(String fileId) async {
+
+    if(_client == null){
+      return Future.value();
+    }
+
     try {
-      var file = await drive.DriveApi(_client).files.get(fileId,
+      var file = await drive.DriveApi(_client!).files.get(fileId,
           downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
       final directory = await getTemporaryDirectory();
@@ -64,7 +81,12 @@ class DriveRepository {
   }
 
   Future<List<DriveFile>> getFiles(String catalogId) async {
-    var data = await drive.DriveApi(_client).files.list(
+
+    if(_client == null){
+      return Future.value([]);
+    }
+
+    var data = await drive.DriveApi(_client!).files.list(
         orderBy: 'folder,name,modifiedTime',
         spaces: 'drive',
         q: '$catalogId in parents and trashed = false',
