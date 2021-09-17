@@ -69,11 +69,11 @@ class _AddButton extends StatelessWidget {
           children: [
             Icon(
               Icons.add,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             Text(
               title.toUpperCase(),
-              style: TextStyle().copyWith(color: Theme.of(context).accentColor),
+              style: TextStyle().copyWith(color: Theme.of(context).colorScheme.secondary),
             ),
           ],
         ),
