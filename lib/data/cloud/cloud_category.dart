@@ -26,8 +26,11 @@ class CloudCategoryConverter extends CloudConverter<CloudCategory> {
   static const String _KEY_OPERATION_TYPE = 'operation_type';
   static const String _KEY_BUDGET_TYPE = 'budget_type';
   static const String _KEY_BUDGET = 'budget';
+  static const String _KEY_USERS = 'users';
 
-  const CloudCategoryConverter();
+  final String userId;
+
+  const CloudCategoryConverter({required this.userId});
 
   @override
   Map<String, dynamic> mapToCloud(CloudCategory category) {
@@ -38,6 +41,7 @@ class CloudCategoryConverter extends CloudConverter<CloudCategory> {
       _KEY_BUDGET_TYPE:
           const BudgetTypeConverter().mapToSql(category.budgetType),
       _KEY_BUDGET: category.budget,
+      _KEY_USERS: [userId],
     };
   }
 
