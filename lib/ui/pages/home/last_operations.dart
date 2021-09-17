@@ -95,12 +95,12 @@ class _ShowAllButton extends StatelessWidget {
             children: [
               Icon(
                 Icons.arrow_downward,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               Text(
                 AppLocalizations.of(context).btnShowAll.toUpperCase(),
                 style:
-                    TextStyle().copyWith(color: Theme.of(context).primaryColor),
+                    TextStyle().copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ],
           ),

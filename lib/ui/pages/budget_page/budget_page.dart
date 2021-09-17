@@ -240,7 +240,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
                   style: Theme.of(context)
                       .textTheme
                       .headline6!
-                      .copyWith(color: Theme.of(context).primaryColor),
+                      .copyWith(color: Theme.of(context).colorScheme.primary),
                 );
               }),
         ],
@@ -347,7 +347,7 @@ class _CategoryItem extends StatelessWidget {
             ),
             LinearProgressIndicator(
               minHeight: 5,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               value: _progress(),
             ),
           ],

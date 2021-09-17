@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:http/http.dart';
-import 'package:http/io_client.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:googleapis_auth/googleapis_auth.dart';
 
 class DriveRepository {
   AuthClient? _client;
@@ -108,16 +106,3 @@ class DriveRepository {
   }
 }
 
-class _GoogleHttpClient extends IOClient {
-  final Map<String, String> _headers;
-
-  _GoogleHttpClient(this._headers);
-
-  @override
-  Future<IOStreamedResponse> send(BaseRequest request) =>
-      super.send(request..headers.addAll(_headers));
-
-  @override
-  Future<Response> head(Uri url, {Map<String, String>? headers}) =>
-      super.head(url, headers: headers?..addAll(_headers));
-}
