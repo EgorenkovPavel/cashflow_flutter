@@ -29,7 +29,7 @@ class TopHeader extends StatelessWidget {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(Dimensions.padding),
@@ -70,7 +70,7 @@ class TopHeader extends StatelessWidget {
                   margin: EdgeInsets.only(
                       bottom: _accounts.isEmpty ? 0 : _itemSize / 2 + Dimensions.padding * 1),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(24.0),
                       bottomRight: Radius.circular(24.0),

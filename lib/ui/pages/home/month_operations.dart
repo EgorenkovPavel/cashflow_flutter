@@ -32,7 +32,7 @@ class MonthOperations extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headline6!
-                          .copyWith(color: Theme.of(context).primaryColor)),
+                          .copyWith(color: Theme.of(context).colorScheme.secondary)),
                 ],
               ),
             ),
@@ -131,7 +131,7 @@ class _MonthOperation extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: LinearProgressIndicator(
                       minHeight: 10,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       value: _progress,
                     ),
                   ),
