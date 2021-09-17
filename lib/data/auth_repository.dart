@@ -1,4 +1,6 @@
+import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 
 class AuthRepository {
   late final GoogleSignIn _googleSignIn;
@@ -43,13 +45,8 @@ class AuthRepository {
     return _googleSignIn.currentUser?.id;
   }
 
-  Future<Map<String, String>?> getHeaders() async {
-    final authHeaders = await _googleSignIn.currentUser?.authHeaders;
-
-    if (authHeaders == null) {
-      return null;
-    } else {
-      return authHeaders;
-    }
+  Future<AuthClient?> getClient() {
+    return _googleSignIn.authenticatedClient();
   }
+
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -6,14 +7,15 @@ import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 
 class DriveRepository {
-  _GoogleHttpClient? _client;
+  AuthClient? _client;
 
   DriveRepository();
 
-  void logIn(Map<String, String> headers){
-    _client = _GoogleHttpClient(headers);
+  void logIn(AuthClient client){
+    _client = client;
   }
 
   void logOut(){
@@ -50,7 +52,7 @@ class DriveRepository {
   Future<Map<String, dynamic>?> restore(String fileId) async {
 
     if(_client == null){
-      return Future.value();
+      return null;
     }
 
     try {
@@ -61,19 +63,16 @@ class DriveRepository {
       var saveFile = File('${directory.path}/test.json');
 
       var dataStore = <int>[];
-      file.stream.listen((data) {
+      await for (var data in file.stream){
         print('DataReceived: ${data.length}');
         dataStore.insertAll(dataStore.length, data);
-      }, onDone: () async {
-        print('Task Done');
-        await saveFile.writeAsBytes(dataStore);
-        print('File saved at ${saveFile.path}');
+      }
 
-        return jsonDecode(saveFile.readAsStringSync());
-      }, onError: (error) {
-        print('Some Error');
-        return null;
-      });
+      print('Task Done');
+      await saveFile.writeAsBytes(dataStore);
+      print('File saved at ${saveFile.path}');
+
+      return jsonDecode(saveFile.readAsStringSync());
     } catch (e) {
       print(e);
       return null;
@@ -89,7 +88,7 @@ class DriveRepository {
     var data = await drive.DriveApi(_client!).files.list(
         orderBy: 'folder,name,modifiedTime',
         spaces: 'drive',
-        q: '$catalogId in parents and trashed = false',
+        q: "'$catalogId' in parents and trashed = false", //only double ""
         //(mimeType = 'application/vnd.google-apps.folder')
         $fields: 'files(id,name,parents,mimeType,modifiedTime)');
 

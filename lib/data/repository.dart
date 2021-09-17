@@ -26,83 +26,83 @@ class Repository{
   }
 
   Future<void> syncData() async {
-    await Future.delayed(Duration(seconds: 10));
-    _cloudSource.accountChanges
-        ?.listen((list) => list.forEach((cloudAccount) async {
-              var _account =
-                  await _databaseSource.accounts.getByCloudId(cloudAccount.id);
-              if (_account == null) {
-                await _databaseSource.accounts.insert(Account(
-                  cloudId: cloudAccount.id,
-                  title: cloudAccount.title,
-                ));
-              } else {
-                await _databaseSource.accounts
-                    .update(_account.copyWith(title: cloudAccount.title));
-              }
-            }));
-
-    _cloudSource.categoryChanges
-        ?.listen((list) => list.forEach((cloudCategory) async {
-              var _category = await _databaseSource.categories
-                  .getByCloudId(cloudCategory.id);
-              if (_category == null) {
-                await _databaseSource.categories.insert(Category(
-                  title: cloudCategory.title,
-                  cloudId: cloudCategory.id,
-                  operationType: cloudCategory.operationType,
-                  budgetType: cloudCategory.budgetType,
-                  budget: cloudCategory.budget,
-                ));
-              } else {
-                await _databaseSource.categories.update(_category.copyWith(
-                  title: cloudCategory.title,
-                  cloudId: cloudCategory.id,
-                  operationType: cloudCategory.operationType,
-                  budgetType: cloudCategory.budgetType,
-                  budget: cloudCategory.budget,
-                ));
-              }
-            }));
-
-    _cloudSource.operationChanges
-        ?.listen((list) => list.forEach((cloudOperation) async {
-              var _operation = await _databaseSource.operations
-                  .getByCloudId(cloudOperation.id);
-
-              var _account = await _databaseSource.accounts
-                  .getByCloudId(cloudOperation.account);
-              var _category = cloudOperation.category == null
-                  ? null
-                  : await _databaseSource.categories
-                      .getByCloudId(cloudOperation.category!);
-              var _recAccount = cloudOperation.recAccount == null
-                  ? null
-                  : await _databaseSource.accounts
-                      .getByCloudId(cloudOperation.recAccount!);
-
-              if (_operation == null) {
-                await _databaseSource.operations.insert(Operation(
-                  cloudId: cloudOperation.id,
-                  date: cloudOperation.date,
-                  type: cloudOperation.operationType,
-                  account: _account!,
-                  category: _category,
-                  recAccount: _recAccount,
-                  sum: cloudOperation.sum,
-                ));
-              } else {
-                await _databaseSource.operations.update(_operation.copyWith(
-                  cloudId: cloudOperation.id,
-                  date: cloudOperation.date,
-                  type: cloudOperation.operationType,
-                  account: _account!,
-                  category: _category,
-                  recAccount: _recAccount,
-                  sum: cloudOperation.sum,
-                ));
-              }
-            }));
+    // await Future.delayed(Duration(seconds: 10));
+    // _cloudSource.accountChanges
+    //     ?.listen((list) => list.forEach((cloudAccount) async {
+    //           var _account =
+    //               await _databaseSource.accounts.getByCloudId(cloudAccount.id);
+    //           if (_account == null) {
+    //             await _databaseSource.accounts.insert(Account(
+    //               cloudId: cloudAccount.id,
+    //               title: cloudAccount.title,
+    //             ));
+    //           } else {
+    //             await _databaseSource.accounts
+    //                 .update(_account.copyWith(title: cloudAccount.title));
+    //           }
+    //         }));
+    //
+    // _cloudSource.categoryChanges
+    //     ?.listen((list) => list.forEach((cloudCategory) async {
+    //           var _category = await _databaseSource.categories
+    //               .getByCloudId(cloudCategory.id);
+    //           if (_category == null) {
+    //             await _databaseSource.categories.insert(Category(
+    //               title: cloudCategory.title,
+    //               cloudId: cloudCategory.id,
+    //               operationType: cloudCategory.operationType,
+    //               budgetType: cloudCategory.budgetType,
+    //               budget: cloudCategory.budget,
+    //             ));
+    //           } else {
+    //             await _databaseSource.categories.update(_category.copyWith(
+    //               title: cloudCategory.title,
+    //               cloudId: cloudCategory.id,
+    //               operationType: cloudCategory.operationType,
+    //               budgetType: cloudCategory.budgetType,
+    //               budget: cloudCategory.budget,
+    //             ));
+    //           }
+    //         }));
+    //
+    // _cloudSource.operationChanges
+    //     ?.listen((list) => list.forEach((cloudOperation) async {
+    //           var _operation = await _databaseSource.operations
+    //               .getByCloudId(cloudOperation.id);
+    //
+    //           var _account = await _databaseSource.accounts
+    //               .getByCloudId(cloudOperation.account);
+    //           var _category = cloudOperation.category == null
+    //               ? null
+    //               : await _databaseSource.categories
+    //                   .getByCloudId(cloudOperation.category!);
+    //           var _recAccount = cloudOperation.recAccount == null
+    //               ? null
+    //               : await _databaseSource.accounts
+    //                   .getByCloudId(cloudOperation.recAccount!);
+    //
+    //           if (_operation == null) {
+    //             await _databaseSource.operations.insert(Operation(
+    //               cloudId: cloudOperation.id,
+    //               date: cloudOperation.date,
+    //               type: cloudOperation.operationType,
+    //               account: _account!,
+    //               category: _category,
+    //               recAccount: _recAccount,
+    //               sum: cloudOperation.sum,
+    //             ));
+    //           } else {
+    //             await _databaseSource.operations.update(_operation.copyWith(
+    //               cloudId: cloudOperation.id,
+    //               date: cloudOperation.date,
+    //               type: cloudOperation.operationType,
+    //               account: _account!,
+    //               category: _category,
+    //               recAccount: _recAccount,
+    //               sum: cloudOperation.sum,
+    //             ));
+    //           }
+    //         }));
   }
 
   //Accounts

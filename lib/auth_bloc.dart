@@ -1,17 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/data/auth_repository.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 
 class AuthState {
   final bool isAuthenticated;
   final String userId;
   final bool inProgress;
-  final Map<String, String> headers;
+  final AuthClient? client;
 
   AuthState({
     required this.isAuthenticated,
     this.userId = '',
     required this.inProgress,
-    this.headers = const {},
+    this.client,
   });
 
   factory AuthState.inProgress() => AuthState(
@@ -21,13 +22,13 @@ class AuthState {
 
   factory AuthState.authenticated({
     required String userId,
-    required Map<String, String> headers,
+    required AuthClient client,
   }) =>
       AuthState(
         inProgress: false,
         isAuthenticated: true,
         userId: userId,
-        headers: headers,
+        client: client,
       );
 
   factory AuthState.notAuthenticated() => AuthState(
@@ -54,8 +55,8 @@ class AuthBloc extends Cubit<AuthState> {
     var isAuthed = await _repository.isAuthenticated();
     if (isAuthed) {
       var userId = await _repository.getUserId();
-      var headers = await _repository.getHeaders();
-      emit(AuthState.authenticated(userId: userId!, headers: headers!));
+      var client = await _repository.getClient();
+      emit(AuthState.authenticated(userId: userId!, client: client!));
     } else {
       emit(AuthState.notAuthenticated());
     }
