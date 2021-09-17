@@ -60,10 +60,9 @@ class _AccountInputPageState extends State<AccountInputPage> {
                 controller: _controller,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(),
+                  // ),
                   labelText: AppLocalizations.of(context).title,
                 ),
                 validator: (value) {

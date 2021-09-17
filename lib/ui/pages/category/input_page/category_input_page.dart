@@ -74,84 +74,88 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
             _bloc.save(titleController.text, budgetController.text);
           },
           child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        AppLocalizations.of(context).titleType,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      SizedBox(width: 8.0,),
-                      BlocBuilder<CategoryInputPageBloc, CategoryInputPageState>(
-                          bloc: _bloc,
-                          builder: (context, state) {
-                            if (state is InputState) {
-                              return Text(AppLocalizations.of(context).operationTypeTitle(state.type));
-                            } else {
-                              return SizedBox();
-                            }
-                          }),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8.0,),
-                TextFormField(
-                  autofocus: true,
-                  controller: titleController,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      AppLocalizations.of(context).titleType,
+                      style: Theme.of(context).textTheme.caption,
                     ),
-                    labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                    labelText: AppLocalizations.of(context).title,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context).emptyTitleError;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 8.0,),
-                TextFormField(
-                  controller: budgetController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                    ),
-                    labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                    labelText: AppLocalizations.of(context).budget,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context).emptyTitleError;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 8.0,),
-                Row(
-                  children: [
-                    Text(AppLocalizations.of(context).budgetType),
                     SizedBox(
-                      width: 16.0,
+                      width: 8.0,
                     ),
-                    TypeRadioButton<BudgetType>(
-                        onChange: (type) => _bloc.setbudgetType(type),
-                        type: (state as InputState).budgetType,
-                        items: [BudgetType.MONTH, BudgetType.YEAR])
+                    BlocBuilder<CategoryInputPageBloc, CategoryInputPageState>(
+                        bloc: _bloc,
+                        builder: (context, state) {
+                          if (state is InputState) {
+                            return Text(AppLocalizations.of(context)
+                                .operationTypeTitle(state.type));
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
                   ],
                 ),
-              ],
-
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                autofocus: true,
+                controller: titleController,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(),
+                  // ),
+                  labelText: AppLocalizations.of(context).title,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context).emptyTitleError;
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                controller: budgetController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(),
+                  // ),
+                  labelText: AppLocalizations.of(context).budget,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context).emptyTitleError;
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Row(
+                children: [
+                  Text(AppLocalizations.of(context).budgetType),
+                  SizedBox(
+                    width: 16.0,
+                  ),
+                  TypeRadioButton<BudgetType>(
+                      onChange: (type) => _bloc.setbudgetType(type),
+                      type: (state as InputState).budgetType,
+                      items: [BudgetType.MONTH, BudgetType.YEAR])
+                ],
+              ),
+            ],
           ),
         );
       },
