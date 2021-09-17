@@ -231,7 +231,7 @@ class Repository{
       id: operation.cloudId,
       date: operation.date,
       operationType: operation.type,
-      account: operation.account.cloudId,
+      account: operation.account.cloudId!,
       category: operation.category?.cloudId ?? '',
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,
@@ -246,7 +246,7 @@ class Repository{
       id: operation.cloudId,
       date: operation.date,
       operationType: operation.type,
-      account: operation.account.cloudId,
+      account: operation.account.cloudId!,
       category: operation.category?.cloudId ?? '',
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,
@@ -264,7 +264,7 @@ class Repository{
   }
 
   Future deleteOperation(Operation operation) async {
-    await _cloudSource.deleteOperation(operation.cloudId);
+    await _cloudSource.deleteOperation(operation.cloudId!);
     await _databaseSource.operations.deleteById(operation.id);
   }
 

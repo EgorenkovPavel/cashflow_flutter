@@ -110,7 +110,7 @@ class CloudSource {
 
   Future<void>? updateAccount(CloudAccount account) => _updateItem(
         _accounts,
-        account.id,
+        account.id!,
         CloudAccountConverter(userId: _userId).mapToCloud(account),
       );
 
@@ -126,7 +126,7 @@ class CloudSource {
 
   Future<void> updateCategory(CloudCategory category) => _updateItem(
         _categories,
-        category.id,
+        category.id!,
         CloudCategoryConverter(userId: _userId).mapToCloud(category),
       );
 
@@ -142,7 +142,7 @@ class CloudSource {
 
   Future<void> updateOperation(CloudOperation operation) => _updateItem(
         _operations,
-        operation.id,
+        operation.id!,
         CloudOperationConverter(userId: _userId).mapToCloud(operation),
       );
 

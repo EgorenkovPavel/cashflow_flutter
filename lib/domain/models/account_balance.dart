@@ -2,7 +2,7 @@ import 'account.dart';
 
 class AccountBalance {
   final int id;
-  final String cloudId;
+  final String? cloudId;
   final String title;
   final int balance;
   final bool isDebt;

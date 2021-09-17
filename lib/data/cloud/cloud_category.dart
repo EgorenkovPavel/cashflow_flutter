@@ -6,7 +6,7 @@ import 'package:money_tracker/domain/models/budget_type.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 
 class CloudCategory {
-  final String id;
+  final String? id;
   final String title;
   final OperationType operationType;
   final BudgetType budgetType;

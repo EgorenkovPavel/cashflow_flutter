@@ -20,7 +20,7 @@ class Accounts extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().withDefault(const Constant(''))();
+  TextColumn get cloudId => text().nullable()();
 
   TextColumn get title => text()();
 
@@ -34,7 +34,7 @@ class Categories extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().withDefault(const Constant(''))();
+  TextColumn get cloudId => text().nullable()();
 
   TextColumn get title => text()();
 
@@ -54,7 +54,7 @@ class Operations extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().withDefault(const Constant(''))();
+  TextColumn get cloudId => text().nullable()();
 
   DateTimeColumn get date => dateTime()();
 
@@ -335,6 +335,10 @@ class _DefaultValueSerializer extends ValueSerializer {
       return _budgetTypeConverter.mapToDart(json as int) as T;
     } else if (T == int && json == null){
       return 0 as T;
+    } else if (T == String && json == null){
+      return '' as T;
+    } else if (T == bool && json == null){
+      return false as T;
     }
 
     return json as T;

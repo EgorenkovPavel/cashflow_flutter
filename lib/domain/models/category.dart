@@ -4,27 +4,29 @@ import 'operation_type.dart';
 
 class Category {
   final int id;
-  final String cloudId;
+  final String? cloudId;
   final String title;
   final OperationType operationType;
   final BudgetType budgetType;
   final int budget;
 
-  const Category(
-      {required this.budgetType,
-      required this.budget,
-      this.id = 0,
-      this.cloudId = '',
-      required this.title,
-      required this.operationType});
+  const Category({
+    required this.budgetType,
+    required this.budget,
+    this.id = 0,
+    this.cloudId = '',
+    required this.title,
+    required this.operationType,
+  });
 
-  Category copyWith(
-          {int? id,
-          String? cloudId,
-          String? title,
-          OperationType? operationType,
-          BudgetType? budgetType,
-          int? budget}) =>
+  Category copyWith({
+    int? id,
+    String? cloudId,
+    String? title,
+    OperationType? operationType,
+    BudgetType? budgetType,
+    int? budget,
+  }) =>
       Category(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
