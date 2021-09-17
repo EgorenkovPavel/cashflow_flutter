@@ -38,8 +38,7 @@ class ItemCard<T> extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(null),
                   child: Text(
                     AppLocalizations.of(context).cancel.toUpperCase(),
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                  ),
+                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -47,7 +46,6 @@ class ItemCard<T> extends StatelessWidget {
                       onSave(context);
                     }
                   },
-                  style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
                   child: Text(
                     AppLocalizations.of(context).save.toUpperCase(),
                     //style: TextStyle(color: Colors.white),

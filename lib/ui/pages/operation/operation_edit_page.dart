@@ -179,21 +179,16 @@ class _OperationEditPageState extends State<OperationEditPage> {
             },
             child: Text(
               AppLocalizations.of(context).cancel.toUpperCase(),
-              style: TextStyle(color: Theme.of(context).primaryColor),
             ),
           ),
           ElevatedButton(
-            // style: ElevatedButton.styleFrom(
-            //     primary: Theme.of(context).primaryColor),
-            onPressed: () {
+             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _saveOperation(context);
                 Navigator.pop(context);
               }
             },
-            style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor),
-            child: Text(
+             child: Text(
               AppLocalizations.of(context).save.toUpperCase(),
               //style: TextStyle(color: Colors.white),
             ),
@@ -316,22 +311,12 @@ class DateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style:
-          TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       onPressed: onPressed,
       child: Row(
         children: <Widget>[
-          Icon(
-            icon,
-            //color: color,
-          ),
-          SizedBox(
-            width: 4.0,
-          ),
-          Text(
-            text,
-            //style: TextStyle(color: color),
-          ),
+          Icon(icon),
+          SizedBox(width: 4.0),
+          Text(text),
         ],
       ),
     );

@@ -324,6 +324,18 @@ class _CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () =>
+          PageNavigator.openCategoryPage(context, category.category.id),
+      title: Text(category.category.title),
+      subtitle: Text(AppLocalizations.of(context)
+          .numberFormat(category.category.budget)),
+      trailing: Text(AppLocalizations.of(context)
+          .numberFormat(category.monthCashflow)),
+      leading: CircularProgressIndicator(
+        value: _progress(),
+      ),
+    );
     return InkWell(
       onTap: () =>
           PageNavigator.openCategoryPage(context, category.category.id),
