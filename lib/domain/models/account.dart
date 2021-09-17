@@ -1,6 +1,6 @@
 class Account {
   final int id;
-  final String cloudId;
+  final String? cloudId;
   final String title;
   final bool isDebt;
 
@@ -10,7 +10,12 @@ class Account {
       required this.title,
       this.isDebt = false});
 
-  Account copyWith({int? id, String? cloudId, String? title, bool? isDebt}) =>
+  Account copyWith({
+    int? id,
+    String? cloudId,
+    String? title,
+    bool? isDebt,
+  }) =>
       Account(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,

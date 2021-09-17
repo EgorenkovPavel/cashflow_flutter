@@ -4,7 +4,7 @@ import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 
 class CloudOperation {
-  final String id;
+  final String? id;
   final DateTime date;
   final OperationType operationType;
   final String account;

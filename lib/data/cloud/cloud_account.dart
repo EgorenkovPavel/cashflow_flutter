@@ -4,7 +4,7 @@ import 'package:money_tracker/data/cloud/cloud_converter.dart';
 
 class CloudAccount{
 
-  final String id;
+  final String? id;
   final String title;
 
   CloudAccount({required this.id, required this.title});
