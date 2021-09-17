@@ -34,7 +34,7 @@ class Keyboard extends StatelessWidget {
           width: width * 0.75, //24.0*_ratio,
           decoration: BoxDecoration(
             border:
-                Border.all(width: 2.0, color: Theme.of(context).primaryColor),
+                Border.all(width: 2.0, color: Theme.of(context).colorScheme.primary),
             borderRadius: BorderRadius.circular(width * 0.75 / 2),
           ),
           child: Center(child: child),
@@ -49,7 +49,7 @@ class Keyboard extends StatelessWidget {
         Text(
           '$digit',
           style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
         ),
         () => onDigitPressed(digit),
@@ -91,7 +91,7 @@ class Keyboard extends StatelessWidget {
                 context,
                 Icon(
                   Icons.arrow_back,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 onBackPressed,
                 _col),

@@ -315,7 +315,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                               child: Text(
                                 AppLocalizations.of(context).more.toUpperCase(),
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                                    color: Theme.of(context).colorScheme.primary),
                               ),
                             ),
                             Expanded(
@@ -335,9 +335,9 @@ class _OperationInputPageState extends State<OperationInputPage>
                                           border: Border.all(
                                               color: state.showKeyboard
                                                   ? Theme.of(context)
-                                                      .accentColor
+                                                      .colorScheme.secondary
                                                   : Theme.of(context)
-                                                      .primaryColor,
+                                                      .colorScheme.primary,
                                               width: 2.0),
                                         ),
                                         width: double.infinity,
@@ -372,7 +372,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                     .create
                                     .toUpperCase(),
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                                    color: Theme.of(context).colorScheme.primary),
                               ),
                             ),
                           ],

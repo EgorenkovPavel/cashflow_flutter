@@ -131,6 +131,7 @@ class _MonthOperation extends StatelessWidget {
                           aspectRatio: 1,
                           child: CircularProgressIndicator(
                             value: _progress,
+                            strokeWidth: 10.0,
                           ),
                         ),
                         AspectRatio(
