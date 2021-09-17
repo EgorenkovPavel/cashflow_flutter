@@ -117,7 +117,7 @@ class _MonthOperation extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(Dimensions.padding),
               decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).primaryColor),
+                border: Border.all(color: Theme.of(context).colorScheme.primary),
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: Column(
