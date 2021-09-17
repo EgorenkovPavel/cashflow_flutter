@@ -16,16 +16,20 @@ class CloudSource {
   CollectionReference? _categories;
   CollectionReference? _operations;
 
+  String _userId = '';
+
   CloudSource(this._firestore);
 
   Future<void> logIn(String userId) async {
+    _userId = userId;
     var db = await _getDatabase(userId);
     _accounts = db.collection(_ACCOUNTS);
     _categories = db.collection(_CATEGORIES);
     _operations = db.collection(_OPERATIONS);
   }
 
-  void logOut(){
+  void logOut() {
+    _userId = '';
     _accounts = null;
     _categories = null;
     _operations = null;
@@ -52,18 +56,19 @@ class CloudSource {
   }
 
   Stream<List<CloudAccount>>? get accountChanges =>
-      _accounts?.snapshots().map((event) => event.docs
-          .map((doc) => const CloudAccountConverter().mapToDart(doc))
+      _accounts?.snapshots()
+          .map((event) => event.docs
+          .map((doc) => CloudAccountConverter(userId: _userId).mapToDart(doc))
           .toList());
 
   Stream<List<CloudCategory>>? get categoryChanges =>
       _categories?.snapshots().map((event) => event.docs
-          .map((doc) => const CloudCategoryConverter().mapToDart(doc))
+          .map((doc) => CloudCategoryConverter(userId: _userId).mapToDart(doc))
           .toList());
 
   Stream<List<CloudOperation>>? get operationChanges =>
       _operations?.snapshots().map((event) => event.docs
-          .map((doc) => const CloudOperationConverter().mapToDart(doc))
+          .map((doc) => CloudOperationConverter(userId: _userId).mapToDart(doc))
           .toList());
 
   Future<String?> _addItem(
@@ -98,38 +103,56 @@ class CloudSource {
     return collection.doc(id).delete();
   }
 
-  Future<String?> addAccount(CloudAccount account) =>
-      _addItem(_accounts, const CloudAccountConverter().mapToCloud(account));
+  Future<String?> addAccount(CloudAccount account) => _addItem(
+        _accounts,
+        CloudAccountConverter(userId: _userId).mapToCloud(account),
+      );
 
   Future<void>? updateAccount(CloudAccount account) => _updateItem(
-      _accounts, account.id, const CloudAccountConverter().mapToCloud(account));
+        _accounts,
+        account.id,
+        CloudAccountConverter(userId: _userId).mapToCloud(account),
+      );
 
-  Future<void> deleteAccount(String cloudId) => _deleteItem(_accounts, cloudId);
+  Future<void> deleteAccount(String cloudId) => _deleteItem(
+        _accounts,
+        cloudId,
+      );
 
   Future<String?> addCategory(CloudCategory category) => _addItem(
-      _categories, const CloudCategoryConverter().mapToCloud(category));
+        _categories,
+        CloudCategoryConverter(userId: _userId).mapToCloud(category),
+      );
 
   Future<void> updateCategory(CloudCategory category) => _updateItem(
-      _categories,
-      category.id,
-      const CloudCategoryConverter().mapToCloud(category));
+        _categories,
+        category.id,
+        CloudCategoryConverter(userId: _userId).mapToCloud(category),
+      );
 
-  Future<void> deleteCategory(String cloudId) =>
-      _deleteItem(_categories, cloudId);
+  Future<void> deleteCategory(String cloudId) => _deleteItem(
+        _categories,
+        cloudId,
+      );
 
   Future<String?> addOperation(CloudOperation operation) => _addItem(
-      _operations, const CloudOperationConverter().mapToCloud(operation));
+        _operations,
+        CloudOperationConverter(userId: _userId).mapToCloud(operation),
+      );
 
   Future<void> updateOperation(CloudOperation operation) => _updateItem(
-      _operations,
-      operation.id,
-      const CloudOperationConverter().mapToCloud(operation));
+        _operations,
+        operation.id,
+        CloudOperationConverter(userId: _userId).mapToCloud(operation),
+      );
 
-  Future<void> deleteOperation(String cloudId) =>
-      _deleteItem(_operations, cloudId);
+  Future<void> deleteOperation(String cloudId) => _deleteItem(
+        _operations,
+        cloudId,
+      );
 
   Future<void> deleteAll() async {
-    if (_operations == null || _accounts == null || _categories == null){
+    if (_operations == null || _accounts == null || _categories == null) {
       return Future.value();
     }
 

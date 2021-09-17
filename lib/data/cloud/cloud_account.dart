@@ -14,13 +14,17 @@ class CloudAccount{
 class CloudAccountConverter extends CloudConverter<CloudAccount>{
 
   static const String _KEY_TITLE = 'title';
+  static const String _KEY_USERS = 'users';
 
-  const CloudAccountConverter();
+  final String userId;
+
+  const CloudAccountConverter({required this.userId});
 
   @override
   Map<String, dynamic> mapToCloud(CloudAccount value) {
     return {
       _KEY_TITLE: value.title,
+      _KEY_USERS: [userId],
     };
   }
 

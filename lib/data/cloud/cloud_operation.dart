@@ -29,8 +29,11 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
   static const String _KEY_CATEGORY = 'category';
   static const String _KEY_REC_ACCOUNT = 'rec_account';
   static const String _KEY_SUM = 'sum';
+  static const String _KEY_USERS = 'users';
 
-  const CloudOperationConverter();
+  final String userId;
+
+  const CloudOperationConverter({required this.userId});
 
   @override
   Map<String, dynamic> mapToCloud(CloudOperation operation) {
@@ -42,6 +45,7 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
       _KEY_CATEGORY: operation.category ?? '',
       _KEY_REC_ACCOUNT: operation.recAccount ?? '',
       _KEY_SUM: operation.sum,
+      _KEY_USERS: [userId],
     };
   }
 
