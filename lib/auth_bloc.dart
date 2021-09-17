@@ -66,15 +66,17 @@ class AuthBloc extends Cubit<AuthState> {
     emit(AuthState.inProgress());
     try {
       await _repository.signIn();
+    } finally{
       await _checkAuth();
-    } catch (e) {}
+    }
   }
 
   Future<void> signOut() async {
     emit(AuthState.inProgress());
     try {
       await _repository.signOut();
+    } finally {
       await _checkAuth();
-    } catch (e) {}
+    }
   }
 }

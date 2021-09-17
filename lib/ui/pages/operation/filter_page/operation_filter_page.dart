@@ -32,7 +32,6 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       );
   }
 
-
   @override
   void dispose() {
     _bloc.close();
@@ -199,8 +198,6 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
           ),
         ),
         ElevatedButton(
-          style:
-              ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           onPressed: () => Navigator.pop(
             context,
             _bloc.getFilter(),

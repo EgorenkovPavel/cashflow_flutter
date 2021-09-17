@@ -37,7 +37,7 @@ class Carousel<T> extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 3.0,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -73,7 +73,7 @@ class Carousel<T> extends StatelessWidget {
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
-                              width: 1.0, color: Theme.of(context).primaryColor),
+                              width: 1.0, color: Theme.of(context).colorScheme.primary),
                         ),
                         height: 20.0,
                         child: itemBuilder(context, pos),
