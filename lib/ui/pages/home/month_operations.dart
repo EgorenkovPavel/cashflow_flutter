@@ -29,10 +29,8 @@ class MonthOperations extends StatelessWidget {
                       text: DateFormat.MMMM(
                               Localizations.localeOf(context).toString())
                           .format(DateTime.now()),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .copyWith(color: Theme.of(context).colorScheme.secondary)),
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Theme.of(context).colorScheme.primary)),
                 ],
               ),
             ),
@@ -114,31 +112,83 @@ class _MonthOperation extends StatelessWidget {
         return Expanded(
           child: InkWell(
             onTap: () => PageNavigator.openBudgetPage(context, operationType),
-            child: Container(
-              padding: EdgeInsets.all(Dimensions.padding),
-              decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).colorScheme.primary),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                      operationType == OperationType.INPUT
-                          ? AppLocalizations.of(context).earning
-                          : AppLocalizations.of(context).spending,
-                      style: Theme.of(context).textTheme.headline6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: LinearProgressIndicator(
-                      minHeight: 10,
-                      color: Theme.of(context).colorScheme.secondary,
-                      value: _progress,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(
+                        operationType == OperationType.INPUT
+                            ? AppLocalizations.of(context).earning
+                            : AppLocalizations.of(context).spending,
+                        style: Theme.of(context).textTheme.headline6),
+                    SizedBox(
+                      height: 16,
                     ),
-                  ),
-                  Text(AppLocalizations.of(context).numberFormat(_cashflow)),
-                ],
+                    Stack(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 1,
+                          child: CircularProgressIndicator(
+                            value: _progress,
+                          ),
+                        ),
+                        AspectRatio(
+                          aspectRatio: 1,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)
+                                      .numberFormat(_cashflow),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6!
+                                      .copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)
+                                      .numberFormat(_budget),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
+            // child: Container(
+            //   padding: EdgeInsets.all(Dimensions.padding),
+            //   decoration: BoxDecoration(
+            //     border: Border.all(color: Theme.of(context).colorScheme.primary),
+            //     borderRadius: BorderRadius.circular(8.0),
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Text(
+            //           operationType == OperationType.INPUT
+            //               ? AppLocalizations.of(context).earning
+            //               : AppLocalizations.of(context).spending,
+            //           style: Theme.of(context).textTheme.headline6),
+            //       Padding(
+            //         padding: const EdgeInsets.symmetric(vertical: 8.0),
+            //         child: LinearProgressIndicator(
+            //           minHeight: 10,
+            //           color: Theme.of(context).colorScheme.secondary,
+            //           value: _progress,
+            //         ),
+            //       ),
+            //       Text(AppLocalizations.of(context).numberFormat(_cashflow)),
+            //     ],
+            //   ),
+            // ),
           ),
         );
       },
