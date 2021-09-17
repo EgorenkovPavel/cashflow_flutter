@@ -161,7 +161,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Future _restore(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => RestoreDialog(),
+      builder: (context) => RestoreDialog(
+        restore: _bloc.restore,
+      ),
     );
   }
 
@@ -270,7 +272,10 @@ class _BackupDialogState extends State<BackupDialog> {
 }
 
 class RestoreDialog extends StatefulWidget {
-  const RestoreDialog({Key? key}) : super(key: key);
+
+  final void Function(String fileId) restore;
+
+  const RestoreDialog({Key? key, required this.restore}) : super(key: key);
 
   @override
   _RestoreDialogState createState() => _RestoreDialogState();
@@ -326,7 +331,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
               return;
             }
 
-            BlocProvider.of<SettingsPageBloc>(context).restore(_file!.id);
+            widget.restore(_file!.id);
 
             Navigator.of(context).pop();
           },

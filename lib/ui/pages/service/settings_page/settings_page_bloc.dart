@@ -95,7 +95,7 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
     ));
     var data = await _driveRepository.restore(fileId);
     if (data == null) {
-      return Future.value();
+      return null;
       // TODO add bad state emit
     }
     await _repository.importData(data);

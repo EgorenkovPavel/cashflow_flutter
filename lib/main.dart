@@ -41,7 +41,7 @@ Future<void> main() async {
             return;
           } else if (state.isAuthenticated) {
             _repository.logIn(state.userId);
-            _driveRepository.logIn(state.headers);
+            _driveRepository.logIn(state.client!);
           } else if (!state.isAuthenticated) {
             _repository.logOut();
             _driveRepository.logOut();
