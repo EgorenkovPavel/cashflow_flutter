@@ -12,27 +12,35 @@ class CloudSource {
   static const String _CATEGORIES = 'categories';
   static const String _OPERATIONS = 'operations';
 
+  DocumentReference<Map<String, dynamic>>? _db;
+
   CollectionReference? _accounts;
   CollectionReference? _categories;
   CollectionReference? _operations;
 
   String _userId = '';
 
+  DateTime? _lastSync;
+
   CloudSource(this._firestore);
 
   Future<void> logIn(String userId) async {
     _userId = userId;
-    var db = await _getDatabase(userId);
-    _accounts = db.collection(_ACCOUNTS);
-    _categories = db.collection(_CATEGORIES);
-    _operations = db.collection(_OPERATIONS);
+    _db = await _getDatabase(userId);
+    _accounts = _db?.collection(_ACCOUNTS);
+    _categories = _db?.collection(_CATEGORIES);
+    _operations = _db?.collection(_OPERATIONS);
+    _lastSync = await _getLastSyncDate();
   }
 
-  void logOut() {
+  Future<void> logOut() async {
+    await _setSyncDate(DateTime.now());
     _userId = '';
+    _db = null;
     _accounts = null;
     _categories = null;
     _operations = null;
+    _lastSync = null;
   }
 
   Future<DocumentReference<Map<String, dynamic>>> _getDatabase(
@@ -55,20 +63,39 @@ class CloudSource {
     });
   }
 
-  Stream<List<CloudAccount>>? get accountChanges =>
-      _accounts?.snapshots()
-          .map((event) => event.docs
-          .map((doc) => CloudAccountConverter(userId: _userId).mapToDart(doc))
+  Future<DateTime> _getLastSyncDate() async {
+    var doc = await _db?.get();
+    return DateTime.fromMicrosecondsSinceEpoch(doc?.get('syncDate')[_userId] ?? 0);
+  }
+
+  Future<void> _setSyncDate(DateTime date) async {
+    return _db?.update({
+      'syncDate.$_userId': date,
+    });
+  }
+
+  Stream<List<CloudAccount>>? get accountChanges => _accounts
+      ?.where(CloudAccountConverter.KEY_UPDATED,
+          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
+      .snapshots()
+      .map((event) => event.docs
+          .map((doc) => const CloudAccountConverter().mapToDart(doc))
           .toList());
 
-  Stream<List<CloudCategory>>? get categoryChanges =>
-      _categories?.snapshots().map((event) => event.docs
-          .map((doc) => CloudCategoryConverter(userId: _userId).mapToDart(doc))
+  Stream<List<CloudCategory>>? get categoryChanges => _categories
+      ?.where(CloudAccountConverter.KEY_UPDATED,
+          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
+      .snapshots()
+      .map((event) => event.docs
+          .map((doc) => const CloudCategoryConverter().mapToDart(doc))
           .toList());
 
-  Stream<List<CloudOperation>>? get operationChanges =>
-      _operations?.snapshots().map((event) => event.docs
-          .map((doc) => CloudOperationConverter(userId: _userId).mapToDart(doc))
+  Stream<List<CloudOperation>>? get operationChanges => _operations
+      ?.where(CloudAccountConverter.KEY_UPDATED,
+          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
+      .snapshots()
+      .map((event) => event.docs
+          .map((doc) => const CloudOperationConverter().mapToDart(doc))
           .toList());
 
   Future<String?> _addItem(
@@ -105,13 +132,13 @@ class CloudSource {
 
   Future<String?> addAccount(CloudAccount account) => _addItem(
         _accounts,
-        CloudAccountConverter(userId: _userId).mapToCloud(account),
+        const CloudAccountConverter().mapToCloud(account),
       );
 
   Future<void>? updateAccount(CloudAccount account) => _updateItem(
         _accounts,
-        account.id!,
-        CloudAccountConverter(userId: _userId).mapToCloud(account),
+        account.id,
+        const CloudAccountConverter().mapToCloud(account),
       );
 
   Future<void> deleteAccount(String cloudId) => _deleteItem(
@@ -121,13 +148,13 @@ class CloudSource {
 
   Future<String?> addCategory(CloudCategory category) => _addItem(
         _categories,
-        CloudCategoryConverter(userId: _userId).mapToCloud(category),
+        const CloudCategoryConverter().mapToCloud(category),
       );
 
   Future<void> updateCategory(CloudCategory category) => _updateItem(
         _categories,
-        category.id!,
-        CloudCategoryConverter(userId: _userId).mapToCloud(category),
+        category.id,
+        const CloudCategoryConverter().mapToCloud(category),
       );
 
   Future<void> deleteCategory(String cloudId) => _deleteItem(
@@ -137,13 +164,13 @@ class CloudSource {
 
   Future<String?> addOperation(CloudOperation operation) => _addItem(
         _operations,
-        CloudOperationConverter(userId: _userId).mapToCloud(operation),
+        const CloudOperationConverter().mapToCloud(operation),
       );
 
   Future<void> updateOperation(CloudOperation operation) => _updateItem(
         _operations,
-        operation.id!,
-        CloudOperationConverter(userId: _userId).mapToCloud(operation),
+        operation.id,
+        const CloudOperationConverter().mapToCloud(operation),
       );
 
   Future<void> deleteOperation(String cloudId) => _deleteItem(

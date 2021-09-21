@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class StateBloc {
@@ -31,7 +31,7 @@ class StateBloc {
 }
 
 class OperationFilterPageBloc extends Cubit<StateBloc> {
-  final Repository model;
+  final DataRepository model;
   late List<Account> accountList;
   late List<Category> categoryInList;
   late List<Category> categoryOutList;

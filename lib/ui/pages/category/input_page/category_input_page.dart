@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
@@ -28,7 +28,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = CategoryInputPageBloc(context.read<Repository>());
+    _bloc = CategoryInputPageBloc(context.read<DataRepository>());
     if (widget.id != null) {
       _bloc.initialById(widget.id!);
     } else {

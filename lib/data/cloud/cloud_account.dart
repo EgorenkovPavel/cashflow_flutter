@@ -4,7 +4,7 @@ import 'package:money_tracker/data/cloud/cloud_converter.dart';
 
 class CloudAccount{
 
-  final String? id;
+  final String id;
   final String title;
 
   CloudAccount({required this.id, required this.title});
@@ -14,17 +14,15 @@ class CloudAccount{
 class CloudAccountConverter extends CloudConverter<CloudAccount>{
 
   static const String _KEY_TITLE = 'title';
-  static const String _KEY_USERS = 'users';
+  static const String KEY_UPDATED = 'updated';
 
-  final String userId;
-
-  const CloudAccountConverter({required this.userId});
+  const CloudAccountConverter();
 
   @override
   Map<String, dynamic> mapToCloud(CloudAccount value) {
     return {
       _KEY_TITLE: value.title,
-      _KEY_USERS: [userId],
+      KEY_UPDATED: DateTime.now().microsecondsSinceEpoch,
     };
   }
 

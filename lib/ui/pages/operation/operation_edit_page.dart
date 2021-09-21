@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
@@ -29,7 +29,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
   Account? _recAccount;
   final TextEditingController _sumController = TextEditingController();
 
-  late Repository model;
+  late DataRepository model;
   late List<Account> accountList;
   late List<Category> categoryInList;
   late List<Category> categoryOutList;
@@ -38,7 +38,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    model = Provider.of<Repository>(context);
+    model = Provider.of<DataRepository>(context);
 
     model.watchAllAccounts().forEach((list) {
       setState(() {
@@ -63,7 +63,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
   void initState() {
     super.initState();
 
-    Provider.of<Repository>(context, listen: false)
+    Provider.of<DataRepository>(context, listen: false)
         .getOperationById(widget.id)
         .then((Operation data) {
       setState(() {
@@ -256,7 +256,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
           recAccount: _recAccount,
           sum: int.parse(_sumController.text));
 
-      await Provider.of<Repository>(context, listen: false)
+      await Provider.of<DataRepository>(context, listen: false)
           .insertOperation(operation);
     } else {
       var operation = Operation(
@@ -267,7 +267,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
           category: _category,
           sum: int.parse(_sumController.text));
 
-      await Provider.of<Repository>(context, listen: false)
+      await Provider.of<DataRepository>(context, listen: false)
           .updateOperation(operation);
     }
   }

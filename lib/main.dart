@@ -10,7 +10,7 @@ import 'package:money_tracker/data/database/database_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/ui/app.dart';
 
-import 'data/repository.dart';
+import 'data/data_repository.dart';
 
 Future<void> main() async {
   final db = Database();
@@ -26,7 +26,7 @@ Future<void> main() async {
 
   final _cloudSource = CloudSource(_firestore);
 
-  final _repository = Repository(
+  final _repository = DataRepository(
     databaseSource: _databaseSource,
     cloudSource: _cloudSource,
   );
@@ -49,7 +49,7 @@ Future<void> main() async {
         }),
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<Repository>(create: (_) => _repository),
+          RepositoryProvider<DataRepository>(create: (_) => _repository),
           RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
         ],
         child: MyApp(),

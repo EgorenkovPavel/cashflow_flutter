@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models/account_balance.dart';
 import 'package:money_tracker/ui/pages/list_card.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
@@ -13,7 +13,7 @@ class AccountList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var stream = context.read<Repository>().watchAllAccountsBalance();
+    var stream = context.read<DataRepository>().watchAllAccountsBalance();
     return StreamBuilder<List<AccountBalance>>(
       stream: stream,
       builder: (context, state) {

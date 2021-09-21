@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models/operation.dart';
 import 'package:money_tracker/domain/models/operation_list_filter.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
@@ -82,7 +82,7 @@ class OperationList extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Operation>>(
       stream:
-          Provider.of<Repository>(context).watchAllOperationsByFilter(_filter),
+          Provider.of<DataRepository>(context).watchAllOperationsByFilter(_filter),
       builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());

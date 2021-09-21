@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
@@ -23,7 +23,7 @@ class LastOperations extends StatelessWidget {
         ),
         StreamBuilder<List<Operation>>(
             stream:
-                context.read<Repository>().watchLastOperations(_operationCount),
+                context.read<DataRepository>().watchLastOperations(_operationCount),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print(snapshot.error);
