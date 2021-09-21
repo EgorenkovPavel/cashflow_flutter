@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/list_card.dart';
@@ -23,7 +23,7 @@ class CategoryList extends StatelessWidget {
         ),
         StreamBuilder<List<Category>>(
           stream: context
-              .read<Repository>()
+              .read<DataRepository>()
               .watchAllCategoriesByType(OperationType.INPUT),
           builder: (context, state) {
             var _categories = <Category>[];
@@ -43,7 +43,7 @@ class CategoryList extends StatelessWidget {
         ),
         StreamBuilder<List<Category>>(
           stream: context
-              .read<Repository>()
+              .read<DataRepository>()
               .watchAllCategoriesByType(OperationType.OUTPUT),
           builder: (context, state) {
             var _categories = <Category>[];

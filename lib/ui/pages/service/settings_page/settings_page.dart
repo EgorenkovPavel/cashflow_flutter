@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/drive_repository.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     _bloc = SettingsPageBloc(
-      context.read<Repository>(),
+      context.read<DataRepository>(),
       context.read<DriveRepository>(),
       context.read<AuthBloc>(),
     );

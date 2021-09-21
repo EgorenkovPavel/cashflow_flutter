@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
@@ -24,7 +24,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = AccountInputPageBloc(context.read<Repository>());
+    _bloc = AccountInputPageBloc(context.read<DataRepository>());
     if (widget.id != null) {
       _bloc.fetch(widget.id!);
     }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/drive_repository.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 
 class BackupPageState {
   final bool isAuthenticated;
@@ -38,7 +38,7 @@ enum BackupPageAction {
 }
 
 class SettingsPageBloc extends Cubit<BackupPageState> {
-  final Repository _repository;
+  final DataRepository _repository;
   final DriveRepository _driveRepository;
   final AuthBloc _authBloc;
   StreamSubscription? sub;

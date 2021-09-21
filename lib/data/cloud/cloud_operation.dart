@@ -4,7 +4,7 @@ import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 
 class CloudOperation {
-  final String? id;
+  final String id;
   final DateTime date;
   final OperationType operationType;
   final String account;
@@ -29,11 +29,9 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
   static const String _KEY_CATEGORY = 'category';
   static const String _KEY_REC_ACCOUNT = 'rec_account';
   static const String _KEY_SUM = 'sum';
-  static const String _KEY_USERS = 'users';
+  static const String KEY_UPDATED = 'updated';
 
-  final String userId;
-
-  const CloudOperationConverter({required this.userId});
+  const CloudOperationConverter();
 
   @override
   Map<String, dynamic> mapToCloud(CloudOperation operation) {
@@ -45,7 +43,7 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
       _KEY_CATEGORY: operation.category ?? '',
       _KEY_REC_ACCOUNT: operation.recAccount ?? '',
       _KEY_SUM: operation.sum,
-      _KEY_USERS: [userId],
+      KEY_UPDATED: DateTime.now().microsecondsSinceEpoch,
     };
   }
 

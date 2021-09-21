@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page_bloc.dart';
@@ -21,7 +21,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = AccountDetailPageBloc(context.read<Repository>());
+    _bloc = AccountDetailPageBloc(context.read<DataRepository>());
     _bloc.fetch(widget.id);
   }
 

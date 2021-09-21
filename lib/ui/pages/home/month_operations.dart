@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/repository.dart';
+import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
@@ -87,7 +87,7 @@ class _MonthOperation extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<CategoryCashflow>>(
       stream: context
-          .read<Repository>()
+          .read<DataRepository>()
           .watchCategoryCashflowByType(DateTime.now(), operationType),
       builder: (context, snapshot) {
         var _cashflow = 0;
