@@ -336,35 +336,5 @@ class _CategoryItem extends StatelessWidget {
         value: _progress(),
       ),
     );
-    return InkWell(
-      onTap: () =>
-          PageNavigator.openCategoryPage(context, category.category.id),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    category.category.title,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Text(AppLocalizations.of(context)
-                      .numberFormat(category.monthCashflow)),
-                ],
-              ),
-            ),
-            LinearProgressIndicator(
-              minHeight: 5,
-              color: Theme.of(context).colorScheme.secondary,
-              value: _progress(),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

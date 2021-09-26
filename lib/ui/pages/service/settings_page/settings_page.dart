@@ -257,7 +257,7 @@ class _BackupDialogState extends State<BackupDialog> {
               return;
             }
 
-            BlocProvider.of<SettingsPageBloc>(context)
+            await BlocProvider.of<SettingsPageBloc>(context)
                 .backup(_folder.id, _controller.text);
 
             Navigator.of(context).pop();
