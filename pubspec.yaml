@@ -32,6 +32,8 @@ dependencies:
   firebase_core: ^1.6.0
   cloud_firestore: ^2.5.3
 
+  shared_preferences: ^2.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,8 +43,6 @@ dev_dependencies:
   googleapis: any
   googleapis_auth: any
   google_sign_in: ^5.1.1
-
-  shared_preferences: ^2.0.8
 
 flutter:
 
