@@ -9,6 +9,47 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
   OperationDao(Database db) : super(db);
 
+  Future<List<OperationItem>> getAllOperationItems() {
+    final acc = alias(accounts, 'a');
+    final rec = alias(accounts, 'rec');
+
+    return (select(operations)
+          ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+          ]))
+        .join(
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
+        .get()
+        .then((rows) => rows.map(
+              (row) {
+                var op = row.readTable(operations);
+                return OperationItem(
+                    operation: op,
+                    account: row.readTable(acc),
+                    category: op.operationType == OperationType.TRANSFER
+                        ? null
+                        : row.readTable(categories),
+                    recAccount: op.operationType == OperationType.TRANSFER
+                        ? row.readTable(rec)
+                        : null);
+              },
+            ).toList());
+  }
+
   Stream<List<OperationItem>> watchAllOperationItems() {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');

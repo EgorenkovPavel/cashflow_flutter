@@ -18,6 +18,9 @@ class OperationRepository {
   final OperationDB Function(Operation) _mapOperationDB =
       (item) => const OperationMapper().mapToOperationData(item);
 
+  Future<List<Operation>> getAll() =>
+      operationDao.getAllOperationItems().then(_mapOperationList);
+
   Stream<List<Operation>> watchAll() =>
       operationDao.watchAllOperationItems().map(_mapOperationList);
 
