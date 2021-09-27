@@ -42,24 +42,17 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-            lazy: false,
-            create: (context) => AuthBloc(_authRepository)
-              ..stream.listen((state) async {
-                if (state.inProgress) {
-                  return;
-                } else if (state.isAuthenticated) {
-                  _driveRepository.logIn(state.client!);
-                } else if (!state.isAuthenticated) {
-                  _driveRepository.logOut();
-                }
-              })),
+          lazy: false,
+          create: (context) => AuthBloc(_authRepository),
+        ),
         BlocProvider(
-            lazy: false,
-            create: (context) => SyncBloc(
-                  context.read<AuthBloc>(),
-                  _dataRepository,
-                  _prefsRepo,
-                )),
+          lazy: false,
+          create: (context) => SyncBloc(
+            context.read<AuthBloc>(),
+            _dataRepository,
+            _prefsRepo,
+          ),
+        ),
       ],
       child: MultiRepositoryProvider(
         providers: [
