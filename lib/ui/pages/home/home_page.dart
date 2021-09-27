@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations.dart';
 import 'package:money_tracker/ui/pages/home/month_operations.dart';
@@ -9,6 +11,10 @@ import 'package:money_tracker/utils/app_localization.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  void _sync(BuildContext context) {
+    context.read<SyncBloc>().sync();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +22,23 @@ class HomePage extends StatelessWidget {
         title: Text('Money tracker'),
         elevation: 0.0,
         actions: [
+          BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+            if (state == SyncState.IN_PROGRESS) {
+              return Icon(Icons.loop);
+            } else if (state == SyncState.SYNCED) {
+              return IconButton(
+                onPressed: () => _sync(context),
+                icon: Icon(Icons.done),
+              );
+            } else if (state == SyncState.NOT_SYNCED) {
+              return IconButton(
+                onPressed: () => _sync(context),
+                icon: Icon(Icons.warning_amber_outlined),
+              );
+            }else {
+              return SizedBox();
+            }
+          }),
           IconButton(
             onPressed: () => PageNavigator.openReportsPage(context),
             icon: Icon(Icons.analytics),
@@ -35,7 +58,9 @@ class HomePage extends StatelessWidget {
               onPressed: () => PageNavigator.openAccountInputPage(context),
             ),
             MonthOperations(),
-            SizedBox(height: 8.0,),
+            SizedBox(
+              height: 8.0,
+            ),
             LastOperations(),
           ],
         ),
@@ -73,7 +98,8 @@ class _AddButton extends StatelessWidget {
             ),
             Text(
               title.toUpperCase(),
-              style: TextStyle().copyWith(color: Theme.of(context).colorScheme.secondary),
+              style: TextStyle()
+                  .copyWith(color: Theme.of(context).colorScheme.secondary),
             ),
           ],
         ),

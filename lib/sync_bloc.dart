@@ -30,8 +30,9 @@ class SyncBloc extends Cubit<SyncState> {
       } else if (event.isAuthenticated) {
         emit(SyncState.IN_PROGRESS);
         await dataRepository.logIn(event.userId);
+        var syncDate = DateTime.now();
         await dataRepository.syncData(prefsRepository.syncDate);
-        await prefsRepository.setSyncDate(DateTime.now());
+        await prefsRepository.setSyncDate(syncDate);
         emit(SyncState.SYNCED);
       } else {
         emit(SyncState.NOT_SYNCED);
@@ -43,8 +44,9 @@ class SyncBloc extends Cubit<SyncState> {
     if (!_authBloc.state.inProgress
     && _authBloc.state.isAuthenticated){
       emit(SyncState.IN_PROGRESS);
+      var syncDate = DateTime.now();
       await dataRepository.syncData(prefsRepository.syncDate);
-      await prefsRepository.setSyncDate(DateTime.now());
+      await prefsRepository.setSyncDate(syncDate);
       emit(SyncState.SYNCED);
     }
   }
