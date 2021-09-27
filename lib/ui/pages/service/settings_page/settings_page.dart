@@ -4,6 +4,7 @@ import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -24,6 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
       context.read<DataRepository>(),
       context.read<DriveRepository>(),
       context.read<AuthBloc>(),
+      context.read<SyncBloc>(),
     );
   }
 
@@ -75,30 +77,47 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 sectionTitle(context, 'Google drive'),
-                BlocConsumer<SettingsPageBloc, BackupPageState>(
-                    bloc: _bloc,
-                    listener: (context, state) {
-                      _showMessage(context, state.action);
-                    },
-                    builder: (context, state) {
-                      if (state.isAuthenticated) {
-                        return ElevatedButton(
-                            onPressed: () => _bloc.signOut(),
-                            child: Text('SING OUT' //todo
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    BlocConsumer<SettingsPageBloc, BackupPageState>(
+                        bloc: _bloc,
+                        listener: (context, state) {
+                          _showMessage(context, state.action);
+                        },
+                        builder: (context, state) {
+                          if (state.isAuthenticated) {
+                            return ElevatedButton(
+                                onPressed: () => _bloc.signOut(),
+                                child: Text('SING OUT' //todo
                                 ));
-                      } else {
-                        return ElevatedButton(
-                            onPressed: () {
-                              _bloc.signIn();
-                            },
-                            child: Text('LOG IN' //TODO
+                          } else {
+                            return ElevatedButton(
+                                onPressed: () {
+                                  _bloc.signIn();
+                                },
+                                child: Text('LOG IN' //TODO
                                 ));
-                      }
-                    }),
-                BlocBuilder<SettingsPageBloc, BackupPageState>(
+                          }
+                        }),
+                    BlocBuilder<SettingsPageBloc, BackupPageState>(
+                        bloc: _bloc,
+                        builder: (context, state) {
+                          if (state.isConnected) {
+                            return Text('Database connected'); //TODO
+                          } else {
+                            return ElevatedButton(
+                              onPressed: () => _bloc.createCloudDatabase(),
+                              child: Text('Create database'),
+                            );
+                          }
+                        }),
+                  ],
+                ),
+                 BlocBuilder<SettingsPageBloc, BackupPageState>(
                   bloc: _bloc,
-                  builder: (context, state){
-                    if (state.isAuthenticated){
+                  builder: (context, state) {
+                    if (state.isAuthenticated) {
                       return Flex(
                         direction: Axis.horizontal,
                         mainAxisSize: MainAxisSize.max,
@@ -113,12 +132,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           ElevatedButton(
                             onPressed: () => _restore(context),
                             child: Text(
-                              AppLocalizations.of(context).restore.toUpperCase(),
+                              AppLocalizations.of(context)
+                                  .restore
+                                  .toUpperCase(),
                             ),
                           ),
                         ],
                       );
-                    }else{
+                    } else {
                       return SizedBox();
                     }
                   },

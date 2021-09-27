@@ -23,6 +23,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   final _firestore = FirebaseFirestore.instance;
+  _firestore.settings = Settings(persistenceEnabled: false);
 
   final _authRepository = AuthRepository();
   final _driveRepository = DriveRepository();
