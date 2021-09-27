@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: <Widget>[
                 sectionTitle(context, 'Google drive'),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     BlocConsumer<SettingsPageBloc, BackupPageState>(
                         bloc: _bloc,
@@ -103,7 +103,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     BlocBuilder<SettingsPageBloc, BackupPageState>(
                         bloc: _bloc,
                         builder: (context, state) {
-                          if (state.isConnected) {
+                          if (!state.isAuthenticated){
+                            return SizedBox();
+                          }else if (state.isConnected) {
                             return Text('Database connected'); //TODO
                           } else {
                             return ElevatedButton(

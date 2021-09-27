@@ -57,29 +57,26 @@ class CloudSource {
     }
   }
 
-  Future<Iterable<CloudAccount>> getAccounts(DateTime date) async {
+  Future<Iterable<CloudAccount>?> getAccounts(DateTime date) async {
     var docs = await _accounts
         ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
         .get();
-    if (docs == null) return [];
-    return docs.docs.map((doc) => const CloudAccountConverter().mapToDart(doc));
+    return docs?.docs.map((doc) => const CloudAccountConverter().mapToDart(doc));
   }
 
-  Future<Iterable<CloudCategory>> getCategories(DateTime date) async {
+  Future<Iterable<CloudCategory>?> getCategories(DateTime date) async {
     var docs = await _categories
         ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
         .get();
-    if (docs == null) return [];
-    return docs.docs
+    return docs?.docs
         .map((doc) => const CloudCategoryConverter().mapToDart(doc));
   }
 
-  Future<Iterable<CloudOperation>> getOperations(DateTime date) async {
+  Future<Iterable<CloudOperation>?> getOperations(DateTime date) async {
     var docs = await _operations
         ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
         .get();
-    if (docs == null) return [];
-    return docs.docs
+    return docs?.docs
         .map((doc) => const CloudOperationConverter().mapToDart(doc));
   }
 

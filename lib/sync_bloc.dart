@@ -41,10 +41,13 @@ class SyncBloc extends Cubit<SyncState> {
     if (await dataRepository.cloudDbExists(userId)) {
       await dataRepository.logIn(userId);
       var syncDate = DateTime.now();
-      await dataRepository.syncData(prefsRepository.syncDate);
-      await prefsRepository.setSyncDate(syncDate);
-      emit(SyncState.SYNCED);
-    } else {
+      if (await dataRepository.syncData(prefsRepository.syncDate)){
+        await prefsRepository.setSyncDate(syncDate);
+        emit(SyncState.SYNCED);
+      }else{
+        emit(SyncState.NOT_SYNCED);
+      }
+     } else {
       emit(SyncState.NO_DB);
     }
   }
@@ -53,9 +56,8 @@ class SyncBloc extends Cubit<SyncState> {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState.IN_PROGRESS);
       await dataRepository.createCloudDatabase(_authBloc.state.userId);
-      var syncDate = DateTime.now();
-      await dataRepository.syncData(prefsRepository.syncDate);
-      await prefsRepository.setSyncDate(syncDate);
+      await dataRepository.loadAllDataToCloud();
+      await prefsRepository.setSyncDate(DateTime.now());
       emit(SyncState.SYNCED);
     }
   }

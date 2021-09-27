@@ -20,12 +20,12 @@ class DataRepository {
     await _cloudSource.logIn(userId);
   }
 
-  Future<bool> cloudDbExists(String userId){
+  Future<bool> cloudDbExists(String userId) {
     return _cloudSource.databaseExists(userId);
   }
 
   Future<void> createCloudDatabase(String userId) async {
-    _cloudSource.createDatabase(userId);
+    await _cloudSource.createDatabase(userId);
   }
 
   Future<void> logOut() async {
@@ -49,10 +49,10 @@ class DataRepository {
     });
   }
 
-  void _loadCloudCategories(Iterable<CloudCategory> list){
+  void _loadCloudCategories(Iterable<CloudCategory> list) {
     list.forEach((cloudCategory) async {
-      var _category = await _databaseSource.categories
-          .getByCloudId(cloudCategory.id);
+      var _category =
+          await _databaseSource.categories.getByCloudId(cloudCategory.id);
       if (_category == null) {
         await _databaseSource.categories.insert(Category(
           title: cloudCategory.title,
@@ -74,21 +74,21 @@ class DataRepository {
     });
   }
 
-  void _loadCloudOperations(Iterable<CloudOperation> list){
+  void _loadCloudOperations(Iterable<CloudOperation> list) {
     list.forEach((cloudOperation) async {
-      var _operation = await _databaseSource.operations
-          .getByCloudId(cloudOperation.id);
+      var _operation =
+          await _databaseSource.operations.getByCloudId(cloudOperation.id);
 
-      var _account = await _databaseSource.accounts
-          .getByCloudId(cloudOperation.account);
+      var _account =
+          await _databaseSource.accounts.getByCloudId(cloudOperation.account);
       var _category = cloudOperation.category == null
           ? null
           : await _databaseSource.categories
-          .getByCloudId(cloudOperation.category!);
+              .getByCloudId(cloudOperation.category!);
       var _recAccount = cloudOperation.recAccount == null
           ? null
           : await _databaseSource.accounts
-          .getByCloudId(cloudOperation.recAccount!);
+              .getByCloudId(cloudOperation.recAccount!);
 
       if (_operation == null) {
         await _databaseSource.operations.insert(Operation(
@@ -115,10 +115,62 @@ class DataRepository {
     });
   }
 
-  Future<void> syncData(DateTime date) async {
-    _loadCloudAccounts(await _cloudSource.getAccounts(date));
-    _loadCloudCategories(await _cloudSource.getCategories(date));
-    _loadCloudOperations(await _cloudSource.getOperations(date));
+  Future<bool> syncData(DateTime date) async {
+    var accouns = await _cloudSource.getAccounts(date);
+    var categories = await _cloudSource.getCategories(date);
+    var operations = await _cloudSource.getOperations(date);
+
+    if (accouns == null || categories == null || operations == null){
+      return false;
+    }
+
+    _loadCloudAccounts(accouns);
+    _loadCloudCategories(categories);
+    _loadCloudOperations(operations);
+
+    return true;
+  }
+
+  Future<void> loadAllDataToCloud() async {
+    var accounts = await getAllAccounts();
+    accounts.forEach((account) async {
+      var _cloudId = await _cloudSource.addAccount(
+        CloudAccount(
+          id: '',
+          title: account.title,
+        ),
+      );
+      await _databaseSource.accounts
+          .update(account.copyWith(cloudId: _cloudId));
+    });
+
+    var categories = await getAllCategories();
+    categories.forEach((category) async {
+      var _cloudId = await _cloudSource.addCategory(CloudCategory(
+        id: category.cloudId ?? '',
+        title: category.title,
+        operationType: category.operationType,
+        budgetType: category.budgetType,
+        budget: category.budget,
+      ));
+      await _databaseSource.categories
+          .update(category.copyWith(cloudId: _cloudId));
+    });
+
+    var operations = await getAllOperations();
+    operations.forEach((operation) async {
+      var _cloudId = await _cloudSource.addOperation(CloudOperation(
+        id: operation.cloudId ?? '',
+        date: operation.date,
+        operationType: operation.type,
+        account: operation.account.cloudId!,
+        category: operation.category?.cloudId ?? '',
+        recAccount: operation.recAccount?.cloudId ?? '',
+        sum: operation.sum,
+      ));
+      await _databaseSource.operations
+          .update(operation.copyWith(cloudId: _cloudId));
+    });
   }
 
   //Accounts
@@ -220,6 +272,8 @@ class DataRepository {
   }
 
   //Operation
+  Future<List<Operation>> getAllOperations() =>
+      _databaseSource.operations.getAll();
 
   Stream<List<Operation>> watchAllOperations() =>
       _databaseSource.operations.watchAll();
