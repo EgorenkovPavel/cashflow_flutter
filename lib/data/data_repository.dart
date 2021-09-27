@@ -6,7 +6,7 @@ import 'package:money_tracker/data/database/database_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 
-class DataRepository{
+class DataRepository {
   final DatabaseSource _databaseSource;
   final CloudSource _cloudSource;
 
@@ -18,90 +18,99 @@ class DataRepository{
 
   Future<void> logIn(String userId) async {
     await _cloudSource.logIn(userId);
-    syncData();
   }
 
   Future<void> logOut() async {
     await _cloudSource.logOut();
   }
 
-  void syncData() {
-    _cloudSource.accountChanges
-        ?.listen((list) => list.forEach((cloudAccount) async {
-              var _account =
-                  await _databaseSource.accounts.getByCloudId(cloudAccount.id);
-              if (_account == null) {
-                await _databaseSource.accounts.insert(Account(
-                  cloudId: cloudAccount.id,
-                  title: cloudAccount.title,
-                ));
-              } else {
-                await _databaseSource.accounts
-                    .update(_account.copyWith(title: cloudAccount.title));
-              }
-            }));
+  void _loadCloudAccounts(Iterable<CloudAccount> list) {
+    list.forEach((cloudAccount) async {
+      var _account =
+          await _databaseSource.accounts.getByCloudId(cloudAccount.id);
+      if (_account == null) {
+        await _databaseSource.accounts.insert(Account(
+          cloudId: cloudAccount.id,
+          title: cloudAccount.title,
+        ));
+      } else {
+        await _databaseSource.accounts
+            .update(_account.copyWith(title: cloudAccount.title));
+      }
+      await _cloudSource.refreshAccountSyncDate(cloudAccount);
+    });
+  }
 
-    _cloudSource.categoryChanges
-        ?.listen((list) => list.forEach((cloudCategory) async {
-              var _category = await _databaseSource.categories
-                  .getByCloudId(cloudCategory.id);
-              if (_category == null) {
-                await _databaseSource.categories.insert(Category(
-                  title: cloudCategory.title,
-                  cloudId: cloudCategory.id,
-                  operationType: cloudCategory.operationType,
-                  budgetType: cloudCategory.budgetType,
-                  budget: cloudCategory.budget,
-                ));
-              } else {
-                await _databaseSource.categories.update(_category.copyWith(
-                  title: cloudCategory.title,
-                  cloudId: cloudCategory.id,
-                  operationType: cloudCategory.operationType,
-                  budgetType: cloudCategory.budgetType,
-                  budget: cloudCategory.budget,
-                ));
-              }
-            }));
+  void _loadCloudCategories(Iterable<CloudCategory> list){
+    list.forEach((cloudCategory) async {
+      var _category = await _databaseSource.categories
+          .getByCloudId(cloudCategory.id);
+      if (_category == null) {
+        await _databaseSource.categories.insert(Category(
+          title: cloudCategory.title,
+          cloudId: cloudCategory.id,
+          operationType: cloudCategory.operationType,
+          budgetType: cloudCategory.budgetType,
+          budget: cloudCategory.budget,
+        ));
+      } else {
+        await _databaseSource.categories.update(_category.copyWith(
+          title: cloudCategory.title,
+          cloudId: cloudCategory.id,
+          operationType: cloudCategory.operationType,
+          budgetType: cloudCategory.budgetType,
+          budget: cloudCategory.budget,
+        ));
+      }
+      await _cloudSource.refreshCategorySyncDate(cloudCategory);
+    });
+  }
 
-    _cloudSource.operationChanges
-        ?.listen((list) => list.forEach((cloudOperation) async {
-              var _operation = await _databaseSource.operations
-                  .getByCloudId(cloudOperation.id);
+  void _loadCloudOperations(Iterable<CloudOperation> list){
+    list.forEach((cloudOperation) async {
+      var _operation = await _databaseSource.operations
+          .getByCloudId(cloudOperation.id);
 
-              var _account = await _databaseSource.accounts
-                  .getByCloudId(cloudOperation.account);
-              var _category = cloudOperation.category == null
-                  ? null
-                  : await _databaseSource.categories
-                      .getByCloudId(cloudOperation.category!);
-              var _recAccount = cloudOperation.recAccount == null
-                  ? null
-                  : await _databaseSource.accounts
-                      .getByCloudId(cloudOperation.recAccount!);
+      var _account = await _databaseSource.accounts
+          .getByCloudId(cloudOperation.account);
+      var _category = cloudOperation.category == null
+          ? null
+          : await _databaseSource.categories
+          .getByCloudId(cloudOperation.category!);
+      var _recAccount = cloudOperation.recAccount == null
+          ? null
+          : await _databaseSource.accounts
+          .getByCloudId(cloudOperation.recAccount!);
 
-              if (_operation == null) {
-                await _databaseSource.operations.insert(Operation(
-                  cloudId: cloudOperation.id,
-                  date: cloudOperation.date,
-                  type: cloudOperation.operationType,
-                  account: _account!,
-                  category: _category,
-                  recAccount: _recAccount,
-                  sum: cloudOperation.sum,
-                ));
-              } else {
-                await _databaseSource.operations.update(_operation.copyWith(
-                  cloudId: cloudOperation.id,
-                  date: cloudOperation.date,
-                  type: cloudOperation.operationType,
-                  account: _account!,
-                  category: _category,
-                  recAccount: _recAccount,
-                  sum: cloudOperation.sum,
-                ));
-              }
-            }));
+      if (_operation == null) {
+        await _databaseSource.operations.insert(Operation(
+          cloudId: cloudOperation.id,
+          date: cloudOperation.date,
+          type: cloudOperation.operationType,
+          account: _account!,
+          category: _category,
+          recAccount: _recAccount,
+          sum: cloudOperation.sum,
+        ));
+      } else {
+        await _databaseSource.operations.update(_operation.copyWith(
+          cloudId: cloudOperation.id,
+          date: cloudOperation.date,
+          type: cloudOperation.operationType,
+          account: _account!,
+          category: _category,
+          recAccount: _recAccount,
+          sum: cloudOperation.sum,
+        ));
+      }
+      await _cloudSource.refreshOperationSyncDate(cloudOperation);
+    });
+  }
+
+  Future<void> syncData(DateTime date) async {
+    _loadCloudAccounts(await _cloudSource.getAccounts(date));
+    _loadCloudCategories(await _cloudSource.getCategories(date));
+    _loadCloudOperations(await _cloudSource.getOperations(date));
   }
 
   //Accounts
@@ -274,13 +283,12 @@ class DataRepository{
     await _databaseSource.deleteAll();
   }
 
-  Future<Map<String, List<Map<String, dynamic>>>> exportData(){
-    return  _databaseSource.exportData();
+  Future<Map<String, List<Map<String, dynamic>>>> exportData() {
+    return _databaseSource.exportData();
   }
 
   Future<void> importData(Map<String, dynamic> data) async {
     await _databaseSource.deleteAll();
     await _databaseSource.importData(data);
   }
-
 }

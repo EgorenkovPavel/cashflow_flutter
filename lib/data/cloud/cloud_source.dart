@@ -18,29 +18,20 @@ class CloudSource {
   CollectionReference? _categories;
   CollectionReference? _operations;
 
-  String _userId = '';
-
-  DateTime? _lastSync;
-
   CloudSource(this._firestore);
 
   Future<void> logIn(String userId) async {
-    _userId = userId;
     _db = await _getDatabase(userId);
     _accounts = _db?.collection(_ACCOUNTS);
     _categories = _db?.collection(_CATEGORIES);
     _operations = _db?.collection(_OPERATIONS);
-    _lastSync = await _getLastSyncDate();
   }
 
   Future<void> logOut() async {
-    await _setSyncDate(DateTime.now());
-    _userId = '';
     _db = null;
     _accounts = null;
     _categories = null;
     _operations = null;
-    _lastSync = null;
   }
 
   Future<DocumentReference<Map<String, dynamic>>> _getDatabase(
@@ -63,40 +54,31 @@ class CloudSource {
     });
   }
 
-  Future<DateTime> _getLastSyncDate() async {
-    var doc = await _db?.get();
-    return DateTime.fromMicrosecondsSinceEpoch(doc?.get('syncDate')[_userId] ?? 0);
+  Future<Iterable<CloudAccount>> getAccounts(DateTime date) async {
+    var docs = await _accounts
+        ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
+        .get();
+    if (docs == null) return [];
+    return docs.docs.map((doc) => const CloudAccountConverter().mapToDart(doc));
   }
 
-  Future<void> _setSyncDate(DateTime date) async {
-    return _db?.update({
-      'syncDate.$_userId': date,
-    });
+  Future<Iterable<CloudCategory>> getCategories(DateTime date) async {
+    var docs = await _categories
+        ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
+        .get();
+    if (docs == null) return [];
+    return docs.docs
+        .map((doc) => const CloudCategoryConverter().mapToDart(doc));
   }
 
-  Stream<List<CloudAccount>>? get accountChanges => _accounts
-      ?.where(CloudAccountConverter.KEY_UPDATED,
-          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
-      .snapshots()
-      .map((event) => event.docs
-          .map((doc) => const CloudAccountConverter().mapToDart(doc))
-          .toList());
-
-  Stream<List<CloudCategory>>? get categoryChanges => _categories
-      ?.where(CloudAccountConverter.KEY_UPDATED,
-          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
-      .snapshots()
-      .map((event) => event.docs
-          .map((doc) => const CloudCategoryConverter().mapToDart(doc))
-          .toList());
-
-  Stream<List<CloudOperation>>? get operationChanges => _operations
-      ?.where(CloudAccountConverter.KEY_UPDATED,
-          isGreaterThanOrEqualTo: _lastSync!.microsecondsSinceEpoch)
-      .snapshots()
-      .map((event) => event.docs
-          .map((doc) => const CloudOperationConverter().mapToDart(doc))
-          .toList());
+  Future<Iterable<CloudOperation>> getOperations(DateTime date) async {
+    var docs = await _operations
+        ?.where(CloudAccountConverter.KEY_UPDATED, isGreaterThanOrEqualTo: date)
+        .get();
+    if (docs == null) return [];
+    return docs.docs
+        .map((doc) => const CloudOperationConverter().mapToDart(doc));
+  }
 
   Future<String?> _addItem(
     CollectionReference? collection,
@@ -129,6 +111,38 @@ class CloudSource {
     }
     return collection.doc(id).delete();
   }
+
+  Future<void> _refreshSyncDate(
+    CollectionReference? collection,
+    String id,
+    String key,
+  ) {
+    if (collection == null) {
+      return Future.value();
+    }
+    return collection.doc(id).update({key: DateTime.now()});
+  }
+
+  Future<void> refreshAccountSyncDate(CloudAccount account) =>
+      _refreshSyncDate(
+        _accounts,
+        account.id,
+        CloudAccountConverter.KEY_UPDATED,
+      );
+
+  Future<void> refreshCategorySyncDate(CloudCategory category) =>
+      _refreshSyncDate(
+        _categories,
+        category.id,
+        CloudCategoryConverter.KEY_UPDATED,
+      );
+
+  Future<void> refreshOperationSyncDate(CloudOperation operation) =>
+      _refreshSyncDate(
+        _operations,
+        operation.id,
+        CloudOperationConverter.KEY_UPDATED,
+      );
 
   Future<String?> addAccount(CloudAccount account) => _addItem(
         _accounts,
