@@ -4,13 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/sync_bloc.dart';
 
 class BackupPageState {
   final bool isAuthenticated;
   final bool inProgress;
+  final bool isConnected;
   final BackupPageAction action;
 
   BackupPageState({
+    required this.isConnected,
     required this.isAuthenticated,
     required this.action,
     required this.inProgress,
@@ -18,12 +21,14 @@ class BackupPageState {
 
   BackupPageState copyWith({
     BackupPageAction? action,
+    bool? isConnected,
     bool? inProgress,
     bool? isAuthenticated,
   }) {
     return BackupPageState(
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       action: action ?? this.action,
+      isConnected: isConnected ?? this.isConnected,
       inProgress: inProgress ?? this.inProgress,
     );
   }
@@ -41,19 +46,23 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
   final DataRepository _repository;
   final DriveRepository _driveRepository;
   final AuthBloc _authBloc;
-  StreamSubscription? sub;
+  final SyncBloc _syncBloc;
+
+  StreamSubscription? subAuth;
+  StreamSubscription? subSync;
 
   SettingsPageBloc(
     this._repository,
     this._driveRepository,
-      this._authBloc,
+    this._authBloc,
+    this._syncBloc,
   ) : super(BackupPageState(
           isAuthenticated: _authBloc.state.isAuthenticated,
           action: BackupPageAction.INITIAL,
           inProgress: false,
+          isConnected: _syncBloc.state != SyncState.NO_DB,
         )) {
-    sub = _authBloc.stream.listen((event) {
-
+    subAuth = _authBloc.stream.listen((event) {
       if (event.inProgress) {
         return;
       } else if (event.isAuthenticated) {
@@ -68,20 +77,31 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
         action: BackupPageAction.INITIAL,
       ));
     });
+
+    subSync = _syncBloc.stream.listen((event) {
+      emit(state.copyWith(
+        isConnected: event != SyncState.NO_DB,
+      ));
+    });
   }
 
   @override
   Future<void> close() {
-    sub?.cancel();
+    subAuth?.cancel();
+    subSync?.cancel();
     return super.close();
   }
 
-  void signIn(){
+  void signIn() {
     _authBloc.signIn();
   }
 
-  void signOut(){
+  void signOut() {
     _authBloc.signOut();
+  }
+
+  void createCloudDatabase(){
+    _syncBloc.createDatabase();
   }
 
   Future<void> backup(String catalogId, String fileName) async {

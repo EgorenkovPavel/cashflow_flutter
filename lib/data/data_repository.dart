@@ -20,6 +20,14 @@ class DataRepository {
     await _cloudSource.logIn(userId);
   }
 
+  Future<bool> cloudDbExists(String userId){
+    return _cloudSource.databaseExists(userId);
+  }
+
+  Future<void> createCloudDatabase(String userId) async {
+    _cloudSource.createDatabase(userId);
+  }
+
   Future<void> logOut() async {
     await _cloudSource.logOut();
   }

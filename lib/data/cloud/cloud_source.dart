@@ -14,27 +14,36 @@ class CloudSource {
 
   DocumentReference<Map<String, dynamic>>? _db;
 
-  CollectionReference? _accounts;
-  CollectionReference? _categories;
-  CollectionReference? _operations;
+  CollectionReference? get _accounts => _db?.collection(_ACCOUNTS);
+  CollectionReference? get _categories => _db?.collection(_CATEGORIES);
+  CollectionReference? get _operations => _db?.collection(_OPERATIONS);
 
   CloudSource(this._firestore);
 
+  Future<bool> databaseExists(String userId) async {
+    QuerySnapshot querySnapshot = await _firestore
+        .collection(_DATABASES)
+        .where(_DATABASES_USERS, arrayContains: userId)
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
+  }
+
+  Future<void> createDatabase(String userId) async {
+    _db = await _firestore.collection(_DATABASES).add({
+      _DATABASES_USERS: [userId],
+    });
+  }
+
   Future<void> logIn(String userId) async {
     _db = await _getDatabase(userId);
-    _accounts = _db?.collection(_ACCOUNTS);
-    _categories = _db?.collection(_CATEGORIES);
-    _operations = _db?.collection(_OPERATIONS);
   }
 
   Future<void> logOut() async {
     _db = null;
-    _accounts = null;
-    _categories = null;
-    _operations = null;
   }
 
-  Future<DocumentReference<Map<String, dynamic>>> _getDatabase(
+  Future<DocumentReference<Map<String, dynamic>>?> _getDatabase(
       String userId) async {
     QuerySnapshot querySnapshot = await _firestore
         .collection(_DATABASES)
@@ -44,14 +53,8 @@ class CloudSource {
     if (querySnapshot.docs.isNotEmpty) {
       return _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id);
     } else {
-      return await _addDatabase(userId);
+      return null;
     }
-  }
-
-  Future<DocumentReference<Map<String, dynamic>>> _addDatabase(String userId) {
-    return _firestore.collection(_DATABASES).add({
-      'users': [userId],
-    });
   }
 
   Future<Iterable<CloudAccount>> getAccounts(DateTime date) async {
