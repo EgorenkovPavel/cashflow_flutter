@@ -177,7 +177,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Future _backup(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => BackupDialog(),
+      builder: (context) => BackupDialog(
+        onBackup: _bloc.backup,
+      ),
     );
   }
 
@@ -211,7 +213,10 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 class BackupDialog extends StatefulWidget {
-  BackupDialog({Key? key}) : super(key: key);
+
+  final Future<void> Function(String folderId, String title) onBackup;
+
+  BackupDialog({Key? key, required this.onBackup}) : super(key: key);
 
   @override
   _BackupDialogState createState() => _BackupDialogState();
@@ -280,8 +285,7 @@ class _BackupDialogState extends State<BackupDialog> {
               return;
             }
 
-            await BlocProvider.of<SettingsPageBloc>(context)
-                .backup(_folder.id, _controller.text);
+            await widget.onBackup(_folder.id, _controller.text);
 
             Navigator.of(context).pop();
           },
