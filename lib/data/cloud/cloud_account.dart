@@ -22,7 +22,7 @@ class CloudAccountConverter extends CloudConverter<CloudAccount>{
   Map<String, dynamic> mapToCloud(CloudAccount value) {
     return {
       _KEY_TITLE: value.title,
-      KEY_UPDATED: DateTime.now().microsecondsSinceEpoch,
+      KEY_UPDATED: DateTime.now(),
     };
   }
 

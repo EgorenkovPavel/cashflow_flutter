@@ -39,7 +39,7 @@ class CloudCategoryConverter extends CloudConverter<CloudCategory> {
       _KEY_BUDGET_TYPE:
           const BudgetTypeConverter().mapToSql(category.budgetType),
       _KEY_BUDGET: category.budget,
-      KEY_UPDATED: DateTime.now().microsecondsSinceEpoch,
+      KEY_UPDATED: DateTime.now(),
     };
   }
 

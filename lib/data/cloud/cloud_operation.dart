@@ -43,7 +43,7 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
       _KEY_CATEGORY: operation.category ?? '',
       _KEY_REC_ACCOUNT: operation.recAccount ?? '',
       _KEY_SUM: operation.sum,
-      KEY_UPDATED: DateTime.now().microsecondsSinceEpoch,
+      KEY_UPDATED: DateTime.now(),
     };
   }
 
