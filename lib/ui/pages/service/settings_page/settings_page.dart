@@ -71,80 +71,80 @@ class _SettingsPageState extends State<SettingsPage> {
         builder: (BuildContext context) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: BlocConsumer<SettingsPageBloc, BackupPageState>(
-                bloc: _bloc,
-                listener: (context, state) {
-                  _showMessage(context, state.action);
-                },
-                builder: (context, state) {
-                  if (state.isAuthenticated) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        sectionTitle(context, 'Google drive'),
-                        ElevatedButton(
-                            onPressed: () {
-                              _bloc.signOut();
-                            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                sectionTitle(context, 'Google drive'),
+                BlocConsumer<SettingsPageBloc, BackupPageState>(
+                    bloc: _bloc,
+                    listener: (context, state) {
+                      _showMessage(context, state.action);
+                    },
+                    builder: (context, state) {
+                      if (state.isAuthenticated) {
+                        return ElevatedButton(
+                            onPressed: () => _bloc.signOut(),
                             child: Text('SING OUT' //todo
-                                )),
-                        Flex(
-                          direction: Axis.horizontal,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            ElevatedButton(
-                              onPressed: () => _backup(context),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .backup
-                                    .toUpperCase(),
-                              ),
+                                ));
+                      } else {
+                        return ElevatedButton(
+                            onPressed: () {
+                              _bloc.signIn();
+                            },
+                            child: Text('LOG IN' //TODO
+                                ));
+                      }
+                    }),
+                BlocBuilder<SettingsPageBloc, BackupPageState>(
+                  bloc: _bloc,
+                  builder: (context, state){
+                    if (state.isAuthenticated){
+                      return Flex(
+                        direction: Axis.horizontal,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () => _backup(context),
+                            child: Text(
+                              AppLocalizations.of(context).backup.toUpperCase(),
                             ),
-                            ElevatedButton(
-                              onPressed: () => _restore(context),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .restore
-                                    .toUpperCase(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        sectionTitle(context,
-                            AppLocalizations.of(context).titleDataControl),
-                        ElevatedButton(
-                          onPressed: () => _deleteAll(context),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .btnDeleteAll
-                                .toUpperCase(),
                           ),
-                        ),
-                        BlocBuilder<SettingsPageBloc, BackupPageState>(
-                          bloc: _bloc,
-                          builder:
-                              (BuildContext context, BackupPageState state) {
-                            if (state.inProgress) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              return SizedBox();
-                            }
-                          },
-                        )
-                      ],
-                    );
-                  } else {
-                    return ElevatedButton(
-                        onPressed: () {
-                          _bloc.signIn();
-                        },
-                        child: Text('LOG IN' //TODO
-                            ));
-                  }
-                }),
+                          ElevatedButton(
+                            onPressed: () => _restore(context),
+                            child: Text(
+                              AppLocalizations.of(context).restore.toUpperCase(),
+                            ),
+                          ),
+                        ],
+                      );
+                    }else{
+                      return SizedBox();
+                    }
+                  },
+                ),
+                sectionTitle(
+                    context, AppLocalizations.of(context).titleDataControl),
+                ElevatedButton(
+                  onPressed: () => _deleteAll(context),
+                  child: Text(
+                    AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
+                  ),
+                ),
+                BlocBuilder<SettingsPageBloc, BackupPageState>(
+                  bloc: _bloc,
+                  builder: (BuildContext context, BackupPageState state) {
+                    if (state.inProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  },
+                )
+              ],
+            ),
           );
         },
       ),
@@ -272,7 +272,6 @@ class _BackupDialogState extends State<BackupDialog> {
 }
 
 class RestoreDialog extends StatefulWidget {
-
   final void Function(String fileId) restore;
 
   const RestoreDialog({Key? key, required this.restore}) : super(key: key);

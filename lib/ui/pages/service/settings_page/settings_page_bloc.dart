@@ -53,6 +53,15 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
           inProgress: false,
         )) {
     sub = _authBloc.stream.listen((event) {
+
+      if (event.inProgress) {
+        return;
+      } else if (event.isAuthenticated) {
+        _driveRepository.logIn(event.client!);
+      } else if (!state.isAuthenticated) {
+        _driveRepository.logOut();
+      }
+
       emit(state.copyWith(
         inProgress: false,
         isAuthenticated: event.isAuthenticated,
