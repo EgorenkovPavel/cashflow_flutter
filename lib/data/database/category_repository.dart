@@ -40,6 +40,9 @@ class CategoryRepository {
   Future<List<Category>> getAll() async =>
       _mapCategoryList(await categoryDao.getAllCategories());
 
+  Future<List<Category>> getAllWithEmptyCloudId() async =>
+      _mapCategoryList(await categoryDao.getAllCategoriesWithEmptyCloudId());
+
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
       categoryDao

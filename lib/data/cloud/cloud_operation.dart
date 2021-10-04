@@ -12,14 +12,13 @@ class CloudOperation {
   final String? recAccount;
   final int sum;
 
-  CloudOperation(
-      {required this.id,
-      required this.date,
-      required this.operationType,
-      required this.account,
-      this.category,
-      this.recAccount,
-      required this.sum});
+  CloudOperation({required this.id,
+    required this.date,
+    required this.operationType,
+    required this.account,
+    this.category,
+    this.recAccount,
+    required this.sum});
 }
 
 class CloudOperationConverter extends CloudConverter<CloudOperation> {
@@ -38,7 +37,7 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
     return {
       _KEY_DATE: operation.date,
       _KEY_OPERATION_TYPE:
-          const OperationTypeConverter().mapToSql(operation.operationType),
+      const OperationTypeConverter().mapToSql(operation.operationType),
       _KEY_ACCOUNT: operation.account,
       _KEY_CATEGORY: operation.category ?? '',
       _KEY_REC_ACCOUNT: operation.recAccount ?? '',
@@ -48,16 +47,16 @@ class CloudOperationConverter extends CloudConverter<CloudOperation> {
   }
 
   @override
-  CloudOperation mapToDart(QueryDocumentSnapshot<Object?> doc) {
-    return CloudOperation(
-      id: doc.id,
-      date: doc.get(_KEY_DATE),
-      operationType: const OperationTypeConverter()
-          .mapToDart(doc.get(_KEY_OPERATION_TYPE))!,
-      account: doc.get(_KEY_ACCOUNT),
-      category: doc.get(_KEY_CATEGORY) == '' ? null : doc.get(_KEY_CATEGORY),
-      recAccount: doc.get(_KEY_REC_ACCOUNT) == '' ? null : doc.get(_KEY_REC_ACCOUNT),
-      sum: doc.get(_KEY_SUM),
-    );
-  }
+  CloudOperation mapToDart(QueryDocumentSnapshot<Object?> doc) =>
+      CloudOperation(
+        id: doc.id,
+        date: doc.get(_KEY_DATE),
+        operationType: const OperationTypeConverter()
+            .mapToDart(doc.get(_KEY_OPERATION_TYPE))!,
+        account: doc.get(_KEY_ACCOUNT),
+        category: doc.get(_KEY_CATEGORY) == '' ? null : doc.get(_KEY_CATEGORY),
+        recAccount: doc.get(_KEY_REC_ACCOUNT) == '' ? null : doc.get(
+            _KEY_REC_ACCOUNT),
+        sum: doc.get(_KEY_SUM),
+      );
 }

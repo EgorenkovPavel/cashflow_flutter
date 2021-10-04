@@ -21,6 +21,9 @@ class OperationRepository {
   Future<List<Operation>> getAll() =>
       operationDao.getAllOperationItems().then(_mapOperationList);
 
+  Future<List<Operation>> getAllWithEmptyCloudId() =>
+      operationDao.getAllOperationItemsWithEmptyCloudId().then(_mapOperationList);
+
   Stream<List<Operation>> watchAll() =>
       operationDao.watchAllOperationItems().map(_mapOperationList);
 

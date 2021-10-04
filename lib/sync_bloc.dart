@@ -18,14 +18,15 @@ class SyncBloc extends Cubit<SyncState> {
   final DataRepository dataRepository;
   final PrefsRepository prefsRepository;
 
-  StreamSubscription? sub;
+  StreamSubscription? _syncSub;
 
-  SyncBloc(
-    this._authBloc,
-    this.dataRepository,
-    this.prefsRepository,
-  ) : super(SyncState.NOT_SYNCED) {
-    sub = _authBloc.stream.listen((event) async {
+  SyncBloc({
+    required AuthBloc authBloc,
+    required this.dataRepository,
+    required this.prefsRepository,
+  })  : _authBloc = authBloc,
+        super(SyncState.NOT_SYNCED) {
+    _syncSub = _authBloc.stream.listen((event) async {
       if (event.inProgress) {
         emit(SyncState.IN_PROGRESS);
       } else if (event.isAuthenticated) {
@@ -41,13 +42,13 @@ class SyncBloc extends Cubit<SyncState> {
     if (await dataRepository.cloudDbExists(userId)) {
       await dataRepository.logIn(userId);
       var syncDate = DateTime.now();
-      if (await dataRepository.syncData(prefsRepository.syncDate)){
+      if (await dataRepository.syncData(prefsRepository.syncDate)) {
         await prefsRepository.setSyncDate(syncDate);
         emit(SyncState.SYNCED);
-      }else{
+      } else {
         emit(SyncState.NOT_SYNCED);
       }
-     } else {
+    } else {
       emit(SyncState.NO_DB);
     }
   }
@@ -56,7 +57,7 @@ class SyncBloc extends Cubit<SyncState> {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState.IN_PROGRESS);
       await dataRepository.createCloudDatabase(_authBloc.state.userId);
-      await dataRepository.loadAllDataToCloud();
+      await dataRepository.loadToCloud();
       await prefsRepository.setSyncDate(DateTime.now());
       emit(SyncState.SYNCED);
     }
@@ -70,7 +71,7 @@ class SyncBloc extends Cubit<SyncState> {
 
   @override
   Future<void> close() {
-    sub?.cancel();
+    _syncSub?.cancel();
     return super.close();
   }
 }
