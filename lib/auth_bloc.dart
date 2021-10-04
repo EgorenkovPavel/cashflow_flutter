@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/data/auth_repository.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:money_tracker/data/auth_repository.dart';
+import 'package:money_tracker/internet_connection_bloc.dart';
 
 class AuthState {
   final bool isAuthenticated;
@@ -38,15 +41,26 @@ class AuthState {
 }
 
 class AuthBloc extends Cubit<AuthState> {
+  final InternetConnectionBloc _connectionBloc;
   final AuthRepository _repository;
 
-  AuthBloc(AuthRepository repository)
-      : _repository = repository,
+  StreamSubscription? _sub;
+
+  AuthBloc({
+    required AuthRepository repository,
+    required InternetConnectionBloc connectionBloc,
+  })  : _repository = repository,
+        _connectionBloc = connectionBloc,
         super(AuthState.inProgress()) {
-    _init();
+
+    _sub = _connectionBloc.stream.listen((event) {
+      if (event.isConnectedToInternet){
+        _signInSilently();
+      }
+    });
   }
 
-  Future<void> _init() async {
+  Future<void> _signInSilently() async {
     await _repository.signInSilently();
     await _checkAuth();
   }
@@ -66,7 +80,7 @@ class AuthBloc extends Cubit<AuthState> {
     emit(AuthState.inProgress());
     try {
       await _repository.signIn();
-    } finally{
+    } finally {
       await _checkAuth();
     }
   }
@@ -78,5 +92,11 @@ class AuthBloc extends Cubit<AuthState> {
     } finally {
       await _checkAuth();
     }
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
   }
 }

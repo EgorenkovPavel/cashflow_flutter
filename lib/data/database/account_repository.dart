@@ -29,6 +29,9 @@ class AccountRepository {
   Future<List<Account>> getAll() async =>
       _mapAccountList(await accountDao.getAllAccounts());
 
+  Future<List<Account>> getAllWithEmptyCloudId() async =>
+      _mapAccountList(await accountDao.getAllAccountsWithEmptyCloudId());
+
   Stream<List<AccountBalance>> watchAllBalance() =>
       accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);
 

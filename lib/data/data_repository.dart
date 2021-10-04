@@ -116,23 +116,28 @@ class DataRepository {
   }
 
   Future<bool> syncData(DateTime date) async {
-    var accouns = await _cloudSource.getAccounts(date);
+    await loadToCloud();
+    return await loadFromCloud(date);
+  }
+
+  Future<bool> loadFromCloud(DateTime date) async {
+    var accounts = await _cloudSource.getAccounts(date);
     var categories = await _cloudSource.getCategories(date);
     var operations = await _cloudSource.getOperations(date);
 
-    if (accouns == null || categories == null || operations == null){
+    if (accounts == null || categories == null || operations == null) {
       return false;
     }
 
-    _loadCloudAccounts(accouns);
+    _loadCloudAccounts(accounts);
     _loadCloudCategories(categories);
     _loadCloudOperations(operations);
 
     return true;
   }
 
-  Future<void> loadAllDataToCloud() async {
-    var accounts = await getAllAccounts();
+  Future<void> loadToCloud() async {
+    var accounts = await getAllAccountsWithEmptyCloudId();
     accounts.forEach((account) async {
       var _cloudId = await _cloudSource.addAccount(
         CloudAccount(
@@ -144,7 +149,7 @@ class DataRepository {
           .update(account.copyWith(cloudId: _cloudId));
     });
 
-    var categories = await getAllCategories();
+    var categories = await getAllCategoriesWithEmptyCloudId();
     categories.forEach((category) async {
       var _cloudId = await _cloudSource.addCategory(CloudCategory(
         id: category.cloudId ?? '',
@@ -157,7 +162,7 @@ class DataRepository {
           .update(category.copyWith(cloudId: _cloudId));
     });
 
-    var operations = await getAllOperations();
+    var operations = await getAllOperationsWithEmptyCloudId();
     operations.forEach((operation) async {
       var _cloudId = await _cloudSource.addOperation(CloudOperation(
         id: operation.cloudId ?? '',
@@ -179,6 +184,9 @@ class DataRepository {
       _databaseSource.accounts.watchAll();
 
   Future<List<Account>> getAllAccounts() => _databaseSource.accounts.getAll();
+
+  Future<List<Account>> getAllAccountsWithEmptyCloudId() =>
+      _databaseSource.accounts.getAllWithEmptyCloudId();
 
   Stream<List<AccountBalance>> watchAllAccountsBalance() =>
       _databaseSource.accounts.watchAllBalance();
@@ -219,6 +227,9 @@ class DataRepository {
 
   Future<List<Category>> getAllCategories() =>
       _databaseSource.categories.getAll();
+
+  Future<List<Category>> getAllCategoriesWithEmptyCloudId() =>
+      _databaseSource.categories.getAllWithEmptyCloudId();
 
   Future<Category> getCategoryById(int id) =>
       _databaseSource.categories.getById(id);
@@ -274,6 +285,9 @@ class DataRepository {
   //Operation
   Future<List<Operation>> getAllOperations() =>
       _databaseSource.operations.getAll();
+
+  Future<List<Operation>> getAllOperationsWithEmptyCloudId() =>
+      _databaseSource.operations.getAllWithEmptyCloudId();
 
   Stream<List<Operation>> watchAllOperations() =>
       _databaseSource.operations.watchAll();

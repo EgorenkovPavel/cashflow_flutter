@@ -12,7 +12,11 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       (select(accounts)..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<AccountDB>> getAllAccounts() => select(accounts).get();
+  Future<List<AccountDB>> getAllAccounts() =>
+      select(accounts).get();
+
+  Future<List<AccountDB>> getAllAccountsWithEmptyCloudId() =>
+      (select(accounts)..where((tbl) => tbl.cloudId.equals(''))).get();
 
   Stream<AccountDB> watchAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).watchSingle();
@@ -21,7 +25,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       (select(accounts)..where((c) => c.id.equals(id))).getSingle();
 
   Future<AccountDB?> getAccountByCloudId(String cloudId) =>
-      (select(accounts)..where((c) => c.cloudId.equals(cloudId))).getSingleOrNull();
+      (select(accounts)..where((c) => c.cloudId.equals(cloudId)))
+          .getSingleOrNull();
 
   Future<int> insertAccount(AccountsCompanion entity) =>
       into(accounts).insert(entity);

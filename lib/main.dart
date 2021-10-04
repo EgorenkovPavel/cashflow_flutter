@@ -9,6 +9,7 @@ import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/database/database_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
+import 'package:money_tracker/internet_connection_bloc.dart';
 import 'package:money_tracker/sync_bloc.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,15 +44,22 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => InternetConnectionBloc(),
           lazy: false,
-          create: (context) => AuthBloc(_authRepository),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => AuthBloc(
+            repository: _authRepository,
+            connectionBloc: context.read<InternetConnectionBloc>(),
+          ),
         ),
         BlocProvider(
           lazy: false,
           create: (context) => SyncBloc(
-            context.read<AuthBloc>(),
-            _dataRepository,
-            _prefsRepo,
+            authBloc: context.read<AuthBloc>(),
+            dataRepository: _dataRepository,
+            prefsRepository: _prefsRepo,
           ),
         ),
       ],
@@ -65,3 +73,7 @@ Future<void> main() async {
     ),
   );
 }
+
+// TODO добавить проверку наличия интернет соединения
+// синхронизация в обе стононы при установлении интернет соединения
+// протестировать работу приложухи при отключенном интернете

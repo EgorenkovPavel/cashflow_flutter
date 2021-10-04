@@ -51,7 +51,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
   CategoryDao(Database db) : super(db);
 
-  //Future<List<Task>> getAllTasks() => select(tasks).get();
   Stream<List<CategoryDB>> watchAllCategories() => (select(categories)
         ..orderBy(
           [
@@ -67,6 +66,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           ],
         ))
       .get();
+
+  Future<List<CategoryDB>> getAllCategoriesWithEmptyCloudId() =>
+      (select(categories)
+            ..orderBy(
+              [
+                (t) => OrderingTerm(expression: t.title),
+              ],
+            )
+            ..where((tbl) => tbl.cloudId.equals('')))
+          .get();
 
   Future<CategoryDB> getCategoryById(int id) => (select(categories)
         ..where(
