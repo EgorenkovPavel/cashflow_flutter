@@ -20,7 +20,7 @@ class Accounts extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().nullable()();
+  TextColumn get cloudId => text()();
 
   TextColumn get title => text()();
 
@@ -34,7 +34,7 @@ class Categories extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().nullable()();
+  TextColumn get cloudId => text()();
 
   TextColumn get title => text()();
 
@@ -54,7 +54,7 @@ class Operations extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get cloudId => text().nullable()();
+  TextColumn get cloudId => text()();
 
   DateTimeColumn get date => dateTime()();
 

@@ -1,5 +1,4 @@
-import 'package:money_tracker/data/cloud/cloud_account.dart';
-import 'package:money_tracker/data/cloud/cloud_category.dart';
+
 import 'package:money_tracker/data/cloud/cloud_operation.dart';
 import 'package:money_tracker/data/cloud/cloud_source.dart';
 import 'package:money_tracker/data/database/database_source.dart';
@@ -32,13 +31,13 @@ class DataRepository {
     await _cloudSource.logOut();
   }
 
-  void _loadCloudAccounts(Iterable<CloudAccount> list) {
+  void _loadCloudAccounts(Iterable<Account> list) {
     list.forEach((cloudAccount) async {
       var _account =
-          await _databaseSource.accounts.getByCloudId(cloudAccount.id);
+          await _databaseSource.accounts.getByCloudId(cloudAccount.cloudId);
       if (_account == null) {
         await _databaseSource.accounts.insert(Account(
-          cloudId: cloudAccount.id,
+          cloudId: cloudAccount.cloudId,
           title: cloudAccount.title,
         ));
       } else {
@@ -49,14 +48,14 @@ class DataRepository {
     });
   }
 
-  void _loadCloudCategories(Iterable<CloudCategory> list) {
+  void _loadCloudCategories(Iterable<Category> list) {
     list.forEach((cloudCategory) async {
       var _category =
-          await _databaseSource.categories.getByCloudId(cloudCategory.id);
+          await _databaseSource.categories.getByCloudId(cloudCategory.cloudId);
       if (_category == null) {
         await _databaseSource.categories.insert(Category(
           title: cloudCategory.title,
-          cloudId: cloudCategory.id,
+          cloudId: cloudCategory.cloudId,
           operationType: cloudCategory.operationType,
           budgetType: cloudCategory.budgetType,
           budget: cloudCategory.budget,
@@ -64,7 +63,7 @@ class DataRepository {
       } else {
         await _databaseSource.categories.update(_category.copyWith(
           title: cloudCategory.title,
-          cloudId: cloudCategory.id,
+          cloudId: cloudCategory.cloudId,
           operationType: cloudCategory.operationType,
           budgetType: cloudCategory.budgetType,
           budget: cloudCategory.budget,
@@ -139,25 +138,14 @@ class DataRepository {
   Future<void> loadToCloud() async {
     var accounts = await getAllAccountsWithEmptyCloudId();
     accounts.forEach((account) async {
-      var _cloudId = await _cloudSource.addAccount(
-        CloudAccount(
-          id: '',
-          title: account.title,
-        ),
-      );
+      var _cloudId = await _cloudSource.addAccount(account);
       await _databaseSource.accounts
           .update(account.copyWith(cloudId: _cloudId));
     });
 
     var categories = await getAllCategoriesWithEmptyCloudId();
     categories.forEach((category) async {
-      var _cloudId = await _cloudSource.addCategory(CloudCategory(
-        id: category.cloudId ?? '',
-        title: category.title,
-        operationType: category.operationType,
-        budgetType: category.budgetType,
-        budget: category.budget,
-      ));
+      var _cloudId = await _cloudSource.addCategory(category);
       await _databaseSource.categories
           .update(category.copyWith(cloudId: _cloudId));
     });
@@ -168,7 +156,7 @@ class DataRepository {
         id: operation.cloudId ?? '',
         date: operation.date,
         operationType: operation.type,
-        account: operation.account.cloudId!,
+        account: operation.account.cloudId,
         category: operation.category?.cloudId ?? '',
         recAccount: operation.recAccount?.cloudId ?? '',
         sum: operation.sum,
@@ -201,22 +189,14 @@ class DataRepository {
       _databaseSource.accounts.getById(id);
 
   Future<int> insertAccount(Account account) async {
-    var _cloudId = await _cloudSource.addAccount(
-      CloudAccount(
-        id: account.cloudId ?? '',
-        title: account.title,
-      ),
-    );
+    var _cloudId = await _cloudSource.addAccount(account);
     var _id = await _databaseSource.accounts
         .insert(account.copyWith(cloudId: _cloudId));
     return _id;
   }
 
   Future updateAccount(Account account) async {
-    await _cloudSource.updateAccount(CloudAccount(
-      id: account.cloudId ?? '',
-      title: account.title,
-    ));
+    await _cloudSource.updateAccount(account);
     await _databaseSource.accounts.update(account);
   }
 
@@ -259,26 +239,14 @@ class DataRepository {
 
   Future<int> insertCategory(Category category) async {
     //TODO вызывается запись в облако и сразу подписка об изменении в облаке а уже потом запись в базе. получается 2 копии в базе и 1 в облаке
-    var _cloudId = await _cloudSource.addCategory(CloudCategory(
-      id: category.cloudId ?? '',
-      title: category.title,
-      operationType: category.operationType,
-      budgetType: category.budgetType,
-      budget: category.budget,
-    ));
+    var _cloudId = await _cloudSource.addCategory(category);
     var _id = await _databaseSource.categories
         .insert(category.copyWith(cloudId: _cloudId));
     return _id;
   }
 
   Future updateCategory(Category category) async {
-    await _cloudSource.updateCategory(CloudCategory(
-      id: category.cloudId ?? '',
-      title: category.title,
-      operationType: category.operationType,
-      budgetType: category.budgetType,
-      budget: category.budget,
-    ));
+    await _cloudSource.updateCategory(category);
     await _databaseSource.categories.update(category);
   }
 
@@ -315,7 +283,7 @@ class DataRepository {
       id: operation.cloudId ?? '',
       date: operation.date,
       operationType: operation.type,
-      account: operation.account.cloudId!,
+      account: operation.account.cloudId,
       category: operation.category?.cloudId ?? '',
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,
@@ -330,7 +298,7 @@ class DataRepository {
       id: operation.cloudId ?? '',
       date: operation.date,
       operationType: operation.type,
-      account: operation.account.cloudId!,
+      account: operation.account.cloudId,
       category: operation.category?.cloudId ?? '',
       recAccount: operation.recAccount?.cloudId ?? '',
       sum: operation.sum,

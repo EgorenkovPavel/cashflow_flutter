@@ -568,6 +568,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         operationData
             .map((p) => OperationsCompanion.insert(
                   id: Value(p.id),
+                  cloudId: p.cloudId,
                   date: p.date,
                   operationType: p.operationType,
                   account: p.account,
