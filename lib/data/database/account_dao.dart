@@ -93,7 +93,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         _accounts
             .map((a) => AccountsCompanion.insert(
                   id: Value(a.id),
+                  cloudId: a.cloudId,
                   title: a.title,
+                  isDebt: Value(a.isDebt),
                 ))
             .toList(),
       );

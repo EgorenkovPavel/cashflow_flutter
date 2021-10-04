@@ -4,7 +4,7 @@ import 'operation_type.dart';
 
 class Operation {
   final int id;
-  final String? cloudId;
+  final String cloudId;
   final DateTime date;
   final OperationType type;
   final Account account;

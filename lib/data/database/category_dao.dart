@@ -325,6 +325,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               .map(
                 (p) => CategoriesCompanion.insert(
                   id: Value(p.id),
+                  cloudId: p.cloudId,
                   title: p.title,
                   operationType: p.operationType,
                   budgetType: p.budgetType,

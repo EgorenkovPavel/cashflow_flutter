@@ -1,6 +1,6 @@
 class Account {
   final int id;
-  final String? cloudId;
+  final String cloudId;
   final String title;
   final bool isDebt;
 

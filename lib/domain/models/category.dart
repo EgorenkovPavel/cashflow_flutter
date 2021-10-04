@@ -4,7 +4,7 @@ import 'operation_type.dart';
 
 class Category {
   final int id;
-  final String? cloudId;
+  final String cloudId;
   final String title;
   final OperationType operationType;
   final BudgetType budgetType;
