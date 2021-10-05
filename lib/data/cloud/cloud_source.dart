@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/data/cloud/cloud_operation.dart';
 import 'package:money_tracker/data/cloud/mappers/account_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
+import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -16,19 +17,22 @@ class CloudSource {
 
   DocumentReference<Map<String, dynamic>>? _db;
 
-  CollectionDAO get _accounts => CollectionDAO(
+  CollectionDAO get _accounts => CollectionDAO<Account>(
         collection: _db?.collection(_ACCOUNTS),
         key_updated: AccountMapper.KEY_UPDATED,
+        mapper: const AccountMapper(),
       );
 
-  CollectionDAO get _categories => CollectionDAO(
+  CollectionDAO get _categories => CollectionDAO<Category>(
         collection: _db?.collection(_CATEGORIES),
         key_updated: CategoryMapper.KEY_UPDATED,
+        mapper: const CategoryMapper(),
       );
 
-  CollectionDAO get _operations => CollectionDAO(
+  CollectionDAO get _operations => CollectionDAO<CloudOperation>(
         collection: _db?.collection(_OPERATIONS),
         key_updated: OperationMapper.KEY_UPDATED,
+        mapper: const OperationMapper(),
       );
 
   CloudSource(this._firestore);
@@ -71,24 +75,15 @@ class CloudSource {
   }
 
   Future<Iterable<Account>?> getAccounts(DateTime date) async {
-    var docs =
-        await _accounts.getItems(date);
-    return docs?.docs
-        .map((doc) => const AccountMapper().mapToDart(doc));
+    return (await _accounts.getItems(date)) as Iterable<Account>?;
   }
 
   Future<Iterable<Category>?> getCategories(DateTime date) async {
-    var docs =
-        await _categories.getItems(date);
-    return docs?.docs
-        .map((doc) => const CategoryMapper().mapToDart(doc));
+    return (await _categories.getItems(date)) as Iterable<Category>?;
   }
 
   Future<Iterable<CloudOperation>?> getOperations(DateTime date) async {
-    var docs =
-        await _operations.getItems(date);
-    return docs?.docs
-        .map((doc) => const OperationMapper().mapToDart(doc));
+    return (await _operations.getItems(date)) as Iterable<CloudOperation>?;
   }
 
   Future<void> refreshAccountSyncDate(Account account) =>
@@ -106,40 +101,36 @@ class CloudSource {
         operation.id,
       );
 
-  Future<String?> addAccount(Account account) => _accounts.addItem(
-        const AccountMapper().mapToCloud(account),
-      );
+  Future<String?> addAccount(Account account) => _accounts.addItem(account);
 
   Future<void>? updateAccount(Account account) => _accounts.updateItem(
         account.cloudId,
-        const AccountMapper().mapToCloud(account),
+        account,
       );
 
   Future<void> deleteAccount(String cloudId) => _accounts.deleteItem(
         cloudId,
       );
 
-  Future<String?> addCategory(Category category) => _categories.addItem(
-        const CategoryMapper().mapToCloud(category),
-      );
+  Future<String?> addCategory(Category category) =>
+      _categories.addItem(category);
 
   Future<void> updateCategory(Category category) => _categories.updateItem(
         category.cloudId,
-        const CategoryMapper().mapToCloud(category),
+        category,
       );
 
   Future<void> deleteCategory(String cloudId) => _categories.deleteItem(
         cloudId,
       );
 
-  Future<String?> addOperation(CloudOperation operation) => _operations.addItem(
-        const OperationMapper().mapToCloud(operation),
-      );
+  Future<String?> addOperation(CloudOperation operation) =>
+      _operations.addItem(operation);
 
   Future<void> updateOperation(CloudOperation operation) =>
       _operations.updateItem(
         operation.id,
-        const OperationMapper().mapToCloud(operation),
+        operation,
       );
 
   Future<void> deleteOperation(String cloudId) => _operations.deleteItem(
@@ -168,32 +159,40 @@ class CloudSource {
   }
 }
 
-
-class CollectionDAO {
+class CollectionDAO<T> {
   final CollectionReference? collection;
+
+  final CloudConverter<T> mapper;
 
   final String key_updated;
 
-  CollectionDAO({required this.key_updated, required this.collection});
+  CollectionDAO(
+      {required this.mapper,
+      required this.key_updated,
+      required this.collection});
 
   Future<QuerySnapshot<Object?>>? get() => collection?.get();
 
-  Future<QuerySnapshot<Object?>>? getItems(DateTime date) {
-    return collection?.where(key_updated, isGreaterThanOrEqualTo: date).get();
+  Future<Iterable<T>?> getItems(DateTime date) async {
+    var docs = await collection
+        ?.where(key_updated, isGreaterThanOrEqualTo: date)
+        .get();
+    return docs?.docs.map<T>((doc) => mapper.mapToDart(doc));
   }
 
   Future<String?> addItem(
-    Map<String, dynamic> data,
+    T data,
   ) async {
-    var doc = await collection?.add(data);
+    var doc = await collection?.add(mapper.mapToCloud(data));
     return doc?.id;
   }
 
   Future<void> updateItem(
     String id,
-    Map<String, dynamic> data,
+    T data,
   ) {
-    return collection?.doc(id).update(data) ?? Future.value();
+    return collection?.doc(id).update(mapper.mapToCloud(data)) ??
+        Future.value();
   }
 
   Future<void> deleteItem(

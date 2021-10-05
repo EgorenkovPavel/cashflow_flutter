@@ -20,7 +20,7 @@ class AccountMapper extends Mapper<Account, AccountDB> {
   Account mapToDart(AccountDB a) {
     return Account(
       id: a.id,
-      cloudId: a.cloudId ?? '',
+      cloudId: a.cloudId,
       title: a.title,
       isDebt: a.isDebt,
     );

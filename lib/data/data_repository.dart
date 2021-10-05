@@ -153,7 +153,7 @@ class DataRepository {
     var operations = await getAllOperationsWithEmptyCloudId();
     operations.forEach((operation) async {
       var _cloudId = await _cloudSource.addOperation(CloudOperation(
-        id: operation.cloudId ?? '',
+        id: operation.cloudId,
         date: operation.date,
         operationType: operation.type,
         account: operation.account.cloudId,
@@ -238,7 +238,6 @@ class DataRepository {
       _databaseSource.categories.getAllByType(type);
 
   Future<int> insertCategory(Category category) async {
-    //TODO вызывается запись в облако и сразу подписка об изменении в облаке а уже потом запись в базе. получается 2 копии в базе и 1 в облаке
     var _cloudId = await _cloudSource.addCategory(category);
     var _id = await _databaseSource.categories
         .insert(category.copyWith(cloudId: _cloudId));
@@ -280,7 +279,7 @@ class DataRepository {
 
   Future<Operation> insertOperation(Operation operation) async {
     var _cloudId = await _cloudSource.addOperation(CloudOperation(
-      id: operation.cloudId ?? '',
+      id: operation.cloudId,
       date: operation.date,
       operationType: operation.type,
       account: operation.account.cloudId,
@@ -295,7 +294,7 @@ class DataRepository {
 
   Future updateOperation(Operation operation) async {
     await _cloudSource.updateOperation(CloudOperation(
-      id: operation.cloudId ?? '',
+      id: operation.cloudId,
       date: operation.date,
       operationType: operation.type,
       account: operation.account.cloudId,
@@ -316,7 +315,7 @@ class DataRepository {
   }
 
   Future deleteOperation(Operation operation) async {
-    await _cloudSource.deleteOperation(operation.cloudId!);
+    await _cloudSource.deleteOperation(operation.cloudId);
     await _databaseSource.operations.deleteById(operation.id);
   }
 

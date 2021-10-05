@@ -22,7 +22,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
   Category mapToDart(CategoryDB c) {
     return Category(
       id: c.id,
-      cloudId: c.cloudId ?? '',
+      cloudId: c.cloudId,
       title: c.title,
       operationType: c.operationType,
       budgetType: c.budgetType,
