@@ -23,6 +23,12 @@ class DataRepository {
     return _cloudSource.databaseExists(userId);
   }
 
+  Future<bool> isAdmin(String userId) => _cloudSource.isAdmin(userId);
+
+  Future<void> addNewUser(String newUser)async {
+    await _cloudSource.addNewUser(newUser);
+  }
+
   Future<void> createCloudDatabase(String userId) async {
     await _cloudSource.createDatabase(userId);
   }
@@ -115,11 +121,11 @@ class DataRepository {
   }
 
   Future<bool> syncData(DateTime date) async {
-    await loadToCloud();
-    return await loadFromCloud(date);
+    await _loadToCloud();
+    return await _loadFromCloud(date);
   }
 
-  Future<bool> loadFromCloud(DateTime date) async {
+  Future<bool> _loadFromCloud(DateTime date) async {
     var accounts = await _cloudSource.getAccounts(date);
     var categories = await _cloudSource.getCategories(date);
     var operations = await _cloudSource.getOperations(date);
@@ -135,7 +141,7 @@ class DataRepository {
     return true;
   }
 
-  Future<void> loadToCloud() async {
+  Future<void> _loadToCloud() async {
     var accounts = await getAllAccountsWithEmptyCloudId();
     accounts.forEach((account) async {
       var _cloudId = await _cloudSource.addAccount(account);
