@@ -24,7 +24,7 @@ class AccountBalanceMapper
   AccountBalance mapToDart(AccountBalanceEntity a) {
     return AccountBalance(
         id: a.account.id,
-        cloudId: a.account.cloudId ?? '',
+        cloudId: a.account.cloudId,
         title: a.account.title,
         isDebt: a.account.isDebt,
         balance: a.sum);

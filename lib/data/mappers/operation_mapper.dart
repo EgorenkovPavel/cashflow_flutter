@@ -23,7 +23,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
   Operation mapToDart(OperationItem o) {
     return Operation(
         id: o.operationData.id,
-        cloudId: o.operation.cloudId ?? '',
+        cloudId: o.operation.cloudId,
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),
