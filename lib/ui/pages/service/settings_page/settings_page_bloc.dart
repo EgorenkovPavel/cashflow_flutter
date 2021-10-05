@@ -10,13 +10,17 @@ class BackupPageState {
   final bool isAuthenticated;
   final bool inProgress;
   final bool isConnected;
+  final String userId;
   final BackupPageAction action;
+  final bool isAdmin;
 
   BackupPageState({
     required this.isConnected,
     required this.isAuthenticated,
     required this.action,
     required this.inProgress,
+    this.userId = '',
+    this.isAdmin = false,
   });
 
   BackupPageState copyWith({
@@ -24,12 +28,16 @@ class BackupPageState {
     bool? isConnected,
     bool? inProgress,
     bool? isAuthenticated,
+    String? userId,
+    bool? isAdmin,
   }) {
     return BackupPageState(
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       action: action ?? this.action,
       isConnected: isConnected ?? this.isConnected,
       inProgress: inProgress ?? this.inProgress,
+      userId: userId ?? this.userId,
+      isAdmin: isAdmin ?? this.isAdmin,
     );
   }
 }
@@ -61,8 +69,13 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
           action: BackupPageAction.INITIAL,
           inProgress: false,
           isConnected: _syncBloc.state != SyncState.NO_DB,
+          userId: _authBloc.state.userId,
         )) {
-    subAuth = _authBloc.stream.listen((event) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    subAuth = _authBloc.stream.listen((event) async {
       if (event.inProgress) {
         return;
       } else if (event.isAuthenticated) {
@@ -71,18 +84,35 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
         _driveRepository.logOut();
       }
 
+      var isAdmin = await _repository.isAdmin(event.userId);
+
       emit(state.copyWith(
         inProgress: false,
         isAuthenticated: event.isAuthenticated,
         action: BackupPageAction.INITIAL,
+        userId: event.userId,
+        isAdmin: isAdmin,
       ));
     });
 
-    subSync = _syncBloc.stream.listen((event) {
+    subSync = _syncBloc.stream.listen((event) async {
       emit(state.copyWith(
         isConnected: event != SyncState.NO_DB,
+        isAdmin: await _repository.isAdmin(state.userId),
       ));
     });
+
+    var isAdmin = await _repository.isAdmin(state.userId);
+    emit(state.copyWith(isAdmin: isAdmin));
+
+  }
+
+  void resresh(){
+    _syncBloc.sync();
+  }
+
+  void addUser(String newUser){
+    _repository.addNewUser(newUser);
   }
 
   @override
@@ -100,7 +130,7 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
     _authBloc.signOut();
   }
 
-  void createCloudDatabase(){
+  void createCloudDatabase() async {
     _syncBloc.createDatabase();
   }
 

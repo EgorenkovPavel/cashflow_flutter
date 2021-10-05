@@ -11,6 +11,7 @@ class CloudSource {
 
   static const String _DATABASES = 'databases';
   static const String _DATABASES_USERS = 'users';
+  static const String _DATABASES_ADMIN = 'admin';
   static const String _ACCOUNTS = 'accounts';
   static const String _CATEGORIES = 'categories';
   static const String _OPERATIONS = 'operations';
@@ -37,6 +38,24 @@ class CloudSource {
 
   CloudSource(this._firestore);
 
+  Future<bool> isAdmin(String userId) async {
+    if (_db == null) {
+      return false;
+    }
+    var doc = await _db!.get();
+    return doc.data()![_DATABASES_ADMIN] == userId;
+  }
+
+  Future<void> addNewUser(String newUser) async{
+    if (_db == null) {
+      return;
+    }
+    var doc = await _db!.get();
+    var data = doc.data();
+    data![_DATABASES_USERS].add(newUser);
+    await _db!.set(data);
+  }
+
   Future<bool> databaseExists(String userId) async {
     QuerySnapshot querySnapshot = await _firestore
         .collection(_DATABASES)
@@ -48,6 +67,7 @@ class CloudSource {
 
   Future<void> createDatabase(String userId) async {
     _db = await _firestore.collection(_DATABASES).add({
+      _DATABASES_ADMIN: userId,
       _DATABASES_USERS: [userId],
     });
   }
