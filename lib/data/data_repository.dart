@@ -122,12 +122,7 @@ class DataRepository {
     });
   }
 
-  Future<bool> syncData(DateTime date) async {
-    await _loadToCloud();
-    return await _loadFromCloud(date);
-  }
-
-  Future<bool> _loadFromCloud(DateTime date) async {
+  Future<bool> loadFromCloud(DateTime date) async {
     var accounts = await _remoteSource.getAccounts(date);
     var categories = await _remoteSource.getCategories(date);
     var operations = await _remoteSource.getOperations(date);
@@ -171,7 +166,7 @@ class DataRepository {
         sum: operation.sum);
   }
 
-  Future<void> _loadToCloud() async {
+  Future<void> loadToCloud() async {
     await _loadAccountsToCloud();
     await _loadCategoriesToCloud();
     await _loadOperationsToCloud();
