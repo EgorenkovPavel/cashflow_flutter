@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/auth_repository.dart';
-import 'package:money_tracker/data/cloud/cloud_source.dart';
+import 'package:money_tracker/data/cloud/firecloud_source.dart';
 import 'package:money_tracker/data/database/database.dart';
 import 'package:money_tracker/data/database/database_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
@@ -29,7 +29,7 @@ Future<void> main() async {
   final _authRepository = AuthRepository();
   final _driveRepository = DriveRepository();
 
-  final _cloudSource = CloudSource(_firestore);
+  final _cloudSource = FirecloudSource(_firestore);
 
   final _dataRepository = DataRepository(
     databaseSource: _databaseSource,

@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
-import 'package:money_tracker/data/database/budget_type_converter.dart';
-import 'package:money_tracker/data/database/operation_type_converter.dart';
-import 'package:money_tracker/domain/models/category.dart';
+import 'package:money_tracker/data/cloud/models/cloud_category.dart';
 
-class CategoryMapper extends CloudConverter<Category> {
+class CategoryMapper extends CloudConverter<CloudCategory> {
   static const String _KEY_TITLE = 'title';
   static const String _KEY_OPERATION_TYPE = 'operation_type';
   static const String _KEY_BUDGET_TYPE = 'budget_type';
@@ -14,28 +12,24 @@ class CategoryMapper extends CloudConverter<Category> {
   const CategoryMapper();
 
   @override
-  Map<String, dynamic> mapToCloud(Category category) {
+  Map<String, dynamic> mapToCloud(CloudCategory category) {
     return {
       _KEY_TITLE: category.title,
-      _KEY_OPERATION_TYPE:
-      const OperationTypeConverter().mapToSql(category.operationType),
-      _KEY_BUDGET_TYPE:
-      const BudgetTypeConverter().mapToSql(category.budgetType),
+      _KEY_OPERATION_TYPE: category.operationType,
+      _KEY_BUDGET_TYPE: category.budgetType,
       _KEY_BUDGET: category.budget,
       KEY_UPDATED: DateTime.now(),
     };
   }
 
   @override
-  Category mapToDart(QueryDocumentSnapshot<Object?> doc) {
-    return Category(
-      cloudId: doc.id,
-      budgetType:
-      const BudgetTypeConverter().mapToDart(doc.get(_KEY_BUDGET_TYPE))!,
+  CloudCategory mapToDart(QueryDocumentSnapshot<Object?> doc) {
+    return CloudCategory(
+      id: doc.id,
+      budgetType: doc.get(_KEY_BUDGET_TYPE),
       budget: doc.get(_KEY_BUDGET),
       title: doc.get(_KEY_TITLE),
-      operationType: const OperationTypeConverter()
-          .mapToDart(doc.get(_KEY_OPERATION_TYPE))!,
+      operationType: doc.get(_KEY_OPERATION_TYPE),
     );
   }
 }
