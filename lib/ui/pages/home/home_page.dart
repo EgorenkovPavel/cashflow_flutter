@@ -28,14 +28,30 @@ class HomePage extends StatelessWidget {
             } else if (state == SyncState.SYNCED) {
               return IconButton(
                 onPressed: () => _sync(context),
-                icon: Icon(Icons.done),
+                icon: Icon(Icons.cloud_done_outlined),
               );
-            } else if (state == SyncState.NOT_SYNCED) {
+            } else if (state == SyncState.LOADING_TO_CLOUD) {
+              return IconButton(
+                onPressed: () => _sync(context),
+                icon: Icon(Icons.cloud_upload_outlined),
+              );
+            } else if (state == SyncState.LOADING_FROM_CLOUD) {
+              return IconButton(
+                onPressed: () => _sync(context),
+                icon: Icon(Icons.cloud_download_outlined),
+              );
+            } else if (state == SyncState.NO_DB) {
+              return IconButton(
+                onPressed: () => _sync(context),
+                icon: Icon(Icons.cloud_off_outlined),
+              );
+            } else if (state == SyncState.NOT_SYNCED ||
+                state == SyncState.FAILED) {
               return IconButton(
                 onPressed: () => _sync(context),
                 icon: Icon(Icons.warning_amber_outlined),
               );
-            }else {
+            } else {
               return SizedBox();
             }
           }),

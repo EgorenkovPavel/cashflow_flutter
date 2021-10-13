@@ -7,6 +7,8 @@ import 'package:money_tracker/data/prefs_repository.dart';
 
 enum SyncState {
   IN_PROGRESS,
+  LOADING_TO_CLOUD,
+  LOADING_FROM_CLOUD,
   SYNCED,
   NOT_SYNCED,
   FAILED,
@@ -30,26 +32,37 @@ class SyncBloc extends Cubit<SyncState> {
       if (event.inProgress) {
         emit(SyncState.IN_PROGRESS);
       } else if (event.isAuthenticated) {
-        await _syncData(event.userId);
+        if(await _logIn(event.userId)){
+          await _syncData();
+        }
       } else {
         emit(SyncState.NOT_SYNCED);
       }
     });
   }
 
-  Future<void> _syncData(String userId) async {
+  Future<void> _syncData() async {
+    emit(SyncState.LOADING_TO_CLOUD);
+    await dataRepository.loadToCloud();
+
+    emit(SyncState.LOADING_FROM_CLOUD);
+    var syncDate = DateTime.now();
+    if (await dataRepository.loadFromCloud(prefsRepository.syncDate)) {
+      await prefsRepository.setSyncDate(syncDate);
+      emit(SyncState.SYNCED);
+    } else {
+      emit(SyncState.NOT_SYNCED);
+    }
+  }
+
+  Future<bool> _logIn(String userId) async {
     emit(SyncState.IN_PROGRESS);
     if (await dataRepository.cloudDbExists(userId)) {
       await dataRepository.logIn(userId);
-      var syncDate = DateTime.now();
-      if (await dataRepository.syncData(prefsRepository.syncDate)) {
-        await prefsRepository.setSyncDate(syncDate);
-        emit(SyncState.SYNCED);
-      } else {
-        emit(SyncState.NOT_SYNCED);
-      }
+      return true;
     } else {
       emit(SyncState.NO_DB);
+      return false;
     }
   }
 
@@ -57,16 +70,13 @@ class SyncBloc extends Cubit<SyncState> {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState.IN_PROGRESS);
       await dataRepository.createCloudDatabase(_authBloc.state.userId);
-      var syncDate = DateTime.now();
-      await dataRepository.syncData(syncDate);
-      await prefsRepository.setSyncDate(syncDate);
-      emit(SyncState.SYNCED);
+      await _syncData();
     }
   }
 
   Future<void> sync() async {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
-      await _syncData(_authBloc.state.userId);
+      await _syncData();
     }
   }
 
