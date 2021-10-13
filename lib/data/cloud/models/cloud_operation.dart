@@ -1,9 +1,7 @@
-import 'package:money_tracker/domain/models/operation_type.dart';
-
-class CloudOperation {
+class CloudOperation{
   final String id;
   final DateTime date;
-  final OperationType operationType;
+  final int operationType;
   final String account;
   final String? category;
   final String? recAccount;

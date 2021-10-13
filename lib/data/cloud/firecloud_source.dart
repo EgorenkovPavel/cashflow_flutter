@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/cloud/cloud_operation.dart';
 import 'package:money_tracker/data/cloud/mappers/account_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
-import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/data/cloud/remote_source.dart';
 
-class CloudSource {
+import 'models/cloud_models.dart';
+
+class FirecloudSource extends RemoteSource {
   final FirebaseFirestore _firestore;
 
   static const String _DATABASES = 'databases';
@@ -18,13 +19,13 @@ class CloudSource {
 
   DocumentReference<Map<String, dynamic>>? _db;
 
-  CollectionDAO get _accounts => CollectionDAO<Account>(
+  CollectionDAO get _accounts => CollectionDAO<CloudAccount>(
         collection: _db?.collection(_ACCOUNTS),
         key_updated: AccountMapper.KEY_UPDATED,
         mapper: const AccountMapper(),
       );
 
-  CollectionDAO get _categories => CollectionDAO<Category>(
+  CollectionDAO get _categories => CollectionDAO<CloudCategory>(
         collection: _db?.collection(_CATEGORIES),
         key_updated: CategoryMapper.KEY_UPDATED,
         mapper: const CategoryMapper(),
@@ -36,8 +37,9 @@ class CloudSource {
         mapper: const OperationMapper(),
       );
 
-  CloudSource(this._firestore);
+  FirecloudSource(this._firestore);
 
+  @override
   Future<bool> isAdmin(String userId) async {
     if (_db == null) {
       return false;
@@ -46,7 +48,8 @@ class CloudSource {
     return doc.data()![_DATABASES_ADMIN] == userId;
   }
 
-  Future<void> addNewUser(String newUser) async{
+  @override
+  Future<void> addNewUser(String newUser) async {
     if (_db == null) {
       return;
     }
@@ -56,6 +59,7 @@ class CloudSource {
     await _db!.set(data);
   }
 
+  @override
   Future<bool> databaseExists(String userId) async {
     QuerySnapshot querySnapshot = await _firestore
         .collection(_DATABASES)
@@ -65,6 +69,7 @@ class CloudSource {
     return querySnapshot.docs.isNotEmpty;
   }
 
+  @override
   Future<void> createDatabase(String userId) async {
     _db = await _firestore.collection(_DATABASES).add({
       _DATABASES_ADMIN: userId,
@@ -72,10 +77,12 @@ class CloudSource {
     });
   }
 
+  @override
   Future<void> logIn(String userId) async {
     _db = await _getDatabase(userId);
   }
 
+  @override
   Future<void> logOut() async {
     _db = null;
   }
@@ -94,69 +101,70 @@ class CloudSource {
     }
   }
 
-  Future<Iterable<Account>?> getAccounts(DateTime date) async {
-    return (await _accounts.getItems(date)) as Iterable<Account>?;
+  @override
+  Future<Iterable<CloudAccount>?> getAccounts(DateTime date) async {
+    return (await _accounts.getItems(date)) as Iterable<CloudAccount>?;
   }
 
-  Future<Iterable<Category>?> getCategories(DateTime date) async {
-    return (await _categories.getItems(date)) as Iterable<Category>?;
+  @override
+  Future<Iterable<CloudCategory>?> getCategories(DateTime date) async {
+    return (await _categories.getItems(date)) as Iterable<CloudCategory>?;
   }
 
+  @override
   Future<Iterable<CloudOperation>?> getOperations(DateTime date) async {
     return (await _operations.getItems(date)) as Iterable<CloudOperation>?;
   }
 
-  Future<void> refreshAccountSyncDate(Account account) =>
-      _accounts.refreshSyncDate(
-        account.cloudId,
-      );
+  @override
+  Future<void> refreshAccountSyncDate(String accountId) =>
+      _accounts.refreshSyncDate(accountId);
 
-  Future<void> refreshCategorySyncDate(Category category) =>
-      _categories.refreshSyncDate(
-        category.cloudId,
-      );
+  @override
+  Future<void> refreshCategorySyncDate(String categoryId) =>
+      _categories.refreshSyncDate(categoryId);
 
-  Future<void> refreshOperationSyncDate(CloudOperation operation) =>
-      _operations.refreshSyncDate(
-        operation.id,
-      );
+  @override
+  Future<void> refreshOperationSyncDate(String operationId) =>
+      _operations.refreshSyncDate(operationId);
 
-  Future<String?> addAccount(Account account) => _accounts.addItem(account);
+  @override
+  Future<String?> addAccount(CloudAccount account) =>
+      _accounts.addItem(account);
 
-  Future<void>? updateAccount(Account account) => _accounts.updateItem(
-        account.cloudId,
-        account,
-      );
+  @override
+  Future<void>? updateAccount(CloudAccount account) =>
+      _accounts.updateItem(account.id, account);
 
-  Future<void> deleteAccount(String cloudId) => _accounts.deleteItem(
-        cloudId,
-      );
+  @override
+  Future<void> deleteAccount(String accountId) =>
+      _accounts.deleteItem(accountId);
 
-  Future<String?> addCategory(Category category) =>
+  @override
+  Future<String?> addCategory(CloudCategory category) =>
       _categories.addItem(category);
 
-  Future<void> updateCategory(Category category) => _categories.updateItem(
-        category.cloudId,
-        category,
-      );
+  @override
+  Future<void> updateCategory(CloudCategory category) =>
+      _categories.updateItem(category.id, category);
 
-  Future<void> deleteCategory(String cloudId) => _categories.deleteItem(
-        cloudId,
-      );
+  @override
+  Future<void> deleteCategory(String categoryId) =>
+      _categories.deleteItem(categoryId);
 
+  @override
   Future<String?> addOperation(CloudOperation operation) =>
       _operations.addItem(operation);
 
+  @override
   Future<void> updateOperation(CloudOperation operation) =>
-      _operations.updateItem(
-        operation.id,
-        operation,
-      );
+      _operations.updateItem(operation.id, operation);
 
-  Future<void> deleteOperation(String cloudId) => _operations.deleteItem(
-        cloudId,
-      );
+  @override
+  Future<void> deleteOperation(String cloudId) =>
+      _operations.deleteItem(cloudId);
 
+  @override
   Future<void> deleteAll() async {
     if (_db == null) {
       return Future.value();
