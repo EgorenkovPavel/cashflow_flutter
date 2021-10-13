@@ -31,20 +31,11 @@ class HomePage extends StatelessWidget {
                 icon: Icon(Icons.cloud_done_outlined),
               );
             } else if (state == SyncState.LOADING_TO_CLOUD) {
-              return IconButton(
-                onPressed: () => _sync(context),
-                icon: Icon(Icons.cloud_upload_outlined),
-              );
+              return Icon(Icons.cloud_upload_outlined);
             } else if (state == SyncState.LOADING_FROM_CLOUD) {
-              return IconButton(
-                onPressed: () => _sync(context),
-                icon: Icon(Icons.cloud_download_outlined),
-              );
+              return Icon(Icons.cloud_download_outlined);
             } else if (state == SyncState.NO_DB) {
-              return IconButton(
-                onPressed: () => _sync(context),
-                icon: Icon(Icons.cloud_off_outlined),
-              );
+              return Icon(Icons.cloud_off_outlined);
             } else if (state == SyncState.NOT_SYNCED ||
                 state == SyncState.FAILED) {
               return IconButton(
