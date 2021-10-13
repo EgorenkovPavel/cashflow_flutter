@@ -4,6 +4,7 @@ import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/sync_bloc.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/backup_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/restore_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page_bloc.dart';
@@ -71,132 +72,149 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Builder(
         builder: (BuildContext context) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  BlocConsumer<SettingsPageBloc, BackupPageState>(
-                      bloc: _bloc,
-                      listener: (context, state) {
-                        _showMessage(context, state.action);
-                      },
-                      builder: (context, state) {
-                        return sectionTitle(context, 'Google account');
-                      }),
-                  BlocBuilder<SettingsPageBloc, BackupPageState>(
-                      bloc: _bloc,
-                      builder: (context, state) {
-                        if (state.isAuthenticated) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () => _bloc.signOut(),
-                                  child: Text('SING OUT' //todo
-                                      )),
-                              Text('UserId ${state.userId}'),
-                            ],
-                          );
-                        } else {
-                          return ElevatedButton(
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                BlocConsumer<SettingsPageBloc, BackupPageState>(
+                    bloc: _bloc,
+                    listener: (context, state) {
+                      _showMessage(context, state.action);
+                    },
+                    builder: (context, state) {
+                      return SizedBox();
+                    }),
+                BlocBuilder<SettingsPageBloc, BackupPageState>(
+                    bloc: _bloc,
+                    builder: (context, state) {
+                      if (state.isAuthenticated) {
+                        return ListTile(
+                          title: Text('Google account'),
+                          subtitle: Text('UserId ${state.userId}'),
+                          trailing: ElevatedButton(
+                              onPressed: () => _bloc.signOut(),
+                              child: Text('SING OUT' //todo
+                              )),
+                        );
+                      } else {
+                        return ListTile(
+                          title: Text('Google account'),
+                          subtitle: Text(''),
+                          trailing: ElevatedButton(
                               onPressed: () {
                                 _bloc.signIn();
                               },
                               child: Text('SIGN IN' //TODO
-                                  ));
-                        }
-                      }),
-                  sectionTitle(context, 'Cloud database'),
-                  BlocBuilder<SettingsPageBloc, BackupPageState>(
-                      bloc: _bloc,
-                      builder: (context, state) {
-                        if (!state.isAuthenticated) {
-                          return Text('No database');
-                        } else if (state.isConnected) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text('Database connected'),
-                              state.isAdmin
-                                  ? ElevatedButton(
-                                      onPressed: () => _addUser(),
-                                      child: Text('Add user'))
-                                  : SizedBox(),
-                            ],
-                          ); //TODO
-                        } else {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => _bloc.createCloudDatabase(),
-                                child: Text('Create database'),
-                              ),
-                              Text('or send UserId to admin user'),
-                              ElevatedButton(
-                                  onPressed: () => _bloc.resresh(),
-                                  child: Text('Refresh')),
-                            ],
-                          );
-                        }
-                      }),
-                  sectionTitle(context, 'Google drive'),
-                  BlocBuilder<SettingsPageBloc, BackupPageState>(
+                              )),
+                        );
+                      }
+                    }),
+                Divider(),
+                BlocBuilder<SettingsPageBloc, BackupPageState>(
                     bloc: _bloc,
                     builder: (context, state) {
-                      if (state.isAuthenticated) {
-                        return Flex(
-                          direction: Axis.horizontal,
-                          mainAxisSize: MainAxisSize.max,
+                      if (!state.isAuthenticated) {
+                        return ListTile(
+                          title: Text('Cloud database'),
+                          subtitle: Text('No database'),
+                        );
+                      } else if (state.isConnected) {
+                        return ListTile(
+                          title: Text('Cloud database'),
+                          subtitle: Text('Database connected'),
+                        );
+                        return Row(// TODO add detail screen
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
+                          children: [
+                            Text('Database connected'),
+                            state.isAdmin
+                                ? ElevatedButton(
+                                    onPressed: () => _addUser(),
+                                    child: Text('Add user'))
+                                : SizedBox(),
+                          ],
+                        ); //TODO
+                      } else {
+                        return ListTile(
+                          title: Text('Cloud database'),
+                          subtitle: Text('Tap to connect'),
+                        );
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
                             ElevatedButton(
-                              onPressed: () => _backup(context),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .backup
-                                    .toUpperCase(),
-                              ),
+                              onPressed: () => _bloc.createCloudDatabase(),
+                              child: Text('Create database'),
                             ),
+                            Text('or send UserId to admin user'),
                             ElevatedButton(
-                              onPressed: () => _restore(context),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .restore
-                                    .toUpperCase(),
-                              ),
-                            ),
+                                onPressed: () => _bloc.resresh(),
+                                child: Text('Refresh')),
                           ],
                         );
-                      } else {
-                        return SizedBox();
                       }
-                    },
-                  ),
-                  sectionTitle(
-                      context, AppLocalizations.of(context).titleDataControl),
-                  ElevatedButton(
-                    onPressed: () => _deleteAll(context),
-                    child: Text(
-                      AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
-                    ),
-                  ),
-                  BlocBuilder<SettingsPageBloc, BackupPageState>(
-                    bloc: _bloc,
-                    builder: (BuildContext context, BackupPageState state) {
-                      if (state.inProgress) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    },
-                  )
-                ],
-              ),
+                    }),
+                Divider(),
+                BlocBuilder<SettingsPageBloc, BackupPageState>(
+                  bloc: _bloc,
+                  builder: (context, state) {
+                    if (state.isAuthenticated) {
+                      return ListTile(
+                        title: Text('Google drive'),
+                      );
+                      return Flex(
+                        direction: Axis.horizontal,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () => _backup(context),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .backup
+                                  .toUpperCase(),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => _restore(context),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .restore
+                                  .toUpperCase(),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    else {
+                      return SizedBox();
+                    }
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(AppLocalizations.of(context).titleDataControl),
+                  onTap: ()=> PageNavigator.openDataControlPage(context),
+                ),
+                 // ElevatedButton(
+                //   onPressed: () => _deleteAll(context),
+                //   child: Text(
+                //     AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
+                //   ),
+                // ),
+                // BlocBuilder<SettingsPageBloc, BackupPageState>(
+                //   bloc: _bloc,
+                //   builder: (BuildContext context, BackupPageState state) {
+                //     if (state.inProgress) {
+                //       return Center(
+                //         child: CircularProgressIndicator(),
+                //       );
+                //     } else {
+                //       return SizedBox();
+                //     }
+                //   },
+                // )
+              ],
             ),
           );
         },
