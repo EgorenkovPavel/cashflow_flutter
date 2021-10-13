@@ -12,6 +12,7 @@ import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page
 import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
+import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 
@@ -80,10 +81,15 @@ class PageNavigator {
   static Future openOperationInputPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeOperationInputName);
 
-  static const _routeSettingsName = '/backup';
+  static const _routeSettingsName = '/settings';
 
   static Future openSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeSettingsName);
+
+  static const _routeDataControlName = '/data_control';
+
+  static Future openDataControlPage(BuildContext context) =>
+      Navigator.of(context).pushNamed(_routeDataControlName);
 
   static const _routeReportsName = '/reports';
 
@@ -115,6 +121,7 @@ class PageNavigator {
     _routeOperationListName: (context) => OperationListPage(),
     _routeOperationInputName: (context) => OperationInputPage(),
     _routeSettingsName: (context) => SettingsPage(),
+        _routeDataControlName: (context) => DataControlPage(),
     _routeReportsName: (context) => ReportsPage(),
   };
 
