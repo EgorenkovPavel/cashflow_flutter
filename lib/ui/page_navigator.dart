@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
@@ -12,6 +11,7 @@ import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page
 import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
+import 'package:money_tracker/ui/pages/service/cloud_database_settings/cloud_database_settings_page.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings.dart';
@@ -51,7 +51,7 @@ class PageNavigator {
       );
 
   static Future<Category?> openCategoryEditPage(BuildContext context,
-      {required int id}) =>
+          {required int id}) =>
       const _Card<Category>().open(
         context,
         CategoryInputPage.edit(
@@ -69,8 +69,9 @@ class PageNavigator {
 
   static Future<OperationListFilter?> openOperationFilterPage(
           BuildContext context, OperationListFilter filter) =>
-      Navigator.of(context)
-          .pushNamed<OperationListFilter?>(_routeOperationFilterName, arguments: filter);
+      Navigator.of(context).pushNamed<OperationListFilter?>(
+          _routeOperationFilterName,
+          arguments: filter);
 
   static const _routeOperationListName = '/operationListPage';
 
@@ -92,10 +93,15 @@ class PageNavigator {
   static Future openDataControlPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeDataControlName);
 
-  static const _routeGoogleDriveSettingsName = '/google_drive_settins';
+  static const _routeGoogleDriveSettingsName = '/google_drive_settings';
 
   static Future openGoogleDriveSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeGoogleDriveSettingsName);
+
+  static const _routeCloudDatabaseSettingsName = '/cloud_database__settings';
+
+  static Future openCloudDatabaseSettingsPage(BuildContext context) =>
+      Navigator.of(context).pushNamed(_routeCloudDatabaseSettingsName);
 
   static const _routeReportsName = '/reports';
 
@@ -111,13 +117,12 @@ class PageNavigator {
 
   static const _routeGoogleDriveChooseFolder = '/google_drive_choose_folder';
 
-  static Future<DriveFile?> chooseFile(
-          BuildContext context) =>
+  static Future<DriveFile?> chooseFile(BuildContext context) =>
       Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDriveChooseFile);
 
-  static Future<DriveFile?> chooseFolder(
-          BuildContext context) =>
-      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDriveChooseFolder);
+  static Future<DriveFile?> chooseFolder(BuildContext context) =>
+      Navigator.of(context)
+          .pushNamed<DriveFile?>(_routeGoogleDriveChooseFolder);
 
   static const routeRootName = '/';
 
@@ -129,6 +134,7 @@ class PageNavigator {
     _routeSettingsName: (context) => SettingsPage(),
     _routeDataControlName: (context) => DataControlPage(),
     _routeGoogleDriveSettingsName: (context) => GoogleDriveSettingsPage(),
+    _routeCloudDatabaseSettingsName: (context) => CloudDatabaseSettingsPage(),
     _routeReportsName: (context) => ReportsPage(),
   };
 
@@ -165,8 +171,8 @@ class PageNavigator {
       case _routeBudgetPageName:
         {
           return MaterialPageRoute(
-            builder: (context) => BudgetPage(
-                type: settings.arguments as OperationType),
+            builder: (context) =>
+                BudgetPage(type: settings.arguments as OperationType),
           );
         }
       case _routeGoogleDriveChooseFile:

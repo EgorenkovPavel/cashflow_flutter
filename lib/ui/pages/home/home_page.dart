@@ -23,21 +23,21 @@ class HomePage extends StatelessWidget {
         elevation: 0.0,
         actions: [
           BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            if (state == SyncState.IN_PROGRESS) {
+            if (state is SyncState_InProgress) {
               return Icon(Icons.loop);
-            } else if (state == SyncState.SYNCED) {
+            } else if (state is SyncState_Synced) {
               return IconButton(
                 onPressed: () => _sync(context),
                 icon: Icon(Icons.cloud_done_outlined),
               );
-            } else if (state == SyncState.LOADING_TO_CLOUD) {
+            } else if (state is SyncState_LoadingToCloud) {
               return Icon(Icons.cloud_upload_outlined);
-            } else if (state == SyncState.LOADING_FROM_CLOUD) {
+            } else if (state is SyncState_LoadingFlomCloud) {
               return Icon(Icons.cloud_download_outlined);
-            } else if (state == SyncState.NO_DB) {
+            } else if (state is SyncState_NoDb) {
               return Icon(Icons.cloud_off_outlined);
-            } else if (state == SyncState.NOT_SYNCED ||
-                state == SyncState.FAILED) {
+            } else if (state is SyncState_NotSynced ||
+                state is SyncState_Failed) {
               return IconButton(
                 onPressed: () => _sync(context),
                 icon: Icon(Icons.warning_amber_outlined),
