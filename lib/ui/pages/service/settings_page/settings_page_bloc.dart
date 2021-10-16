@@ -107,7 +107,7 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
 
   }
 
-  void resresh(){
+  void refresh(){
     _syncBloc.sync();
   }
 
@@ -131,7 +131,7 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
   }
 
   void createCloudDatabase() async {
-    _syncBloc.createDatabase();
+    await _syncBloc.createDatabase();
   }
 
   Future<void> backup(String catalogId, String fileName) async {
@@ -176,3 +176,5 @@ class SettingsPageBloc extends Cubit<BackupPageState> {
     ));
   }
 }
+
+//TODO скрывать кнопку авторизации если нет интернета

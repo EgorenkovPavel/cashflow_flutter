@@ -5,6 +5,7 @@ import 'cloud_converter.dart';
 
 class AccountMapper extends CloudConverter<CloudAccount> {
   static const String _KEY_TITLE = 'title';
+  static const String _KEY_IS_DEBT = 'is_debt';
   static const String KEY_UPDATED = 'updated';
 
   const AccountMapper();
@@ -19,5 +20,6 @@ class AccountMapper extends CloudConverter<CloudAccount> {
   CloudAccount mapToDart(QueryDocumentSnapshot<Object?> doc) => CloudAccount(
         id: doc.id,
         title: doc.get(_KEY_TITLE),
+        isDebt: doc.get(_KEY_IS_DEBT) ?? false,
       );
 }

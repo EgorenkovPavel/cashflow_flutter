@@ -14,6 +14,7 @@ import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog.dart';
+import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings.dart';
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 
 class PageNavigator {
@@ -91,6 +92,11 @@ class PageNavigator {
   static Future openDataControlPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeDataControlName);
 
+  static const _routeGoogleDriveSettingsName = '/google_drive_settins';
+
+  static Future openGoogleDriveSettingsPage(BuildContext context) =>
+      Navigator.of(context).pushNamed(_routeGoogleDriveSettingsName);
+
   static const _routeReportsName = '/reports';
 
   static void openReportsPage(BuildContext context) =>
@@ -121,7 +127,8 @@ class PageNavigator {
     _routeOperationListName: (context) => OperationListPage(),
     _routeOperationInputName: (context) => OperationInputPage(),
     _routeSettingsName: (context) => SettingsPage(),
-        _routeDataControlName: (context) => DataControlPage(),
+    _routeDataControlName: (context) => DataControlPage(),
+    _routeGoogleDriveSettingsName: (context) => GoogleDriveSettingsPage(),
     _routeReportsName: (context) => ReportsPage(),
   };
 
