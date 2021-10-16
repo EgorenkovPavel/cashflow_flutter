@@ -4,8 +4,8 @@ import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
-import 'package:money_tracker/ui/pages/service/settings_page/backup_dialog.dart';
-import 'package:money_tracker/ui/pages/service/settings_page/restore_dialog.dart';
+import 'package:money_tracker/ui/pages/service/google_drive_settings_page/backup_dialog.dart';
+import 'package:money_tracker/ui/pages/service/google_drive_settings_page/restore_dialog.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/src/provider.dart';
 
