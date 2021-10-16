@@ -8,7 +8,7 @@ class Account {
       {this.id = 0,
       this.cloudId = '',
       required this.title,
-      this.isDebt = false});
+      required this.isDebt});
 
   Account copyWith({
     int? id,

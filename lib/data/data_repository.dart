@@ -39,14 +39,15 @@ class DataRepository {
     await _remoteSource.logOut();
   }
 
-  void _loadCloudAccounts(Iterable<CloudAccount> list) {
-    list.forEach((cloudAccount) async {
+  Future<void> _loadCloudAccounts(Iterable<CloudAccount> list) async {
+    await Future.forEach(list, (CloudAccount cloudAccount) async {
       var _account =
           await _databaseSource.accounts.getByCloudId(cloudAccount.id);
       if (_account == null) {
         await _databaseSource.accounts.insert(Account(
           cloudId: cloudAccount.id,
           title: cloudAccount.title,
+          isDebt: cloudAccount.isDebt,
         ));
       } else {
         await _databaseSource.accounts
@@ -56,24 +57,28 @@ class DataRepository {
     });
   }
 
-  void _loadCloudCategories(Iterable<CloudCategory> list) {
-    list.forEach((cloudCategory) async {
+  Future<void> _loadCloudCategories(Iterable<CloudCategory> list) async {
+    await Future.forEach(list, (CloudCategory cloudCategory) async {
       var _category =
           await _databaseSource.categories.getByCloudId(cloudCategory.id);
       if (_category == null) {
         await _databaseSource.categories.insert(Category(
           title: cloudCategory.title,
           cloudId: cloudCategory.id,
-          operationType: const OperationTypeConverter().mapToDart(cloudCategory.operationType)!,
-          budgetType: const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
+          operationType: const OperationTypeConverter()
+              .mapToDart(cloudCategory.operationType)!,
+          budgetType:
+              const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
           budget: cloudCategory.budget,
         ));
       } else {
         await _databaseSource.categories.update(_category.copyWith(
           title: cloudCategory.title,
           cloudId: cloudCategory.id,
-          operationType: const OperationTypeConverter().mapToDart(cloudCategory.operationType),
-          budgetType: const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
+          operationType: const OperationTypeConverter()
+              .mapToDart(cloudCategory.operationType),
+          budgetType:
+              const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
           budget: cloudCategory.budget,
         ));
       }
@@ -81,8 +86,8 @@ class DataRepository {
     });
   }
 
-  void _loadCloudOperations(Iterable<CloudOperation> list) {
-    list.forEach((cloudOperation) async {
+  Future<void> _loadCloudOperations(Iterable<CloudOperation> list) async {
+    await Future.forEach(list, (CloudOperation cloudOperation) async {
       var _operation =
           await _databaseSource.operations.getByCloudId(cloudOperation.id);
 
@@ -101,7 +106,8 @@ class DataRepository {
         await _databaseSource.operations.insert(Operation(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
-          type: const OperationTypeConverter().mapToDart(cloudOperation.operationType)!,
+          type: const OperationTypeConverter()
+              .mapToDart(cloudOperation.operationType)!,
           account: _account!,
           category: _category,
           recAccount: _recAccount,
@@ -111,7 +117,8 @@ class DataRepository {
         await _databaseSource.operations.update(_operation.copyWith(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
-          type: const OperationTypeConverter().mapToDart(cloudOperation.operationType),
+          type: const OperationTypeConverter()
+              .mapToDart(cloudOperation.operationType),
           account: _account!,
           category: _category,
           recAccount: _recAccount,
@@ -131,9 +138,9 @@ class DataRepository {
       return false;
     }
 
-    _loadCloudAccounts(accounts);
-    _loadCloudCategories(categories);
-    _loadCloudOperations(operations);
+    await _loadCloudAccounts(accounts);
+    await _loadCloudCategories(categories);
+    await _loadCloudOperations(operations);
 
     return true;
   }
@@ -142,6 +149,7 @@ class DataRepository {
     return CloudAccount(
       id: account.cloudId,
       title: account.title,
+      isDebt: account.isDebt,
     );
   }
 
@@ -174,33 +182,45 @@ class DataRepository {
 
   Future<void> _loadAccountsToCloud() async {
     var accounts = await getAllAccountsWithEmptyCloudId();
-    accounts.forEach((account) async {
+    await Future.forEach(accounts, (Account account) async {
       var _cloudId =
-      await _remoteSource.addAccount(_mapToCloudAccount(account));
-      await _databaseSource.accounts
-          .update(account.copyWith(cloudId: _cloudId));
+          await _remoteSource.addAccount(_mapToCloudAccount(account));
+      if(_cloudId != null) {
+        await _databaseSource.accounts
+            .update(account.copyWith(cloudId: _cloudId));
+      }else{
+        return;
+      }
     });
   }
 
   Future<void> _loadCategoriesToCloud() async {
     var categories = await getAllCategoriesWithEmptyCloudId();
-    categories.forEach((category) async {
+    await Future.forEach(categories, (Category category) async {
       var _cloudId =
-      await _remoteSource.addCategory(_mapToCloudCategory(category));
-      await _databaseSource.categories
-          .update(category.copyWith(cloudId: _cloudId));
+          await _remoteSource.addCategory(_mapToCloudCategory(category));
+      if(_cloudId !=null) {
+        await _databaseSource.categories
+            .update(category.copyWith(cloudId: _cloudId));
+      }else{
+        return;
+      }
     });
   }
 
   Future<void> _loadOperationsToCloud() async {
     var operations = await getAllOperationsWithEmptyCloudId();
-    operations.forEach((operation) async {
-      var _cloudId = await _remoteSource.addOperation(_mapToCloudOperation(operation));
-      await _databaseSource.operations
-          .update(operation.copyWith(cloudId: _cloudId));
+    await Future.forEach(operations, (Operation operation) async {
+      var _cloudId =
+          await _remoteSource.addOperation(_mapToCloudOperation(operation));
+      if (_cloudId != null) {
+        await _databaseSource.operations
+            .update(operation.copyWith(cloudId: _cloudId));
+      }else{
+        return Future.value(false);
+      }
     });
   }
-
 
   //Accounts
 
@@ -274,7 +294,8 @@ class DataRepository {
       _databaseSource.categories.getAllByType(type);
 
   Future<int> insertCategory(Category category) async {
-    var _cloudId = await _remoteSource.addCategory(_mapToCloudCategory(category));
+    var _cloudId =
+        await _remoteSource.addCategory(_mapToCloudCategory(category));
     var _id = await _databaseSource.categories
         .insert(category.copyWith(cloudId: _cloudId));
     return _id;
@@ -314,7 +335,8 @@ class DataRepository {
   Future<Operation?> getLastOperation() => _databaseSource.operations.getLast();
 
   Future<Operation> insertOperation(Operation operation) async {
-    var _cloudId = await _remoteSource.addOperation(_mapToCloudOperation(operation));
+    var _cloudId =
+        await _remoteSource.addOperation(_mapToCloudOperation(operation));
     var _id = await _databaseSource.operations
         .insert(operation.copyWith(cloudId: _cloudId));
     return operation.copyWith(id: _id, cloudId: _cloudId);

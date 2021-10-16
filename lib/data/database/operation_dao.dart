@@ -455,6 +455,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future insertOperationItem(OperationItem entity) {
     return transaction(() async {
       var operationData = OperationsCompanion(
+        cloudId: Value(entity.operation.cloudId),
         date: Value(entity.date),
         operationType: Value(entity.type),
         account: Value(entity.account.id),
@@ -486,6 +487,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       await deleteOperation(entity);
       return await insertOperation(OperationsCompanion(
         id: Value(entity.id),
+        cloudId: Value(entity.cloudId),
         date: Value(entity.date),
         operationType: Value(entity.operationType),
         account: Value(entity.account),

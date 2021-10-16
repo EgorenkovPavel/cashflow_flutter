@@ -148,7 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             Text('or send UserId to admin user'),
                             ElevatedButton(
-                                onPressed: () => _bloc.resresh(),
+                                onPressed: () => _bloc.refresh(),
                                 child: Text('Refresh')),
                           ],
                         );
@@ -161,33 +161,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     if (state.isAuthenticated) {
                       return ListTile(
                         title: Text('Google drive'),
-                      );
-                      return Flex(
-                        direction: Axis.horizontal,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () => _backup(context),
-                            child: Text(
-                              AppLocalizations.of(context)
-                                  .backup
-                                  .toUpperCase(),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => _restore(context),
-                            child: Text(
-                              AppLocalizations.of(context)
-                                  .restore
-                                  .toUpperCase(),
-                            ),
-                          ),
-                        ],
+                        onTap: ()=> PageNavigator.openGoogleDriveSettingsPage(context),
                       );
                     }
                     else {
-                      return SizedBox();
+                      return ListTile(
+                        title: Text('Google drive'),
+                      );
                     }
                   },
                 ),
@@ -196,24 +176,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   title: Text(AppLocalizations.of(context).titleDataControl),
                   onTap: ()=> PageNavigator.openDataControlPage(context),
                 ),
-                 // ElevatedButton(
-                //   onPressed: () => _deleteAll(context),
-                //   child: Text(
-                //     AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
-                //   ),
-                // ),
-                // BlocBuilder<SettingsPageBloc, BackupPageState>(
-                //   bloc: _bloc,
-                //   builder: (BuildContext context, BackupPageState state) {
-                //     if (state.inProgress) {
-                //       return Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     } else {
-                //       return SizedBox();
-                //     }
-                //   },
-                // )
               ],
             ),
           );

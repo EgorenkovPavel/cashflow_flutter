@@ -211,8 +211,12 @@ class CollectionDAO<T> {
   Future<String?> addItem(
     T data,
   ) async {
-    var doc = await collection?.add(mapper.mapToCloud(data));
-    return doc?.id;
+    try {
+      var doc = await collection?.add(mapper.mapToCloud(data));
+      return doc?.id;
+    }catch (e){
+      return null;
+    }
   }
 
   Future<void> updateItem(
