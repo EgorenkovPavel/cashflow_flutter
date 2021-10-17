@@ -7,6 +7,7 @@ import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
+import 'package:money_tracker/domain/models/user.dart';
 
 import 'models/cloud_models.dart';
 
@@ -19,6 +20,7 @@ class FirecloudSource extends RemoteSource {
   static const String _ACCOUNTS = 'accounts';
   static const String _CATEGORIES = 'categories';
   static const String _OPERATIONS = 'operations';
+  static const String _USERS = 'users';
 
   DocumentReference<Map<String, dynamic>>? _db;
 
@@ -49,15 +51,21 @@ class FirecloudSource extends RemoteSource {
   Stream<bool> isAdmin() => _adminController.stream;
 
   @override
-  Future<Either<Exception, void>> addNewUser(String newUser) async {
+  Future<Either<Exception, void>> addNewUser(User user) async {
     if (_db == null) {
       return Future.value(Left(Exception('No database')));
     }
     try {
       var doc = await _db!.get();
       var data = doc.data();
-      data![_DATABASES_USERS].add(newUser);
+      data![_DATABASES_USERS].add(user.id);
       await _db!.set(data);
+
+      await _db!.collection(_USERS).doc(user.id).set({
+        'isAdmin': true,
+        'name': user.name,
+        'photo': user.photo,
+      });
       return Right(null);
     } catch (e) {
       return Future.value(Left(e as Exception));
@@ -79,12 +87,18 @@ class FirecloudSource extends RemoteSource {
   }
 
   @override
-  Future<Either<Exception, void>> createDatabase(String userId) async {
+  Future<Either<Exception, void>> createDatabase(User user) async {
     try {
       _db = await _firestore.collection(_DATABASES).add({
-        _DATABASES_ADMIN: userId,
-        _DATABASES_USERS: [userId],
+        _DATABASES_ADMIN: user.id,
+        _DATABASES_USERS: [user.id],
       });
+      await _db!.collection(_USERS).doc(user.id).set({
+        'isAdmin': true,
+        'name': user.name,
+        'photo': user.photo,
+      });
+
       _adminController.add(true);
       return Right(null);
     } catch (e) {
@@ -114,7 +128,6 @@ class FirecloudSource extends RemoteSource {
           return Left(e as Exception);
         }
       }
-
     }
   }
 

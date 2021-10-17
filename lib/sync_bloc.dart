@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
+import 'package:money_tracker/domain/models/user.dart';
 
 abstract class SyncState {
   abstract final bool isAdmin;
@@ -80,7 +81,7 @@ class SyncBloc extends Cubit<SyncState> {
       if (event.inProgress) {
         emit(SyncState_InProgress());
       } else if (event.isAuthenticated) {
-        if (await _logIn(event.userId)) {
+        if (await _logIn(event.user!.id)) {
           await _syncData();
         }
       } else {
@@ -130,7 +131,7 @@ class SyncBloc extends Cubit<SyncState> {
   Future<bool> createCloudDatabase() async {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState_InProgress());
-      var res = await dataRepository.createCloudDatabase(_authBloc.state.userId);
+      var res = await dataRepository.createCloudDatabase(_authBloc.state.user!);
       if (res.isLeft){
         emit(SyncState_Failed(isAdmin: _isAdmin));
         return false;
@@ -157,8 +158,8 @@ class SyncBloc extends Cubit<SyncState> {
     }
   }
 
-  Future<bool> addUser(String newUserId) async {
-    var res = await dataRepository.addNewUser(newUserId);
+  Future<bool> addUser(User user) async {
+    var res = await dataRepository.addNewUser(user);
     return res.fold((left) => false, (right) => true);
   }
 

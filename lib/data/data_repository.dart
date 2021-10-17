@@ -5,6 +5,7 @@ import 'package:money_tracker/data/database/database_source.dart';
 import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
+import 'package:money_tracker/domain/models/user.dart';
 
 import 'cloud/models/cloud_models.dart';
 
@@ -18,27 +19,21 @@ class DataRepository {
   })  : _databaseSource = databaseSource,
         _remoteSource = cloudSource;
 
-  Future<Either<Exception, void>> logIn(String userId) {
-    return _remoteSource.logIn(userId);
-  }
+  Future<Either<Exception, void>> logIn(String userId) =>
+      _remoteSource.logIn(userId);
 
-  Future<Either<Exception, bool>> cloudDbExists(String userId) {
-    return _remoteSource.databaseExists(userId);
-  }
+  Future<Either<Exception, bool>> cloudDbExists(String userId) =>
+      _remoteSource.databaseExists(userId);
 
   Stream<bool> isAdmin() => _remoteSource.isAdmin();
 
-  Future<Either<Exception, void>> addNewUser(String newUser) {
-    return _remoteSource.addNewUser(newUser);
-  }
+  Future<Either<Exception, void>> addNewUser(User user) =>
+      _remoteSource.addNewUser(user);
 
-  Future<Either<Exception, void>> createCloudDatabase(String userId) async {
-    return _remoteSource.createDatabase(userId);
-  }
+  Future<Either<Exception, void>> createCloudDatabase(User user) =>
+      _remoteSource.createDatabase(user);
 
-  void logOut() {
-    _remoteSource.logOut();
-  }
+  void logOut() => _remoteSource.logOut();
 
   Future<void> _loadCloudAccounts(Iterable<CloudAccount> list) async {
     await Future.forEach(list, (CloudAccount cloudAccount) async {
@@ -186,10 +181,10 @@ class DataRepository {
     await Future.forEach(accounts, (Account account) async {
       var _cloudId =
           await _remoteSource.addAccount(_mapToCloudAccount(account));
-      if(_cloudId != null) {
+      if (_cloudId != null) {
         await _databaseSource.accounts
             .update(account.copyWith(cloudId: _cloudId));
-      }else{
+      } else {
         return Future.value(false);
       }
     });
@@ -200,10 +195,10 @@ class DataRepository {
     await Future.forEach(categories, (Category category) async {
       var _cloudId =
           await _remoteSource.addCategory(_mapToCloudCategory(category));
-      if(_cloudId !=null) {
+      if (_cloudId != null) {
         await _databaseSource.categories
             .update(category.copyWith(cloudId: _cloudId));
-      }else{
+      } else {
         return Future.value(false);
       }
     });
@@ -217,7 +212,7 @@ class DataRepository {
       if (_cloudId != null) {
         await _databaseSource.operations
             .update(operation.copyWith(cloudId: _cloudId));
-      }else{
+      } else {
         return Future.value(false);
       }
     });

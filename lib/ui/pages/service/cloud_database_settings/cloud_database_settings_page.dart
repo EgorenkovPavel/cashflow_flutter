@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/sync_bloc.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {
@@ -47,18 +48,36 @@ class AdminSettings extends StatelessWidget {
   }
 
   Future<void> _addUser(BuildContext context) async {
-    var _controller = TextEditingController();
+    var _idController = TextEditingController();
+    var _nameController = TextEditingController();
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Add user'),
-        content: TextField(
-          controller: _controller,
+        content: Column(
+          children: [
+            TextField(
+              controller: _idController,
+          decoration: InputDecoration(
+            labelText: 'Id',
+          ),
+            ),
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
+              ),
+            ),
+          ],
         ),
         actions: [
           TextButton(
               onPressed: () {
-                context.read<SyncBloc>().addUser(_controller.text);
+                context.read<SyncBloc>().addUser(User(
+                  id: _idController.text,
+                  name: _nameController.text,
+                  photo: '',
+                ));
                 Navigator.of(context).pop();
               },
               child: Text('OK'))

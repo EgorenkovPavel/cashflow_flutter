@@ -1,6 +1,7 @@
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:money_tracker/domain/models/user.dart';
 
 class AuthRepository {
   late final GoogleSignIn _googleSignIn;
@@ -41,12 +42,19 @@ class AuthRepository {
     }
   }
 
-  Future<String?> getUserId() async {
-    return _googleSignIn.currentUser?.id;
+  Future<User?> getUser() async {
+    if (_googleSignIn.currentUser == null) {
+      return null;
+    }
+
+    return User(
+      id: _googleSignIn.currentUser!.id,
+      name: _googleSignIn.currentUser!.displayName ?? '',
+      photo: _googleSignIn.currentUser!.photoUrl ?? '',
+    );
   }
 
   Future<AuthClient?> getClient() {
     return _googleSignIn.authenticatedClient();
   }
-
 }
