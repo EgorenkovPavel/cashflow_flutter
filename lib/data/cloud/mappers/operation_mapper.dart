@@ -30,7 +30,7 @@ class OperationMapper extends CloudConverter<CloudOperation> {
   CloudOperation mapToDart(QueryDocumentSnapshot<Object?> doc) =>
       CloudOperation(
         id: doc.id,
-        date: doc.get(_KEY_DATE),
+        date: DateTime.fromMillisecondsSinceEpoch((doc.get(_KEY_DATE) as Timestamp).millisecondsSinceEpoch),
         operationType: doc.get(_KEY_OPERATION_TYPE),
         account: doc.get(_KEY_ACCOUNT),
         category: doc.get(_KEY_CATEGORY) == '' ? null : doc.get(_KEY_CATEGORY),

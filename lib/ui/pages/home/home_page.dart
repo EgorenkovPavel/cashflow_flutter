@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
               );
             } else if (state is SyncState_LoadingToCloud) {
               return Icon(Icons.cloud_upload_outlined);
-            } else if (state is SyncState_LoadingFlomCloud) {
+            } else if (state is SyncState_LoadingFromCloud) {
               return Icon(Icons.cloud_download_outlined);
             } else if (state is SyncState_NoDb) {
               return Icon(Icons.cloud_off_outlined);

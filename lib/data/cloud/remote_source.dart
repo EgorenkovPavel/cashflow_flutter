@@ -1,17 +1,19 @@
+import 'package:either_dart/either.dart';
+
 import 'models/cloud_models.dart';
 
 abstract class RemoteSource{
-  Future<bool> isAdmin(String userId);
+  Stream<bool> isAdmin();
 
-  Future<void> addNewUser(String newUserId);
+  Future<Either<Exception, void>> addNewUser(String newUserId);
 
-  Future<bool> databaseExists(String userId);
+  Future<Either<Exception, bool>> databaseExists(String userId);
 
-  Future<void> createDatabase(String userId);
+  Future<Either<Exception, void>> createDatabase(String userId);
 
-  Future<void> logIn(String userId);
+  Future<Either<Exception, void>> logIn(String userId);
 
-  Future<void> logOut();
+  void logOut();
 
   Future<Iterable<CloudAccount>?> getAccounts(DateTime date);
   Future<Iterable<CloudCategory>?> getCategories(DateTime date);

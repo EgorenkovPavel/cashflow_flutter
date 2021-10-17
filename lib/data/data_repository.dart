@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
 import 'package:money_tracker/data/database/budget_type_converter.dart';
 import 'package:money_tracker/data/database/database_source.dart';
@@ -17,26 +18,26 @@ class DataRepository {
   })  : _databaseSource = databaseSource,
         _remoteSource = cloudSource;
 
-  Future<void> logIn(String userId) async {
-    await _remoteSource.logIn(userId);
+  Future<Either<Exception, void>> logIn(String userId) {
+    return _remoteSource.logIn(userId);
   }
 
-  Future<bool> cloudDbExists(String userId) {
+  Future<Either<Exception, bool>> cloudDbExists(String userId) {
     return _remoteSource.databaseExists(userId);
   }
 
-  Future<bool> isAdmin(String userId) => _remoteSource.isAdmin(userId);
+  Stream<bool> isAdmin() => _remoteSource.isAdmin();
 
-  Future<void> addNewUser(String newUser) async {
-    await _remoteSource.addNewUser(newUser);
+  Future<Either<Exception, void>> addNewUser(String newUser) {
+    return _remoteSource.addNewUser(newUser);
   }
 
-  Future<void> createCloudDatabase(String userId) async {
-    await _remoteSource.createDatabase(userId);
+  Future<Either<Exception, void>> createCloudDatabase(String userId) async {
+    return _remoteSource.createDatabase(userId);
   }
 
-  Future<void> logOut() async {
-    await _remoteSource.logOut();
+  void logOut() {
+    _remoteSource.logOut();
   }
 
   Future<void> _loadCloudAccounts(Iterable<CloudAccount> list) async {
@@ -189,7 +190,7 @@ class DataRepository {
         await _databaseSource.accounts
             .update(account.copyWith(cloudId: _cloudId));
       }else{
-        return;
+        return Future.value(false);
       }
     });
   }
@@ -203,7 +204,7 @@ class DataRepository {
         await _databaseSource.categories
             .update(category.copyWith(cloudId: _cloudId));
       }else{
-        return;
+        return Future.value(false);
       }
     });
   }
