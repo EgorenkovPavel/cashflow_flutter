@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/data/auth_repository.dart';
+import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/internet_connection_bloc.dart';
 
 class AuthState {
   final bool isAuthenticated;
   final bool isConnectedToInternet;
-  final String userId;
+  final User? user;
   final bool inProgress;
   final AuthClient? client;
 
   AuthState({
     required this.isAuthenticated,
-    this.userId = '',
+    this.user,
     required this.inProgress,
     this.client,
     required this.isConnectedToInternet,
@@ -27,14 +28,14 @@ class AuthState {
       );
 
   factory AuthState.authenticated({
-    required String userId,
+    required User user,
     required AuthClient client,
   }) =>
       AuthState(
         inProgress: false,
         isAuthenticated: true,
         isConnectedToInternet: true,
-        userId: userId,
+        user: user,
         client: client,
       );
 
@@ -88,9 +89,9 @@ class AuthBloc extends Cubit<AuthState> {
     }
     var isAuthed = await _authRepository.isAuthenticated();
     if (isAuthed) {
-      var userId = await _authRepository.getUserId();
+      var user = await _authRepository.getUser();
       var client = await _authRepository.getClient();
-      emit(AuthState.authenticated(userId: userId!, client: client!));
+      emit(AuthState.authenticated(user: user!, client: client!));
     } else {
       emit(AuthState.notAuthenticated());
     }
