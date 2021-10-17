@@ -11,10 +11,6 @@ import 'package:money_tracker/utils/app_localization.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  void _sync(BuildContext context) {
-    context.read<SyncBloc>().sync();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,30 +18,7 @@ class HomePage extends StatelessWidget {
         title: Text('Money tracker'),
         elevation: 0.0,
         actions: [
-          BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            if (state is SyncState_InProgress) {
-              return Icon(Icons.loop);
-            } else if (state is SyncState_Synced) {
-              return IconButton(
-                onPressed: () => _sync(context),
-                icon: Icon(Icons.cloud_done_outlined),
-              );
-            } else if (state is SyncState_LoadingToCloud) {
-              return Icon(Icons.cloud_upload_outlined);
-            } else if (state is SyncState_LoadingFromCloud) {
-              return Icon(Icons.cloud_download_outlined);
-            } else if (state is SyncState_NoDb) {
-              return Icon(Icons.cloud_off_outlined);
-            } else if (state is SyncState_NotSynced ||
-                state is SyncState_Failed) {
-              return IconButton(
-                onPressed: () => _sync(context),
-                icon: Icon(Icons.warning_amber_outlined),
-              );
-            } else {
-              return SizedBox();
-            }
-          }),
+          SyncButton(),
           IconButton(
             onPressed: () => PageNavigator.openReportsPage(context),
             icon: Icon(Icons.analytics),
@@ -80,6 +53,80 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class SyncButton extends StatelessWidget {
+  const SyncButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+      return IconButton(
+          onPressed: () => onPressed(context), icon: iconBySyncState(state));
+    });
+  }
+
+  Icon iconBySyncState(SyncState state, {Color? color, double? size}) {
+    if (state is SyncState_InProgress) {
+      return Icon(
+        Icons.loop,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_Synced) {
+      return Icon(
+        Icons.cloud_done_outlined,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_LoadingToCloud) {
+      return Icon(
+        Icons.cloud_upload_outlined,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_LoadingFromCloud) {
+      return Icon(
+        Icons.cloud_download_outlined,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_NoDb) {
+      return Icon(
+        Icons.cloud_off_outlined,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_NotSynced || state is SyncState_Failed) {
+      return Icon(
+        Icons.warning_amber_outlined,
+        color: color,
+        size: size,
+      );
+    } else {
+      return Icon(null);
+    }
+  }
+
+  void onPressed(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              // title: Text('Sync'),
+              content:
+                  BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+                return iconBySyncState(state, color: Colors.black, size: 48);
+              }),
+              actions: [
+                TextButton(
+                    onPressed: () => context.read<SyncBloc>().sync(),
+                    child: Text('Sync'.toUpperCase())),
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close'.toUpperCase()))
+              ],
+            ));
+  }
+}
+
 class _AddButton extends StatelessWidget {
   const _AddButton({
     Key? key,
@@ -94,21 +141,16 @@ class _AddButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
-      child: TextButton(
+      child: TextButton.icon(
+        icon: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
         onPressed: onPressed,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.add,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            Text(
-              title.toUpperCase(),
-              style: TextStyle()
-                  .copyWith(color: Theme.of(context).colorScheme.secondary),
-            ),
-          ],
+        label: Text(
+          title.toUpperCase(),
+          style: TextStyle()
+              .copyWith(color: Theme.of(context).colorScheme.secondary),
         ),
       ),
     );
