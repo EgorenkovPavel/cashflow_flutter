@@ -5,56 +5,55 @@ import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/data_repository.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
 
-abstract class SyncState{
+abstract class SyncState {
   abstract final bool isAdmin;
 
   const SyncState();
 }
 
-class SyncState_InProgress  extends SyncState{
+class SyncState_InProgress extends SyncState {
   @override
   final bool isAdmin = false;
 
   const SyncState_InProgress();
 }
 
-class SyncState_LoadingToCloud extends SyncState{
+class SyncState_LoadingToCloud extends SyncState {
   @override
   final bool isAdmin;
 
   const SyncState_LoadingToCloud({required this.isAdmin});
 }
 
-class SyncState_LoadingFlomCloud extends SyncState{
+class SyncState_LoadingFromCloud extends SyncState {
   @override
   final bool isAdmin;
 
-  const SyncState_LoadingFlomCloud({required this.isAdmin});
+  const SyncState_LoadingFromCloud({required this.isAdmin});
 }
 
-class SyncState_Synced extends SyncState{
+class SyncState_Synced extends SyncState {
   @override
   final bool isAdmin;
 
   const SyncState_Synced({required this.isAdmin});
-
 }
 
-class SyncState_NotSynced extends SyncState{
+class SyncState_NotSynced extends SyncState {
   @override
   final bool isAdmin;
 
   const SyncState_NotSynced({required this.isAdmin});
 }
 
-class SyncState_Failed extends SyncState{
+class SyncState_Failed extends SyncState {
   @override
   final bool isAdmin;
 
   const SyncState_Failed({required this.isAdmin});
 }
 
-class SyncState_NoDb extends SyncState{
+class SyncState_NoDb extends SyncState {
   @override
   final bool isAdmin = false;
 
@@ -67,6 +66,7 @@ class SyncBloc extends Cubit<SyncState> {
   final PrefsRepository prefsRepository;
 
   StreamSubscription? _syncSub;
+  StreamSubscription? _adminSub;
 
   bool _isAdmin = false;
 
@@ -80,12 +80,15 @@ class SyncBloc extends Cubit<SyncState> {
       if (event.inProgress) {
         emit(SyncState_InProgress());
       } else if (event.isAuthenticated) {
-        if(await _logIn(event.userId)){
+        if (await _logIn(event.userId)) {
           await _syncData();
         }
       } else {
         emit(SyncState_NotSynced(isAdmin: _isAdmin));
       }
+    });
+    _adminSub = dataRepository.isAdmin().listen((event) {
+      _isAdmin = event;
     });
   }
 
@@ -93,7 +96,7 @@ class SyncBloc extends Cubit<SyncState> {
     emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
     await dataRepository.loadToCloud();
 
-    emit(SyncState_LoadingFlomCloud(isAdmin: _isAdmin));
+    emit(SyncState_LoadingFromCloud(isAdmin: _isAdmin));
     var syncDate = DateTime.now();
     if (await dataRepository.loadFromCloud(prefsRepository.syncDate)) {
       await prefsRepository.setSyncDate(syncDate);
@@ -105,25 +108,46 @@ class SyncBloc extends Cubit<SyncState> {
 
   Future<bool> _logIn(String userId) async {
     emit(SyncState_InProgress());
-    if (await dataRepository.cloudDbExists(userId)) {
-      await dataRepository.logIn(userId);
-      _isAdmin = await dataRepository.isAdmin(userId);
+    var res = await dataRepository.cloudDbExists(userId);
+
+    return res.fold<Future<bool>>((left) async {
+      emit(SyncState_Failed(isAdmin: _isAdmin));
+      return false;
+    }, (right) async {
+      if (res.right) {
+        var resLogIn = await dataRepository.logIn(userId);
+        return resLogIn.fold<bool>((left){
+          emit(SyncState_Failed(isAdmin: _isAdmin));
+          return false;
+        }, (right) => true);
+      } else {
+        emit(SyncState_NoDb());
+        return false;
+      }
+    });
+  }
+
+  Future<bool> createCloudDatabase() async {
+    if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
+      emit(SyncState_InProgress());
+      var res = await dataRepository.createCloudDatabase(_authBloc.state.userId);
+      if (res.isLeft){
+        emit(SyncState_Failed(isAdmin: _isAdmin));
+        return false;
+      }
+
+      emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
+      await dataRepository.loadToCloud();
+      await prefsRepository.setSyncDate(DateTime.now());
+
+      emit(SyncState_Synced(isAdmin: _isAdmin));
       return true;
-    } else {
-      emit(SyncState_NoDb());
+    }else{
       return false;
     }
   }
 
-  Future<void> createCloudDatabase() async {
-    if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
-      emit(SyncState_InProgress());
-      await dataRepository.createCloudDatabase(_authBloc.state.userId);
-      await _syncData();
-    }
-  }
-
-  void refreshConnection(){
+  void refreshConnection() {
     sync();
   }
 
@@ -133,13 +157,15 @@ class SyncBloc extends Cubit<SyncState> {
     }
   }
 
-  void addUser(String newUserId){
-    dataRepository.addNewUser(newUserId);
+  Future<bool> addUser(String newUserId) async {
+    var res = await dataRepository.addNewUser(newUserId);
+    return res.fold((left) => false, (right) => true);
   }
 
   @override
   Future<void> close() {
     _syncSub?.cancel();
+    _adminSub?.cancel();
     return super.close();
   }
 }

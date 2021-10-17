@@ -13,13 +13,18 @@ class AccountMapper extends CloudConverter<CloudAccount> {
   @override
   Map<String, dynamic> mapToCloud(CloudAccount value) => {
         _KEY_TITLE: value.title,
+        _KEY_IS_DEBT: value.isDebt,
         KEY_UPDATED: DateTime.now(),
       };
 
   @override
-  CloudAccount mapToDart(QueryDocumentSnapshot<Object?> doc) => CloudAccount(
-        id: doc.id,
-        title: doc.get(_KEY_TITLE),
-        isDebt: doc.get(_KEY_IS_DEBT) ?? false,
-      );
+  CloudAccount mapToDart(QueryDocumentSnapshot<Object?> doc) {
+    var data = doc.data() as Map<String,dynamic>;
+
+    return CloudAccount(
+      id: doc.id,
+      title: data.containsKey(_KEY_TITLE) ? doc.get(_KEY_TITLE) : '',
+      isDebt: data.containsKey(_KEY_IS_DEBT) ? doc.get(_KEY_IS_DEBT) : false,
+    );
+  }
 }
