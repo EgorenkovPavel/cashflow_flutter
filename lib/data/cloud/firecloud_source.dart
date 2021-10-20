@@ -151,88 +151,117 @@ class FirecloudSource extends RemoteSource {
   }
 
   @override
-  Future<Iterable<CloudAccount>?> getAccounts(DateTime date) async {
-    return (await _accounts.getItems(date)) as Iterable<CloudAccount>?;
+  Future<Try<Iterable<CloudAccount>>> getAccounts(DateTime date) async {
+    return (await _accounts.getItems(date)) as Try<Iterable<CloudAccount>>;
   }
 
   @override
-  Future<Iterable<CloudCategory>?> getCategories(DateTime date) async {
-    return (await _categories.getItems(date)) as Iterable<CloudCategory>?;
+  Future<Try<Iterable<CloudCategory>>> getCategories(DateTime date) async {
+    return (await _categories.getItems(date)) as Try<Iterable<CloudCategory>>;
   }
 
   @override
-  Future<Iterable<CloudOperation>?> getOperations(DateTime date) async {
-    return (await _operations.getItems(date)) as Iterable<CloudOperation>?;
+  Future<Try<Iterable<CloudOperation>>> getOperations(DateTime date) async {
+    return (await _operations.getItems(date)) as Try<Iterable<CloudOperation>>;
   }
 
   @override
-  Future<void> refreshAccountSyncDate(String accountId) =>
+  Future<Try<void>> refreshAccountSyncDate(String accountId) =>
       _accounts.refreshSyncDate(accountId);
 
   @override
-  Future<void> refreshCategorySyncDate(String categoryId) =>
+  Future<Try<void>> refreshCategorySyncDate(String categoryId) =>
       _categories.refreshSyncDate(categoryId);
 
   @override
-  Future<void> refreshOperationSyncDate(String operationId) =>
+  Future<Try<void>> refreshOperationSyncDate(String operationId) =>
       _operations.refreshSyncDate(operationId);
 
   @override
-  Future<String?> addAccount(CloudAccount account) =>
+  Future<Try<String>> addAccount(CloudAccount account) =>
       _accounts.addItem(account);
 
   @override
-  Future<void>? updateAccount(CloudAccount account) =>
+  Future<Try<void>> updateAccount(CloudAccount account) =>
       _accounts.updateItem(account.id, account);
 
   @override
-  Future<void> deleteAccount(String accountId) =>
+  Future<Try<void>> deleteAccount(String accountId) =>
       _accounts.deleteItem(accountId);
 
   @override
-  Future<String?> addCategory(CloudCategory category) =>
+  Future<Try<String>> addCategory(CloudCategory category) =>
       _categories.addItem(category);
 
   @override
-  Future<void> updateCategory(CloudCategory category) =>
+  Future<Try<void>> updateCategory(CloudCategory category) =>
       _categories.updateItem(category.id, category);
 
   @override
-  Future<void> deleteCategory(String categoryId) =>
+  Future<Try<void>> deleteCategory(String categoryId) =>
       _categories.deleteItem(categoryId);
 
   @override
-  Future<String?> addOperation(CloudOperation operation) =>
+  Future<Try<String>> addOperation(CloudOperation operation) =>
       _operations.addItem(operation);
 
   @override
-  Future<void> updateOperation(CloudOperation operation) =>
+  Future<Try<void>> updateOperation(CloudOperation operation) =>
       _operations.updateItem(operation.id, operation);
 
   @override
-  Future<void> deleteOperation(String cloudId) =>
+  Future<Try<void>> deleteOperation(String cloudId) =>
       _operations.deleteItem(cloudId);
 
   @override
-  Future<void> deleteAll() async {
+  Future<Try<void>> deleteAll() async {
     if (_db == null) {
-      return Future.value();
+      return Failure(Exception('No db'));
     }
 
-    var queryOperation = await _operations.get();
-    queryOperation!.docs.forEach((element) async {
-      await deleteOperation(element.id);
+    var queryOperation;
+    try {
+      queryOperation = await _operations.get();
+    }catch (e){
+      return Failure(e as Exception);
+    }
+
+    await Future.forEach<CloudOperation>(queryOperation, (element) async {
+      var res = await deleteOperation(element.id);
+      if (res.isFailure()){
+        return res;
+      }
     });
 
-    var queryCategory = await _categories.get();
-    queryCategory!.docs.forEach((element) async {
-      await deleteCategory(element.id);
+    var queryCategory;
+    try {
+      queryCategory = await _categories.get();
+    }catch (e){
+      return Failure(e as Exception);
+    }
+
+    await Future.forEach<CloudCategory>(queryCategory, (element) async {
+      var res = await deleteCategory(element.id);
+      if (res.isFailure()){
+        return res;
+      }
     });
 
-    var queryAccount = await _accounts.get();
-    queryAccount!.docs.forEach((element) async {
-      await deleteAccount(element.id);
+    var queryAccount;
+    try {
+      queryAccount = await _accounts.get();
+    }catch (e){
+      return Failure(e as Exception);
+    }
+
+    await Future.forEach<CloudAccount>(queryAccount, (element) async {
+      var res = await deleteAccount(element.id);
+      if (res.isFailure()){
+        return res;
+      }
     });
+
+    return Success(null);
   }
 }
 
@@ -250,42 +279,75 @@ class CollectionDAO<T> {
 
   Future<QuerySnapshot<Object?>>? get() => collection?.get();
 
-  Future<Iterable<T>?> getItems(DateTime date) async {
-    var docs = await collection
-        ?.where(key_updated, isGreaterThanOrEqualTo: date)
-        .get();
-    return docs?.docs.map<T>((doc) => mapper.mapToDart(doc));
+  Future<Try<Iterable<T>>> getItems(DateTime date) async {
+    if (collection == null){
+      return Success([]);
+    }
+    try {
+      var docs = await collection
+      !.where(key_updated, isGreaterThanOrEqualTo: date)
+          .get();
+      return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
+    }catch (e){
+      return Failure(e as Exception);
+    }
   }
 
-  Future<String?> addItem(
+  Future<Try<String>> addItem(
     T data,
   ) async {
     try {
       var doc = await collection?.add(mapper.mapToCloud(data));
-      return doc?.id;
+      if (doc == null){
+        return Failure(Exception('Error'));
+      }else{
+        return Success(doc.id);
+      }
     } catch (e) {
-      return null;
+      return Failure(e as Exception);
     }
   }
 
-  Future<void> updateItem(
+  Future<Try<void>> updateItem(
     String id,
     T data,
-  ) {
-    return collection?.doc(id).update(mapper.mapToCloud(data)) ??
-        Future.value();
+  ) async {
+    if (collection == null){
+      return Failure(Exception('Collection is null'));
+    }
+    try {
+      await collection!.doc(id).update(mapper.mapToCloud(data));
+      return Success(null);
+    }catch (e){
+      return Failure(e as Exception);
+    }
   }
 
-  Future<void> deleteItem(
+  Future<Try<void>> deleteItem(
     String id,
-  ) {
-    return collection?.doc(id).delete() ?? Future.value();
+  ) async {
+    if (collection == null){
+      return Failure(Exception('Collection is null'));
+    }
+    try {
+      await collection!.doc(id).delete();
+      return Success(null);
+    }catch (e){
+      return Failure(e as Exception);
+    }
   }
 
-  Future<void> refreshSyncDate(
+  Future<Try<void>> refreshSyncDate(
     String id,
-  ) {
-    return collection?.doc(id).update({key_updated: DateTime.now()}) ??
-        Future.value();
+  ) async {
+    if (collection == null){
+      return Failure(Exception('Collection is null'));
+    }
+    try {
+      await collection!.doc(id).update({key_updated: DateTime.now()});
+      return Success(null);
+    }catch (e){
+      return Failure(e as Exception);
+    }
   }
 }

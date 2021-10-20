@@ -19,16 +19,14 @@ class DataRepository {
   })  : _databaseSource = databaseSource,
         _remoteSource = cloudSource;
 
-  Future<Try<void>> logIn(String userId) =>
-      _remoteSource.logIn(userId);
+  Future<Try<void>> logIn(String userId) => _remoteSource.logIn(userId);
 
   Future<Try<bool>> cloudDbExists(String userId) =>
       _remoteSource.databaseExists(userId);
 
   Stream<bool> isAdmin() => _remoteSource.isAdmin();
 
-  Future<Try<void>> addNewUser(User user) =>
-      _remoteSource.addNewUser(user);
+  Future<Try<void>> addNewUser(User user) => _remoteSource.addNewUser(user);
 
   Future<Try<void>> createCloudDatabase(User user) =>
       _remoteSource.createDatabase(user);
@@ -46,8 +44,10 @@ class DataRepository {
           isDebt: cloudAccount.isDebt,
         ));
       } else {
-        await _databaseSource.accounts
-            .update(_account.copyWith(title: cloudAccount.title));
+        await _databaseSource.accounts.update(_account.copyWith(
+          title: cloudAccount.title,
+          isDebt: cloudAccount.isDebt,
+        ));
       }
       await _remoteSource.refreshAccountSyncDate(cloudAccount.id);
     });
@@ -130,13 +130,15 @@ class DataRepository {
     var categories = await _remoteSource.getCategories(date);
     var operations = await _remoteSource.getOperations(date);
 
-    if (accounts == null || categories == null || operations == null) {
+    if (accounts.isFailure() ||
+        categories.isFailure() ||
+        operations.isFailure()) {
       return false;
     }
 
-    await _loadCloudAccounts(accounts);
-    await _loadCloudCategories(categories);
-    await _loadCloudOperations(operations);
+    await _loadCloudAccounts(accounts.getOrDefault([]));
+    await _loadCloudCategories(categories.getOrDefault([]));
+    await _loadCloudOperations(operations.getOrDefault([]));
 
     return true;
   }
@@ -181,11 +183,9 @@ class DataRepository {
     await Future.forEach(accounts, (Account account) async {
       var _cloudId =
           await _remoteSource.addAccount(_mapToCloudAccount(account));
-      if (_cloudId != null) {
+      if (_cloudId.isSuccess()) {
         await _databaseSource.accounts
-            .update(account.copyWith(cloudId: _cloudId));
-      } else {
-        return Future.value(false);
+            .update(account.copyWith(cloudId: _cloudId.getOrDefault('')));
       }
     });
   }
@@ -195,11 +195,9 @@ class DataRepository {
     await Future.forEach(categories, (Category category) async {
       var _cloudId =
           await _remoteSource.addCategory(_mapToCloudCategory(category));
-      if (_cloudId != null) {
+      if (_cloudId.isSuccess()) {
         await _databaseSource.categories
-            .update(category.copyWith(cloudId: _cloudId));
-      } else {
-        return Future.value(false);
+            .update(category.copyWith(cloudId: _cloudId.getOrDefault('')));
       }
     });
   }
@@ -209,11 +207,9 @@ class DataRepository {
     await Future.forEach(operations, (Operation operation) async {
       var _cloudId =
           await _remoteSource.addOperation(_mapToCloudOperation(operation));
-      if (_cloudId != null) {
+      if (_cloudId.isSuccess()) {
         await _databaseSource.operations
-            .update(operation.copyWith(cloudId: _cloudId));
-      } else {
-        return Future.value(false);
+            .update(operation.copyWith(cloudId: _cloudId.getOrDefault('')));
       }
     });
   }
@@ -242,9 +238,12 @@ class DataRepository {
 
   Future<int> insertAccount(Account account) async {
     var _cloudId = await _remoteSource.addAccount(_mapToCloudAccount(account));
-    var _id = await _databaseSource.accounts
-        .insert(account.copyWith(cloudId: _cloudId));
-    return _id;
+    return _cloudId.fold((success) async {
+      return await _databaseSource.accounts
+          .insert(account.copyWith(cloudId: success));
+    }, (failure) async {
+      return await _databaseSource.accounts.insert(account);
+    });
   }
 
   Future updateAccount(Account account) async {
@@ -292,9 +291,12 @@ class DataRepository {
   Future<int> insertCategory(Category category) async {
     var _cloudId =
         await _remoteSource.addCategory(_mapToCloudCategory(category));
-    var _id = await _databaseSource.categories
-        .insert(category.copyWith(cloudId: _cloudId));
-    return _id;
+    return _cloudId.fold((success) async {
+      return await _databaseSource.categories
+          .insert(category.copyWith(cloudId: success));
+    }, (failure) async {
+      return await _databaseSource.categories.insert(category);
+    });
   }
 
   Future updateCategory(Category category) async {
@@ -333,9 +335,14 @@ class DataRepository {
   Future<Operation> insertOperation(Operation operation) async {
     var _cloudId =
         await _remoteSource.addOperation(_mapToCloudOperation(operation));
-    var _id = await _databaseSource.operations
-        .insert(operation.copyWith(cloudId: _cloudId));
-    return operation.copyWith(id: _id, cloudId: _cloudId);
+    return _cloudId.fold((success) async {
+      var _id = await _databaseSource.operations
+          .insert(operation.copyWith(cloudId: success));
+      return operation.copyWith(id: _id, cloudId: success);
+    }, (failure) async {
+      var _id = await _databaseSource.operations.insert(operation);
+      return operation.copyWith(id: _id);
+    });
   }
 
   Future updateOperation(Operation operation) async {
