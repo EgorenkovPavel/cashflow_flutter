@@ -1,4 +1,3 @@
-import 'package:either_dart/either.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
 import 'package:money_tracker/data/database/budget_type_converter.dart';
 import 'package:money_tracker/data/database/database_source.dart';
@@ -6,6 +5,7 @@ import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/try.dart';
 
 import 'cloud/models/cloud_models.dart';
 
@@ -19,18 +19,18 @@ class DataRepository {
   })  : _databaseSource = databaseSource,
         _remoteSource = cloudSource;
 
-  Future<Either<Exception, void>> logIn(String userId) =>
+  Future<Try<void>> logIn(String userId) =>
       _remoteSource.logIn(userId);
 
-  Future<Either<Exception, bool>> cloudDbExists(String userId) =>
+  Future<Try<bool>> cloudDbExists(String userId) =>
       _remoteSource.databaseExists(userId);
 
   Stream<bool> isAdmin() => _remoteSource.isAdmin();
 
-  Future<Either<Exception, void>> addNewUser(User user) =>
+  Future<Try<void>> addNewUser(User user) =>
       _remoteSource.addNewUser(user);
 
-  Future<Either<Exception, void>> createCloudDatabase(User user) =>
+  Future<Try<void>> createCloudDatabase(User user) =>
       _remoteSource.createDatabase(user);
 
   void logOut() => _remoteSource.logOut();

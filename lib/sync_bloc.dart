@@ -111,11 +111,8 @@ class SyncBloc extends Cubit<SyncState> {
     emit(SyncState_InProgress());
     var res = await dataRepository.cloudDbExists(userId);
 
-    return res.fold<Future<bool>>((left) async {
-      emit(SyncState_Failed(isAdmin: _isAdmin));
-      return false;
-    }, (right) async {
-      if (res.right) {
+    return res.fold((success) async {
+      if (success) {
         var resLogIn = await dataRepository.logIn(userId);
         return resLogIn.fold<bool>((left){
           emit(SyncState_Failed(isAdmin: _isAdmin));
@@ -125,6 +122,9 @@ class SyncBloc extends Cubit<SyncState> {
         emit(SyncState_NoDb());
         return false;
       }
+    }, (failure){
+      emit(SyncState_Failed(isAdmin: _isAdmin));
+      return false;
     });
   }
 
@@ -132,7 +132,7 @@ class SyncBloc extends Cubit<SyncState> {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState_InProgress());
       var res = await dataRepository.createCloudDatabase(_authBloc.state.user!);
-      if (res.isLeft){
+      if (res.isFailure()){
         emit(SyncState_Failed(isAdmin: _isAdmin));
         return false;
       }
