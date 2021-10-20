@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:either_dart/either.dart';
 import 'package:money_tracker/data/cloud/mappers/account_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/try.dart';
 
 import 'models/cloud_models.dart';
 
@@ -51,9 +51,9 @@ class FirecloudSource extends RemoteSource {
   Stream<bool> isAdmin() => _adminController.stream;
 
   @override
-  Future<Either<Exception, void>> addNewUser(User user) async {
+  Future<Try<void>> addNewUser(User user) async {
     if (_db == null) {
-      return Future.value(Left(Exception('No database')));
+      return Future.value(Failure(Exception('No database')));
     }
     try {
       var doc = await _db!.get();
@@ -66,28 +66,28 @@ class FirecloudSource extends RemoteSource {
         'name': user.name,
         'photo': user.photo,
       });
-      return Right(null);
+      return Success(null);
     } catch (e) {
-      return Future.value(Left(e as Exception));
+      return Future.value(Failure(e as Exception));
     }
   }
 
   @override
-  Future<Either<Exception, bool>> databaseExists(String userId) async {
+  Future<Try<bool>> databaseExists(String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
 
-      return Right(querySnapshot.docs.isNotEmpty);
+      return Success(querySnapshot.docs.isNotEmpty);
     } catch (e) {
-      return Future.value(Left(e as Exception));
+      return Future.value(Failure(e as Exception));
     }
   }
 
   @override
-  Future<Either<Exception, void>> createDatabase(User user) async {
+  Future<Try<void>> createDatabase(User user) async {
     try {
       _db = await _firestore.collection(_DATABASES).add({
         _DATABASES_ADMIN: user.id,
@@ -100,35 +100,30 @@ class FirecloudSource extends RemoteSource {
       });
 
       _adminController.add(true);
-      return Right(null);
+      return Success(null);
     } catch (e) {
       _adminController.add(false);
-      return Future.value(Left(e as Exception));
+      return Future.value(Failure(e as Exception));
     }
   }
 
   @override
-  Future<Either<Exception, void>> logIn(String userId) async {
+  Future<Try<void>> logIn(String userId) async {
     var res = await _getDatabase(userId);
-    if (res.isLeft){
+    return res.fold((success) async {
+      _db = success;
+      try {
+        var doc = await _db!.get();
+        _adminController.add(doc.data()![_DATABASES_ADMIN] == userId);
+        return Success(null);
+      } catch (e) {
+        return Failure(e as Exception);
+      }
+    }, (failure) {
       _db = null;
       _adminController.add(false);
-      return Left(res.left);
-    }else{
-      _db = res.right;
-      if (_db == null) {
-        _adminController.add(false);
-        return Left(Exception('Failed'));
-      } else {
-        try {
-          var doc = await _db!.get();
-          _adminController.add(doc.data()![_DATABASES_ADMIN] == userId);
-          return Right(null);
-        }catch (e){
-          return Left(e as Exception);
-        }
-      }
-    }
+      return Failure(failure);
+    });
   }
 
   @override
@@ -137,21 +132,21 @@ class FirecloudSource extends RemoteSource {
     _adminController.add(false);
   }
 
-  Future<Either<Exception, DocumentReference<Map<String, dynamic>>?>>
-      _getDatabase(String userId) async {
+  Future<Try<DocumentReference<Map<String, dynamic>>>> _getDatabase(
+      String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
       if (querySnapshot.docs.isNotEmpty) {
-        return Right(
+        return Success(
             _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id));
       } else {
-        return Right(null);
+        return Failure(Exception('No database found'));
       }
     } catch (e) {
-      return Future.value(Left(e as Exception));
+      return Future.value(Failure(e as Exception));
     }
   }
 

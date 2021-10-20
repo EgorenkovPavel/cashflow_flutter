@@ -1,18 +1,19 @@
-import 'package:either_dart/either.dart';
+
 import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/try.dart';
 
 import 'models/cloud_models.dart';
 
 abstract class RemoteSource{
   Stream<bool> isAdmin();
 
-  Future<Either<Exception, void>> addNewUser(User user);
+  Future<Try<void>> addNewUser(User user);
 
-  Future<Either<Exception, bool>> databaseExists(String userId);
+  Future<Try<bool>> databaseExists(String userId);
 
-  Future<Either<Exception, void>> createDatabase(User user);
+  Future<Try<void>> createDatabase(User user);
 
-  Future<Either<Exception, void>> logIn(String userId);
+  Future<Try<void>> logIn(String userId);
 
   void logOut();
 
