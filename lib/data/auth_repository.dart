@@ -1,10 +1,12 @@
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/domain/models/user.dart' as model;
 
 class AuthRepository {
   late final GoogleSignIn _googleSignIn;
+  final auth = FirebaseAuth.instance;
 
   AuthRepository() {
     _googleSignIn = GoogleSignIn(
@@ -24,14 +26,26 @@ class AuthRepository {
   Future<void> signInSilently() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
-      await _googleSignIn.signInSilently();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signInSilently();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await auth.signInWithCredential(credential);
     }
   }
 
   Future<void> signIn() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
-      await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await auth.signInWithCredential(credential);
     }
   }
 
@@ -39,18 +53,19 @@ class AuthRepository {
     var isAuth = await isAuthenticated();
     if (isAuth) {
       await _googleSignIn.signOut();
+      await auth.signOut();
     }
   }
 
-  Future<User?> getUser() async {
+  Future<model.User?> getUser() async {
     if (_googleSignIn.currentUser == null) {
       return null;
     }
 
-    return User(
-      id: _googleSignIn.currentUser!.id,
-      name: _googleSignIn.currentUser!.displayName ?? '',
-      photo: _googleSignIn.currentUser!.photoUrl ?? '',
+    return model.User(
+      id: auth.currentUser!.uid,
+      name: auth.currentUser!.displayName ?? '',
+      photo: auth.currentUser!.photoURL ?? '',
     );
   }
 
