@@ -66,6 +66,7 @@ class AuthRepository {
       id: auth.currentUser!.uid,
       name: auth.currentUser!.displayName ?? '',
       photo: auth.currentUser!.photoURL ?? '',
+      isAdmin: true,
     );
   }
 

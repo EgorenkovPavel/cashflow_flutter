@@ -5,6 +5,7 @@ import 'package:money_tracker/data/cloud/mappers/account_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
 import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
+import 'package:money_tracker/data/cloud/mappers/user_mapper.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/utils/try.dart';
@@ -61,14 +62,26 @@ class FirecloudSource extends RemoteSource {
       data![_DATABASES_USERS].add(user.id);
       await _db!.set(data);
 
-      await _db!.collection(_USERS).doc(user.id).set({
-        'isAdmin': true,
-        'name': user.name,
-        'photo': user.photo,
-      });
+      await _db!
+          .collection(_USERS)
+          .doc(user.id)
+          .set(const UserMapper().mapToCloud(user));
       return Success(null);
     } catch (e) {
       return Future.value(Failure(e as Exception));
+    }
+  }
+
+  @override
+  Future<Try<Iterable<User>>> getUsers() async {
+    try {
+      if (_db == null) {
+        return Success(<User>[]);
+      }
+      var doc = await _db!.collection(_USERS).get();
+      return Success(doc.docs.map((doc) => const UserMapper().mapToDart(doc)));
+    } catch (e) {
+      return Failure(e as Exception);
     }
   }
 
@@ -93,11 +106,10 @@ class FirecloudSource extends RemoteSource {
         _DATABASES_ADMIN: user.id,
         _DATABASES_USERS: [user.id],
       });
-      await _db!.collection(_USERS).doc(user.id).set({
-        'isAdmin': true,
-        'name': user.name,
-        'photo': user.photo,
-      });
+      await _db!
+          .collection(_USERS)
+          .doc(user.id)
+          .set(const UserMapper().mapToCloud(user));
 
       _adminController.add(true);
       return Success(null);
@@ -222,13 +234,13 @@ class FirecloudSource extends RemoteSource {
     var queryOperation;
     try {
       queryOperation = await _operations.get();
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
 
     await Future.forEach<CloudOperation>(queryOperation, (element) async {
       var res = await deleteOperation(element.id);
-      if (res.isFailure()){
+      if (res.isFailure()) {
         return res;
       }
     });
@@ -236,13 +248,13 @@ class FirecloudSource extends RemoteSource {
     var queryCategory;
     try {
       queryCategory = await _categories.get();
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
 
     await Future.forEach<CloudCategory>(queryCategory, (element) async {
       var res = await deleteCategory(element.id);
-      if (res.isFailure()){
+      if (res.isFailure()) {
         return res;
       }
     });
@@ -250,13 +262,13 @@ class FirecloudSource extends RemoteSource {
     var queryAccount;
     try {
       queryAccount = await _accounts.get();
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
 
     await Future.forEach<CloudAccount>(queryAccount, (element) async {
       var res = await deleteAccount(element.id);
-      if (res.isFailure()){
+      if (res.isFailure()) {
         return res;
       }
     });
@@ -280,15 +292,15 @@ class CollectionDAO<T> {
   Future<QuerySnapshot<Object?>>? get() => collection?.get();
 
   Future<Try<Iterable<T>>> getItems(DateTime date) async {
-    if (collection == null){
+    if (collection == null) {
       return Success([]);
     }
     try {
-      var docs = await collection
-      !.where(key_updated, isGreaterThanOrEqualTo: date)
+      var docs = await collection!
+          .where(key_updated, isGreaterThanOrEqualTo: date)
           .get();
       return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
   }
@@ -298,9 +310,9 @@ class CollectionDAO<T> {
   ) async {
     try {
       var doc = await collection?.add(mapper.mapToCloud(data));
-      if (doc == null){
+      if (doc == null) {
         return Failure(Exception('Error'));
-      }else{
+      } else {
         return Success(doc.id);
       }
     } catch (e) {
@@ -312,13 +324,13 @@ class CollectionDAO<T> {
     String id,
     T data,
   ) async {
-    if (collection == null){
+    if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
     try {
       await collection!.doc(id).update(mapper.mapToCloud(data));
       return Success(null);
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
   }
@@ -326,13 +338,13 @@ class CollectionDAO<T> {
   Future<Try<void>> deleteItem(
     String id,
   ) async {
-    if (collection == null){
+    if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
     try {
       await collection!.doc(id).delete();
       return Success(null);
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
   }
@@ -340,13 +352,13 @@ class CollectionDAO<T> {
   Future<Try<void>> refreshSyncDate(
     String id,
   ) async {
-    if (collection == null){
+    if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
     try {
       await collection!.doc(id).update({key_updated: DateTime.now()});
       return Success(null);
-    }catch (e){
+    } catch (e) {
       return Failure(e as Exception);
     }
   }
