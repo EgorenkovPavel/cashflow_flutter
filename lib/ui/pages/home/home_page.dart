@@ -64,6 +64,26 @@ class SyncButton extends StatelessWidget {
     });
   }
 
+  String getTitle(SyncState state){
+    if (state is SyncState_InProgress) {
+      return 'In progress';
+    } else if (state is SyncState_Synced) {
+      return 'Synced';
+    } else if (state is SyncState_LoadingToCloud) {
+      return 'Loading to cloud';
+    } else if (state is SyncState_LoadingFromCloud) {
+      return 'Loading from cloud';
+    } else if (state is SyncState_NoDb) {
+      return 'No database';
+    } else if (state is SyncState_NotSynced) {
+      return 'Not synced';
+    } else if (state is SyncState_Failed) {
+      return 'Failed';
+    } else {
+      return '';
+    }
+  }
+
   Icon iconBySyncState(SyncState state, {Color? color, double? size}) {
     if (state is SyncState_InProgress) {
       return Icon(
@@ -95,9 +115,15 @@ class SyncButton extends StatelessWidget {
         color: color,
         size: size,
       );
-    } else if (state is SyncState_NotSynced || state is SyncState_Failed) {
+    } else if (state is SyncState_NotSynced) {
       return Icon(
         Icons.warning_amber_outlined,
+        color: color,
+        size: size,
+      );
+    } else if (state is SyncState_Failed) {
+      return Icon(
+        Icons.sync_problem,
         color: color,
         size: size,
       );
@@ -108,22 +134,24 @@ class SyncButton extends StatelessWidget {
 
   void onPressed(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              // title: Text('Sync'),
-              content:
-                  BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-                return iconBySyncState(state, color: Colors.black, size: 48);
-              }),
-              actions: [
-                TextButton(
-                    onPressed: () => context.read<SyncBloc>().sync(),
-                    child: Text('Sync'.toUpperCase())),
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('Close'.toUpperCase()))
-              ],
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: BlocBuilder<SyncBloc, SyncState>(
+          builder: (context, state) => Text(getTitle(state)),
+        ),
+        content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+          return iconBySyncState(state, color: Colors.black, size: 48);
+        }),
+        actions: [
+          TextButton(
+              onPressed: () => context.read<SyncBloc>().sync(),
+              child: Text('Sync'.toUpperCase())),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Close'.toUpperCase()))
+        ],
+      ),
+    );
   }
 }
 
