@@ -76,6 +76,7 @@ class AdminSettings extends StatelessWidget {
                 context.read<SyncBloc>().addUser(User(
                   id: _idController.text,
                   name: _nameController.text,
+                  isAdmin: false,
                   photo: '',
                 ));
                 Navigator.of(context).pop();

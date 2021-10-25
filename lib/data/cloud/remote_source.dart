@@ -15,6 +15,8 @@ abstract class RemoteSource{
 
   Future<Try<void>> logIn(String userId);
 
+  Future<Try<Iterable<User>>> getUsers();
+
   void logOut();
 
   Future<Try<Iterable<CloudAccount>>> getAccounts(DateTime date);
