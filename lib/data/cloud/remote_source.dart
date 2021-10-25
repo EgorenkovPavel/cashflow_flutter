@@ -1,6 +1,6 @@
 
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/try.dart';
+import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';
 

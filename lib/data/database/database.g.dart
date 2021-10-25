@@ -90,8 +90,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(cloudId.hashCode, $mrjc(title.hashCode, isDebt.hashCode))));
+  int get hashCode => Object.hash(id, cloudId, title, isDebt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -365,14 +364,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          cloudId.hashCode,
-          $mrjc(
-              title.hashCode,
-              $mrjc(operationType.hashCode,
-                  $mrjc(budgetType.hashCode, budget.hashCode))))));
+  int get hashCode =>
+      Object.hash(id, cloudId, title, operationType, budgetType, budget);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -722,18 +715,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          cloudId.hashCode,
-          $mrjc(
-              date.hashCode,
-              $mrjc(
-                  operationType.hashCode,
-                  $mrjc(
-                      account.hashCode,
-                      $mrjc(category.hashCode,
-                          $mrjc(recAccount.hashCode, sum.hashCode))))))));
+  int get hashCode => Object.hash(
+      id, cloudId, date, operationType, account, category, recAccount, sum);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1074,8 +1057,7 @@ class BalanceDB extends DataClass implements Insertable<BalanceDB> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(date.hashCode,
-      $mrjc(operation.hashCode, $mrjc(account.hashCode, sum.hashCode))));
+  int get hashCode => Object.hash(date, operation, account, sum);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1324,8 +1306,7 @@ class CashflowDB extends DataClass implements Insertable<CashflowDB> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(date.hashCode,
-      $mrjc(operation.hashCode, $mrjc(category.hashCode, sum.hashCode))));
+  int get hashCode => Object.hash(date, operation, category, sum);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
