@@ -5,7 +5,7 @@ import 'package:money_tracker/data/database/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/try.dart';
+import 'package:money_tracker/utils/try.dart';
 
 import 'cloud/models/cloud_models.dart';
 

@@ -7,7 +7,7 @@ import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/cloud/remote_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/try.dart';
+import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';
 

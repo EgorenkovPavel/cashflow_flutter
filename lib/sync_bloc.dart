@@ -114,10 +114,10 @@ class SyncBloc extends Cubit<SyncState> {
     return res.fold((success) async {
       if (success) {
         var resLogIn = await dataRepository.logIn(userId);
-        return resLogIn.fold<bool>((left){
+        return resLogIn.fold((success) => true, (failure) {
           emit(SyncState_Failed(isAdmin: _isAdmin));
           return false;
-        }, (right) => true);
+        });
       } else {
         emit(SyncState_NoDb());
         return false;
