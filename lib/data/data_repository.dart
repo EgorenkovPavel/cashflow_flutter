@@ -98,7 +98,7 @@ class DataRepository {
           : await _databaseSource.accounts
               .getByCloudId(cloudOperation.recAccount!);
 
-      if (_operation == null) {
+      if (_operation == null && !cloudOperation.deleted) {
         await _databaseSource.operations.insert(Operation(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
@@ -109,7 +109,7 @@ class DataRepository {
           recAccount: _recAccount,
           sum: cloudOperation.sum,
         ));
-      } else {
+      } else if(_operation != null && !cloudOperation.deleted){
         await _databaseSource.operations.update(_operation.copyWith(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
@@ -120,6 +120,8 @@ class DataRepository {
           recAccount: _recAccount,
           sum: cloudOperation.sum,
         ));
+      }else if(_operation != null && cloudOperation.deleted){
+        await _databaseSource.operations.deleteById(_operation.id);
       }
       await _remoteSource.refreshOperationSyncDate(cloudOperation.id);
     });
@@ -148,28 +150,33 @@ class DataRepository {
       id: account.cloudId,
       title: account.title,
       isDebt: account.isDebt,
+      deleted: false,
     );
   }
 
   CloudCategory _mapToCloudCategory(Category category) {
     return CloudCategory(
-        id: category.cloudId,
-        title: category.title,
-        operationType:
-            const OperationTypeConverter().mapToSql(category.operationType)!,
-        budgetType: const BudgetTypeConverter().mapToSql(category.budgetType)!,
-        budget: category.budget);
+      id: category.cloudId,
+      title: category.title,
+      operationType:
+          const OperationTypeConverter().mapToSql(category.operationType)!,
+      budgetType: const BudgetTypeConverter().mapToSql(category.budgetType)!,
+      budget: category.budget,
+      deleted: false,
+    );
   }
 
   CloudOperation _mapToCloudOperation(Operation operation) {
     return CloudOperation(
-        id: operation.cloudId,
-        date: operation.date,
-        operationType: const OperationTypeConverter().mapToSql(operation.type)!,
-        account: operation.account.cloudId,
-        category: operation.category?.cloudId,
-        recAccount: operation.recAccount?.cloudId,
-        sum: operation.sum);
+      id: operation.cloudId,
+      date: operation.date,
+      operationType: const OperationTypeConverter().mapToSql(operation.type)!,
+      account: operation.account.cloudId,
+      category: operation.category?.cloudId,
+      recAccount: operation.recAccount?.cloudId,
+      sum: operation.sum,
+      deleted: false,
+    );
   }
 
   Future<void> loadToCloud() async {
@@ -360,7 +367,7 @@ class DataRepository {
   }
 
   Future deleteOperation(Operation operation) async {
-    await _remoteSource.deleteOperation(operation.cloudId);
+    await _remoteSource.deleteOperation(_mapToCloudOperation(operation));
     await _databaseSource.operations.deleteById(operation.id);
   }
 

@@ -9,3 +9,11 @@ extension DateTimeExtension on DateTime{
     return DateTime(date.year, date.month).add(Duration());
   }
 }
+
+extension MapExtension on Map<String, dynamic>{
+  dynamic getOrDefault(String key, dynamic value){
+    return containsKey(key)
+        ? this[key]
+        : value;
+  }
+}

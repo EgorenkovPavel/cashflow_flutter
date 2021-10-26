@@ -25,19 +25,22 @@ class FirecloudSource extends RemoteSource {
 
   DocumentReference<Map<String, dynamic>>? _db;
 
-  CollectionDAO get _accounts => CollectionDAO<CloudAccount>(
+  CollectionDAO get _accounts =>
+      CollectionDAO<CloudAccount>(
         collection: _db?.collection(_ACCOUNTS),
         key_updated: AccountMapper.KEY_UPDATED,
         mapper: const AccountMapper(),
       );
 
-  CollectionDAO get _categories => CollectionDAO<CloudCategory>(
+  CollectionDAO get _categories =>
+      CollectionDAO<CloudCategory>(
         collection: _db?.collection(_CATEGORIES),
         key_updated: CategoryMapper.KEY_UPDATED,
         mapper: const CategoryMapper(),
       );
 
-  CollectionDAO get _operations => CollectionDAO<CloudOperation>(
+  CollectionDAO get _operations =>
+      CollectionDAO<CloudOperation>(
         collection: _db?.collection(_OPERATIONS),
         key_updated: OperationMapper.KEY_UPDATED,
         mapper: const OperationMapper(),
@@ -198,8 +201,8 @@ class FirecloudSource extends RemoteSource {
       _accounts.updateItem(account.id, account);
 
   @override
-  Future<Try<void>> deleteAccount(String accountId) =>
-      _accounts.deleteItem(accountId);
+  Future<Try<void>> deleteAccount(CloudAccount account) =>
+      _accounts.deleteItem(account.id, account.copyWith(deleted: true));
 
   @override
   Future<Try<String>> addCategory(CloudCategory category) =>
@@ -210,8 +213,8 @@ class FirecloudSource extends RemoteSource {
       _categories.updateItem(category.id, category);
 
   @override
-  Future<Try<void>> deleteCategory(String categoryId) =>
-      _categories.deleteItem(categoryId);
+  Future<Try<void>> deleteCategory(CloudCategory category) =>
+      _categories.deleteItem(category.id, category.copyWith(deleted: true));
 
   @override
   Future<Try<String>> addOperation(CloudOperation operation) =>
@@ -222,8 +225,8 @@ class FirecloudSource extends RemoteSource {
       _operations.updateItem(operation.id, operation);
 
   @override
-  Future<Try<void>> deleteOperation(String cloudId) =>
-      _operations.deleteItem(cloudId);
+  Future<Try<void>> deleteOperation(CloudOperation operation) =>
+      _operations.deleteItem(operation.id, operation.copyWith(deleted: true));
 
   @override
   Future<Try<void>> deleteAll() async {
@@ -239,7 +242,7 @@ class FirecloudSource extends RemoteSource {
     }
 
     await Future.forEach<CloudOperation>(queryOperation, (element) async {
-      var res = await deleteOperation(element.id);
+      var res = await deleteOperation(element);
       if (res.isFailure()) {
         return res;
       }
@@ -253,7 +256,7 @@ class FirecloudSource extends RemoteSource {
     }
 
     await Future.forEach<CloudCategory>(queryCategory, (element) async {
-      var res = await deleteCategory(element.id);
+      var res = await deleteCategory(element);
       if (res.isFailure()) {
         return res;
       }
@@ -267,7 +270,7 @@ class FirecloudSource extends RemoteSource {
     }
 
     await Future.forEach<CloudAccount>(queryAccount, (element) async {
-      var res = await deleteAccount(element.id);
+      var res = await deleteAccount(element);
       if (res.isFailure()) {
         return res;
       }
@@ -284,10 +287,9 @@ class CollectionDAO<T> {
 
   final String key_updated;
 
-  CollectionDAO(
-      {required this.mapper,
-      required this.key_updated,
-      required this.collection});
+  CollectionDAO({required this.mapper,
+    required this.key_updated,
+    required this.collection});
 
   Future<QuerySnapshot<Object?>>? get() => collection?.get();
 
@@ -305,9 +307,7 @@ class CollectionDAO<T> {
     }
   }
 
-  Future<Try<String>> addItem(
-    T data,
-  ) async {
+  Future<Try<String>> addItem(T data,) async {
     try {
       var doc = await collection?.add(mapper.mapToCloud(data));
       if (doc == null) {
@@ -320,10 +320,8 @@ class CollectionDAO<T> {
     }
   }
 
-  Future<Try<void>> updateItem(
-    String id,
-    T data,
-  ) async {
+  Future<Try<void>> updateItem(String id,
+      T data,) async {
     if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
@@ -335,23 +333,20 @@ class CollectionDAO<T> {
     }
   }
 
-  Future<Try<void>> deleteItem(
-    String id,
-  ) async {
+  Future<Try<void>> deleteItem(String id, T data, ) async {
     if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
     try {
-      await collection!.doc(id).delete();
+      await updateItem(id, data);
+      //await collection!.doc(id).delete();
       return Success(null);
     } catch (e) {
       return Failure(e as Exception);
     }
   }
 
-  Future<Try<void>> refreshSyncDate(
-    String id,
-  ) async {
+  Future<Try<void>> refreshSyncDate(String id,) async {
     if (collection == null) {
       return Failure(Exception('Collection is null'));
     }
