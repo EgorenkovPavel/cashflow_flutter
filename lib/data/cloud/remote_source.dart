@@ -29,15 +29,15 @@ abstract class RemoteSource{
 
   Future<Try<String>> addAccount(CloudAccount account);
   Future<Try<void>> updateAccount(CloudAccount account);
-  Future<Try<void>> deleteAccount(String cloudId);
+  Future<Try<void>> deleteAccount(CloudAccount account);
 
   Future<Try<String>> addCategory(CloudCategory category);
   Future<void> updateCategory(CloudCategory category);
-  Future<void> deleteCategory(String cloudId);
+  Future<void> deleteCategory(CloudCategory category);
 
   Future<Try<String>> addOperation(CloudOperation operation);
   Future<Try<void>> updateOperation(CloudOperation operation);
-  Future<Try<void>> deleteOperation(String cloudId);
+  Future<Try<void>> deleteOperation(CloudOperation operation);
 
   Future<Try<void>> deleteAll();
 }
