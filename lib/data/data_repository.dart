@@ -28,6 +28,8 @@ class DataRepository {
 
   Future<Try<void>> addNewUser(User user) => _remoteSource.addNewUser(user);
 
+  Future<Try<Iterable<User>>> getUsers() => _remoteSource.getUsers();
+
   Future<Try<void>> createCloudDatabase(User user) =>
       _remoteSource.createDatabase(user);
 
