@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/database/category_dao.dart';
+import 'package:money_tracker/data/local/data/category_dao.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 

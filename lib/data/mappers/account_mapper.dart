@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/domain/models.dart';
 
 import 'mapper.dart';

@@ -1,11 +1,12 @@
-import 'package:money_tracker/data/database/account_dao.dart';
-import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/local/data/account_dao.dart';
+import 'package:money_tracker/data/local/data/database.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:moor/moor.dart';
 
-class AccountRepository {
+class AccountRepository extends LocalAccountRepo{
   final AccountDao accountDao;
 
   AccountRepository(this.accountDao);

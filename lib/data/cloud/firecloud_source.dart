@@ -57,7 +57,7 @@ class FirecloudSource extends RemoteSource {
   @override
   Future<Try<void>> addNewUser(User user) async {
     if (_db == null) {
-      return Future.value(Failure(Exception('No database')));
+      return Future.value(Failure(Exception('No local')));
     }
     try {
       var doc = await _db!.get();
@@ -158,7 +158,7 @@ class FirecloudSource extends RemoteSource {
         return Success(
             _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id));
       } else {
-        return Failure(Exception('No database found'));
+        return Failure(Exception('No local found'));
       }
     } catch (e) {
       return Future.value(Failure(e as Exception));

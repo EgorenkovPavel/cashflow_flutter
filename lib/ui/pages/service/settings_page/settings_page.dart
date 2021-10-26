@@ -84,18 +84,18 @@ class CloudDatabaseListTile extends StatelessWidget {
 
         if (!_authState.isAuthenticated) {
           return ListTile(
-            title: Text('Cloud database'),
-            subtitle: Text('No database. Sign in to connect'),
+            title: Text('Cloud local'),
+            subtitle: Text('No local. Sign in to connect'),
           );
         } else if (_syncState is! SyncState_NoDb) {
           return ListTile(
-            title: Text('Cloud database'),
+            title: Text('Cloud local'),
             subtitle: Text('Database connected'),
             onTap: () => PageNavigator.openCloudDatabaseSettingsPage(context),
           );
         } else {
           return ListTile(
-            title: Text('Cloud database'),
+            title: Text('Cloud local'),
             subtitle: Text('Tap to connect'),
             onTap: () => PageNavigator.openCloudDatabaseSettingsPage(context),
           );

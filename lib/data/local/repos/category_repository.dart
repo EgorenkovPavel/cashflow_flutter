@@ -1,12 +1,13 @@
-import 'package:money_tracker/data/database/category_dao.dart';
-import 'package:money_tracker/data/database/database.dart';
+import 'package:money_tracker/data/local/data/category_dao.dart';
+import 'package:money_tracker/data/local/data/database.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:moor/moor.dart';
 
-class CategoryRepository {
+class CategoryRepository extends LocalCategoryRepo{
   final CategoryDao categoryDao;
 
   CategoryRepository(this.categoryDao);

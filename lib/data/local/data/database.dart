@@ -1,8 +1,8 @@
-import 'package:money_tracker/data/database/account_dao.dart';
-import 'package:money_tracker/data/database/budget_type_converter.dart';
-import 'package:money_tracker/data/database/category_dao.dart';
-import 'package:money_tracker/data/database/operation_dao.dart';
-import 'package:money_tracker/data/database/operation_type_converter.dart';
+import 'package:money_tracker/data/local/data/account_dao.dart';
+import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
+import 'package:money_tracker/data/local/data/category_dao.dart';
+import 'package:money_tracker/data/local/data/operation_dao.dart';
+import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/budget_type.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:moor/ffi.dart';
@@ -157,7 +157,7 @@ class OperationItem {
 LazyDatabase _openConnection() {
   // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
+    // put the local file, called db.sqlite here, into the documents folder
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
