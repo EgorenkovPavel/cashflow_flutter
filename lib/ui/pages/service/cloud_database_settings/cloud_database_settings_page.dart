@@ -10,7 +10,7 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Cloud database'),),
+      appBar: AppBar(title: Text('Cloud local'),),
       body: BlocConsumer<SyncBloc, SyncState>(
         listener: (context, state){},
         builder: (context, state){
@@ -98,7 +98,7 @@ class ConnectingView extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () => context.read<SyncBloc>().createCloudDatabase(),
-          child: Text('Create database'),
+          child: Text('Create local'),
         ),
         Text('or send UserId to admin user'),
         ElevatedButton(

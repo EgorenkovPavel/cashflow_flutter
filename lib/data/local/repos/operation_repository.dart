@@ -1,10 +1,11 @@
-import 'package:money_tracker/data/database/database.dart';
-import 'package:money_tracker/data/database/operation_dao.dart';
+import 'package:money_tracker/data/local/data/database.dart';
+import 'package:money_tracker/data/local/data/operation_dao.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/operation_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:moor/moor.dart';
 
-class OperationRepository {
+class OperationRepository extends LocalOperationsRepo{
   final OperationDao operationDao;
 
   OperationRepository(this.operationDao);
