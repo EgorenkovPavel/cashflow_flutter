@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
+import 'package:money_tracker/data/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 class UserMapper extends CloudConverter<User>{

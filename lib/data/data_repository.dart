@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/cloud/remote_source.dart';
+import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/data/local/local_source.dart';
@@ -7,7 +7,7 @@ import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/utils/try.dart';
 
-import 'cloud/models/cloud_models.dart';
+import 'remote/models/cloud_models.dart';
 
 class DataRepository {
   final LocalSource _databaseSource;

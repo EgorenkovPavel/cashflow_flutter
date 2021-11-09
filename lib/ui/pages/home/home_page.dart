@@ -70,9 +70,9 @@ class SyncButton extends StatelessWidget {
     } else if (state is SyncState_Synced) {
       return 'Synced';
     } else if (state is SyncState_LoadingToCloud) {
-      return 'Loading to cloud';
+      return 'Loading to remote';
     } else if (state is SyncState_LoadingFromCloud) {
-      return 'Loading from cloud';
+      return 'Loading from remote';
     } else if (state is SyncState_NoDb) {
       return 'No local';
     } else if (state is SyncState_NotSynced) {

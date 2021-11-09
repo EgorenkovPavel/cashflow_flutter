@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
-import 'package:money_tracker/data/cloud/models/cloud_operation.dart';
+import 'package:money_tracker/data/remote/mappers/cloud_converter.dart';
+import 'package:money_tracker/data/remote/models/cloud_operation.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
 class OperationMapper extends CloudConverter<CloudOperation> {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/auth_repository.dart';
-import 'package:money_tracker/data/cloud/firecloud_source.dart';
+import 'package:money_tracker/data/remote/firecloud_source.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/database_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
