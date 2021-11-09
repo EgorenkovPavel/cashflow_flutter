@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class BudgetPageState {
@@ -23,7 +23,7 @@ class BudgetPageState {
 }
 
 class BudgetPageBloc extends Cubit<BudgetPageState> {
-  final DataRepository repo;
+  final DataSource repo;
 
   DateTime _date = DateTime(DateTime.now().year, DateTime.now().month);
   late OperationType _type;

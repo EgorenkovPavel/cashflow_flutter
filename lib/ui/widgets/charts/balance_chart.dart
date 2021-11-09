@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 
 class BalanceChart extends StatelessWidget {
   @override
@@ -81,7 +81,7 @@ abstract class BalanceChartEvent {}
 class Fetch extends BalanceChartEvent {}
 
 class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
-  final DataRepository _repository;
+  final DataSource _repository;
 
   List<DateTime> dates = [];
   List<ValueOnDate> balance = [];

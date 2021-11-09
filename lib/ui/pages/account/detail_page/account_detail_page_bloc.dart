@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 
 class AccountEditPageState{
   final String accountTitle;
@@ -11,7 +11,7 @@ class AccountEditPageState{
 
 class AccountDetailPageBloc extends Cubit<AccountEditPageState>{
 
-  final DataRepository _repository;
+  final DataSource _repository;
   StreamSubscription? _sub;
 
   AccountDetailPageBloc(this._repository) : super(AccountEditPageState(''));

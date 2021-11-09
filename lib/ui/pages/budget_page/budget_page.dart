@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_page_bloc.dart';
@@ -26,7 +26,7 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = BudgetPageBloc(context.read<DataRepository>())..fetch(widget.type);
+    _bloc = BudgetPageBloc(context.read<DataSource>())..fetch(widget.type);
   }
 
   @override
@@ -46,12 +46,6 @@ class _BudgetPageState extends State<BudgetPage> {
     return Text('$start $date');
   }
 
-  int _cashflow(List<CategoryCashflow> items) {
-    return items
-        .map((e) => e.monthCashflow)
-        .fold<int>(0, (previousValue, element) => previousValue + element);
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BudgetPageBloc, BudgetPageState>(
@@ -69,7 +63,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
               ),
               SliverPersistentHeader(
-                  delegate: DiagammDelegate(
+                  delegate: DiagramDelegate(
                       items: state.itemsAll,
                       onBackPressed: _bloc.onBackPressed,
                       onForwardPressed: _bloc.onForwardPressed)),
@@ -171,12 +165,12 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class DiagammDelegate extends SliverPersistentHeaderDelegate {
+class DiagramDelegate extends SliverPersistentHeaderDelegate {
   final List<CategoryCashflow> items;
   final void Function() onBackPressed;
   final void Function() onForwardPressed;
 
-  DiagammDelegate(
+  DiagramDelegate(
       {required this.items,
       required this.onBackPressed,
       required this.onForwardPressed});

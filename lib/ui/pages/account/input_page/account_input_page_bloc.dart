@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class AccountInputPageState {
@@ -28,7 +28,7 @@ class AccountInputPageState {
 enum BlocAction { DATA, CLOSE }
 
 class AccountInputPageBloc extends Cubit<AccountInputPageState> {
-  final DataRepository _repository;
+  final DataSource _repository;
 
   int? _id;
 

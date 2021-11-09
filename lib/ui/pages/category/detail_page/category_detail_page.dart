@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/detail_page/category_cashflow_diagram.dart';
@@ -26,7 +26,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage>
   @override
   void initState() {
     super.initState();
-    _bloc = CategoryBloc(context.read<DataRepository>())..fetch(widget.id);
+    _bloc = CategoryBloc(context.read<DataSource>())..fetch(widget.id);
   }
 
   @override
@@ -92,7 +92,7 @@ class _OperationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: context.read<DataRepository>().watchAllOperationsByCategory(id),
+      stream: context.read<DataSource>().watchAllOperationsByCategory(id),
       builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
         var list = <Operation>[];
         if (snapshot.hasData) {
