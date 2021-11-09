@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/cloud/mappers/account_mapper.dart';
-import 'package:money_tracker/data/cloud/mappers/category_mapper.dart';
-import 'package:money_tracker/data/cloud/mappers/cloud_converter.dart';
-import 'package:money_tracker/data/cloud/mappers/operation_mapper.dart';
-import 'package:money_tracker/data/cloud/mappers/user_mapper.dart';
-import 'package:money_tracker/data/cloud/remote_source.dart';
+import 'package:money_tracker/data/remote/mappers/account_mapper.dart';
+import 'package:money_tracker/data/remote/mappers/category_mapper.dart';
+import 'package:money_tracker/data/remote/mappers/cloud_converter.dart';
+import 'package:money_tracker/data/remote/mappers/operation_mapper.dart';
+import 'package:money_tracker/data/remote/mappers/user_mapper.dart';
+import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/utils/try.dart';
 

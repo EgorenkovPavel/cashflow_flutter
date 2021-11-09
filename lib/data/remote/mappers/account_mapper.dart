@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/cloud/models/cloud_account.dart';
+import 'package:money_tracker/data/remote/models/cloud_account.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
 import 'cloud_converter.dart';
