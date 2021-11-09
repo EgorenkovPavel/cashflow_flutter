@@ -1,3 +1,4 @@
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
@@ -9,7 +10,7 @@ import 'package:money_tracker/utils/try.dart';
 
 import 'remote/models/cloud_models.dart';
 
-class DataRepository {
+class DataRepository extends DataSource{
   final LocalSource _databaseSource;
   final RemoteSource _remoteSource;
 
@@ -19,20 +20,27 @@ class DataRepository {
   })  : _databaseSource = databaseSource,
         _remoteSource = cloudSource;
 
+  @override
   Future<Try<void>> logIn(String userId) => _remoteSource.logIn(userId);
 
+  @override
   Future<Try<bool>> cloudDbExists(String userId) =>
       _remoteSource.databaseExists(userId);
 
+  @override
   Stream<bool> isAdmin() => _remoteSource.isAdmin();
 
+  @override
   Future<Try<void>> addNewUser(User user) => _remoteSource.addNewUser(user);
 
+  @override
   Future<Try<Iterable<User>>> getUsers() => _remoteSource.getUsers();
 
+  @override
   Future<Try<void>> createCloudDatabase(User user) =>
       _remoteSource.createDatabase(user);
 
+  @override
   void logOut() => _remoteSource.logOut();
 
   Future<void> _loadCloudAccounts(Iterable<CloudAccount> list) async {
@@ -129,6 +137,7 @@ class DataRepository {
     });
   }
 
+  @override
   Future<bool> loadFromCloud(DateTime date) async {
     var accounts = await _remoteSource.getAccounts(date);
     var categories = await _remoteSource.getCategories(date);
@@ -181,6 +190,7 @@ class DataRepository {
     );
   }
 
+  @override
   Future<void> loadToCloud() async {
     await _loadAccountsToCloud();
     await _loadCategoriesToCloud();
@@ -188,7 +198,7 @@ class DataRepository {
   }
 
   Future<void> _loadAccountsToCloud() async {
-    var accounts = await getAllAccountsWithEmptyCloudId();
+    var accounts = await _getAllAccountsWithEmptyCloudId();
     await Future.forEach(accounts, (Account account) async {
       var _cloudId =
           await _remoteSource.addAccount(_mapToCloudAccount(account));
@@ -200,7 +210,7 @@ class DataRepository {
   }
 
   Future<void> _loadCategoriesToCloud() async {
-    var categories = await getAllCategoriesWithEmptyCloudId();
+    var categories = await _getAllCategoriesWithEmptyCloudId();
     await Future.forEach(categories, (Category category) async {
       var _cloudId =
           await _remoteSource.addCategory(_mapToCloudCategory(category));
@@ -212,7 +222,7 @@ class DataRepository {
   }
 
   Future<void> _loadOperationsToCloud() async {
-    var operations = await getAllOperationsWithEmptyCloudId();
+    var operations = await _getAllOperationsWithEmptyCloudId();
     await Future.forEach(operations, (Operation operation) async {
       var _cloudId =
           await _remoteSource.addOperation(_mapToCloudOperation(operation));
@@ -225,26 +235,33 @@ class DataRepository {
 
   //Accounts
 
+  @override
   Stream<List<Account>> watchAllAccounts() =>
       _databaseSource.accounts.watchAll();
 
+  @override
   Future<List<Account>> getAllAccounts() => _databaseSource.accounts.getAll();
 
-  Future<List<Account>> getAllAccountsWithEmptyCloudId() =>
+  Future<List<Account>> _getAllAccountsWithEmptyCloudId() =>
       _databaseSource.accounts.getAllWithEmptyCloudId();
 
+  @override
   Stream<List<AccountBalance>> watchAllAccountsBalance() =>
       _databaseSource.accounts.watchAllBalance();
 
+  @override
   Future<List<AccountBalance>> getAllAccountsBalance() =>
       _databaseSource.accounts.getAllBalance();
 
+  @override
   Stream<Account> watchAccountById(int id) =>
       _databaseSource.accounts.watchById(id);
 
+  @override
   Future<Account> getAccountById(int id) =>
       _databaseSource.accounts.getById(id);
 
+  @override
   Future<int> insertAccount(Account account) async {
     var _cloudId = await _remoteSource.addAccount(_mapToCloudAccount(account));
     return _cloudId.fold((success) async {
@@ -255,6 +272,7 @@ class DataRepository {
     });
   }
 
+  @override
   Future updateAccount(Account account) async {
     await _remoteSource.updateAccount(_mapToCloudAccount(account));
     await _databaseSource.accounts.update(account);
@@ -262,41 +280,52 @@ class DataRepository {
 
   //Category
 
+  @override
   Stream<List<Category>> watchAllCategories() =>
       _databaseSource.categories.watchAll();
 
+  @override
   Future<List<Category>> getAllCategories() =>
       _databaseSource.categories.getAll();
 
-  Future<List<Category>> getAllCategoriesWithEmptyCloudId() =>
+  Future<List<Category>> _getAllCategoriesWithEmptyCloudId() =>
       _databaseSource.categories.getAllWithEmptyCloudId();
 
+  @override
   Future<Category> getCategoryById(int id) =>
       _databaseSource.categories.getById(id);
 
+  @override
   Stream<Category> watchCategoryById(int id) =>
       _databaseSource.categories.watchById(id);
 
+  @override
   Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
       _databaseSource.categories.watchAllByType(type);
 
+  @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
       _databaseSource.categories.watchCashflowByCategoryByMonth(id);
 
+  @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
       _databaseSource.categories.watchCashflowByCategoryByYear(id);
 
+  @override
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
       _databaseSource.categories.watchCategoryCashflowByType(date, type);
 
+  @override
   Future<List<CategoryCashflow>> getCategoryCashflowByType(
           DateTime date, OperationType type) =>
       _databaseSource.categories.getCategoryCashflowByType(date, type);
 
+  @override
   Future<List<Category>> getAllCategoriesByType(OperationType type) =>
       _databaseSource.categories.getAllByType(type);
 
+  @override
   Future<int> insertCategory(Category category) async {
     var _cloudId =
         await _remoteSource.addCategory(_mapToCloudCategory(category));
@@ -308,39 +337,49 @@ class DataRepository {
     });
   }
 
+  @override
   Future updateCategory(Category category) async {
     await _remoteSource.updateCategory(_mapToCloudCategory(category));
     await _databaseSource.categories.update(category);
   }
 
   //Operation
+  @override
   Future<List<Operation>> getAllOperations() =>
       _databaseSource.operations.getAll();
 
-  Future<List<Operation>> getAllOperationsWithEmptyCloudId() =>
+  Future<List<Operation>> _getAllOperationsWithEmptyCloudId() =>
       _databaseSource.operations.getAllWithEmptyCloudId();
 
+  @override
   Stream<List<Operation>> watchAllOperations() =>
       _databaseSource.operations.watchAll();
 
+  @override
   Stream<List<Operation>> watchAllOperationsByFilter(
           OperationListFilter filter) =>
       _databaseSource.operations.watchAllByFilter(filter);
 
+  @override
   Future<Operation> getOperationById(int id) =>
       _databaseSource.operations.getById(id);
 
+  @override
   Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
       _databaseSource.operations.watchAllByAccount(accountId);
 
+  @override
   Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
       _databaseSource.operations.watchAllByCategory(categoryId);
 
+  @override
   Stream<List<Operation>> watchLastOperations(int limit) =>
       _databaseSource.operations.watchLast(limit);
 
+  @override
   Future<Operation?> getLastOperation() => _databaseSource.operations.getLast();
 
+  @override
   Future<Operation> insertOperation(Operation operation) async {
     var _cloudId =
         await _remoteSource.addOperation(_mapToCloudOperation(operation));
@@ -354,11 +393,13 @@ class DataRepository {
     });
   }
 
+  @override
   Future updateOperation(Operation operation) async {
     await _remoteSource.updateOperation(_mapToCloudOperation(operation));
     await _databaseSource.operations.update(operation);
   }
 
+  @override
   Future<Operation> duplicateOperation(Operation operation) {
     var newOperation = operation.copyWith(
       id: 0,
@@ -368,6 +409,7 @@ class DataRepository {
     return insertOperation(newOperation);
   }
 
+  @override
   Future deleteOperation(Operation operation) async {
     await _remoteSource.deleteOperation(_mapToCloudOperation(operation));
     await _databaseSource.operations.deleteById(operation.id);
@@ -375,15 +417,18 @@ class DataRepository {
 
   //Backup
 
+  @override
   Future deleteAll() async {
     await _remoteSource.deleteAll();
     await _databaseSource.deleteAll();
   }
 
+  @override
   Future<Map<String, List<Map<String, dynamic>>>> exportData() {
     return _databaseSource.exportData();
   }
 
+  @override
   Future<void> importData(Map<String, dynamic> data) async {
     await _databaseSource.deleteAll();
     await _databaseSource.importData(data);

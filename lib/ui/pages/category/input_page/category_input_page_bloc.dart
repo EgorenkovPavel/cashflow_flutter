@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class CategoryInputPageState {}
@@ -25,7 +25,7 @@ class Saved extends CategoryInputPageState {
 }
 
 class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
-  final DataRepository _repository;
+  final DataSource _repository;
 
   int? _id;
   OperationType _type = OperationType.INPUT;

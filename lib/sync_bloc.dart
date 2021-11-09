@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
@@ -63,7 +63,7 @@ class SyncState_NoDb extends SyncState {
 
 class SyncBloc extends Cubit<SyncState> {
   final AuthBloc _authBloc;
-  final DataRepository dataRepository;
+  final DataSource dataSource;
   final PrefsRepository prefsRepository;
 
   StreamSubscription? _syncSub;
@@ -73,7 +73,7 @@ class SyncBloc extends Cubit<SyncState> {
 
   SyncBloc({
     required AuthBloc authBloc,
-    required this.dataRepository,
+    required this.dataSource,
     required this.prefsRepository,
   })  : _authBloc = authBloc,
         super(SyncState_NotSynced(isAdmin: false)) {
@@ -88,18 +88,18 @@ class SyncBloc extends Cubit<SyncState> {
         emit(SyncState_NotSynced(isAdmin: _isAdmin));
       }
     });
-    _adminSub = dataRepository.isAdmin().listen((event) {
+    _adminSub = dataSource.isAdmin().listen((event) {
       _isAdmin = event;
     });
   }
 
   Future<void> _syncData() async {
     emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
-    await dataRepository.loadToCloud();
+    await dataSource.loadToCloud();
 
     emit(SyncState_LoadingFromCloud(isAdmin: _isAdmin));
     var syncDate = DateTime.now();
-    if (await dataRepository.loadFromCloud(prefsRepository.syncDate)) {
+    if (await dataSource.loadFromCloud(prefsRepository.syncDate)) {
       await prefsRepository.setSyncDate(syncDate);
       emit(SyncState_Synced(isAdmin: _isAdmin));
     } else {
@@ -109,11 +109,11 @@ class SyncBloc extends Cubit<SyncState> {
 
   Future<bool> _logIn(String userId) async {
     emit(SyncState_InProgress());
-    var res = await dataRepository.cloudDbExists(userId);
+    var res = await dataSource.cloudDbExists(userId);
 
     return res.fold((success) async {
       if (success) {
-        var resLogIn = await dataRepository.logIn(userId);
+        var resLogIn = await dataSource.logIn(userId);
         return resLogIn.fold((success) => true, (failure) {
           emit(SyncState_Failed(isAdmin: _isAdmin));
           return false;
@@ -131,14 +131,14 @@ class SyncBloc extends Cubit<SyncState> {
   Future<bool> createCloudDatabase() async {
     if (!_authBloc.state.inProgress && _authBloc.state.isAuthenticated) {
       emit(SyncState_InProgress());
-      var res = await dataRepository.createCloudDatabase(_authBloc.state.user!);
+      var res = await dataSource.createCloudDatabase(_authBloc.state.user!);
       if (res.isFailure()){
         emit(SyncState_Failed(isAdmin: _isAdmin));
         return false;
       }
 
       emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
-      await dataRepository.loadToCloud();
+      await dataSource.loadToCloud();
       await prefsRepository.setSyncDate(DateTime.now());
 
       emit(SyncState_Synced(isAdmin: _isAdmin));
@@ -159,7 +159,7 @@ class SyncBloc extends Cubit<SyncState> {
   }
 
   Future<bool> addUser(User user) async {
-    var res = await dataRepository.addNewUser(user);
+    var res = await dataSource.addNewUser(user);
     return res.fold((left) => false, (right) => true);
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -26,7 +26,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = OperationFilterPageBloc(context.read<DataRepository>())
+    _bloc = OperationFilterPageBloc(context.read<DataSource>())
       ..init(
         widget.filter ?? OperationListFilter(),
       );

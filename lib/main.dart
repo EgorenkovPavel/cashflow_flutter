@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/auth_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/remote/firecloud_source.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/database_source.dart';
@@ -31,7 +32,7 @@ Future<void> main() async {
 
   final _cloudSource = FirecloudSource(_firestore);
 
-  final _dataRepository = DataRepository(
+  final DataSource _dataSource = DataRepository(
     databaseSource: _databaseSource,
     cloudSource: _cloudSource,
   );
@@ -58,14 +59,14 @@ Future<void> main() async {
           lazy: false,
           create: (context) => SyncBloc(
             authBloc: context.read<AuthBloc>(),
-            dataRepository: _dataRepository,
+            dataSource: _dataSource,
             prefsRepository: _prefsRepo,
           ),
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<DataRepository>(create: (_) => _dataRepository),
+          RepositoryProvider<DataSource>(create: (_) => _dataSource),
           RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
         ],
         child: MyApp(),
