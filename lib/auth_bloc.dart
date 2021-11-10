@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:money_tracker/data/auth_repository.dart';
+import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/internet_connection_bloc.dart';
 
-class AuthState {
+class AuthState extends Equatable {
   final bool isAuthenticated;
   final bool isConnectedToInternet;
   final User? user;
@@ -46,51 +47,54 @@ class AuthState {
       );
 
   factory AuthState.disconnected() => AuthState(
-    isAuthenticated: false,
-    isConnectedToInternet: false,
-    inProgress: false,
-  );
+        isAuthenticated: false,
+        isConnectedToInternet: false,
+        inProgress: false,
+      );
+
+  @override
+  List<Object?> get props =>
+      [isAuthenticated, isConnectedToInternet, user, inProgress, client];
 }
 
 class AuthBloc extends Cubit<AuthState> {
   final InternetConnectionBloc _connectionBloc;
-  final AuthRepository _authRepository;
+  final AuthSource _authSource;
 
   StreamSubscription? _sub;
 
   bool isConnectedToInternet = false;
 
   AuthBloc({
-    required AuthRepository repository,
+    required AuthSource authSource,
     required InternetConnectionBloc connectionBloc,
-  })  : _authRepository = repository,
+  })  : _authSource = authSource,
         _connectionBloc = connectionBloc,
         super(AuthState.inProgress()) {
-
     _sub = _connectionBloc.stream.listen((event) {
       isConnectedToInternet = event.isConnectedToInternet;
-      if (event.isConnectedToInternet){
+      if (event.isConnectedToInternet) {
         _signInSilently();
-      }else{
+      } else {
         _checkAuth();
       }
     });
   }
 
   Future<void> _signInSilently() async {
-    await _authRepository.signInSilently();
+    await _authSource.signInSilently();
     await _checkAuth();
   }
 
   Future<void> _checkAuth() async {
-    if (!isConnectedToInternet){
+    if (!isConnectedToInternet) {
       emit(AuthState.disconnected());
       return;
     }
-    var isAuthed = await _authRepository.isAuthenticated();
+    var isAuthed = await _authSource.isAuthenticated();
     if (isAuthed) {
-      var user = await _authRepository.getUser();
-      var client = await _authRepository.getClient();
+      var user = await _authSource.getUser();
+      var client = await _authSource.getClient();
       emit(AuthState.authenticated(user: user!, client: client!));
     } else {
       emit(AuthState.notAuthenticated());
@@ -100,7 +104,7 @@ class AuthBloc extends Cubit<AuthState> {
   Future<void> signIn() async {
     emit(AuthState.inProgress());
     try {
-      await _authRepository.signIn();
+      await _authSource.signIn();
     } finally {
       await _checkAuth();
     }
@@ -109,7 +113,7 @@ class AuthBloc extends Cubit<AuthState> {
   Future<void> signOut() async {
     emit(AuthState.inProgress());
     try {
-      await _authRepository.signOut();
+      await _authSource.signOut();
     } finally {
       await _checkAuth();
     }

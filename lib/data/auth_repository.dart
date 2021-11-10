@@ -2,9 +2,10 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart' as model;
 
-class AuthRepository {
+class AuthRepository extends AuthSource{
   late final GoogleSignIn _googleSignIn;
   final auth = FirebaseAuth.instance;
 
@@ -17,12 +18,14 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<bool> isAuthenticated() async {
     final currentUser = _googleSignIn.currentUser;
     var isSignIn = await _googleSignIn.isSignedIn();
     return currentUser != null && isSignIn;
   }
 
+  @override
   Future<void> signInSilently() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
@@ -36,6 +39,7 @@ class AuthRepository {
     }
   }
 
+  @override
   Future<void> signIn() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
@@ -49,6 +53,7 @@ class AuthRepository {
     }
   }
 
+  @override
   Future<void> signOut() async {
     var isAuth = await isAuthenticated();
     if (isAuth) {
@@ -57,6 +62,7 @@ class AuthRepository {
     }
   }
 
+  @override
   Future<model.User?> getUser() async {
     if (_googleSignIn.currentUser == null) {
       return null;
@@ -70,6 +76,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<AuthClient?> getClient() {
     return _googleSignIn.authenticatedClient();
   }
