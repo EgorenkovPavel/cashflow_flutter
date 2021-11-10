@@ -20,8 +20,8 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: true, internet: true),
       act: (AuthBloc bloc) => bloc.signIn(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.authenticated(user: getTestUser(), client: authClient),
+        AuthStateInProgress(),
+        AuthStateAuthenticated(user: getTestUser(), client: authClient),
       ],
     );
 
@@ -30,8 +30,8 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: true, internet: false),
       act: (AuthBloc bloc) => bloc.signIn(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.disconnected(),
+        AuthStateInProgress(),
+        AuthStateDisconnected(),
       ],
     );
 
@@ -40,9 +40,9 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: false, internet: true),
       act: (AuthBloc bloc) => bloc.signIn(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.notAuthenticated(),
-        AuthState.authenticated(user: getTestUser(), client: authClient),
+        AuthStateInProgress(),
+        AuthStateNotAuthenticated(),
+        AuthStateAuthenticated(user: getTestUser(), client: authClient),
       ],
     );
 
@@ -51,8 +51,8 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: false, internet: false),
       act: (AuthBloc bloc) => bloc.signIn(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.disconnected(),
+        AuthStateInProgress(),
+        AuthStateDisconnected(),
       ],
     );
 
@@ -61,9 +61,9 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: true, internet: true),
       act: (AuthBloc bloc) => bloc.signOut(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.authenticated(user: getTestUser(), client: authClient),
-        AuthState.notAuthenticated(),
+        AuthStateInProgress(),
+        AuthStateAuthenticated(user: getTestUser(), client: authClient),
+        AuthStateNotAuthenticated(),
       ],
     );
 
@@ -72,8 +72,8 @@ void main() {
       build: () => getAuthBloc(isAlreadySigned: true, internet: false),
       act: (AuthBloc bloc) => bloc.signOut(),
       expect: () => [
-        AuthState.inProgress(),
-        AuthState.disconnected(),
+        AuthStateInProgress(),
+        AuthStateDisconnected(),
       ],
     );
 
