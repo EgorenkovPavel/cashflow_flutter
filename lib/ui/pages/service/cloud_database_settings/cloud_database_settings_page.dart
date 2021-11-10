@@ -55,6 +55,7 @@ class AdminSettings extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text('Add user'),
         content: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _idController,
