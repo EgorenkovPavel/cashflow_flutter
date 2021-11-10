@@ -89,7 +89,7 @@ class BudgetPageBloc extends Cubit<BudgetPageState> {
           .toList(),
       itemsYearBudget: _items
           .where((element) => element.category.budgetType == BudgetType.YEAR)
-          .where((element) => _showAllYearBudget || element.monthCashflow > 0)
+          .where((element) => _showAllYearBudget || element.yearCashflow > 0)
           .toList(),
       itemsAll: _items
     ));

@@ -91,7 +91,7 @@ class _BudgetPageState extends State<BudgetPage> {
                       cashflow: state.itemsYearBudget.fold(
                           0,
                           (previousValue, element) =>
-                              previousValue + element.monthCashflow),
+                              previousValue + element.yearCashflow),
                       showAll: state.showAllYearBudget,
                       onPressed: () => _bloc.changeShowAll(BudgetType.YEAR))),
               SliverList(
@@ -302,17 +302,21 @@ class _CategoryItem extends StatelessWidget {
 
   const _CategoryItem({Key? key, required this.category}) : super(key: key);
 
-  double _progress() {
-    var _cashflow = category.category.budgetType == BudgetType.MONTH
+  int _cashflow() {
+    return category.category.budgetType == BudgetType.MONTH
         ? category.monthCashflow
         : category.yearCashflow;
+  }
+
+  double _progress() {
+    var _cash = _cashflow();
     var _budget = category.category.budget;
-    if (_cashflow == 0) {
+    if (_cash == 0) {
       return 0;
-    } else if (_cashflow > _budget || _budget == 0) {
+    } else if (_cash > _budget || _budget == 0) {
       return 1;
     } else {
-      return _cashflow / _budget;
+      return _cash / _budget;
     }
   }
 
@@ -325,7 +329,7 @@ class _CategoryItem extends StatelessWidget {
       subtitle: Text(AppLocalizations.of(context)
           .numberFormat(category.category.budget)),
       trailing: Text(AppLocalizations.of(context)
-          .numberFormat(category.monthCashflow)),
+          .numberFormat(_cashflow())),
       leading: CircularProgressIndicator(
         value: _progress(),
       ),
