@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/data/auth_repository.dart';
+import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/remote/firecloud_source.dart';
 import 'package:money_tracker/data/local/data/database.dart';
@@ -27,7 +28,7 @@ Future<void> main() async {
   final _firestore = FirebaseFirestore.instance;
   _firestore.settings = Settings(persistenceEnabled: false);
 
-  final _authRepository = AuthRepository();
+  final AuthSource _authRepository = AuthRepository();
   final _driveRepository = DriveRepository();
 
   final _cloudSource = FirecloudSource(_firestore);
@@ -51,7 +52,7 @@ Future<void> main() async {
         BlocProvider(
           lazy: false,
           create: (context) => AuthBloc(
-            repository: _authRepository,
+            authSource: _authRepository,
             connectionBloc: context.read<InternetConnectionBloc>(),
           ),
         ),
