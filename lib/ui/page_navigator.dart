@@ -18,7 +18,6 @@ import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 
 class PageNavigator {
-  static const _routeAccountName = '/account';
 
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
@@ -31,15 +30,6 @@ class PageNavigator {
         context,
         AccountInputPage.edit(id),
       );
-
-  static Future openAccountPage(BuildContext context, int accountId) =>
-      Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
-
-  static const _routeCategoryName = '/category';
-
-  static void openCategoryPage(BuildContext context, int categoryId) =>
-      Navigator.of(context)
-          .pushNamed(_routeCategoryName, arguments: categoryId);
 
   static Future<Category?> openCategoryInputPage(BuildContext context,
           {required OperationType type}) =>
@@ -58,6 +48,17 @@ class PageNavigator {
           id: id,
         ),
       );
+
+  static const _routeAccountName = '/account';
+
+  static Future openAccountPage(BuildContext context, int accountId) =>
+      Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
+
+  static const _routeCategoryName = '/category';
+
+  static void openCategoryPage(BuildContext context, int categoryId) =>
+      Navigator.of(context)
+          .pushNamed(_routeCategoryName, arguments: categoryId);
 
   static const _routeOperationName = '/operation';
 
@@ -88,17 +89,17 @@ class PageNavigator {
   static Future openSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeSettingsName);
 
-  static const _routeDataControlName = '/data_control';
+  static const _routeDataControlName = '/settings/data_control';
 
   static Future openDataControlPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeDataControlName);
 
-  static const _routeGoogleDriveSettingsName = '/google_drive_settings';
+  static const _routeGoogleDriveSettingsName = '/settings/google_drive_settings';
 
   static Future openGoogleDriveSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeGoogleDriveSettingsName);
 
-  static const _routeCloudDatabaseSettingsName = '/cloud_database__settings';
+  static const _routeCloudDatabaseSettingsName = '/settings/cloud_database__settings';
 
   static Future openCloudDatabaseSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeCloudDatabaseSettingsName);
