@@ -7,54 +7,34 @@ import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/internet_connection_bloc.dart';
 
-class AuthState extends Equatable {
-  final bool isAuthenticated;
-  final bool isConnectedToInternet;
-  final User? user;
-  final bool inProgress;
-  final AuthClient? client;
+abstract class AuthState extends Equatable{}
 
-  AuthState({
-    required this.isAuthenticated,
-    this.user,
-    required this.inProgress,
-    this.client,
-    required this.isConnectedToInternet,
+class AuthStateInProgress extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthStateAuthenticated extends AuthState {
+  final User user;
+  final AuthClient client;
+
+  AuthStateAuthenticated({
+    required this.user,
+    required this.client,
   });
 
-  factory AuthState.inProgress() => AuthState(
-        isAuthenticated: false,
-        isConnectedToInternet: false,
-        inProgress: true,
-      );
-
-  factory AuthState.authenticated({
-    required User user,
-    required AuthClient client,
-  }) =>
-      AuthState(
-        inProgress: false,
-        isAuthenticated: true,
-        isConnectedToInternet: true,
-        user: user,
-        client: client,
-      );
-
-  factory AuthState.notAuthenticated() => AuthState(
-        isAuthenticated: false,
-        isConnectedToInternet: true,
-        inProgress: false,
-      );
-
-  factory AuthState.disconnected() => AuthState(
-        isAuthenticated: false,
-        isConnectedToInternet: false,
-        inProgress: false,
-      );
-
   @override
-  List<Object?> get props =>
-      [isAuthenticated, isConnectedToInternet, user, inProgress, client];
+  List<Object?> get props => [user, client];
+}
+
+class AuthStateNotAuthenticated extends AuthState{
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthStateDisconnected extends AuthState{
+  @override
+  List<Object?> get props => [];
 }
 
 class AuthBloc extends Cubit<AuthState> {
@@ -70,7 +50,7 @@ class AuthBloc extends Cubit<AuthState> {
     required InternetConnectionBloc connectionBloc,
   })  : _authSource = authSource,
         _connectionBloc = connectionBloc,
-        super(AuthState.inProgress()) {
+        super(AuthStateInProgress()) {
     _sub = _connectionBloc.stream.listen((event) {
       isConnectedToInternet = event.isConnectedToInternet;
       if (event.isConnectedToInternet) {
@@ -88,21 +68,21 @@ class AuthBloc extends Cubit<AuthState> {
 
   Future<void> _checkAuth() async {
     if (!isConnectedToInternet) {
-      emit(AuthState.disconnected());
+      emit(AuthStateDisconnected());
       return;
     }
     var isAuthed = await _authSource.isAuthenticated();
     if (isAuthed) {
       var user = await _authSource.getUser();
       var client = await _authSource.getClient();
-      emit(AuthState.authenticated(user: user!, client: client!));
+      emit(AuthStateAuthenticated(user: user!, client: client!));
     } else {
-      emit(AuthState.notAuthenticated());
+      emit(AuthStateNotAuthenticated());
     }
   }
 
   Future<void> signIn() async {
-    emit(AuthState.inProgress());
+    emit(AuthStateInProgress());
     try {
       await _authSource.signIn();
     } finally {
@@ -111,7 +91,7 @@ class AuthBloc extends Cubit<AuthState> {
   }
 
   Future<void> signOut() async {
-    emit(AuthState.inProgress());
+    emit(AuthStateInProgress());
     try {
       await _authSource.signOut();
     } finally {
