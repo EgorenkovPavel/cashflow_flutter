@@ -57,7 +57,7 @@ class FirecloudSource extends RemoteSource {
   @override
   Future<Try<void>> addNewUser(User user) async {
     if (_db == null) {
-      return Future.value(Failure(Exception('No local')));
+      return Future.value(Failure('No connected cloud database'));
     }
     try {
       var doc = await _db!.get();
@@ -71,7 +71,7 @@ class FirecloudSource extends RemoteSource {
           .set(const UserMapper().mapToCloud(user));
       return Success(null);
     } catch (e) {
-      return Future.value(Failure(e as Exception));
+      return Future.value(Failure(e.toString()));
     }
   }
 
@@ -84,7 +84,7 @@ class FirecloudSource extends RemoteSource {
       var doc = await _db!.collection(_USERS).get();
       return Success(doc.docs.map((doc) => const UserMapper().mapToDart(doc)));
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 
@@ -98,7 +98,7 @@ class FirecloudSource extends RemoteSource {
 
       return Success(querySnapshot.docs.isNotEmpty);
     } catch (e) {
-      return Future.value(Failure(e as Exception));
+      return Future.value(Failure(e.toString()));
     }
   }
 
@@ -118,7 +118,7 @@ class FirecloudSource extends RemoteSource {
       return Success(null);
     } catch (e) {
       _adminController.add(false);
-      return Future.value(Failure(e as Exception));
+      return Future.value(Failure(e.toString()));
     }
   }
 
@@ -132,7 +132,7 @@ class FirecloudSource extends RemoteSource {
         _adminController.add(doc.data()![_DATABASES_ADMIN] == userId);
         return Success(null);
       } catch (e) {
-        return Failure(e as Exception);
+        return Failure(e.toString());
       }
     }, (failure) {
       _db = null;
@@ -158,10 +158,10 @@ class FirecloudSource extends RemoteSource {
         return Success(
             _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id));
       } else {
-        return Failure(Exception('No local found'));
+        return Failure('No local found');
       }
     } catch (e) {
-      return Future.value(Failure(e as Exception));
+      return Future.value(Failure(e.toString()));
     }
   }
 
@@ -231,14 +231,14 @@ class FirecloudSource extends RemoteSource {
   @override
   Future<Try<void>> deleteAll() async {
     if (_db == null) {
-      return Failure(Exception('No db'));
+      return Failure('No db');
     }
 
     var queryOperation;
     try {
       queryOperation = await _operations.get();
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
 
     await Future.forEach<CloudOperation>(queryOperation, (element) async {
@@ -252,7 +252,7 @@ class FirecloudSource extends RemoteSource {
     try {
       queryCategory = await _categories.get();
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
 
     await Future.forEach<CloudCategory>(queryCategory, (element) async {
@@ -266,7 +266,7 @@ class FirecloudSource extends RemoteSource {
     try {
       queryAccount = await _accounts.get();
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
 
     await Future.forEach<CloudAccount>(queryAccount, (element) async {
@@ -303,7 +303,7 @@ class CollectionDAO<T> {
           .get();
       return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 
@@ -311,50 +311,50 @@ class CollectionDAO<T> {
     try {
       var doc = await collection?.add(mapper.mapToCloud(data));
       if (doc == null) {
-        return Failure(Exception('Error'));
+        return Failure('Error');
       } else {
         return Success(doc.id);
       }
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 
   Future<Try<void>> updateItem(String id,
       T data,) async {
     if (collection == null) {
-      return Failure(Exception('Collection is null'));
+      return Failure('Collection is null');
     }
     try {
       await collection!.doc(id).update(mapper.mapToCloud(data));
       return Success(null);
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 
   Future<Try<void>> deleteItem(String id, T data, ) async {
     if (collection == null) {
-      return Failure(Exception('Collection is null'));
+      return Failure('Collection is null');
     }
     try {
       await updateItem(id, data);
       //await collection!.doc(id).delete();
       return Success(null);
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 
   Future<Try<void>> refreshSyncDate(String id,) async {
     if (collection == null) {
-      return Failure(Exception('Collection is null'));
+      return Failure('Collection is null');
     }
     try {
       await collection!.doc(id).update({key_updated: DateTime.now()});
       return Success(null);
     } catch (e) {
-      return Failure(e as Exception);
+      return Failure(e.toString());
     }
   }
 }
