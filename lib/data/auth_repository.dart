@@ -31,9 +31,14 @@ class AuthRepository extends AuthSource{
     if (!isAuth) {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signInSilently();
       final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      if(googleUser == null || googleAuth == null){
+        return;
+      }
+
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
       await auth.signInWithCredential(credential);
     }
