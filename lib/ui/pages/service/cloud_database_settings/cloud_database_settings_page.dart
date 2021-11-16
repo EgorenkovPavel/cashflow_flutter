@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/domain/models/user.dart';
@@ -8,21 +10,22 @@ import 'package:money_tracker/sync_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {
-
   const CloudDatabaseSettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Cloud local'),),
+      appBar: AppBar(
+        title: Text('Cloud local'),
+      ),
       body: BlocConsumer<SyncBloc, SyncState>(
-        listener: (context, state){},
-        builder: (context, state){
-          if (state.isAdmin){
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state.isAdmin) {
             return AdminSettings();
-          }else if(state is! SyncState_NoDb){
+          } else if (state is! SyncState_NoDb) {
             return ConnectedView();
-          }else{
+          } else {
             return ConnectingView();
           }
         },
@@ -36,19 +39,46 @@ class ConnectedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Database connected'),);
+    return Container(
+      child: Text('Database connected'),
+    );
   }
 }
-
 
 class AdminSettings extends StatelessWidget {
   const AdminSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () => _addUser(context),
-        child: Text('Add user'));
+    return Row(
+      children: [
+        ElevatedButton(
+          onPressed: () => _addUser(context),
+          child: Text('Add user'),
+        ),
+        ElevatedButton(
+          onPressed: () => _scanQrCode(context),
+          child: Text('Scan qr code'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _scanQrCode(BuildContext context) async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+    }on PlatformException{
+      return;
+    }
+    if (barcodeScanRes == ''){
+      return;
+    }
+
+    var userData = jsonDecode(barcodeScanRes);
+
+    context.read<SyncBloc>().addUser(User.fromJson(userData));
   }
 
   Future<void> _addUser(BuildContext context) async {
@@ -63,9 +93,9 @@ class AdminSettings extends StatelessWidget {
           children: [
             TextField(
               controller: _idController,
-          decoration: InputDecoration(
-            labelText: 'Id',
-          ),
+              decoration: InputDecoration(
+                labelText: 'Id',
+              ),
             ),
             TextField(
               controller: _nameController,
@@ -79,11 +109,11 @@ class AdminSettings extends StatelessWidget {
           TextButton(
               onPressed: () {
                 context.read<SyncBloc>().addUser(User(
-                  id: _idController.text,
-                  name: _nameController.text,
-                  isAdmin: false,
-                  photo: '',
-                ));
+                      id: _idController.text,
+                      name: _nameController.text,
+                      isAdmin: false,
+                      photo: '',
+                    ));
                 Navigator.of(context).pop();
               },
               child: Text('OK'))
@@ -107,8 +137,8 @@ class ConnectingView extends StatelessWidget {
             child: Text('Create local'),
           ),
           BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state){
-              if (state is AuthStateAuthenticated){
+            builder: (context, state) {
+              if (state is AuthStateAuthenticated) {
                 return Column(
                   children: [
                     QrImage(
@@ -120,7 +150,7 @@ class ConnectingView extends StatelessWidget {
                     Text('Name: ${state.user.name}'),
                   ],
                 );
-              }else{
+              } else {
                 return SizedBox();
               }
             },
@@ -133,5 +163,3 @@ class ConnectingView extends StatelessWidget {
     );
   }
 }
-
-
