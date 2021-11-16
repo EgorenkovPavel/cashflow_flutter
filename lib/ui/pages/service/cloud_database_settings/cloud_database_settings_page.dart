@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/auth_bloc.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/sync_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {
 
@@ -94,18 +98,38 @@ class ConnectingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: () => context.read<SyncBloc>().createCloudDatabase(),
-          child: Text('Create local'),
-        ),
-        Text('or send UserId to admin user'),
-        ElevatedButton(
-            onPressed: () => context.read<SyncBloc>().refreshConnection(),
-            child: Text('Refresh')),
-      ],
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ElevatedButton(
+            onPressed: () => context.read<SyncBloc>().createCloudDatabase(),
+            child: Text('Create local'),
+          ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state){
+              if (state is AuthStateAuthenticated){
+                return Column(
+                  children: [
+                    QrImage(
+                      data: jsonEncode(state.user),
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    ),
+                    Text('Id: ${state.user.id}'),
+                    Text('Name: ${state.user.name}'),
+                  ],
+                );
+              }else{
+                return SizedBox();
+              }
+            },
+          ),
+          ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().refreshConnection(),
+              child: Text('Refresh')),
+        ],
+      ),
     );
   }
 }

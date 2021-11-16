@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:money_tracker/data/local/data/database.dart';
 
 class User extends Equatable {
   final String id;
@@ -12,6 +13,18 @@ class User extends Equatable {
     required this.photo,
     required this.isAdmin,
   });
+
+  User.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        photo = json['photo'],
+        isAdmin = false;
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'photo': photo,
+  };
 
   @override
   List<Object?> get props => [id, name, photo, isAdmin];
