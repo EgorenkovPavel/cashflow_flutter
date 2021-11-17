@@ -49,7 +49,7 @@ class AuthListTile extends StatelessWidget {
         if (_authState is AuthStateAuthenticated) {
           return ListTile(
             title: Text('Google account'),
-            subtitle: Text('UserId ${_authState.user.id}'),
+            subtitle: Text('Signed In'),
             trailing: ElevatedButton(
                 onPressed: () => context.read<AuthBloc>().signOut(),
                 child: Text('SING OUT' //todo
@@ -58,7 +58,7 @@ class AuthListTile extends StatelessWidget {
         } else {
           return ListTile(
             title: Text('Google account'),
-            subtitle: Text(''),
+            subtitle: Text('Sign in to backup yout database'),
             trailing: ElevatedButton(
                 onPressed: () {
                   context.read<AuthBloc>().signIn();
