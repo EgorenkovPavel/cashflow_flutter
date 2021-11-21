@@ -42,21 +42,21 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.2"
+    version: "2.8.1"
   bloc:
     dependency: "direct main"
     description:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.1"
+    version: "8.0.1"
   bloc_test:
     dependency: "direct main"
     description:
       name: bloc_test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.5.0"
+    version: "9.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -323,6 +323,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  fake_async:
+    dependency: transitive
+    description:
+      name: fake_async
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   ffi:
     dependency: transitive
     description:
@@ -418,7 +425,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.3"
+    version: "8.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -431,6 +438,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  flutter_test:
+    dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -554,7 +566,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.11"
+    version: "0.12.10"
   meta:
     dependency: transitive
     description:
@@ -778,6 +790,20 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
+    version: "2.0.9"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.8"
+  shared_preferences_ios:
+    dependency: transitive
+    description:
+      name: shared_preferences_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.8"
   shared_preferences_linux:
     dependency: transitive
@@ -932,26 +958,26 @@ packages:
     source: hosted
     version: "1.2.0"
   test:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.19.3"
+    version: "1.17.10"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.7"
+    version: "0.4.2"
   test_core:
     dependency: transitive
     description:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.8"
+    version: "0.4.0"
   timing:
     dependency: transitive
     description:
