@@ -1,5 +1,5 @@
 import 'package:money_tracker/domain/models.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 class BudgetTypeConverter extends TypeConverter<BudgetType, int> {
   const BudgetTypeConverter();

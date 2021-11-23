@@ -17,8 +17,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
       required this.cloudId,
       required this.title,
       required this.isDebt});
-  factory AccountDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory AccountDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return AccountDB(
       id: const IntType()
@@ -52,7 +51,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
 
   factory AccountDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return AccountDB(
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
@@ -62,7 +61,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
@@ -239,7 +238,7 @@ class $AccountsTable extends Accounts
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   AccountDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return AccountDB.fromData(data, _db,
+    return AccountDB.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
@@ -263,8 +262,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       required this.operationType,
       required this.budgetType,
       required this.budget});
-  factory CategoryDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory CategoryDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return CategoryDB(
       id: const IntType()
@@ -312,7 +310,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
 
   factory CategoryDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return CategoryDB(
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
@@ -324,7 +322,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
@@ -558,7 +556,7 @@ class $CategoriesTable extends Categories
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   CategoryDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return CategoryDB.fromData(data, _db,
+    return CategoryDB.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
@@ -591,8 +589,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       this.category,
       this.recAccount,
       required this.sum});
-  factory OperationDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory OperationDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return OperationDB(
       id: const IntType()
@@ -653,7 +650,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
 
   factory OperationDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return OperationDB(
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
@@ -667,7 +664,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
@@ -960,7 +957,7 @@ class $OperationsTable extends Operations
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   OperationDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return OperationDB.fromData(data, _db,
+    return OperationDB.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
@@ -983,8 +980,7 @@ class BalanceDB extends DataClass implements Insertable<BalanceDB> {
       required this.operation,
       required this.account,
       required this.sum});
-  factory BalanceDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory BalanceDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return BalanceDB(
       date: const DateTimeType()
@@ -1018,7 +1014,7 @@ class BalanceDB extends DataClass implements Insertable<BalanceDB> {
 
   factory BalanceDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return BalanceDB(
       date: serializer.fromJson<DateTime>(json['date']),
       operation: serializer.fromJson<int>(json['operation']),
@@ -1028,7 +1024,7 @@ class BalanceDB extends DataClass implements Insertable<BalanceDB> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'date': serializer.toJson<DateTime>(date),
       'operation': serializer.toJson<int>(operation),
@@ -1212,7 +1208,7 @@ class $BalancesTable extends Balances
   Set<GeneratedColumn> get $primaryKey => {operation, account};
   @override
   BalanceDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return BalanceDB.fromData(data, _db,
+    return BalanceDB.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
@@ -1232,8 +1228,7 @@ class CashflowDB extends DataClass implements Insertable<CashflowDB> {
       required this.operation,
       required this.category,
       required this.sum});
-  factory CashflowDB.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory CashflowDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return CashflowDB(
       date: const DateTimeType()
@@ -1267,7 +1262,7 @@ class CashflowDB extends DataClass implements Insertable<CashflowDB> {
 
   factory CashflowDB.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return CashflowDB(
       date: serializer.fromJson<DateTime>(json['date']),
       operation: serializer.fromJson<int>(json['operation']),
@@ -1277,7 +1272,7 @@ class CashflowDB extends DataClass implements Insertable<CashflowDB> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'date': serializer.toJson<DateTime>(date),
       'operation': serializer.toJson<int>(operation),
@@ -1461,7 +1456,7 @@ class $CashflowsTable extends Cashflows
   Set<GeneratedColumn> get $primaryKey => {operation, category};
   @override
   CashflowDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return CashflowDB.fromData(data, _db,
+    return CashflowDB.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 

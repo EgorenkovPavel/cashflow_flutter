@@ -1,10 +1,10 @@
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'operation_dao.g.dart';
 
-@UseDao(tables: [Accounts, Categories, Operations, Balances, Cashflows])
+@DriftAccessor(tables: [Accounts, Categories, Operations, Balances, Cashflows])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
   OperationDao(Database db) : super(db);
