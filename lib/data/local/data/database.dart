@@ -5,10 +5,10 @@ import 'package:money_tracker/data/local/data/operation_dao.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/budget_type.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:moor/ffi.dart';
+import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 import 'dart:io';
 
 part 'database.g.dart';
@@ -161,11 +161,11 @@ LazyDatabase _openConnection() {
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return VmDatabase(file);
+    return NativeDatabase(file);
   });
 }
 
-@UseMoor(
+@DriftDatabase(
     tables: [Accounts, Categories, Operations, Balances, Cashflows],
     daos: [AccountDao, CategoryDao, OperationDao])
 class Database extends _$Database {

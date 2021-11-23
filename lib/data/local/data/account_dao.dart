@@ -1,9 +1,9 @@
 import 'package:money_tracker/data/local/data/database.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'account_dao.g.dart';
 
-@UseDao(tables: [Accounts, Balances])
+@DriftAccessor(tables: [Accounts, Balances])
 class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   // Called by the AppDatabase class
   AccountDao(Database db) : super(db);

@@ -4,7 +4,7 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 class AccountRepository extends LocalAccountRepo{
   final AccountDao accountDao;

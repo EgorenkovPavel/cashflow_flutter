@@ -3,7 +3,7 @@ import 'package:money_tracker/data/local/converters/operation_type_converter.dar
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'category_dao.g.dart';
 
@@ -46,7 +46,7 @@ class CategoryBudgetEntity {
   int get hashCode => category.hashCode;
 }
 
-@UseDao(tables: [Categories, Cashflows])
+@DriftAccessor(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
   CategoryDao(Database db) : super(db);
@@ -149,7 +149,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data, db),
+                  category: CategoryDB.fromData(row.data),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -185,7 +185,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data, db),
+                  category: CategoryDB.fromData(row.data),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -253,7 +253,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data, db),
+                  category: CategoryDB.fromData(row.data),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -279,7 +279,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryBudgetEntity(
-                  CategoryDB.fromData(row.data, db),
+                  CategoryDB.fromData(row.data),
                   row.read<int>('budget'),
                 ),
               )

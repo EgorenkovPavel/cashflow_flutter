@@ -5,7 +5,7 @@ import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 class CategoryRepository extends LocalCategoryRepo{
   final CategoryDao categoryDao;
