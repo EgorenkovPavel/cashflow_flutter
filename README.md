@@ -1,3 +1,5 @@
+[![Codemagic build status](https://api.codemagic.io/apps/5e20980fdb01d42befc9c30b/5e20980fdb01d42befc9c30a/status_badge.svg)](https://codemagic.io/apps/5e20980fdb01d42befc9c30b/5e20980fdb01d42befc9c30a/latest_build)
+
 # cashflow
 
 A new Flutter application.
