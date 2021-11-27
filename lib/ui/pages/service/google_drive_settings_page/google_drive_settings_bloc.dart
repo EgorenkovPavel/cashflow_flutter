@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
 
 class DriveBloc extends Cubit<DriveState> {
-  final DataSource _dataRepository;
+  final LocalSource _dataRepository;
   final DriveRepository _driveRepository;
   final AuthBloc _authBloc;
 
   StreamSubscription? _authSub;
 
   DriveBloc({
-    required DataSource dataRepository,
+    required LocalSource dataRepository,
     required DriveRepository driveRepository,
     required AuthBloc authBloc,
   })  : _dataRepository = dataRepository,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/subtitle.dart';
@@ -14,30 +14,33 @@ class BudgetSubtitle extends StatelessWidget {
     required this.type,
   }) : super(key: key);
 
-  int _calcCashflow(List<CategoryCashflow> list){
+  int _calcCashflow(List<CategoryCashflow> list) {
     return list.fold(
         0, (previousValue, element) => previousValue + element.monthCashflow);
   }
 
-  int _calcBudget(List<CategoryCashflow> list){
-    return
-        list.where((element) => element.category.budgetType == BudgetType.MONTH).fold<int>(
-            0,
-                (previousValue, element) =>
-            previousValue + element.category.budget)
-        +
-            list.where((element) => element.category.budgetType == BudgetType.YEAR).fold<int>(
+  int _calcBudget(List<CategoryCashflow> list) {
+    return list
+            .where((element) => element.category.budgetType == BudgetType.MONTH)
+            .fold<int>(
                 0,
-                    (previousValue, element) =>
-                previousValue + (element.category.budget / 12).floor());
+                (previousValue, element) =>
+                    previousValue + element.category.budget) +
+        list
+            .where((element) => element.category.budgetType == BudgetType.YEAR)
+            .fold<int>(
+                0,
+                (previousValue, element) =>
+                    previousValue + (element.category.budget / 12).floor());
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CategoryCashflow>>(
       stream: context
-          .read<DataSource>()
-          .watchCategoryCashflowByType(DateTime.now(), type),
+          .read<LocalSource>()
+          .categories
+          .watchCashflowByType(DateTime.now(), type),
       builder: (context, snapshot) {
         var _cashflow = 0;
         var _budget = 0;
@@ -59,10 +62,8 @@ class BudgetSubtitle extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6),
                 TextSpan(
                     text: DateFormat.MMMM().format(DateTime.now()),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Theme.of(context).colorScheme.primary)),
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: Theme.of(context).colorScheme.primary)),
               ],
             ),
           ),

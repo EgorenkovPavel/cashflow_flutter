@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models/category.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/ui/pages/list_card.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/pages/list_card.dart';
 import 'package:money_tracker/ui/widgets/sliver_header_delegate.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -23,8 +23,9 @@ class CategoryList extends StatelessWidget {
         ),
         StreamBuilder<List<Category>>(
           stream: context
-              .read<DataSource>()
-              .watchAllCategoriesByType(OperationType.INPUT),
+              .read<LocalSource>()
+              .categories
+              .watchAllByType(OperationType.INPUT),
           builder: (context, state) {
             var _categories = <Category>[];
             if (state.hasData && state.data != null) {
@@ -43,8 +44,9 @@ class CategoryList extends StatelessWidget {
         ),
         StreamBuilder<List<Category>>(
           stream: context
-              .read<DataSource>()
-              .watchAllCategoriesByType(OperationType.OUTPUT),
+              .read<LocalSource>()
+              .categories
+              .watchAllByType(OperationType.OUTPUT),
           builder: (context, state) {
             var _categories = <Category>[];
             if (state.hasData && state.data != null) {

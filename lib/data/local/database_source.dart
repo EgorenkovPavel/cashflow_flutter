@@ -21,15 +21,24 @@ class DatabaseSource extends LocalSource{
     _operationRepo = OperationRepository(OperationDao(db));
   }
 
+  @override
   AccountRepository get accounts => _accountRepo;
 
+  @override
   CategoryRepository get categories => _categoryRepo;
 
+  @override
   OperationRepository get operations => _operationRepo;
 
+  @override
   Future deleteAll() => db.deleteAll();
 
+  @override
   Future<Map<String, List<Map<String, dynamic>>>> exportData() => db.getDbData();
 
-  Future importData(Map<String, dynamic> data) => db.loadData(data);
+  @override
+  Future importData(Map<String, dynamic> data) async {
+    await deleteAll();
+    return db.loadData(data);
+  }
 }

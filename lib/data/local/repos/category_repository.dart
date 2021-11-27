@@ -29,35 +29,44 @@ class CategoryRepository extends LocalCategoryRepo{
       _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
 
+  @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
       categoryDao.watchCashflowByCategoryByMonth(id);
 
+  @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
       categoryDao.watchCashflowByCategoryByYear(id);
 
+  @override
   Stream<List<Category>> watchAll() =>
       categoryDao.watchAllCategories().map(_mapCategoryList);
 
+  @override
   Future<List<Category>> getAll() async =>
       _mapCategoryList(await categoryDao.getAllCategories());
 
+  @override
   Future<List<Category>> getAllWithEmptyCloudId() async =>
       _mapCategoryList(await categoryDao.getAllCategoriesWithEmptyCloudId());
 
-  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
+  @override
+  Stream<List<CategoryCashflow>> watchCashflowByType(
           DateTime date, OperationType type) =>
       categoryDao
           .watchCategoryCashflowByType(date, type)
           .map(_mapCategoryCashflowList);
 
-  Future<List<CategoryCashflow>> getCategoryCashflowByType(
+  @override
+  Future<List<CategoryCashflow>> getCashflowByType(
       DateTime date, OperationType type) async =>
       _mapCategoryCashflowList(await categoryDao
           .getCategoryCashflowByType(date, type));
 
+  @override
   Future<Category> getById(int id) async =>
       _mapCategory(await categoryDao.getCategoryById(id));
 
+  @override
   Future<Category?> getByCloudId(String cloudId) async {
     var _category = await categoryDao.getCategoryByCloudId(cloudId);
     if (_category == null){
@@ -67,15 +76,19 @@ class CategoryRepository extends LocalCategoryRepo{
     }
   }
 
+  @override
   Stream<Category> watchById(int id) =>
       categoryDao.watchCategoryById(id).map(_mapCategory);
 
+  @override
   Stream<List<Category>> watchAllByType(OperationType type) =>
       categoryDao.watchAllCategoriesByType(type).map(_mapCategoryList);
 
+  @override
   Future<List<Category>> getAllByType(OperationType type) async =>
       _mapCategoryList(await categoryDao.getAllCategoriesByType(type));
 
+  @override
   Future<int> insert(Category entity) =>
       categoryDao.insertCategory(CategoriesCompanion(
         cloudId: Value(entity.cloudId),
@@ -85,6 +98,22 @@ class CategoryRepository extends LocalCategoryRepo{
         budget: Value(entity.budget),
       ));
 
+  @override
   Future update(Category entity) =>
       categoryDao.updateCategory(_mapCategoryDB(entity));
+
+  @override
+  Future<List<Category>> getAllNotSynced() async {
+    return _mapCategoryList(await categoryDao.getAllNotSynced());
+  }
+
+  @override
+  Future markAsSynced(int categoryId, String cloudId) {
+    return categoryDao.markAsSynced(categoryId, cloudId);
+  }
+
+  @override
+  Stream<Category> watchNotSynced() {
+    return categoryDao.watchNotSynced().map((event) => _mapCategory(event));
+  }
 }

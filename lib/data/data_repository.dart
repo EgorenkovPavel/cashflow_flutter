@@ -314,12 +314,12 @@ class DataRepository extends DataSource{
   @override
   Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
           DateTime date, OperationType type) =>
-      _databaseSource.categories.watchCategoryCashflowByType(date, type);
+      _databaseSource.categories.watchCashflowByType(date, type);
 
   @override
   Future<List<CategoryCashflow>> getCategoryCashflowByType(
           DateTime date, OperationType type) =>
-      _databaseSource.categories.getCategoryCashflowByType(date, type);
+      _databaseSource.categories.getCashflowByType(date, type);
 
   @override
   Future<List<Category>> getAllCategoriesByType(OperationType type) =>
@@ -384,12 +384,10 @@ class DataRepository extends DataSource{
     var _cloudId =
         await _remoteSource.addOperation(_mapToCloudOperation(operation));
     return _cloudId.fold((success) async {
-      var _id = await _databaseSource.operations
+      return await _databaseSource.operations
           .insert(operation.copyWith(cloudId: success));
-      return operation.copyWith(id: _id, cloudId: success);
     }, (failure) async {
-      var _id = await _databaseSource.operations.insert(operation);
-      return operation.copyWith(id: _id);
+      return await _databaseSource.operations.insert(operation);
     });
   }
 
@@ -430,7 +428,6 @@ class DataRepository extends DataSource{
 
   @override
   Future<void> importData(Map<String, dynamic> data) async {
-    await _databaseSource.deleteAll();
     await _databaseSource.importData(data);
   }
 }

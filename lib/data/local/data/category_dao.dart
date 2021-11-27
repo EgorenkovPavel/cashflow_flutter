@@ -1,9 +1,9 @@
-import 'package:money_tracker/data/local/data/database.dart';
+import 'package:drift/drift.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
+import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
-import 'package:drift/drift.dart';
 
 part 'category_dao.g.dart';
 
@@ -89,6 +89,12 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               (c) => c.cloudId.equals(cloudId),
             ))
           .getSingleOrNull();
+
+  Future<List<CategoryDB>> getAllNotSynced() =>
+      (select(categories)..where((tbl) => tbl.synced.equals(false))).get();
+
+  Stream<CategoryDB> watchNotSynced() =>
+      (select(categories)..where((tbl) => tbl.synced.equals(false))).watchSingle();
 
   Stream<CategoryDB> watchCategoryById(int id) => (select(categories)
         ..where(
@@ -289,6 +295,15 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future<int> insertCategory(CategoriesCompanion entity) =>
       into(categories).insert(entity);
+
+  Future<int> markAsSynced(int categoryId, String cloudId) {
+    return (update(categories)..where((t) => t.id.equals(categoryId))).write(
+      CategoriesCompanion(
+        cloudId: Value(cloudId),
+        synced: Value(true),
+      ),
+    );
+  }
 
   Future updateCategory(CategoryDB entity) =>
       update(categories).replace(entity);

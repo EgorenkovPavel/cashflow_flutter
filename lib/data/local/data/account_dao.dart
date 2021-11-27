@@ -18,6 +18,12 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   Future<List<AccountDB>> getAllAccountsWithEmptyCloudId() =>
       (select(accounts)..where((tbl) => tbl.cloudId.equals(''))).get();
 
+  Future<List<AccountDB>> getAllAccountsNotSynced() =>
+      (select(accounts)..where((tbl) => tbl.synced.equals(false))).get();
+
+  Stream<AccountDB> watchNotSynced() =>
+      (select(accounts)..where((tbl) => tbl.synced.equals(false))).watchSingle();
+
   Stream<AccountDB> watchAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).watchSingle();
 
@@ -33,6 +39,16 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Future<bool> updateAccount(AccountDB entity) =>
       update(accounts).replace(entity);
+
+  Future<int> markAsSynced(int accountId, String cloudId) {
+    return (update(accounts)
+      ..where((t) => t.id.equals(accountId))
+    ).write(AccountsCompanion(
+      cloudId: Value(cloudId),
+      synced: Value(true),
+    ),
+    );
+  }
 
   Stream<int> getTotalBalance() {
     return customSelect(

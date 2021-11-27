@@ -13,6 +13,7 @@ class AccountMapper extends Mapper<Account, AccountDB> {
       cloudId: a.cloudId,
       title: a.title,
       isDebt: a.isDebt,
+      synced: false,
     );
   }
 

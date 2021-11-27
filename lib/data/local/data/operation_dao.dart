@@ -92,6 +92,91 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             ).toList());
   }
 
+  Future<List<OperationItem>> getAllOperationItemsNotSynced() {
+    final acc = alias(accounts, 'a');
+    final rec = alias(accounts, 'rec');
+
+    return (select(operations)
+      ..where((tbl) => tbl.synced.equals(false))
+      ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+      ]))
+        .join(
+      [
+        innerJoin(
+          acc,
+          acc.id.equalsExp(operations.account),
+        ),
+        leftOuterJoin(
+          categories,
+          categories.id.equalsExp(operations.category),
+        ),
+        leftOuterJoin(
+          rec,
+          rec.id.equalsExp(operations.recAccount),
+        ),
+      ],
+    )
+        .get()
+        .then((rows) => rows.map(
+          (row) {
+        var op = row.readTable(operations);
+        return OperationItem(
+            operation: op,
+            account: row.readTable(acc),
+            category: op.operationType == OperationType.TRANSFER
+                ? null
+                : row.readTable(categories),
+            recAccount: op.operationType == OperationType.TRANSFER
+                ? row.readTable(rec)
+                : null);
+      },
+    ).toList());
+  }
+
+  Stream<OperationItem> watchOperationItemsNotSynced() {
+    final acc = alias(accounts, 'a');
+    final rec = alias(accounts, 'rec');
+
+    return (select(operations)
+      ..where((tbl) => tbl.synced.equals(false))
+      ..orderBy([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+      ]))
+        .join(
+      [
+        innerJoin(
+          acc,
+          acc.id.equalsExp(operations.account),
+        ),
+        leftOuterJoin(
+          categories,
+          categories.id.equalsExp(operations.category),
+        ),
+        leftOuterJoin(
+          rec,
+          rec.id.equalsExp(operations.recAccount),
+        ),
+      ],
+    )
+        .watchSingle()
+        .map(
+          (row) {
+        var op = row.readTable(operations);
+        return OperationItem(
+            operation: op,
+            account: row.readTable(acc),
+            category: op.operationType == OperationType.TRANSFER
+                ? null
+                : row.readTable(categories),
+            recAccount: op.operationType == OperationType.TRANSFER
+                ? row.readTable(rec)
+                : null);
+      },
+    );
+  }
+
+
   Stream<List<OperationItem>> watchAllOperationItems() {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
@@ -450,6 +535,16 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
                   ? row.readTable(rec)
                   : null);
         });
+  }
+
+  Future<int> markAsSynced(int operationId, String cloudId) {
+    return (update(operations)
+      ..where((t) => t.id.equals(operationId))
+    ).write(OperationsCompanion(
+      cloudId: Value(cloudId),
+      synced: Value(true),
+    ),
+    );
   }
 
   Future insertOperationItem(OperationItem entity) {

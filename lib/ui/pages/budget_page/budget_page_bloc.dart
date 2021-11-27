@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class BudgetPageState {
@@ -23,7 +23,7 @@ class BudgetPageState {
 }
 
 class BudgetPageBloc extends Cubit<BudgetPageState> {
-  final DataSource repo;
+  final LocalSource repo;
 
   DateTime _date = DateTime(DateTime.now().year, DateTime.now().month);
   late OperationType _type;
@@ -70,7 +70,7 @@ class BudgetPageBloc extends Cubit<BudgetPageState> {
   Future<void> watchCashflow() async {
     await _subscription?.cancel();
     _subscription =
-        repo.watchCategoryCashflowByType(_date, _type).listen((items) {
+        repo.categories.watchCashflowByType(_date, _type).listen((items) {
       items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow);
 
       _items = items;

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class CategoryInputPageState {}
@@ -25,7 +25,7 @@ class Saved extends CategoryInputPageState {
 }
 
 class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
-  final DataSource _repository;
+  final LocalSource _repository;
 
   int? _id;
   OperationType _type = OperationType.INPUT;
@@ -43,7 +43,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
 
   Future<void> initialById(int id) async {
     _id = id;
-    var category = await _repository.getCategoryById(id);
+    var category = await _repository.categories.getById(id);
     _type = category.operationType;
     _budgetType = category.budgetType;
     emit(InputState(
@@ -67,7 +67,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
         budget: int.parse(budget),
       );
 
-      var id = await _repository.insertCategory(category);
+      var id = await _repository.categories.insert(category);
       emit(Saved(category.copyWith(id: id)));
     } else {
       var category = Category(
@@ -78,7 +78,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
         budget: int.parse(budget),
       );
 
-      var id = await _repository.updateCategory(category);
+      var id = await _repository.categories.update(category);
       emit(Saved(category));
     }
   }

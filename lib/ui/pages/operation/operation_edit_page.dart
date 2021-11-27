@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
@@ -29,7 +29,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
   Account? _recAccount;
   final TextEditingController _sumController = TextEditingController();
 
-  late DataSource model;
+  late LocalSource model;
   late List<Account> accountList;
   late List<Category> categoryInList;
   late List<Category> categoryOutList;
@@ -38,21 +38,21 @@ class _OperationEditPageState extends State<OperationEditPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    model = Provider.of<DataSource>(context);
+    model = Provider.of<LocalSource>(context);
 
-    model.watchAllAccounts().forEach((list) {
+    model.accounts.watchAll().forEach((list) {
       setState(() {
         accountList = list;
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.INPUT).forEach((list) {
+    model.categories.watchAllByType(OperationType.INPUT).forEach((list) {
       setState(() {
         categoryInList = list;
       });
     });
 
-    model.watchAllCategoriesByType(OperationType.OUTPUT).forEach((list) {
+    model.categories.watchAllByType(OperationType.OUTPUT).forEach((list) {
       setState(() {
         categoryOutList = list;
       });
@@ -63,8 +63,9 @@ class _OperationEditPageState extends State<OperationEditPage> {
   void initState() {
     super.initState();
 
-    Provider.of<DataSource>(context, listen: false)
-        .getOperationById(widget.id)
+    Provider.of<LocalSource>(context, listen: false)
+        .operations
+        .getById(widget.id)
         .then((Operation data) {
       setState(() {
         _type = data.type;
@@ -182,13 +183,13 @@ class _OperationEditPageState extends State<OperationEditPage> {
             ),
           ),
           ElevatedButton(
-             onPressed: () {
+            onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _saveOperation(context);
                 Navigator.pop(context);
               }
             },
-             child: Text(
+            child: Text(
               AppLocalizations.of(context).save.toUpperCase(),
               //style: TextStyle(color: Colors.white),
             ),
@@ -256,8 +257,9 @@ class _OperationEditPageState extends State<OperationEditPage> {
           recAccount: _recAccount,
           sum: int.parse(_sumController.text));
 
-      await Provider.of<DataSource>(context, listen: false)
-          .insertOperation(operation);
+      await Provider.of<LocalSource>(context, listen: false)
+          .operations
+          .insert(operation);
     } else {
       var operation = Operation(
           id: widget.id,
@@ -267,8 +269,9 @@ class _OperationEditPageState extends State<OperationEditPage> {
           category: _category,
           sum: int.parse(_sumController.text));
 
-      await Provider.of<DataSource>(context, listen: false)
-          .updateOperation(operation);
+      await Provider.of<LocalSource>(context, listen: false)
+          .operations
+          .update(operation);
     }
   }
 

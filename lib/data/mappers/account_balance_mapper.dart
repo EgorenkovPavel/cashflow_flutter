@@ -16,6 +16,7 @@ class AccountBalanceMapper
           cloudId: a.cloudId,
           title: a.title,
           isDebt: a.isDebt,
+          synced: false,
         ),
         a.balance);
   }

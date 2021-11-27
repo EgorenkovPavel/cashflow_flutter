@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/sum_on_date.dart';
 
@@ -32,14 +32,14 @@ class CategoryState {
 }
 
 class CategoryBloc extends Cubit<CategoryState> {
-  final DataSource _repository;
+  final LocalSource _repository;
 
   StreamSubscription<Category>? subCategory;
 
   CategoryBloc(this._repository) : super(CategoryState());
 
   void fetch(int id) {
-    subCategory = _repository.watchCategoryById(id).listen((event) {
+    subCategory = _repository.categories.watchById(id).listen((event) {
       emit(state.copyWith(
           title: event.title,
           budget: event.budget,
