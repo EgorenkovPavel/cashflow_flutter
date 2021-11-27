@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class StateBloc {
@@ -31,7 +31,7 @@ class StateBloc {
 }
 
 class OperationFilterPageBloc extends Cubit<StateBloc> {
-  final DataSource model;
+  final LocalSource model;
   late List<Account> accountList;
   late List<Category> categoryInList;
   late List<Category> categoryOutList;
@@ -40,11 +40,11 @@ class OperationFilterPageBloc extends Cubit<StateBloc> {
   OperationFilterPageBloc(this.model) : super(StateBloc());
 
   Future<void> init(OperationListFilter filter) async {
-    accountList = await model.getAllAccounts();
+    accountList = await model.accounts.getAll();
 
-    categoryInList = await model.getAllCategoriesByType(OperationType.INPUT);
+    categoryInList = await model.categories.getAllByType(OperationType.INPUT);
 
-    categoryOutList = await model.getAllCategoriesByType(OperationType.OUTPUT);
+    categoryOutList = await model.categories.getAllByType(OperationType.OUTPUT);
 
     _state = StateBloc(
       dateRange: filter.date,

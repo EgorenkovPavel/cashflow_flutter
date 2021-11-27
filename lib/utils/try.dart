@@ -18,6 +18,7 @@ class Success<T> extends Try<T>{
   R fold<R>(R Function(T success) fnL, R Function(String failure) fnR) {
     return fnL(value);
   }
+
 }
 
 class Failure<T> extends Try<T>{
@@ -29,4 +30,5 @@ class Failure<T> extends Try<T>{
   R fold<R>(R Function(T success) fnL, R Function(String failure) fnR) {
     return fnR(value);
   }
+
 }

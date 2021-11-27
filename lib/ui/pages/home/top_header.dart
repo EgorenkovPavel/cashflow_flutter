@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/themes.dart';
@@ -14,7 +14,7 @@ class TopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<AccountBalance>>(
-      stream: context.read<DataSource>().watchAllAccountsBalance(),
+      stream: context.read<LocalSource>().accounts.watchAllBalance(),
       builder: (context, snapshot) {
         var _balance = 0;
         var _accounts = <AccountBalance>[];

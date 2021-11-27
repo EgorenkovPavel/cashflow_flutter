@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/auth_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/backup_dialog.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/restore_dialog.dart';
@@ -13,7 +13,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _bloc = DriveBloc(
-        dataRepository: context.read<DataSource>(),
+        dataRepository: context.read<LocalSource>(),
         driveRepository: context.read<DriveRepository>(),
       authBloc: context.read<AuthBloc>(),
     );

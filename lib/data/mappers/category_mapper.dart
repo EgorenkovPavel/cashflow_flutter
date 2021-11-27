@@ -15,6 +15,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
       operationType: c.operationType,
       budgetType: c.budgetType,
       budget: c.budget,
+      synced: false,
     );
   }
 

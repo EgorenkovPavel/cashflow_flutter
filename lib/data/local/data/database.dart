@@ -25,6 +25,8 @@ class Accounts extends Table {
   TextColumn get title => text()();
 
   BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
+
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('CategoryDB')
@@ -45,6 +47,8 @@ class Categories extends Table {
       integer().named('budget_type').map(const BudgetTypeConverter())();
 
   IntColumn get budget => integer()();
+
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('OperationDB')
@@ -71,6 +75,8 @@ class Operations extends Table {
       integer().nullable().customConstraint('NULL REFERENCES account(id)')();
 
   IntColumn get sum => integer()();
+
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('BalanceDB')
@@ -246,6 +252,7 @@ class Database extends _$Database {
                 cloudId: '',
                 title: d['account_title'],
                 isDebt: false,
+                synced: false,
               ));
             } else {
               accounts.add(
@@ -270,6 +277,7 @@ class Database extends _$Database {
                 budgetType: const BudgetTypeConverter().mapToDart(
                   int.parse(d['category_budget_type']),
                 )!,
+                synced: false,
               ));
             } else {
               categories.add(CategoryDB.fromJson(d,
@@ -294,6 +302,7 @@ class Database extends _$Database {
                 category: _getId(d['operation_category_id']),
                 recAccount: _getId(d['operation_recipient_account_id']),
                 sum: int.parse(d['operation_sum']),
+                synced: false,
               ));
             } else {
               operations.add(OperationDB.fromJson(d,

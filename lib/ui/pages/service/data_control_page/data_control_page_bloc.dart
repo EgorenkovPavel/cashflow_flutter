@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 
 enum DataControlState{
   INITIAL,
@@ -9,7 +9,7 @@ enum DataControlState{
 
 class DataControlBloc extends Cubit<DataControlState>{
 
-  final DataSource _dataRepository;
+  final LocalSource _dataRepository;
 
   DataControlBloc(this._dataRepository) : super(DataControlState.INITIAL);
 

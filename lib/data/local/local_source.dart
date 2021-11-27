@@ -26,6 +26,9 @@ abstract class LocalAccountRepo{
   Future<Account> getById(int id);
 
   Future<Account?> getByCloudId(String cloudId);
+  Stream<Account> watchNotSynced();
+  Future<List<Account>> getAllNotSynced();
+  Future markAsSynced(int accountId, String cloudId);
 
   Future<int> insert(Account account);
   Future update(Account account);
@@ -38,17 +41,21 @@ abstract class LocalCategoryRepo{
   Future<List<Category>> getAll();
   Future<List<Category>> getAllWithEmptyCloudId();
 
-  Stream<List<CategoryCashflow>> watchCategoryCashflowByType(
+  Stream<List<CategoryCashflow>> watchCashflowByType(
       DateTime date, OperationType type);
-  Future<List<CategoryCashflow>> getCategoryCashflowByType(
+  Future<List<CategoryCashflow>> getCashflowByType(
       DateTime date, OperationType type);
 
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id);
   Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id);
 
   Future<Category> getById(int id);
-  Future<Category?> getByCloudId(String cloudId);
   Stream<Category> watchById(int id);
+
+  Future<Category?> getByCloudId(String cloudId);
+  Stream<Category> watchNotSynced();
+  Future<List<Category>> getAllNotSynced();
+  Future markAsSynced(int categoryId, String cloudId);
 
   Stream<List<Category>> watchAllByType(OperationType type);
   Future<List<Category>> getAllByType(OperationType type);
@@ -65,14 +72,19 @@ abstract class LocalOperationsRepo{
   Stream<List<Operation>> watchAllByFilter(OperationListFilter filter);
 
   Future<Operation> getById(int id);
+
   Future<Operation?> getByCloudId(String cloudId);
+  Stream<Operation> watchNotSynced();
+  Future<List<Operation>> getAllNotSynced();
+  Future markAsSynced(int operationId, String cloudId);
 
   Stream<List<Operation>> watchAllByAccount(int accountId);
   Stream<List<Operation>> watchAllByCategory(int categoryId);
   Stream<List<Operation>> watchLast(int limit);
 
   Future<Operation?> getLast();
-  Future<int> insert(Operation entity);
+  Future<Operation> insert(Operation entity);
+  Future<Operation> duplicate(Operation entity);
   Future update(Operation operation);
   Future delete(Operation entity);
   Future deleteById(int operationId);

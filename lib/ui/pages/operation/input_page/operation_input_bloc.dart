@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -42,7 +42,7 @@ class MasterState {
 }
 
 class MasterBloc extends Cubit<MasterState> {
-  final DataSource _repository;
+  final LocalSource _repository;
   final Stream<List<AccountBalance>> accountStream;
   final Stream<List<Category>> categoryInStream;
   final Stream<List<Category>> categoryOutStream;
@@ -54,11 +54,11 @@ class MasterBloc extends Cubit<MasterState> {
   Operation? _operation;
 
   MasterBloc(this._repository)
-      : accountStream = _repository.watchAllAccountsBalance(),
+      : accountStream = _repository.accounts.watchAllBalance(),
         categoryInStream =
-            _repository.watchAllCategoriesByType(OperationType.INPUT),
+            _repository.categories.watchAllByType(OperationType.INPUT),
         categoryOutStream =
-            _repository.watchAllCategoriesByType(OperationType.OUTPUT),
+            _repository.categories.watchAllByType(OperationType.OUTPUT),
         super(MasterState(
             action: MasterStateAction.DATA,
             type: OperationType.INPUT,
@@ -74,7 +74,7 @@ class MasterBloc extends Cubit<MasterState> {
   AccountBalance? get recAccount => _recAccount;
 
   Future<void> start() async {
-    var op = await _repository.getLastOperation();
+    var op = await _repository.operations.getLast();
 
     if (op == null) {
       return;
@@ -162,7 +162,7 @@ class MasterBloc extends Cubit<MasterState> {
   }
 
   Future<void> cancelOperation() async {
-    await _repository.deleteOperation(_operation!);
+    await _repository.operations.delete(_operation!);
     _operation = null;
     emit(state.copyWith(
         action: MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE));
@@ -217,7 +217,7 @@ class MasterBloc extends Cubit<MasterState> {
               category: _categoryIn,
               sum: state.sum);
 
-          return _repository.insertOperation(operation);
+          return _repository.operations.insert(operation);
         }
       case OperationType.OUTPUT:
         {
@@ -228,7 +228,7 @@ class MasterBloc extends Cubit<MasterState> {
               category: _categoryOut,
               sum: state.sum);
 
-          return _repository.insertOperation(operation);
+          return _repository.operations.insert(operation);
         }
       case OperationType.TRANSFER:
         {
@@ -240,7 +240,7 @@ class MasterBloc extends Cubit<MasterState> {
                   const AccountBalanceMapper().mapToAccount(_recAccount!),
               sum: state.sum);
 
-          return _repository.insertOperation(operation);
+          return _repository.operations.insert(operation);
         }
       default:
         {

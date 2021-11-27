@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class AccountInputPageState {
@@ -28,7 +28,7 @@ class AccountInputPageState {
 enum BlocAction { DATA, CLOSE }
 
 class AccountInputPageBloc extends Cubit<AccountInputPageState> {
-  final DataSource _repository;
+  final LocalSource _repository;
 
   int? _id;
 
@@ -38,7 +38,7 @@ class AccountInputPageBloc extends Cubit<AccountInputPageState> {
 
   Future<void> fetch(int id) async {
     _id = id;
-    var account = await _repository.getAccountById(id);
+    var account = await _repository.accounts.getById(id);
     emit(AccountInputPageState(
         action: BlocAction.DATA, title: account.title, isDebt: account.isDebt));
   }
@@ -50,11 +50,11 @@ class AccountInputPageBloc extends Cubit<AccountInputPageState> {
   Future<void> save(String title) async {
     if (_id == null) {
       var account = Account(title: title, isDebt: state.isDebt);
-      var _id = await _repository.insertAccount(account);
+      var _id = await _repository.accounts.insert(account);
       emit(state.copyWith(action: BlocAction.CLOSE, account: account.copyWith(id: _id)));
     } else {
       var account = Account(id: _id!, title: title, isDebt: state.isDebt);
-      await _repository.updateAccount(account);
+      await _repository.accounts.update(account);
       emit(state.copyWith(action: BlocAction.CLOSE, account: account));
     }
   }
