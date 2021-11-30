@@ -30,17 +30,16 @@ enum BlocAction { DATA, CLOSE }
 class AccountInputPageBloc extends Cubit<AccountInputPageState> {
   final LocalSource _repository;
 
-  int? _id;
+  Account? _account;
 
   AccountInputPageBloc(this._repository)
       : super(AccountInputPageState(
             action: BlocAction.DATA, title: '', isDebt: false));
 
   Future<void> fetch(int id) async {
-    _id = id;
-    var account = await _repository.accounts.getById(id);
+    _account = await _repository.accounts.getById(id);
     emit(AccountInputPageState(
-        action: BlocAction.DATA, title: account.title, isDebt: account.isDebt));
+        action: BlocAction.DATA, title: _account!.title, isDebt: _account!.isDebt));
   }
 
   void changeIsDebt(bool val) {
@@ -48,14 +47,14 @@ class AccountInputPageBloc extends Cubit<AccountInputPageState> {
   }
 
   Future<void> save(String title) async {
-    if (_id == null) {
+    if (_account == null) {
       var account = Account(title: title, isDebt: state.isDebt);
       var _id = await _repository.accounts.insert(account);
       emit(state.copyWith(action: BlocAction.CLOSE, account: account.copyWith(id: _id)));
     } else {
-      var account = Account(id: _id!, title: title, isDebt: state.isDebt);
-      await _repository.accounts.update(account);
-      emit(state.copyWith(action: BlocAction.CLOSE, account: account));
+      var _newAccount = _account!.copyWith(title: title, isDebt: state.isDebt);
+      await _repository.accounts.update(_newAccount);
+      emit(state.copyWith(action: BlocAction.CLOSE, account: _newAccount));
     }
   }
 }

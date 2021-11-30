@@ -1,5 +1,5 @@
-import 'package:money_tracker/data/local/data/database.dart';
 import 'package:drift/drift.dart';
+import 'package:money_tracker/data/local/data/database.dart';
 
 part 'account_dao.g.dart';
 
@@ -12,8 +12,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       (select(accounts)..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<AccountDB>> getAllAccounts() =>
-      select(accounts).get();
+  Future<List<AccountDB>> getAllAccounts() => select(accounts).get();
 
   Future<List<AccountDB>> getAllAccountsWithEmptyCloudId() =>
       (select(accounts)..where((tbl) => tbl.cloudId.equals(''))).get();
@@ -22,7 +21,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       (select(accounts)..where((tbl) => tbl.synced.equals(false))).get();
 
   Stream<AccountDB> watchNotSynced() =>
-      (select(accounts)..where((tbl) => tbl.synced.equals(false))).watchSingle();
+      (select(accounts)..where((tbl) => tbl.synced.equals(false)))
+          .watchSingle();
 
   Stream<AccountDB> watchAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).watchSingle();
@@ -37,16 +37,18 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   Future<int> insertAccount(AccountsCompanion entity) =>
       into(accounts).insert(entity);
 
+  Future<int> updateFields(int accountId, AccountsCompanion entity) =>
+      (update(accounts)..where((t) => t.id.equals(accountId))).write(entity);
+
   Future<bool> updateAccount(AccountDB entity) =>
       update(accounts).replace(entity);
 
   Future<int> markAsSynced(int accountId, String cloudId) {
-    return (update(accounts)
-      ..where((t) => t.id.equals(accountId))
-    ).write(AccountsCompanion(
-      cloudId: Value(cloudId),
-      synced: Value(true),
-    ),
+    return (update(accounts)..where((t) => t.id.equals(accountId))).write(
+      AccountsCompanion(
+        cloudId: Value(cloudId),
+        synced: Value(true),
+      ),
     );
   }
 

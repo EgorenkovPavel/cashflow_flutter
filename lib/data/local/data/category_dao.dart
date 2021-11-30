@@ -296,6 +296,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Future<int> insertCategory(CategoriesCompanion entity) =>
       into(categories).insert(entity);
 
+  Future<int> updateFields(int categoryId, CategoriesCompanion entity) =>
+      (update(categories)..where((t) => t.id.equals(categoryId))).write(entity);
+
   Future<int> markAsSynced(int categoryId, String cloudId) {
     return (update(categories)..where((t) => t.id.equals(categoryId))).write(
       CategoriesCompanion(

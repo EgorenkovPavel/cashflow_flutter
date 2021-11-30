@@ -27,7 +27,7 @@ class Saved extends CategoryInputPageState {
 class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   final LocalSource _repository;
 
-  int? _id;
+  Category? _category;
   OperationType _type = OperationType.INPUT;
   BudgetType _budgetType = BudgetType.MONTH;
 
@@ -42,24 +42,23 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
   }
 
   Future<void> initialById(int id) async {
-    _id = id;
-    var category = await _repository.categories.getById(id);
-    _type = category.operationType;
-    _budgetType = category.budgetType;
+    _category = await _repository.categories.getById(id);
+    _type = _category!.operationType;
+    _budgetType = _category!.budgetType;
     emit(InputState(
         type: _type,
         budgetType: _budgetType,
-        title: category.title,
-        budget: category.budget));
+        title: _category!.title,
+        budget: _category!.budget));
   }
 
-  void setbudgetType(BudgetType budgetType) {
+  void setBudgetType(BudgetType budgetType) {
     _budgetType = budgetType;
     emit(InputState(type: _type, budgetType: _budgetType));
   }
 
   Future<void> save(String title, String budget) async {
-    if (_id == null) {
+    if (_category == null) {
       var category = Category(
         title: title,
         operationType: _type,
@@ -70,16 +69,15 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
       var id = await _repository.categories.insert(category);
       emit(Saved(category.copyWith(id: id)));
     } else {
-      var category = Category(
-        id: _id!,
+      var _newCategory = _category!.copyWith(
         title: title,
         operationType: _type,
         budgetType: _budgetType,
         budget: int.parse(budget),
       );
 
-      var id = await _repository.categories.update(category);
-      emit(Saved(category));
+      var id = await _repository.categories.update(_newCategory);
+      emit(Saved(_newCategory));
     }
   }
 }

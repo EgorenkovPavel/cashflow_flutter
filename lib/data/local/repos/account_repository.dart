@@ -89,4 +89,24 @@ class AccountRepository extends LocalAccountRepo{
   Stream<Account> watchNotSynced() {
     return accountDao.watchNotSynced().map((event) => _mapAccount(event));
   }
+
+  @override
+  Future insertFromCloud(Account account) {
+    return accountDao.insertAccount(AccountsCompanion(
+      cloudId: Value(account.cloudId),
+      title: Value(account.title),
+      isDebt: Value(account.isDebt),
+      synced: Value(true),
+    ));
+  }
+
+  @override
+  Future updateFromCloud(Account account) {
+    return accountDao.updateFields(account.id, AccountsCompanion(
+      cloudId: Value(account.cloudId),
+      title: Value(account.title),
+      isDebt: Value(account.isDebt),
+      synced: Value(true),
+    ));
+  }
 }

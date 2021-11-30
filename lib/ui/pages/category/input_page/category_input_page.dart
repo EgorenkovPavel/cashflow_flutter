@@ -150,7 +150,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                     width: 16.0,
                   ),
                   TypeRadioButton<BudgetType>(
-                      onChange: (type) => _bloc.setbudgetType(type),
+                      onChange: (type) => _bloc.setBudgetType(type),
                       type: (state as InputState).budgetType,
                       items: [BudgetType.MONTH, BudgetType.YEAR])
                 ],
