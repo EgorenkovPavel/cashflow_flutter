@@ -30,6 +30,9 @@ abstract class LocalAccountRepo{
   Future<List<Account>> getAllNotSynced();
   Future markAsSynced(int accountId, String cloudId);
 
+  Future insertFromCloud(Account account);
+  Future updateFromCloud(Account account);
+
   Future<int> insert(Account account);
   Future update(Account account);
 
@@ -60,6 +63,9 @@ abstract class LocalCategoryRepo{
   Stream<List<Category>> watchAllByType(OperationType type);
   Future<List<Category>> getAllByType(OperationType type);
 
+  Future insertFromCloud(Category category);
+  Future updateFromCloud(Category category);
+
   Future<int> insert(Category entity);
   Future update(Category entity);
 }
@@ -81,6 +87,9 @@ abstract class LocalOperationsRepo{
   Stream<List<Operation>> watchAllByAccount(int accountId);
   Stream<List<Operation>> watchAllByCategory(int categoryId);
   Stream<List<Operation>> watchLast(int limit);
+
+  Future insertFromCloud(Operation operation);
+  Future updateFromCloud(Operation operation);
 
   Future<Operation?> getLast();
   Future<Operation> insert(Operation entity);

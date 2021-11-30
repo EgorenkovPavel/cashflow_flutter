@@ -116,4 +116,28 @@ class CategoryRepository extends LocalCategoryRepo{
   Stream<Category> watchNotSynced() {
     return categoryDao.watchNotSynced().map((event) => _mapCategory(event));
   }
+
+  @override
+  Future insertFromCloud(Category category) {
+    return categoryDao.insertCategory(CategoriesCompanion(
+      cloudId: Value(category.cloudId),
+      title: Value(category.title),
+      operationType: Value(category.operationType),
+      budgetType: Value(category.budgetType),
+      budget: Value(category.budget),
+      synced: Value(true),
+    ));
+  }
+
+  @override
+  Future updateFromCloud(Category category) {
+    return categoryDao.updateFields(category.id, CategoriesCompanion(
+      cloudId: Value(category.cloudId),
+      title: Value(category.title),
+      operationType: Value(category.operationType),
+      budgetType: Value(category.budgetType),
+      budget: Value(category.budget),
+      synced: Value(true),
+    ));
+  }
 }

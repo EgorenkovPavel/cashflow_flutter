@@ -125,4 +125,32 @@ class OperationRepository extends LocalOperationsRepo {
   Stream<Operation> watchNotSynced() {
     return operationDao.watchOperationItemsNotSynced().map((event) => _mapOperation(event));
   }
+
+  @override
+  Future insertFromCloud(Operation operation) {
+    return operationDao.insertOperation(OperationsCompanion(
+      cloudId: Value(operation.cloudId),
+      date: Value(operation.date),
+      operationType: Value(operation.type),
+      account: Value(operation.account.id),
+      category: Value(operation.category?.id),
+      recAccount: Value(operation.recAccount?.id),
+      sum: Value(operation.sum),
+      synced: Value(true),
+    ));
+  }
+
+  @override
+  Future updateFromCloud(Operation operation) {
+    return operationDao.updateFields(operation.id, OperationsCompanion(
+      cloudId: Value(operation.cloudId),
+      date: Value(operation.date),
+      operationType: Value(operation.type),
+      account: Value(operation.account.id),
+      category: Value(operation.category?.id),
+      recAccount: Value(operation.recAccount?.id),
+      sum: Value(operation.sum),
+      synced: Value(true),
+    ));
+  }
 }

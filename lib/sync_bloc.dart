@@ -200,30 +200,31 @@ class SyncBloc extends Cubit<SyncState> {
 
   Future<void> _loadCloudAccounts(Iterable<CloudAccount> list) async {
     await Future.forEach(list, (CloudAccount cloudAccount) async {
+      print('Load from cloud account ${cloudAccount.title}');
       var _account =
       await localSource.accounts.getByCloudId(cloudAccount.id);
       if (_account == null) {
-        await localSource.accounts.insert(Account(
+        await localSource.accounts.insertFromCloud(Account(
           cloudId: cloudAccount.id,
           title: cloudAccount.title,
           isDebt: cloudAccount.isDebt,
         ));
       } else {
-        await localSource.accounts.update(_account.copyWith(
+        await localSource.accounts.updateFromCloud(_account.copyWith(
           title: cloudAccount.title,
           isDebt: cloudAccount.isDebt,
         ));
       }
-      await remoteSource.refreshAccountSyncDate(cloudAccount.id);
     });
   }
 
   Future<void> _loadCloudCategories(Iterable<CloudCategory> list) async {
     await Future.forEach(list, (CloudCategory cloudCategory) async {
+      print('Load from cloud category ${cloudCategory.title}');
       var _category =
       await localSource.categories.getByCloudId(cloudCategory.id);
       if (_category == null) {
-        await localSource.categories.insert(Category(
+        await localSource.categories.insertFromCloud(Category(
           title: cloudCategory.title,
           cloudId: cloudCategory.id,
           operationType: const OperationTypeConverter()
@@ -233,7 +234,7 @@ class SyncBloc extends Cubit<SyncState> {
           budget: cloudCategory.budget,
         ));
       } else {
-        await localSource.categories.update(_category.copyWith(
+        await localSource.categories.updateFromCloud(_category.copyWith(
           title: cloudCategory.title,
           cloudId: cloudCategory.id,
           operationType: const OperationTypeConverter()
@@ -243,12 +244,12 @@ class SyncBloc extends Cubit<SyncState> {
           budget: cloudCategory.budget,
         ));
       }
-      await remoteSource.refreshCategorySyncDate(cloudCategory.id);
     });
   }
 
   Future<void> _loadCloudOperations(Iterable<CloudOperation> list) async {
     await Future.forEach(list, (CloudOperation cloudOperation) async {
+      print('Load from cloud operation ${cloudOperation.id}');
       var _operation =
       await localSource.operations.getByCloudId(cloudOperation.id);
 
@@ -288,7 +289,6 @@ class SyncBloc extends Cubit<SyncState> {
       }else if(_operation != null && cloudOperation.deleted){
         await localSource.operations.deleteById(_operation.id);
       }
-      await remoteSource.refreshOperationSyncDate(cloudOperation.id);
     });
   }
 
@@ -339,10 +339,20 @@ class SyncBloc extends Cubit<SyncState> {
   Future<void> _loadAccountsToCloud() async {
     var accounts = await localSource.accounts.getAllNotSynced();
     await Future.forEach(accounts, (Account account) async {
-      var _cloudId =
-      await remoteSource.addAccount(_mapToCloudAccount(account));
-      if (_cloudId.isSuccess()) {
-        await localSource.accounts.markAsSynced(account.id, _cloudId.getOrDefault(''));
+      print('Load to cloud account ${account.title}');
+      if (account.cloudId.isNotEmpty){
+        var res = await remoteSource.updateAccount(_mapToCloudAccount(account));
+        if (res.isSuccess()){
+          await localSource.accounts.markAsSynced(account.id, account.cloudId);
+        }
+      }else {
+        var _cloudId =
+        await remoteSource.addAccount(_mapToCloudAccount(account));
+        if (_cloudId.isSuccess()) {
+          var res = await localSource.accounts.markAsSynced(
+              account.id, _cloudId.getOrDefault(''));
+          print('$res');
+        }
       }
     });
   }
@@ -350,10 +360,18 @@ class SyncBloc extends Cubit<SyncState> {
   Future<void> _loadCategoriesToCloud() async {
     var categories = await localSource.categories.getAllNotSynced();
     await Future.forEach(categories, (Category category) async {
-      var _cloudId =
-      await remoteSource.addCategory(_mapToCloudCategory(category));
-      if (_cloudId.isSuccess()) {
-        await localSource.categories.markAsSynced(category.id, _cloudId.getOrDefault(''));
+      print('Load to cloud category ${category.title}');
+      if(category.cloudId.isNotEmpty){
+        var res = await remoteSource.updateCategory(_mapToCloudCategory(category));
+        if (res.isSuccess()){
+          await localSource.categories.markAsSynced(category.id, category.cloudId);
+        }
+      }else{
+        var _cloudId =
+        await remoteSource.addCategory(_mapToCloudCategory(category));
+        if (_cloudId.isSuccess()) {
+          await localSource.categories.markAsSynced(category.id, _cloudId.getOrDefault(''));
+        }
       }
     });
   }
@@ -361,10 +379,19 @@ class SyncBloc extends Cubit<SyncState> {
   Future<void> _loadOperationsToCloud() async {
     var operations = await localSource.operations.getAllNotSynced();
     await Future.forEach(operations, (Operation operation) async {
-      var _cloudId =
-      await remoteSource.addOperation(_mapToCloudOperation(operation));
-      if (_cloudId.isSuccess()) {
-        await localSource.operations.markAsSynced(operation.id, _cloudId.getOrDefault(''));
+      print('Load to cloud operation ${operation.id}');
+      if(operation.cloudId.isNotEmpty){
+        var res = await remoteSource.updateOperation(_mapToCloudOperation(operation));
+        if(res.isSuccess()){
+          await localSource.operations.markAsSynced(operation.id, operation.cloudId);
+        }
+      }else {
+        var _cloudId =
+        await remoteSource.addOperation(_mapToCloudOperation(operation));
+        if (_cloudId.isSuccess()) {
+          await localSource.operations.markAsSynced(
+              operation.id, _cloudId.getOrDefault(''));
+        }
       }
     });
   }

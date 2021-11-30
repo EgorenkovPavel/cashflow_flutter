@@ -32,8 +32,8 @@ abstract class RemoteSource{
   Future<Try<void>> deleteAccount(CloudAccount account);
 
   Future<Try<String>> addCategory(CloudCategory category);
-  Future<void> updateCategory(CloudCategory category);
-  Future<void> deleteCategory(CloudCategory category);
+  Future<Try<void>> updateCategory(CloudCategory category);
+  Future<Try<void>> deleteCategory(CloudCategory category);
 
   Future<Try<String>> addOperation(CloudOperation operation);
   Future<Try<void>> updateOperation(CloudOperation operation);

@@ -577,6 +577,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
+  Future<int> updateFields(int operationId, OperationsCompanion entity) =>
+      (update(operations)..where((t) => t.id.equals(operationId))).write(entity);
+
   Future<int> updateOperation(OperationDB entity) {
     return transaction(() async {
       await deleteOperation(entity);

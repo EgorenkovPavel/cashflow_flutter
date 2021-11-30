@@ -21,6 +21,7 @@ class OperationEditPage extends StatefulWidget {
 class _OperationEditPageState extends State<OperationEditPage> {
   final _formKey = GlobalKey<FormState>();
 
+  Operation? _operation;
   OperationType _type = OperationType.INPUT;
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
@@ -68,6 +69,7 @@ class _OperationEditPageState extends State<OperationEditPage> {
         .getById(widget.id)
         .then((Operation data) {
       setState(() {
+        _operation = data;
         _type = data.type;
         _date = data.date;
         _account = data.account;
@@ -249,29 +251,31 @@ class _OperationEditPageState extends State<OperationEditPage> {
     _date =
         DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     if (_type == OperationType.TRANSFER) {
-      var operation = Operation(
-          id: widget.id,
-          date: _date,
-          type: _type,
-          account: _account,
-          recAccount: _recAccount,
-          sum: int.parse(_sumController.text));
+      var _newOperation = _operation!.copyWith(
+        date: _date,
+        type: _type,
+        account: _account,
+        category: null,
+        recAccount: _recAccount,
+        sum: int.parse(_sumController.text),
+      );
 
       await Provider.of<LocalSource>(context, listen: false)
           .operations
-          .insert(operation);
+          .insert(_newOperation);
     } else {
-      var operation = Operation(
-          id: widget.id,
-          date: _date,
-          type: _type,
-          account: _account,
-          category: _category,
-          sum: int.parse(_sumController.text));
+      var _newOperation = _operation!.copyWith(
+        date: _date,
+        type: _type,
+        account: _account,
+        category: _category,
+        recAccount: null,
+        sum: int.parse(_sumController.text),
+      );
 
       await Provider.of<LocalSource>(context, listen: false)
           .operations
-          .update(operation);
+          .update(_newOperation);
     }
   }
 
