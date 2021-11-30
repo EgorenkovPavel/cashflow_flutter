@@ -195,6 +195,10 @@ class Database extends _$Database {
           await m.addColumn(accounts, accounts.cloudId);
           await m.addColumn(categories, categories.cloudId);
           await m.addColumn(operations, operations.cloudId);
+
+          await m.addColumn(accounts, accounts.synced);
+          await m.addColumn(categories, categories.synced);
+          await m.addColumn(operations, operations.synced);
         }
       }
   );
