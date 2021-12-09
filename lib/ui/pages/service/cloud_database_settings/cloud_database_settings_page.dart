@@ -39,8 +39,34 @@ class ConnectedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Database connected'),
+    return Column(
+      children: [
+        Text('Database connected'),
+        BlocBuilder<SyncBloc, SyncState>(builder: (context, state){
+          if (state is SyncState_Synced){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Last sync ${state.syncDate}'),
+            );
+          }else{
+            return SizedBox();
+          }
+        }),
+        SizedBox(height: 8.0,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().sync(),
+              child: Text('Sync'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().sync(),
+              child: Text('Sync all'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -50,15 +76,44 @@ class AdminSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        ElevatedButton(
-          onPressed: () => _addUser(context),
-          child: Text('Add user'),
+        BlocBuilder<SyncBloc, SyncState>(builder: (context, state){
+          if (state is SyncState_Synced){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Last sync ${state.syncDate}'),
+            );
+          }else{
+            return SizedBox();
+          }
+        }),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () => _addUser(context),
+              child: Text('Add user'),
+            ),
+            ElevatedButton(
+              onPressed: () => _scanQrCode(context),
+              child: Text('Scan QR code'),
+            ),
+          ],
         ),
-        ElevatedButton(
-          onPressed: () => _scanQrCode(context),
-          child: Text('Scan qr code'),
+        SizedBox(height: 8.0,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().sync(),
+              child: Text('Sync'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().sync(),
+              child: Text('Sync all'),
+            ),
+          ],
         ),
       ],
     );

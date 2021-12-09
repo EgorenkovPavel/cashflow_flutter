@@ -42,8 +42,9 @@ class SyncState_LoadingFromCloud extends SyncState {
 class SyncState_Synced extends SyncState {
   @override
   final bool isAdmin;
+  final DateTime syncDate;
 
-  const SyncState_Synced({required this.isAdmin});
+  const SyncState_Synced({required this.isAdmin, required this.syncDate});
 }
 
 class SyncState_NotSynced extends SyncState {
@@ -109,7 +110,21 @@ class SyncBloc extends Cubit<SyncState> {
     var syncDate = DateTime.now();
     if (await _loadFromCloud(prefsRepository.syncDate)) {
       await prefsRepository.setSyncDate(syncDate);
-      emit(SyncState_Synced(isAdmin: _isAdmin));
+      emit(SyncState_Synced(isAdmin: _isAdmin, syncDate: syncDate));
+    } else {
+      emit(SyncState_NotSynced(isAdmin: _isAdmin));
+    }
+  }
+
+  Future<void> _syncAllData() async {
+    emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
+    await _loadToCloud();
+
+    emit(SyncState_LoadingFromCloud(isAdmin: _isAdmin));
+    var syncDate = DateTime.now();
+    if (await _loadFromCloud(DateTime.utc(1970, 1, 1))) {
+      await prefsRepository.setSyncDate(syncDate);
+      emit(SyncState_Synced(isAdmin: _isAdmin, syncDate: syncDate));
     } else {
       emit(SyncState_NotSynced(isAdmin: _isAdmin));
     }
@@ -147,9 +162,10 @@ class SyncBloc extends Cubit<SyncState> {
 
       emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
       await _loadToCloud();
-      await prefsRepository.setSyncDate(DateTime.now());
+      final syncDate = DateTime.now();
+      await prefsRepository.setSyncDate(syncDate);
 
-      emit(SyncState_Synced(isAdmin: _isAdmin));
+      emit(SyncState_Synced(isAdmin: _isAdmin, syncDate: syncDate));
       return true;
     }else{
       return false;
@@ -165,6 +181,12 @@ class SyncBloc extends Cubit<SyncState> {
       await _syncData();
     }
   }
+
+  Future<void> syncAll() async {
+    if (_authBloc.state is AuthStateAuthenticated){
+      await _syncAllData();
+  }
+}
 
   Future<bool> addUser(User user) async {
     var res = await remoteSource.addNewUser(user);
