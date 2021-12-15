@@ -208,30 +208,35 @@ class $AccountsTable extends Accounts
   final String? _alias;
   $AccountsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  @override
   late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
       'cloud_id', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
+  @override
   late final GeneratedColumn<bool?> isDebt = GeneratedColumn<bool?>(
       'is_debt', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_debt IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  @override
   late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
       'synced', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (synced IN (0, 1))',
       defaultValue: const Constant(false));
@@ -546,39 +551,46 @@ class $CategoriesTable extends Categories
   final String? _alias;
   $CategoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  @override
   late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
       'cloud_id', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
+  @override
   late final GeneratedColumnWithTypeConverter<OperationType, int?>
       operationType = GeneratedColumn<int?>(
               'operation_type', aliasedName, false,
-              typeName: 'INTEGER', requiredDuringInsert: true)
+              type: const IntType(), requiredDuringInsert: true)
           .withConverter<OperationType>($CategoriesTable.$converter0);
   final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
+  @override
   late final GeneratedColumnWithTypeConverter<BudgetType, int?> budgetType =
       GeneratedColumn<int?>('budget_type', aliasedName, false,
-              typeName: 'INTEGER', requiredDuringInsert: true)
+              type: const IntType(), requiredDuringInsert: true)
           .withConverter<BudgetType>($CategoriesTable.$converter1);
   final VerificationMeta _budgetMeta = const VerificationMeta('budget');
+  @override
   late final GeneratedColumn<int?> budget = GeneratedColumn<int?>(
       'budget', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  @override
   late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
       'synced', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (synced IN (0, 1))',
       defaultValue: const Constant(false));
@@ -953,52 +965,61 @@ class $OperationsTable extends Operations
   final String? _alias;
   $OperationsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  @override
   late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
       'cloud_id', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
       'date', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
+  @override
   late final GeneratedColumnWithTypeConverter<OperationType, int?>
       operationType = GeneratedColumn<int?>(
               'operation_type', aliasedName, false,
-              typeName: 'INTEGER', requiredDuringInsert: true)
+              type: const IntType(), requiredDuringInsert: true)
           .withConverter<OperationType>($OperationsTable.$converter0);
   final VerificationMeta _accountMeta = const VerificationMeta('account');
+  @override
   late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
       'account', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
+  @override
   late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
       'category', aliasedName, true,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       $customConstraints: 'NULL REFERENCES category(id)');
   final VerificationMeta _recAccountMeta = const VerificationMeta('recAccount');
+  @override
   late final GeneratedColumn<int?> recAccount = GeneratedColumn<int?>(
       'rec_account', aliasedName, true,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
+  @override
   late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
       'sum', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  @override
   late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
       'synced', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (synced IN (0, 1))',
       defaultValue: const Constant(false));
@@ -1262,25 +1283,29 @@ class $BalancesTable extends Balances
   final String? _alias;
   $BalancesTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
       'date', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _operationMeta = const VerificationMeta('operation');
+  @override
   late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
       'operation', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NULL REFERENCES operation(id)');
   final VerificationMeta _accountMeta = const VerificationMeta('account');
+  @override
   late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
       'account', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NULL REFERENCES account(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
+  @override
   late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
       'sum', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, account, sum];
   @override
@@ -1510,25 +1535,29 @@ class $CashflowsTable extends Cashflows
   final String? _alias;
   $CashflowsTable(this._db, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
       'date', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _operationMeta = const VerificationMeta('operation');
+  @override
   late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
       'operation', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NULL REFERENCES operation(id)');
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
+  @override
   late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
       'category', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NULL REFERENCES category(id)');
   final VerificationMeta _sumMeta = const VerificationMeta('sum');
+  @override
   late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
       'sum', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, category, sum];
   @override
