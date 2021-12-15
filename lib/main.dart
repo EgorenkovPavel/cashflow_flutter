@@ -64,6 +64,7 @@ Future<void> main() async {
         providers: [
           RepositoryProvider<LocalSource>(create: (_) => _databaseSource),
           RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
+          RepositoryProvider<PrefsRepository>(create: (_) => _prefsRepo),
         ],
         child: MyApp(),
       ),

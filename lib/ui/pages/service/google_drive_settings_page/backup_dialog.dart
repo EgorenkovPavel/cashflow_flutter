@@ -1,11 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:money_tracker/data/prefs_repository.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
+import 'package:provider/src/provider.dart';
 
 class BackupDialog extends StatefulWidget {
-
   final Future<void> Function(String folderId, String title) onBackup;
 
   BackupDialog({Key? key, required this.onBackup}) : super(key: key);
@@ -15,10 +15,28 @@ class BackupDialog extends StatefulWidget {
 }
 
 class _BackupDialogState extends State<BackupDialog> {
-  final TextEditingController _controller =
-  TextEditingController(text: 'Cashflow backup');
+  final TextEditingController _controller = TextEditingController();
 
   DriveFile _folder = DriveFile.root();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = context.read<PrefsRepository>().googleDriveFileName;
+  }
+
+  Future<void> _save() async {
+    if (_folder == null || _controller.text.isEmpty) {
+      return;
+    }
+
+    await widget.onBackup(_folder.id, _controller.text);
+    await context
+        .read<PrefsRepository>()
+        .setGoogleDriveFileName(_controller.text);
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +90,7 @@ class _BackupDialogState extends State<BackupDialog> {
           child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
         ),
         ElevatedButton(
-          onPressed: () async {
-            if (_folder == null || _controller.text.isEmpty) {
-              return;
-            }
-
-            await widget.onBackup(_folder.id, _controller.text);
-
-            Navigator.of(context).pop();
-          },
+          onPressed: () => _save(),
           child: Text(
             AppLocalizations.of(context).backup.toUpperCase(),
           ),
@@ -89,4 +99,3 @@ class _BackupDialogState extends State<BackupDialog> {
     );
   }
 }
-
