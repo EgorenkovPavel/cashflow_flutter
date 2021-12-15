@@ -21,8 +21,6 @@ class UserMapper extends CloudConverter<User>{
 
   @override
   User mapToDart(QueryDocumentSnapshot<Object?> doc) {
-    var data = doc.data() as Map<String,dynamic>;
-
     return User(
       id: doc.id,
       name: doc.get(_KEY_NAME),

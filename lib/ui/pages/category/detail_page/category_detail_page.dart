@@ -8,7 +8,6 @@ import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 class CategoryDetailPage extends StatefulWidget {
   final int id;

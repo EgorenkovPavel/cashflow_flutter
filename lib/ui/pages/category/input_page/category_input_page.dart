@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
@@ -58,12 +57,12 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
           return SizedBox();
         }
 
-        if ((state as InputState).title != null) {
-          titleController.text = (state as InputState).title!;
+        if (state.title != null) {
+          titleController.text = state.title!;
         }
 
-        if ((state as InputState).budget != null) {
-          budgetController.text = (state as InputState).budget.toString();
+        if (state.budget != null) {
+          budgetController.text = state.budget.toString();
         }
 
         return ItemCard(
@@ -151,7 +150,7 @@ class _CategoryInputPageState extends State<CategoryInputPage> {
                   ),
                   TypeRadioButton<BudgetType>(
                       onChange: (type) => _bloc.setBudgetType(type),
-                      type: (state as InputState).budgetType,
+                      type: (state).budgetType,
                       items: [BudgetType.MONTH, BudgetType.YEAR])
                 ],
               ),

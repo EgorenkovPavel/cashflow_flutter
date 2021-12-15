@@ -133,7 +133,7 @@ class AdminSettings extends StatelessWidget {
 
     var userData = jsonDecode(barcodeScanRes);
 
-    context.read<SyncBloc>().addUser(User.fromJson(userData));
+    await context.read<SyncBloc>().addUser(User.fromJson(userData));
   }
 
   Future<void> _addUser(BuildContext context) async {

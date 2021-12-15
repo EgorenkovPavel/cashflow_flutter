@@ -5,7 +5,6 @@ import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/dialog_drive_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/src/provider.dart';
 
 class DriveDialog extends StatefulWidget {
   final DialogMode mode;

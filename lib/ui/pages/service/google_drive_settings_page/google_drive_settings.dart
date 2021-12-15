@@ -7,7 +7,6 @@ import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/backup_dialog.dart';
 import 'package:money_tracker/ui/pages/service/google_drive_settings_page/restore_dialog.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/src/provider.dart';
 
 class GoogleDriveSettingsPage extends StatelessWidget {
   @override

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/src/provider.dart';
 
 class DataControlPage extends StatelessWidget {
   const DataControlPage({Key? key}) : super(key: key);

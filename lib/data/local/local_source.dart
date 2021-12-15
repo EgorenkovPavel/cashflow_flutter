@@ -1,5 +1,4 @@
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/sum_on_date.dart';
 
 abstract class LocalSource{
 

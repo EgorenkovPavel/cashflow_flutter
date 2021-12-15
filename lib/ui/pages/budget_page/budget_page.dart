@@ -7,7 +7,6 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
   const BudgetPage({Key? key, required this.type}) : super(key: key);
