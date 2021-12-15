@@ -25,8 +25,15 @@ class _BackupDialogState extends State<BackupDialog> {
     _controller.text = context.read<PrefsRepository>().googleDriveFileName;
   }
 
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Future<void> _save() async {
-    if (_folder == null || _controller.text.isEmpty) {
+    if (_controller.text.isEmpty) {
       return;
     }
 
