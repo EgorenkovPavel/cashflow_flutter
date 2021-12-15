@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/sum_on_date.dart';
 
 class CategoryState {
   final String title;

@@ -1,7 +1,5 @@
 import 'package:money_tracker/domain/models.dart';
 
-import 'operation_type.dart';
-
 class Category {
   final int id;
   final String cloudId;

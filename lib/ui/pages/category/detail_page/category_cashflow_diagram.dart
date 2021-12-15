@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/sum_on_date.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 

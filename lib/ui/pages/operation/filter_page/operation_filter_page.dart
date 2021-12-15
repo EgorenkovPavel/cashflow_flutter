@@ -5,7 +5,6 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 class OperationFilterPage extends StatefulWidget {
   OperationFilterPage({Key? key, this.filter}) : super(key: key);

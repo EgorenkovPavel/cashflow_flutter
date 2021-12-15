@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:money_tracker/data/local/data/database.dart';
 
 class User extends Equatable {
   final String id;

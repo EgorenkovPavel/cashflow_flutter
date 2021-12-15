@@ -2,8 +2,6 @@ import 'package:drift/drift.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:money_tracker/domain/models/sum_on_date.dart';
 
 part 'category_dao.g.dart';
 

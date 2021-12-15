@@ -58,7 +58,7 @@ class DriveBloc extends Cubit<DriveState> {
 
   @override
   Future<void> close() async {
-    _authSub?.cancel();
+    await _authSub?.cancel();
     return super.close();
   }
 }
