@@ -287,7 +287,7 @@ class SyncBloc extends Cubit<SyncState> {
           .getByCloudId(cloudOperation.recAccount!);
 
       if (_operation == null && !cloudOperation.deleted) {
-        await localSource.operations.insert(Operation(
+        await localSource.operations.insertFromCloud(Operation(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
           type: const OperationTypeConverter()
@@ -298,7 +298,7 @@ class SyncBloc extends Cubit<SyncState> {
           sum: cloudOperation.sum,
         ));
       } else if(_operation != null && !cloudOperation.deleted){
-        await localSource.operations.update(_operation.copyWith(
+        await localSource.operations.updateFromCloud(_operation.copyWith(
           cloudId: cloudOperation.id,
           date: cloudOperation.date,
           type: const OperationTypeConverter()
