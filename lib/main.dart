@@ -15,6 +15,7 @@ import 'package:money_tracker/internet_connection_bloc.dart';
 import 'package:money_tracker/sync_bloc.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// ignore_for_file: unused_import
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 Future<void> main() async {

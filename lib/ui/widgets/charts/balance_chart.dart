@@ -89,7 +89,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
 
   int budgetSum = 0;
   int startBalance = 0;
-  List<ValueOnDate> _balanceByPeriod = [];
+  final List<ValueOnDate> _balanceByPeriod = [];
 
   void calcBalance() {
     var balances = <ValueOnDate>[];

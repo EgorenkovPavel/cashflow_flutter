@@ -20,10 +20,6 @@ class CategoryRepository extends LocalCategoryRepo{
   final CategoryDB Function(Category) _mapCategoryDB =
       (item) => const CategoryMapper().mapToSql(item);
 
-  final CategoryCashflow Function(CategoryCashflowEntity)
-      _mapCategoryCashflowBudget =
-      (item) => const CategoryCashflowMapper().mapToDart(item);
-
   final List<CategoryCashflow> Function(List<CategoryCashflowEntity>)
       _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
