@@ -76,7 +76,7 @@ class CategoryInputPageBloc extends Cubit<CategoryInputPageState> {
         budget: int.parse(budget),
       );
 
-      var id = await _repository.categories.update(_newCategory);
+      await _repository.categories.update(_newCategory);
       emit(Saved(_newCategory));
     }
   }

@@ -29,8 +29,8 @@ class AuthRepository extends AuthSource{
   Future<void> signInSilently() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signInSilently();
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final googleUser = await _googleSignIn.signInSilently();
+      final googleAuth = await googleUser?.authentication;
 
       if(googleUser == null || googleAuth == null){
         return;
@@ -48,8 +48,8 @@ class AuthRepository extends AuthSource{
   Future<void> signIn() async {
     var isAuth = await isAuthenticated();
     if (!isAuth) {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final googleUser = await _googleSignIn.signIn();
+      final googleAuth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,

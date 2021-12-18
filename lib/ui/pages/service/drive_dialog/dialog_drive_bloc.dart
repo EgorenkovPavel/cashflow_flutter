@@ -51,9 +51,6 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
   Future<void> loadFolders() async {
     try {
       var files = await _repository.getFiles(rootFolder.top().id);
-      if (files == null) {
-        return;
-      }
 
       emit(
         DialogDriveState(
