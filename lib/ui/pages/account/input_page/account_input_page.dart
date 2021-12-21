@@ -44,7 +44,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
       listener: (context, state) {
         if (state is Close) {
           Navigator.of(context).pop(state.account);
-        }else if(state is InitTitle){
+        } else if (state is InitTitle) {
           _controller.text = state.title;
         }
       },
@@ -74,7 +74,10 @@ class _AccountInputPageState extends State<AccountInputPage> {
               ),
               Row(
                 children: [
-                  Checkbox(value: (state as Data).isDebt, onChanged: (val)=> _bloc.changeIsDebt(val!), ),
+                  Checkbox(
+                    value: (state as Data).isDebt,
+                    onChanged: (val) => _bloc.changeIsDebt(val!),
+                  ),
                   Text('Is debt'),
                 ],
               )
