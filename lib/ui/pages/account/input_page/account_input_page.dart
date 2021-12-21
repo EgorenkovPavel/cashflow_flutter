@@ -42,17 +42,19 @@ class _AccountInputPageState extends State<AccountInputPage> {
     return BlocConsumer<AccountInputPageBloc, AccountInputPageState>(
       bloc: _bloc,
       listener: (context, state) {
-        if (state.action == BlocAction.CLOSE) {
+        if (state is Close) {
           Navigator.of(context).pop(state.account);
+        }else if(state is InitTitle){
+          _controller.text = state.title;
         }
       },
+      buildWhen: (previous, current) => current is Data,
       builder: (context, state) {
-        _controller.text = state.title;
         return ItemCard<Account>(
           title: widget.id == null
               ? AppLocalizations.of(context).newAccountCardTitle
               : AppLocalizations.of(context).accountCardTitle,
-          onSave: (context) => _bloc.save(_controller.text),
+          onSave: (context) => _bloc.save(),
           child: Column(
             children: [
               TextFormField(
@@ -60,11 +62,9 @@ class _AccountInputPageState extends State<AccountInputPage> {
                 controller: _controller,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(),
-                  // ),
                   labelText: AppLocalizations.of(context).title,
                 ),
+                onChanged: (value) => _bloc.changeTitle(value),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return AppLocalizations.of(context).emptyTitleError;
@@ -74,7 +74,7 @@ class _AccountInputPageState extends State<AccountInputPage> {
               ),
               Row(
                 children: [
-                  Checkbox(value: state.isDebt, onChanged: (val)=> _bloc.changeIsDebt(val!), ),
+                  Checkbox(value: (state as Data).isDebt, onChanged: (val)=> _bloc.changeIsDebt(val!), ),
                   Text('Is debt'),
                 ],
               )
