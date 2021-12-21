@@ -17,7 +17,9 @@ class CategoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CategoryBloc(context.read<LocalSource>())..fetch(id),
+      create: (context) =>
+      CategoryBloc(context.read<LocalSource>())
+        ..fetch(id),
       child: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           return Scaffold(
@@ -30,27 +32,46 @@ class CategoryDetailPage extends StatelessWidget {
                     icon: Icon(Icons.edit))
               ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '${AppLocalizations.of(context).budget} ${state.budget} ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(state.budgetType)}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                        height: 200.0,
-                        child: CategoryCashflowDiagram(
-                          id: id,
-                          budget: state.budget,
-                          budgetType: state.budgetType,
-                        )),
-                  ),
-                  _OperationList(id: id),
-                ],
-              ),
+            body: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  delegate: TitleDelegate(id: id, budget: state.budget, budgetType: state.budgetType),
+                ),
+                StreamBuilder<List<Operation>>(
+                    stream: context
+                        .read<LocalSource>()
+                        .operations
+                        .watchAllByCategory(id),
+                    builder: (context, snapshot) {
+                      var list = <Operation>[];
+                      if (snapshot.hasData) {
+                        list = snapshot.data!;
+                      }
+
+                      return SliverList(
+                        delegate: SliverChildListDelegate(
+                          list
+                              .expand(
+                                (e) =>
+                            [
+                              if (list.indexOf(e) == 0)
+                                ListDividerOperation.day(null, e)
+                              else
+                                ListDividerOperation.day(
+                                    list[list.indexOf(e) - 1], e),
+                              ListTileOperation(
+                                e,
+                                onTap: () =>
+                                    PageNavigator.openOperationEditPage(
+                                        context, e.id),
+                              )
+                            ],
+                          )
+                              .toList(),
+                        ),
+                      );
+                    })
+              ],
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => PageNavigator.openOperationInputPage(context),
@@ -63,39 +84,52 @@ class CategoryDetailPage extends StatelessWidget {
   }
 }
 
-class _OperationList extends StatelessWidget {
-  const _OperationList({Key? key, required this.id}) : super(key: key);
+class TitleDelegate extends SliverPersistentHeaderDelegate {
 
   final int id;
+  final int budget;
+  final BudgetType budgetType;
+
+  TitleDelegate(
+      {required this.id, required this.budget, required this.budgetType,});
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: context.read<LocalSource>().operations.watchAllByCategory(id),
-      builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
-        var list = <Operation>[];
-        if (snapshot.hasData) {
-          list = snapshot.data!;
-        }
-
-        return Column(
-          children: list
-              .expand(
-                (e) => [
-                  if (list.indexOf(e) == 0)
-                    ListDividerOperation.day(null, e)
-                  else
-                    ListDividerOperation.day(list[list.indexOf(e) - 1], e),
-                  ListTileOperation(
-                    e,
-                    onTap: () =>
-                        PageNavigator.openOperationEditPage(context, e.id),
-                  )
-                ],
-              )
-              .toList(),
-        );
-      },
+  Widget build(BuildContext context, double shrinkOffset,
+      bool overlapsContent) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+              '${AppLocalizations
+                  .of(context)
+                  .budget} $budget ${AppLocalizations
+                  .of(context)
+                  .in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}'),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 150,
+            child: CategoryCashflowDiagram(
+              id: id,
+              budget: budget,
+              budgetType: budgetType,
+            ),
+          ),
+        ),
+      ],
     );
+  }
+
+  @override
+  double get maxExtent => 200;
+
+  @override
+  double get minExtent => 200;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }
