@@ -57,11 +57,19 @@ class ConnectedView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().sync(),
+              onPressed: () => context.read<SyncBloc>().syncNow(),
               child: Text('Sync'),
             ),
             ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().sync(),
+              onPressed: () => context.read<SyncBloc>().syncLastDay(),
+              child: Text('Sync last day'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().syncLastMonth(),
+              child: Text('Sync last month'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().syncAll(),
               child: Text('Sync all'),
             ),
           ],
@@ -106,11 +114,19 @@ class AdminSettings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().sync(),
+              onPressed: () => context.read<SyncBloc>().syncNow(),
               child: Text('Sync'),
             ),
             ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().sync(),
+              onPressed: () => context.read<SyncBloc>().syncLastDay(),
+              child: Text('Sync last day'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().syncLastMonth(),
+              child: Text('Sync last month'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<SyncBloc>().syncAll(),
               child: Text('Sync all'),
             ),
           ],
