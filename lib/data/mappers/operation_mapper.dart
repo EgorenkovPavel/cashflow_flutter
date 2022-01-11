@@ -1,4 +1,5 @@
 import 'package:money_tracker/data/local/data/database.dart';
+import 'package:money_tracker/data/local/data/operation_item.dart';
 import 'package:money_tracker/domain/models.dart';
 
 import 'account_mapper.dart';
@@ -26,6 +27,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
     return Operation(
         id: o.operationData.id,
         cloudId: o.operation.cloudId,
+        synced: o.synced,
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),

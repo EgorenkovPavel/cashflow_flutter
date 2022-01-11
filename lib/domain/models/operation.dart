@@ -5,6 +5,7 @@ import 'operation_type.dart';
 class Operation {
   final int id;
   final String cloudId;
+  final bool synced;
   final DateTime date;
   final OperationType type;
   final Account account;
@@ -15,6 +16,7 @@ class Operation {
   const Operation({
     this.id = 0,
     this.cloudId = '',
+    this.synced = false,
     required this.date,
     required this.type,
     required this.account,
@@ -26,6 +28,7 @@ class Operation {
   Operation copyWith({
     int? id,
     String? cloudId,
+    bool? synced,
     DateTime? date,
     OperationType? type,
     Account? account,
@@ -36,6 +39,7 @@ class Operation {
       Operation(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
+        synced: synced ?? this.synced,
         date: date ?? this.date,
         type: type ?? this.type,
         account: account ?? this.account,
