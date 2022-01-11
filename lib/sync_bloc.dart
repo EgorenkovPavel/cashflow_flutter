@@ -91,7 +91,7 @@ class SyncBloc extends Cubit<SyncState> {
         emit(SyncState_InProgress());
       } else if (event is AuthStateAuthenticated) {
         if (await _logIn(event.user.id)) {
-          await _syncData();
+          await syncNow();
         }
       } else {
         emit(SyncState_NotSynced(isAdmin: _isAdmin));
@@ -102,27 +102,17 @@ class SyncBloc extends Cubit<SyncState> {
     });
   }
 
-  Future<void> _syncData() async {
-    emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
-    await _loadToCloud();
-
-    emit(SyncState_LoadingFromCloud(isAdmin: _isAdmin));
-    var syncDate = DateTime.now();
-    if (await _loadFromCloud(prefsRepository.syncDate)) {
-      await prefsRepository.setSyncDate(syncDate);
-      emit(SyncState_Synced(isAdmin: _isAdmin, syncDate: syncDate));
-    } else {
-      emit(SyncState_NotSynced(isAdmin: _isAdmin));
+  Future<void> _syncData(DateTime syncFrom) async {
+    if (_authBloc.state is! AuthStateAuthenticated){
+      return;
     }
-  }
 
-  Future<void> _syncAllData() async {
     emit(SyncState_LoadingToCloud(isAdmin: _isAdmin));
     await _loadToCloud();
 
     emit(SyncState_LoadingFromCloud(isAdmin: _isAdmin));
     var syncDate = DateTime.now();
-    if (await _loadFromCloud(DateTime.utc(1970, 1, 1))) {
+    if (await _loadFromCloud(syncFrom)) {
       await prefsRepository.setSyncDate(syncDate);
       emit(SyncState_Synced(isAdmin: _isAdmin, syncDate: syncDate));
     } else {
@@ -173,20 +163,26 @@ class SyncBloc extends Cubit<SyncState> {
   }
 
   void refreshConnection() {
-    sync();
+    syncNow();
   }
 
-  Future<void> sync() async {
-    if (_authBloc.state is AuthStateAuthenticated) {
-      await _syncData();
-    }
+  Future<void> syncNow() async {
+    await _syncData(prefsRepository.syncDate);
+  }
+
+  Future<void> syncLastDay() async {
+    await _syncData(prefsRepository.syncDate.subtract(const Duration(days: 1)));
+  }
+
+  Future<void> syncLastMonth() async {
+    await _syncData(prefsRepository.syncDate.subtract(const Duration(days: 30)));
   }
 
   Future<void> syncAll() async {
-    if (_authBloc.state is AuthStateAuthenticated){
-      await _syncAllData();
+    await _syncData(DateTime.utc(1970, 1, 1));
   }
-}
+
+
 
   Future<bool> addUser(User user) async {
     var res = await remoteSource.addNewUser(user);
