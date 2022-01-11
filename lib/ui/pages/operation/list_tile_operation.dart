@@ -46,7 +46,13 @@ class ListTileOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      subtitle: Text(_operation.account.title),
+      subtitle: Row(
+        children: [
+          Text(_operation.account.title),
+          SizedBox(width: 8,),
+          if (_operation.synced) Icon(Icons.check),
+        ],
+      ),
       title: _operation.type == OperationType.TRANSFER
           ? Text(_operation.recAccount!.title)
           : Text(_operation.category!.title),
