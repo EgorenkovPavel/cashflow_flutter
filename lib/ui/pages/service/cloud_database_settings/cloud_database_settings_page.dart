@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/sync/states.dart';
+import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/sync_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {
@@ -21,12 +22,28 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
       body: BlocConsumer<SyncBloc, SyncState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state.isAdmin) {
-            return AdminSettings();
-          } else if (state is! SyncState_NoDb) {
-            return ConnectedView();
-          } else {
+          if (state is SyncState_NoDb) {
             return ConnectingView();
+          } else if (state is SyncState_Synced) {
+            if (state.isAdmin) {
+              return AdminSettings();
+            } else {
+              return ConnectedView();
+            }
+          } else if (state is SyncState_Failed) {
+            if (state.isAdmin) {
+              return AdminSettings();
+            } else {
+              return ConnectedView();
+            }
+          } else if (state is SyncState_NotSynced) {
+            if (state.isAdmin) {
+              return AdminSettings();
+            } else {
+              return ConnectedView();
+            }
+          } else {
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -42,17 +59,19 @@ class ConnectedView extends StatelessWidget {
     return Column(
       children: [
         Text('Database connected'),
-        BlocBuilder<SyncBloc, SyncState>(builder: (context, state){
-          if (state is SyncState_Synced){
+        BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+          if (state is SyncState_Synced) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Last sync ${state.syncDate}'),
             );
-          }else{
+          } else {
             return SizedBox();
           }
         }),
-        SizedBox(height: 8.0,),
+        SizedBox(
+          height: 8.0,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -86,13 +105,13 @@ class AdminSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BlocBuilder<SyncBloc, SyncState>(builder: (context, state){
-          if (state is SyncState_Synced){
+        BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+          if (state is SyncState_Synced) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Last sync ${state.syncDate}'),
             );
-          }else{
+          } else {
             return SizedBox();
           }
         }),
@@ -109,7 +128,9 @@ class AdminSettings extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8.0,),
+        SizedBox(
+          height: 8.0,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -140,10 +161,10 @@ class AdminSettings extends StatelessWidget {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-    }on PlatformException{
+    } on PlatformException {
       return;
     }
-    if (barcodeScanRes == ''){
+    if (barcodeScanRes == '') {
       return;
     }
 

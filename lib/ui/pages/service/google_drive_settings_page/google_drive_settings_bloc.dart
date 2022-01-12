@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 

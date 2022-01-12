@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:googleapis_auth/src/auth_client.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:money_tracker/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/internet_connection_bloc.dart';
+import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 import 'package:test/test.dart';
 
 void main() {

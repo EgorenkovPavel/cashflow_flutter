@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/sync_bloc.dart';
+import 'package:money_tracker/common_blocs/sync/states.dart';
+import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations.dart';
 import 'package:money_tracker/ui/pages/home/month_operations.dart';
@@ -63,7 +64,7 @@ class SyncButton extends StatelessWidget {
     });
   }
 
-  String getTitle(SyncState state){
+  String getTitle(SyncState state) {
     if (state is SyncState_InProgress) {
       return 'In progress';
     } else if (state is SyncState_Synced) {
@@ -139,7 +140,29 @@ class SyncButton extends StatelessWidget {
           builder: (context, state) => Text(getTitle(state)),
         ),
         content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          return iconBySyncState(state, color: Colors.black, size: 48);
+          if(state is SyncState_LoadingToCloud) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                iconBySyncState(state, color: Colors.black, size: 48),
+                Text('Accounts ${state.accountCount}'),
+                Text('Categories ${state.categoryCount}'),
+                Text('Operations ${state.operationCount}'),
+              ],
+            );
+          }else if(state is SyncState_LoadingFromCloud){
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                iconBySyncState(state, color: Colors.black, size: 48),
+                Text('Accounts ${state.accountCount}'),
+                Text('Categories ${state.categoryCount}'),
+                Text('Operations ${state.operationCount}'),
+              ],
+            );
+          }else {
+            return iconBySyncState(state, color: Colors.black, size: 48);
+          }
         }),
         actions: [
           TextButton(
