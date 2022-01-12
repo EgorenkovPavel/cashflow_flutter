@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/internet_connection_bloc.dart';
+import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 
 abstract class AuthState extends Equatable{}
 

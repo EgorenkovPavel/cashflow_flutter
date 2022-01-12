@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/auth_bloc.dart';
-import 'package:money_tracker/sync_bloc.dart';
+import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/sync/states.dart';
+import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
