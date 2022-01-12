@@ -57,7 +57,8 @@ class SyncBloc extends Cubit<SyncState> {
         categoryCount: event.categoryCount,
         operationCount: event.operationCount,
       ));
-    };
+    }
+    ;
 
     var syncDate = DateTime.now();
     _syncer.loadFromCloud(syncFrom).listen((event) {
@@ -113,7 +114,8 @@ class SyncBloc extends Cubit<SyncState> {
 
   void refreshConnection() => syncNow();
 
-  Future<void> syncNow() => _syncData(prefsRepository.syncDate);
+  Future<void> syncNow() =>
+      _syncData(prefsRepository.syncDate.subtract(const Duration(minutes: 30)));
 
   Future<void> syncLastDay() =>
       _syncData(prefsRepository.syncDate.subtract(const Duration(days: 1)));
