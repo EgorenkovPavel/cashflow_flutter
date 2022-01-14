@@ -28,7 +28,7 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
             if (state.isAdmin) {
               return AdminSettings();
             } else {
-              return ConnectedView();
+            return ConnectedView();
             }
           } else if (state is SyncState_Failed) {
             if (state.isAdmin) {
@@ -56,44 +56,44 @@ class ConnectedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Database connected'),
-        BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          if (state is SyncState_Synced) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Last sync ${state.syncDate}'),
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
-        SizedBox(
-          height: 8.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncNow(),
-              child: Text('Sync'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncLastDay(),
-              child: Text('Sync last day'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncLastMonth(),
-              child: Text('Sync last month'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncAll(),
-              child: Text('Sync all'),
-            ),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Database connected'),
+          SizedBox(height: 8.0),
+          BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+            if (state is SyncState_Synced) {
+              return Text('Last sync ${state.syncDate}');
+            } else {
+              return SizedBox();
+            }
+          }),
+          SizedBox(height: 8.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncNow(),
+                child: Text('Sync'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncLastDay(),
+                child: Text('Sync last day'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncLastMonth(),
+                child: Text('Sync last month'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncAll(),
+                child: Text('Sync all'),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -103,56 +103,56 @@ class AdminSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          if (state is SyncState_Synced) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Last sync ${state.syncDate}'),
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () => _addUser(context),
-              child: Text('Add user'),
-            ),
-            ElevatedButton(
-              onPressed: () => _scanQrCode(context),
-              child: Text('Scan QR code'),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncNow(),
-              child: Text('Sync'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncLastDay(),
-              child: Text('Sync last day'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncLastMonth(),
-              child: Text('Sync last month'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().syncAll(),
-              child: Text('Sync all'),
-            ),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
+            if (state is SyncState_Synced) {
+              return Text('Last sync ${state.syncDate}');
+            } else {
+              return SizedBox();
+            }
+          }),
+          SizedBox(height: 8.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () => _addUser(context),
+                child: Text('Add user'),
+              ),
+              ElevatedButton(
+                onPressed: () => _scanQrCode(context),
+                child: Text('Scan QR code'),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncNow(),
+                child: Text('Sync'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncLastDay(),
+                child: Text('Sync last day'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncLastMonth(),
+                child: Text('Sync last month'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<SyncBloc>().syncAll(),
+                child: Text('Sync all'),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
