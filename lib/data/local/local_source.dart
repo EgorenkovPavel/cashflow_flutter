@@ -47,6 +47,7 @@ abstract class LocalCategoryRepo{
       DateTime date, OperationType type);
   Future<List<CategoryCashflow>> getCashflowByType(
       DateTime date, OperationType type);
+  Future<List<CategoryMonthCashflow>> getCashflowByYear(int year);
 
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id);
   Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id);

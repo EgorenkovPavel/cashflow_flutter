@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
 
 class BalanceChart extends StatelessWidget {
   @override
@@ -81,7 +80,7 @@ abstract class BalanceChartEvent {}
 class Fetch extends BalanceChartEvent {}
 
 class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
-  final LocalSource _repository;
+  //final LocalSource _repository;
 
   List<DateTime> dates = [];
   List<ValueOnDate> balance = [];
@@ -116,7 +115,7 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
         date.month == 12 ? 1 : date.month + 1);
   }
 
-  BalanceChartBloc(this._repository) : super(BalanceChartState([], [], [])) {
+  BalanceChartBloc() : super(BalanceChartState([], [], [])) {
     var _now = DateTime.now();
 
     dates = [
@@ -158,7 +157,6 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
     //   });
   }
 
-  @override
   Stream<BalanceChartState> mapEventToState(BalanceChartEvent event) async* {
     if (event is Fetch) {
       yield BalanceChartState(dates, balance, budget);

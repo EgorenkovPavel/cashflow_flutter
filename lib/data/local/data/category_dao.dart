@@ -44,6 +44,18 @@ class CategoryBudgetEntity {
   int get hashCode => category.hashCode;
 }
 
+class CategoryMonthCashflowEntity {
+  final CategoryDB category;
+  final int month;
+  final int cashflow;
+
+  CategoryMonthCashflowEntity({
+    required this.month,
+    required this.category,
+    required this.cashflow,
+  });
+}
+
 @DriftAccessor(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
@@ -92,7 +104,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       (select(categories)..where((tbl) => tbl.synced.equals(false))).get();
 
   Stream<CategoryDB> watchNotSynced() =>
-      (select(categories)..where((tbl) => tbl.synced.equals(false))).watchSingle();
+      (select(categories)..where((tbl) => tbl.synced.equals(false)))
+          .watchSingle();
 
   Stream<CategoryDB> watchCategoryById(int id) => (select(categories)
         ..where(
@@ -228,6 +241,34 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
             date: DateTime(row.read<int?>(year) ?? 0),
             sum: row.read<int?>(sum) ?? 0))
         .toList());
+  }
+
+  Future<List<CategoryMonthCashflowEntity>> getCashflowByYear(int year) {
+    var yearStart = DateTime(year);
+    var yearEnd = DateTime(year + 1);
+
+    return customSelect(
+      'SELECT *, '
+      'FROM categories c '
+          'LEFT JOIN '
+        '(SELECT category as category, strftime("%m", date) as month, SUM(sum) as sum FROM cashflow WHERE date BETWEEN ? AND ?) AS "cashflow" '
+          'ON c.id = cashflow.category',
+        variables: [
+        Variable.withDateTime(yearStart),
+        Variable.withDateTime(yearEnd),
+      ],
+      readsFrom: {categories, cashflows},
+    ).get().then(
+          (rows) => rows
+              .map(
+                (row) => CategoryMonthCashflowEntity(
+                  category: CategoryDB.fromData(row.data),
+                  month: row.read<int?>('month') ?? 0,
+                  cashflow: row.read<int?>('sum') ?? 0,
+                ),
+              )
+              .toList(),
+        );
   }
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(

@@ -10,7 +10,7 @@ enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
 class DriveBloc extends Cubit<DriveState> {
   final LocalSource _dataRepository;
   final DriveRepository _driveRepository;
-  final AuthBloc _authBloc;
+  //final AuthBloc _authBloc;
 
   StreamSubscription? _authSub;
 
@@ -20,7 +20,7 @@ class DriveBloc extends Cubit<DriveState> {
     required AuthBloc authBloc,
   })  : _dataRepository = dataRepository,
         _driveRepository = driveRepository,
-        _authBloc = authBloc,
+        //_authBloc = authBloc,
         super(DriveState.INITIAL){
     _authState(authBloc.state);
     _authSub = authBloc.stream.listen((event) {
