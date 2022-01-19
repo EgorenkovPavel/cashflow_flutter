@@ -504,6 +504,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  horizontal_data_table:
+    dependency: "direct main"
+    description:
+      name: horizontal_data_table
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.6.0"
   http:
     dependency: transitive
     description:

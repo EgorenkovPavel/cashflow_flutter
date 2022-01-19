@@ -3,6 +3,7 @@ import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
+import 'package:money_tracker/data/mappers/category_month_cashflow_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:drift/drift.dart';
 
@@ -23,6 +24,10 @@ class CategoryRepository extends LocalCategoryRepo{
   final List<CategoryCashflow> Function(List<CategoryCashflowEntity>)
       _mapCategoryCashflowList =
       (list) => const CategoryCashflowMapper().mapListToDart(list);
+
+  final List<CategoryMonthCashflow> Function(List<CategoryMonthCashflowEntity>)
+  _mapCategoryMonthCashflowList =
+      (list) => const CategoryMonthCashflowMapper().mapListToDart(list);
 
   @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
@@ -50,6 +55,10 @@ class CategoryRepository extends LocalCategoryRepo{
       categoryDao
           .watchCategoryCashflowByType(date, type)
           .map(_mapCategoryCashflowList);
+
+  @override
+  Future<List<CategoryMonthCashflow>> getCashflowByYear(int year) async =>
+      _mapCategoryMonthCashflowList(await categoryDao.getCashflowByYear(year));
 
   @override
   Future<List<CategoryCashflow>> getCashflowByType(
