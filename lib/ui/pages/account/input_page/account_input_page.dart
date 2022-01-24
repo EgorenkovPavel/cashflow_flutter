@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/account/input_page/account_input_page_bloc.dart';
+import 'package:money_tracker/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -15,9 +15,9 @@ class AccountInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = AccountInputPageBloc(context.read<LocalSource>());
+    final _bloc = AccountInputBloc(context.read<LocalSource>());
     if (id != null) {
-      _bloc.fetch(id!);
+      _bloc.add(Fetch(id!));
     }
     return BlocProvider(
       create: (context) => _bloc,
@@ -48,11 +48,11 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AccountInputPageBloc, AccountInputPageState>(
+    return BlocConsumer<AccountInputBloc, AccountInputState>(
       listener: (context, state) {
-        if (state is Close) {
+        if (state is SavedAccount) {
           Navigator.of(context).pop(state.account);
-        } else if (state is InitTitle) {
+        } else if (state is FetchAccount) {
           _controller.text = state.title;
         }
       },
@@ -62,7 +62,7 @@ class _AccountPageState extends State<AccountPage> {
           title: widget.isNew
               ? AppLocalizations.of(context).newAccountCardTitle
               : AppLocalizations.of(context).accountCardTitle,
-          onSave: (context) => context.read<AccountInputPageBloc>().save(),
+          onSave: (context) => context.read<AccountInputBloc>().add(Save()),
           child: Column(
             children: [
               TextFormField(
@@ -72,8 +72,9 @@ class _AccountPageState extends State<AccountPage> {
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).title,
                 ),
-                onChanged: (value) =>
-                    context.read<AccountInputPageBloc>().changeTitle(value),
+                onChanged: (value) => context
+                    .read<AccountInputBloc>()
+                    .add(ChangeTitle(value)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return AppLocalizations.of(context).emptyTitleError;
@@ -85,8 +86,9 @@ class _AccountPageState extends State<AccountPage> {
                 children: [
                   Checkbox(
                     value: (state as Data).isDebt,
-                    onChanged: (val) =>
-                        context.read<AccountInputPageBloc>().changeIsDebt(val!),
+                    onChanged: (val) => context
+                        .read<AccountInputBloc>()
+                        .add(ChangeIsDebt(val!)),
                   ),
                   Text('Is debt'),
                 ],
