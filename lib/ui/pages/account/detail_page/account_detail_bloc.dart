@@ -40,7 +40,7 @@ class AccountDetailState {
 
 class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
   final LocalSource _repository;
-  StreamSubscription? _sub;
+  StreamSubscription? _subTitle;
   StreamSubscription? _subOperations;
 
   AccountDetailBloc(this._repository) : super(AccountDetailState.initial()) {
@@ -50,7 +50,7 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
   }
 
   Future<void> _fetch(Fetch event, Emitter<AccountDetailState> emit) async {
-    _sub = _repository.accounts.watchById(event.accountId).listen((event) {
+    _subTitle = _repository.accounts.watchById(event.accountId).listen((event) {
       add(TitleChanged(event.title));
     });
 
@@ -71,7 +71,7 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
 
   @override
   Future<void> close() {
-    _sub?.cancel();
+    _subTitle?.cancel();
     _subOperations?.cancel();
     return super.close();
   }
