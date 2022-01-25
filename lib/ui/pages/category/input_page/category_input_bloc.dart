@@ -76,6 +76,7 @@ class Data extends CategoryInputState {
           operationType: operationType ?? state.operationType,
           budgetType: budgetType ?? state.budgetType,
           budget: budget ?? state.budget,
+          category: state.category,
         );
 
   Data.initial()

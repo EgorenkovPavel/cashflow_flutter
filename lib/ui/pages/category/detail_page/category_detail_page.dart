@@ -4,7 +4,7 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/detail_page/category_cashflow_diagram.dart';
-import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page_bloc.dart';
+import 'package:money_tracker/ui/pages/category/detail_page/category_detail_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -18,9 +18,8 @@ class CategoryDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-      CategoryBloc(context.read<LocalSource>())
-        ..fetch(id),
-      child: BlocBuilder<CategoryBloc, CategoryState>(
+          CategoryDetailBloc(context.read<LocalSource>())..add(Fetch(id)),
+      child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -35,7 +34,10 @@ class CategoryDetailPage extends StatelessWidget {
             body: CustomScrollView(
               slivers: [
                 SliverPersistentHeader(
-                  delegate: TitleDelegate(id: id, budget: state.budget, budgetType: state.budgetType),
+                  delegate: TitleDelegate(
+                      id: id,
+                      budget: state.budget,
+                      budgetType: state.budgetType),
                 ),
                 StreamBuilder<List<Operation>>(
                     stream: context
@@ -52,21 +54,20 @@ class CategoryDetailPage extends StatelessWidget {
                         delegate: SliverChildListDelegate(
                           list
                               .expand(
-                                (e) =>
-                            [
-                              if (list.indexOf(e) == 0)
-                                ListDividerOperation.day(null, e)
-                              else
-                                ListDividerOperation.day(
-                                    list[list.indexOf(e) - 1], e),
-                              ListTileOperation(
-                                e,
-                                onTap: () =>
-                                    PageNavigator.openOperationEditPage(
-                                        context, e.id),
+                                (e) => [
+                                  if (list.indexOf(e) == 0)
+                                    ListDividerOperation.day(null, e)
+                                  else
+                                    ListDividerOperation.day(
+                                        list[list.indexOf(e) - 1], e),
+                                  ListTileOperation(
+                                    e,
+                                    onTap: () =>
+                                        PageNavigator.openOperationEditPage(
+                                            context, e.id),
+                                  )
+                                ],
                               )
-                            ],
-                          )
                               .toList(),
                         ),
                       );
@@ -85,27 +86,25 @@ class CategoryDetailPage extends StatelessWidget {
 }
 
 class TitleDelegate extends SliverPersistentHeaderDelegate {
-
   final int id;
   final int budget;
   final BudgetType budgetType;
 
-  TitleDelegate(
-      {required this.id, required this.budget, required this.budgetType,});
+  TitleDelegate({
+    required this.id,
+    required this.budget,
+    required this.budgetType,
+  });
 
   @override
-  Widget build(BuildContext context, double shrinkOffset,
-      bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-              '${AppLocalizations
-                  .of(context)
-                  .budget} $budget ${AppLocalizations
-                  .of(context)
-                  .in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}'),
+              '${AppLocalizations.of(context).budget} $budget ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}'),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
