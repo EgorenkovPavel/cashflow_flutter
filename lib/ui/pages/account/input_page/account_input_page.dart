@@ -48,7 +48,7 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AccountInputBloc, AccountInputState>(
+    return BlocListener<AccountInputBloc, AccountInputState>(
       listener: (context, state) {
         if (state is SavedAccount) {
           Navigator.of(context).pop(state.account);
@@ -56,47 +56,43 @@ class _AccountPageState extends State<AccountPage> {
           _controller.text = state.title;
         }
       },
-      buildWhen: (previous, current) => current is Data,
-      builder: (context, state) {
-        return ItemCard<Account>(
-          title: widget.isNew
-              ? AppLocalizations.of(context).newAccountCardTitle
-              : AppLocalizations.of(context).accountCardTitle,
-          onSave: (context) => context.read<AccountInputBloc>().add(Save()),
-          child: Column(
-            children: [
-              TextFormField(
-                autofocus: true,
-                controller: _controller,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context).title,
-                ),
-                onChanged: (value) => context
-                    .read<AccountInputBloc>()
-                    .add(ChangeTitle(value)),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppLocalizations.of(context).emptyTitleError;
-                  }
-                  return null;
-                },
+      child: ItemCard<Account>(
+        title: widget.isNew
+            ? AppLocalizations.of(context).newAccountCardTitle
+            : AppLocalizations.of(context).accountCardTitle,
+        onSave: (context) => context.read<AccountInputBloc>().add(Save()),
+        child: Column(
+          children: [
+            TextFormField(
+              //autofocus: true,
+              controller: _controller,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).title,
               ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: (state as Data).isDebt,
-                    onChanged: (val) => context
-                        .read<AccountInputBloc>()
-                        .add(ChangeIsDebt(val!)),
-                  ),
-                  Text('Is debt'),
-                ],
-              )
-            ],
-          ),
-        );
-      },
+              onChanged: (value) =>
+                  context.read<AccountInputBloc>().add(ChangeTitle(value)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return AppLocalizations.of(context).emptyTitleError;
+                }
+                return null;
+              },
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: context.select<AccountInputBloc, bool>(
+                      (bloc) => bloc.state.isDebt),
+                  onChanged: (val) =>
+                      context.read<AccountInputBloc>().add(ChangeIsDebt(val!)),
+                ),
+                Text('Is debt'),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
