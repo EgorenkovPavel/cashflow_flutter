@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/pages/budget_page/budget_page_bloc.dart';
+import 'package:money_tracker/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -20,12 +20,12 @@ class BudgetPage extends StatefulWidget {
 final _duration = const Duration(seconds: 1);
 
 class _BudgetPageState extends State<BudgetPage> {
-  late BudgetPageBloc _bloc;
+  late BudgetBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = BudgetPageBloc(context.read<LocalSource>())..fetch(widget.type);
+    _bloc = BudgetBloc(context.read<LocalSource>())..add(Fetch(widget.type));
   }
 
   @override
@@ -34,7 +34,7 @@ class _BudgetPageState extends State<BudgetPage> {
     super.dispose();
   }
 
-  Widget _calcTitle(BudgetPageState state) {
+  Widget _calcTitle(BudgetState state) {
     var start = widget.type == OperationType.INPUT
         ? AppLocalizations.of(context).earningIn
         : AppLocalizations.of(context).spendingIn;
@@ -47,7 +47,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BudgetPageBloc, BudgetPageState>(
+    return BlocBuilder<BudgetBloc, BudgetState>(
       bloc: _bloc,
       builder: (context, state) {
         return Scaffold(
@@ -64,8 +64,8 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                   delegate: DiagramDelegate(
                       items: state.itemsAll,
-                      onBackPressed: _bloc.onBackPressed,
-                      onForwardPressed: _bloc.onForwardPressed)),
+                      onBackPressed: () => _bloc.add(PreviousYear()),
+                      onForwardPressed: () => _bloc.add(NextYear()))),
               SliverPersistentHeader(
                   pinned: true,
                   delegate: BudgetTypeHeaderDelegate(
@@ -76,7 +76,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         (previousValue, element) =>
                             previousValue + element.monthCashflow),
                     showAll: state.showAllMonthBudget,
-                    onPressed: () => _bloc.changeShowAll(BudgetType.MONTH),
+                    onPressed: () => _bloc.add(ShowAll(BudgetType.MONTH)),
                   )),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsMonthBudget
@@ -92,7 +92,7 @@ class _BudgetPageState extends State<BudgetPage> {
                           (previousValue, element) =>
                               previousValue + element.yearCashflow),
                       showAll: state.showAllYearBudget,
-                      onPressed: () => _bloc.changeShowAll(BudgetType.YEAR))),
+                      onPressed: () => _bloc.add(ShowAll(BudgetType.YEAR)))),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsYearBudget
                     .expand((e) => [_CategoryItem(category: e), Divider()])

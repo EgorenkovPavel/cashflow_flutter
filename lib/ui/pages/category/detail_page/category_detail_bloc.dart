@@ -22,24 +22,19 @@ class CategoryDetailState {
   final String title;
   final int budget;
   final BudgetType budgetType;
-  final List<SumOnDate> cashflows;
 
-  CategoryDetailState({this.cashflows = const [],
-    this.budgetType = BudgetType.MONTH,
-    this.title = '',
-    this.budget = 0});
+  CategoryDetailState(
+      {required this.budgetType, required this.title, required this.budget});
 
-  CategoryDetailState copyWith({List<SumOnDate>? cashflows,
-    BudgetType? budgetType,
-    String? title,
-    int? budget}) {
-    return CategoryDetailState(
-      title: title ?? this.title,
-      budget: budget ?? this.budget,
-      budgetType: budgetType ?? this.budgetType,
-      cashflows: cashflows ?? this.cashflows,
-    );
-  }
+  CategoryDetailState.initial(
+      {this.budgetType = BudgetType.MONTH, this.title = '', this.budget = 0});
+
+  CategoryDetailState.category({
+    required Category category,
+  }) :
+      title = category.title,
+      budget = category.budget,
+      budgetType = category.budgetType;
 }
 
 class CategoryDetailBloc
@@ -48,7 +43,7 @@ class CategoryDetailBloc
 
   StreamSubscription<Category>? _subCategory;
 
-  CategoryDetailBloc(this._repository) : super(CategoryDetailState()) {
+  CategoryDetailBloc(this._repository) : super(CategoryDetailState.initial()) {
     on<Fetch>(_fetch);
     on<ChangeCategory>(_changeCategory);
   }
@@ -56,15 +51,13 @@ class CategoryDetailBloc
   void _fetch(Fetch event, Emitter<CategoryDetailState> emit) {
     _subCategory =
         _repository.categories.watchById(event.categoryId).listen((category) {
-          add(ChangeCategory(category));
-        });
+      add(ChangeCategory(category));
+    });
   }
 
-  void _changeCategory(ChangeCategory event,
-      Emitter<CategoryDetailState> emit) {
-    emit(state.copyWith(title: event.category.title,
-      budget: event.category.budget,
-      budgetType: event.category.budgetType,));
+  void _changeCategory(
+      ChangeCategory event, Emitter<CategoryDetailState> emit) {
+    emit(CategoryDetailState.category(category: event.category));
   }
 
   @override
