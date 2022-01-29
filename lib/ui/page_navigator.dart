@@ -9,7 +9,7 @@ import 'package:money_tracker/ui/pages/home/home_page.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/ui/pages/operation/operation_edit_page.dart';
-import 'package:money_tracker/ui/pages/operation/operation_list_page.dart';
+import 'package:money_tracker/ui/pages/operation/list_page/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/cloud_database_settings/cloud_database_settings_page.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page.dart';

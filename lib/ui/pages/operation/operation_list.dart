@@ -1,23 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models/operation.dart';
-import 'package:money_tracker/domain/models/operation_list_filter.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends StatelessWidget {
-  final OperationListFilter _filter;
+  final List<Operation> _operations;
 
-  const OperationList(
-      {OperationListFilter filter = const OperationListFilter()})
-      : _filter = filter;
+  const OperationList(this._operations);
 
   Widget _listBuilder(BuildContext context, List<Operation> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
@@ -80,23 +75,17 @@ class OperationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Operation>>(
-      stream:
-          Provider.of<LocalSource>(context).operations.watchAllByFilter(_filter),
-      builder: (BuildContext context, AsyncSnapshot<List<Operation>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.data!.isEmpty) {
-          return EmptyListHint(
-            title: AppLocalizations.of(context).emptyListOperations,
-            hint: AppLocalizations.of(context).hintEmptyList,
-          );
-        }
+    if (_operations.isEmpty) {
+      return EmptyListHint(
+        title: AppLocalizations
+            .of(context)
+            .emptyListOperations,
+        hint: AppLocalizations
+            .of(context)
+            .hintEmptyList,
+      );
+    }
 
-        final items = snapshot.data ?? <Operation>[];
-
-        return _listBuilder(context, items);
-      },
-    );
+    return _listBuilder(context, _operations);
   }
 }

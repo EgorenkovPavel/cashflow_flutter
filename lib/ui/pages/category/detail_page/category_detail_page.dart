@@ -39,39 +39,32 @@ class CategoryDetailPage extends StatelessWidget {
                       budget: state.budget,
                       budgetType: state.budgetType),
                 ),
-                StreamBuilder<List<Operation>>(
-                    stream: context
-                        .read<LocalSource>()
-                        .operations
-                        .watchAllByCategory(id),
-                    builder: (context, snapshot) {
-                      var list = <Operation>[];
-                      if (snapshot.hasData) {
-                        list = snapshot.data!;
-                      }
-
-                      return SliverList(
-                        delegate: SliverChildListDelegate(
-                          list
-                              .expand(
-                                (e) => [
-                                  if (list.indexOf(e) == 0)
-                                    ListDividerOperation.day(null, e)
-                                  else
-                                    ListDividerOperation.day(
-                                        list[list.indexOf(e) - 1], e),
-                                  ListTileOperation(
-                                    e,
-                                    onTap: () =>
-                                        PageNavigator.openOperationEditPage(
-                                            context, e.id),
-                                  )
-                                ],
+                BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
+                    builder: (context, state) {
+                  return SliverList(
+                    delegate: SliverChildListDelegate(
+                      state.operations
+                          .expand(
+                            (e) => [
+                              if (state.operations.indexOf(e) == 0)
+                                ListDividerOperation.day(null, e)
+                              else
+                                ListDividerOperation.day(
+                                    state.operations[
+                                        state.operations.indexOf(e) - 1],
+                                    e),
+                              ListTileOperation(
+                                e,
+                                onTap: () =>
+                                    PageNavigator.openOperationEditPage(
+                                        context, e.id),
                               )
-                              .toList(),
-                        ),
-                      );
-                    })
+                            ],
+                          )
+                          .toList(),
+                    ),
+                  );
+                }),
               ],
             ),
             floatingActionButton: FloatingActionButton(

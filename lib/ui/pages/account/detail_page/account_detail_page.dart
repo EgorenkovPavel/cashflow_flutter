@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
-import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/account/detail_page/account_detail_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
@@ -27,7 +26,7 @@ class AccountDetailPage extends StatelessWidget {
                     icon: Icon(Icons.edit))
               ],
             ),
-            body: OperationList(filter: OperationListFilter(accountsIds: {id})),
+            body: OperationList(context.watch<AccountDetailBloc>().state.operations),
             floatingActionButton: FloatingActionButton(
               onPressed: () => PageNavigator.openOperationInputPage(context),
               child: Icon(Icons.add),
