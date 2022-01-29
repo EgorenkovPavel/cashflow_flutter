@@ -3,39 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page_bloc.dart';
+import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
-class OperationFilterPage extends StatefulWidget {
+class OperationFilterPage extends StatelessWidget {
   OperationFilterPage({Key? key, this.filter}) : super(key: key);
 
   final OperationListFilter? filter;
 
   @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => OperationFilterBloc(context.read<LocalSource>())
+        ..add(Init(filter ?? OperationListFilter.empty())),
+      child: _OperationFilterPage(),
+    );
+  }
+}
+
+class _OperationFilterPage extends StatefulWidget {
+  @override
   _OperationFilterPageState createState() => _OperationFilterPageState();
 }
 
-class _OperationFilterPageState extends State<OperationFilterPage> {
-  final _accountKey = GlobalKey<State<OperationFilterPage>>();
-  final _categoryInKey = GlobalKey<State<OperationFilterPage>>();
-  final _categoryOutKey = GlobalKey<State<OperationFilterPage>>();
-
-  late OperationFilterPageBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = OperationFilterPageBloc(context.read<LocalSource>())
-      ..init(
-        widget.filter ?? OperationListFilter(),
-      );
-  }
-
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+class _OperationFilterPageState extends State<_OperationFilterPage> {
+  final _accountKey = GlobalKey<State<_OperationFilterPage>>();
+  final _categoryInKey = GlobalKey<State<_OperationFilterPage>>();
+  final _categoryOutKey = GlobalKey<State<_OperationFilterPage>>();
 
   RelativeRect buttonMenuPosition(BuildContext c) {
     final bar = c.findRenderObject() as RenderBox;
@@ -54,14 +48,15 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     final result = await showMenu<Account>(
         context: context,
         position: buttonMenuPosition(_accountKey.currentContext!),
-        items: _bloc.accountList
+        items: context
+            .read<OperationFilterBloc>().state.accounts
             .map((a) => PopupMenuItem<Account>(
                   value: a,
                   child: Text(a.title),
                 ))
             .toList());
     if (result != null) {
-      _bloc.addAccount(result);
+      context.read<OperationFilterBloc>().add(AddAccount(result));
     }
   }
 
@@ -69,7 +64,8 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     final result = await showMenu<Category>(
         context: context,
         position: buttonMenuPosition(_categoryInKey.currentContext!),
-        items: _bloc.categoryInList
+        items: context
+            .read<OperationFilterBloc>().state.inCategories
             .map(
               (c) => PopupMenuItem<Category>(
                 value: c,
@@ -78,7 +74,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
             )
             .toList());
     if (result != null) {
-      _bloc.addCategory(result);
+      context.read<OperationFilterBloc>().add(AddCategory(result));
     }
   }
 
@@ -86,14 +82,15 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
     final result = await showMenu<Category>(
         context: context,
         position: buttonMenuPosition(_categoryOutKey.currentContext!),
-        items: _bloc.categoryOutList
+        items: context
+            .read<OperationFilterBloc>().state.outCategories
             .map((c) => PopupMenuItem<Category>(
                   value: c,
                   child: Text(c.title),
                 ))
             .toList());
     if (result != null) {
-      _bloc.addCategory(result);
+      context.read<OperationFilterBloc>().add(AddCategory(result));
     }
   }
 
@@ -106,91 +103,102 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: BlocBuilder<OperationFilterPageBloc, StateBloc>(
-              bloc: _bloc,
-              builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(AppLocalizations.of(context).period),
-                    PeriodButton(
-                      date: state.dateRange,
-                      onPressed: (date) => _bloc.setPeriod(date),
-                      onDelete: () => _bloc.clearPeriod(),
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(AppLocalizations.of(context).accounts),
-                    InputChip(
-                        key: _accountKey,
-                        avatar: Icon(Icons.mode_edit),
-                        label: Text(AppLocalizations.of(context).chooseAccount),
-                        onPressed: _onAccountChipPressed),
-                    Wrap(
-                      children: state.accounts
-                          .map(
-                            (account) => InputChip(
-                              label: Text(account.title),
-                              deleteIcon: Icon(Icons.cancel),
-                              onDeleted: () => _bloc.removeAccount(account),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(AppLocalizations.of(context).inputCategory),
-                    InputChip(
-                      key: _categoryInKey,
-                      avatar: Icon(Icons.mode_edit),
-                      label: Text(AppLocalizations.of(context).chooseCategory),
-                      onPressed: _onCategoryInPressed,
-                    ),
-                    Wrap(
-                        children: state.categoryIn
-                            .map(
-                              (category) => InputChip(
-                                label: Text(category.title),
-                                deleteIcon: Icon(Icons.cancel),
-                                onDeleted: () => _bloc.removeCategory(category),
-                              ),
-                            )
-                            .toList()),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(AppLocalizations.of(context).outputCategory),
-                    InputChip(
-                      key: _categoryOutKey,
-                      avatar: Icon(Icons.mode_edit),
-                      label: Text(AppLocalizations.of(context).chooseCategory),
-                      onPressed: _onCategoryOutPressed,
-                    ),
-                    Wrap(
-                        children: state.categoryOut
-                            .map(
-                              (category) => InputChip(
-                                label: Text(category.title),
-                                deleteIcon: Icon(Icons.cancel),
-                                onDeleted: () => _bloc.removeCategory(category),
-                              ),
-                            )
-                            .toList()),
-                  ],
-                );
-              }),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 8.0),
+              Text(AppLocalizations.of(context).period),
+              PeriodButton(
+                date: context.select<OperationFilterBloc, DateTimeRange?>(
+                    (bloc) => bloc.state.filter.period),
+                onPressed: (date) =>
+                    context.read<OperationFilterBloc>().add(SetPeriod(date)),
+                onDelete: () =>
+                    context.read<OperationFilterBloc>().add(ResetPediod()),
+              ),
+              SizedBox(height: 8.0),
+              Text(AppLocalizations.of(context).accounts),
+              InputChip(
+                  key: _accountKey,
+                  avatar: Icon(Icons.mode_edit),
+                  label: Text(AppLocalizations.of(context).chooseAccount),
+                  onPressed: _onAccountChipPressed),
+              Wrap(
+                children: context
+                    .select<OperationFilterBloc, Set<Account>>(
+                        (bloc) => bloc.state.filter.accounts)
+                    .map(
+                      (account) => InputChip(
+                        label: Text(account.title),
+                        deleteIcon: Icon(Icons.cancel),
+                        onDeleted: () => context
+                            .read<OperationFilterBloc>()
+                            .add(RemoveAccount(account)),
+                      ),
+                    )
+                    .toList(),
+              ),
+              SizedBox(height: 8.0),
+              Text(AppLocalizations.of(context).inputCategory),
+              InputChip(
+                key: _categoryInKey,
+                avatar: Icon(Icons.mode_edit),
+                label: Text(AppLocalizations.of(context).chooseCategory),
+                onPressed: _onCategoryInPressed,
+              ),
+              Wrap(
+                  children: context
+                      .select<OperationFilterBloc, Set<Category>>((bloc) => bloc
+                          .state.filter.categories
+                          .where(
+                              (cat) => cat.operationType == OperationType.INPUT)
+                          .toSet())
+                      .map(
+                        (category) => InputChip(
+                          label: Text(category.title),
+                          deleteIcon: Icon(Icons.cancel),
+                          onDeleted: () => context
+                              .read<OperationFilterBloc>()
+                              .add(RemoveCategory(category)),
+                        ),
+                      )
+                      .toList()),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text(AppLocalizations.of(context).outputCategory),
+              InputChip(
+                key: _categoryOutKey,
+                avatar: Icon(Icons.mode_edit),
+                label: Text(AppLocalizations.of(context).chooseCategory),
+                onPressed: _onCategoryOutPressed,
+              ),
+              Wrap(
+                  children: context
+                      .select<OperationFilterBloc, Set<Category>>((bloc) => bloc
+                          .state.filter.categories
+                          .where((cat) =>
+                              cat.operationType == OperationType.OUTPUT)
+                          .toSet())
+                      .map(
+                        (category) => InputChip(
+                          label: Text(category.title),
+                          deleteIcon: Icon(Icons.cancel),
+                          onDeleted: () => context
+                              .read<OperationFilterBloc>()
+                              .add(RemoveCategory(category)),
+                        ),
+                      )
+                      .toList()),
+            ],
+          ),
         ),
       ),
       persistentFooterButtons: [
         TextButton(
           onPressed: () => Navigator.pop(
             context,
-            OperationListFilter(),
+            OperationListFilter.empty(),
           ),
           child: Text(
             AppLocalizations.of(context).reset.toUpperCase(),
@@ -199,7 +207,7 @@ class _OperationFilterPageState extends State<OperationFilterPage> {
         ElevatedButton(
           onPressed: () => Navigator.pop(
             context,
-            _bloc.getFilter(),
+            context.read<OperationFilterBloc>().state.filter,
           ),
           child: Text(
             AppLocalizations.of(context).apply.toUpperCase(),

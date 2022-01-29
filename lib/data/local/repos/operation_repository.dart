@@ -37,10 +37,11 @@ class OperationRepository extends LocalOperationsRepo {
   Stream<List<Operation>> watchAllByFilter(OperationListFilter filter) =>
       operationDao
           .watchAllOperationItemsByFilter(
-              start: filter.date?.start,
-              end: filter.date?.end,
-              accountIds: filter.accountsIds,
-              categoriesIds: filter.categoriesIds)
+              start: filter.period?.start,
+              end: filter.period?.end,
+              accountIds: filter.accounts.map((account) => account.id).toSet(),
+              categoriesIds:
+                  filter.categories.map((category) => category.id).toSet())
           .map(_mapOperationList);
 
   @override
@@ -91,7 +92,7 @@ class OperationRepository extends LocalOperationsRepo {
   }
 
   @override
-  Future<Operation> duplicate(Operation entity){
+  Future<Operation> duplicate(Operation entity) {
     var newOperation = entity.copyWith(
       id: 0,
       cloudId: '',
@@ -114,7 +115,8 @@ class OperationRepository extends LocalOperationsRepo {
 
   @override
   Future<List<Operation>> getAllNotSynced() async {
-    return _mapOperationList(await operationDao.getAllOperationItemsNotSynced());
+    return _mapOperationList(
+        await operationDao.getAllOperationItemsNotSynced());
   }
 
   @override
@@ -124,7 +126,9 @@ class OperationRepository extends LocalOperationsRepo {
 
   @override
   Stream<Operation> watchNotSynced() {
-    return operationDao.watchOperationItemsNotSynced().map((event) => _mapOperation(event));
+    return operationDao
+        .watchOperationItemsNotSynced()
+        .map((event) => _mapOperation(event));
   }
 
   @override
@@ -143,15 +147,17 @@ class OperationRepository extends LocalOperationsRepo {
 
   @override
   Future updateFromCloud(Operation operation) {
-    return operationDao.updateFields(operation.id, OperationsCompanion(
-      cloudId: Value(operation.cloudId),
-      date: Value(operation.date),
-      operationType: Value(operation.type),
-      account: Value(operation.account.id),
-      category: Value(operation.category?.id),
-      recAccount: Value(operation.recAccount?.id),
-      sum: Value(operation.sum),
-      synced: Value(true),
-    ));
+    return operationDao.updateFields(
+        operation.id,
+        OperationsCompanion(
+          cloudId: Value(operation.cloudId),
+          date: Value(operation.date),
+          operationType: Value(operation.type),
+          account: Value(operation.account.id),
+          category: Value(operation.category?.id),
+          recAccount: Value(operation.recAccount?.id),
+          sum: Value(operation.sum),
+          synced: Value(true),
+        ));
   }
 }

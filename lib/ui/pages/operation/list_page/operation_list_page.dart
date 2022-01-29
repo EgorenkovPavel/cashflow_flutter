@@ -12,7 +12,7 @@ class OperationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OperationListBloc(context.read<LocalSource>())
-        ..add(Fetch(OperationListFilter())),
+        ..add(Fetch(OperationListFilter.empty())),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(

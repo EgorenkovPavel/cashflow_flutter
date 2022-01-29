@@ -55,7 +55,9 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
     });
 
     _subOperations = _repository.operations
-        .watchAllByFilter(OperationListFilter(accountsIds: {event.accountId}))
+        .watchAllByFilter(OperationListFilter(
+            accounts: {Account(id: event.accountId, title: '', isDebt: false)},
+            categories: {}))
         .listen((event) {
       add(OperationsChanged(event));
     });
@@ -65,7 +67,8 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
     emit(AccountDetailState(title: event.title, operations: state.operations));
   }
 
-  void _operationsChanged(OperationsChanged event, Emitter<AccountDetailState> emit){
+  void _operationsChanged(
+      OperationsChanged event, Emitter<AccountDetailState> emit) {
     emit(AccountDetailState(title: state.title, operations: event.operations));
   }
 

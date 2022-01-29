@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:money_tracker/domain/models.dart';
 
 class OperationListFilter {
-  final DateTimeRange? date;
-  final Set<int> accountsIds;
-  final Set<int> categoriesIds;
+  final DateTimeRange? period;
+  final Set<Account> accounts;
+  final Set<Category> categories;
 
   const OperationListFilter({
-    this.date,
-    this.accountsIds = const {},
-    this.categoriesIds = const {},
+    this.period,
+    required this.accounts,
+    required this.categories,
   });
 
+  OperationListFilter.empty()
+      : period = null,
+        accounts = {},
+        categories = {};
+
   OperationListFilter copyWith({
-    DateTimeRange? date,
-    Set<int>? accountsIds,
-    Set<int>? categoriesIds,
+    DateTimeRange? period,
+    Set<Account>? accounts,
+    Set<Category>? categories,
   }) =>
       OperationListFilter(
-        date: date ?? this.date,
-        accountsIds: accountsIds ?? this.accountsIds,
-        categoriesIds: categoriesIds ?? this.categoriesIds,
+        period: period ?? this.period,
+        accounts: accounts ?? this.accounts,
+        categories: categories ?? this.categories,
       );
 }
