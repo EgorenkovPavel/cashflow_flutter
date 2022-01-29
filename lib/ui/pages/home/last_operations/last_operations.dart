@@ -1,64 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/pages/home/last_operations/last_operations_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 class LastOperations extends StatelessWidget {
   const LastOperations({Key? key}) : super(key: key);
 
-  static const int _operationCount = 5;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          LastOperationsBloc(context.read<LocalSource>())..add(Fetch()),
+      child: Builder(builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              AppLocalizations.of(context).titleLastOperations,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            BlocBuilder<LastOperationsBloc, LastOperationsState>(
+                builder: (context, state) {
+              if (state.operations.isEmpty) {
+                return _NoOperationsTitle();
+              }
+              return _OperationsList(items: state.operations);
+            }),
+            //_ShowAllButton(),
+          ],
+        );
+      }),
+    );
+  }
+}
+
+class _OperationsList extends StatelessWidget {
+  const _OperationsList({
+    Key? key,
+    required this.items,
+  }) : super(key: key);
+
+  final List<Operation> items;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          AppLocalizations.of(context).titleLastOperations,
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        StreamBuilder<List<Operation>>(
-            stream:
-                context.read<LocalSource>().operations.watchLast(_operationCount),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print(snapshot.error);
-              }
-
-              if (snapshot.data == null) {
-                return _NoOperationsTitle();
-              }
-
-              var items = snapshot.data!;
-
-              if (items.isEmpty) {
-                return _NoOperationsTitle();
-              }
-
-              return Column(
-                children: items
-                    .expand((e) => [
-                          if (items.indexOf(e) == 0)
-                            ListDividerOperation.day(null, e)
-                          else
-                            ListDividerOperation.day(
-                                items[items.indexOf(e) - 1], e),
-                          ListTileOperation(
-                            e,
-                            onTap: () => PageNavigator.openOperationEditPage(
-                                context, e.id),
-                          ),
-                        ])
-                    .toList()
-                      ..add(_ShowAllButton()),
-              );
-            }),
-        //_ShowAllButton(),
-      ],
+      children: items
+          .expand((e) => [
+                if (items.indexOf(e) == 0)
+                  ListDividerOperation.day(null, e)
+                else
+                  ListDividerOperation.day(items[items.indexOf(e) - 1], e),
+                ListTileOperation(
+                  e,
+                  onTap: () =>
+                      PageNavigator.openOperationEditPage(context, e.id),
+                ),
+              ])
+          .toList()
+        ..add(_ShowAllButton()),
     );
   }
 }
@@ -99,8 +104,8 @@ class _ShowAllButton extends StatelessWidget {
               ),
               Text(
                 AppLocalizations.of(context).btnShowAll.toUpperCase(),
-                style:
-                    TextStyle().copyWith(color: Theme.of(context).colorScheme.primary),
+                style: TextStyle()
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ],
           ),
