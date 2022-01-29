@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
+import 'package:money_tracker/ui/pages/home/top_header/top_header_bloc.dart';
 import 'package:money_tracker/ui/themes.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 const double _itemSize = 100.0;
 
@@ -13,83 +14,88 @@ class TopHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<AccountBalance>>(
-      stream: context.read<LocalSource>().accounts.watchAllBalance(),
-      builder: (context, snapshot) {
-        var _balance = 0;
-        var _accounts = <AccountBalance>[];
-        if (snapshot.hasData) {
-          _balance = snapshot.data!.fold(
-              0, (previousValue, element) => previousValue + element.balance);
-          _accounts = snapshot.data!;
-        }
+    return BlocProvider(
+      create: (context) =>
+          TopHeaderBloc(context.read<LocalSource>())..add(Fetch()),
+      child: Column(
+        children: [
+          _TotalBalance(),
+          _AccountsList(),
+        ],
+      ),
+    );
+  }
+}
 
-        return Column(
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(Dimensions.padding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context).titleTotalBalance,
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context).numberFormat(_balance),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(
-                                  color: Colors.white,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                   ],
-                ),
-              ),
+class _AccountsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: _itemSize / 2,
+          width: double.infinity,
+          margin: EdgeInsets.only(
+              bottom: context.watch<TopHeaderBloc>().state.accounts.isEmpty
+                  ? 0
+                  : _itemSize / 2 + Dimensions.padding * 1),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(24.0),
+              bottomRight: Radius.circular(24.0),
             ),
-            Stack(
+          ),
+        ),
+        Positioned(
+          bottom: 0.0,
+          left: 0.0,
+          right: 0.0,
+          child: AccountList(
+            accounts: context.watch<TopHeaderBloc>().state.accounts,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TotalBalance extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(Dimensions.padding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: _itemSize / 2,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      bottom: _accounts.isEmpty ? 0 : _itemSize / 2 + Dimensions.padding * 1),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(24.0),
-                      bottomRight: Radius.circular(24.0),
-                    ),
-                  ),
+                Text(
+                  AppLocalizations.of(context).titleTotalBalance,
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                 ),
-                Positioned(
-                  bottom: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: AccountList(
-                    accounts: _accounts,
-                  ),
+                Text(
+                  AppLocalizations.of(context).numberFormat(
+                      context.select<TopHeaderBloc, int>(
+                          (bloc) => bloc.state.totalBalance)),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -115,7 +121,7 @@ class AccountList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (accounts.isEmpty){
+    if (accounts.isEmpty) {
       return SizedBox();
     }
 

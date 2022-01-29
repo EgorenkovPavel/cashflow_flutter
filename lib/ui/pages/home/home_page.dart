@@ -3,7 +3,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations.dart';
 import 'package:money_tracker/ui/pages/home/month_operations.dart';
 import 'package:money_tracker/ui/pages/home/sync_button.dart';
-import 'package:money_tracker/ui/pages/home/top_header.dart';
+import 'package:money_tracker/ui/pages/home/top_header/top_header.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class HomePage extends StatelessWidget {
