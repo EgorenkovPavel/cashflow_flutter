@@ -230,7 +230,7 @@ class ConnectingView extends StatelessWidget {
           ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state is AuthStateAuthenticated) {
+              if (state is Authenticated) {
                 return Column(
                   children: [
                     QrImage(

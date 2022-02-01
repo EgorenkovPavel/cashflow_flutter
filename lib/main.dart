@@ -11,7 +11,7 @@ import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/database_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
-import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
+import 'package:money_tracker/common_blocs/internet_connection_bloc.dart' as InternetConnection;
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,15 +41,15 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => InternetConnectionBloc(),
+          create: (context) => InternetConnection.InternetConnectionBloc()..add(InternetConnection.Init()),
           lazy: false,
         ),
         BlocProvider(
           lazy: false,
           create: (context) => AuthBloc(
-            authSource: _authRepository,
-            connectionBloc: context.read<InternetConnectionBloc>(),
-          ),
+            _authRepository,
+            context.read<InternetConnection.InternetConnectionBloc>(),
+          )..add(Init()),
         ),
         BlocProvider(
           lazy: false,

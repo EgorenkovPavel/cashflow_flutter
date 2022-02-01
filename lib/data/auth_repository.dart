@@ -19,6 +19,11 @@ class AuthRepository extends AuthSource{
   }
 
   @override
+  Stream<model.User?> userChanges(){
+    return auth.authStateChanges().map((user) => _mapUser(user));
+  }
+
+  @override
   Future<bool> isAuthenticated() async {
     final currentUser = _googleSignIn.currentUser;
     var isSignIn = await _googleSignIn.isSignedIn();
@@ -69,14 +74,18 @@ class AuthRepository extends AuthSource{
 
   @override
   Future<model.User?> getUser() async {
-    if (_googleSignIn.currentUser == null) {
+     return _mapUser(auth.currentUser!);
+  }
+
+  model.User? _mapUser(User? user){
+    if (user == null){
       return null;
     }
 
     return model.User(
-      id: auth.currentUser!.uid,
-      name: auth.currentUser!.displayName ?? '',
-      photo: auth.currentUser!.photoURL ?? '',
+      id: user.uid,
+      name: user.displayName ?? '',
+      photo: user.photoURL ?? '',
       isAdmin: true,
     );
   }

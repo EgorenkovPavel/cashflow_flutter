@@ -31,9 +31,9 @@ class SyncBloc extends Cubit<SyncState> {
         _syncer = Syncer(localSource: localSource, remoteSource: remoteSource),
         super(SyncState_NotSynced(isAdmin: false)) {
     _syncSub = _authBloc.stream.listen((event) async {
-      if (event is AuthStateInProgress) {
+      if (event is InProgress) {
         emit(SyncState_InProgress());
-      } else if (event is AuthStateAuthenticated) {
+      } else if (event is Authenticated) {
         if (await _logIn(event.user.id)) {
           await syncNow();
         }
@@ -47,7 +47,7 @@ class SyncBloc extends Cubit<SyncState> {
   }
 
   Future<void> _syncData(DateTime syncFrom) async {
-    if (_authBloc.state is! AuthStateAuthenticated) {
+    if (_authBloc.state is! Authenticated) {
       return;
     }
 
@@ -97,12 +97,12 @@ class SyncBloc extends Cubit<SyncState> {
   }
 
   Future<bool> createCloudDatabase() async {
-    if (_authBloc.state is! AuthStateAuthenticated) {
+    if (_authBloc.state is! Authenticated) {
       return false;
     }
     emit(SyncState_InProgress());
     var res = await remoteSource
-        .createDatabase((_authBloc.state as AuthStateAuthenticated).user);
+        .createDatabase((_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
       emit(SyncState_Failed(isAdmin: _isAdmin));
       return false;

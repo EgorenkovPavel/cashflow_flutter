@@ -9,6 +9,7 @@ abstract class AuthSource{
   Future<void> signIn();
   Future<void> signOut();
   Future<User?> getUser();
+  Stream<User?> userChanges();
   Future<AuthClient?> getClient();
 
 }

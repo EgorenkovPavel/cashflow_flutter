@@ -29,11 +29,11 @@ class DriveBloc extends Cubit<DriveState> {
   }
 
   void _authState(AuthState event){
-    if (event is AuthStateInProgress) {
+    if (event is InProgress) {
       return;
-    } else if (event is AuthStateAuthenticated) {
+    } else if (event is Authenticated) {
       _driveRepository.logIn(event.client);
-    } else if (event is AuthStateNotAuthenticated) {
+    } else if (event is NotAuthenticated) {
       _driveRepository.logOut();
     }
   }

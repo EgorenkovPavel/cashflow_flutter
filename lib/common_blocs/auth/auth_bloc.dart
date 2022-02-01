@@ -3,22 +3,38 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 
-abstract class AuthState extends Equatable{}
+abstract class AuthEvent {}
 
-class AuthStateInProgress extends AuthState {
+class Init extends AuthEvent {}
+
+class ChangeAuth extends AuthEvent {
+  final bool authenticated;
+
+  ChangeAuth(this.authenticated);
+}
+
+class SignInSilently extends AuthEvent {}
+
+class SignIn extends AuthEvent {}
+
+class SignOut extends AuthEvent {}
+
+abstract class AuthState extends Equatable {}
+
+class InProgress extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthStateAuthenticated extends AuthState {
+class Authenticated extends AuthState {
   final User user;
   final AuthClient client;
 
-  AuthStateAuthenticated({
+  Authenticated({
     required this.user,
     required this.client,
   });
@@ -27,81 +43,62 @@ class AuthStateAuthenticated extends AuthState {
   List<Object?> get props => [user, client];
 }
 
-class AuthStateNotAuthenticated extends AuthState{
+class NotAuthenticated extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthStateDisconnected extends AuthState{
-  @override
-  List<Object?> get props => [];
-}
-
-class AuthBloc extends Cubit<AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final InternetConnectionBloc _connectionBloc;
   final AuthSource _authSource;
 
   StreamSubscription? _sub;
 
-  bool isConnectedToInternet = false;
-
-  AuthBloc({
-    required AuthSource authSource,
-    required InternetConnectionBloc connectionBloc,
-  })  : _authSource = authSource,
-        _connectionBloc = connectionBloc,
-        super(AuthStateInProgress()) {
-    _sub = _connectionBloc.stream.listen((event) {
-      isConnectedToInternet = event.isConnectedToInternet;
-      if (event.isConnectedToInternet) {
-        _signInSilently();
-      } else {
-        _checkAuth();
-      }
-    });
-  }
-
-  Future<void> _signInSilently() async {
-    await _authSource.signInSilently();
-    await _checkAuth();
-  }
-
-  Future<void> _checkAuth() async {
-    if (!isConnectedToInternet) {
-      emit(AuthStateDisconnected());
-      return;
-    }
-    var isAuthed = await _authSource.isAuthenticated();
-    if (isAuthed) {
-      var user = await _authSource.getUser();
-      var client = await _authSource.getClient();
-      emit(AuthStateAuthenticated(user: user!, client: client!));
-    } else {
-      emit(AuthStateNotAuthenticated());
-    }
-  }
-
-  Future<void> signIn() async {
-    emit(AuthStateInProgress());
-    try {
-      await _authSource.signIn();
-    } finally {
-      await _checkAuth();
-    }
-  }
-
-  Future<void> signOut() async {
-    emit(AuthStateInProgress());
-    try {
-      await _authSource.signOut();
-    } finally {
-      await _checkAuth();
-    }
+  AuthBloc(
+    this._authSource,
+    this._connectionBloc,
+  ) : super(InProgress()) {
+    on<Init>(_init);
+    on<ChangeAuth>(_changeAuth);
+    on<SignInSilently>(_signInSilently);
+    on<SignIn>(_signIn);
+    on<SignOut>(_signOut);
   }
 
   @override
   Future<void> close() {
     _sub?.cancel();
     return super.close();
+  }
+
+  void _init(Init event, Emitter<AuthState> emit) {
+    _sub = _authSource.userChanges().listen((user) {
+      add(ChangeAuth(user != null));
+    });
+    add(SignInSilently());
+  }
+
+  Future<void> _changeAuth(ChangeAuth event, Emitter<AuthState> emit) async {
+    if (event.authenticated) {
+      var user = await _authSource.getUser();
+      var client = await _authSource.getClient();
+      emit(Authenticated(user: user!, client: client!));
+    } else {
+      emit(NotAuthenticated());
+    }
+  }
+
+  void _signInSilently(SignInSilently event, Emitter<AuthState> emit) {
+    _authSource.signInSilently();
+  }
+
+  Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {
+    emit(InProgress());
+    await _authSource.signIn();
+  }
+
+  Future<void> _signOut(SignOut event, Emitter<AuthState> emit) async {
+    emit(InProgress());
+    await _authSource.signOut();
   }
 }
