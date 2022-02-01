@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class AccountInputEvent {}
@@ -81,7 +81,7 @@ class FetchAccount extends AccountInputState {
 
 class AccountInputBloc
     extends Bloc<AccountInputEvent, AccountInputState> {
-  final LocalSource _repository;
+  final DataSource _repository;
 
   AccountInputBloc(this._repository) : super(Data.initial()) {
     on<Fetch>(_fetch);

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class TopHeaderEvent{}
@@ -28,7 +28,7 @@ class TopHeaderState {
 }
 
 class TopHeaderBloc extends Bloc<TopHeaderEvent, TopHeaderState>{
-  final LocalSource _repository;
+  final DataSource _repository;
   StreamSubscription? _sub;
 
   TopHeaderBloc(this._repository) : super(TopHeaderState.initial()){

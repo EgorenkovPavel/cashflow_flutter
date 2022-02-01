@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class BudgetEvent {}
@@ -66,7 +66,7 @@ class BudgetState {
 }
 
 class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
-  final LocalSource repo;
+  final DataSource repo;
 
   StreamSubscription<List<CategoryCashflow>>? _subscription;
 

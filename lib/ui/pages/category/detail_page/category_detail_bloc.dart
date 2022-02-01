@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class CategoryDetailEvent {}
@@ -62,7 +62,7 @@ class CategoryDetailState {
 
 class CategoryDetailBloc
     extends Bloc<CategoryDetailEvent, CategoryDetailState> {
-  final LocalSource _repository;
+  final DataSource _repository;
 
   StreamSubscription<Category>? _subCategory;
   StreamSubscription? _subOperations;

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class OperationEditEvent {}
@@ -210,7 +210,7 @@ class Saved extends OperationEditState {
 }
 
 class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
-  final LocalSource _repository;
+  final DataSource _repository;
 
   OperationEditBloc(this._repository) : super(Data.initial()) {
     on<Fetch>(_fetch);

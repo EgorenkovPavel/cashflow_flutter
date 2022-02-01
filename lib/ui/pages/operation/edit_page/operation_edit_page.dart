@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
@@ -18,7 +18,7 @@ class OperationEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) =>
-    OperationEditBloc(context.read<LocalSource>())..add(Fetch(id)),
+    OperationEditBloc(context.read<DataSource>())..add(Fetch(id)),
     child: _OperationEditPage(),
     );
   }

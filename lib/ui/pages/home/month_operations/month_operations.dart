@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/month_operations/month_operations_bloc.dart';
@@ -41,7 +41,7 @@ class MonthOperations extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: BlocProvider(
               create: (context) =>
-                  MonthOperationsBloc(context.read<LocalSource>())
+                  MonthOperationsBloc(context.read<DataSource>())
                     ..add(Fetch(OperationType.INPUT)),
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.spaceEvenly,

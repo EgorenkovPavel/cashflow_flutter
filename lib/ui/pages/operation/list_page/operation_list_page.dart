@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_page/operation_list_bloc.dart';
@@ -11,7 +11,7 @@ class OperationListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OperationListBloc(context.read<LocalSource>())
+      create: (context) => OperationListBloc(context.read<DataSource>())
         ..add(Fetch(OperationListFilter.empty())),
       child: Builder(builder: (context) {
         return Scaffold(

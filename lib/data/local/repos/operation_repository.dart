@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/data/operation_dao.dart';
 import 'package:money_tracker/data/local/data/operation_item.dart';
@@ -6,7 +7,7 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/operation_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class OperationRepository extends LocalOperationsRepo {
+class OperationRepository implements LocalSyncTable<Operation>, OperationDataSource {
   final OperationDao operationDao;
 
   OperationRepository(this.operationDao);

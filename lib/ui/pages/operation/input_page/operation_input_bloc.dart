@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -42,7 +42,7 @@ class MasterState {
 }
 
 class MasterBloc extends Cubit<MasterState> {
-  final LocalSource _repository;
+  final DataSource _repository;
   final Stream<List<AccountBalance>> accountStream;
   final Stream<List<Category>> categoryInStream;
   final Stream<List<Category>> categoryOutStream;

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class OperationFilterEvent {}
@@ -112,7 +112,7 @@ class OperationFilterState {
 
 class OperationFilterBloc
     extends Bloc<OperationFilterEvent, OperationFilterState> {
-  final LocalSource _repository;
+  final DataSource _repository;
 
   OperationFilterBloc(this._repository)
       : super(OperationFilterState.initial()) {

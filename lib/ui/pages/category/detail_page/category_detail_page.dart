@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/category/detail_page/category_cashflow_diagram.dart';
@@ -18,7 +18,7 @@ class CategoryDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          CategoryDetailBloc(context.read<LocalSource>())..add(Fetch(id)),
+          CategoryDetailBloc(context.read<DataSource>())..add(Fetch(id)),
       child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
         builder: (context, state) {
           return Scaffold(

@@ -84,15 +84,15 @@ class Syncer implements SyncWorker{
   }
 
   Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
-    var _account = await localSource.accounts.getByCloudId(cloudAccount.id);
+    var _account = await localSource.accountsSync.getByCloudId(cloudAccount.id);
     if (_account == null) {
-      await localSource.accounts.insertFromCloud(Account(
+      await localSource.accountsSync.insertFromCloud(Account(
         cloudId: cloudAccount.id,
         title: cloudAccount.title,
         isDebt: cloudAccount.isDebt,
       ));
     } else {
-      await localSource.accounts.updateFromCloud(_account.copyWith(
+      await localSource.accountsSync.updateFromCloud(_account.copyWith(
         title: cloudAccount.title,
         isDebt: cloudAccount.isDebt,
       ));
@@ -101,9 +101,9 @@ class Syncer implements SyncWorker{
 
   Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
     var _category =
-        await localSource.categories.getByCloudId(cloudCategory.id);
+        await localSource.categoriesSync.getByCloudId(cloudCategory.id);
     if (_category == null) {
-      await localSource.categories.insertFromCloud(Category(
+      await localSource.categoriesSync.insertFromCloud(Category(
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
@@ -113,7 +113,7 @@ class Syncer implements SyncWorker{
         budget: cloudCategory.budget,
       ));
     } else {
-      await localSource.categories.updateFromCloud(_category.copyWith(
+      await localSource.categoriesSync.updateFromCloud(_category.copyWith(
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
@@ -127,19 +127,19 @@ class Syncer implements SyncWorker{
 
   Future<void> _loadOperationFromCloud(CloudOperation cloudOperation) async {
     var _operation =
-        await localSource.operations.getByCloudId(cloudOperation.id);
+        await localSource.operationsSync.getByCloudId(cloudOperation.id);
 
     var _account =
-        await localSource.accounts.getByCloudId(cloudOperation.account);
+        await localSource.accountsSync.getByCloudId(cloudOperation.account);
     var _category = cloudOperation.category == null
         ? null
-        : await localSource.categories.getByCloudId(cloudOperation.category!);
+        : await localSource.categoriesSync.getByCloudId(cloudOperation.category!);
     var _recAccount = cloudOperation.recAccount == null
         ? null
-        : await localSource.accounts.getByCloudId(cloudOperation.recAccount!);
+        : await localSource.accountsSync.getByCloudId(cloudOperation.recAccount!);
 
     if (_operation == null && !cloudOperation.deleted) {
-      await localSource.operations.insertFromCloud(Operation(
+      await localSource.operationsSync.insertFromCloud(Operation(
         cloudId: cloudOperation.id,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
@@ -150,7 +150,7 @@ class Syncer implements SyncWorker{
         sum: cloudOperation.sum,
       ));
     } else if (_operation != null && !cloudOperation.deleted) {
-      await localSource.operations.updateFromCloud(_operation.copyWith(
+      await localSource.operationsSync.updateFromCloud(_operation.copyWith(
         cloudId: cloudOperation.id,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
@@ -202,9 +202,9 @@ class Syncer implements SyncWorker{
   @override
   Stream<LoadingState> loadToCloud() async* {
 
-    final accounts = await localSource.accounts.getAllNotSynced();
-    final categories = await localSource.categories.getAllNotSynced();
-    final operations = await localSource.operations.getAllNotSynced();
+    final accounts = await localSource.accountsSync.getAllNotSynced();
+    final categories = await localSource.categoriesSync.getAllNotSynced();
+    final operations = await localSource.operationsSync.getAllNotSynced();
 
     var accountCount = accounts.length;
     var categoryCount = categories.length;
@@ -257,13 +257,13 @@ class Syncer implements SyncWorker{
     if (account.cloudId.isNotEmpty) {
       var res = await remoteSource.updateAccount(_mapToCloudAccount(account));
       if (res.isSuccess()) {
-        await localSource.accounts.markAsSynced(account.id, account.cloudId);
+        await localSource.accountsSync.markAsSynced(account.id, account.cloudId);
       }
     } else {
       var _cloudId =
           await remoteSource.addAccount(_mapToCloudAccount(account));
       if (_cloudId.isSuccess()) {
-        var res = await localSource.accounts
+        var res = await localSource.accountsSync
             .markAsSynced(account.id, _cloudId.getOrDefault(''));
         print('$res');
       }
@@ -275,14 +275,14 @@ class Syncer implements SyncWorker{
       var res =
           await remoteSource.updateCategory(_mapToCloudCategory(category));
       if (res.isSuccess()) {
-        await localSource.categories
+        await localSource.categoriesSync
             .markAsSynced(category.id, category.cloudId);
       }
     } else {
       var _cloudId =
           await remoteSource.addCategory(_mapToCloudCategory(category));
       if (_cloudId.isSuccess()) {
-        await localSource.categories
+        await localSource.categoriesSync
             .markAsSynced(category.id, _cloudId.getOrDefault(''));
       }
     }
@@ -293,14 +293,14 @@ class Syncer implements SyncWorker{
       var res =
           await remoteSource.updateOperation(_mapToCloudOperation(operation));
       if (res.isSuccess()) {
-        await localSource.operations
+        await localSource.operationsSync
             .markAsSynced(operation.id, operation.cloudId);
       }
     } else {
       var _cloudId =
           await remoteSource.addOperation(_mapToCloudOperation(operation));
       if (_cloudId.isSuccess()) {
-        await localSource.operations
+        await localSource.operationsSync
             .markAsSynced(operation.id, _cloudId.getOrDefault(''));
       }
     }

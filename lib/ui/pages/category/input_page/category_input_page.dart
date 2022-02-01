@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
@@ -17,7 +17,7 @@ class CategoryInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = CategoryInputBloc(context.read<LocalSource>());
+    final _bloc = CategoryInputBloc(context.read<DataSource>());
     if (id != null) {
       _bloc.add(InitById(id!));
     } else {

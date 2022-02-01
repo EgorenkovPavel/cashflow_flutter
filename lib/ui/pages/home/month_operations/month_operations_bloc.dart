@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class MonthOperationsEvent {}
@@ -35,7 +35,7 @@ class MonthOperationsState {
 
 class MonthOperationsBloc
     extends Bloc<MonthOperationsEvent, MonthOperationsState> {
-  final LocalSource _repository;
+  final DataSource _repository;
   StreamSubscription? _sub;
 
   MonthOperationsBloc(this._repository)

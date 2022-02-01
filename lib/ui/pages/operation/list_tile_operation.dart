@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models/operation.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -22,7 +22,7 @@ class ListTileOperation extends StatelessWidget {
             leading: Icon(Icons.control_point_duplicate),
             title: Text(AppLocalizations.of(context).duplicate),
             onTap: () {
-              Provider.of<LocalSource>(context, listen: false)
+              Provider.of<DataSource>(context, listen: false)
                   .operations
                   .duplicate(_operation);
               Navigator.of(context).pop();
@@ -32,7 +32,7 @@ class ListTileOperation extends StatelessWidget {
             leading: Icon(Icons.delete),
             title: Text(AppLocalizations.of(context).delete),
             onTap: () {
-              Provider.of<LocalSource>(context, listen: false)
+              Provider.of<DataSource>(context, listen: false)
                   .operations
                   .delete(_operation);
               Navigator.of(context).pop();

@@ -1,3 +1,4 @@
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/data/category_dao.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/local_source.dart';
@@ -7,7 +8,7 @@ import 'package:money_tracker/data/mappers/category_month_cashflow_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:drift/drift.dart';
 
-class CategoryRepository extends LocalCategoryRepo{
+class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource{
   final CategoryDao categoryDao;
 
   CategoryRepository(this.categoryDao);

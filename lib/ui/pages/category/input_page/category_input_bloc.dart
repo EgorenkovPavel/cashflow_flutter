@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class CategoryInputEvent {}
@@ -114,7 +114,7 @@ class Saved extends CategoryInputState {
 }
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
-  final LocalSource _repository;
+  final DataSource _repository;
 
   CategoryInputBloc(this._repository) : super(Data.initial()) {
     on<InitByType>(_initByType);

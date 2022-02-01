@@ -1,3 +1,4 @@
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/data/account_dao.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/local_source.dart';
@@ -6,7 +7,7 @@ import 'package:money_tracker/data/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:drift/drift.dart';
 
-class AccountRepository extends LocalAccountRepo{
+class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
   final AccountDao accountDao;
 
   AccountRepository(this.accountDao);

@@ -12,6 +12,8 @@ import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/syncer/syncer.dart';
 import 'package:money_tracker/data/auth_repository.dart';
 import 'package:money_tracker/data/auth_source.dart';
+import 'package:money_tracker/data/data_repository.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/database_source.dart';
@@ -40,6 +42,8 @@ Future<void> main() async {
 
   final _prefsRepo = PrefsRepository(_prefs);
 
+  final _dataSource = DataRepository(_databaseSource, _cloudSource);
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -67,7 +71,7 @@ Future<void> main() async {
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<LocalSource>(create: (_) => _databaseSource),
+          RepositoryProvider<DataSource>(create: (_) => _dataSource),
           RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
           RepositoryProvider<PrefsRepository>(create: (_) => _prefsRepo),
         ],

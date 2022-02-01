@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/local/local_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations/last_operations_bloc.dart';
@@ -15,7 +15,7 @@ class LastOperations extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          LastOperationsBloc(context.read<LocalSource>())..add(Fetch()),
+          LastOperationsBloc(context.read<DataSource>())..add(Fetch()),
       child: Builder(builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
