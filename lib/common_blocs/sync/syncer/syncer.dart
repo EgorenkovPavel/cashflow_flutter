@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
+import 'package:money_tracker/common_blocs/sync/syncer/sync_worker.dart';
 import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/data/local/local_source.dart';
@@ -8,7 +9,7 @@ import 'package:money_tracker/data/remote/models/cloud_models.dart';
 import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class Syncer {
+class Syncer implements SyncWorker{
   final RemoteSource remoteSource;
   final LocalSource localSource;
 
@@ -17,6 +18,7 @@ class Syncer {
     required this.localSource,
   });
 
+  @override
   Stream<LoadingState> loadFromCloud(DateTime date) async* {
 
     var accountsTry = await remoteSource.getAccounts(date);
@@ -197,6 +199,7 @@ class Syncer {
     );
   }
 
+  @override
   Stream<LoadingState> loadToCloud() async* {
 
     final accounts = await localSource.accounts.getAllNotSynced();

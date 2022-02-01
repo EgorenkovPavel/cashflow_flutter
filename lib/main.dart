@@ -1,22 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+// ignore_for_file: unused_import
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
+import 'package:money_tracker/common_blocs/internet_connection_bloc.dart'
+    as internet_connection;
+import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
+import 'package:money_tracker/common_blocs/sync/syncer/syncer.dart';
 import 'package:money_tracker/data/auth_repository.dart';
 import 'package:money_tracker/data/auth_source.dart';
-import 'package:money_tracker/data/local/local_source.dart';
-import 'package:money_tracker/data/remote/firecloud_source.dart';
+import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/database_source.dart';
-import 'package:money_tracker/data/drive_repository.dart';
+import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
-import 'package:money_tracker/common_blocs/internet_connection_bloc.dart' as InternetConnection;
-import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
+import 'package:money_tracker/data/remote/firecloud_source.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// ignore_for_file: unused_import
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 Future<void> main() async {
   final db = Database();
@@ -41,14 +44,15 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => InternetConnection.InternetConnectionBloc()..add(InternetConnection.Init()),
+          create: (context) => internet_connection.InternetConnectionBloc()
+            ..add(internet_connection.Init()),
           lazy: false,
         ),
         BlocProvider(
           lazy: false,
           create: (context) => AuthBloc(
             _authRepository,
-            context.read<InternetConnection.InternetConnectionBloc>(),
+            context.read<internet_connection.InternetConnectionBloc>(),
           )..add(Init()),
         ),
         BlocProvider(
