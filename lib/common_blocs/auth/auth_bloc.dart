@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 import 'package:money_tracker/data/auth_source.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 abstract class AuthEvent {}
@@ -23,9 +24,16 @@ class SignIn extends AuthEvent {}
 
 class SignOut extends AuthEvent {}
 
-abstract class AuthState extends Equatable {}
+abstract class AuthState extends Equatable {
+  final bool isAdmin;
+
+  AuthState({required this.isAdmin});
+}
 
 class InProgress extends AuthState {
+  InProgress() : super(isAdmin: false);
+
+
   @override
   List<Object?> get props => [];
 }
@@ -35,15 +43,18 @@ class Authenticated extends AuthState {
   final AuthClient client;
 
   Authenticated({
+    required bool isAdmin,
     required this.user,
     required this.client,
-  });
+  }) : super(isAdmin: isAdmin);
 
   @override
   List<Object?> get props => [user, client];
 }
 
 class NotAuthenticated extends AuthState {
+  NotAuthenticated() : super(isAdmin: false);
+
   @override
   List<Object?> get props => [];
 }
@@ -51,12 +62,15 @@ class NotAuthenticated extends AuthState {
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final InternetConnectionBloc _connectionBloc;
   final AuthSource _authSource;
+  final DataSource _dataSource;
 
   StreamSubscription? _sub;
+  StreamSubscription? _subInternet;
 
   AuthBloc(
     this._authSource,
     this._connectionBloc,
+    this._dataSource,
   ) : super(InProgress()) {
     on<Init>(_init);
     on<ChangeAuth>(_changeAuth);
@@ -68,12 +82,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   @override
   Future<void> close() {
     _sub?.cancel();
+    _subInternet?.cancel();
     return super.close();
   }
 
   void _init(Init event, Emitter<AuthState> emit) {
     _sub = _authSource.userChanges().listen((user) {
       add(ChangeAuth(user != null));
+    });
+    _subInternet = _connectionBloc.stream.listen((connectionEvent) {
+      if (connectionEvent.isConnected){
+        add(SignInSilently());
+      }else{
+        add(ChangeAuth(false));
+      }
     });
     add(SignInSilently());
   }
@@ -82,14 +104,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event.authenticated) {
       var user = await _authSource.getUser();
       var client = await _authSource.getClient();
-      emit(Authenticated(user: user!, client: client!));
+      if (client == null){
+        emit(NotAuthenticated());
+      }else {
+        var isAdmin = await _dataSource.users.isAdmin(user!);
+        emit(Authenticated(isAdmin: isAdmin, user: user, client: client));
+      }
     } else {
       emit(NotAuthenticated());
     }
   }
 
-  void _signInSilently(SignInSilently event, Emitter<AuthState> emit) {
-    _authSource.signInSilently();
+  Future<void> _signInSilently(SignInSilently event, Emitter<AuthState> emit) async {
+    await _authSource.signInSilently();
+    add(ChangeAuth(true));
   }
 
   Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {

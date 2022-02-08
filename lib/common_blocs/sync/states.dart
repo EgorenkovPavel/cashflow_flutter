@@ -31,22 +31,18 @@ class SyncState_LoadingFromCloud extends SyncState {
 }
 
 class SyncState_Synced extends SyncState {
-  final bool isAdmin;
   final DateTime syncDate;
 
-  const SyncState_Synced({required this.isAdmin, required this.syncDate});
+  const SyncState_Synced({required this.syncDate});
 }
 
 class SyncState_NotSynced extends SyncState {
-  final bool isAdmin;
-
-  const SyncState_NotSynced({required this.isAdmin});
+  const SyncState_NotSynced();
 }
 
 class SyncState_Failed extends SyncState {
-  final bool isAdmin;
 
-  const SyncState_Failed({required this.isAdmin});
+  const SyncState_Failed();
 }
 
 class SyncState_NoDb extends SyncState {

@@ -9,7 +9,6 @@ import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart'
     as internet_connection;
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
-import 'package:money_tracker/common_blocs/sync/syncer/syncer.dart';
 import 'package:money_tracker/data/auth_repository.dart';
 import 'package:money_tracker/data/auth_source.dart';
 import 'package:money_tracker/data/data_repository.dart';
@@ -57,14 +56,14 @@ Future<void> main() async {
           create: (context) => AuthBloc(
             _authRepository,
             context.read<internet_connection.InternetConnectionBloc>(),
+            _dataSource,
           )..add(Init()),
         ),
         BlocProvider(
           lazy: false,
           create: (context) => SyncBloc(
             authBloc: context.read<AuthBloc>(),
-            localSource: _databaseSource,
-            remoteSource: _cloudSource,
+            dataSource: _dataSource,
             prefsRepository: _prefsRepo,
           ),
         ),

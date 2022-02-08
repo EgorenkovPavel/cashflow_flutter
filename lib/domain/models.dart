@@ -9,3 +9,4 @@ export 'package:money_tracker/domain/models/operation_list_filter.dart';
 export 'package:money_tracker/domain/models/operation_type.dart';
 export 'package:money_tracker/domain/models/google_drive_file.dart';
 export 'package:money_tracker/domain/models/sum_on_date.dart';
+export 'package:money_tracker/domain/models/user.dart';

@@ -13,6 +13,7 @@ import 'package:money_tracker/utils/try.dart';
 import 'models/cloud_models.dart';
 
 class FirecloudSource extends RemoteSource {
+
   final FirebaseFirestore _firestore;
 
   static const String _DATABASES = 'databases';
@@ -25,127 +26,29 @@ class FirecloudSource extends RemoteSource {
 
   DocumentReference<Map<String, dynamic>>? _db;
 
-  CollectionDAO get _accounts =>
-      CollectionDAO<CloudAccount>(
+  FirecloudSource(this._firestore);
+
+  @override
+  CloudTable<CloudAccount> get accounts => AccountsDAO(
         collection: _db?.collection(_ACCOUNTS),
         key_updated: AccountMapper.KEY_UPDATED,
         mapper: const AccountMapper(),
       );
 
-  CollectionDAO get _categories =>
-      CollectionDAO<CloudCategory>(
+  @override
+  CloudTable<CloudCategory> get categories => CategoriesDAO(
         collection: _db?.collection(_CATEGORIES),
         key_updated: CategoryMapper.KEY_UPDATED,
         mapper: const CategoryMapper(),
       );
 
-  CollectionDAO get _operations =>
-      CollectionDAO<CloudOperation>(
+  @override
+  CloudTable<CloudOperation> get operations => OperationDAO(
         collection: _db?.collection(_OPERATIONS),
         key_updated: OperationMapper.KEY_UPDATED,
         mapper: const OperationMapper(),
       );
 
-  FirecloudSource(this._firestore);
-
-  final StreamController<bool> _adminController = StreamController<bool>()
-    ..add(false);
-
-  @override
-  Stream<bool> isAdmin() => _adminController.stream;
-
-  @override
-  Future<Try<void>> addNewUser(User user) async {
-    if (_db == null) {
-      return Future.value(Failure('No connected cloud database'));
-    }
-    try {
-      var doc = await _db!.get();
-      var data = doc.data();
-      data![_DATABASES_USERS].add(user.id);
-      await _db!.set(data);
-
-      await _db!
-          .collection(_USERS)
-          .doc(user.id)
-          .set(const UserMapper().mapToCloud(user));
-      return Success(null);
-    } catch (e) {
-      return Future.value(Failure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Try<Iterable<User>>> getUsers() async {
-    try {
-      if (_db == null) {
-        return Success(<User>[]);
-      }
-      var doc = await _db!.collection(_USERS).get();
-      return Success(doc.docs.map((doc) => const UserMapper().mapToDart(doc)));
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  @override
-  Future<Try<bool>> databaseExists(String userId) async {
-    try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection(_DATABASES)
-          .where(_DATABASES_USERS, arrayContains: userId)
-          .get();
-
-      return Success(querySnapshot.docs.isNotEmpty);
-    } catch (e) {
-      return Future.value(Failure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Try<void>> createDatabase(User user) async {
-    try {
-      _db = await _firestore.collection(_DATABASES).add({
-        _DATABASES_ADMIN: user.id,
-        _DATABASES_USERS: [user.id],
-      });
-      await _db!
-          .collection(_USERS)
-          .doc(user.id)
-          .set(const UserMapper().mapToCloud(user));
-
-      _adminController.add(true);
-      return Success(null);
-    } catch (e) {
-      _adminController.add(false);
-      return Future.value(Failure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Try<void>> logIn(String userId) async {
-    var res = await _getDatabase(userId);
-    return res.fold((success) async {
-      _db = success;
-      try {
-        var doc = await _db!.get();
-        _adminController.add(doc.data()![_DATABASES_ADMIN] == userId);
-        return Success(null);
-      } catch (e) {
-        return Failure(e.toString());
-      }
-    }, (failure) {
-      _db = null;
-      _adminController.add(false);
-      return Failure(failure);
-    });
-  }
-
-  @override
-  void logOut() {
-    _db = null;
-    _adminController.add(false);
-  }
 
   Future<Try<DocumentReference<Map<String, dynamic>>>> _getDatabase(
       String userId) async {
@@ -166,179 +69,157 @@ class FirecloudSource extends RemoteSource {
   }
 
   @override
-  Future<Try<Iterable<CloudAccount>>> getAccounts(DateTime date) async {
-    return (await _accounts.getItems(date)) as Try<Iterable<CloudAccount>>;
-  }
-
-  @override
-  Future<Try<Iterable<CloudCategory>>> getCategories(DateTime date) async {
-    return (await _categories.getItems(date)) as Try<Iterable<CloudCategory>>;
-  }
-
-  @override
-  Future<Try<Iterable<CloudOperation>>> getOperations(DateTime date) async {
-    return (await _operations.getItems(date)) as Try<Iterable<CloudOperation>>;
-  }
-
-  @override
-  Future<Try<void>> refreshAccountSyncDate(String accountId) =>
-      _accounts.refreshSyncDate(accountId);
-
-  @override
-  Future<Try<void>> refreshCategorySyncDate(String categoryId) =>
-      _categories.refreshSyncDate(categoryId);
-
-  @override
-  Future<Try<void>> refreshOperationSyncDate(String operationId) =>
-      _operations.refreshSyncDate(operationId);
-
-  @override
-  Future<Try<String>> addAccount(CloudAccount account) =>
-      _accounts.addItem(account);
-
-  @override
-  Future<Try<void>> updateAccount(CloudAccount account) =>
-      _accounts.updateItem(account.id, account);
-
-  @override
-  Future<Try<void>> deleteAccount(CloudAccount account) =>
-      _accounts.deleteItem(account.id, account.copyWith(deleted: true));
-
-  @override
-  Future<Try<String>> addCategory(CloudCategory category) =>
-      _categories.addItem(category);
-
-  @override
-  Future<Try<void>> updateCategory(CloudCategory category) =>
-      _categories.updateItem(category.id, category);
-
-  @override
-  Future<Try<void>> deleteCategory(CloudCategory category) =>
-      _categories.deleteItem(category.id, category.copyWith(deleted: true));
-
-  @override
-  Future<Try<String>> addOperation(CloudOperation operation) =>
-      _operations.addItem(operation);
-
-  @override
-  Future<Try<void>> updateOperation(CloudOperation operation) =>
-      _operations.updateItem(operation.id, operation);
-
-  @override
-  Future<Try<void>> deleteOperation(CloudOperation operation) =>
-      _operations.deleteItem(operation.id, operation.copyWith(deleted: true));
-
-  @override
   Future<Try<void>> deleteAll() async {
     if (_db == null) {
       return Failure('No db');
     }
 
-    var queryOperation;
-    try {
-      queryOperation = await _operations.get();
-    } catch (e) {
-      return Failure(e.toString());
+    var resOperations = await operations.deleteAll();
+    if (resOperations.isFailure()) {
+      return resOperations;
     }
 
-    await Future.forEach<CloudOperation>(queryOperation, (element) async {
-      var res = await deleteOperation(element);
-      if (res.isFailure()) {
-        return res;
-      }
-    });
-
-    var queryCategory;
-    try {
-      queryCategory = await _categories.get();
-    } catch (e) {
-      return Failure(e.toString());
+    var resCategories = await categories.deleteAll();
+    if (resCategories.isFailure()) {
+      return resCategories;
     }
-
-    await Future.forEach<CloudCategory>(queryCategory, (element) async {
-      var res = await deleteCategory(element);
-      if (res.isFailure()) {
-        return res;
-      }
-    });
-
-    var queryAccount;
-    try {
-      queryAccount = await _accounts.get();
-    } catch (e) {
-      return Failure(e.toString());
+    var resAccounts = await accounts.deleteAll();
+    if (resAccounts.isFailure()) {
+      return resAccounts;
     }
-
-    await Future.forEach<CloudAccount>(queryAccount, (element) async {
-      var res = await deleteAccount(element);
-      if (res.isFailure()) {
-        return res;
-      }
-    });
 
     return Success(null);
   }
+
+  @override
+  Future<Try<void>> addToDatabase(User user) async {
+    if (_db == null) {
+      return Future.value(Failure('No connected cloud database'));
+    }
+    try {
+      var doc = await _db!.get();
+      var data = doc.data();
+      data![_DATABASES_USERS].add(user.id);
+      await _db!.set(data);
+
+      await _db!
+          .collection(_USERS)
+          .doc(user.id)
+          .set(const UserMapper().mapToCloud(user));
+      return Success(null);
+    } catch (e) {
+      return Future.value(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Try<List<User>>> getAll() async {
+    try {
+      if (_db == null) {
+        return Success(<User>[]);
+      }
+      var doc = await _db!.collection(_USERS).get();
+      return Success(
+          doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList());
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+
+  @override
+  Future<Try<void>> createDatabase(User user) async {
+    try {
+      _db = await _firestore.collection(_DATABASES).add({
+        _DATABASES_ADMIN: user.id,
+        _DATABASES_USERS: [user.id],
+      });
+      await _db!
+        .collection(_USERS)
+        .doc(user.id)
+        .set(const UserMapper().mapToCloud(user));
+
+      return Success(null);
+    } catch (e) {
+      return Future.value(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Try<bool>> databaseExists(User user) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection(_DATABASES)
+          .where(_DATABASES_USERS, arrayContains: user.id)
+          .get();
+
+      return Success(querySnapshot.docs.isNotEmpty);
+    } catch (e) {
+      return Future.value(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Try<void>> logIn(User user) async {
+    var res = await _getDatabase(user.id);
+      return res.fold((success) async {
+        _db = success;
+        try {
+          var doc = await _db!.get();
+          return Success(null);
+        } catch (e) {
+          return Failure(e.toString());
+        }
+      }, (failure) {
+        _db = null;
+        return Failure(failure);
+      });
+  }
+
+  @override
+  Future<void> logOut() async {
+    _db = null;
+  }
+
+  @override
+  Future<bool> isAdmin(User user) async {
+    if (_db == null){
+      return false;
+    }
+    var res = await _db!.get();
+    return user.id == res.data()![_DATABASES_ADMIN];
+  }
 }
 
-class CollectionDAO<T> {
-  final CollectionReference? collection;
+abstract class TableDAO<T> implements CloudTable<T> {
+  final CollectionReference<Map<String, dynamic>>? collection;
 
   final CloudConverter<T> mapper;
 
   final String key_updated;
 
-  CollectionDAO({required this.mapper,
-    required this.key_updated,
-    required this.collection});
+  TableDAO(
+      {required this.collection,
+      required this.mapper,
+      required this.key_updated});
 
-  Future<QuerySnapshot<Object?>>? get() => collection?.get();
-
-  Future<Try<Iterable<T>>> getItems(DateTime date) async {
+  @override
+  Future<Try<String>> add(T entity) async {
     if (collection == null) {
-      return Success([]);
+      return Failure('No cloud db');
     }
-    try {
-      var docs = await collection!
-          .where(key_updated, isGreaterThanOrEqualTo: date)
-          .get();
-      return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
-    } catch (e) {
-      return Failure(e.toString());
+
+    var doc = await collection!.add(mapper.mapToCloud(entity));
+    if (doc == null) {
+      return Failure('Error');
+    } else {
+      return Success(doc.id);
     }
   }
 
-  Future<Try<String>> addItem(T data,) async {
+  @override
+  Future<Try<void>> delete(T entity) async {
     try {
-      var doc = await collection?.add(mapper.mapToCloud(data));
-      if (doc == null) {
-        return Failure('Error');
-      } else {
-        return Success(doc.id);
-      }
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  Future<Try<void>> updateItem(String id,
-      T data,) async {
-    if (collection == null) {
-      return Failure('Collection is null');
-    }
-    try {
-      await collection!.doc(id).update(mapper.mapToCloud(data));
-      return Success(null);
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  Future<Try<void>> deleteItem(String id, T data, ) async {
-    if (collection == null) {
-      return Failure('Collection is null');
-    }
-    try {
-      await updateItem(id, data);
+      await update(setDeletionMark(entity));
       //await collection!.doc(id).delete();
       return Success(null);
     } catch (e) {
@@ -346,15 +227,140 @@ class CollectionDAO<T> {
     }
   }
 
-  Future<Try<void>> refreshSyncDate(String id,) async {
+  @override
+  Future<Try<Iterable<T>>> getAll(DateTime dateSince) async {
     if (collection == null) {
-      return Failure('Collection is null');
+      return Failure('No cloud db');
     }
+
     try {
-      await collection!.doc(id).update({key_updated: DateTime.now()});
+      var docs = await collection!
+          .where(key_updated, isGreaterThanOrEqualTo: dateSince)
+          .get();
+      return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+
+  @override
+  Future<Try<void>> refreshEntitySyncDate(String entityId) async {
+    if (collection == null) {
+      return Failure('No cloud db');
+    }
+
+    try {
+      await collection!.doc(entityId).update({key_updated: DateTime.now()});
       return Success(null);
     } catch (e) {
       return Failure(e.toString());
     }
+  }
+
+  @override
+  Future<Try<void>> update(T entity) async {
+    if (collection == null) {
+      return Failure('No cloud db');
+    }
+
+    try {
+      await collection!.doc(getId(entity)).update(mapper.mapToCloud(entity));
+      return Success(null);
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+
+  @override
+  Future<Try<void>> deleteAll() async {
+    if (collection == null) {
+      return Failure('No cloud db');
+    }
+
+    var queryOperation;
+    try {
+      queryOperation = await collection!.get();
+    } catch (e) {
+      return Failure(e.toString());
+    }
+
+    await Future.forEach<T>(queryOperation, (element) async {
+      var res = await delete(element);
+      if (res.isFailure()) {
+        return res;
+      }
+    });
+
+    return Success(null);
+  }
+
+  String getId(T entity);
+
+  T setDeletionMark(T entity);
+}
+
+class AccountsDAO extends TableDAO<CloudAccount> {
+  AccountsDAO({
+    required CollectionReference<Map<String, dynamic>>? collection,
+    required CloudConverter<CloudAccount> mapper,
+    required String key_updated,
+  }) : super(
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
+
+  @override
+  String getId(CloudAccount entity) {
+    return entity.id;
+  }
+
+  @override
+  CloudAccount setDeletionMark(CloudAccount entity) {
+    return entity.copyWith(deleted: true);
+  }
+}
+
+class CategoriesDAO extends TableDAO<CloudCategory> {
+  CategoriesDAO({
+    required CollectionReference<Map<String, dynamic>>? collection,
+    required CloudConverter<CloudCategory> mapper,
+    required String key_updated,
+  }) : super(
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
+
+  @override
+  String getId(CloudCategory entity) {
+    return entity.id;
+  }
+
+  @override
+  CloudCategory setDeletionMark(CloudCategory entity) {
+    return entity.copyWith(deleted: true);
+  }
+}
+
+class OperationDAO extends TableDAO<CloudOperation> {
+  OperationDAO({
+    required CollectionReference<Map<String, dynamic>>? collection,
+    required CloudConverter<CloudOperation> mapper,
+    required String key_updated,
+  }) : super(
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
+
+  @override
+  String getId(CloudOperation entity) {
+    return entity.id;
+  }
+
+  @override
+  CloudOperation setDeletionMark(CloudOperation entity) {
+    return entity.copyWith(deleted: true);
   }
 }

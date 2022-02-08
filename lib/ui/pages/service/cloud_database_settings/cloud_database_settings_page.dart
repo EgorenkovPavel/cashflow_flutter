@@ -24,20 +24,10 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
         builder: (context, state) {
           if (state is SyncState_NoDb) {
             return ConnectingView();
-          } else if (state is SyncState_Synced) {
-            if (state.isAdmin) {
-              return AdminSettings();
-            } else {
-            return ConnectedView();
-            }
-          } else if (state is SyncState_Failed) {
-            if (state.isAdmin) {
-              return AdminSettings();
-            } else {
-              return ConnectedView();
-            }
-          } else if (state is SyncState_NotSynced) {
-            if (state.isAdmin) {
+          } else if (state is SyncState_Synced ||
+              state is SyncState_Failed ||
+              state is SyncState_NotSynced) {
+            if (context.watch<AuthBloc>().state.isAdmin) {
               return AdminSettings();
             } else {
               return ConnectedView();
@@ -203,7 +193,6 @@ class AdminSettings extends StatelessWidget {
                 context.read<SyncBloc>().addUser(User(
                       id: _idController.text,
                       name: _nameController.text,
-                      isAdmin: false,
                       photo: '',
                     ));
                 Navigator.of(context).pop();

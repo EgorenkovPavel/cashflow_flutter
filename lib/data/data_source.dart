@@ -1,10 +1,16 @@
+import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/utils/try.dart';
 
 abstract class DataSource{
 
   AccountDataSource get accounts;
   CategoryDataSource get categories;
   OperationDataSource get operations;
+  UsersDataSource get users;
+
+  Stream<LoadingState> loadFromCloud(DateTime date);
+  Stream<LoadingState> loadToCloud();
 
   Future deleteAll();
   Future<Map<String, List<Map<String, dynamic>>>> exportData();
@@ -67,4 +73,22 @@ abstract class OperationDataSource{
   Future update(Operation operation);
   Future delete(Operation entity);
   Future deleteById(int operationId);
+}
+
+abstract class UsersDataSource{
+
+  Future<bool> isAdmin(User user);
+
+  Future<Try<List<User>>> getAll();
+
+  Future<Try<void>> logIn(User user);
+
+  Future<void> logOut();
+
+  Future<Try<void>> addToDatabase(User user);
+
+  Future<Try<void>> createDatabase(User user);
+
+  Future<Try<bool>> databaseExists(User user);
+
 }

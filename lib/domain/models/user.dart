@@ -4,20 +4,17 @@ class User extends Equatable {
   final String id;
   final String name;
   final String photo;
-  final bool isAdmin;
 
   User({
     required this.id,
     required this.name,
     required this.photo,
-    required this.isAdmin,
   });
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        photo = json['photo'],
-        isAdmin = false;
+        photo = json['photo'];
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -26,5 +23,5 @@ class User extends Equatable {
   };
 
   @override
-  List<Object?> get props => [id, name, photo, isAdmin];
+  List<Object?> get props => [id, name, photo];
 }

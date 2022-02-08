@@ -1,43 +1,28 @@
 
-import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';
 
-abstract class RemoteSource{
-  Stream<bool> isAdmin();
+abstract class RemoteSource implements UsersDataSource{
 
-  Future<Try<void>> addNewUser(User user);
-
-  Future<Try<bool>> databaseExists(String userId);
-
-  Future<Try<void>> createDatabase(User user);
-
-  Future<Try<void>> logIn(String userId);
-
-  Future<Try<Iterable<User>>> getUsers();
-
-  void logOut();
-
-  Future<Try<Iterable<CloudAccount>>> getAccounts(DateTime date);
-  Future<Try<Iterable<CloudCategory>>> getCategories(DateTime date);
-  Future<Try<Iterable<CloudOperation>>> getOperations(DateTime date);
-
-  Future<Try<void>> refreshAccountSyncDate(String accountId);
-  Future<Try<void>> refreshCategorySyncDate(String categoryId);
-  Future<Try<void>> refreshOperationSyncDate(String operationId);
-
-  Future<Try<String>> addAccount(CloudAccount account);
-  Future<Try<void>> updateAccount(CloudAccount account);
-  Future<Try<void>> deleteAccount(CloudAccount account);
-
-  Future<Try<String>> addCategory(CloudCategory category);
-  Future<Try<void>> updateCategory(CloudCategory category);
-  Future<Try<void>> deleteCategory(CloudCategory category);
-
-  Future<Try<String>> addOperation(CloudOperation operation);
-  Future<Try<void>> updateOperation(CloudOperation operation);
-  Future<Try<void>> deleteOperation(CloudOperation operation);
+  CloudTable<CloudAccount> get accounts;
+  CloudTable<CloudCategory> get categories;
+  CloudTable<CloudOperation> get operations;
 
   Future<Try<void>> deleteAll();
+}
+
+abstract class CloudTable<T>{
+
+  Future<Try<Iterable<T>>> getAll(DateTime dateSince);
+
+  Future<Try<void>> refreshEntitySyncDate(String entityId);
+
+  Future<Try<String>> add(T entity);
+  Future<Try<void>> update(T entity);
+  Future<Try<void>> delete(T entity);
+
+  Future<Try<void>> deleteAll();
+
 }
