@@ -12,4 +12,5 @@ mixin _$OperationDaoMixin on DatabaseAccessor<Database> {
   $OperationsTable get operations => attachedDatabase.operations;
   $BalancesTable get balances => attachedDatabase.balances;
   $CashflowsTable get cashflows => attachedDatabase.cashflows;
+  $DeletedItemsTable get deletedItems => attachedDatabase.deletedItems;
 }

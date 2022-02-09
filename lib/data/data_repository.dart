@@ -229,6 +229,8 @@ class DataRepository implements DataSource{
     final categories = await _localSource.categoriesSync.getAllNotSynced();
     final operations = await _localSource.operationsSync.getAllNotSynced();
 
+    final deletedItems = await _localSource.operationsSync.getDeleted();
+
     var accountCount = accounts.length;
     var categoryCount = categories.length;
     var operationCount = operations.length;
@@ -274,6 +276,11 @@ class DataRepository implements DataSource{
         operationCount: operationCount,
       ));
     };
+
+    for (var cloudId in deletedItems){
+      await _remoteSource.operations.delete(cloudId);
+      await _localSource.operationsSync.clearDeletedById(cloudId);
+    }
   }
 
   Future<void> _loadAccountToCloud(Account account) async {

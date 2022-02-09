@@ -145,4 +145,18 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
       synced: Value(true),
     ));
   }
+
+  @override
+  Future<void> clearDeleted() async {
+   }
+
+  @override
+  Future<List<String>> getDeleted() async {
+    return [];
+  }
+
+  @override
+  Future<void> clearDeletedById(String cloudId) async{
+
+  }
 }

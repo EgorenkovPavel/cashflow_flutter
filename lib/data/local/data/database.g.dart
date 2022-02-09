@@ -1610,6 +1610,220 @@ class $CashflowsTable extends Cashflows
   }
 }
 
+class DeletedItemsDB extends DataClass implements Insertable<DeletedItemsDB> {
+  final DateTime date;
+  final TableType tableType;
+  final String cloudId;
+  DeletedItemsDB(
+      {required this.date, required this.tableType, required this.cloudId});
+  factory DeletedItemsDB.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return DeletedItemsDB(
+      date: const DateTimeType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
+      tableType: $DeletedItemsTable.$converter0.mapToDart(const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}table_type']))!,
+      cloudId: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['date'] = Variable<DateTime>(date);
+    {
+      final converter = $DeletedItemsTable.$converter0;
+      map['table_type'] = Variable<int>(converter.mapToSql(tableType)!);
+    }
+    map['cloud_id'] = Variable<String>(cloudId);
+    return map;
+  }
+
+  DeletedItemsCompanion toCompanion(bool nullToAbsent) {
+    return DeletedItemsCompanion(
+      date: Value(date),
+      tableType: Value(tableType),
+      cloudId: Value(cloudId),
+    );
+  }
+
+  factory DeletedItemsDB.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DeletedItemsDB(
+      date: serializer.fromJson<DateTime>(json['date']),
+      tableType: serializer.fromJson<TableType>(json['tableType']),
+      cloudId: serializer.fromJson<String>(json['cloudId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'date': serializer.toJson<DateTime>(date),
+      'tableType': serializer.toJson<TableType>(tableType),
+      'cloudId': serializer.toJson<String>(cloudId),
+    };
+  }
+
+  DeletedItemsDB copyWith(
+          {DateTime? date, TableType? tableType, String? cloudId}) =>
+      DeletedItemsDB(
+        date: date ?? this.date,
+        tableType: tableType ?? this.tableType,
+        cloudId: cloudId ?? this.cloudId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('DeletedItemsDB(')
+          ..write('date: $date, ')
+          ..write('tableType: $tableType, ')
+          ..write('cloudId: $cloudId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(date, tableType, cloudId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DeletedItemsDB &&
+          other.date == this.date &&
+          other.tableType == this.tableType &&
+          other.cloudId == this.cloudId);
+}
+
+class DeletedItemsCompanion extends UpdateCompanion<DeletedItemsDB> {
+  final Value<DateTime> date;
+  final Value<TableType> tableType;
+  final Value<String> cloudId;
+  const DeletedItemsCompanion({
+    this.date = const Value.absent(),
+    this.tableType = const Value.absent(),
+    this.cloudId = const Value.absent(),
+  });
+  DeletedItemsCompanion.insert({
+    required DateTime date,
+    required TableType tableType,
+    required String cloudId,
+  })  : date = Value(date),
+        tableType = Value(tableType),
+        cloudId = Value(cloudId);
+  static Insertable<DeletedItemsDB> custom({
+    Expression<DateTime>? date,
+    Expression<TableType>? tableType,
+    Expression<String>? cloudId,
+  }) {
+    return RawValuesInsertable({
+      if (date != null) 'date': date,
+      if (tableType != null) 'table_type': tableType,
+      if (cloudId != null) 'cloud_id': cloudId,
+    });
+  }
+
+  DeletedItemsCompanion copyWith(
+      {Value<DateTime>? date,
+      Value<TableType>? tableType,
+      Value<String>? cloudId}) {
+    return DeletedItemsCompanion(
+      date: date ?? this.date,
+      tableType: tableType ?? this.tableType,
+      cloudId: cloudId ?? this.cloudId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (tableType.present) {
+      final converter = $DeletedItemsTable.$converter0;
+      map['table_type'] = Variable<int>(converter.mapToSql(tableType.value)!);
+    }
+    if (cloudId.present) {
+      map['cloud_id'] = Variable<String>(cloudId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DeletedItemsCompanion(')
+          ..write('date: $date, ')
+          ..write('tableType: $tableType, ')
+          ..write('cloudId: $cloudId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DeletedItemsTable extends DeletedItems
+    with TableInfo<$DeletedItemsTable, DeletedItemsDB> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $DeletedItemsTable(this._db, [this._alias]);
+  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+      'date', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
+  final VerificationMeta _tableTypeMeta = const VerificationMeta('tableType');
+  @override
+  late final GeneratedColumnWithTypeConverter<TableType, int?> tableType =
+      GeneratedColumn<int?>('table_type', aliasedName, false,
+              type: const IntType(), requiredDuringInsert: true)
+          .withConverter<TableType>($DeletedItemsTable.$converter0);
+  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+  @override
+  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+      'cloud_id', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [date, tableType, cloudId];
+  @override
+  String get aliasedName => _alias ?? 'deletedItems';
+  @override
+  String get actualTableName => 'deletedItems';
+  @override
+  VerificationContext validateIntegrity(Insertable<DeletedItemsDB> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    context.handle(_tableTypeMeta, const VerificationResult.success());
+    if (data.containsKey('cloud_id')) {
+      context.handle(_cloudIdMeta,
+          cloudId.isAcceptableOrUnknown(data['cloud_id']!, _cloudIdMeta));
+    } else if (isInserting) {
+      context.missing(_cloudIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  @override
+  DeletedItemsDB map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DeletedItemsDB.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $DeletedItemsTable createAlias(String alias) {
+    return $DeletedItemsTable(_db, alias);
+  }
+
+  static TypeConverter<TableType, int> $converter0 = const TableTypeConverter();
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $AccountsTable accounts = $AccountsTable(this);
@@ -1617,6 +1831,7 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
+  late final $DeletedItemsTable deletedItems = $DeletedItemsTable(this);
   late final AccountDao accountDao = AccountDao(this as Database);
   late final CategoryDao categoryDao = CategoryDao(this as Database);
   late final OperationDao operationDao = OperationDao(this as Database);
@@ -1624,5 +1839,5 @@ abstract class _$Database extends GeneratedDatabase {
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [accounts, categories, operations, balances, cashflows];
+      [accounts, categories, operations, balances, cashflows, deletedItems];
 }

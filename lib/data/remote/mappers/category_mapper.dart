@@ -38,4 +38,9 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
     );
   }
+
+  @override
+  Map<String, dynamic> deletionMark() {
+    return {_KEY_DELETION_MARK: true};
+  }
 }

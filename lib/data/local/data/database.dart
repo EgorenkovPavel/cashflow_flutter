@@ -117,6 +117,42 @@ class Cashflows extends Table {
   Set<Column> get primaryKey => {operation, category};
 }
 
+@DataClassName('DeletedItemsDB')
+class DeletedItems extends Table {
+  @override
+  String get tableName => 'deletedItems';
+
+  DateTimeColumn get date => dateTime()();
+
+  IntColumn get tableType => integer().map(const TableTypeConverter())();
+
+  TextColumn get cloudId => text()();
+}
+
+enum TableType{
+  OPERATIONS
+}
+
+class TableTypeConverter extends TypeConverter<TableType, int>{
+  const TableTypeConverter();
+
+  @override
+  TableType? mapToDart(int? fromDb) {
+    if (fromDb == 1){
+      return TableType.OPERATIONS;
+    }else{
+      return null;
+    }
+  }
+
+  @override
+  int? mapToSql(TableType? value) {
+    if (value == TableType.OPERATIONS){
+      return 1;
+    }else{
+      return 0;
+    }
+  }}
 
 LazyDatabase _openConnection() {
   // the LazyDatabase util lets us find the right location for the file async.
@@ -130,13 +166,13 @@ LazyDatabase _openConnection() {
 }
 
 @DriftDatabase(
-    tables: [Accounts, Categories, Operations, Balances, Cashflows],
+    tables: [Accounts, Categories, Operations, Balances, Cashflows, DeletedItems],
     daos: [AccountDao, CategoryDao, OperationDao])
 class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -149,7 +185,7 @@ class Database extends _$Database {
           await m.addColumn(accounts, accounts.isDebt);
         }
 
-        if (from >= 2){
+        if (from == 2){
           await m.addColumn(accounts, accounts.cloudId);
           await m.addColumn(categories, categories.cloudId);
           await m.addColumn(operations, operations.cloudId);
@@ -157,6 +193,10 @@ class Database extends _$Database {
           await m.addColumn(accounts, accounts.synced);
           await m.addColumn(categories, categories.synced);
           await m.addColumn(operations, operations.synced);
+        }
+
+        if (from == 3){
+          await m.createTable(deletedItems);
         }
       }
   );

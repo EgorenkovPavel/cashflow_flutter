@@ -161,4 +161,19 @@ class OperationRepository implements LocalSyncTable<Operation>, OperationDataSou
           synced: Value(true),
         ));
   }
+
+  @override
+  Future<void> clearDeleted() {
+    return operationDao.clearDeleted();
+  }
+
+  @override
+  Future<List<String>> getDeleted() {
+    return operationDao.getDeleted();
+  }
+
+  @override
+  Future<void> clearDeletedById(String cloudId) async{
+    return operationDao.clearDeletedById(cloudId);
+  }
 }

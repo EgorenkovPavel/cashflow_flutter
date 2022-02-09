@@ -31,4 +31,9 @@ class AccountMapper extends CloudConverter<CloudAccount> {
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
     );
   }
+
+  @override
+  Map<String, dynamic> deletionMark() {
+    return {_KEY_DELETION_MARK: true};
+  }
 }

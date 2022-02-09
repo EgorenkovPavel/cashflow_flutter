@@ -217,10 +217,13 @@ abstract class TableDAO<T> implements CloudTable<T> {
   }
 
   @override
-  Future<Try<void>> delete(T entity) async {
+  Future<Try<void>> delete(String cloudId) async {
+    if (collection == null) {
+      return Failure('No cloud db');
+    }
+
     try {
-      await update(setDeletionMark(entity));
-      //await collection!.doc(id).delete();
+      await collection!.doc(cloudId).update(mapper.deletionMark());
       return Success(null);
     } catch (e) {
       return Failure(e.toString());
@@ -285,7 +288,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
     }
 
     await Future.forEach<T>(queryOperation, (element) async {
-      var res = await delete(element);
+      var res = await delete(getId(element));
       if (res.isFailure()) {
         return res;
       }
@@ -296,7 +299,6 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
   String getId(T entity);
 
-  T setDeletionMark(T entity);
 }
 
 class AccountsDAO extends TableDAO<CloudAccount> {
@@ -315,10 +317,6 @@ class AccountsDAO extends TableDAO<CloudAccount> {
     return entity.id;
   }
 
-  @override
-  CloudAccount setDeletionMark(CloudAccount entity) {
-    return entity.copyWith(deleted: true);
-  }
 }
 
 class CategoriesDAO extends TableDAO<CloudCategory> {
@@ -336,11 +334,6 @@ class CategoriesDAO extends TableDAO<CloudCategory> {
   String getId(CloudCategory entity) {
     return entity.id;
   }
-
-  @override
-  CloudCategory setDeletionMark(CloudCategory entity) {
-    return entity.copyWith(deleted: true);
-  }
 }
 
 class OperationDAO extends TableDAO<CloudOperation> {
@@ -357,10 +350,5 @@ class OperationDAO extends TableDAO<CloudOperation> {
   @override
   String getId(CloudOperation entity) {
     return entity.id;
-  }
-
-  @override
-  CloudOperation setDeletionMark(CloudOperation entity) {
-    return entity.copyWith(deleted: true);
   }
 }

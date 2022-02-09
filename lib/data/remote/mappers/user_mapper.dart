@@ -26,4 +26,9 @@ class UserMapper extends CloudConverter<User>{
     );
   }
 
+  @override
+  Map<String, dynamic> deletionMark() {
+    return {};
+  }
+
 }

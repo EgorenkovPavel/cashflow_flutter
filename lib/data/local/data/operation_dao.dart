@@ -1,11 +1,18 @@
+import 'package:drift/drift.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/data/operation_item.dart';
 import 'package:money_tracker/domain/models/operation_type.dart';
-import 'package:drift/drift.dart';
 
 part 'operation_dao.g.dart';
 
-@DriftAccessor(tables: [Accounts, Categories, Operations, Balances, Cashflows])
+@DriftAccessor(tables: [
+  Accounts,
+  Categories,
+  Operations,
+  Balances,
+  Cashflows,
+  DeletedItems,
+])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
   OperationDao(Database db) : super(db);
@@ -98,41 +105,41 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..where((tbl) => tbl.synced.equals(false))
-      ..orderBy([
+          ..where((tbl) => tbl.synced.equals(false))
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .get()
         .then((rows) => rows.map(
-          (row) {
-        var op = row.readTable(operations);
-        return OperationItem(
-            operation: op,
-            account: row.readTable(acc),
-            category: op.operationType == OperationType.TRANSFER
-                ? null
-                : row.readTable(categories),
-            recAccount: op.operationType == OperationType.TRANSFER
-                ? row.readTable(rec)
-                : null);
-      },
-    ).toList());
+              (row) {
+                var op = row.readTable(operations);
+                return OperationItem(
+                    operation: op,
+                    account: row.readTable(acc),
+                    category: op.operationType == OperationType.TRANSFER
+                        ? null
+                        : row.readTable(categories),
+                    recAccount: op.operationType == OperationType.TRANSFER
+                        ? row.readTable(rec)
+                        : null);
+              },
+            ).toList());
   }
 
   Stream<OperationItem> watchOperationItemsNotSynced() {
@@ -140,43 +147,42 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
-      ..where((tbl) => tbl.synced.equals(false))
-      ..orderBy([
+          ..where((tbl) => tbl.synced.equals(false))
+          ..orderBy([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
-      ]))
+          ]))
         .join(
-      [
-        innerJoin(
-          acc,
-          acc.id.equalsExp(operations.account),
-        ),
-        leftOuterJoin(
-          categories,
-          categories.id.equalsExp(operations.category),
-        ),
-        leftOuterJoin(
-          rec,
-          rec.id.equalsExp(operations.recAccount),
-        ),
-      ],
-    )
+          [
+            innerJoin(
+              acc,
+              acc.id.equalsExp(operations.account),
+            ),
+            leftOuterJoin(
+              categories,
+              categories.id.equalsExp(operations.category),
+            ),
+            leftOuterJoin(
+              rec,
+              rec.id.equalsExp(operations.recAccount),
+            ),
+          ],
+        )
         .watchSingle()
         .map(
           (row) {
-        var op = row.readTable(operations);
-        return OperationItem(
-            operation: op,
-            account: row.readTable(acc),
-            category: op.operationType == OperationType.TRANSFER
-                ? null
-                : row.readTable(categories),
-            recAccount: op.operationType == OperationType.TRANSFER
-                ? row.readTable(rec)
-                : null);
-      },
-    );
+            var op = row.readTable(operations);
+            return OperationItem(
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null);
+          },
+        );
   }
-
 
   Stream<List<OperationItem>> watchAllOperationItems() {
     final acc = alias(accounts, 'a');
@@ -539,12 +545,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<int> markAsSynced(int operationId, String cloudId) {
-    return (update(operations)
-      ..where((t) => t.id.equals(operationId))
-    ).write(OperationsCompanion(
-      cloudId: Value(cloudId),
-      synced: Value(true),
-    ),
+    return (update(operations)..where((t) => t.id.equals(operationId))).write(
+      OperationsCompanion(
+        cloudId: Value(cloudId),
+        synced: Value(true),
+      ),
     );
   }
 
@@ -579,7 +584,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<int> updateFields(int operationId, OperationsCompanion entity) =>
-      (update(operations)..where((t) => t.id.equals(operationId))).write(entity);
+      (update(operations)..where((t) => t.id.equals(operationId)))
+          .write(entity);
 
   Future<int> updateOperation(OperationDB entity) {
     return transaction(() async {
@@ -601,14 +607,28 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return transaction(() async {
       await delete(operations).delete(entity);
       await _deleteAnalytic(entity);
+      await _insertDeletedItem(entity.cloudId);
     });
   }
 
-  Future deleteOperationById(int operationId) {
+  Future _insertDeletedItem(String cloudId) async {
+    var data = DeletedItemsCompanion(
+      date: Value(DateTime.now()),
+      tableType: Value(TableType.OPERATIONS),
+      cloudId: Value(cloudId),
+    );
+
+    await into(deletedItems).insert(data);
+  }
+
+  Future deleteOperationById(int operationId) async {
+    var operation = await getOperationById(operationId);
+
     return transaction(() async {
       await (delete(operations)..where((tbl) => tbl.id.equals(operationId)))
           .go();
       await _deleteAnalyticByOperationId(operationId);
+      await _insertDeletedItem(operation.operation.cloudId);
     });
   }
 
@@ -758,6 +778,31 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .go();
     await (delete(cashflows)
           ..where((entry) => entry.operation.equals(operationId)))
+        .go();
+  }
+
+  Future<void> clearDeleted() {
+    return (delete(deletedItems)
+          ..where((tbl) => tbl.tableType.equals(
+              const TableTypeConverter().mapToSql(TableType.OPERATIONS))))
+        .go();
+  }
+
+  Future<List<String>> getDeleted() async {
+    var res = await (select(deletedItems)
+          ..where((tbl) => tbl.tableType.equals(
+              const TableTypeConverter().mapToSql(TableType.OPERATIONS)))
+          ..orderBy([(t) => OrderingTerm(expression: t.date)]))
+        .get();
+    return res.map((row) => row.cloudId).toList();
+  }
+
+  Future<void> clearDeletedById(String cloudId) {
+    return (delete(deletedItems)
+          ..where((tbl) =>
+              tbl.tableType.equals(
+                  const TableTypeConverter().mapToSql(TableType.OPERATIONS)) &
+              tbl.cloudId.equals(cloudId)))
         .go();
   }
 }

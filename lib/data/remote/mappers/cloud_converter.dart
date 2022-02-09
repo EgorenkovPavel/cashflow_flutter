@@ -7,4 +7,6 @@ abstract class CloudConverter<T>{
   T mapToDart(QueryDocumentSnapshot<Object?> doc);
 
   Map<String, dynamic> mapToCloud(T value);
+
+  Map<String, dynamic> deletionMark();
 }

@@ -21,7 +21,7 @@ abstract class CloudTable<T>{
 
   Future<Try<String>> add(T entity);
   Future<Try<void>> update(T entity);
-  Future<Try<void>> delete(T entity);
+  Future<Try<void>> delete(String cloudId);
 
   Future<Try<void>> deleteAll();
 
