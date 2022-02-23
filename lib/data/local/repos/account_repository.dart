@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/data/account_dao.dart';
 import 'package:money_tracker/data/local/data/database.dart';
@@ -5,25 +6,22 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:drift/drift.dart';
 
-class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
+class AccountRepository implements LocalSyncTable<Account>, AccountDataSource {
   final AccountDao accountDao;
 
   AccountRepository(this.accountDao);
 
-  final List<Account> Function(List<AccountDB>) _mapAccountList =
-      (list) => const AccountMapper().mapListToDart(list);
+  List<Account> _mapAccountList(List<AccountDB> list) =>
+      const AccountMapper().mapListToDart(list);
 
-  final Account Function(AccountDB) _mapAccount =
-      (item) => const AccountMapper().mapToDart(item);
+  Account _mapAccount(AccountDB item) => const AccountMapper().mapToDart(item);
 
-  final AccountDB Function(Account) _mapAccountDB =
-      (item) => const AccountMapper().mapToSql(item);
+  AccountDB _mapAccountDB(Account item) => const AccountMapper().mapToSql(item);
 
-  final List<AccountBalance> Function(List<AccountBalanceEntity>)
-      _mapAccountBalanceList =
-      (list) => const AccountBalanceMapper().mapListToDart(list);
+  List<AccountBalance> _mapAccountBalanceList(
+          List<AccountBalanceEntity> list) =>
+      const AccountBalanceMapper().mapListToDart(list);
 
   @override
   Stream<List<Account>> watchAll() =>
@@ -56,13 +54,12 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
   @override
   Future<Account?> getByCloudId(String cloudId) async {
     var _account = await accountDao.getAccountByCloudId(cloudId);
-    if (_account == null){
+    if (_account == null) {
       return null;
-    }else{
+    } else {
       return _mapAccount(_account);
     }
   }
-
 
   @override
   Future<int> insert(Account account) =>
@@ -103,12 +100,13 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
 
   @override
   Future updateFromCloud(Account account) {
-    return accountDao.updateFields(account.id, AccountsCompanion(
-      cloudId: Value(account.cloudId),
-      title: Value(account.title),
-      isDebt: Value(account.isDebt),
-      synced: const Value(true),
-    ));
+    return accountDao.updateFields(
+        account.id,
+        AccountsCompanion(
+          cloudId: Value(account.cloudId),
+          title: Value(account.title),
+          isDebt: Value(account.isDebt),
+          synced: const Value(true),
+        ));
   }
-
 }

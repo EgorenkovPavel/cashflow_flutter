@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/data/category_dao.dart';
 import 'package:money_tracker/data/local/data/database.dart';
@@ -6,29 +7,29 @@ import 'package:money_tracker/data/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/mappers/category_mapper.dart';
 import 'package:money_tracker/data/mappers/category_month_cashflow_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:drift/drift.dart';
 
-class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource{
+class CategoryRepository
+    implements LocalSyncTable<Category>, CategoryDataSource {
   final CategoryDao categoryDao;
 
   CategoryRepository(this.categoryDao);
 
-  final List<Category> Function(List<CategoryDB>) _mapCategoryList =
-      (list) => const CategoryMapper().mapListToDart(list);
+  List<Category> _mapCategoryList(List<CategoryDB> list) =>
+      const CategoryMapper().mapListToDart(list);
 
-  final Category Function(CategoryDB) _mapCategory =
-      (item) => const CategoryMapper().mapToDart(item);
+  Category _mapCategory(CategoryDB item) =>
+      const CategoryMapper().mapToDart(item);
 
-  final CategoryDB Function(Category) _mapCategoryDB =
-      (item) => const CategoryMapper().mapToSql(item);
+  CategoryDB _mapCategoryDB(Category item) =>
+      const CategoryMapper().mapToSql(item);
 
-  final List<CategoryCashflow> Function(List<CategoryCashflowEntity>)
-      _mapCategoryCashflowList =
-      (list) => const CategoryCashflowMapper().mapListToDart(list);
+  List<CategoryCashflow> _mapCategoryCashflowList(
+          List<CategoryCashflowEntity> list) =>
+      const CategoryCashflowMapper().mapListToDart(list);
 
-  final List<CategoryMonthCashflow> Function(List<CategoryMonthCashflowEntity>)
-  _mapCategoryMonthCashflowList =
-      (list) => const CategoryMonthCashflowMapper().mapListToDart(list);
+  List<CategoryMonthCashflow> _mapCategoryMonthCashflowList(
+          List<CategoryMonthCashflowEntity> list) =>
+      const CategoryMonthCashflowMapper().mapListToDart(list);
 
   @override
   Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
@@ -63,9 +64,9 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
 
   @override
   Future<List<CategoryCashflow>> getCashflowByType(
-      DateTime date, OperationType type) async =>
-      _mapCategoryCashflowList(await categoryDao
-          .getCategoryCashflowByType(date, type));
+          DateTime date, OperationType type) async =>
+      _mapCategoryCashflowList(
+          await categoryDao.getCategoryCashflowByType(date, type));
 
   @override
   Future<Category> getById(int id) async =>
@@ -74,9 +75,9 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
   @override
   Future<Category?> getByCloudId(String cloudId) async {
     var _category = await categoryDao.getCategoryByCloudId(cloudId);
-    if (_category == null){
+    if (_category == null) {
       return null;
-    }else{
+    } else {
       return _mapCategory(_category);
     }
   }
@@ -136,14 +137,15 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
 
   @override
   Future updateFromCloud(Category category) {
-    return categoryDao.updateFields(category.id, CategoriesCompanion(
-      cloudId: Value(category.cloudId),
-      title: Value(category.title),
-      operationType: Value(category.operationType),
-      budgetType: Value(category.budgetType),
-      budget: Value(category.budget),
-      synced: const Value(true),
-    ));
+    return categoryDao.updateFields(
+        category.id,
+        CategoriesCompanion(
+          cloudId: Value(category.cloudId),
+          title: Value(category.title),
+          operationType: Value(category.operationType),
+          budgetType: Value(category.budgetType),
+          budget: Value(category.budget),
+          synced: const Value(true),
+        ));
   }
-
 }

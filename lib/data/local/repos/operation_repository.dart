@@ -7,19 +7,20 @@ import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/mappers/operation_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class OperationRepository implements LocalSyncTable<Operation>, OperationDataSource {
+class OperationRepository
+    implements LocalSyncTable<Operation>, OperationDataSource {
   final OperationDao operationDao;
 
   OperationRepository(this.operationDao);
 
-  final List<Operation> Function(List<OperationItem>) _mapOperationList =
-      (list) => const OperationMapper().mapListToDart(list);
+  List<Operation> _mapOperationList(List<OperationItem> list) =>
+      const OperationMapper().mapListToDart(list);
 
-  final Operation Function(OperationItem) _mapOperation =
-      (item) => const OperationMapper().mapToDart(item);
+  Operation _mapOperation(OperationItem item) =>
+      const OperationMapper().mapToDart(item);
 
-  final OperationDB Function(Operation) _mapOperationDB =
-      (item) => const OperationMapper().mapToOperationData(item);
+  OperationDB _mapOperationDB(Operation item) =>
+      const OperationMapper().mapToOperationData(item);
 
   @override
   Future<List<Operation>> getAll() =>
@@ -163,5 +164,4 @@ class OperationRepository implements LocalSyncTable<Operation>, OperationDataSou
           deleted: Value(operation.deleted),
         ));
   }
-
 }
