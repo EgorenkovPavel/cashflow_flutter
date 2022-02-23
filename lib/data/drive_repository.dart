@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
@@ -41,9 +42,13 @@ class DriveRepository {
     try {
       var response =
           await drive.DriveApi(_client!).files.create(file, uploadMedia: media);
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -62,17 +67,25 @@ class DriveRepository {
 
       var dataStore = <int>[];
       await for (var data in file.stream){
-        print('DataReceived: ${data.length}');
+        if (kDebugMode) {
+          print('DataReceived: ${data.length}');
+        }
         dataStore.insertAll(dataStore.length, data);
       }
 
-      print('Task Done');
+      if (kDebugMode) {
+        print('Task Done');
+      }
       await saveFile.writeAsBytes(dataStore);
-      print('File saved at ${saveFile.path}');
+      if (kDebugMode) {
+        print('File saved at ${saveFile.path}');
+      }
 
       return jsonDecode(saveFile.readAsStringSync());
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
   }

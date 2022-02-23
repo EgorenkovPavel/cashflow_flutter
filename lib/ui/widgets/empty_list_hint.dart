@@ -4,7 +4,8 @@ class EmptyListHint extends StatelessWidget {
   final String title;
   final String hint;
 
-  const EmptyListHint({required this.title, required this.hint});
+  const EmptyListHint({Key? key, required this.title, required this.hint})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class EmptyListHint extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.add,
             color: Colors.grey,
             size: 48.0,

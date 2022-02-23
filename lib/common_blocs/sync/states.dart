@@ -2,50 +2,50 @@ abstract class SyncState {
   const SyncState();
 }
 
-class SyncState_InProgress extends SyncState {
-  const SyncState_InProgress();
+class SyncStateInProgress extends SyncState {
+  const SyncStateInProgress();
 }
 
-class SyncState_LoadingToCloud extends SyncState {
+class SyncStateLoadingToCloud extends SyncState {
   final int accountCount;
   final int categoryCount;
   final int operationCount;
 
-  const SyncState_LoadingToCloud({
+  const SyncStateLoadingToCloud({
     required this.accountCount,
     required this.categoryCount,
     required this.operationCount,
   });
 }
 
-class SyncState_LoadingFromCloud extends SyncState {
+class SyncStateLoadingFromCloud extends SyncState {
   final int accountCount;
   final int categoryCount;
   final int operationCount;
 
-  const SyncState_LoadingFromCloud({
+  const SyncStateLoadingFromCloud({
     required this.accountCount,
     required this.categoryCount,
     required this.operationCount,
   });
 }
 
-class SyncState_Synced extends SyncState {
+class SyncStateSynced extends SyncState {
   final DateTime syncDate;
 
-  const SyncState_Synced({required this.syncDate});
+  const SyncStateSynced({required this.syncDate});
 }
 
-class SyncState_NotSynced extends SyncState {
-  const SyncState_NotSynced();
+class SyncStateNotSynced extends SyncState {
+  const SyncStateNotSynced();
 }
 
-class SyncState_Failed extends SyncState {
+class SyncStateFailed extends SyncState {
 
-  const SyncState_Failed();
+  const SyncStateFailed();
 }
 
-class SyncState_NoDb extends SyncState {
+class SyncStateNoDb extends SyncState {
 
-  const SyncState_NoDb();
+  const SyncStateNoDb();
 }

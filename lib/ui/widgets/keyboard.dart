@@ -15,7 +15,7 @@ class Keyboard extends StatelessWidget {
           horizontal: width * 0.1,
           vertical: width * 0.05,
         ),
-        child: Container(
+        child: SizedBox(
           height: width * 0.75, //24.0*_ratio,
           width: width * 0.75, //24.0*_ratio,
         ),

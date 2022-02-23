@@ -23,13 +23,13 @@ class AccountDetailPage extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                     onPressed: () => PageNavigator.openAccountEditPage(context, id),
-                    icon: Icon(Icons.edit))
+                    icon: const Icon(Icons.edit))
               ],
             ),
             body: OperationList(context.watch<AccountDetailBloc>().state.operations),
             floatingActionButton: FloatingActionButton(
               onPressed: () => PageNavigator.openOperationInputPage(context),
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           );
         }

@@ -130,7 +130,7 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
       operationType: Value(category.operationType),
       budgetType: Value(category.budgetType),
       budget: Value(category.budget),
-      synced: Value(true),
+      synced: const Value(true),
     ));
   }
 
@@ -142,21 +142,8 @@ class CategoryRepository implements LocalSyncTable<Category>, CategoryDataSource
       operationType: Value(category.operationType),
       budgetType: Value(category.budgetType),
       budget: Value(category.budget),
-      synced: Value(true),
+      synced: const Value(true),
     ));
   }
 
-  @override
-  Future<void> clearDeleted() async {
-   }
-
-  @override
-  Future<List<String>> getDeleted() async {
-    return [];
-  }
-
-  @override
-  Future<void> clearDeletedById(String cloudId) async{
-
-  }
 }

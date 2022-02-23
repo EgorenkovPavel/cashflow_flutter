@@ -9,9 +9,13 @@ import 'package:money_tracker/utils/app_localization.dart';
 class DriveDialog extends StatefulWidget {
   final DialogMode mode;
 
-  const DriveDialog.ChooseFile() : mode = DialogMode.CHOOSE_FILE;
+  const DriveDialog.chooseFile({Key? key})
+      : mode = DialogMode.CHOOSE_FILE,
+        super(key: key);
 
-  const DriveDialog.ChooseFolder() : mode = DialogMode.CHOOSE_FOLDER;
+  const DriveDialog.chooseFolder({Key? key})
+      : mode = DialogMode.CHOOSE_FOLDER,
+        super(key: key);
 
   @override
   _DriveDialogState createState() => _DriveDialogState();
@@ -46,7 +50,7 @@ class _DriveDialogState extends State<DriveDialog> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Google drive'),
+          title: const Text('Google drive'),
         ),
         body: BlocConsumer<DialogDriveBloc, DialogDriveState>(
           bloc: _bloc,
@@ -55,7 +59,7 @@ class _DriveDialogState extends State<DriveDialog> {
               controller: _listController,
               itemCount: state.folderList.length,
               separatorBuilder: (BuildContext context, int index) {
-                return Divider();
+                return const Divider();
               },
               itemBuilder: (BuildContext context, int index) {
                 var f = state.folderList[index];
@@ -85,7 +89,7 @@ class _DriveDialogState extends State<DriveDialog> {
             onPressed: () => _bloc.choose(),
             child: Text(
               AppLocalizations.of(context).choose.toUpperCase(),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           )
         ],
@@ -107,7 +111,8 @@ class _DriveFileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: file.isFolder ? Icon(Icons.folder) : Icon(Icons.remove),
+      leading:
+          file.isFolder ? const Icon(Icons.folder) : const Icon(Icons.remove),
       title: Text(file.title),
       subtitle: Text(
           '${AppLocalizations.of(context).lastChanges} ${DateFormat.yMMMd().format(file.lastChanges)}'),

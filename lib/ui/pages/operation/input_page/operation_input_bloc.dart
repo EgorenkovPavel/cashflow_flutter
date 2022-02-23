@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/mappers/account_balance_mapper.dart';

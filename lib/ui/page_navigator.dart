@@ -22,7 +22,7 @@ class PageNavigator {
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
         context,
-        AccountInputPage.input(),
+        const AccountInputPage.input(),
       );
 
   static Future<Account?> openAccountEditPage(BuildContext context, int id) =>
@@ -129,14 +129,14 @@ class PageNavigator {
 
   static Map<String, Widget Function(BuildContext)> routes =
       <String, WidgetBuilder>{
-    routeRootName: (context) => HomePage(),
-    _routeOperationListName: (context) => OperationListPage(),
-    _routeOperationInputName: (context) => OperationInputPage(),
-    _routeSettingsName: (context) => SettingsPage(),
-    _routeDataControlName: (context) => DataControlPage(),
-    _routeGoogleDriveSettingsName: (context) => GoogleDriveSettingsPage(),
-    _routeCloudDatabaseSettingsName: (context) => CloudDatabaseSettingsPage(),
-    _routeReportsName: (context) => ReportsPage(),
+    routeRootName: (context) => const HomePage(),
+    _routeOperationListName: (context) => const OperationListPage(),
+    _routeOperationInputName: (context) => const OperationInputPage(),
+    _routeSettingsName: (context) => const SettingsPage(),
+    _routeDataControlName: (context) => const DataControlPage(),
+    _routeGoogleDriveSettingsName: (context) => const GoogleDriveSettingsPage(),
+    _routeCloudDatabaseSettingsName: (context) => const CloudDatabaseSettingsPage(),
+    _routeReportsName: (context) => const ReportsPage(),
   };
 
   static Route<dynamic>? Function(RouteSettings)? onGenerateRoute = (settings) {
@@ -179,13 +179,13 @@ class PageNavigator {
       case _routeGoogleDriveChooseFile:
         {
           return MaterialPageRoute<DriveFile?>(
-            builder: (context) => DriveDialog.ChooseFile(),
+            builder: (context) => const DriveDialog.chooseFile(),
           );
         }
       case _routeGoogleDriveChooseFolder:
         {
           return MaterialPageRoute<DriveFile?>(
-            builder: (context) => DriveDialog.ChooseFolder(),
+            builder: (context) => const DriveDialog.chooseFolder(),
           );
         }
       default:
@@ -203,7 +203,7 @@ class _Card<T> {
       barrierDismissible: false,
       builder: (context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(12),
             ),

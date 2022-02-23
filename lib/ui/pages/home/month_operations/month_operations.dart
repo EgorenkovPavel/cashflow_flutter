@@ -16,51 +16,49 @@ class MonthOperations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                      text: '${AppLocalizations.of(context).operationsIn} ',
-                      style: Theme.of(context).textTheme.headline6),
-                  TextSpan(
-                      text: DateFormat.MMMM(
-                              Localizations.localeOf(context).toString())
-                          .format(DateTime.now()),
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: Theme.of(context).colorScheme.primary)),
-                ],
-              ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: '${AppLocalizations.of(context).operationsIn} ',
+                    style: Theme.of(context).textTheme.headline6),
+                TextSpan(
+                    text: DateFormat.MMMM(
+                            Localizations.localeOf(context).toString())
+                        .format(DateTime.now()),
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: Theme.of(context).colorScheme.primary)),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: BlocProvider(
-              create: (context) =>
-                  MonthOperationsBloc(context.read<DataSource>())
-                    ..add(Fetch(OperationType.INPUT)),
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _MonthOperation(
-                    operationType: OperationType.INPUT,
-                  ),
-                  SizedBox(
-                    width: Dimensions.padding,
-                  ),
-                  _MonthOperation(
-                    operationType: OperationType.OUTPUT,
-                  ),
-                ],
-              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: BlocProvider(
+            create: (context) =>
+                MonthOperationsBloc(context.read<DataSource>())
+                  ..add(Fetch(OperationType.INPUT)),
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                _MonthOperation(
+                  operationType: OperationType.INPUT,
+                ),
+                SizedBox(
+                  width: Dimensions.padding,
+                ),
+                _MonthOperation(
+                  operationType: OperationType.OUTPUT,
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -129,7 +127,7 @@ class _MonthOperation extends StatelessWidget {
       //   ),
       // ),
       child: Container(
-        padding: EdgeInsets.all(Dimensions.padding),
+        padding: const EdgeInsets.all(Dimensions.padding),
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.primary),
           borderRadius: BorderRadius.circular(8.0),

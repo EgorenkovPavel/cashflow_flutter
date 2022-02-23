@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, avoid_renaming_method_parameters
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/data/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/domain/models/user.dart';

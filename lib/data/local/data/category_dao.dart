@@ -195,7 +195,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(const OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
@@ -291,7 +291,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(const OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories, cashflows},
     ).get().then(
@@ -317,7 +317,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       'ORDER BY title;',
       variables: [
         Variable.withDateTime(DateTime.now()),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(const OperationTypeConverter().mapToSql(type)!),
       ],
       readsFrom: {categories},
     ).watch().map(
@@ -342,7 +342,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     return (update(categories)..where((t) => t.id.equals(categoryId))).write(
       CategoriesCompanion(
         cloudId: Value(cloudId),
-        synced: Value(true),
+        synced: const Value(true),
       ),
     );
   }
@@ -362,7 +362,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     ).watch().map(
           (rows) => rows
               .map(
-                (row) => OperationTypeConverter().mapToDart(
+                (row) => const OperationTypeConverter().mapToDart(
                           row.read<int>('operation_type'),
                         ) ==
                         OperationType.INPUT

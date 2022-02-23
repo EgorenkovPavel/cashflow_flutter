@@ -17,7 +17,7 @@ class BudgetPage extends StatefulWidget {
   _BudgetPageState createState() => _BudgetPageState();
 }
 
-final _duration = const Duration(seconds: 1);
+const _duration = Duration(seconds: 1);
 
 class _BudgetPageState extends State<BudgetPage> {
   late BudgetBloc _bloc;
@@ -80,7 +80,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   )),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsMonthBudget
-                    .expand((e) => [_CategoryItem(category: e), Divider()])
+                    .expand((e) => [_CategoryItem(category: e), const Divider()])
                     .toList()),
               ),
               SliverPersistentHeader(
@@ -95,7 +95,7 @@ class _BudgetPageState extends State<BudgetPage> {
                       onPressed: () => _bloc.add(ShowAll(BudgetType.YEAR)))),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsYearBudget
-                    .expand((e) => [_CategoryItem(category: e), Divider()])
+                    .expand((e) => [_CategoryItem(category: e), const Divider()])
                     .toList()),
               ),
             ],
@@ -103,7 +103,7 @@ class _BudgetPageState extends State<BudgetPage> {
           floatingActionButton: FloatingActionButton(
             onPressed: () =>
                 PageNavigator.openCategoryInputPage(context, type: widget.type),
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
         );
       },
@@ -139,12 +139,12 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
                 title,
                 style: Theme.of(context).textTheme.headline6,
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 AppLocalizations.of(context).numberFormat(cashflow),
                 style: Theme.of(context).textTheme.headline6,
               ),
-              showAll ? Icon(Icons.arrow_drop_down) : Icon(Icons.arrow_drop_up)
+              showAll ? const Icon(Icons.arrow_drop_down) : const Icon(Icons.arrow_drop_up)
             ],
           ),
         ),
@@ -269,7 +269,7 @@ class PieDiagram extends StatelessWidget {
       children: [
         IconButton(
           onPressed: onBackPressed,
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
         SizedBox(
           width: 200.0,
@@ -289,7 +289,7 @@ class PieDiagram extends StatelessWidget {
         ),
         IconButton(
           onPressed: onForwardPressed,
-          icon: Icon(Icons.arrow_forward_ios),
+          icon: const Icon(Icons.arrow_forward_ios),
         ),
       ],
     );

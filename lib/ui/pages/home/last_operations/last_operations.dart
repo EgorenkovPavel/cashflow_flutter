@@ -27,7 +27,7 @@ class LastOperations extends StatelessWidget {
             BlocBuilder<LastOperationsBloc, LastOperationsState>(
                 builder: (context, state) {
               if (state.operations.isEmpty) {
-                return _NoOperationsTitle();
+                return const _NoOperationsTitle();
               }
               return _OperationsList(items: state.operations);
             }),
@@ -63,7 +63,7 @@ class _OperationsList extends StatelessWidget {
                 ),
               ])
           .toList()
-        ..add(_ShowAllButton()),
+        ..add(const _ShowAllButton()),
     );
   }
 }
@@ -104,7 +104,7 @@ class _ShowAllButton extends StatelessWidget {
               ),
               Text(
                 AppLocalizations.of(context).btnShowAll.toUpperCase(),
-                style: TextStyle()
+                style: const TextStyle()
                     .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ],

@@ -9,9 +9,9 @@ import 'package:money_tracker/utils/app_localization.dart';
 class AccountInputPage extends StatelessWidget {
   final int? id;
 
-  const AccountInputPage.input() : id = null;
+  const AccountInputPage.input({Key? key}) : id = null, super(key: key);
 
-  const AccountInputPage.edit(this.id);
+  const AccountInputPage.edit(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _AccountPageState extends State<AccountPage> {
                   onChanged: (val) =>
                       context.read<AccountInputBloc>().add(ChangeIsDebt(val!)),
                 ),
-                Text('Is debt'),
+                const Text('Is debt'),
               ],
             )
           ],

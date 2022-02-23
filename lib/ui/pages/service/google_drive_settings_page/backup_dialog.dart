@@ -8,7 +8,7 @@ import 'package:provider/src/provider.dart';
 class BackupDialog extends StatefulWidget {
   final Future<void> Function(String folderId, String title) onBackup;
 
-  BackupDialog({Key? key, required this.onBackup}) : super(key: key);
+  const BackupDialog({Key? key, required this.onBackup}) : super(key: key);
 
   @override
   _BackupDialogState createState() => _BackupDialogState();
@@ -56,25 +56,25 @@ class _BackupDialogState extends State<BackupDialog> {
             TextField(
               controller: _controller,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context).title,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16.0,
             ),
             Container(
-              padding: EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 8.0),
               width: double.infinity,
               decoration: BoxDecoration(
                   border: Border.all(width: 1),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(_folder.title),
                   IconButton(
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     onPressed: () async {
                       var newFolder = await PageNavigator.chooseFolder(context);
                       if (newFolder != null) {
@@ -90,7 +90,7 @@ class _BackupDialogState extends State<BackupDialog> {
           ],
         ),
       ),
-      contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+      contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

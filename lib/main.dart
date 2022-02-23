@@ -30,7 +30,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   final _firestore = FirebaseFirestore.instance;
-  _firestore.settings = Settings(persistenceEnabled: false);
+  _firestore.settings = const Settings(persistenceEnabled: false);
 
   final AuthSource _authRepository = AuthRepository();
   final _driveRepository = DriveRepository();
@@ -74,7 +74,7 @@ Future<void> main() async {
           RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
           RepositoryProvider<PrefsRepository>(create: (_) => _prefsRepo),
         ],
-        child: MyApp(),
+        child: const MyApp(),
       ),
     ),
   );

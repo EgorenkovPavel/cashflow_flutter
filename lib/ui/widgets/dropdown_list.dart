@@ -32,10 +32,10 @@ class DropdownList<T> extends StatelessWidget {
           child: Text(hint),
         ),
         value: value,
-        icon: Icon(Icons.keyboard_arrow_down),
+        icon: const Icon(Icons.keyboard_arrow_down),
         iconSize: 24,
         elevation: 16,
-        underline: SizedBox(),
+        underline: const SizedBox(),
         onChanged: (T? newValue) {
           if (onChange != null) {
             onChange!(newValue);

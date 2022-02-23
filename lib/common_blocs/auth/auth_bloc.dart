@@ -27,11 +27,11 @@ class SignOut extends AuthEvent {}
 abstract class AuthState extends Equatable {
   final bool isAdmin;
 
-  AuthState({required this.isAdmin});
+  const AuthState({required this.isAdmin});
 }
 
 class InProgress extends AuthState {
-  InProgress() : super(isAdmin: false);
+  const InProgress() : super(isAdmin: false);
 
 
   @override
@@ -42,7 +42,7 @@ class Authenticated extends AuthState {
   final User user;
   final AuthClient client;
 
-  Authenticated({
+  const Authenticated({
     required bool isAdmin,
     required this.user,
     required this.client,
@@ -53,7 +53,7 @@ class Authenticated extends AuthState {
 }
 
 class NotAuthenticated extends AuthState {
-  NotAuthenticated() : super(isAdmin: false);
+  const NotAuthenticated() : super(isAdmin: false);
 
   @override
   List<Object?> get props => [];
@@ -71,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._authSource,
     this._connectionBloc,
     this._dataSource,
-  ) : super(InProgress()) {
+  ) : super(const InProgress()) {
     on<Init>(_init);
     on<ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
@@ -105,13 +105,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       var user = await _authSource.getUser();
       var client = await _authSource.getClient();
       if (client == null){
-        emit(NotAuthenticated());
+        emit(const NotAuthenticated());
       }else {
         var isAdmin = await _dataSource.users.isAdmin(user!);
         emit(Authenticated(isAdmin: isAdmin, user: user, client: client));
       }
     } else {
-      emit(NotAuthenticated());
+      emit(const NotAuthenticated());
     }
   }
 
@@ -121,12 +121,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {
-    emit(InProgress());
+    emit(const InProgress());
     await _authSource.signIn();
   }
 
   Future<void> _signOut(SignOut event, Emitter<AuthState> emit) async {
-    emit(InProgress());
+    emit(const InProgress());
     await _authSource.signOut();
   }
 }

@@ -164,16 +164,4 @@ class OperationRepository implements LocalSyncTable<Operation>, OperationDataSou
         ));
   }
 
-  @override
-  Future<void> clearDeletedById(String cloudId) {
-    // TODO: implement clearDeletedById
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<String>> getDeleted() {
-    // TODO: implement getDeleted
-    throw UnimplementedError();
-  }
-
 }

@@ -41,7 +41,7 @@ class _AccountsList extends StatelessWidget {
                   : _itemSize / 2 + Dimensions.padding * 1),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(24.0),
               bottomRight: Radius.circular(24.0),
             ),
@@ -111,10 +111,10 @@ class AccountList extends StatelessWidget {
   List<Widget> _items() {
     var items = <Widget>[];
     var accountItems = accounts.map((e) => _AccountItem(account: e)).toList();
-    items.add(SizedBox(width: Dimensions.padding));
+    items.add(const SizedBox(width: Dimensions.padding));
     for (var accountItem in accountItems) {
       items.add(accountItem);
-      items.add(SizedBox(width: Dimensions.padding));
+      items.add(const SizedBox(width: Dimensions.padding));
     }
     return items;
   }
@@ -122,7 +122,7 @@ class AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (accounts.isEmpty) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return SingleChildScrollView(
@@ -152,7 +152,7 @@ class _AccountItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 10),
               blurRadius: 20.0,
@@ -161,7 +161,7 @@ class _AccountItem extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(8.0),
         ),
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         height: _itemSize,
         width: 200.0,
         child: Column(

@@ -47,7 +47,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return (update(accounts)..where((t) => t.id.equals(accountId))).write(
       AccountsCompanion(
         cloudId: Value(cloudId),
-        synced: Value(true),
+        synced: const Value(true),
       ),
     );
   }

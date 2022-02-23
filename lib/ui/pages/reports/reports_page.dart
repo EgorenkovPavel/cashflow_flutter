@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
@@ -13,6 +15,8 @@ const int YEAR = 2021;
 const double _CELL_HEIGHT = 32;
 
 class ReportsPage extends StatelessWidget {
+  const ReportsPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +29,9 @@ class ReportsPage extends StatelessWidget {
         child: BlocBuilder<ReportsBloc, ReportsState>(
           builder: (context, state) {
             if (state is InProgress) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is Data) {
-              return ConsolidateReport();
+              return const ConsolidateReport();
             } else {
               throw Exception('no such state');
             }
@@ -50,7 +54,7 @@ class ConsolidateReport extends StatelessWidget {
       rightHandSideColumnWidth: 14 * _CELL_WIDTH,
       isFixedHeader: true,
       headerWidgets: [
-        Cell(text: ''),
+        const Cell(text: ''),
         ...List.generate(
             12,
             (i) => Cell(
@@ -58,8 +62,8 @@ class ConsolidateReport extends StatelessWidget {
                     DateFormat.MMMM(Localizations.localeOf(context).toString())
                         .format(DateTime(YEAR, i + 1))
                         .capitalize())),
-        Cell(text: ''),
-        Cell(
+        const Cell(text: ''),
+        const Cell(
           text: 'Total',
           bold: true,
         ),
@@ -101,7 +105,7 @@ class Cell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: _CELL_WIDTH,
       height: _CELL_HEIGHT,
       child: Align(

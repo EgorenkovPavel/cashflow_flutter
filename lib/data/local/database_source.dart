@@ -14,15 +14,14 @@ import 'package:money_tracker/domain/models/operation.dart';
 class DatabaseSource extends LocalSource{
   final Database db;
 
-  late final _accountRepo;
-  late final _categoryRepo;
-  late final _operationRepo;
+  final AccountRepository _accountRepo;
+  final CategoryRepository _categoryRepo;
+  final OperationRepository _operationRepo;
 
-  DatabaseSource(this.db){
-    _accountRepo = AccountRepository(AccountDao(db));
-    _categoryRepo = CategoryRepository(CategoryDao(db));
+  DatabaseSource(this.db) :
+    _accountRepo = AccountRepository(AccountDao(db)),
+    _categoryRepo = CategoryRepository(CategoryDao(db)),
     _operationRepo = OperationRepository(OperationDao(db));
-  }
 
   @override
   AccountRepository get accounts => _accountRepo;

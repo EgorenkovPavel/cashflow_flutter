@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
 import 'package:money_tracker/data/data_source.dart';
 import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
@@ -5,6 +6,7 @@ import 'package:money_tracker/data/local/converters/operation_type_converter.dar
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/domain/models/category.dart' as model;
 
 import 'remote/models/cloud_models.dart';
 
@@ -69,7 +71,9 @@ class DataRepository implements DataSource{
     ));
 
     for (var cloudAccount in accounts){
-      print('Load from cloud account ${cloudAccount.title}');
+      if (kDebugMode) {
+        print('Load from cloud account ${cloudAccount.title}');
+      }
       await _loadAccountFromCloud(cloudAccount);
 
       accountCount--;
@@ -81,7 +85,9 @@ class DataRepository implements DataSource{
     }
 
     for (var cloudCategory in categories){
-      print('Load from cloud category ${cloudCategory.title}');
+      if (kDebugMode) {
+        print('Load from cloud category ${cloudCategory.title}');
+      }
       await _loadCategoryFromCloud(cloudCategory);
 
       categoryCount--;
@@ -93,7 +99,9 @@ class DataRepository implements DataSource{
     }
 
     for (var cloudOperation in operations){
-      print('Load from cloud operation ${cloudOperation.id}');
+      if (kDebugMode) {
+        print('Load from cloud operation ${cloudOperation.id}');
+      }
       await _loadOperationFromCloud(cloudOperation);
 
       operationCount--;
@@ -126,7 +134,7 @@ class DataRepository implements DataSource{
     var _category =
     await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
     if (_category == null) {
-      await _localSource.categoriesSync.insertFromCloud(Category(
+      await _localSource.categoriesSync.insertFromCloud(model.Category(
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
@@ -199,7 +207,7 @@ class DataRepository implements DataSource{
     );
   }
 
-  CloudCategory _mapToCloudCategory(Category category) {
+  CloudCategory _mapToCloudCategory(model.Category category) {
     return CloudCategory(
       id: category.cloudId,
       title: category.title,
@@ -242,7 +250,9 @@ class DataRepository implements DataSource{
     ));
 
     for (var account in accounts){
-      print('Load to cloud account ${account.title}');
+      if (kDebugMode) {
+        print('Load to cloud account ${account.title}');
+      }
       await _loadAccountToCloud(account);
 
       accountCount--;
@@ -254,7 +264,9 @@ class DataRepository implements DataSource{
     }
 
     for (var category in categories){
-      print('Load to cloud category ${category.title}');
+      if (kDebugMode) {
+        print('Load to cloud category ${category.title}');
+      }
       await _loadCategoryToCloud(category);
 
       categoryCount--;
@@ -266,7 +278,9 @@ class DataRepository implements DataSource{
     }
 
     for (var operation in operations){
-      print('Load to cloud operation ${operation.id}');
+      if (kDebugMode) {
+        print('Load to cloud operation ${operation.id}');
+      }
       await _loadOperationToCloud(operation);
 
       operationCount--;
@@ -290,12 +304,14 @@ class DataRepository implements DataSource{
       if (_cloudId.isSuccess()) {
         var res = await _localSource.accountsSync
             .markAsSynced(account.id, _cloudId.getOrDefault(''));
-        print('$res');
+        if (kDebugMode) {
+          print('$res');
+        }
       }
     }
   }
 
-  Future<void> _loadCategoryToCloud(Category category) async {
+  Future<void> _loadCategoryToCloud(model.Category category) async {
     if (category.cloudId.isNotEmpty) {
       var res =
       await _remoteSource.categories.update(_mapToCloudCategory(category));

@@ -10,7 +10,7 @@ class Carousel<T> extends StatelessWidget {
   final ValueChanged<int> onPageChanged;
   final IndexedWidgetBuilder itemBuilder;
 
-  Carousel(
+  const Carousel(
       {Key? key,
       required this.items,
       required this.onPageChanged,
@@ -62,8 +62,8 @@ class Carousel<T> extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       _pageController.animateToPage(pos,
-                          duration: Duration(seconds: 1),
-                          curve: ElasticOutCurve());
+                          duration: const Duration(seconds: 1),
+                          curve: const ElasticOutCurve());
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),

@@ -10,6 +10,8 @@ import 'package:money_tracker/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class OperationInputPage extends StatefulWidget {
+  const OperationInputPage({Key? key}) : super(key: key);
+
   @override
   _OperationInputPageState createState() => _OperationInputPageState();
 }
@@ -81,7 +83,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add,
                     //color: Theme.of(context).primaryColor,
                   ),
@@ -92,7 +94,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                 )
               ],
             ),
-            Divider(),
+            const Divider(),
             Flexible(
               child: Container(
                 child: list,
@@ -116,7 +118,7 @@ class _OperationInputPageState extends State<OperationInputPage>
         return buildList(AppLocalizations.of(context).receiver,
             addNewRecAccount, recAccountPageView(context));
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -128,7 +130,7 @@ class _OperationInputPageState extends State<OperationInputPage>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     )..addListener(() => setState(() {}));
     _animation = CurvedAnimation(
       parent: _animationController,
@@ -265,7 +267,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                       horizontal: 8.0, vertical: 8.0),
                   child: TypeRadioButton<OperationType>(
                     type: state.type,
-                    items: [
+                    items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
                       OperationType.TRANSFER,
@@ -295,10 +297,10 @@ class _OperationInputPageState extends State<OperationInputPage>
                         //Same as `blurRadius` i guess
                         decoration: BoxDecoration(
                           borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(16.0)),
+                              const BorderRadius.vertical(top: Radius.circular(16.0)),
                           color: Theme.of(context)
                               .dialogBackgroundColor, //Colors.white,
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.grey,
                               offset: Offset(0.0, 1.0), //(x,y)

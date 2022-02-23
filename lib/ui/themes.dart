@@ -9,15 +9,15 @@ const Color _accentColor = Color(0xFFF15931);
 
 ThemeData theme() {
   return ThemeData(
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: _primaryColor,
       secondary: _accentColor,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       //brightness: Brightness.dark,
       actionsIconTheme: IconThemeData(color: Colors.white),
     ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
     ),

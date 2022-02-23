@@ -20,16 +20,16 @@ class SyncBloc extends Cubit<SyncState> {
     required this.prefsRepository,
   })  : _authBloc = authBloc,
         _dataSource = dataSource,
-        super(SyncState_NotSynced()) {
+        super(const SyncStateNotSynced()) {
     _syncSub = _authBloc.stream.listen((event) async {
       if (event is InProgress) {
-        emit(SyncState_InProgress());
+        emit(const SyncStateInProgress());
       } else if (event is Authenticated) {
         if (await _logIn(event.user)) {
           await syncNow();
         }
       } else {
-        emit(SyncState_NotSynced());
+        emit(const SyncStateNotSynced());
       }
     });
 
@@ -41,46 +41,45 @@ class SyncBloc extends Cubit<SyncState> {
     }
 
     await for (var event in _dataSource.loadToCloud()) {
-      emit(SyncState_LoadingToCloud(
+      emit(SyncStateLoadingToCloud(
         accountCount: event.accountCount,
         categoryCount: event.categoryCount,
         operationCount: event.operationCount,
       ));
     }
-    ;
 
     var syncDate = DateTime.now();
     _dataSource.loadFromCloud(syncFrom).listen((event) {
-      emit(SyncState_LoadingFromCloud(
+      emit(SyncStateLoadingFromCloud(
         accountCount: event.accountCount,
         categoryCount: event.categoryCount,
         operationCount: event.operationCount,
       ));
     }, onDone: () {
       prefsRepository.setSyncDate(syncDate);
-      emit(SyncState_Synced(syncDate: syncDate));
+      emit(SyncStateSynced(syncDate: syncDate));
     }, onError: (e) {
-      emit(SyncState_NotSynced());
+      emit(const SyncStateNotSynced());
     });
   }
 
   Future<bool> _logIn(User user) async {
-    emit(SyncState_InProgress());
+    emit(const SyncStateInProgress());
     var res = await _dataSource.users.databaseExists(user);
 
     return res.fold((success) async {
       if (success) {
         var resLogIn = await _dataSource.users.logIn(user);
         return resLogIn.fold((success) => true, (failure) {
-          emit(SyncState_Failed());
+          emit(const SyncStateFailed());
           return false;
         });
       } else {
-        emit(SyncState_NoDb());
+        emit(const SyncStateNoDb());
         return false;
       }
     }, (failure) {
-      emit(SyncState_Failed());
+      emit(const SyncStateFailed());
       return false;
     });
   }
@@ -89,11 +88,11 @@ class SyncBloc extends Cubit<SyncState> {
     if (_authBloc.state is! Authenticated) {
       return false;
     }
-    emit(SyncState_InProgress());
+    emit(const SyncStateInProgress());
     var res = await _dataSource.users
         .createDatabase((_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
-      emit(SyncState_Failed());
+      emit(const SyncStateFailed());
       return false;
     }
 

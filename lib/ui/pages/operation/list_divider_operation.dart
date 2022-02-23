@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/models/operation.dart';
@@ -29,7 +31,7 @@ class ListDividerOperation extends StatelessWidget {
             if (op1.year == op2.year &&
                 op1.month == op2.month &&
                 op1.day == op2.day) {
-              return _EmptyDivider();
+              return const _EmptyDivider();
             } else {
               return _TitleDivider(date: op2, type: _titleType,);
             }
@@ -37,7 +39,7 @@ class ListDividerOperation extends StatelessWidget {
         case _TitleType.MONTH:
           {
             if (op1.year == op2.year && op1.month == op2.month) {
-              return _EmptyDivider();
+              return const _EmptyDivider();
             } else {
               return _TitleDivider(date: op2, type: _titleType,);
             }
@@ -73,12 +75,12 @@ class _TitleDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      Divider(),
+      const Divider(),
       Container(
         padding: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).dividerColor),
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
         child: Text(
@@ -98,7 +100,7 @@ class _EmptyDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider();
+    return const Divider();
   }
 }
 

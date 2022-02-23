@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_renaming_method_parameters
+
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/data/operation_item.dart';
 import 'package:money_tracker/domain/models.dart';

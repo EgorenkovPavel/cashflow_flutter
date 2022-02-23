@@ -6,7 +6,7 @@ extension StringExtension on String {
 
 extension DateTimeExtension on DateTime{
   DateTime startOfMonth(DateTime date){
-    return DateTime(date.year, date.month).add(Duration());
+    return DateTime(date.year, date.month).add(const Duration());
   }
 }
 

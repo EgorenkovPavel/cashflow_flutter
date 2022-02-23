@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/ui/widgets/carousel.dart';
 
 class CarouselList<T> extends StatelessWidget {
-  CarouselList({
+  const CarouselList({
     Key? key,
     required Stream<List<T>> stream,
     required String emptyListMessage,

@@ -5,7 +5,7 @@ class User extends Equatable {
   final String name;
   final String photo;
 
-  User({
+  const User({
     required this.id,
     required this.name,
     required this.photo,

@@ -7,7 +7,7 @@ import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_bl
 import 'package:money_tracker/utils/app_localization.dart';
 
 class OperationFilterPage extends StatelessWidget {
-  OperationFilterPage({Key? key, this.filter}) : super(key: key);
+  const OperationFilterPage({Key? key, this.filter}) : super(key: key);
 
   final OperationListFilter? filter;
 
@@ -106,7 +106,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Text(AppLocalizations.of(context).period),
               PeriodButton(
                 date: context.select<OperationFilterBloc, DateTimeRange?>(
@@ -116,11 +116,11 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                 onDelete: () =>
                     context.read<OperationFilterBloc>().add(ResetPediod()),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Text(AppLocalizations.of(context).accounts),
               InputChip(
                   key: _accountKey,
-                  avatar: Icon(Icons.mode_edit),
+                  avatar: const Icon(Icons.mode_edit),
                   label: Text(AppLocalizations.of(context).chooseAccount),
                   onPressed: _onAccountChipPressed),
               Wrap(
@@ -130,7 +130,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                     .map(
                       (account) => InputChip(
                         label: Text(account.title),
-                        deleteIcon: Icon(Icons.cancel),
+                        deleteIcon: const Icon(Icons.cancel),
                         onDeleted: () => context
                             .read<OperationFilterBloc>()
                             .add(RemoveAccount(account)),
@@ -138,11 +138,11 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                     )
                     .toList(),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Text(AppLocalizations.of(context).inputCategory),
               InputChip(
                 key: _categoryInKey,
-                avatar: Icon(Icons.mode_edit),
+                avatar: const Icon(Icons.mode_edit),
                 label: Text(AppLocalizations.of(context).chooseCategory),
                 onPressed: _onCategoryInPressed,
               ),
@@ -156,20 +156,20 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
-                          deleteIcon: Icon(Icons.cancel),
+                          deleteIcon: const Icon(Icons.cancel),
                           onDeleted: () => context
                               .read<OperationFilterBloc>()
                               .add(RemoveCategory(category)),
                         ),
                       )
                       .toList()),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Text(AppLocalizations.of(context).outputCategory),
               InputChip(
                 key: _categoryOutKey,
-                avatar: Icon(Icons.mode_edit),
+                avatar: const Icon(Icons.mode_edit),
                 label: Text(AppLocalizations.of(context).chooseCategory),
                 onPressed: _onCategoryOutPressed,
               ),
@@ -183,7 +183,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                       .map(
                         (category) => InputChip(
                           label: Text(category.title),
-                          deleteIcon: Icon(Icons.cancel),
+                          deleteIcon: const Icon(Icons.cancel),
                           onDeleted: () => context
                               .read<OperationFilterBloc>()
                               .add(RemoveCategory(category)),
@@ -211,7 +211,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           ),
           child: Text(
             AppLocalizations.of(context).apply.toUpperCase(),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ],
@@ -237,12 +237,12 @@ class PeriodButton extends StatelessWidget {
           .format(date!.end);
       return InputChip(
         label: Text('$start - $end'),
-        deleteIcon: Icon(Icons.cancel),
+        deleteIcon: const Icon(Icons.cancel),
         onDeleted: onDelete,
       );
     } else {
       return InputChip(
-        avatar: Icon(Icons.mode_edit),
+        avatar: const Icon(Icons.mode_edit),
         label: Text(AppLocalizations.of(context).choosePeriod),
         onPressed: () async {
           var date = await showDateRangePicker(

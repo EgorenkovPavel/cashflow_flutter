@@ -5,20 +5,22 @@ import 'package:money_tracker/ui/themes.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Money tracker',
       theme: theme(),
-      localizationsDelegates: [
-        const AppLocalizationsDelegate(),
+      localizationsDelegates: const [
+        AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('ru'),
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ru'),
       ],
       initialRoute: PageNavigator.routeRootName,
       routes: PageNavigator.routes,

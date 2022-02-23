@@ -29,11 +29,11 @@ class DataControlPage extends StatelessWidget {
               bloc: _bloc,
               builder: (context, state) {
                 if (state == DataControlState.IN_PROGRESS) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               },
               listener: (context, state) {

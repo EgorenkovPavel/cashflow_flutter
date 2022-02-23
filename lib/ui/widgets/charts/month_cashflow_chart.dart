@@ -8,8 +8,8 @@ class MonthCashflowChart extends StatelessWidget {
 
   final bool? animate;
 
-  MonthCashflowChart(this.categoriesInput, this.categoriesOutput,
-      {this.animate});
+  const MonthCashflowChart(this.categoriesInput, this.categoriesOutput,
+      {this.animate, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MonthCashflowChart extends StatelessWidget {
     //     )
     //   ],
     // );
-    return SizedBox();
+    return const SizedBox();
   }
 
   // int _cashflow(List<CategoryCashflowBudget> categories) {

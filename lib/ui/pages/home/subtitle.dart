@@ -18,17 +18,17 @@ class Subtitle extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        padding: EdgeInsets.all(Dimensions.padding),
+        padding: const EdgeInsets.all(Dimensions.padding),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            leading ?? SizedBox(),
+            leading ?? const SizedBox(),
             Row(
               children: [
-                child ?? SizedBox(),
+                child ?? const SizedBox(),
                 onPress == null
-                    ? SizedBox()
-                    : Icon(Icons.arrow_forward_ios_outlined),
+                    ? const SizedBox()
+                    : const Icon(Icons.arrow_forward_ios_outlined),
               ],
             ),
           ],

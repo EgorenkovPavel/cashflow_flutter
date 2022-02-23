@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/data/data_source.dart';
 

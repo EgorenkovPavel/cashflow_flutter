@@ -13,37 +13,37 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Money tracker'),
+        title: const Text('Money tracker'),
         elevation: 0.0,
         actions: [
-          SyncButton(),
+          const SyncButton(),
           IconButton(
             onPressed: () => PageNavigator.openReportsPage(context),
-            icon: Icon(Icons.analytics),
+            icon: const Icon(Icons.analytics),
           ),
           IconButton(
             onPressed: () => PageNavigator.openSettingsPage(context),
-            icon: Icon(Icons.settings_sharp),
+            icon: const Icon(Icons.settings_sharp),
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopHeader(),
+            const TopHeader(),
             _AddButton(
               title: AppLocalizations.of(context).btnAddAccount,
               onPressed: () => PageNavigator.openAccountInputPage(context),
             ),
-            MonthOperations(),
-            SizedBox(height: 8.0),
-            LastOperations(),
+            const MonthOperations(),
+            const SizedBox(height: 8.0),
+            const LastOperations(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => PageNavigator.openOperationInputPage(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -71,7 +71,7 @@ class _AddButton extends StatelessWidget {
         onPressed: onPressed,
         label: Text(
           title.toUpperCase(),
-          style: TextStyle()
+          style: const TextStyle()
               .copyWith(color: Theme.of(context).colorScheme.secondary),
         ),
       ),

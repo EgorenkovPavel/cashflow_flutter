@@ -11,9 +11,13 @@ class CategoryInputPage extends StatelessWidget {
   final OperationType? type;
   final int? id;
 
-  const CategoryInputPage.byType({required this.type}) : id = null;
+  const CategoryInputPage.byType({Key? key, required this.type})
+      : id = null,
+        super(key: key);
 
-  const CategoryInputPage.edit({required this.id}) : type = null;
+  const CategoryInputPage.edit({Key? key, required this.id})
+      : type = null,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +87,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     AppLocalizations.of(context).titleType,
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8.0,
                   ),
                   Text(AppLocalizations.of(context).operationTypeTitle(
@@ -92,7 +96,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ],
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextFormField(
               //autofocus: true,
               controller: titleController,
@@ -109,7 +113,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 return null;
               },
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextFormField(
               controller: budgetController,
               keyboardType: TextInputType.number,
@@ -126,18 +130,18 @@ class _CategoryPageState extends State<CategoryPage> {
                 return null;
               },
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Row(
               children: [
                 Text(AppLocalizations.of(context).budgetType),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 TypeRadioButton<BudgetType>(
                   onChange: (type) => context
                       .read<CategoryInputBloc>()
                       .add(ChangeBudgetType(type)),
                   type: context.select<CategoryInputBloc, BudgetType>(
                       (bloc) => bloc.state.budgetType),
-                  items: [BudgetType.MONTH, BudgetType.YEAR],
+                  items: const [BudgetType.MONTH, BudgetType.YEAR],
                 )
               ],
             ),

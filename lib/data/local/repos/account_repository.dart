@@ -97,7 +97,7 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
       cloudId: Value(account.cloudId),
       title: Value(account.title),
       isDebt: Value(account.isDebt),
-      synced: Value(true),
+      synced: const Value(true),
     ));
   }
 
@@ -107,21 +107,8 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataSource{
       cloudId: Value(account.cloudId),
       title: Value(account.title),
       isDebt: Value(account.isDebt),
-      synced: Value(true),
+      synced: const Value(true),
     ));
   }
 
-  @override
-  Future<void> clearDeleted() async {
-  }
-
-  @override
-  Future<List<String>> getDeleted() async {
-    return <String>[];
-  }
-
-  @override
-  Future<void> clearDeletedById(String cloudId) async{
-
-  }
 }

@@ -74,7 +74,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                               .format(context.select<OperationEditBloc,
                               DateTime>((bloc) => bloc.state.date)),
                           onPressed: _selectDate),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       DateButton(
                           icon: Icons.access_time,
                           text: context
@@ -91,7 +91,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     onChange: (newValue) => context
                         .read<OperationEditBloc>()
                         .add(ChangeOperationType(newValue)),
-                    items: [
+                    items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
                       OperationType.TRANSFER
@@ -122,7 +122,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       keyboardType: TextInputType.number,
                       controller: _sumController,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         labelText: AppLocalizations.of(context).titleSum,
                       ),
                       onChanged: (value) => context
@@ -204,7 +204,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
               items: state.accounts,
               getListItem: (item) => ListTile(title: Text(item.title)));
         default:
-          return SizedBox();
+          return const SizedBox();
       }
     });
   }
@@ -250,7 +250,7 @@ class DateButton extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Icon(icon),
-          SizedBox(width: 4.0),
+          const SizedBox(width: 4.0),
           Text(text),
         ],
       ),

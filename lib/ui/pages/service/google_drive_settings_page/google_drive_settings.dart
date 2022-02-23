@@ -9,6 +9,8 @@ import 'package:money_tracker/ui/pages/service/google_drive_settings_page/restor
 import 'package:money_tracker/utils/app_localization.dart';
 
 class GoogleDriveSettingsPage extends StatelessWidget {
+  const GoogleDriveSettingsPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var _bloc = DriveBloc(
@@ -18,7 +20,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google drive'),
+        title: const Text('Google drive'),
       ),
       body: BlocConsumer<DriveBloc, DriveState>(
         bloc: _bloc,
@@ -56,7 +58,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
                 ],
               ),
               if (state == DriveState.IN_PROGRESS)
-                 Center(child: CircularProgressIndicator(),)
+                 const Center(child: CircularProgressIndicator(),)
             ],
           );
         },

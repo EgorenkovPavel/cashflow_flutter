@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/data/data_source.dart';
@@ -45,7 +46,9 @@ class BudgetSubtitle extends StatelessWidget {
         var _cashflow = 0;
         var _budget = 0;
         if (snapshot.hasError) {
-          print(snapshot.error);
+          if (kDebugMode) {
+            print(snapshot.error);
+          }
         }
         if (snapshot.hasData) {
           _cashflow = _calcCashflow(snapshot.data!);

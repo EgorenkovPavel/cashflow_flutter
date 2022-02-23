@@ -16,7 +16,7 @@ class ModeToggleButton extends StatelessWidget {
       onPressed: (index) {
         onPressed(modes[index]);
       },
-      children: [Icon(Icons.light_mode), Icon(Icons.dark_mode)],
+      children: const [Icon(Icons.light_mode), Icon(Icons.dark_mode)],
     );
   }
 }

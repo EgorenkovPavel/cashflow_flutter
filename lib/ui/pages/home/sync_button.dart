@@ -16,19 +16,19 @@ class SyncButton extends StatelessWidget {
   }
 
   String getTitle(SyncState state) {
-    if (state is SyncState_InProgress) {
+    if (state is SyncStateInProgress) {
       return 'In progress';
-    } else if (state is SyncState_Synced) {
+    } else if (state is SyncStateSynced) {
       return 'Synced';
-    } else if (state is SyncState_LoadingToCloud) {
+    } else if (state is SyncStateLoadingToCloud) {
       return 'Loading to remote';
-    } else if (state is SyncState_LoadingFromCloud) {
+    } else if (state is SyncStateLoadingFromCloud) {
       return 'Loading from remote';
-    } else if (state is SyncState_NoDb) {
+    } else if (state is SyncStateNoDb) {
       return 'No local';
-    } else if (state is SyncState_NotSynced) {
+    } else if (state is SyncStateNotSynced) {
       return 'Not synced';
-    } else if (state is SyncState_Failed) {
+    } else if (state is SyncStateFailed) {
       return 'Failed';
     } else {
       return '';
@@ -36,50 +36,50 @@ class SyncButton extends StatelessWidget {
   }
 
   Icon iconBySyncState(SyncState state, {Color? color, double? size}) {
-    if (state is SyncState_InProgress) {
+    if (state is SyncStateInProgress) {
       return Icon(
         Icons.loop,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_Synced) {
+    } else if (state is SyncStateSynced) {
       return Icon(
         Icons.cloud_done_outlined,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_LoadingToCloud) {
+    } else if (state is SyncStateLoadingToCloud) {
       return Icon(
         Icons.cloud_upload_outlined,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_LoadingFromCloud) {
+    } else if (state is SyncStateLoadingFromCloud) {
       return Icon(
         Icons.cloud_download_outlined,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_NoDb) {
+    } else if (state is SyncStateNoDb) {
       return Icon(
         Icons.cloud_off_outlined,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_NotSynced) {
+    } else if (state is SyncStateNotSynced) {
       return Icon(
         Icons.warning_amber_outlined,
         color: color,
         size: size,
       );
-    } else if (state is SyncState_Failed) {
+    } else if (state is SyncStateFailed) {
       return Icon(
         Icons.sync_problem,
         color: color,
         size: size,
       );
     } else {
-      return Icon(null);
+      return const Icon(null);
     }
   }
 
@@ -91,7 +91,7 @@ class SyncButton extends StatelessWidget {
           builder: (context, state) => Text(getTitle(state)),
         ),
         content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          if(state is SyncState_LoadingToCloud) {
+          if(state is SyncStateLoadingToCloud) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -101,7 +101,7 @@ class SyncButton extends StatelessWidget {
                 Text('Operations ${state.operationCount}'),
               ],
             );
-          }else if(state is SyncState_LoadingFromCloud){
+          }else if(state is SyncStateLoadingFromCloud){
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [

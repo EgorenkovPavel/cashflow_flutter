@@ -28,7 +28,7 @@ class CategoryDetailPage extends StatelessWidget {
                 IconButton(
                     onPressed: () =>
                         PageNavigator.openCategoryEditPage(context, id: id),
-                    icon: Icon(Icons.edit))
+                    icon: const Icon(Icons.edit))
               ],
             ),
             body: CustomScrollView(
@@ -69,7 +69,7 @@ class CategoryDetailPage extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => PageNavigator.openOperationInputPage(context),
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           );
         },

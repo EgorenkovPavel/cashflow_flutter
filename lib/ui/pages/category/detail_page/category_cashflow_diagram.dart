@@ -35,14 +35,14 @@ class CategoryCashflowDiagram extends StatelessWidget {
         if (snapshot.hasData) {
           data = snapshot.data!;
         } else {
-          return SizedBox(
+          return const SizedBox(
             height: 60.0,
             child: CircularProgressIndicator(),
           );
         }
 
         if (data.isEmpty) {
-          return SizedBox(
+          return const SizedBox(
             height: 60.0,
             child: Text('No data'),
           );
@@ -67,11 +67,11 @@ class CategoryCashflowDiagram extends StatelessWidget {
                     measureFn: (SumOnDate sales, _) => sales.sum,
                     data: data,
                     labelAccessorFn: (SumOnDate sales, _) =>
-                        '${AppLocalizations.of(context).numberFormat(sales.sum)}')
+                        AppLocalizations.of(context).numberFormat(sales.sum))
               ],
               animate: false,
               primaryMeasureAxis:
-                  charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+                  const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
               behaviors: [
                 charts.RangeAnnotation(
                   [
@@ -84,7 +84,7 @@ class CategoryCashflowDiagram extends StatelessWidget {
                 ),
               ],
               barRendererDecorator: charts.BarLabelDecorator<String>(),
-              domainAxis: charts.OrdinalAxisSpec(),
+              domainAxis: const charts.OrdinalAxisSpec(),
             ),
           ),
         );

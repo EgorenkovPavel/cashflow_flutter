@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BalanceChart extends StatelessWidget {
+  const BalanceChart({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // return BlocBuilder<BalanceChartBloc, BalanceChartState>(
@@ -62,7 +64,7 @@ class BalanceChart extends StatelessWidget {
     //     }
     //   },
     // );
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -95,10 +97,10 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
     balances.add(ValueOnDate(dates[0], startBalance));
 
     var currentBalance = startBalance;
-    _balanceByPeriod.forEach((element) {
+    for (var element in _balanceByPeriod) {
       currentBalance += element.value;
       balances.add(ValueOnDate(element.date, currentBalance));
-    });
+    }
 
     balance = balances;
 

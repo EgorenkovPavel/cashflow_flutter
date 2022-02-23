@@ -1,4 +1,7 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -36,13 +39,12 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
   final DriveRepository _repository;
   final DialogMode mode;
 
-  late final rootFolder;
+  final rootFolder =_Stack<DriveFile>();
 
   DialogDriveBloc({required DriveRepository repository, required this.mode})
       : _repository = repository,
         super(DialogDriveState(
             action: DialogDriveAction.NO_ACTION, folderList: [])) {
-    rootFolder = _Stack<DriveFile>();
     rootFolder.push(
       DriveFile.root(),
     );
@@ -59,7 +61,9 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
         ),
       );
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 

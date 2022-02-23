@@ -20,11 +20,11 @@ class _RestoreDialogState extends State<RestoreDialog> {
     return AlertDialog(
       title: Text(AppLocalizations.of(context).restore),
       content: Container(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: const EdgeInsets.only(left: 8.0),
         width: double.infinity,
         decoration: BoxDecoration(
           border: Border.all(width: 1),
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(8.0),
           ),
         ),
@@ -33,7 +33,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           children: [
             Text(_file?.title ?? ''),
             IconButton(
-              icon: Icon(Icons.arrow_drop_down),
+              icon: const Icon(Icons.arrow_drop_down),
               onPressed: () async {
                 var newFile = await PageNavigator.chooseFile(context);
                 if (newFile != null) {
@@ -48,7 +48,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           ],
         ),
       ),
-      contentPadding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+      contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
