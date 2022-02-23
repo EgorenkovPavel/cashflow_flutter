@@ -41,11 +41,9 @@ class SyncStateNotSynced extends SyncState {
 }
 
 class SyncStateFailed extends SyncState {
-
   const SyncStateFailed();
 }
 
 class SyncStateNoDb extends SyncState {
-
   const SyncStateNoDb();
 }
