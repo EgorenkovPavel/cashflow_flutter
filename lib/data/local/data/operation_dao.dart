@@ -11,7 +11,6 @@ part 'operation_dao.g.dart';
   Operations,
   Balances,
   Cashflows,
-  DeletedItems,
 ])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
@@ -548,29 +547,24 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return (update(operations)..where((t) => t.id.equals(operationId))).write(
       OperationsCompanion(
         cloudId: Value(cloudId),
-        synced: Value(true),
+        synced: const Value(true),
       ),
     );
   }
 
   Future insertOperationItem(OperationItem entity) {
-    return transaction(() async {
-      var operationData = OperationsCompanion(
-        cloudId: Value(entity.operation.cloudId),
-        date: Value(entity.date),
-        operationType: Value(entity.type),
-        account: Value(entity.account.id),
-        category: Value(entity.category?.id),
-        recAccount: Value(entity.recAccount?.id),
-        sum: Value(entity.sum),
-      );
+    var operationData = OperationsCompanion(
+      cloudId: Value(entity.operation.cloudId),
+      date: Value(entity.date),
+      operationType: Value(entity.type),
+      account: Value(entity.account.id),
+      category: Value(entity.category?.id),
+      recAccount: Value(entity.recAccount?.id),
+      sum: Value(entity.sum),
+      deleted: Value(entity.operation.deleted),
+    );
 
-      var id = await into(operations).insert(operationData);
-
-      operationData = operationData.copyWith(id: Value(id));
-
-      await _insertAnalytic(operationData);
-    });
+    return insertOperation(operationData);
   }
 
   Future<int> insertOperation(OperationsCompanion entity) {
@@ -578,14 +572,40 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       var id = await into(operations).insert(entity);
 
       var operationData = entity.copyWith(id: Value(id));
-      await _insertAnalytic(operationData);
+
+      if (!operationData.deleted.present || !operationData.deleted.value) {
+        await _insertAnalytic(operationData);
+      }
+
       return id;
     });
   }
 
-  Future<int> updateFields(int operationId, OperationsCompanion entity) =>
-      (update(operations)..where((t) => t.id.equals(operationId)))
-          .write(entity);
+  Future<int> updateFields(int operationId, OperationsCompanion entity) async {
+    var id = await (update(operations)..where((t) => t.id.equals(operationId)))
+        .write(entity);
+
+    if (entity.deleted.present) {
+      if (entity.deleted.value) {
+        var operation = await getOperationById(operationId);
+        var operationData = OperationsCompanion(
+          cloudId: Value(operation.operation.cloudId),
+          date: Value(operation.date),
+          operationType: Value(operation.type),
+          account: Value(operation.account.id),
+          category: Value(operation.category?.id),
+          recAccount: Value(operation.recAccount?.id),
+          sum: Value(operation.sum),
+          deleted: Value(operation.operation.deleted),
+        );
+        _insertAnalytic(operationData);
+      } else {
+        _deleteAnalyticByOperationId(operationId);
+      }
+    }
+
+    return id;
+  }
 
   Future<int> updateOperation(OperationDB entity) {
     return transaction(() async {
@@ -599,36 +619,24 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         category: Value(entity.category),
         recAccount: Value(entity.recAccount),
         sum: Value(entity.sum),
+        deleted: Value(entity.deleted),
       ));
     });
   }
 
   Future deleteOperation(OperationDB entity) {
     return transaction(() async {
-      await delete(operations).delete(entity);
+      await (update(operations)..where((tbl) => tbl.id.equals(entity.id)))
+          .write(const OperationsCompanion(deleted: Value(true)));
       await _deleteAnalytic(entity);
-      await _insertDeletedItem(entity.cloudId);
     });
   }
 
-  Future _insertDeletedItem(String cloudId) async {
-    var data = DeletedItemsCompanion(
-      date: Value(DateTime.now()),
-      tableType: Value(TableType.OPERATIONS),
-      cloudId: Value(cloudId),
-    );
-
-    await into(deletedItems).insert(data);
-  }
-
   Future deleteOperationById(int operationId) async {
-    var operation = await getOperationById(operationId);
-
     return transaction(() async {
-      await (delete(operations)..where((tbl) => tbl.id.equals(operationId)))
-          .go();
+      await (update(operations)..where((tbl) => tbl.id.equals(operationId)))
+          .write(const OperationsCompanion(deleted: Value(true)));
       await _deleteAnalyticByOperationId(operationId);
-      await _insertDeletedItem(operation.operation.cloudId);
     });
   }
 
@@ -636,7 +644,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     var cashflowData = <CashflowDB>[];
     var balanceData = <BalanceDB>[];
 
-    operationData.forEach((operation) {
+    for (var operation in operationData) {
+      if (operation.deleted) {
+        continue;
+      }
+
       switch (operation.operationType) {
         case OperationType.INPUT:
           {
@@ -681,7 +693,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             break;
           }
       }
-    });
+    }
 
     await batch((batch) {
       batch.insertAll(
@@ -696,6 +708,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
                   category: Value(p.category),
                   recAccount: Value(p.recAccount),
                   sum: p.sum,
+                  deleted: Value(p.deleted),
                 ))
             .toList(),
       );
@@ -721,48 +734,75 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     });
   }
 
+  Future<void> _insertAnalyticInput(
+    DateTime date,
+    int operationId,
+    int accountId,
+    int categoryId,
+    int sum,
+  ) async {
+    await into(balances).insert(BalanceDB(
+        date: date, operation: operationId, account: accountId, sum: sum));
+    await into(cashflows).insert(CashflowDB(
+        date: date, operation: operationId, category: categoryId, sum: sum));
+  }
+
+  Future<void> _insertAnalyticOutput(
+    DateTime date,
+    int operationId,
+    int accountId,
+    int categoryId,
+    int sum,
+  ) async {
+    await into(balances).insert(BalanceDB(
+        date: date, operation: operationId, account: accountId, sum: -1 * sum));
+    await into(cashflows).insert(CashflowDB(
+        date: date, operation: operationId, category: categoryId, sum: sum));
+  }
+
+  Future<void> _insertAnalyticTransfer(
+    DateTime date,
+    int operationId,
+    int accountId,
+    int recAccountId,
+    int sum,
+  ) async {
+    await into(balances).insert(BalanceDB(
+        date: date, operation: operationId, account: accountId, sum: -1 * sum));
+    await into(balances).insert(BalanceDB(
+        date: date, operation: operationId, account: recAccountId, sum: sum));
+  }
+
   Future _insertAnalytic(OperationsCompanion operation) async {
     switch (operation.operationType.value) {
       case OperationType.INPUT:
         {
-          await into(balances).insert(BalanceDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              account: operation.account.value,
-              sum: operation.sum.value));
-          await into(cashflows).insert(CashflowDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              category: operation.category.value!,
-              sum: operation.sum.value));
+          await _insertAnalyticInput(
+              operation.date.value,
+              operation.id.value,
+              operation.account.value,
+              operation.category.value!,
+              operation.sum.value);
           break;
         }
       case OperationType.OUTPUT:
         {
-          await into(balances).insert(BalanceDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              account: operation.account.value,
-              sum: -1 * operation.sum.value));
-          await into(cashflows).insert(CashflowDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              category: operation.category.value!,
-              sum: operation.sum.value));
+          await _insertAnalyticOutput(
+              operation.date.value,
+              operation.id.value,
+              operation.account.value,
+              operation.category.value!,
+              operation.sum.value);
           break;
         }
       case OperationType.TRANSFER:
         {
-          await into(balances).insert(BalanceDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              account: operation.account.value,
-              sum: -1 * operation.sum.value));
-          await into(balances).insert(BalanceDB(
-              date: operation.date.value,
-              operation: operation.id.value,
-              account: operation.recAccount.value!,
-              sum: operation.sum.value));
+          await _insertAnalyticTransfer(
+              operation.date.value,
+              operation.id.value,
+              operation.account.value,
+              operation.recAccount.value!,
+              operation.sum.value);
           break;
         }
     }
@@ -778,31 +818,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .go();
     await (delete(cashflows)
           ..where((entry) => entry.operation.equals(operationId)))
-        .go();
-  }
-
-  Future<void> clearDeleted() {
-    return (delete(deletedItems)
-          ..where((tbl) => tbl.tableType.equals(
-              const TableTypeConverter().mapToSql(TableType.OPERATIONS))))
-        .go();
-  }
-
-  Future<List<String>> getDeleted() async {
-    var res = await (select(deletedItems)
-          ..where((tbl) => tbl.tableType.equals(
-              const TableTypeConverter().mapToSql(TableType.OPERATIONS)))
-          ..orderBy([(t) => OrderingTerm(expression: t.date)]))
-        .get();
-    return res.map((row) => row.cloudId).toList();
-  }
-
-  Future<void> clearDeletedById(String cloudId) {
-    return (delete(deletedItems)
-          ..where((tbl) =>
-              tbl.tableType.equals(
-                  const TableTypeConverter().mapToSql(TableType.OPERATIONS)) &
-              tbl.cloudId.equals(cloudId)))
         .go();
   }
 }

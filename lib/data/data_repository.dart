@@ -78,7 +78,7 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
+    }
 
     for (var cloudCategory in categories){
       print('Load from cloud category ${cloudCategory.title}');
@@ -90,7 +90,7 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
+    }
 
     for (var cloudOperation in operations){
       print('Load from cloud operation ${cloudOperation.id}');
@@ -102,7 +102,7 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
+    }
 
   }
 
@@ -161,9 +161,11 @@ class DataRepository implements DataSource{
         ? null
         : await _localSource.accountsSync.getByCloudId(cloudOperation.recAccount!);
 
-    if (_operation == null && !cloudOperation.deleted) {
+    if (_operation == null) {
       await _localSource.operationsSync.insertFromCloud(Operation(
         cloudId: cloudOperation.id,
+        synced: true,
+        deleted: cloudOperation.deleted,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
             .mapToDart(cloudOperation.operationType)!,
@@ -172,9 +174,11 @@ class DataRepository implements DataSource{
         recAccount: _recAccount,
         sum: cloudOperation.sum,
       ));
-    } else if (_operation != null && !cloudOperation.deleted) {
+    } else {
       await _localSource.operationsSync.updateFromCloud(_operation.copyWith(
         cloudId: cloudOperation.id,
+        synced: true,
+        deleted: cloudOperation.deleted,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
             .mapToDart(cloudOperation.operationType),
@@ -183,8 +187,6 @@ class DataRepository implements DataSource{
         recAccount: _recAccount,
         sum: cloudOperation.sum,
       ));
-    } else if (_operation != null && cloudOperation.deleted) {
-      await _localSource.operations.deleteById(_operation.id);
     }
   }
 
@@ -218,7 +220,7 @@ class DataRepository implements DataSource{
       category: operation.category?.cloudId,
       recAccount: operation.recAccount?.cloudId,
       sum: operation.sum,
-      deleted: false,
+      deleted: operation.deleted,
     );
   }
 
@@ -228,8 +230,6 @@ class DataRepository implements DataSource{
     final accounts = await _localSource.accountsSync.getAllNotSynced();
     final categories = await _localSource.categoriesSync.getAllNotSynced();
     final operations = await _localSource.operationsSync.getAllNotSynced();
-
-    final deletedItems = await _localSource.operationsSync.getDeleted();
 
     var accountCount = accounts.length;
     var categoryCount = categories.length;
@@ -251,7 +251,7 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
+    }
 
     for (var category in categories){
       print('Load to cloud category ${category.title}');
@@ -263,7 +263,7 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
+    }
 
     for (var operation in operations){
       print('Load to cloud operation ${operation.id}');
@@ -275,11 +275,6 @@ class DataRepository implements DataSource{
         categoryCount: categoryCount,
         operationCount: operationCount,
       ));
-    };
-
-    for (var cloudId in deletedItems){
-      await _remoteSource.operations.delete(cloudId);
-      await _localSource.operationsSync.clearDeletedById(cloudId);
     }
   }
 

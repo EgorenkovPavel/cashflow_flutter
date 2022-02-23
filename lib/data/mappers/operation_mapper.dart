@@ -28,6 +28,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
         id: o.operationData.id,
         cloudId: o.operation.cloudId,
         synced: o.synced,
+        deleted: o.operation.deleted,
         date: o.operationData.date,
         type: o.operationData.operationType,
         account: const AccountMapper().mapToDart(o.account),
@@ -51,6 +52,7 @@ class OperationMapper extends Mapper<Operation, OperationItem> {
       recAccount: o.recAccount?.id,
       sum: o.sum,
       synced: false,
+      deleted: o.deleted,
     );
   }
 }

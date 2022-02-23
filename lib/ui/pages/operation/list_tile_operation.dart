@@ -19,7 +19,7 @@ class ListTileOperation extends StatelessWidget {
       builder: (context) => Wrap(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.control_point_duplicate),
+            leading: const Icon(Icons.control_point_duplicate),
             title: Text(AppLocalizations.of(context).duplicate),
             onTap: () {
               Provider.of<DataSource>(context, listen: false)
@@ -29,7 +29,7 @@ class ListTileOperation extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.delete),
+            leading: const Icon(Icons.delete),
             title: Text(AppLocalizations.of(context).delete),
             onTap: () {
               Provider.of<DataSource>(context, listen: false)
@@ -48,9 +48,11 @@ class ListTileOperation extends StatelessWidget {
     return ListTile(
       subtitle: Row(
         children: [
-          Text(_operation.account.title),
-          SizedBox(width: 8,),
-          if (_operation.synced) Icon(Icons.check),
+          Text(_operation.account.title,),
+          const SizedBox(width: 8,),
+          if (_operation.synced) const Icon(Icons.check),
+          const SizedBox(width: 8,),
+          if (_operation.deleted) const Icon(Icons.cancel),
         ],
       ),
       title: _operation.type == OperationType.TRANSFER

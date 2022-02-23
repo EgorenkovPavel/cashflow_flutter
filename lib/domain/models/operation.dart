@@ -6,6 +6,7 @@ class Operation {
   final int id;
   final String cloudId;
   final bool synced;
+  final bool deleted;
   final DateTime date;
   final OperationType type;
   final Account account;
@@ -17,6 +18,7 @@ class Operation {
     this.id = 0,
     this.cloudId = '',
     this.synced = false,
+    this.deleted = false,
     required this.date,
     required this.type,
     required this.account,
@@ -29,6 +31,7 @@ class Operation {
     int? id,
     String? cloudId,
     bool? synced,
+    bool? deleted,
     DateTime? date,
     OperationType? type,
     Account? account,
@@ -40,6 +43,7 @@ class Operation {
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
         synced: synced ?? this.synced,
+        deleted: deleted ?? this.deleted,
         date: date ?? this.date,
         type: type ?? this.type,
         account: account ?? this.account,

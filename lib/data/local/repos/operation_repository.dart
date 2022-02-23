@@ -142,7 +142,8 @@ class OperationRepository implements LocalSyncTable<Operation>, OperationDataSou
       category: Value(operation.category?.id),
       recAccount: Value(operation.recAccount?.id),
       sum: Value(operation.sum),
-      synced: Value(true),
+      synced: const Value(true),
+      deleted: Value(operation.deleted),
     ));
   }
 
@@ -158,22 +159,21 @@ class OperationRepository implements LocalSyncTable<Operation>, OperationDataSou
           category: Value(operation.category?.id),
           recAccount: Value(operation.recAccount?.id),
           sum: Value(operation.sum),
-          synced: Value(true),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
         ));
   }
 
   @override
-  Future<void> clearDeleted() {
-    return operationDao.clearDeleted();
+  Future<void> clearDeletedById(String cloudId) {
+    // TODO: implement clearDeletedById
+    throw UnimplementedError();
   }
 
   @override
   Future<List<String>> getDeleted() {
-    return operationDao.getDeleted();
+    // TODO: implement getDeleted
+    throw UnimplementedError();
   }
 
-  @override
-  Future<void> clearDeletedById(String cloudId) async{
-    return operationDao.clearDeletedById(cloudId);
-  }
 }

@@ -204,9 +204,10 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
 
 class $AccountsTable extends Accounts
     with TableInfo<$AccountsTable, AccountDB> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AccountsTable(this._db, [this._alias]);
+  $AccountsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -287,7 +288,7 @@ class $AccountsTable extends Accounts
 
   @override
   $AccountsTable createAlias(String alias) {
-    return $AccountsTable(_db, alias);
+    return $AccountsTable(attachedDatabase, alias);
   }
 }
 
@@ -547,9 +548,10 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
 
 class $CategoriesTable extends Categories
     with TableInfo<$CategoriesTable, CategoryDB> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CategoriesTable(this._db, [this._alias]);
+  $CategoriesTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -646,7 +648,7 @@ class $CategoriesTable extends Categories
 
   @override
   $CategoriesTable createAlias(String alias) {
-    return $CategoriesTable(_db, alias);
+    return $CategoriesTable(attachedDatabase, alias);
   }
 
   static TypeConverter<OperationType, int> $converter0 =
@@ -665,6 +667,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int? recAccount;
   final int sum;
   final bool synced;
+  final bool deleted;
   OperationDB(
       {required this.id,
       required this.cloudId,
@@ -674,7 +677,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       this.category,
       this.recAccount,
       required this.sum,
-      required this.synced});
+      required this.synced,
+      required this.deleted});
   factory OperationDB.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return OperationDB(
@@ -696,6 +700,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           .mapFromDatabaseResponse(data['${effectivePrefix}sum'])!,
       synced: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}synced'])!,
+      deleted: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}deleted'])!,
     );
   }
   @override
@@ -717,6 +723,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     }
     map['sum'] = Variable<int>(sum);
     map['synced'] = Variable<bool>(synced);
+    map['deleted'] = Variable<bool>(deleted);
     return map;
   }
 
@@ -735,6 +742,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           : Value(recAccount),
       sum: Value(sum),
       synced: Value(synced),
+      deleted: Value(deleted),
     );
   }
 
@@ -751,6 +759,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       recAccount: serializer.fromJson<int?>(json['recAccount']),
       sum: serializer.fromJson<int>(json['sum']),
       synced: serializer.fromJson<bool>(json['synced']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
     );
   }
   @override
@@ -766,6 +775,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       'recAccount': serializer.toJson<int?>(recAccount),
       'sum': serializer.toJson<int>(sum),
       'synced': serializer.toJson<bool>(synced),
+      'deleted': serializer.toJson<bool>(deleted),
     };
   }
 
@@ -778,7 +788,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           int? category,
           int? recAccount,
           int? sum,
-          bool? synced}) =>
+          bool? synced,
+          bool? deleted}) =>
       OperationDB(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
@@ -789,6 +800,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
         recAccount: recAccount ?? this.recAccount,
         sum: sum ?? this.sum,
         synced: synced ?? this.synced,
+        deleted: deleted ?? this.deleted,
       );
   @override
   String toString() {
@@ -801,14 +813,15 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           ..write('category: $category, ')
           ..write('recAccount: $recAccount, ')
           ..write('sum: $sum, ')
-          ..write('synced: $synced')
+          ..write('synced: $synced, ')
+          ..write('deleted: $deleted')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, cloudId, date, operationType, account,
-      category, recAccount, sum, synced);
+      category, recAccount, sum, synced, deleted);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -821,7 +834,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           other.category == this.category &&
           other.recAccount == this.recAccount &&
           other.sum == this.sum &&
-          other.synced == this.synced);
+          other.synced == this.synced &&
+          other.deleted == this.deleted);
 }
 
 class OperationsCompanion extends UpdateCompanion<OperationDB> {
@@ -834,6 +848,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   final Value<int?> recAccount;
   final Value<int> sum;
   final Value<bool> synced;
+  final Value<bool> deleted;
   const OperationsCompanion({
     this.id = const Value.absent(),
     this.cloudId = const Value.absent(),
@@ -844,6 +859,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     this.recAccount = const Value.absent(),
     this.sum = const Value.absent(),
     this.synced = const Value.absent(),
+    this.deleted = const Value.absent(),
   });
   OperationsCompanion.insert({
     this.id = const Value.absent(),
@@ -855,6 +871,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     this.recAccount = const Value.absent(),
     required int sum,
     this.synced = const Value.absent(),
+    this.deleted = const Value.absent(),
   })  : cloudId = Value(cloudId),
         date = Value(date),
         operationType = Value(operationType),
@@ -870,6 +887,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     Expression<int?>? recAccount,
     Expression<int>? sum,
     Expression<bool>? synced,
+    Expression<bool>? deleted,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -881,6 +899,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       if (recAccount != null) 'rec_account': recAccount,
       if (sum != null) 'sum': sum,
       if (synced != null) 'synced': synced,
+      if (deleted != null) 'deleted': deleted,
     });
   }
 
@@ -893,7 +912,8 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       Value<int?>? category,
       Value<int?>? recAccount,
       Value<int>? sum,
-      Value<bool>? synced}) {
+      Value<bool>? synced,
+      Value<bool>? deleted}) {
     return OperationsCompanion(
       id: id ?? this.id,
       cloudId: cloudId ?? this.cloudId,
@@ -904,6 +924,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       recAccount: recAccount ?? this.recAccount,
       sum: sum ?? this.sum,
       synced: synced ?? this.synced,
+      deleted: deleted ?? this.deleted,
     );
   }
 
@@ -939,6 +960,9 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     if (synced.present) {
       map['synced'] = Variable<bool>(synced.value);
     }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
     return map;
   }
 
@@ -953,7 +977,8 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
           ..write('category: $category, ')
           ..write('recAccount: $recAccount, ')
           ..write('sum: $sum, ')
-          ..write('synced: $synced')
+          ..write('synced: $synced, ')
+          ..write('deleted: $deleted')
           ..write(')'))
         .toString();
   }
@@ -961,9 +986,10 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
 
 class $OperationsTable extends Operations
     with TableInfo<$OperationsTable, OperationDB> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $OperationsTable(this._db, [this._alias]);
+  $OperationsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -1023,6 +1049,14 @@ class $OperationsTable extends Operations
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (synced IN (0, 1))',
       defaultValue: const Constant(false));
+  final VerificationMeta _deletedMeta = const VerificationMeta('deleted');
+  @override
+  late final GeneratedColumn<bool?> deleted = GeneratedColumn<bool?>(
+      'deleted', aliasedName, false,
+      type: const BoolType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'CHECK (deleted IN (0, 1))',
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1033,7 +1067,8 @@ class $OperationsTable extends Operations
         category,
         recAccount,
         sum,
-        synced
+        synced,
+        deleted
       ];
   @override
   String get aliasedName => _alias ?? 'operations';
@@ -1086,6 +1121,10 @@ class $OperationsTable extends Operations
       context.handle(_syncedMeta,
           synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta));
     }
+    if (data.containsKey('deleted')) {
+      context.handle(_deletedMeta,
+          deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta));
+    }
     return context;
   }
 
@@ -1099,7 +1138,7 @@ class $OperationsTable extends Operations
 
   @override
   $OperationsTable createAlias(String alias) {
-    return $OperationsTable(_db, alias);
+    return $OperationsTable(attachedDatabase, alias);
   }
 
   static TypeConverter<OperationType, int> $converter0 =
@@ -1279,9 +1318,10 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
 
 class $BalancesTable extends Balances
     with TableInfo<$BalancesTable, BalanceDB> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $BalancesTable(this._db, [this._alias]);
+  $BalancesTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
@@ -1354,7 +1394,7 @@ class $BalancesTable extends Balances
 
   @override
   $BalancesTable createAlias(String alias) {
-    return $BalancesTable(_db, alias);
+    return $BalancesTable(attachedDatabase, alias);
   }
 }
 
@@ -1531,9 +1571,10 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
 
 class $CashflowsTable extends Cashflows
     with TableInfo<$CashflowsTable, CashflowDB> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CashflowsTable(this._db, [this._alias]);
+  $CashflowsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
   late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
@@ -1606,222 +1647,8 @@ class $CashflowsTable extends Cashflows
 
   @override
   $CashflowsTable createAlias(String alias) {
-    return $CashflowsTable(_db, alias);
+    return $CashflowsTable(attachedDatabase, alias);
   }
-}
-
-class DeletedItemsDB extends DataClass implements Insertable<DeletedItemsDB> {
-  final DateTime date;
-  final TableType tableType;
-  final String cloudId;
-  DeletedItemsDB(
-      {required this.date, required this.tableType, required this.cloudId});
-  factory DeletedItemsDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return DeletedItemsDB(
-      date: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
-      tableType: $DeletedItemsTable.$converter0.mapToDart(const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}table_type']))!,
-      cloudId: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['date'] = Variable<DateTime>(date);
-    {
-      final converter = $DeletedItemsTable.$converter0;
-      map['table_type'] = Variable<int>(converter.mapToSql(tableType)!);
-    }
-    map['cloud_id'] = Variable<String>(cloudId);
-    return map;
-  }
-
-  DeletedItemsCompanion toCompanion(bool nullToAbsent) {
-    return DeletedItemsCompanion(
-      date: Value(date),
-      tableType: Value(tableType),
-      cloudId: Value(cloudId),
-    );
-  }
-
-  factory DeletedItemsDB.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DeletedItemsDB(
-      date: serializer.fromJson<DateTime>(json['date']),
-      tableType: serializer.fromJson<TableType>(json['tableType']),
-      cloudId: serializer.fromJson<String>(json['cloudId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'date': serializer.toJson<DateTime>(date),
-      'tableType': serializer.toJson<TableType>(tableType),
-      'cloudId': serializer.toJson<String>(cloudId),
-    };
-  }
-
-  DeletedItemsDB copyWith(
-          {DateTime? date, TableType? tableType, String? cloudId}) =>
-      DeletedItemsDB(
-        date: date ?? this.date,
-        tableType: tableType ?? this.tableType,
-        cloudId: cloudId ?? this.cloudId,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('DeletedItemsDB(')
-          ..write('date: $date, ')
-          ..write('tableType: $tableType, ')
-          ..write('cloudId: $cloudId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(date, tableType, cloudId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is DeletedItemsDB &&
-          other.date == this.date &&
-          other.tableType == this.tableType &&
-          other.cloudId == this.cloudId);
-}
-
-class DeletedItemsCompanion extends UpdateCompanion<DeletedItemsDB> {
-  final Value<DateTime> date;
-  final Value<TableType> tableType;
-  final Value<String> cloudId;
-  const DeletedItemsCompanion({
-    this.date = const Value.absent(),
-    this.tableType = const Value.absent(),
-    this.cloudId = const Value.absent(),
-  });
-  DeletedItemsCompanion.insert({
-    required DateTime date,
-    required TableType tableType,
-    required String cloudId,
-  })  : date = Value(date),
-        tableType = Value(tableType),
-        cloudId = Value(cloudId);
-  static Insertable<DeletedItemsDB> custom({
-    Expression<DateTime>? date,
-    Expression<TableType>? tableType,
-    Expression<String>? cloudId,
-  }) {
-    return RawValuesInsertable({
-      if (date != null) 'date': date,
-      if (tableType != null) 'table_type': tableType,
-      if (cloudId != null) 'cloud_id': cloudId,
-    });
-  }
-
-  DeletedItemsCompanion copyWith(
-      {Value<DateTime>? date,
-      Value<TableType>? tableType,
-      Value<String>? cloudId}) {
-    return DeletedItemsCompanion(
-      date: date ?? this.date,
-      tableType: tableType ?? this.tableType,
-      cloudId: cloudId ?? this.cloudId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (date.present) {
-      map['date'] = Variable<DateTime>(date.value);
-    }
-    if (tableType.present) {
-      final converter = $DeletedItemsTable.$converter0;
-      map['table_type'] = Variable<int>(converter.mapToSql(tableType.value)!);
-    }
-    if (cloudId.present) {
-      map['cloud_id'] = Variable<String>(cloudId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DeletedItemsCompanion(')
-          ..write('date: $date, ')
-          ..write('tableType: $tableType, ')
-          ..write('cloudId: $cloudId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $DeletedItemsTable extends DeletedItems
-    with TableInfo<$DeletedItemsTable, DeletedItemsDB> {
-  final GeneratedDatabase _db;
-  final String? _alias;
-  $DeletedItemsTable(this._db, [this._alias]);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
-      'date', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _tableTypeMeta = const VerificationMeta('tableType');
-  @override
-  late final GeneratedColumnWithTypeConverter<TableType, int?> tableType =
-      GeneratedColumn<int?>('table_type', aliasedName, false,
-              type: const IntType(), requiredDuringInsert: true)
-          .withConverter<TableType>($DeletedItemsTable.$converter0);
-  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
-  @override
-  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
-      'cloud_id', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [date, tableType, cloudId];
-  @override
-  String get aliasedName => _alias ?? 'deletedItems';
-  @override
-  String get actualTableName => 'deletedItems';
-  @override
-  VerificationContext validateIntegrity(Insertable<DeletedItemsDB> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('date')) {
-      context.handle(
-          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
-    } else if (isInserting) {
-      context.missing(_dateMeta);
-    }
-    context.handle(_tableTypeMeta, const VerificationResult.success());
-    if (data.containsKey('cloud_id')) {
-      context.handle(_cloudIdMeta,
-          cloudId.isAcceptableOrUnknown(data['cloud_id']!, _cloudIdMeta));
-    } else if (isInserting) {
-      context.missing(_cloudIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
-  @override
-  DeletedItemsDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return DeletedItemsDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $DeletedItemsTable createAlias(String alias) {
-    return $DeletedItemsTable(_db, alias);
-  }
-
-  static TypeConverter<TableType, int> $converter0 = const TableTypeConverter();
 }
 
 abstract class _$Database extends GeneratedDatabase {
@@ -1831,7 +1658,6 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
-  late final $DeletedItemsTable deletedItems = $DeletedItemsTable(this);
   late final AccountDao accountDao = AccountDao(this as Database);
   late final CategoryDao categoryDao = CategoryDao(this as Database);
   late final OperationDao operationDao = OperationDao(this as Database);
@@ -1839,5 +1665,5 @@ abstract class _$Database extends GeneratedDatabase {
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [accounts, categories, operations, balances, cashflows, deletedItems];
+      [accounts, categories, operations, balances, cashflows];
 }

@@ -30,6 +30,5 @@ abstract class LocalSyncTable<T>{
   Future updateFromCloud(T entity);
 
   Future<List<String>> getDeleted();
-  Future<void> clearDeleted();
   Future<void> clearDeletedById(String cloudId);
 }

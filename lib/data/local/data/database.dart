@@ -77,6 +77,8 @@ class Operations extends Table {
   IntColumn get sum => integer()();
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
+
+  BoolColumn get deleted => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('BalanceDB')
@@ -117,43 +119,6 @@ class Cashflows extends Table {
   Set<Column> get primaryKey => {operation, category};
 }
 
-@DataClassName('DeletedItemsDB')
-class DeletedItems extends Table {
-  @override
-  String get tableName => 'deletedItems';
-
-  DateTimeColumn get date => dateTime()();
-
-  IntColumn get tableType => integer().map(const TableTypeConverter())();
-
-  TextColumn get cloudId => text()();
-}
-
-enum TableType{
-  OPERATIONS
-}
-
-class TableTypeConverter extends TypeConverter<TableType, int>{
-  const TableTypeConverter();
-
-  @override
-  TableType? mapToDart(int? fromDb) {
-    if (fromDb == 1){
-      return TableType.OPERATIONS;
-    }else{
-      return null;
-    }
-  }
-
-  @override
-  int? mapToSql(TableType? value) {
-    if (value == TableType.OPERATIONS){
-      return 1;
-    }else{
-      return 0;
-    }
-  }}
-
 LazyDatabase _openConnection() {
   // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
@@ -166,7 +131,7 @@ LazyDatabase _openConnection() {
 }
 
 @DriftDatabase(
-    tables: [Accounts, Categories, Operations, Balances, Cashflows, DeletedItems],
+    tables: [Accounts, Categories, Operations, Balances, Cashflows],
     daos: [AccountDao, CategoryDao, OperationDao])
 class Database extends _$Database {
   Database() : super(_openConnection());
@@ -196,7 +161,7 @@ class Database extends _$Database {
         }
 
         if (from == 3){
-          await m.createTable(deletedItems);
+          await m.addColumn(operations, operations.deleted);
         }
       }
   );
@@ -222,19 +187,19 @@ class Database extends _$Database {
     data.putIfAbsent(
         'account',
         () => accounts
-            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
             .toList());
 
     data.putIfAbsent(
         'category',
         () => categories
-            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
             .toList());
 
     data.putIfAbsent(
         'operation',
         () => operations
-            .map((p) => p.toJson(serializer: _DefaultValueSerializer()))
+            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
             .toList());
 
     return data;
@@ -258,7 +223,7 @@ class Database extends _$Database {
               ));
             } else {
               accounts.add(
-                  AccountDB.fromJson(d, serializer: _DefaultValueSerializer()));
+                  AccountDB.fromJson(d, serializer: const _DefaultValueSerializer()));
             }
           }
         });
@@ -283,7 +248,7 @@ class Database extends _$Database {
               ));
             } else {
               categories.add(CategoryDB.fromJson(d,
-                  serializer: _DefaultValueSerializer()));
+                  serializer: const _DefaultValueSerializer()));
             }
           }
         });
@@ -305,10 +270,11 @@ class Database extends _$Database {
                 recAccount: _getId(d['operation_recipient_account_id']),
                 sum: int.parse(d['operation_sum']),
                 synced: false,
+                deleted: false,
               ));
             } else {
               operations.add(OperationDB.fromJson(d,
-                  serializer: _DefaultValueSerializer()));
+                  serializer: const _DefaultValueSerializer()));
             }
           }
         });

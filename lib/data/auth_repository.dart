@@ -74,7 +74,7 @@ class AuthRepository extends AuthSource{
 
   @override
   Future<model.User?> getUser() async {
-     return _mapUser(auth.currentUser!);
+     return _mapUser(auth.currentUser);
   }
 
   model.User? _mapUser(User? user){
