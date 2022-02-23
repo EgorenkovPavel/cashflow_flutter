@@ -139,7 +139,7 @@ class PageNavigator {
     _routeReportsName: (context) => const ReportsPage(),
   };
 
-  static Route<dynamic>? Function(RouteSettings)? onGenerateRoute = (settings) {
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case _routeAccountName:
         {
@@ -191,7 +191,7 @@ class PageNavigator {
       default:
         return null;
     }
-  };
+  }
 }
 
 class _Card<T> {

@@ -3,7 +3,7 @@ import 'package:money_tracker/data/prefs_repository.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 class BackupDialog extends StatefulWidget {
   final Future<void> Function(String folderId, String title) onBackup;
