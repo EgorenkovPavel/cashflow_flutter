@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/domain/models/operation.dart';
+import 'package:money_tracker/domain/models/operation/operation.dart';
 
 class ListDividerOperation extends StatelessWidget {
   final Operation? operation1;

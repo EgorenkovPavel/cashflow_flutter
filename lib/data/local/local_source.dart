@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class LocalSource{

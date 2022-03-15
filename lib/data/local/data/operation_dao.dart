@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/data/operation_item.dart';
-import 'package:money_tracker/domain/models/operation_type.dart';
+import 'package:money_tracker/domain/models/enum/operation_type.dart';
 
 part 'operation_dao.g.dart';
 

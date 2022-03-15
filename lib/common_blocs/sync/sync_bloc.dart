@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/data/prefs_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 

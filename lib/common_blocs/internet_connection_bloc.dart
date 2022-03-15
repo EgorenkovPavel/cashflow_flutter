@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/core/network_info.dart';
 
 abstract class InternetConnectionEvent {}
 
@@ -21,9 +21,11 @@ class InternetConnectionState {
 
 class InternetConnectionBloc
     extends Bloc<InternetConnectionEvent, InternetConnectionState> {
+
+  final NetworkInfo networkInfo;
   StreamSubscription? _sub;
 
-  InternetConnectionBloc()
+  InternetConnectionBloc(this.networkInfo)
       : super(InternetConnectionState(isConnected: false)) {
     on<Init>(_init);
     on<ChangeConnection>(_changeConnection);
@@ -36,8 +38,8 @@ class InternetConnectionBloc
   }
 
   void _init(Init event, Emitter<InternetConnectionState> emit) {
-    _sub = Connectivity().onConnectivityChanged.listen((result) {
-      add(ChangeConnection(result != ConnectivityResult.none));
+    _sub = networkInfo.connected().listen((connected) {
+      add(ChangeConnection(connected));
     });
   }
 

@@ -1,5 +1,5 @@
 import 'package:money_tracker/data/local/data/category_dao.dart';
-import 'package:money_tracker/domain/models/category_month_cashflow.dart';
+import 'package:money_tracker/domain/models/category/category_month_cashflow.dart';
 
 import 'category_mapper.dart';
 import 'mapper.dart';

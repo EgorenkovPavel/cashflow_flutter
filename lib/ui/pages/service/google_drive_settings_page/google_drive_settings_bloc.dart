@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/data/drive_repository.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }

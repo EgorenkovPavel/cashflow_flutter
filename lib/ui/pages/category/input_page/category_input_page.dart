@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';

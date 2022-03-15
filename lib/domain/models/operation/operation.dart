@@ -1,6 +1,6 @@
-import 'account.dart';
-import 'category.dart';
-import 'operation_type.dart';
+import '../account/account.dart';
+import '../category/category.dart';
+import '../enum/operation_type.dart';
 
 class Operation {
   final int id;

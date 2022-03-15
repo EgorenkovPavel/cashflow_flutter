@@ -1,4 +1,4 @@
-import 'package:money_tracker/domain/models/category.dart';
+import 'package:money_tracker/domain/models/category/category.dart';
 
 class CategoryCashflow {
   final Category category;

@@ -1,5 +1,5 @@
 
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';

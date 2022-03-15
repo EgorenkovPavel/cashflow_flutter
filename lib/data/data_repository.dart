@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
 import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/data/local/local_source.dart';
 import 'package:money_tracker/data/remote/remote_source.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/category.dart' as model;
+import 'package:money_tracker/domain/models/category/category.dart' as model;
 
 import 'remote/models/cloud_models.dart';
 

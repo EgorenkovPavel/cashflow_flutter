@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
-import 'package:money_tracker/data/auth_source.dart';
-import 'package:money_tracker/data/data_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_source.dart';
+import 'package:money_tracker/domain/interfaces/data_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 abstract class AuthEvent {}
@@ -32,7 +32,6 @@ abstract class AuthState extends Equatable {
 
 class InProgress extends AuthState {
   const InProgress() : super(isAdmin: false);
-
 
   @override
   List<Object?> get props => [];

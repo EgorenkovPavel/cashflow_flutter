@@ -2,7 +2,7 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:money_tracker/data/auth_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart' as model;
 
 class AuthRepository extends AuthSource{

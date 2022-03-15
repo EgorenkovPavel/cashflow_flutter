@@ -7,9 +7,9 @@ import 'package:money_tracker/data/local/repos/category_repository.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/data/local/data/operation_dao.dart';
 import 'package:money_tracker/data/local/repos/operation_repository.dart';
-import 'package:money_tracker/domain/models/account.dart';
-import 'package:money_tracker/domain/models/category.dart';
-import 'package:money_tracker/domain/models/operation.dart';
+import 'package:money_tracker/domain/models/account/account.dart';
+import 'package:money_tracker/domain/models/category/category.dart';
+import 'package:money_tracker/domain/models/operation/operation.dart';
 
 class DatabaseSource extends LocalSource{
   final Database db;
