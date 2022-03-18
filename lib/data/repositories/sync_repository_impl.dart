@@ -20,7 +20,7 @@ class SyncRepositoryImpl implements SyncRepository{
 
   @override
   Future<Try<void>> addToDatabase(User user) {
-    return _remoteSource.addToDatabase(user);
+    return _remoteSource.addUserToDatabase(user);
   }
 
   @override
@@ -45,12 +45,12 @@ class SyncRepositoryImpl implements SyncRepository{
 
   @override
   Future<Try<void>> logIn(User user) {
-    return _remoteSource.logIn(user);
+    return _remoteSource.connect(user);
   }
 
   @override
   Future<void> logOut() {
-    return _remoteSource.logOut();
+    return _remoteSource.disconnect();
   }
 
   @override
