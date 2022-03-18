@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
+import 'package:money_tracker/common_blocs/sync/loading_state.dart';
 import 'package:money_tracker/data/sources/local/converters/budget_type_converter.dart';
 import 'package:money_tracker/data/sources/local/converters/operation_type_converter.dart';
 import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/network_info.dart';
 import 'package:money_tracker/data/sources/remote/remote_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -15,8 +16,9 @@ class SyncRepositoryImpl implements SyncRepository{
 
   final LocalSource _localSource;
   final RemoteSource _remoteSource;
+  final NetworkInfo _networkInfo;
 
-  SyncRepositoryImpl(this._remoteSource, this._localSource);
+  SyncRepositoryImpl(this._remoteSource, this._localSource, this._networkInfo);
 
   @override
   Future<Try<void>> addToDatabase(User user) {
@@ -355,6 +357,11 @@ class SyncRepositoryImpl implements SyncRepository{
             .markAsSynced(operation.id, _cloudId.getOrDefault(''));
       }
     }
+  }
+
+  @override
+  Stream<bool> connectedToInternet() {
+    return _networkInfo.connected();
   }
 
 }

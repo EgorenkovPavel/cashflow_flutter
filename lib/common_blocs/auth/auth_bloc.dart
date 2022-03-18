@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 import 'package:money_tracker/data/sources/auth_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
@@ -59,7 +58,6 @@ class NotAuthenticated extends AuthState {
 }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final InternetConnectionBloc _connectionBloc;
   final AuthSource _authSource;
   final SyncRepository _syncRepo;
 
@@ -68,7 +66,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(
     this._authSource,
-    this._connectionBloc,
     this._syncRepo,
   ) : super(const InProgress()) {
     on<Init>(_init);
@@ -89,8 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _sub = _authSource.userChanges().listen((user) {
       add(ChangeAuth(user != null));
     });
-    _subInternet = _connectionBloc.stream.listen((connectionEvent) {
-      if (connectionEvent.isConnected) {
+    _subInternet = _syncRepo.connectedToInternet().listen((connected) {
+      if (connected) {
         add(SignInSilently());
       } else {
         add(ChangeAuth(false));
