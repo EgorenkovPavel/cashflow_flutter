@@ -6,9 +6,8 @@ import 'package:money_tracker/data/sources/local/local_source.dart';
 import 'package:money_tracker/data/sources/remote/remote_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/utils/try.dart';
 import 'package:money_tracker/domain/models/category/category.dart' as model;
+import 'package:money_tracker/utils/try.dart';
 
 import '../sources/remote/models/cloud_models.dart';
 

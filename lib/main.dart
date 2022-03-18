@@ -63,7 +63,6 @@ Future<void> main() async {
           create: (context) => AuthBloc(
             _authRepository,
             context.read<internet_connection.InternetConnectionBloc>(),
-            _dataSource,
             _syncRepo,
           )..add(Init()),
         ),

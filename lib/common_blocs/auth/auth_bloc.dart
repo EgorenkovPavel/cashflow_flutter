@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
 import 'package:money_tracker/data/sources/auth_source.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
@@ -62,7 +61,6 @@ class NotAuthenticated extends AuthState {
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final InternetConnectionBloc _connectionBloc;
   final AuthSource _authSource;
-  final DataRepository _dataSource;
   final SyncRepository _syncRepo;
 
   StreamSubscription? _sub;
@@ -71,7 +69,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
     this._authSource,
     this._connectionBloc,
-    this._dataSource,
     this._syncRepo,
   ) : super(const InProgress()) {
     on<Init>(_init);

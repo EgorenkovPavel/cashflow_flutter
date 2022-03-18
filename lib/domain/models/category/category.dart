@@ -1,5 +1,4 @@
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/enum/operation_type.dart';
 
 class Category {
   final int id;
