@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
@@ -125,7 +125,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   @override
   void initState() {
     super.initState();
-    _bloc = MasterBloc(context.read<DataSource>());
+    _bloc = MasterBloc(context.read<DataRepository>());
     _bloc.start();
 
     _animationController = AnimationController(

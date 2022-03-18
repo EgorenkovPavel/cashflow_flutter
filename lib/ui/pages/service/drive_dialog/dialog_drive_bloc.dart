@@ -2,7 +2,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:money_tracker/data/drive_repository.dart';
+import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class DialogDriveState {
@@ -36,12 +36,12 @@ enum DialogMode {
 }
 
 class DialogDriveBloc extends Cubit<DialogDriveState> {
-  final DriveRepository _repository;
+  final GoogleDrive _repository;
   final DialogMode mode;
 
   final rootFolder =_Stack<DriveFile>();
 
-  DialogDriveBloc({required DriveRepository repository, required this.mode})
+  DialogDriveBloc({required GoogleDrive repository, required this.mode})
       : _repository = repository,
         super(DialogDriveState(
             action: DialogDriveAction.NO_ACTION, folderList: [])) {

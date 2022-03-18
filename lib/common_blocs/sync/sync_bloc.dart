@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
-import 'package:money_tracker/data/prefs_repository.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/data/sources/settings_source.dart';
+import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 abstract class SyncEvent {}
@@ -41,15 +42,17 @@ class NotAuth extends SyncEvent {}
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final AuthBloc _authBloc;
-  final DataSource _dataSource;
-  final PrefsRepository prefsRepository;
+  final DataRepository _dataSource;
+  final SharedPrefs prefsRepository;
+  final SyncRepository syncRepo;
 
   StreamSubscription? _syncSub;
 
-  SyncBloc({
+  SyncBloc( {
     required AuthBloc authBloc,
-    required DataSource dataSource,
+    required DataRepository dataSource,
     required this.prefsRepository,
+    required this.syncRepo,
   })  : _authBloc = authBloc,
         _dataSource = dataSource,
         super(const SyncStateNotSynced()) {
@@ -85,11 +88,11 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   FutureOr<void> _authAuthenticated(
       AuthAuthenticated event, Emitter<SyncState> emit) async {
     emit(const SyncStateInProgress());
-    var res = await _dataSource.users.databaseExists(event.user);
+    var res = await syncRepo.databaseExists(event.user);
 
     return res.fold((success) async {
       if (success) {
-        var resLogIn = await _dataSource.users.logIn(event.user);
+        var resLogIn = await syncRepo.logIn(event.user);
         return resLogIn.fold((success) => add(SyncNow()), (failure) {
           emit(const SyncStateFailed());
         });
@@ -111,7 +114,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       return;
     }
 
-    await for (var event in _dataSource.loadToCloud()) {
+    await for (var event in syncRepo.loadToCloud()) {
       emit(SyncStateLoadingToCloud(
         accountCount: event.accountCount,
         categoryCount: event.categoryCount,
@@ -120,7 +123,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
 
     var syncDate = DateTime.now();
-    _dataSource.loadFromCloud(syncFrom).listen((event) {
+    syncRepo.loadFromCloud(syncFrom).listen((event) {
       emit(SyncStateLoadingFromCloud(
         accountCount: event.accountCount,
         categoryCount: event.categoryCount,
@@ -139,7 +142,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       return;
     }
     emit(const SyncStateInProgress());
-    var res = await _dataSource.users
+    var res = await syncRepo
         .createDatabase((_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
       emit(const SyncStateFailed());
@@ -166,7 +169,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _addUser(AddUser event, Emitter<SyncState> emit) async{
-    await _dataSource.users.addToDatabase(event.user);
+    await syncRepo.addToDatabase(event.user);
   }
 
   @override
@@ -174,10 +177,4 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     _syncSub?.cancel();
     return super.close();
   }
-
-
-
-
-
-
 }

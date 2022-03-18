@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/core/network_info.dart';
+import 'package:money_tracker/data/sources/network_info.dart';
 
 abstract class InternetConnectionEvent {}
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class OperationListEvent {}
@@ -33,7 +33,7 @@ class OperationListState {
 }
 
 class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
-  final DataSource _repository;
+  final DataRepository _repository;
   StreamSubscription? _sub;
 
   OperationListBloc(this._repository) : super(OperationListState.initial()) {

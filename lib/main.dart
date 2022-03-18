@@ -10,17 +10,18 @@ import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart'
     as internet_connection;
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
-import 'package:money_tracker/core/network_info.dart';
-import 'package:money_tracker/data/auth_repository.dart';
-import 'package:money_tracker/data/data_repository.dart';
-import 'package:money_tracker/data/drive_repository.dart';
-import 'package:money_tracker/data/local/data/database.dart';
-import 'package:money_tracker/data/local/database_source.dart';
-import 'package:money_tracker/data/local/local_source.dart';
-import 'package:money_tracker/data/prefs_repository.dart';
-import 'package:money_tracker/data/remote/firecloud_source.dart';
-import 'package:money_tracker/domain/interfaces/auth_source.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
+import 'package:money_tracker/data/repositories/sync_repository_impl.dart';
+import 'package:money_tracker/data/sources/local/data/database.dart';
+import 'package:money_tracker/data/sources/local/database_source.dart';
+import 'package:money_tracker/data/sources/network_info.dart';
+import 'package:money_tracker/data/sources/auth_source_impl.dart';
+import 'package:money_tracker/data/repositories/data_repository_impl.dart';
+import 'package:money_tracker/data/sources/backup_source.dart';
+import 'package:money_tracker/data/sources/remote/firecloud_source.dart';
+import 'package:money_tracker/data/sources/settings_source.dart';
+import 'package:money_tracker/data/sources/auth_source.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,18 +35,20 @@ Future<void> main() async {
   final _firestore = FirebaseFirestore.instance;
   _firestore.settings = const Settings(persistenceEnabled: false);
 
-  final AuthSource _authRepository = AuthRepository();
-  final _driveRepository = DriveRepository();
+  final AuthSource _authRepository = GoogleAuth();
+  //final _driveRepository = GoogleDrive();
 
   final _cloudSource = FirecloudSource(_firestore);
 
   final _prefs = await SharedPreferences.getInstance();
 
-  final _prefsRepo = PrefsRepository(_prefs);
+  final _prefsRepo = SharedPrefs(_prefs);
 
-  final _dataSource = DataRepository(_databaseSource, _cloudSource);
+  final _dataSource = DataRepositoryImpl(_databaseSource);
 
   final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
+
+  final SyncRepository _syncRepo = SyncRepositoryImpl(_cloudSource, _databaseSource);
 
   runApp(
     MultiBlocProvider(
@@ -62,6 +65,7 @@ Future<void> main() async {
             _authRepository,
             context.read<internet_connection.InternetConnectionBloc>(),
             _dataSource,
+            _syncRepo,
           )..add(Init()),
         ),
         BlocProvider(
@@ -70,14 +74,14 @@ Future<void> main() async {
             authBloc: context.read<AuthBloc>(),
             dataSource: _dataSource,
             prefsRepository: _prefsRepo,
+            syncRepo: _syncRepo,
           ),
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<DataSource>(create: (_) => _dataSource),
-          RepositoryProvider<DriveRepository>(create: (_) => _driveRepository),
-          RepositoryProvider<PrefsRepository>(create: (_) => _prefsRepo),
+          RepositoryProvider<DataRepository>(create: (_) => _dataSource),
+          RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
         ],
         child: const MyApp(),
       ),

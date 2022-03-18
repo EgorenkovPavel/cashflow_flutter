@@ -4,30 +4,27 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:path_provider/path_provider.dart';
 
-class DriveRepository {
-  AuthClient? _client;
+abstract class BackupSource {
+  Future<void> backup(Map<String, List<Map<String, dynamic>>> data,
+      String catalogId, String fileName);
 
-  DriveRepository();
+  Future<Map<String, dynamic>?> restore(String fileId);
 
-  void logIn(AuthClient client){
-    _client = client;
-  }
+  Future<List<DriveFile>> getFiles(String catalogId);
+}
 
-  void logOut(){
-    _client = null;
-  }
+class GoogleDrive extends BackupSource {
+  final http.Client _client;
 
+  GoogleDrive(this._client);
+
+  @override
   Future<void> backup(Map<String, List<Map<String, dynamic>>> data,
       String catalogId, String fileName) async {
-
-    if(_client == null){
-      return Future.value();
-    }
-
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(data));
@@ -41,7 +38,7 @@ class DriveRepository {
 
     try {
       var response =
-          await drive.DriveApi(_client!).files.create(file, uploadMedia: media);
+          await drive.DriveApi(_client).files.create(file, uploadMedia: media);
       if (kDebugMode) {
         print(response);
       }
@@ -52,21 +49,17 @@ class DriveRepository {
     }
   }
 
+  @override
   Future<Map<String, dynamic>?> restore(String fileId) async {
-
-    if(_client == null){
-      return null;
-    }
-
     try {
-      var file = await drive.DriveApi(_client!).files.get(fileId,
+      var file = await drive.DriveApi(_client).files.get(fileId,
           downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
 
       final directory = await getTemporaryDirectory();
       var saveFile = File('${directory.path}/test.json');
 
       var dataStore = <int>[];
-      await for (var data in file.stream){
+      await for (var data in file.stream) {
         if (kDebugMode) {
           print('DataReceived: ${data.length}');
         }
@@ -90,13 +83,9 @@ class DriveRepository {
     }
   }
 
+  @override
   Future<List<DriveFile>> getFiles(String catalogId) async {
-
-    if(_client == null){
-      return Future.value([]);
-    }
-
-    var data = await drive.DriveApi(_client!).files.list(
+    var data = await drive.DriveApi(_client).files.list(
         orderBy: 'folder,name,modifiedTime',
         spaces: 'drive',
         q: "'$catalogId' in parents and trashed = false", //only double ""
@@ -105,17 +94,14 @@ class DriveRepository {
 
     return data.files!
         .map((f) => DriveFile(
-      title: f.name!,
-      id: f.id!,
-      isFolder:
-      f.mimeType == 'application/vnd.google-apps.folder',
-      lastChanges: f.modifiedTime!,
-      enabled:
-      f.mimeType == 'application/vnd.google-apps.folder' ||
-          f.mimeType == 'application/json' ||
-          f.mimeType == 'text/plain',
-    ))
+              title: f.name!,
+              id: f.id!,
+              isFolder: f.mimeType == 'application/vnd.google-apps.folder',
+              lastChanges: f.modifiedTime!,
+              enabled: f.mimeType == 'application/vnd.google-apps.folder' ||
+                  f.mimeType == 'application/json' ||
+                  f.mimeType == 'text/plain',
+            ))
         .toList();
   }
 }
-

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/prefs_repository.dart';
+import 'package:money_tracker/data/sources/settings_source.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -22,7 +22,7 @@ class _BackupDialogState extends State<BackupDialog> {
   @override
   void initState() {
     super.initState();
-    _controller.text = context.read<PrefsRepository>().googleDriveFileName;
+    _controller.text = context.read<SharedPrefs>().googleDriveFileName;
   }
 
 
@@ -39,7 +39,7 @@ class _BackupDialogState extends State<BackupDialog> {
 
     await widget.onBackup(_folder.id, _controller.text);
     await context
-        .read<PrefsRepository>()
+        .read<SharedPrefs>()
         .setGoogleDriveFileName(_controller.text);
 
     Navigator.of(context).pop();

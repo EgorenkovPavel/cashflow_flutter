@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
 
 enum DataControlState{
   INITIAL,
@@ -11,7 +11,7 @@ enum DataControlState{
 
 class DataControlBloc extends Cubit<DataControlState>{
 
-  final DataSource _dataRepository;
+  final DataRepository _dataRepository;
 
   DataControlBloc(this._dataRepository) : super(DataControlState.INITIAL);
 

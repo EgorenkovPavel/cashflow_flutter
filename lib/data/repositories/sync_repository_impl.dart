@@ -1,46 +1,57 @@
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
-import 'package:money_tracker/data/local/converters/budget_type_converter.dart';
-import 'package:money_tracker/data/local/converters/operation_type_converter.dart';
-import 'package:money_tracker/data/local/local_source.dart';
-import 'package:money_tracker/data/remote/remote_source.dart';
+import 'package:money_tracker/data/sources/local/converters/budget_type_converter.dart';
+import 'package:money_tracker/data/sources/local/converters/operation_type_converter.dart';
+import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/remote/remote_source.dart';
+import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/domain/models/user.dart';
+import 'package:money_tracker/utils/try.dart';
 import 'package:money_tracker/domain/models/category/category.dart' as model;
 
-import 'remote/models/cloud_models.dart';
+import '../sources/remote/models/cloud_models.dart';
 
-class DataRepository implements DataSource{
+class SyncRepositoryImpl implements SyncRepository{
+
   final LocalSource _localSource;
   final RemoteSource _remoteSource;
 
-  DataRepository(this._localSource, this._remoteSource);
+  SyncRepositoryImpl(this._remoteSource, this._localSource);
 
   @override
-  AccountDataSource get accounts => _localSource.accounts;
-
-  @override
-  CategoryDataSource get categories => _localSource.categories;
-
-  @override
-  OperationDataSource get operations => _localSource.operations;
-
-  @override
-  UsersDataSource get users => _remoteSource;
-
-  @override
-  Future deleteAll() {
-    return _localSource.deleteAll();
+  Future<Try<void>> addToDatabase(User user) {
+    return _remoteSource.addToDatabase(user);
   }
 
   @override
-  Future<Map<String, List<Map<String, dynamic>>>> exportData() {
-    return _localSource.exportData();
+  Future<Try<void>> createDatabase(User user) {
+    return _remoteSource.createDatabase(user);
   }
 
   @override
-  Future importData(Map<String, dynamic> data) {
-    return _localSource.importData(data);
+  Future<Try<bool>> databaseExists(User user) {
+    return _remoteSource.databaseExists(user);
+  }
+
+  @override
+  Future<Try<List<User>>> getAll() {
+    return _remoteSource.getAll();
+  }
+
+  @override
+  Future<bool> isAdmin(User user) {
+    return _remoteSource.isAdmin(user);
+  }
+
+  @override
+  Future<Try<void>> logIn(User user) {
+    return _remoteSource.logIn(user);
+  }
+
+  @override
+  Future<void> logOut() {
+    return _remoteSource.logOut();
   }
 
   @override
@@ -346,4 +357,5 @@ class DataRepository implements DataSource{
       }
     }
   }
+
 }

@@ -4,8 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/common_blocs/internet_connection_bloc.dart';
-import 'package:money_tracker/domain/interfaces/auth_source.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
+import 'package:money_tracker/data/sources/auth_source.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 abstract class AuthEvent {}
@@ -61,7 +62,8 @@ class NotAuthenticated extends AuthState {
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final InternetConnectionBloc _connectionBloc;
   final AuthSource _authSource;
-  final DataSource _dataSource;
+  final DataRepository _dataSource;
+  final SyncRepository _syncRepo;
 
   StreamSubscription? _sub;
   StreamSubscription? _subInternet;
@@ -70,6 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._authSource,
     this._connectionBloc,
     this._dataSource,
+    this._syncRepo,
   ) : super(const InProgress()) {
     on<Init>(_init);
     on<ChangeAuth>(_changeAuth);
@@ -90,9 +93,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       add(ChangeAuth(user != null));
     });
     _subInternet = _connectionBloc.stream.listen((connectionEvent) {
-      if (connectionEvent.isConnected){
+      if (connectionEvent.isConnected) {
         add(SignInSilently());
-      }else{
+      } else {
         add(ChangeAuth(false));
       }
     });
@@ -103,10 +106,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event.authenticated) {
       var user = await _authSource.getUser();
       var client = await _authSource.getClient();
-      if (client == null){
+      if (client == null) {
         emit(const NotAuthenticated());
-      }else {
-        var isAdmin = await _dataSource.users.isAdmin(user!);
+      } else {
+        var isAdmin = await _syncRepo.isAdmin(user!);
         emit(Authenticated(isAdmin: isAdmin, user: user, client: client));
       }
     } else {
@@ -114,7 +117,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signInSilently(SignInSilently event, Emitter<AuthState> emit) async {
+  Future<void> _signInSilently(
+      SignInSilently event, Emitter<AuthState> emit) async {
     await _authSource.signInSilently();
     add(ChangeAuth(true));
   }

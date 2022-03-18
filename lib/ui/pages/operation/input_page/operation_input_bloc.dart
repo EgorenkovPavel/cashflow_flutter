@@ -1,8 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
-import 'package:money_tracker/data/mappers/account_balance_mapper.dart';
+import 'package:money_tracker/data/sources/mappers/account_balance_mapper.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 enum MasterStateAction {
@@ -44,7 +44,7 @@ class MasterState {
 }
 
 class MasterBloc extends Cubit<MasterState> {
-  final DataSource _repository;
+  final DataRepository _repository;
   final Stream<List<AccountBalance>> accountStream;
   final Stream<List<Category>> categoryInStream;
   final Stream<List<Category>> categoryOutStream;

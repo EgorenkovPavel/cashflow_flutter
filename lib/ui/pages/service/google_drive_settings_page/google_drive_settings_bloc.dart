@@ -4,24 +4,22 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_source.dart';
-import 'package:money_tracker/data/drive_repository.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/data/sources/backup_source.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
 
 class DriveBloc extends Cubit<DriveState> {
-  final DataSource _dataRepository;
-  final DriveRepository _driveRepository;
+  final DataRepository _dataRepository;
+  GoogleDrive? _driveRepository;
   //final AuthBloc _authBloc;
 
   StreamSubscription? _authSub;
 
   DriveBloc({
-    required DataSource dataRepository,
-    required DriveRepository driveRepository,
+    required DataRepository dataRepository,
     required AuthBloc authBloc,
   })  : _dataRepository = dataRepository,
-        _driveRepository = driveRepository,
         //_authBloc = authBloc,
         super(DriveState.INITIAL){
     _authState(authBloc.state);
@@ -34,24 +32,30 @@ class DriveBloc extends Cubit<DriveState> {
     if (event is InProgress) {
       return;
     } else if (event is Authenticated) {
-      _driveRepository.logIn(event.client);
+      _driveRepository = GoogleDrive(event.client);
     } else if (event is NotAuthenticated) {
-      _driveRepository.logOut();
+      _driveRepository = null;
     }
   }
 
   Future<void> backup(String catalogId, String fileName) async {
+    if (_driveRepository == null){
+      return;
+    }
     emit(DriveState.IN_PROGRESS);
     var data = await _dataRepository.exportData();
-    await _driveRepository.backup(data, catalogId, fileName);
+    await _driveRepository!.backup(data, catalogId, fileName);
     emit(DriveState.SUCCESS_BACKUP);
   }
 
   Future<void> restore(String fileId) async {
+    if (_driveRepository == null){
+      return;
+    }
     emit(DriveState.IN_PROGRESS);
-    var data = await _driveRepository.restore(fileId);
+    var data = await _driveRepository!.restore(fileId);
     if (data == null) {
-      return null;
+      return;
       // TODO add bad state emit
     }
     await _dataRepository.importData(data);
