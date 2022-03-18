@@ -1,12 +1,10 @@
-import 'package:money_tracker/common_blocs/sync/syncer/loading_state.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/utils/try.dart';
 
 abstract class DataRepository{
 
-  AccountDataSource get accounts;
-  CategoryDataSource get categories;
-  OperationDataSource get operations;
+  AccountDataRepository get accounts;
+  CategoryDataRepository get categories;
+  OperationDataRepository get operations;
 
   Future deleteAll();
   Future<Map<String, List<Map<String, dynamic>>>> exportData();
@@ -14,7 +12,7 @@ abstract class DataRepository{
 
 }
 
-abstract class AccountDataSource{
+abstract class AccountDataRepository{
   Stream<List<Account>> watchAll();
   Future<List<Account>> getAll();
 
@@ -28,7 +26,7 @@ abstract class AccountDataSource{
   Future update(Account account);
 }
 
-abstract class CategoryDataSource{
+abstract class CategoryDataRepository{
   Stream<List<Category>> watchAll();
   Future<List<Category>> getAll();
 
@@ -51,7 +49,7 @@ abstract class CategoryDataSource{
   Future update(Category entity);
 }
 
-abstract class OperationDataSource{
+abstract class OperationDataRepository{
   Future<List<Operation>> getAll();
   Future<List<Operation>> getAllWithEmptyCloudId();
   Stream<List<Operation>> watchAll();

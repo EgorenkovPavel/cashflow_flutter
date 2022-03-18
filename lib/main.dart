@@ -36,7 +36,6 @@ Future<void> main() async {
   _firestore.settings = const Settings(persistenceEnabled: false);
 
   final AuthSource _authRepository = GoogleAuth();
-  //final _driveRepository = GoogleDrive();
 
   final _cloudSource = FirecloudSource(_firestore);
 
@@ -72,7 +71,6 @@ Future<void> main() async {
           lazy: false,
           create: (context) => SyncBloc(
             authBloc: context.read<AuthBloc>(),
-            dataSource: _dataSource,
             prefsRepository: _prefsRepo,
             syncRepo: _syncRepo,
           ),

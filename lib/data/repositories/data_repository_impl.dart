@@ -7,13 +7,13 @@ class DataRepositoryImpl implements DataRepository {
   DataRepositoryImpl(this._localSource);
 
   @override
-  AccountDataSource get accounts => _localSource.accounts;
+  AccountDataRepository get accounts => _localSource.accounts;
 
   @override
-  CategoryDataSource get categories => _localSource.categories;
+  CategoryDataRepository get categories => _localSource.categories;
 
   @override
-  OperationDataSource get operations => _localSource.operations;
+  OperationDataRepository get operations => _localSource.operations;
 
   @override
   Future deleteAll() => _localSource.deleteAll();

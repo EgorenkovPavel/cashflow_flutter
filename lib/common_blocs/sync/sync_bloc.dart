@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/data/sources/settings_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
@@ -42,7 +41,6 @@ class NotAuth extends SyncEvent {}
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final AuthBloc _authBloc;
-  final DataRepository _dataSource;
   final SharedPrefs prefsRepository;
   final SyncRepository syncRepo;
 
@@ -50,11 +48,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
 
   SyncBloc( {
     required AuthBloc authBloc,
-    required DataRepository dataSource,
     required this.prefsRepository,
     required this.syncRepo,
   })  : _authBloc = authBloc,
-        _dataSource = dataSource,
         super(const SyncStateNotSynced()) {
     on<SyncInit>(_init);
     on<AuthProgress>(_authProgress);
