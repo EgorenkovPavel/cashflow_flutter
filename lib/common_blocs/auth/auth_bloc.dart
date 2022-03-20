@@ -7,21 +7,36 @@ import 'package:money_tracker/data/sources/auth_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class AuthEvent {}
+abstract class AuthEvent extends Equatable{}
 
-class Init extends AuthEvent {}
-
-class ChangeAuth extends AuthEvent {
-  final bool authenticated;
-
-  ChangeAuth(this.authenticated);
+class Init extends AuthEvent {
+  @override
+  List<Object?> get props => [];
 }
 
-class SignInSilently extends AuthEvent {}
+class _ChangeAuth extends AuthEvent {
+  final bool authenticated;
 
-class SignIn extends AuthEvent {}
+  _ChangeAuth(this.authenticated);
 
-class SignOut extends AuthEvent {}
+  @override
+  List<Object?> get props => [authenticated];
+}
+
+class SignInSilently extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class SignIn extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class SignOut extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 abstract class AuthState extends Equatable {
   final bool isAdmin;
@@ -69,7 +84,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._syncRepo,
   ) : super(const InProgress()) {
     on<Init>(_init);
-    on<ChangeAuth>(_changeAuth);
+    on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
     on<SignIn>(_signIn);
     on<SignOut>(_signOut);
@@ -84,19 +99,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _init(Init event, Emitter<AuthState> emit) {
     _sub = _authSource.userChanges().listen((user) {
-      add(ChangeAuth(user != null));
+      add(_ChangeAuth(user != null));
     });
     _subInternet = _syncRepo.connectedToInternet().listen((connected) {
       if (connected) {
         add(SignInSilently());
       } else {
-        add(ChangeAuth(false));
+        add(_ChangeAuth(false));
       }
     });
     add(SignInSilently());
   }
 
-  Future<void> _changeAuth(ChangeAuth event, Emitter<AuthState> emit) async {
+  Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {
     if (event.authenticated) {
       var user = await _authSource.getUser();
       var client = await _authSource.getClient();
@@ -113,8 +128,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signInSilently(
       SignInSilently event, Emitter<AuthState> emit) async {
+    emit(const InProgress());
     await _authSource.signInSilently();
-    add(ChangeAuth(true));
   }
 
   Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {
