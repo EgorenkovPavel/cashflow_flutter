@@ -28,7 +28,7 @@ class AccountBalance {
         balance: balance ?? this.balance,
       );
 
-  Account getAccount() => Account(
+  Account toAccount() => Account(
         id: id,
         cloudId: cloudId,
         title: title,

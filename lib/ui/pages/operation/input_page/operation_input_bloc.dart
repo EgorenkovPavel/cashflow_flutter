@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/data/sources/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -215,7 +214,7 @@ class MasterBloc extends Cubit<MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: state.type,
-              account: const AccountBalanceMapper().mapToAccount(_account!),
+              account: _account!.toAccount(),
               category: _categoryIn,
               sum: state.sum);
 
@@ -226,7 +225,7 @@ class MasterBloc extends Cubit<MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: state.type,
-              account: const AccountBalanceMapper().mapToAccount(_account!),
+              account: _account!.toAccount(),
               category: _categoryOut,
               sum: state.sum);
 
@@ -237,9 +236,8 @@ class MasterBloc extends Cubit<MasterState> {
           var operation = Operation(
               date: DateTime.now(),
               type: state.type,
-              account: const AccountBalanceMapper().mapToAccount(_account!),
-              recAccount:
-                  const AccountBalanceMapper().mapToAccount(_recAccount!),
+              account: _account!.toAccount(),
+              recAccount: _recAccount!.toAccount(),
               sum: state.sum);
 
           return _repository.operations.insert(operation);

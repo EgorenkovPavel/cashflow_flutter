@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/loading_state.dart';
-import 'package:money_tracker/data/sources/local/converters/budget_type_converter.dart';
-import 'package:money_tracker/data/sources/local/converters/operation_type_converter.dart';
+import 'package:money_tracker/data/sources/local/db_converters/budget_type_converter.dart';
+import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/data/sources/local/local_source.dart';
 import 'package:money_tracker/data/sources/network_info.dart';
 import 'package:money_tracker/data/sources/remote/remote_source.dart';
