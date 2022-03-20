@@ -9,7 +9,7 @@ class GoogleAuth extends AuthSource{
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
 
-  GoogleAuth(this._googleSignIn, this._firebaseAuth)
+  GoogleAuth(this._googleSignIn, this._firebaseAuth);
 
   @override
   Stream<model.User?> userChanges(){
