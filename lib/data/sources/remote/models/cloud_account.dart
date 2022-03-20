@@ -1,10 +1,12 @@
-class CloudAccount {
+import 'package:equatable/equatable.dart';
+
+class CloudAccount extends Equatable{
   final String id;
   final String title;
   final bool isDebt;
   final bool deleted;
 
-  CloudAccount({
+  const CloudAccount({
     required this.id,
     required this.title,
     required this.isDebt,
@@ -23,4 +25,7 @@ class CloudAccount {
         isDebt: isDebt ?? this.isDebt,
         deleted: deleted ?? this.deleted,
       );
+
+  @override
+  List<Object?> get props => [id,title,isDebt,deleted];
 }

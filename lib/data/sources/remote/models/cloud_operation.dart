@@ -1,4 +1,6 @@
-class CloudOperation {
+import 'package:equatable/equatable.dart';
+
+class CloudOperation extends Equatable {
   final String id;
   final DateTime date;
   final int operationType;
@@ -8,7 +10,7 @@ class CloudOperation {
   final int sum;
   final bool deleted;
 
-  CloudOperation({
+  const CloudOperation({
     required this.id,
     required this.date,
     required this.operationType,
@@ -39,4 +41,8 @@ class CloudOperation {
         sum: sum ?? this.sum,
         deleted: deleted ?? this.deleted,
       );
+
+  @override
+  List<Object?> get props =>
+      [id, date, operationType, account, category, recAccount, sum, deleted];
 }

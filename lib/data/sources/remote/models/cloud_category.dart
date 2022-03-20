@@ -1,4 +1,6 @@
-class CloudCategory {
+import 'package:equatable/equatable.dart';
+
+class CloudCategory extends Equatable{
   final String id;
   final String title;
   final int operationType;
@@ -6,7 +8,7 @@ class CloudCategory {
   final int budget;
   final bool deleted;
 
-  CloudCategory({
+  const CloudCategory({
     required this.id,
     required this.title,
     required this.operationType,
@@ -31,4 +33,7 @@ class CloudCategory {
         budget: budget ?? this.budget,
         deleted: deleted ?? this.deleted,
       );
+
+  @override
+  List<Object?> get props => [id,title,operationType,budgetType,budget,deleted];
 }

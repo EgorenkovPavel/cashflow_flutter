@@ -199,7 +199,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
   final String key_updated;
 
-  TableDAO(
+  const TableDAO(
       {required this.collection,
       required this.mapper,
       required this.key_updated});
@@ -304,7 +304,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
 }
 
 class AccountsDAO extends TableDAO<CloudAccount> {
-  AccountsDAO({
+  const AccountsDAO({
     required CollectionReference<Map<String, dynamic>>? collection,
     required CloudConverter<CloudAccount> mapper,
     required String key_updated,
@@ -322,7 +322,7 @@ class AccountsDAO extends TableDAO<CloudAccount> {
 }
 
 class CategoriesDAO extends TableDAO<CloudCategory> {
-  CategoriesDAO({
+  const CategoriesDAO({
     required CollectionReference<Map<String, dynamic>>? collection,
     required CloudConverter<CloudCategory> mapper,
     required String key_updated,
@@ -339,7 +339,7 @@ class CategoriesDAO extends TableDAO<CloudCategory> {
 }
 
 class OperationDAO extends TableDAO<CloudOperation> {
-  OperationDAO({
+  const OperationDAO({
     required CollectionReference<Map<String, dynamic>>? collection,
     required CloudConverter<CloudOperation> mapper,
     required String key_updated,
