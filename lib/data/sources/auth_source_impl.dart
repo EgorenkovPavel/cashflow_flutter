@@ -6,21 +6,14 @@ import 'package:money_tracker/data/sources/auth_source.dart';
 import 'package:money_tracker/domain/models/user.dart' as model;
 
 class GoogleAuth extends AuthSource{
-  late final GoogleSignIn _googleSignIn;
-  final auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn;
+  final FirebaseAuth _firebaseAuth;
 
-  GoogleAuth() {
-    _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/drive',
-      ],
-    );
-  }
+  GoogleAuth(this._googleSignIn, this._firebaseAuth)
 
   @override
   Stream<model.User?> userChanges(){
-    return auth.authStateChanges().map((user) => _mapUser(user));
+    return _firebaseAuth.authStateChanges().map((user) => _mapUser(user));
   }
 
   @override
@@ -45,7 +38,7 @@ class GoogleAuth extends AuthSource{
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await auth.signInWithCredential(credential);
+      await _firebaseAuth.signInWithCredential(credential);
     }
   }
 
@@ -59,7 +52,7 @@ class GoogleAuth extends AuthSource{
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      await auth.signInWithCredential(credential);
+      await _firebaseAuth.signInWithCredential(credential);
     }
   }
 
@@ -68,13 +61,13 @@ class GoogleAuth extends AuthSource{
     var isAuth = await isAuthenticated();
     if (isAuth) {
       await _googleSignIn.signOut();
-      await auth.signOut();
+      await _firebaseAuth.signOut();
     }
   }
 
   @override
   Future<model.User?> getUser() async {
-     return _mapUser(auth.currentUser);
+     return _mapUser(_firebaseAuth.currentUser);
   }
 
   model.User? _mapUser(User? user){

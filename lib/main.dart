@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // ignore_for_file: unused_import
@@ -23,6 +24,8 @@ import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:google_sign_in/google_sign_in.dart';
+
 Future<void> main() async {
   final db = Database();
   final _databaseSource = DatabaseSource(db);
@@ -33,7 +36,15 @@ Future<void> main() async {
   final _firestore = FirebaseFirestore.instance;
   _firestore.settings = const Settings(persistenceEnabled: false);
 
-  final AuthSource _authRepository = GoogleAuth();
+  final _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/drive',
+    ],
+  );
+  final _firebaseAuth = FirebaseAuth.instance;
+
+  final AuthSource _authRepository = GoogleAuth(_googleSignIn, _firebaseAuth);
 
   final _cloudSource = FirecloudSource(_firestore);
 

@@ -41,7 +41,7 @@ class NotAuth extends SyncEvent {}
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final AuthBloc _authBloc;
-  final SharedPrefs prefsRepository;
+  final SettingsSource prefsRepository;
   final SyncRepository syncRepo;
 
   StreamSubscription? _syncSub;
