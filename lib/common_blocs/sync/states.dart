@@ -1,9 +1,14 @@
-abstract class SyncState {
+import 'package:equatable/equatable.dart';
+
+abstract class SyncState extends Equatable{
   const SyncState();
 }
 
 class SyncStateInProgress extends SyncState {
   const SyncStateInProgress();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class SyncStateLoadingToCloud extends SyncState {
@@ -16,6 +21,9 @@ class SyncStateLoadingToCloud extends SyncState {
     required this.categoryCount,
     required this.operationCount,
   });
+
+  @override
+  List<Object?> get props => [accountCount, categoryCount, operationCount];
 }
 
 class SyncStateLoadingFromCloud extends SyncState {
@@ -28,22 +36,37 @@ class SyncStateLoadingFromCloud extends SyncState {
     required this.categoryCount,
     required this.operationCount,
   });
+
+  @override
+  List<Object?> get props => [accountCount,categoryCount,operationCount];
 }
 
 class SyncStateSynced extends SyncState {
   final DateTime syncDate;
 
   const SyncStateSynced({required this.syncDate});
+
+  @override
+  List<Object?> get props => [syncDate];
 }
 
 class SyncStateNotSynced extends SyncState {
   const SyncStateNotSynced();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class SyncStateFailed extends SyncState {
   const SyncStateFailed();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class SyncStateNoDb extends SyncState {
   const SyncStateNoDb();
+
+  @override
+  List<Object?> get props => [];
 }

@@ -1,43 +1,77 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
 import 'package:money_tracker/data/sources/settings_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class SyncEvent {}
+abstract class SyncEvent extends Equatable{}
 
-class SyncInit extends SyncEvent {}
+class SyncInit extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class CreateCloudDatabase extends SyncEvent {}
+class CreateCloudDatabase extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class RefreshConnection extends SyncEvent {}
+class RefreshConnection extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class SyncNow extends SyncEvent {}
+class SyncNow extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class SyncLastDay extends SyncEvent {}
+class SyncLastDay extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class SyncLastMonth extends SyncEvent {}
+class SyncLastMonth extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class SyncAll extends SyncEvent {}
+class SyncAll extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class AddUser extends SyncEvent {
   final User user;
 
   AddUser(this.user);
+
+  @override
+  List<Object?> get props => [user];
 }
 
-class AuthProgress extends SyncEvent {}
+class AuthProgress extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthAuthenticated extends SyncEvent {
   final User user;
 
   AuthAuthenticated(this.user);
+
+  @override
+  List<Object?> get props => [];
 }
 
-class NotAuth extends SyncEvent {}
+class NotAuth extends SyncEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final AuthBloc _authBloc;
