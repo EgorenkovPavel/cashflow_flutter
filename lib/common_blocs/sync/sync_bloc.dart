@@ -8,7 +8,7 @@ import 'package:money_tracker/data/sources/settings_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class SyncEvent extends Equatable{}
+abstract class SyncEvent extends Equatable {}
 
 class SyncInit extends SyncEvent {
   @override
@@ -73,6 +73,15 @@ class NotAuth extends SyncEvent {
   List<Object?> get props => [];
 }
 
+class SyncData extends SyncEvent{
+  final DateTime syncDate;
+
+  SyncData(this.syncDate);
+
+  @override
+  List<Object?> get props => [syncDate];
+}
+
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final AuthBloc _authBloc;
   final SettingsSource prefsRepository;
@@ -80,7 +89,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
 
   StreamSubscription? _syncSub;
 
-  SyncBloc( {
+  SyncBloc({
     required AuthBloc authBloc,
     required this.prefsRepository,
     required this.syncRepo,
@@ -97,13 +106,12 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     on<SyncLastMonth>(_syncLastMonth);
     on<SyncAll>(_syncAll);
     on<AddUser>(_addUser);
+    on<SyncData>(_syncData);
   }
 
   FutureOr<void> _init(SyncInit event, Emitter<SyncState> emit) {
     _syncSub = _authBloc.stream.listen((event) async {
-      if (event is InProgress) {
-        add(AuthProgress());
-      } else if (event is Authenticated) {
+      if (event is Authenticated) {
         add(AuthAuthenticated(event.user));
       } else {
         add(NotAuth());
@@ -132,48 +140,49 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }, (failure) {
       emit(const SyncStateFailed());
     });
-
   }
 
   FutureOr<void> _notAuth(NotAuth event, Emitter<SyncState> emit) {
     emit(const SyncStateNotSynced());
   }
 
-  Future<void> _syncData(DateTime syncFrom, Emitter<SyncState> emit) async {
+  Future<void> _syncData(SyncData event, Emitter<SyncState> emit) async {
     if (_authBloc.state is! Authenticated) {
       return;
     }
 
-    await for (var event in syncRepo.loadToCloud()) {
-      emit(SyncStateLoadingToCloud(
-        accountCount: event.accountCount,
-        categoryCount: event.categoryCount,
-        operationCount: event.operationCount,
-      ));
-    }
+    try {
+      await for (var event in syncRepo.loadToCloud()) {
+        emit(SyncStateLoadingToCloud(
+          accountCount: event.accountCount,
+          categoryCount: event.categoryCount,
+          operationCount: event.operationCount,
+        ));
+      }
 
-    var syncDate = DateTime.now();
-    syncRepo.loadFromCloud(syncFrom).listen((event) {
-      emit(SyncStateLoadingFromCloud(
-        accountCount: event.accountCount,
-        categoryCount: event.categoryCount,
-        operationCount: event.operationCount,
-      ));
-    }, onDone: () {
-      prefsRepository.setSyncDate(syncDate);
+      var syncDate = DateTime.now();
+      await for (var event in syncRepo.loadFromCloud(event.syncDate)) {
+        emit(SyncStateLoadingFromCloud(
+          accountCount: event.accountCount,
+          categoryCount: event.categoryCount,
+          operationCount: event.operationCount,
+        ));
+      }
+      await prefsRepository.setSyncDate(syncDate);
       emit(SyncStateSynced(syncDate: syncDate));
-    }, onError: (e) {
+    } catch (e) {
       emit(const SyncStateNotSynced());
-    });
+    }
   }
 
-  FutureOr<void> _createCloudDatabase(CreateCloudDatabase event, Emitter<SyncState> emit) async {
+  FutureOr<void> _createCloudDatabase(
+      CreateCloudDatabase event, Emitter<SyncState> emit) async {
     if (_authBloc.state is! Authenticated) {
       return;
     }
     emit(const SyncStateInProgress());
-    var res = await syncRepo
-        .createDatabase((_authBloc.state as Authenticated).user);
+    var res =
+        await syncRepo.createDatabase((_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
       emit(const SyncStateFailed());
       return;
@@ -183,22 +192,24 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _syncNow(SyncEvent event, Emitter<SyncState> emit) {
-    _syncData(prefsRepository.syncDate.subtract(const Duration(minutes: 30)), emit);
+    add(SyncData(
+        prefsRepository.syncDate.subtract(const Duration(minutes: 30))));
   }
 
   FutureOr<void> _syncLastDay(SyncLastDay event, Emitter<SyncState> emit) {
-    _syncData(prefsRepository.syncDate.subtract(const Duration(days: 1)), emit);
+    add(SyncData(prefsRepository.syncDate.subtract(const Duration(days: 1))));
   }
 
   FutureOr<void> _syncLastMonth(SyncLastMonth event, Emitter<SyncState> emit) {
-    _syncData(prefsRepository.syncDate.subtract(const Duration(days: 30)), emit);
+    add(SyncData(
+        prefsRepository.syncDate.subtract(const Duration(days: 30))));
   }
 
   FutureOr<void> _syncAll(SyncAll event, Emitter<SyncState> emit) {
-    _syncData(DateTime.utc(1970, 1, 1), emit);
+    add(SyncData(DateTime.utc(1970, 1, 1)));
   }
 
-  FutureOr<void> _addUser(AddUser event, Emitter<SyncState> emit) async{
+  FutureOr<void> _addUser(AddUser event, Emitter<SyncState> emit) async {
     await syncRepo.addToDatabase(event.user);
   }
 

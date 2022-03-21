@@ -44,7 +44,7 @@ Future<void> main() async {
   );
   final _firebaseAuth = FirebaseAuth.instance;
 
-  final AuthSource _authRepository = GoogleAuth(_googleSignIn, _firebaseAuth);
+  final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
 
   final _cloudSource = FirecloudSource(_firestore);
 
@@ -65,7 +65,7 @@ Future<void> main() async {
         BlocProvider(
           lazy: false,
           create: (context) => AuthBloc(
-            _authRepository,
+            _authSource,
             _syncRepo,
           )..add(Init()),
         ),
@@ -75,11 +75,12 @@ Future<void> main() async {
             authBloc: context.read<AuthBloc>(),
             prefsRepository: _prefsRepo,
             syncRepo: _syncRepo,
-          ),
+          )..add(SyncInit()),
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
+          RepositoryProvider<AuthSource>(create: (_) => _authSource),
           RepositoryProvider<DataRepository>(create: (_) => _dataSource),
           RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
         ],

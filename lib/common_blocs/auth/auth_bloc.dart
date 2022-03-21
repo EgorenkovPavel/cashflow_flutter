@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/data/sources/auth_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class AuthEvent extends Equatable{}
+abstract class AuthEvent extends Equatable {}
 
 class Init extends AuthEvent {
   @override
@@ -44,25 +43,16 @@ abstract class AuthState extends Equatable {
   const AuthState({required this.isAdmin});
 }
 
-class InProgress extends AuthState {
-  const InProgress() : super(isAdmin: false);
-
-  @override
-  List<Object?> get props => [];
-}
-
 class Authenticated extends AuthState {
   final User user;
-  final AuthClient client;
 
   const Authenticated({
     required bool isAdmin,
     required this.user,
-    required this.client,
   }) : super(isAdmin: isAdmin);
 
   @override
-  List<Object?> get props => [user, client];
+  List<Object?> get props => [user];
 }
 
 class NotAuthenticated extends AuthState {
@@ -82,7 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
     this._authSource,
     this._syncRepo,
-  ) : super(const InProgress()) {
+  ) : super(const NotAuthenticated()) {
     on<Init>(_init);
     on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
@@ -114,13 +104,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {
     if (event.authenticated) {
       var user = await _authSource.getUser();
-      var client = await _authSource.getClient();
-      if (client == null) {
-        emit(const NotAuthenticated());
-      } else {
-        var isAdmin = await _syncRepo.isAdmin(user!);
-        emit(Authenticated(isAdmin: isAdmin, user: user, client: client));
-      }
+      var isAdmin = await _syncRepo.isAdmin(user!);
+      emit(Authenticated(
+        isAdmin: isAdmin,
+        user: user,
+      ));
     } else {
       emit(const NotAuthenticated());
     }
@@ -128,17 +116,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signInSilently(
       SignInSilently event, Emitter<AuthState> emit) async {
-    emit(const InProgress());
     await _authSource.signInSilently();
   }
 
   Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {
-    emit(const InProgress());
     await _authSource.signIn();
   }
 
   Future<void> _signOut(SignOut event, Emitter<AuthState> emit) async {
-    emit(const InProgress());
     await _authSource.signOut();
   }
 }
