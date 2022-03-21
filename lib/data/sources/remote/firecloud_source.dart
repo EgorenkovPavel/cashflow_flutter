@@ -8,13 +8,13 @@ import 'package:money_tracker/data/sources/remote/mappers/category_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/user_mapper.dart';
-import 'package:money_tracker/data/sources/remote/remote_source.dart';
+import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';
 
-class FirecloudSource extends RemoteSource {
+class FirecloudSource extends RemoteDataSource {
 
   final FirebaseFirestore _firestore;
 

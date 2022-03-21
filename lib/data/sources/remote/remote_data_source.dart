@@ -4,7 +4,7 @@ import 'package:money_tracker/utils/try.dart';
 
 import 'models/cloud_models.dart';
 
-abstract class RemoteSource{
+abstract class RemoteDataSource{
 
   CloudTable<CloudAccount> get accounts;
   CloudTable<CloudCategory> get categories;

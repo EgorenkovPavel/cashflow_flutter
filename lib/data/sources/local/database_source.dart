@@ -3,7 +3,7 @@ import 'package:money_tracker/data/sources/local/data/account_dao.dart';
 import 'package:money_tracker/data/sources/local/data/category_dao.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
 import 'package:money_tracker/data/sources/local/data/operation_dao.dart';
-import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/data/sources/local/repos/account_repository.dart';
 import 'package:money_tracker/data/sources/local/repos/category_repository.dart';
 import 'package:money_tracker/data/sources/local/repos/operation_repository.dart';
@@ -11,7 +11,7 @@ import 'package:money_tracker/domain/models/account/account.dart';
 import 'package:money_tracker/domain/models/category/category.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
 
-class DatabaseSource extends LocalSource{
+class DatabaseSource extends LocalDataSource{
   final Database db;
 
   final AccountRepository _accountRepo;

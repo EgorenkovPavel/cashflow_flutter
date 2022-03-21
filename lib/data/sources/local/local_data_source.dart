@@ -1,7 +1,7 @@
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class LocalSource{
+abstract class LocalDataSource{
 
   AccountDataRepository get accounts;
   CategoryDataRepository get categories;

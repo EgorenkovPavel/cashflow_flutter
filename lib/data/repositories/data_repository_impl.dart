@@ -1,8 +1,8 @@
-import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 
 class DataRepositoryImpl implements DataRepository {
-  final LocalSource _localSource;
+  final LocalDataSource _localSource;
 
   DataRepositoryImpl(this._localSource);
 

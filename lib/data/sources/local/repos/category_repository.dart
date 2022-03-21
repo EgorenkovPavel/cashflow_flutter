@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:money_tracker/data/sources/local/data/category_dao.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/data/sources/local/mappers/category_cashflow_mapper.dart';
 import 'package:money_tracker/data/sources/local/mappers/category_mapper.dart';
 import 'package:money_tracker/data/sources/local/mappers/category_month_cashflow_mapper.dart';

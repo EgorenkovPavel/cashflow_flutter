@@ -3,7 +3,7 @@ import 'package:money_tracker/data/sources/local/entities/account_balance_entity
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/data/sources/local/data/account_dao.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/local_source.dart';
+import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/data/sources/local/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/sources/local/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
