@@ -10,11 +10,6 @@ import 'package:money_tracker/domain/models/user.dart';
 
 abstract class SyncEvent extends Equatable {}
 
-class SyncInit extends SyncEvent {
-  @override
-  List<Object?> get props => [];
-}
-
 class CreateCloudDatabase extends SyncEvent {
   @override
   List<Object?> get props => [];
@@ -95,7 +90,6 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     required this.syncRepo,
   })  : _authBloc = authBloc,
         super(const SyncStateNotSynced()) {
-    on<SyncInit>(_init);
     on<AuthProgress>(_authProgress);
     on<AuthAuthenticated>(_authAuthenticated);
     on<NotAuth>(_notAuth);
@@ -107,9 +101,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     on<SyncAll>(_syncAll);
     on<AddUser>(_addUser);
     on<SyncData>(_syncData);
-  }
 
-  FutureOr<void> _init(SyncInit event, Emitter<SyncState> emit) {
     _syncSub = _authBloc.stream.listen((event) async {
       if (event is Authenticated) {
         add(AuthAuthenticated(event.user));

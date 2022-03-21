@@ -8,11 +8,6 @@ import 'package:money_tracker/domain/models/user.dart';
 
 abstract class AuthEvent extends Equatable {}
 
-class Init extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}
-
 class _ChangeAuth extends AuthEvent {
   final bool authenticated;
 
@@ -73,21 +68,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._authSource,
     this._syncRepo,
   ) : super(const NotAuthenticated()) {
-    on<Init>(_init);
     on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
     on<SignIn>(_signIn);
     on<SignOut>(_signOut);
-  }
 
-  @override
-  Future<void> close() {
-    _sub?.cancel();
-    _subInternet?.cancel();
-    return super.close();
-  }
-
-  void _init(Init event, Emitter<AuthState> emit) {
     _sub = _authSource.userChanges().listen((user) {
       add(_ChangeAuth(user != null));
     });
@@ -98,7 +83,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         add(_ChangeAuth(false));
       }
     });
-    add(SignInSilently());
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    _subInternet?.cancel();
+    return super.close();
   }
 
   Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {

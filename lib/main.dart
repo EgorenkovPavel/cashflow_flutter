@@ -67,7 +67,7 @@ Future<void> main() async {
           create: (context) => AuthBloc(
             _authSource,
             _syncRepo,
-          )..add(Init()),
+          ),
         ),
         BlocProvider(
           lazy: false,
@@ -75,7 +75,7 @@ Future<void> main() async {
             authBloc: context.read<AuthBloc>(),
             prefsRepository: _prefsRepo,
             syncRepo: _syncRepo,
-          )..add(SyncInit()),
+          ),
         ),
       ],
       child: MultiRepositoryProvider(
