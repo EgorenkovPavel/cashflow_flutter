@@ -25,7 +25,6 @@ class _BackupDialogState extends State<BackupDialog> {
     _controller.text = context.read<SharedPrefs>().googleDriveFileName;
   }
 
-
   @override
   void dispose() {
     _controller.dispose();
@@ -38,9 +37,7 @@ class _BackupDialogState extends State<BackupDialog> {
     }
 
     await widget.onBackup(_folder.id, _controller.text);
-    await context
-        .read<SharedPrefs>()
-        .setGoogleDriveFileName(_controller.text);
+    await context.read<SharedPrefs>().setGoogleDriveFileName(_controller.text);
 
     Navigator.of(context).pop();
   }
@@ -67,8 +64,9 @@ class _BackupDialogState extends State<BackupDialog> {
               padding: const EdgeInsets.only(left: 8.0),
               width: double.infinity,
               decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(8.0))),
+                border: Border.all(width: 1),
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -101,7 +99,7 @@ class _BackupDialogState extends State<BackupDialog> {
           child: Text(
             AppLocalizations.of(context).backup.toUpperCase(),
           ),
-        )
+        ),
       ],
     );
   }

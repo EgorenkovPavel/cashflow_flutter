@@ -89,6 +89,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> close() {
     _sub?.cancel();
     _subInternet?.cancel();
+
     return super.close();
   }
 
@@ -106,7 +107,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signInSilently(
-      SignInSilently event, Emitter<AuthState> emit) async {
+      SignInSilently event, Emitter<AuthState> emit,) async {
     await _authSource.signInSilently();
   }
 

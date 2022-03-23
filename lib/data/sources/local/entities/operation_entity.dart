@@ -8,11 +8,12 @@ class OperationDbEntity {
   final CategoryDB? category;
   final AccountDB? recAccount;
 
-  OperationDbEntity(
-      {required this.operation,
-        required this.account,
-        this.category,
-        this.recAccount});
+  OperationDbEntity({
+    required this.operation,
+    required this.account,
+    this.category,
+    this.recAccount,
+  });
 
   //TODO rewrite to date, type, account, category, recAccount sum
   OperationDB get operationData {
@@ -22,7 +23,9 @@ class OperationDbEntity {
         return operation.copyWith(account: account.id, category: category!.id);
       case OperationType.TRANSFER:
         return operation.copyWith(
-            account: account.id, recAccount: recAccount!.id);
+          account: account.id,
+          recAccount: recAccount!.id,
+        );
       default:
         throw InvalidDataException('');
     }
@@ -35,5 +38,4 @@ class OperationDbEntity {
   OperationType get type => operation.operationType;
 
   int get sum => operation.sum;
-
 }

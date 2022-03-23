@@ -15,7 +15,6 @@ import 'package:money_tracker/utils/try.dart';
 import 'models/cloud_models.dart';
 
 class FirecloudSource extends RemoteDataSource {
-
   final FirebaseFirestore _firestore;
 
   static const String _DATABASES = 'databases';
@@ -51,20 +50,20 @@ class FirecloudSource extends RemoteDataSource {
         mapper: const OperationMapper(),
       );
 
-
   Future<Try<DocumentReference<Map<String, dynamic>>>> _getDatabase(
-      String userId) async {
+    String userId,
+  ) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        return Success(
-            _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id));
-      } else {
-        return Failure('No local found');
-      }
+
+      return querySnapshot.docs.isNotEmpty
+          ? Success(_firestore
+              .collection(_DATABASES)
+              .doc(querySnapshot.docs.first.id))
+          : Failure('No local found');
     } catch (e) {
       return Future.value(Failure(e.toString()));
     }
@@ -108,6 +107,7 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_USERS)
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
+
       return Success(null);
     } catch (e) {
       return Future.value(Failure(e.toString()));
@@ -121,8 +121,10 @@ class FirecloudSource extends RemoteDataSource {
         return Success(<User>[]);
       }
       var doc = await _db!.collection(_USERS).get();
+
       return Success(
-          doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList());
+        doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList(),
+      );
     } catch (e) {
       return Failure(e.toString());
     }
@@ -136,9 +138,9 @@ class FirecloudSource extends RemoteDataSource {
         _DATABASES_USERS: [user.id],
       });
       await _db!
-        .collection(_USERS)
-        .doc(user.id)
-        .set(const UserMapper().mapToCloud(user));
+          .collection(_USERS)
+          .doc(user.id)
+          .set(const UserMapper().mapToCloud(user));
 
       return Success(null);
     } catch (e) {
@@ -163,18 +165,24 @@ class FirecloudSource extends RemoteDataSource {
   @override
   Future<Try<void>> connect(User user) async {
     var res = await _getDatabase(user.id);
-      return res.fold((success) async {
+
+    return res.fold(
+      (success) async {
         _db = success;
         try {
           var doc = await _db!.get();
+
           return Success(null);
         } catch (e) {
           return Failure(e.toString());
         }
-      }, (failure) {
+      },
+      (failure) {
         _db = null;
+
         return Failure(failure);
-      });
+      },
+    );
   }
 
   @override
@@ -184,10 +192,11 @@ class FirecloudSource extends RemoteDataSource {
 
   @override
   Future<bool> isAdmin(User user) async {
-    if (_db == null){
+    if (_db == null) {
       return false;
     }
     var res = await _db!.get();
+
     return user.id == res.data()![_DATABASES_ADMIN];
   }
 }
@@ -199,10 +208,11 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
   final String key_updated;
 
-  const TableDAO(
-      {required this.collection,
-      required this.mapper,
-      required this.key_updated});
+  const TableDAO({
+    required this.collection,
+    required this.mapper,
+    required this.key_updated,
+  });
 
   @override
   Future<Try<String>> add(T entity) async {
@@ -211,11 +221,8 @@ abstract class TableDAO<T> implements CloudTable<T> {
     }
 
     var doc = await collection!.add(mapper.mapToCloud(entity));
-    if (doc == null) {
-      return Failure('Error');
-    } else {
-      return Success(doc.id);
-    }
+
+    return doc == null ? Failure('Error') : Success(doc.id);
   }
 
   @override
@@ -226,6 +233,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
     try {
       await collection!.doc(cloudId).update(mapper.deletionMark());
+
       return Success(null);
     } catch (e) {
       return Failure(e.toString());
@@ -242,6 +250,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
       var docs = await collection!
           .where(key_updated, isGreaterThanOrEqualTo: dateSince)
           .get();
+
       return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
     } catch (e) {
       return Failure(e.toString());
@@ -256,6 +265,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
     try {
       await collection!.doc(entityId).update({key_updated: DateTime.now()});
+
       return Success(null);
     } catch (e) {
       return Failure(e.toString());
@@ -270,6 +280,7 @@ abstract class TableDAO<T> implements CloudTable<T> {
 
     try {
       await collection!.doc(getId(entity)).update(mapper.mapToCloud(entity));
+
       return Success(null);
     } catch (e) {
       return Failure(e.toString());
@@ -300,7 +311,6 @@ abstract class TableDAO<T> implements CloudTable<T> {
   }
 
   String getId(T entity);
-
 }
 
 class AccountsDAO extends TableDAO<CloudAccount> {
@@ -318,7 +328,6 @@ class AccountsDAO extends TableDAO<CloudAccount> {
   String getId(CloudAccount entity) {
     return entity.id;
   }
-
 }
 
 class CategoriesDAO extends TableDAO<CloudCategory> {

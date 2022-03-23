@@ -6,7 +6,7 @@ import 'package:money_tracker/domain/interfaces/data_repository.dart';
 enum DataControlState{
   INITIAL,
   IN_PROGRESS,
-  SUCCESS
+  SUCCESS,
 }
 
 class DataControlBloc extends Cubit<DataControlState>{

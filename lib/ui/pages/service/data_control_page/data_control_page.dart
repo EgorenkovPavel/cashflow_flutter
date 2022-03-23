@@ -10,6 +10,7 @@ class DataControlPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _bloc = DataControlBloc(context.read<DataRepository>());
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).titleDataControl),
@@ -26,23 +27,22 @@ class DataControlPage extends StatelessWidget {
             ),
           ),
           BlocConsumer<DataControlBloc, DataControlState>(
-              bloc: _bloc,
-              builder: (context, state) {
-                if (state == DataControlState.IN_PROGRESS) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-              listener: (context, state) {
-                if (state == DataControlState.SUCCESS) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          AppLocalizations.of(context).mesDatabaseDeleted)));
-                }
-              })
+            bloc: _bloc,
+            builder: (context, state) {
+              return state == DataControlState.IN_PROGRESS
+                  ? const Center(child: CircularProgressIndicator())
+                  : const SizedBox();
+            },
+            listener: (context, state) {
+              if (state == DataControlState.SUCCESS) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    AppLocalizations.of(context).mesDatabaseDeleted,
+                  ),
+                ));
+              }
+            },
+          ),
         ],
       ),
     );

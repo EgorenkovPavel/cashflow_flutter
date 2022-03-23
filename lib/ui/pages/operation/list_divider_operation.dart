@@ -23,26 +23,25 @@ class ListDividerOperation extends StatelessWidget {
     var op2 = operation2.date;
 
     if (op1 == null) {
-      return _TitleDivider(date: op2, type: _titleType,);
+      return _TitleDivider(
+        date: op2,
+        type: _titleType,
+      );
     } else {
       switch (_titleType) {
         case _TitleType.DAY:
           {
-            if (op1.year == op2.year &&
-                op1.month == op2.month &&
-                op1.day == op2.day) {
-              return const _EmptyDivider();
-            } else {
-              return _TitleDivider(date: op2, type: _titleType,);
-            }
+            return op1.year == op2.year &&
+                    op1.month == op2.month &&
+                    op1.day == op2.day
+                ? const _EmptyDivider()
+                : _TitleDivider(date: op2, type: _titleType);
           }
         case _TitleType.MONTH:
           {
-            if (op1.year == op2.year && op1.month == op2.month) {
-              return const _EmptyDivider();
-            } else {
-              return _TitleDivider(date: op2, type: _titleType,);
-            }
+            return op1.year == op2.year && op1.month == op2.month
+                ? const _EmptyDivider()
+                : _TitleDivider(date: op2, type: _titleType);
           }
       }
     }
@@ -52,24 +51,26 @@ class ListDividerOperation extends StatelessWidget {
 class _TitleDivider extends StatelessWidget {
   const _TitleDivider({
     Key? key,
-    required this.date, required this.type,
+    required this.date,
+    required this.type,
   }) : super(key: key);
 
   final DateTime date;
   final _TitleType type;
 
-  String _calcTitle(BuildContext context){
-    switch (type){
-      case _TitleType.DAY:{
-        return DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-            .format(date);
-      }
-      case _TitleType.MONTH:{
-        return DateFormat.yMMM(Localizations.localeOf(context).languageCode)
-            .format(date);
-      }
+  String _calcTitle(BuildContext context) {
+    switch (type) {
+      case _TitleType.DAY:
+        {
+          return DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+              .format(date);
+        }
+      case _TitleType.MONTH:
+        {
+          return DateFormat.yMMM(Localizations.localeOf(context).languageCode)
+              .format(date);
+        }
     }
-
   }
 
   @override
@@ -105,4 +106,3 @@ class _EmptyDivider extends StatelessWidget {
 }
 
 enum _TitleType { DAY, MONTH }
-

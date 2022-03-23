@@ -39,11 +39,12 @@ class OperationRepository
   Stream<List<Operation>> watchAllByFilter(OperationListFilter filter) =>
       operationDao
           .watchAllOperationItemsByFilter(
-              start: filter.period?.start,
-              end: filter.period?.end,
-              accountIds: filter.accounts.map((account) => account.id).toSet(),
-              categoriesIds:
-                  filter.categories.map((category) => category.id).toSet())
+            start: filter.period?.start,
+            end: filter.period?.end,
+            accountIds: filter.accounts.map((account) => account.id).toSet(),
+            categoriesIds:
+                filter.categories.map((category) => category.id).toSet(),
+          )
           .map(_mapOperationList);
 
   @override
@@ -53,11 +54,7 @@ class OperationRepository
   @override
   Future<Operation?> getByCloudId(String cloudId) =>
       operationDao.getOperationByCloudId(cloudId).then((value) {
-        if (value == null) {
-          return null;
-        } else {
-          return _mapOperation(value);
-        }
+        return value == null ? null : _mapOperation(value);
       });
 
   @override
@@ -90,6 +87,7 @@ class OperationRepository
       recAccount: Value(entity.recAccount?.id),
       sum: Value(entity.sum),
     ));
+
     return entity.copyWith(id: _id);
   }
 
@@ -100,6 +98,7 @@ class OperationRepository
       cloudId: '',
       date: DateTime.now(),
     );
+
     return insert(newOperation);
   }
 
@@ -118,7 +117,8 @@ class OperationRepository
   @override
   Future<List<Operation>> getAllNotSynced() async {
     return _mapOperationList(
-        await operationDao.getAllOperationItemsNotSynced());
+      await operationDao.getAllOperationItemsNotSynced(),
+    );
   }
 
   @override
@@ -151,17 +151,18 @@ class OperationRepository
   @override
   Future updateFromCloud(Operation operation) {
     return operationDao.updateFields(
-        operation.id,
-        OperationsCompanion(
-          cloudId: Value(operation.cloudId),
-          date: Value(operation.date),
-          operationType: Value(operation.type),
-          account: Value(operation.account.id),
-          category: Value(operation.category?.id),
-          recAccount: Value(operation.recAccount?.id),
-          sum: Value(operation.sum),
-          synced: const Value(true),
-          deleted: Value(operation.deleted),
-        ));
+      operation.id,
+      OperationsCompanion(
+        cloudId: Value(operation.cloudId),
+        date: Value(operation.date),
+        operationType: Value(operation.type),
+        account: Value(operation.account.id),
+        category: Value(operation.category?.id),
+        recAccount: Value(operation.recAccount?.id),
+        sum: Value(operation.sum),
+        synced: const Value(true),
+        deleted: Value(operation.deleted),
+      ),
+    );
   }
 }

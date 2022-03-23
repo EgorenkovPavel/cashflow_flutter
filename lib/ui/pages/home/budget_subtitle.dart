@@ -17,22 +17,26 @@ class BudgetSubtitle extends StatelessWidget {
 
   int _calcCashflow(List<CategoryCashflow> list) {
     return list.fold(
-        0, (previousValue, element) => previousValue + element.monthCashflow);
+      0,
+      (previousValue, element) => previousValue + element.monthCashflow,
+    );
   }
 
   int _calcBudget(List<CategoryCashflow> list) {
     return list
             .where((element) => element.category.budgetType == BudgetType.MONTH)
             .fold<int>(
-                0,
-                (previousValue, element) =>
-                    previousValue + element.category.budget) +
+              0,
+              (previousValue, element) =>
+                  previousValue + element.category.budget,
+            ) +
         list
             .where((element) => element.category.budgetType == BudgetType.YEAR)
             .fold<int>(
-                0,
-                (previousValue, element) =>
-                    previousValue + (element.category.budget / 12).floor());
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.category.budget / 12).floor(),
+            );
   }
 
   @override
@@ -54,19 +58,23 @@ class BudgetSubtitle extends StatelessWidget {
           _cashflow = _calcCashflow(snapshot.data!);
           _budget = _calcBudget(snapshot.data!);
         }
+
         return Subtitle(
           leading: RichText(
             text: TextSpan(
               children: [
                 TextSpan(
-                    text: type == OperationType.INPUT
-                        ? 'Earning in '
-                        : 'Spending in ',
-                    style: Theme.of(context).textTheme.headline6),
+                  text: type == OperationType.INPUT
+                      ? 'Earning in '
+                      : 'Spending in ',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 TextSpan(
-                    text: DateFormat.MMMM().format(DateTime.now()),
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Theme.of(context).colorScheme.primary)),
+                  text: DateFormat.MMMM().format(DateTime.now()),
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
               ],
             ),
           ),
@@ -84,7 +92,7 @@ class BudgetSubtitle extends StatelessWidget {
               Text(
                 'of ${NumberFormat().format(_budget)}',
                 style: Theme.of(context).textTheme.caption,
-              )
+              ),
             ],
           ),
         );

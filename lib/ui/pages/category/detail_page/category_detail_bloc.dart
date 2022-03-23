@@ -18,7 +18,7 @@ class ChangeCategory extends CategoryDetailEvent {
   ChangeCategory(this.category);
 }
 
-class ChangeOperations extends CategoryDetailEvent{
+class ChangeOperations extends CategoryDetailEvent {
   final List<Operation> operations;
 
   ChangeOperations(this.operations);
@@ -79,24 +79,34 @@ class CategoryDetailBloc
       add(ChangeCategory(category));
     });
     _subOperations = _repository.operations
-        .watchAllByCategory(event.categoryId).listen((items) {
-          add(ChangeOperations(items));
+        .watchAllByCategory(event.categoryId)
+        .listen((items) {
+      add(ChangeOperations(items));
     });
   }
 
   void _changeCategory(
-      ChangeCategory event, Emitter<CategoryDetailState> emit) {
+    ChangeCategory event,
+    Emitter<CategoryDetailState> emit,
+  ) {
     emit(CategoryDetailState.category(category: event.category, state: state));
   }
 
-  void _changeOperations(ChangeOperations event, Emitter<CategoryDetailState> emit) {
-    emit(CategoryDetailState.operations(operations: event.operations, state: state));
+  void _changeOperations(
+    ChangeOperations event,
+    Emitter<CategoryDetailState> emit,
+  ) {
+    emit(CategoryDetailState.operations(
+      operations: event.operations,
+      state: state,
+    ));
   }
 
   @override
   Future<void> close() async {
     await _subCategory?.cancel();
     await _subOperations?.cancel();
+
     return super.close();
   }
 }

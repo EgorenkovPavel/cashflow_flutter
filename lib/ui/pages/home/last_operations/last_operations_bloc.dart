@@ -47,6 +47,7 @@ class LastOperationsBloc extends Bloc<LastOperationsEvent, LastOperationsState>{
   @override
   Future<void> close() {
     _sub?.cancel();
+
     return super.close();
   }
 }

@@ -22,7 +22,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     return (select(operations)
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -44,15 +44,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .then((rows) => rows.map(
               (row) {
                 var op = row.readTable(operations);
+
                 return OperationDbEntity(
-                    operation: op,
-                    account: row.readTable(acc),
-                    category: op.operationType == OperationType.TRANSFER
-                        ? null
-                        : row.readTable(categories),
-                    recAccount: op.operationType == OperationType.TRANSFER
-                        ? row.readTable(rec)
-                        : null);
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null,
+                );
               },
             ).toList());
   }
@@ -64,7 +66,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return (select(operations)
           ..where((tbl) => tbl.cloudId.equals(''))
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -86,15 +88,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .then((rows) => rows.map(
               (row) {
                 var op = row.readTable(operations);
+
                 return OperationDbEntity(
-                    operation: op,
-                    account: row.readTable(acc),
-                    category: op.operationType == OperationType.TRANSFER
-                        ? null
-                        : row.readTable(categories),
-                    recAccount: op.operationType == OperationType.TRANSFER
-                        ? row.readTable(rec)
-                        : null);
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null,
+                );
               },
             ).toList());
   }
@@ -106,7 +110,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return (select(operations)
           ..where((tbl) => tbl.synced.equals(false))
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -128,15 +132,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .then((rows) => rows.map(
               (row) {
                 var op = row.readTable(operations);
+
                 return OperationDbEntity(
-                    operation: op,
-                    account: row.readTable(acc),
-                    category: op.operationType == OperationType.TRANSFER
-                        ? null
-                        : row.readTable(categories),
-                    recAccount: op.operationType == OperationType.TRANSFER
-                        ? row.readTable(rec)
-                        : null);
+                  operation: op,
+                  account: row.readTable(acc),
+                  category: op.operationType == OperationType.TRANSFER
+                      ? null
+                      : row.readTable(categories),
+                  recAccount: op.operationType == OperationType.TRANSFER
+                      ? row.readTable(rec)
+                      : null,
+                );
               },
             ).toList());
   }
@@ -148,7 +154,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return (select(operations)
           ..where((tbl) => tbl.synced.equals(false))
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -170,15 +176,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .map(
           (row) {
             var op = row.readTable(operations);
+
             return OperationDbEntity(
-                operation: op,
-                account: row.readTable(acc),
-                category: op.operationType == OperationType.TRANSFER
-                    ? null
-                    : row.readTable(categories),
-                recAccount: op.operationType == OperationType.TRANSFER
-                    ? row.readTable(rec)
-                    : null);
+              operation: op,
+              account: row.readTable(acc),
+              category: op.operationType == OperationType.TRANSFER
+                  ? null
+                  : row.readTable(categories),
+              recAccount: op.operationType == OperationType.TRANSFER
+                  ? row.readTable(rec)
+                  : null,
+            );
           },
         );
   }
@@ -189,7 +197,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     return (select(operations)
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -212,25 +220,28 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           (rows) => rows.map(
             (row) {
               var op = row.readTable(operations);
+
               return OperationDbEntity(
-                  operation: op,
-                  account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER
-                      ? null
-                      : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER
-                      ? row.readTable(rec)
-                      : null);
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null,
+              );
             },
           ).toList(),
         );
   }
 
-  Stream<List<OperationDbEntity>> watchAllOperationItemsByFilter(
-      {required DateTime? start,
-      required DateTime? end,
-      required Set<int> accountIds,
-      required Set<int> categoriesIds}) {
+  Stream<List<OperationDbEntity>> watchAllOperationItemsByFilter({
+    required DateTime? start,
+    required DateTime? end,
+    required Set<int> accountIds,
+    required Set<int> categoriesIds,
+  }) {
     final acc = alias(accounts, 'aсс');
     final rec = alias(accounts, 'rec');
 
@@ -245,7 +256,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     if (accountIds.isNotEmpty) {
       sel.where(
-          (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds));
+        (t) => t.account.isIn(accountIds) | t.recAccount.isIn(accountIds),
+      );
     }
 
     if (categoriesIds.isNotEmpty) {
@@ -254,7 +266,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     return (sel
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -277,28 +289,32 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           (rows) => rows.map(
             (row) {
               var op = row.readTable(operations);
+
               return OperationDbEntity(
-                  operation: op,
-                  account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER
-                      ? null
-                      : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER
-                      ? row.readTable(rec)
-                      : null);
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null,
+              );
             },
           ).toList(),
         );
   }
 
-  Stream<List<OperationDbEntity>> watchAllOperationItemsByCategory(int categoryId) {
+  Stream<List<OperationDbEntity>> watchAllOperationItemsByCategory(
+    int categoryId,
+  ) {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
 
     return (select(operations)
           ..where((t) => t.category.equals(categoryId))
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -321,21 +337,25 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           (rows) => rows.map(
             (row) {
               var op = row.readTable(operations);
+
               return OperationDbEntity(
-                  operation: op,
-                  account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER
-                      ? null
-                      : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER
-                      ? row.readTable(rec)
-                      : null);
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null,
+              );
             },
           ).toList(),
         );
   }
 
-  Stream<List<OperationDbEntity>> watchAllOperationItemsByAccount(int accountId) {
+  Stream<List<OperationDbEntity>> watchAllOperationItemsByAccount(
+    int accountId,
+  ) {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
 
@@ -343,7 +363,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ..where((t) =>
               t.account.equals(accountId) | t.recAccount.equals(accountId))
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ]))
         .join(
           [
@@ -366,15 +386,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           (rows) => rows.map(
             (row) {
               var op = row.readTable(operations);
+
               return OperationDbEntity(
-                  operation: op,
-                  account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER
-                      ? null
-                      : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER
-                      ? row.readTable(rec)
-                      : null);
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null,
+              );
             },
           ).toList(),
         );
@@ -386,7 +408,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     return (select(operations)
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ])
           ..limit(limit))
         .join(
@@ -410,15 +432,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           (rows) => rows.map(
             (row) {
               var op = row.readTable(operations);
+
               return OperationDbEntity(
-                  operation: op,
-                  account: row.readTable(acc),
-                  category: op.operationType == OperationType.TRANSFER
-                      ? null
-                      : row.readTable(categories),
-                  recAccount: op.operationType == OperationType.TRANSFER
-                      ? row.readTable(rec)
-                      : null);
+                operation: op,
+                account: row.readTable(acc),
+                category: op.operationType == OperationType.TRANSFER
+                    ? null
+                    : row.readTable(categories),
+                recAccount: op.operationType == OperationType.TRANSFER
+                    ? row.readTable(rec)
+                    : null,
+              );
             },
           ).toList(),
         );
@@ -430,7 +454,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
     return (select(operations)
           ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ])
           ..limit(1))
         .join(
@@ -450,9 +474,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ],
         )
         .getSingle()
-        .then((row) {
-          var op = row.readTable(operations);
-          return OperationDbEntity(
+        .then(
+          (row) {
+            var op = row.readTable(operations);
+
+            return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
               category: op.operationType == OperationType.TRANSFER
@@ -460,10 +486,13 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
                   : row.readTable(categories),
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
-                  : null);
-        }, onError: (e) {
-          return null;
-        });
+                  : null,
+            );
+          },
+          onError: (e) {
+            return null;
+          },
+        );
   }
 
   Future<List<OperationDB>> getAllOperations() => select(operations).get();
@@ -492,15 +521,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .getSingle()
         .then((row) {
           var op = row.readTable(operations);
+
           return OperationDbEntity(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
+            operation: op,
+            account: row.readTable(acc),
+            category: op.operationType == OperationType.TRANSFER
+                ? null
+                : row.readTable(categories),
+            recAccount: op.operationType == OperationType.TRANSFER
+                ? row.readTable(rec)
+                : null,
+          );
         });
   }
 
@@ -531,15 +562,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return null;
           }
           var op = row.readTable(operations);
+
           return OperationDbEntity(
-              operation: op,
-              account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null);
+            operation: op,
+            account: row.readTable(acc),
+            category: op.operationType == OperationType.TRANSFER
+                ? null
+                : row.readTable(categories),
+            recAccount: op.operationType == OperationType.TRANSFER
+                ? row.readTable(rec)
+                : null,
+          );
         });
   }
 
@@ -610,6 +643,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future<int> updateOperation(OperationDB entity) {
     return transaction(() async {
       await deleteOperation(entity);
+
       return await insertOperation(OperationsCompanion(
         id: Value(entity.id),
         cloudId: Value(entity.cloudId),
@@ -653,43 +687,49 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         case OperationType.INPUT:
           {
             balanceData.add(BalanceDB(
-                date: operation.date,
-                operation: operation.id,
-                account: operation.account,
-                sum: operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: operation.sum,
+            ));
             cashflowData.add(CashflowDB(
-                date: operation.date,
-                operation: operation.id,
-                category: operation.category!,
-                sum: operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              category: operation.category!,
+              sum: operation.sum,
+            ));
             break;
           }
         case OperationType.OUTPUT:
           {
             balanceData.add(BalanceDB(
-                date: operation.date,
-                operation: operation.id,
-                account: operation.account,
-                sum: -1 * operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: -1 * operation.sum,
+            ));
             cashflowData.add(CashflowDB(
-                date: operation.date,
-                operation: operation.id,
-                category: operation.category!,
-                sum: operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              category: operation.category!,
+              sum: operation.sum,
+            ));
             break;
           }
         case OperationType.TRANSFER:
           {
             balanceData.add(BalanceDB(
-                date: operation.date,
-                operation: operation.id,
-                account: operation.account,
-                sum: -1 * operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              account: operation.account,
+              sum: -1 * operation.sum,
+            ));
             balanceData.add(BalanceDB(
-                date: operation.date,
-                operation: operation.id,
-                account: operation.recAccount!,
-                sum: operation.sum));
+              date: operation.date,
+              operation: operation.id,
+              account: operation.recAccount!,
+              sum: operation.sum,
+            ));
             break;
           }
       }
@@ -716,21 +756,24 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         cashflows,
         cashflowData
             .map((p) => CashflowsCompanion.insert(
-                date: p.date,
-                operation: p.operation,
-                category: p.category,
-                sum: p.sum))
+                  date: p.date,
+                  operation: p.operation,
+                  category: p.category,
+                  sum: p.sum,
+                ))
             .toList(),
       );
       batch.insertAll(
-          balances,
-          balanceData
-              .map((p) => BalancesCompanion.insert(
+        balances,
+        balanceData
+            .map((p) => BalancesCompanion.insert(
                   date: p.date,
                   operation: p.operation,
                   account: p.account,
-                  sum: p.sum))
-              .toList());
+                  sum: p.sum,
+                ))
+            .toList(),
+      );
     });
   }
 
@@ -742,9 +785,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int sum,
   ) async {
     await into(balances).insert(BalanceDB(
-        date: date, operation: operationId, account: accountId, sum: sum));
+      date: date,
+      operation: operationId,
+      account: accountId,
+      sum: sum,
+    ));
     await into(cashflows).insert(CashflowDB(
-        date: date, operation: operationId, category: categoryId, sum: sum));
+      date: date,
+      operation: operationId,
+      category: categoryId,
+      sum: sum,
+    ));
   }
 
   Future<void> _insertAnalyticOutput(
@@ -755,9 +806,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int sum,
   ) async {
     await into(balances).insert(BalanceDB(
-        date: date, operation: operationId, account: accountId, sum: -1 * sum));
+      date: date,
+      operation: operationId,
+      account: accountId,
+      sum: -1 * sum,
+    ));
     await into(cashflows).insert(CashflowDB(
-        date: date, operation: operationId, category: categoryId, sum: sum));
+      date: date,
+      operation: operationId,
+      category: categoryId,
+      sum: sum,
+    ));
   }
 
   Future<void> _insertAnalyticTransfer(
@@ -768,9 +827,17 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int sum,
   ) async {
     await into(balances).insert(BalanceDB(
-        date: date, operation: operationId, account: accountId, sum: -1 * sum));
+      date: date,
+      operation: operationId,
+      account: accountId,
+      sum: -1 * sum,
+    ));
     await into(balances).insert(BalanceDB(
-        date: date, operation: operationId, account: recAccountId, sum: sum));
+      date: date,
+      operation: operationId,
+      account: recAccountId,
+      sum: sum,
+    ));
   }
 
   Future _insertAnalytic(OperationsCompanion operation) async {
@@ -778,31 +845,34 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       case OperationType.INPUT:
         {
           await _insertAnalyticInput(
-              operation.date.value,
-              operation.id.value,
-              operation.account.value,
-              operation.category.value!,
-              operation.sum.value);
+            operation.date.value,
+            operation.id.value,
+            operation.account.value,
+            operation.category.value!,
+            operation.sum.value,
+          );
           break;
         }
       case OperationType.OUTPUT:
         {
           await _insertAnalyticOutput(
-              operation.date.value,
-              operation.id.value,
-              operation.account.value,
-              operation.category.value!,
-              operation.sum.value);
+            operation.date.value,
+            operation.id.value,
+            operation.account.value,
+            operation.category.value!,
+            operation.sum.value,
+          );
           break;
         }
       case OperationType.TRANSFER:
         {
           await _insertAnalyticTransfer(
-              operation.date.value,
-              operation.id.value,
-              operation.account.value,
-              operation.recAccount.value!,
-              operation.sum.value);
+            operation.date.value,
+            operation.id.value,
+            operation.account.value,
+            operation.recAccount.value!,
+            operation.sum.value,
+          );
           break;
         }
     }

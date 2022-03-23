@@ -14,7 +14,7 @@ class DateUtil{
     monthLength[5] = 30;
     monthLength[10] = 30;
 
-    if (leapYear(year) == true) {
+    if (leapYear(year)) {
       monthLength[1] = 29;
     } else {
       monthLength[1] = 28;
@@ -27,7 +27,7 @@ class DateUtil{
     var leapYear = false;
 
     var leap = ((year % 100 == 0) && (year % 400 != 0));
-    if (leap == true) {
+    if (leap) {
       leapYear = false;
     } else if (year % 4 == 0) {
       leapYear = true;

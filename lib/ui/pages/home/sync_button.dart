@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
@@ -11,7 +10,9 @@ class SyncButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
       return IconButton(
-          onPressed: () => onPressed(context), icon: iconBySyncState(state));
+        onPressed: () => onPressed(context),
+        icon: iconBySyncState(state),
+      );
     });
   }
 
@@ -91,7 +92,7 @@ class SyncButton extends StatelessWidget {
           builder: (context, state) => Text(getTitle(state)),
         ),
         content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          if(state is SyncStateLoadingToCloud) {
+          if (state is SyncStateLoadingToCloud) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -101,7 +102,7 @@ class SyncButton extends StatelessWidget {
                 Text('Operations ${state.operationCount}'),
               ],
             );
-          }else if(state is SyncStateLoadingFromCloud){
+          } else if (state is SyncStateLoadingFromCloud) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -111,17 +112,19 @@ class SyncButton extends StatelessWidget {
                 Text('Operations ${state.operationCount}'),
               ],
             );
-          }else {
+          } else {
             return iconBySyncState(state, color: Colors.black, size: 48);
           }
         }),
         actions: [
           TextButton(
-              onPressed: () => context.read<SyncBloc>().add(SyncNow()),
-              child: Text('Sync'.toUpperCase())),
+            onPressed: () => context.read<SyncBloc>().add(SyncNow()),
+            child: Text('Sync'.toUpperCase()),
+          ),
           TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('Close'.toUpperCase()))
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Close'.toUpperCase()),
+          ),
         ],
       ),
     );

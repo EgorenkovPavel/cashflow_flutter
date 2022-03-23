@@ -22,7 +22,7 @@ class ShowAll extends BudgetEvent {
   ShowAll(this.budgetType);
 }
 
-class ChangeItems extends BudgetEvent{
+class ChangeItems extends BudgetEvent {
   final List<CategoryCashflow> items;
 
   ChangeItems(this.items);
@@ -38,25 +38,26 @@ class BudgetState {
   final bool showAllMonthBudget;
   final bool showAllYearBudget;
 
-  BudgetState.initial(
-      {required this.operationType,
-      this.itemsYearBudget = const [],
-      this.showAllYearBudget = false,
-      this.showAllMonthBudget = false,
-      required this.date,
-      this.itemsMonthBudget = const [],
-      this.itemsAll = const []});
+  BudgetState.initial({
+    required this.operationType,
+    this.itemsYearBudget = const [],
+    this.showAllYearBudget = false,
+    this.showAllMonthBudget = false,
+    required this.date,
+    this.itemsMonthBudget = const [],
+    this.itemsAll = const [],
+  });
 
-  BudgetState.state(
-      {required BudgetState state,
-      OperationType? operationType,
-      List<CategoryCashflow>? itemsYearBudget,
-      bool? showAllYearBudget = false,
-      bool? showAllMonthBudget = false,
-      DateTime? date,
-      List<CategoryCashflow>? itemsMonthBudget,
-      List<CategoryCashflow>? itemsAll})
-      : operationType = operationType ?? state.operationType,
+  BudgetState.state({
+    required BudgetState state,
+    OperationType? operationType,
+    List<CategoryCashflow>? itemsYearBudget,
+    bool? showAllYearBudget = false,
+    bool? showAllMonthBudget = false,
+    DateTime? date,
+    List<CategoryCashflow>? itemsMonthBudget,
+    List<CategoryCashflow>? itemsAll,
+  })  : operationType = operationType ?? state.operationType,
         date = date ?? state.date,
         showAllMonthBudget = showAllMonthBudget ?? state.showAllMonthBudget,
         showAllYearBudget = showAllYearBudget ?? state.showAllYearBudget,
@@ -72,7 +73,9 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
 
   BudgetBloc(this.repo)
       : super(BudgetState.initial(
-            date: DateTime.now(), operationType: OperationType.INPUT)) {
+          date: DateTime.now(),
+          operationType: OperationType.INPUT,
+        )) {
     on<Fetch>(_fetch);
     on<PreviousYear>(_previousYear);
     on<NextYear>(_nextYear);
@@ -105,9 +108,15 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
 
   void _showAll(ShowAll event, Emitter<BudgetState> emit) {
     if (event.budgetType == BudgetType.MONTH) {
-      emit(BudgetState.state(state: state, showAllMonthBudget: !state.showAllMonthBudget));
+      emit(BudgetState.state(
+        state: state,
+        showAllMonthBudget: !state.showAllMonthBudget,
+      ));
     } else if (event.budgetType == BudgetType.YEAR) {
-      emit(BudgetState.state(state: state, showAllYearBudget: !state.showAllYearBudget));
+      emit(BudgetState.state(
+        state: state,
+        showAllYearBudget: !state.showAllYearBudget,
+      ));
     }
     add(ChangeItems(state.itemsAll));
   }
@@ -122,18 +131,21 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     });
   }
 
-  void _changeItems(ChangeItems event, Emitter<BudgetState> emit){
-    emit(BudgetState.state(state: state,
-    itemsAll: event.items,
+  void _changeItems(ChangeItems event, Emitter<BudgetState> emit) {
+    emit(BudgetState.state(
+      state: state,
+      itemsAll: event.items,
       itemsMonthBudget: event.items
           .where((element) => element.category.budgetType == BudgetType.MONTH)
-          .where(
-              (element) => state.showAllMonthBudget || element.monthCashflow > 0)
+          .where((element) =>
+              state.showAllMonthBudget || element.monthCashflow > 0)
           .toList(),
       itemsYearBudget: event.items
           .where((element) => element.category.budgetType == BudgetType.YEAR)
-          .where((element) => state.showAllYearBudget || element.yearCashflow > 0)
-          .toList()
+          .where(
+            (element) => state.showAllYearBudget || element.yearCashflow > 0,
+          )
+          .toList(),
     ));
   }
 

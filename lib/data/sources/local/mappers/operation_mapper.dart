@@ -14,33 +14,35 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
   @override
   OperationDbEntity mapToSql(Operation o) {
     return OperationDbEntity(
-        operation: mapToOperationData(o),
-        account: const AccountMapper().mapToSql(o.account),
-        category: o.category == null
-            ? null
-            : const CategoryMapper().mapToSql(o.category!),
-        recAccount: o.recAccount == null
-            ? null
-            : const AccountMapper().mapToSql(o.recAccount!));
+      operation: mapToOperationData(o),
+      account: const AccountMapper().mapToSql(o.account),
+      category: o.category == null
+          ? null
+          : const CategoryMapper().mapToSql(o.category!),
+      recAccount: o.recAccount == null
+          ? null
+          : const AccountMapper().mapToSql(o.recAccount!),
+    );
   }
 
   @override
   Operation mapToDart(OperationDbEntity o) {
     return Operation(
-        id: o.operationData.id,
-        cloudId: o.operation.cloudId,
-        synced: o.synced,
-        deleted: o.operation.deleted,
-        date: o.operationData.date,
-        type: o.operationData.operationType,
-        account: const AccountMapper().mapToDart(o.account),
-        category: o.category == null
-            ? null
-            : const CategoryMapper().mapToDart(o.category!),
-        recAccount: o.recAccount == null
-            ? null
-            : const AccountMapper().mapToDart(o.recAccount!),
-        sum: o.operationData.sum);
+      id: o.operationData.id,
+      cloudId: o.operation.cloudId,
+      synced: o.synced,
+      deleted: o.operation.deleted,
+      date: o.operationData.date,
+      type: o.operationData.operationType,
+      account: const AccountMapper().mapToDart(o.account),
+      category: o.category == null
+          ? null
+          : const CategoryMapper().mapToDart(o.category!),
+      recAccount: o.recAccount == null
+          ? null
+          : const AccountMapper().mapToDart(o.recAccount!),
+      sum: o.operationData.sum,
+    );
   }
 
   OperationDB mapToOperationData(Operation o) {

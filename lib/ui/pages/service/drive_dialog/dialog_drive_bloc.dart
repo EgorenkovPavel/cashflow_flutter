@@ -10,17 +10,22 @@ class DialogDriveState {
   final List<DriveFile> folderList;
   final DriveFile? result;
 
-  DialogDriveState(
-      {this.result, required this.action, required this.folderList});
+  DialogDriveState({
+    this.result,
+    required this.action,
+    required this.folderList,
+  });
 
-  DialogDriveState copyWith(
-      {required DialogDriveAction action,
-      List<DriveFile>? folderList,
-      DriveFile? result}) {
+  DialogDriveState copyWith({
+    required DialogDriveAction action,
+    List<DriveFile>? folderList,
+    DriveFile? result,
+  }) {
     return DialogDriveState(
-        action: action,
-        folderList: folderList ?? this.folderList,
-        result: result ?? this.result);
+      action: action,
+      folderList: folderList ?? this.folderList,
+      result: result ?? this.result,
+    );
   }
 }
 
@@ -39,12 +44,14 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
   final GoogleDrive _repository;
   final DialogMode mode;
 
-  final rootFolder =_Stack<DriveFile>();
+  final rootFolder = _Stack<DriveFile>();
 
   DialogDriveBloc({required GoogleDrive repository, required this.mode})
       : _repository = repository,
         super(DialogDriveState(
-            action: DialogDriveAction.NO_ACTION, folderList: [])) {
+          action: DialogDriveAction.NO_ACTION,
+          folderList: [],
+        )) {
     rootFolder.push(
       DriveFile.root(),
     );

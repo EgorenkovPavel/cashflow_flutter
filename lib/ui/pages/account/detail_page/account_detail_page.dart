@@ -22,17 +22,21 @@ class AccountDetailPage extends StatelessWidget {
               title: Text(context.watch<AccountDetailBloc>().state.title),
               actions: <Widget>[
                 IconButton(
-                    onPressed: () => PageNavigator.openAccountEditPage(context, id),
-                    icon: const Icon(Icons.edit))
+                  onPressed: () =>
+                      PageNavigator.openAccountEditPage(context, id),
+                  icon: const Icon(Icons.edit),
+                ),
               ],
             ),
-            body: OperationList(context.watch<AccountDetailBloc>().state.operations),
+            body: OperationList(
+              context.watch<AccountDetailBloc>().state.operations,
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => PageNavigator.openOperationInputPage(context),
               child: const Icon(Icons.add),
             ),
           );
-        }
+        },
       ),
     );
   }

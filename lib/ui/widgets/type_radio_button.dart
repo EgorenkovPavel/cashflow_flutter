@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -9,9 +8,12 @@ class TypeRadioButton<T> extends StatelessWidget {
 
   final List<T> items;
 
-  const TypeRadioButton(
-      {Key? key, required this.onChange, required this.type, required this.items})
-      : super(key: key);
+  const TypeRadioButton({
+    Key? key,
+    required this.onChange,
+    required this.type,
+    required this.items,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +44,13 @@ class _TypeItem<T> extends StatelessWidget {
 
   final T _type;
 
-  String getTitle(BuildContext context){
-    if (_type is OperationType){
-      return AppLocalizations.of(context).operationTypeTitle(_type as OperationType);
-    }else if (_type is BudgetType){
+  String getTitle(BuildContext context) {
+    if (_type is OperationType) {
+      return AppLocalizations.of(context)
+          .operationTypeTitle(_type as OperationType);
+    } else if (_type is BudgetType) {
       return AppLocalizations.of(context).budgetTypeTitle(_type as BudgetType);
-    }else{
+    } else {
       return _type.toString();
     }
   }

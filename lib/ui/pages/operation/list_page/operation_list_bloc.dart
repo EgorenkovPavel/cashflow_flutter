@@ -42,7 +42,9 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
   }
 
   void _fetch(Fetch event, Emitter<OperationListState> emit) {
-    emit(OperationListState(operations: state.operations, filter: event.filter));
+    emit(
+      OperationListState(operations: state.operations, filter: event.filter),
+    );
     _sub?.cancel();
     _sub =
         _repository.operations.watchAllByFilter(event.filter).listen((items) {
@@ -51,13 +53,18 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
   }
 
   void _changeOperations(
-      ChangeOperations event, Emitter<OperationListState> emit) {
-    emit(OperationListState(operations: event.operations, filter: state.filter));
+    ChangeOperations event,
+    Emitter<OperationListState> emit,
+  ) {
+    emit(
+      OperationListState(operations: event.operations, filter: state.filter),
+    );
   }
 
   @override
   Future<void> close() {
     _sub?.cancel();
+
     return super.close();
   }
 }

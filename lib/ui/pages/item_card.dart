@@ -8,12 +8,12 @@ class ItemCard<T> extends StatelessWidget {
   final Widget child;
   final void Function(BuildContext context) onSave;
 
-  ItemCard(
-      {Key? key,
-      required this.title,
-      required this.child,
-      required this.onSave})
-      : super(key: key);
+  ItemCard({
+    Key? key,
+    required this.title,
+    required this.child,
+    required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ItemCard<T> extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(null),
                   child: Text(
                     AppLocalizations.of(context).cancel.toUpperCase(),
-                   ),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -50,8 +50,8 @@ class ItemCard<T> extends StatelessWidget {
                     AppLocalizations.of(context).save.toUpperCase(),
                     //style: TextStyle(color: Colors.white),
                   ),
-                )
-              ])
+                ),
+              ]),
             ],
           ),
         ),

@@ -62,40 +62,51 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
               ),
               SliverPersistentHeader(
-                  delegate: DiagramDelegate(
-                      items: state.itemsAll,
-                      onBackPressed: () => _bloc.add(PreviousYear()),
-                      onForwardPressed: () => _bloc.add(NextYear()))),
+                delegate: DiagramDelegate(
+                  items: state.itemsAll,
+                  onBackPressed: () => _bloc.add(PreviousYear()),
+                  onForwardPressed: () => _bloc.add(NextYear()),
+                ),
+              ),
               SliverPersistentHeader(
-                  pinned: true,
-                  delegate: BudgetTypeHeaderDelegate(
-                    title: AppLocalizations.of(context)
-                        .budgetTypeTitle(BudgetType.MONTH),
-                    cashflow: state.itemsMonthBudget.fold(
-                        0,
-                        (previousValue, element) =>
-                            previousValue + element.monthCashflow),
-                    showAll: state.showAllMonthBudget,
-                    onPressed: () => _bloc.add(ShowAll(BudgetType.MONTH)),
-                  )),
+                pinned: true,
+                delegate: BudgetTypeHeaderDelegate(
+                  title: AppLocalizations.of(context)
+                      .budgetTypeTitle(BudgetType.MONTH),
+                  cashflow: state.itemsMonthBudget.fold(
+                    0,
+                    (previousValue, element) =>
+                        previousValue + element.monthCashflow,
+                  ),
+                  showAll: state.showAllMonthBudget,
+                  onPressed: () => _bloc.add(ShowAll(BudgetType.MONTH)),
+                ),
+              ),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsMonthBudget
-                    .expand((e) => [_CategoryItem(category: e), const Divider()])
+                    .expand(
+                      (e) => [_CategoryItem(category: e), const Divider()],
+                    )
                     .toList()),
               ),
               SliverPersistentHeader(
-                  delegate: BudgetTypeHeaderDelegate(
-                      title: AppLocalizations.of(context)
-                          .budgetTypeTitle(BudgetType.YEAR),
-                      cashflow: state.itemsYearBudget.fold(
-                          0,
-                          (previousValue, element) =>
-                              previousValue + element.yearCashflow),
-                      showAll: state.showAllYearBudget,
-                      onPressed: () => _bloc.add(ShowAll(BudgetType.YEAR)))),
+                delegate: BudgetTypeHeaderDelegate(
+                  title: AppLocalizations.of(context)
+                      .budgetTypeTitle(BudgetType.YEAR),
+                  cashflow: state.itemsYearBudget.fold(
+                    0,
+                    (previousValue, element) =>
+                        previousValue + element.yearCashflow,
+                  ),
+                  showAll: state.showAllYearBudget,
+                  onPressed: () => _bloc.add(ShowAll(BudgetType.YEAR)),
+                ),
+              ),
               SliverList(
                 delegate: SliverChildListDelegate(state.itemsYearBudget
-                    .expand((e) => [_CategoryItem(category: e), const Divider()])
+                    .expand(
+                      (e) => [_CategoryItem(category: e), const Divider()],
+                    )
                     .toList()),
               ),
             ],
@@ -117,15 +128,19 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
   final bool showAll;
   final void Function() onPressed;
 
-  BudgetTypeHeaderDelegate(
-      {required this.cashflow,
-      required this.showAll,
-      required this.onPressed,
-      required this.title});
+  BudgetTypeHeaderDelegate({
+    required this.cashflow,
+    required this.showAll,
+    required this.onPressed,
+    required this.title,
+  });
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return InkWell(
       onTap: onPressed,
       child: Container(
@@ -144,7 +159,9 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
                 AppLocalizations.of(context).numberFormat(cashflow),
                 style: Theme.of(context).textTheme.headline6,
               ),
-              showAll ? const Icon(Icons.arrow_drop_down) : const Icon(Icons.arrow_drop_up)
+              showAll
+                  ? const Icon(Icons.arrow_drop_down)
+                  : const Icon(Icons.arrow_drop_up),
             ],
           ),
         ),
@@ -169,14 +186,18 @@ class DiagramDelegate extends SliverPersistentHeaderDelegate {
   final void Function() onBackPressed;
   final void Function() onForwardPressed;
 
-  DiagramDelegate(
-      {required this.items,
-      required this.onBackPressed,
-      required this.onForwardPressed});
+  DiagramDelegate({
+    required this.items,
+    required this.onBackPressed,
+    required this.onForwardPressed,
+  });
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return PieDiagram(
       list: items.where((item) => item.monthCashflow > 0).toList(),
       onBackPressed: onBackPressed,
@@ -211,7 +232,10 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
       child: Row(
@@ -222,20 +246,21 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             style: Theme.of(context).textTheme.headline6,
           ),
           TweenAnimationBuilder<int>(
-              tween: IntTween(
-                begin: 0,
-                end: _cashflow(items),
-              ),
-              duration: _duration,
-              builder: (context, cashflow, _) {
-                return Text(
-                  AppLocalizations.of(context).numberFormat(cashflow),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: Theme.of(context).colorScheme.primary),
-                );
-              }),
+            tween: IntTween(
+              begin: 0,
+              end: _cashflow(items),
+            ),
+            duration: _duration,
+            builder: (context, cashflow, _) {
+              return Text(
+                AppLocalizations.of(context).numberFormat(cashflow),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -254,9 +279,12 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class PieDiagram extends StatelessWidget {
-  const PieDiagram(
-      {Key? key, required this.list, this.onBackPressed, this.onForwardPressed})
-      : super(key: key);
+  const PieDiagram({
+    Key? key,
+    required this.list,
+    this.onBackPressed,
+    this.onForwardPressed,
+  }) : super(key: key);
 
   final void Function()? onBackPressed;
   final void Function()? onForwardPressed;
@@ -281,7 +309,7 @@ class PieDiagram extends StatelessWidget {
                 domainFn: (CategoryCashflow sales, _) => sales.category.id,
                 measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
                 data: list,
-              )
+              ),
             ],
             animate: true,
             animationDuration: _duration,
@@ -325,10 +353,10 @@ class _CategoryItem extends StatelessWidget {
       onTap: () =>
           PageNavigator.openCategoryPage(context, category.category.id),
       title: Text(category.category.title),
-      subtitle: Text(AppLocalizations.of(context)
-          .numberFormat(category.category.budget)),
-      trailing: Text(AppLocalizations.of(context)
-          .numberFormat(_cashflow())),
+      subtitle: Text(
+        AppLocalizations.of(context).numberFormat(category.category.budget),
+      ),
+      trailing: Text(AppLocalizations.of(context).numberFormat(_cashflow())),
       leading: CircularProgressIndicator(
         value: _progress(),
       ),

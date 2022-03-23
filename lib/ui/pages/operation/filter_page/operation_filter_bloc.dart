@@ -85,26 +85,32 @@ class OperationFilterState {
         outCategories = state.outCategories;
 
   OperationFilterState.removeAccount(
-      OperationFilterState state, Account account)
-      : filter = state.filter.copyWith(
-            accounts: state.filter.accounts
-              ..removeWhere((a) => a.id == account.id)),
+    OperationFilterState state,
+    Account account,
+  )   : filter = state.filter.copyWith(
+          accounts: state.filter.accounts
+            ..removeWhere((a) => a.id == account.id),
+        ),
         accounts = state.accounts,
         inCategories = state.inCategories,
         outCategories = state.outCategories;
 
-  OperationFilterState.addCategory(OperationFilterState state, Category category)
-      : filter = state.filter
-      .copyWith(categories: state.filter.categories..add(category)),
+  OperationFilterState.addCategory(
+    OperationFilterState state,
+    Category category,
+  )   : filter = state.filter
+            .copyWith(categories: state.filter.categories..add(category)),
         accounts = state.accounts,
         inCategories = state.inCategories,
         outCategories = state.outCategories;
 
   OperationFilterState.removeCategory(
-      OperationFilterState state, Category category)
-      : filter = state.filter.copyWith(
-      categories: state.filter.categories
-        ..removeWhere((c) => c.id == category.id)),
+    OperationFilterState state,
+    Category category,
+  )   : filter = state.filter.copyWith(
+          categories: state.filter.categories
+            ..removeWhere((c) => c.id == category.id),
+        ),
         accounts = state.accounts,
         inCategories = state.inCategories,
         outCategories = state.outCategories;
@@ -160,8 +166,10 @@ class OperationFilterBloc
     emit(OperationFilterState.addCategory(state, event.category));
   }
 
-  void _removeCategory(RemoveCategory event, Emitter<OperationFilterState> emit) {
+  void _removeCategory(
+    RemoveCategory event,
+    Emitter<OperationFilterState> emit,
+  ) {
     emit(OperationFilterState.removeCategory(state, event.category));
   }
-
 }

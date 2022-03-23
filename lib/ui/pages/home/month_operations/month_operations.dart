@@ -24,14 +24,17 @@ class MonthOperations extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                    text: '${AppLocalizations.of(context).operationsIn} ',
-                    style: Theme.of(context).textTheme.headline6),
+                  text: '${AppLocalizations.of(context).operationsIn} ',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 TextSpan(
-                    text: DateFormat.MMMM(
-                            Localizations.localeOf(context).toString())
-                        .format(DateTime.now()),
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Theme.of(context).colorScheme.primary)),
+                  text: DateFormat.MMMM(
+                    Localizations.localeOf(context).toString(),
+                  ).format(DateTime.now()),
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
               ],
             ),
           ),
@@ -135,10 +138,11 @@ class _MonthOperation extends StatelessWidget {
         child: Column(
           children: [
             Text(
-                operationType == OperationType.INPUT
-                    ? AppLocalizations.of(context).earning
-                    : AppLocalizations.of(context).spending,
-                style: Theme.of(context).textTheme.headline6),
+              operationType == OperationType.INPUT
+                  ? AppLocalizations.of(context).earning
+                  : AppLocalizations.of(context).spending,
+              style: Theme.of(context).textTheme.headline6,
+            ),
             Stack(
               children: [
                 Padding(
@@ -146,16 +150,19 @@ class _MonthOperation extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       borderRadius: BorderRadius.circular(2.0),
                     ),
                     child: LinearProgressIndicator(
                       minHeight: 10,
                       color: Theme.of(context).colorScheme.primary,
                       value: context.select<MonthOperationsBloc, double>(
-                          (bloc) => _progress(
-                              bloc.state.cashflow[operationType] ?? 0,
-                              bloc.state.budget[operationType] ?? 0)),
+                        (bloc) => _progress(
+                          bloc.state.cashflow[operationType] ?? 0,
+                          bloc.state.budget[operationType] ?? 0,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -166,12 +173,14 @@ class _MonthOperation extends StatelessWidget {
                     width: 2.0,
                     height: 32.0,
                   ),
-                )
+                ),
               ],
             ),
             Text(AppLocalizations.of(context).numberFormat(
-                context.select<MonthOperationsBloc, int>(
-                    (bloc) => bloc.state.cashflow[operationType] ?? 0))),
+              context.select<MonthOperationsBloc, int>(
+                (bloc) => bloc.state.cashflow[operationType] ?? 0,
+              ),
+            )),
           ],
         ),
       ),
@@ -187,12 +196,14 @@ class _MonthOperation extends StatelessWidget {
     } else {
       _progress = cashflow / budget;
     }
+
     return _progress;
   }
 
   double getAlign() {
     var now = DateTime.now();
     var days = DateUtil.daysInMonth(now.month, now.year);
+
     return now.day / days * 2 - 1;
   }
 }

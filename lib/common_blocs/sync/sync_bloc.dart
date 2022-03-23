@@ -68,7 +68,7 @@ class NotAuth extends SyncEvent {
   List<Object?> get props => [];
 }
 
-class SyncData extends SyncEvent{
+class SyncData extends SyncEvent {
   final DateTime syncDate;
 
   SyncData(this.syncDate);
@@ -116,22 +116,28 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _authAuthenticated(
-      AuthAuthenticated event, Emitter<SyncState> emit) async {
+    AuthAuthenticated event,
+    Emitter<SyncState> emit,
+  ) async {
     emit(const SyncStateInProgress());
     var res = await syncRepo.databaseExists(event.user);
 
-    return res.fold((success) async {
-      if (success) {
-        var resLogIn = await syncRepo.logIn(event.user);
-        return resLogIn.fold((success) => add(SyncNow()), (failure) {
-          emit(const SyncStateFailed());
-        });
-      } else {
-        emit(const SyncStateNoDb());
-      }
-    }, (failure) {
-      emit(const SyncStateFailed());
-    });
+    return res.fold(
+      (success) async {
+        if (success) {
+          var resLogIn = await syncRepo.logIn(event.user);
+
+          return resLogIn.fold((success) => add(SyncNow()), (failure) {
+            emit(const SyncStateFailed());
+          });
+        } else {
+          emit(const SyncStateNoDb());
+        }
+      },
+      (failure) {
+        emit(const SyncStateFailed());
+      },
+    );
   }
 
   FutureOr<void> _notAuth(NotAuth event, Emitter<SyncState> emit) {
@@ -168,7 +174,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _createCloudDatabase(
-      CreateCloudDatabase event, Emitter<SyncState> emit) async {
+    CreateCloudDatabase event,
+    Emitter<SyncState> emit,
+  ) async {
     if (_authBloc.state is! Authenticated) {
       return;
     }
@@ -177,6 +185,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
         await syncRepo.createDatabase((_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
       emit(const SyncStateFailed());
+
       return;
     }
 
@@ -185,7 +194,8 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
 
   FutureOr<void> _syncNow(SyncEvent event, Emitter<SyncState> emit) {
     add(SyncData(
-        prefsRepository.syncDate.subtract(const Duration(minutes: 30))));
+      prefsRepository.syncDate.subtract(const Duration(minutes: 30)),
+    ));
   }
 
   FutureOr<void> _syncLastDay(SyncLastDay event, Emitter<SyncState> emit) {
@@ -193,8 +203,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _syncLastMonth(SyncLastMonth event, Emitter<SyncState> emit) {
-    add(SyncData(
-        prefsRepository.syncDate.subtract(const Duration(days: 30))));
+    add(SyncData(prefsRepository.syncDate.subtract(const Duration(days: 30))));
   }
 
   FutureOr<void> _syncAll(SyncAll event, Emitter<SyncState> emit) {
@@ -208,6 +217,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   @override
   Future<void> close() {
     _syncSub?.cancel();
+
     return super.close();
   }
 }

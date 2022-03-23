@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -17,15 +16,14 @@ class OperationEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) =>
-    OperationEditBloc(context.read<DataRepository>())..add(Fetch(id)),
-    child: _OperationEditPage(),
+      create: (context) =>
+          OperationEditBloc(context.read<DataRepository>())..add(Fetch(id)),
+      child: _OperationEditPage(),
     );
   }
 }
 
 class _OperationEditPage extends StatefulWidget {
-
   @override
   _OperationEditPageState createState() => _OperationEditPageState();
 }
@@ -67,43 +65,49 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   Row(
                     children: <Widget>[
                       DateButton(
-                          icon: Icons.calendar_today,
-                          text: DateFormat.yMMMd(
-                              Localizations.localeOf(context)
-                                  .languageCode)
-                              .format(context.select<OperationEditBloc,
-                              DateTime>((bloc) => bloc.state.date)),
-                          onPressed: _selectDate),
+                        icon: Icons.calendar_today,
+                        text: DateFormat.yMMMd(
+                          Localizations.localeOf(context).languageCode,
+                        ).format(context.select<OperationEditBloc, DateTime>(
+                          (bloc) => bloc.state.date,
+                        )),
+                        onPressed: _selectDate,
+                      ),
                       const SizedBox(width: 16.0),
                       DateButton(
-                          icon: Icons.access_time,
-                          text: context
-                              .select<OperationEditBloc, TimeOfDay>(
-                                  (bloc) => bloc.state.time)
-                              .format(context),
-                          onPressed: _selectTime),
+                        icon: Icons.access_time,
+                        text: context
+                            .select<OperationEditBloc, TimeOfDay>(
+                              (bloc) => bloc.state.time,
+                            )
+                            .format(context),
+                        onPressed: _selectTime,
+                      ),
                     ],
                   ),
                   Title(text: AppLocalizations.of(context).titleType),
                   TypeRadioButton<OperationType>(
                     type: context.select<OperationEditBloc, OperationType>(
-                            (bloc) => bloc.state.operationType),
+                      (bloc) => bloc.state.operationType,
+                    ),
                     onChange: (newValue) => context
                         .read<OperationEditBloc>()
                         .add(ChangeOperationType(newValue)),
                     items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
-                      OperationType.TRANSFER
+                      OperationType.TRANSFER,
                     ],
                   ),
                   Title(text: AppLocalizations.of(context).titleAccount),
                   DropdownList<Account>(
                     value: context.select<OperationEditBloc, Account>(
-                            (bloc) => bloc.state.account),
+                      (bloc) => bloc.state.account,
+                    ),
                     hint: AppLocalizations.of(context).hintAccount,
                     items: context.select<OperationEditBloc, List<Account>>(
-                            (bloc) => bloc.state.accounts),
+                      (bloc) => bloc.state.accounts,
+                    ),
                     onChange: (newValue) {
                       if (newValue != null) {
                         context
@@ -111,8 +115,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                             .add(ChangeAccount(newValue));
                       }
                     },
-                    getListItem: (data) =>
-                        ListTile(title: Text(data.title)),
+                    getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
                   Title(text: AppLocalizations.of(context).titleAnalytic),
                   analyticMenu(),
@@ -132,10 +135,11 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                         if (value == null || value.isEmpty) {
                           return AppLocalizations.of(context).emptySumError;
                         }
+
                         return null;
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -143,8 +147,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
           persistentFooterButtons: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child:
-              Text(AppLocalizations.of(context).cancel.toUpperCase()),
+              child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
             ),
             ElevatedButton(
               onPressed: () {
@@ -153,7 +156,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 }
               },
               child: Text(AppLocalizations.of(context).save.toUpperCase()),
-            )
+            ),
           ],
         ),
       ),
@@ -162,10 +165,10 @@ class _OperationEditPageState extends State<_OperationEditPage> {
 
   Widget analyticMenu() {
     return BlocBuilder<OperationEditBloc, OperationEditState>(
-        builder: (context, state) {
-      switch (state.operationType) {
-        case OperationType.INPUT:
-          return DropdownList<Category>(
+      builder: (context, state) {
+        switch (state.operationType) {
+          case OperationType.INPUT:
+            return DropdownList<Category>(
               value: state.category,
               hint: AppLocalizations.of(context).hintCategory,
               onChange: (Category? newValue) {
@@ -176,9 +179,10 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 }
               },
               items: state.inCategories,
-              getListItem: (item) => ListTile(title: Text(item.title)));
-        case OperationType.OUTPUT:
-          return DropdownList<Category>(
+              getListItem: (item) => ListTile(title: Text(item.title)),
+            );
+          case OperationType.OUTPUT:
+            return DropdownList<Category>(
               value: state.category,
               hint: AppLocalizations.of(context).hintCategory,
               onChange: (Category? newValue) {
@@ -189,9 +193,10 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 }
               },
               items: state.outCategories,
-              getListItem: (item) => ListTile(title: Text(item.title)));
-        case OperationType.TRANSFER:
-          return DropdownList<Account>(
+              getListItem: (item) => ListTile(title: Text(item.title)),
+            );
+          case OperationType.TRANSFER:
+            return DropdownList<Account>(
               value: state.recAccount,
               hint: AppLocalizations.of(context).hintAccount,
               onChange: (Account? newValue) {
@@ -202,11 +207,13 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 }
               },
               items: state.accounts,
-              getListItem: (item) => ListTile(title: Text(item.title)));
-        default:
-          return const SizedBox();
-      }
-    });
+              getListItem: (item) => ListTile(title: Text(item.title)),
+            );
+          default:
+            return const SizedBox();
+        }
+      },
+    );
   }
 
   void _selectDate() async {
@@ -223,8 +230,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
 
   void _selectTime() async {
     final picked = await showTimePicker(
-        context: context,
-        initialTime: context.read<OperationEditBloc>().state.time);
+      context: context,
+      initialTime: context.read<OperationEditBloc>().state.time,
+    );
     if (picked != null) {
       context.read<OperationEditBloc>().add(ChangeTime(picked));
     }

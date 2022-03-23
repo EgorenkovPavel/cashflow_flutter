@@ -4,11 +4,12 @@ class Account {
   final String title;
   final bool isDebt;
 
-  const Account(
-      {this.id = 0,
-      this.cloudId = '',
-      required this.title,
-      required this.isDebt});
+  const Account({
+    this.id = 0,
+    this.cloudId = '',
+    required this.title,
+    required this.isDebt,
+  });
 
   Account copyWith({
     int? id,

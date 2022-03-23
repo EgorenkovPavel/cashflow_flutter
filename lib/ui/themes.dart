@@ -22,7 +22,9 @@ ThemeData theme() {
       foregroundColor: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(_primaryColor))),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(_primaryColor),
+      ),
+    ),
   );
 }

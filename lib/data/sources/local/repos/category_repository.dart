@@ -24,11 +24,13 @@ class CategoryRepository
       const CategoryMapper().mapToSql(item);
 
   List<CategoryCashflow> _mapCategoryCashflowList(
-          List<CategoryCashflowEntity> list) =>
+    List<CategoryCashflowEntity> list,
+  ) =>
       const CategoryCashflowMapper().mapListToDart(list);
 
   List<CategoryMonthCashflow> _mapCategoryMonthCashflowList(
-          List<CategoryMonthCashflowEntity> list) =>
+    List<CategoryMonthCashflowEntity> list,
+  ) =>
       const CategoryMonthCashflowMapper().mapListToDart(list);
 
   @override
@@ -53,7 +55,9 @@ class CategoryRepository
 
   @override
   Stream<List<CategoryCashflow>> watchCashflowByType(
-          DateTime date, OperationType type) =>
+    DateTime date,
+    OperationType type,
+  ) =>
       categoryDao
           .watchCategoryCashflowByType(date, type)
           .map(_mapCategoryCashflowList);
@@ -64,9 +68,12 @@ class CategoryRepository
 
   @override
   Future<List<CategoryCashflow>> getCashflowByType(
-          DateTime date, OperationType type) async =>
+    DateTime date,
+    OperationType type,
+  ) async =>
       _mapCategoryCashflowList(
-          await categoryDao.getCategoryCashflowByType(date, type));
+        await categoryDao.getCategoryCashflowByType(date, type),
+      );
 
   @override
   Future<Category> getById(int id) async =>
@@ -75,11 +82,8 @@ class CategoryRepository
   @override
   Future<Category?> getByCloudId(String cloudId) async {
     var _category = await categoryDao.getCategoryByCloudId(cloudId);
-    if (_category == null) {
-      return null;
-    } else {
-      return _mapCategory(_category);
-    }
+
+    return _category == null ? null : _mapCategory(_category);
   }
 
   @override
@@ -138,14 +142,15 @@ class CategoryRepository
   @override
   Future updateFromCloud(Category category) {
     return categoryDao.updateFields(
-        category.id,
-        CategoriesCompanion(
-          cloudId: Value(category.cloudId),
-          title: Value(category.title),
-          operationType: Value(category.operationType),
-          budgetType: Value(category.budgetType),
-          budget: Value(category.budget),
-          synced: const Value(true),
-        ));
+      category.id,
+      CategoriesCompanion(
+        cloudId: Value(category.cloudId),
+        title: Value(category.title),
+        operationType: Value(category.operationType),
+        budgetType: Value(category.budgetType),
+        budget: Value(category.budget),
+        synced: const Value(true),
+      ),
+    );
   }
 }

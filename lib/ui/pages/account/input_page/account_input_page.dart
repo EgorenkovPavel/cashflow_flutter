@@ -9,7 +9,9 @@ import 'package:money_tracker/utils/app_localization.dart';
 class AccountInputPage extends StatelessWidget {
   final int? id;
 
-  const AccountInputPage.input({Key? key}) : id = null, super(key: key);
+  const AccountInputPage.input({Key? key})
+      : id = null,
+        super(key: key);
 
   const AccountInputPage.edit(this.id, {Key? key}) : super(key: key);
 
@@ -19,6 +21,7 @@ class AccountInputPage extends StatelessWidget {
     if (id != null) {
       _bloc.add(Fetch(id!));
     }
+
     return BlocProvider(
       create: (context) => _bloc,
       child: AccountPage(
@@ -76,6 +79,7 @@ class _AccountPageState extends State<AccountPage> {
                 if (value == null || value.isEmpty) {
                   return AppLocalizations.of(context).emptyTitleError;
                 }
+
                 return null;
               },
             ),
@@ -83,13 +87,14 @@ class _AccountPageState extends State<AccountPage> {
               children: [
                 Checkbox(
                   value: context.select<AccountInputBloc, bool>(
-                      (bloc) => bloc.state.isDebt),
+                    (bloc) => bloc.state.isDebt,
+                  ),
                   onChanged: (val) =>
                       context.read<AccountInputBloc>().add(ChangeIsDebt(val!)),
                 ),
                 const Text('Is debt'),
               ],
-            )
+            ),
           ],
         ),
       ),

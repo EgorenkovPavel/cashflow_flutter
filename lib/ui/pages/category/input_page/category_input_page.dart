@@ -27,6 +27,7 @@ class CategoryInputPage extends StatelessWidget {
     } else {
       _bloc.add(InitByType(type!));
     }
+
     return BlocProvider(
       create: (context) => _bloc,
       child: CategoryPage(
@@ -91,8 +92,10 @@ class _CategoryPageState extends State<CategoryPage> {
                     width: 8.0,
                   ),
                   Text(AppLocalizations.of(context).operationTypeTitle(
-                      context.select<CategoryInputBloc, OperationType>(
-                          (bloc) => bloc.state.operationType))),
+                    context.select<CategoryInputBloc, OperationType>(
+                      (bloc) => bloc.state.operationType,
+                    ),
+                  )),
                 ],
               ),
             ),
@@ -110,6 +113,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 if (value == null || value.isEmpty) {
                   return AppLocalizations.of(context).emptyTitleError;
                 }
+
                 return null;
               },
             ),
@@ -127,6 +131,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 if (value == null || value.isEmpty) {
                   return AppLocalizations.of(context).emptyTitleError;
                 }
+
                 return null;
               },
             ),
@@ -140,9 +145,10 @@ class _CategoryPageState extends State<CategoryPage> {
                       .read<CategoryInputBloc>()
                       .add(ChangeBudgetType(type)),
                   type: context.select<CategoryInputBloc, BudgetType>(
-                      (bloc) => bloc.state.budgetType),
+                    (bloc) => bloc.state.budgetType,
+                  ),
                   items: const [BudgetType.MONTH, BudgetType.YEAR],
-                )
+                ),
               ],
             ),
           ],

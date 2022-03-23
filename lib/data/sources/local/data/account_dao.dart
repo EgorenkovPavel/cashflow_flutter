@@ -60,8 +60,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     ).watchSingle().map((row) => row.read<int>('sum'));
   }
 
-  Stream<List<AccountBalanceEntity>> watchAllAccountsWithBalance(
-      {bool archive = false}) {
+  Stream<List<AccountBalanceEntity>> watchAllAccountsWithBalance({
+    bool archive = false,
+  }) {
     final sumBalance = balances.sum.sum();
 
     final query = db.select(accounts).join([
@@ -69,7 +70,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         balances,
         balances.account.equalsExp(accounts.id),
         useColumns: false,
-      )
+      ),
     ]);
     query
       ..addColumns([sumBalance])
@@ -79,7 +80,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
-              row.readTable(accounts), row.read(sumBalance) ?? 0))
+                row.readTable(accounts),
+                row.read(sumBalance) ?? 0,
+              ))
           .toList();
     });
   }
@@ -92,7 +95,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         balances,
         balances.account.equalsExp(accounts.id),
         useColumns: false,
-      )
+      ),
     ]);
     query
       ..addColumns([sumBalance])
@@ -100,9 +103,12 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       ..orderBy([OrderingTerm(expression: accounts.title)]);
 
     var result = await query.get();
+
     return result
         .map((row) => AccountBalanceEntity(
-            row.readTable(accounts), row.read(sumBalance) ?? 0))
+              row.readTable(accounts),
+              row.read(sumBalance) ?? 0,
+            ))
         .toList();
   }
 
@@ -123,7 +129,9 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   }
 
   Stream<List<BalanceOnDate>> watchBalanceOnPeriod(
-      DateTime start, DateTime end) {
+    DateTime start,
+    DateTime end,
+  ) {
     final sumBalance = balances.sum.sum().cast<int>();
     //final date = CustomExpression<DateTime>("DATE(balance.date, 'start of day')");
 
@@ -141,14 +149,15 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
       ..orderBy([
         OrderingTerm(expression: year),
         OrderingTerm(expression: month),
-        OrderingTerm(expression: day)
+        OrderingTerm(expression: day),
       ]);
 
     return query.watch().map((list) {
       return list
           .map((c) => BalanceOnDate(
-              DateTime(c.read(year), c.read(month), c.read(day)),
-              c.read(sumBalance)))
+                DateTime(c.read(year), c.read(month), c.read(day)),
+                c.read(sumBalance),
+              ))
           .toList();
     });
   }
@@ -165,5 +174,3 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         .map((c) => BalanceOnDate(date, c.read(sumBalance) ?? 0));
   }
 }
-
-

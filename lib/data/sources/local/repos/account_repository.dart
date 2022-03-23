@@ -1,14 +1,15 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/entities/account_balance_entity.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/data/sources/local/data/account_dao.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
+import 'package:money_tracker/data/sources/local/entities/account_balance_entity.dart';
 import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/data/sources/local/mappers/account_balance_mapper.dart';
 import 'package:money_tracker/data/sources/local/mappers/account_mapper.dart';
+import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class AccountRepository implements LocalSyncTable<Account>, AccountDataRepository {
+class AccountRepository
+    implements LocalSyncTable<Account>, AccountDataRepository {
   final AccountDao accountDao;
 
   AccountRepository(this.accountDao);
@@ -21,7 +22,8 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataRepositor
   AccountDB _mapAccountDB(Account item) => const AccountMapper().mapToSql(item);
 
   List<AccountBalance> _mapAccountBalanceList(
-          List<AccountBalanceEntity> list) =>
+    List<AccountBalanceEntity> list,
+  ) =>
       const AccountBalanceMapper().mapListToDart(list);
 
   @override
@@ -55,11 +57,8 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataRepositor
   @override
   Future<Account?> getByCloudId(String cloudId) async {
     var _account = await accountDao.getAccountByCloudId(cloudId);
-    if (_account == null) {
-      return null;
-    } else {
-      return _mapAccount(_account);
-    }
+
+    return _account == null ? null : _mapAccount(_account);
   }
 
   @override
@@ -102,12 +101,13 @@ class AccountRepository implements LocalSyncTable<Account>, AccountDataRepositor
   @override
   Future updateFromCloud(Account account) {
     return accountDao.updateFields(
-        account.id,
-        AccountsCompanion(
-          cloudId: Value(account.cloudId),
-          title: Value(account.title),
-          isDebt: Value(account.isDebt),
-          synced: const Value(true),
-        ));
+      account.id,
+      AccountsCompanion(
+        cloudId: Value(account.cloudId),
+        title: Value(account.title),
+        isDebt: Value(account.isDebt),
+        synced: const Value(true),
+      ),
+    );
   }
 }

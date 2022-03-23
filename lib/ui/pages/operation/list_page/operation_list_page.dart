@@ -21,18 +21,22 @@ class OperationListPage extends StatelessWidget {
             title: Text(AppLocalizations.of(context).operations),
             actions: [
               IconButton(
-                  onPressed: () async {
-                    var newFilter = await PageNavigator.openOperationFilterPage(
-                        context,
-                        context.read<OperationListBloc>().state.filter);
-                    if (newFilter != null) {
-                      context.read<OperationListBloc>().add(Fetch(newFilter));
-                    }
-                  },
-                  icon: const Icon(Icons.filter_list))
+                onPressed: () async {
+                  var newFilter = await PageNavigator.openOperationFilterPage(
+                    context,
+                    context.read<OperationListBloc>().state.filter,
+                  );
+                  if (newFilter != null) {
+                    context.read<OperationListBloc>().add(Fetch(newFilter));
+                  }
+                },
+                icon: const Icon(Icons.filter_list),
+              ),
             ],
           ),
-          body: OperationList(context.watch<OperationListBloc>().state.operations),
+          body: OperationList(
+            context.watch<OperationListBloc>().state.operations,
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => PageNavigator.openOperationInputPage(context),
             child: const Icon(Icons.add),

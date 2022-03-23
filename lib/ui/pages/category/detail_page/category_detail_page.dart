@@ -26,45 +26,51 @@ class CategoryDetailPage extends StatelessWidget {
               title: Text(state.title),
               actions: [
                 IconButton(
-                    onPressed: () =>
-                        PageNavigator.openCategoryEditPage(context, id: id),
-                    icon: const Icon(Icons.edit))
+                  onPressed: () =>
+                      PageNavigator.openCategoryEditPage(context, id: id),
+                  icon: const Icon(Icons.edit),
+                ),
               ],
             ),
             body: CustomScrollView(
               slivers: [
                 SliverPersistentHeader(
                   delegate: TitleDelegate(
-                      id: id,
-                      budget: state.budget,
-                      budgetType: state.budgetType),
+                    id: id,
+                    budget: state.budget,
+                    budgetType: state.budgetType,
+                  ),
                 ),
                 BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
-                    builder: (context, state) {
-                  return SliverList(
-                    delegate: SliverChildListDelegate(
-                      state.operations
-                          .expand(
-                            (e) => [
-                              if (state.operations.indexOf(e) == 0)
-                                ListDividerOperation.day(null, e)
-                              else
-                                ListDividerOperation.day(
+                  builder: (context, state) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        state.operations
+                            .expand(
+                              (e) => [
+                                if (state.operations.indexOf(e) == 0)
+                                  ListDividerOperation.day(null, e)
+                                else
+                                  ListDividerOperation.day(
                                     state.operations[
                                         state.operations.indexOf(e) - 1],
-                                    e),
-                              ListTileOperation(
-                                e,
-                                onTap: () =>
-                                    PageNavigator.openOperationEditPage(
-                                        context, e.id),
-                              )
-                            ],
-                          )
-                          .toList(),
-                    ),
-                  );
-                }),
+                                    e,
+                                  ),
+                                ListTileOperation(
+                                  e,
+                                  onTap: () =>
+                                      PageNavigator.openOperationEditPage(
+                                    context,
+                                    e.id,
+                                  ),
+                                ),
+                              ],
+                            )
+                            .toList(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             floatingActionButton: FloatingActionButton(
@@ -91,13 +97,17 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-              '${AppLocalizations.of(context).budget} $budget ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}'),
+            '${AppLocalizations.of(context).budget} $budget ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}',
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

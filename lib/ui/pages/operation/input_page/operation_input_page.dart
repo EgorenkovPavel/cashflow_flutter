@@ -91,7 +91,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                     _bloc.onAddNewItem();
                     onAdd();
                   },
-                )
+                ),
               ],
             ),
             const Divider(),
@@ -109,14 +109,23 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget buildAnalyticList(OperationType type) {
     switch (type) {
       case OperationType.INPUT:
-        return buildList(AppLocalizations.of(context).categories,
-            addNewInCategory, categoryInPageView(context));
+        return buildList(
+          AppLocalizations.of(context).categories,
+          addNewInCategory,
+          categoryInPageView(context),
+        );
       case OperationType.OUTPUT:
-        return buildList(AppLocalizations.of(context).categories,
-            addNewOutCategory, categoryOutPageView(context));
+        return buildList(
+          AppLocalizations.of(context).categories,
+          addNewOutCategory,
+          categoryOutPageView(context),
+        );
       case OperationType.TRANSFER:
-        return buildList(AppLocalizations.of(context).receiver,
-            addNewRecAccount, recAccountPageView(context));
+        return buildList(
+          AppLocalizations.of(context).receiver,
+          addNewRecAccount,
+          recAccountPageView(context),
+        );
       default:
         return const SizedBox();
     }
@@ -214,16 +223,20 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewInCategory() async {
-    var category = await PageNavigator.openCategoryInputPage(context,
-        type: OperationType.INPUT);
+    var category = await PageNavigator.openCategoryInputPage(
+      context,
+      type: OperationType.INPUT,
+    );
     if (category != null) {
       _bloc.onCategoryInChanged(category);
     }
   }
 
   Future<void> addNewOutCategory() async {
-    var category = await PageNavigator.openCategoryInputPage(context,
-        type: OperationType.OUTPUT);
+    var category = await PageNavigator.openCategoryInputPage(
+      context,
+      type: OperationType.OUTPUT,
+    );
     if (category != null) {
       _bloc.onCategoryOutChanged(category);
     }
@@ -247,6 +260,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     return WillPopScope(
       onWillPop: () {
         _bloc.backpressed();
+
         return Future(() => false);
       },
       child: Scaffold(
@@ -264,7 +278,9 @@ class _OperationInputPageState extends State<OperationInputPage>
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 8.0),
+                    horizontal: 8.0,
+                    vertical: 8.0,
+                  ),
                   child: TypeRadioButton<OperationType>(
                     type: state.type,
                     items: const [
@@ -279,11 +295,12 @@ class _OperationInputPageState extends State<OperationInputPage>
                   child: Row(
                     children: <Widget>[
                       buildList(
-                          state.type == OperationType.TRANSFER
-                              ? AppLocalizations.of(context).source
-                              : AppLocalizations.of(context).accounts,
-                          addNewAccount,
-                          accountPageView(context, state.type)),
+                        state.type == OperationType.TRANSFER
+                            ? AppLocalizations.of(context).source
+                            : AppLocalizations.of(context).accounts,
+                        addNewAccount,
+                        accountPageView(context, state.type),
+                      ),
                       buildAnalyticList(state.type),
                     ],
                   ),
@@ -296,8 +313,9 @@ class _OperationInputPageState extends State<OperationInputPage>
                         margin: const EdgeInsets.only(top: 6.0),
                         //Same as `blurRadius` i guess
                         decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.vertical(top: Radius.circular(16.0)),
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(16.0),
+                          ),
                           color: Theme.of(context)
                               .dialogBackgroundColor, //Colors.white,
                           boxShadow: const [
@@ -317,7 +335,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                               child: Text(
                                 AppLocalizations.of(context).more.toUpperCase(),
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.primary),
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             ),
                             Expanded(
@@ -335,12 +354,15 @@ class _OperationInputPageState extends State<OperationInputPage>
                                           borderRadius:
                                               BorderRadius.circular(4.0),
                                           border: Border.all(
-                                              color: state.showKeyboard
-                                                  ? Theme.of(context)
-                                                      .colorScheme.secondary
-                                                  : Theme.of(context)
-                                                      .colorScheme.primary,
-                                              width: 2.0),
+                                            color: state.showKeyboard
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                            width: 2.0,
+                                          ),
                                         ),
                                         width: double.infinity,
                                         height: 48.0,
@@ -374,7 +396,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                                     .create
                                     .toUpperCase(),
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.primary),
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             ),
                           ],
@@ -423,7 +446,7 @@ class _AccountItem extends StatelessWidget {
         Text(
           AppLocalizations.of(context).numberFormat(account.balance),
           style: Theme.of(context).textTheme.caption,
-        )
+        ),
       ],
     );
   }

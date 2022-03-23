@@ -69,7 +69,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           child: Text(
             AppLocalizations.of(context).restore.toUpperCase(),
           ),
-        )
+        ),
       ],
     );
   }

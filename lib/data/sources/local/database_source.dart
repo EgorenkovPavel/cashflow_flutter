@@ -50,6 +50,7 @@ class DatabaseSource extends LocalDataSource{
   @override
   Future importData(Map<String, dynamic> data) async {
     await deleteAll();
+
     return db.loadData(data);
   }
 }

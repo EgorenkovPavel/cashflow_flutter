@@ -34,7 +34,7 @@ class ChangeBudgetType extends CategoryInputEvent {
   ChangeBudgetType(this.budgetType);
 }
 
-class Save extends CategoryInputEvent{}
+class Save extends CategoryInputEvent {}
 
 abstract class CategoryInputState {
   final Category? category;
@@ -133,7 +133,9 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   }
 
   Future<void> _initById(
-      InitById event, Emitter<CategoryInputState> emit) async {
+    InitById event,
+    Emitter<CategoryInputState> emit,
+  ) async {
     var _category = await _repository.categories.getById(event.categoryId);
 
     emit(Restore(category: _category));
@@ -147,7 +149,10 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     emit(Data.state(state: state, budget: event.budget));
   }
 
-  void _changeBudgetType(ChangeBudgetType event, Emitter<CategoryInputState> emit) {
+  void _changeBudgetType(
+    ChangeBudgetType event,
+    Emitter<CategoryInputState> emit,
+  ) {
     emit(Data.state(state: state, budgetType: event.budgetType));
   }
 

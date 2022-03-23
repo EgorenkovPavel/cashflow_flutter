@@ -48,41 +48,53 @@ class MonthOperationsBloc
     _sub = _repository.categories
         .watchCashflowByType(DateTime.now(), event.operationType)
         .listen((items) {
-      add(ChangeCategories(categories: items, operationType: event.operationType));
+      add(ChangeCategories(
+        categories: items,
+        operationType: event.operationType,
+      ));
     });
   }
 
   void _changeCategories(
-      ChangeCategories event, Emitter<MonthOperationsState> emit) {
+    ChangeCategories event,
+    Emitter<MonthOperationsState> emit,
+  ) {
     emit(MonthOperationsState(
-      cashflow: Map.from(state.cashflow)..update(event.operationType, (_) => _calcCashflow(event.categories)),
-      budget: Map.from(state.budget)..update(event.operationType, (_) => _calcBudget(event.categories)),
+      cashflow: Map.from(state.cashflow)
+        ..update(event.operationType, (_) => _calcCashflow(event.categories)),
+      budget: Map.from(state.budget)
+        ..update(event.operationType, (_) => _calcBudget(event.categories)),
     ));
   }
 
   int _calcCashflow(List<CategoryCashflow> list) {
     return list.fold(
-        0, (previousValue, element) => previousValue + element.monthCashflow);
+      0,
+      (previousValue, element) => previousValue + element.monthCashflow,
+    );
   }
 
   int _calcBudget(List<CategoryCashflow> list) {
     return list
             .where((element) => element.category.budgetType == BudgetType.MONTH)
             .fold<int>(
-                0,
-                (previousValue, element) =>
-                    previousValue + element.category.budget) +
+              0,
+              (previousValue, element) =>
+                  previousValue + element.category.budget,
+            ) +
         list
             .where((element) => element.category.budgetType == BudgetType.YEAR)
             .fold<int>(
-                0,
-                (previousValue, element) =>
-                    previousValue + (element.category.budget / 12).floor());
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.category.budget / 12).floor(),
+            );
   }
 
   @override
   Future<void> close() {
     _sub?.cancel();
+
     return super.close();
   }
 }

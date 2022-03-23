@@ -38,7 +38,8 @@ class OperationMapper extends CloudConverter<CloudOperation> {
     return CloudOperation(
       id: doc.id,
       date: DateTime.fromMillisecondsSinceEpoch(
-          (doc.get(_KEY_DATE) as Timestamp).millisecondsSinceEpoch),
+        (doc.get(_KEY_DATE) as Timestamp).millisecondsSinceEpoch,
+      ),
       operationType: doc.get(_KEY_OPERATION_TYPE),
       account: doc.get(_KEY_ACCOUNT),
       category: doc.get(_KEY_CATEGORY) == '' ? null : doc.get(_KEY_CATEGORY),

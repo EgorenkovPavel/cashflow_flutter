@@ -88,18 +88,18 @@ abstract class OperationEditState {
 
 class Data extends OperationEditState {
   Data(
-      Operation operation,
-      DateTime date,
-      TimeOfDay time,
-      OperationType operationType,
-      Account account,
-      Category? category,
-      Account? recAccount,
-      int sum,
-      List<Account> accounts,
-      List<Category> inCategories,
-      List<Category> outCategories)
-      : super(
+    Operation operation,
+    DateTime date,
+    TimeOfDay time,
+    OperationType operationType,
+    Account account,
+    Category? category,
+    Account? recAccount,
+    int sum,
+    List<Account> accounts,
+    List<Category> inCategories,
+    List<Category> outCategories,
+  ) : super(
           operation: operation,
           date: date,
           time: time,
@@ -116,10 +116,11 @@ class Data extends OperationEditState {
   Data.initial()
       : super(
           operation: Operation(
-              date: DateTime.now(),
-              type: OperationType.INPUT,
-              account: const Account(title: '', isDebt: false),
-              sum: 0),
+            date: DateTime.now(),
+            type: OperationType.INPUT,
+            account: const Account(title: '', isDebt: false),
+            sum: 0,
+          ),
           date: DateTime.now(),
           time: TimeOfDay.now(),
           operationType: OperationType.INPUT,
@@ -175,9 +176,10 @@ class Data extends OperationEditState {
 }
 
 class FetchOperation extends OperationEditState {
-  FetchOperation(
-      {required Operation operation, required OperationEditState state})
-      : super(
+  FetchOperation({
+    required Operation operation,
+    required OperationEditState state,
+  }) : super(
           operation: operation,
           operationType: operation.type,
           date: operation.date,
@@ -252,7 +254,9 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
   }
 
   void _changeOperationType(
-      ChangeOperationType event, Emitter<OperationEditState> emit) {
+    ChangeOperationType event,
+    Emitter<OperationEditState> emit,
+  ) {
     emit(Data.state(state: state, operationType: event.operationType));
     emit(Data.resetCategory(state: state));
   }
@@ -266,7 +270,9 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
   }
 
   void _changeRecAccount(
-      ChangeRecAccount event, Emitter<OperationEditState> emit) {
+    ChangeRecAccount event,
+    Emitter<OperationEditState> emit,
+  ) {
     emit(Data.state(state: state, recAccount: event.recAccount));
   }
 
@@ -292,9 +298,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         sum: state.sum,
       );
 
-      await _repository
-          .operations
-          .insert(_newOperation);
+      await _repository.operations.insert(_newOperation);
     } else {
       var _newOperation = state.operation.copyWith(
         date: _date,
@@ -305,9 +309,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         sum: state.sum,
       );
 
-      await _repository
-          .operations
-          .update(_newOperation);
+      await _repository.operations.update(_newOperation);
     }
 
     emit(Saved(state: state));

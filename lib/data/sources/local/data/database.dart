@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:money_tracker/data/sources/local/data/account_dao.dart';
 import 'package:money_tracker/data/sources/local/data/category_dao.dart';
 import 'package:money_tracker/data/sources/local/data/operation_dao.dart';
@@ -5,11 +9,8 @@ import 'package:money_tracker/data/sources/local/db_converters/budget_type_conve
 import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/domain/models/enum/budget_type.dart';
 import 'package:money_tracker/domain/models/enum/operation_type.dart';
-import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:drift/drift.dart';
-import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 part 'database.g.dart';
 
@@ -126,13 +127,15 @@ LazyDatabase _openConnection() {
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
     return NativeDatabase(file);
   });
 }
 
 @DriftDatabase(
-    tables: [Accounts, Categories, Operations, Balances, Cashflows],
-    daos: [AccountDao, CategoryDao, OperationDao])
+  tables: [Accounts, Categories, Operations, Balances, Cashflows],
+  daos: [AccountDao, CategoryDao, OperationDao],
+)
 class Database extends _$Database {
   Database() : super(_openConnection());
 
@@ -141,31 +144,30 @@ class Database extends _$Database {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-      onCreate: (Migrator m) {
-        return m.createAll();
-      },
-      onUpgrade: (Migrator m, int from, int to) async {
-        if (from == 1) {
-          // we added the dueDate property in the change from version 1
-          await m.addColumn(accounts, accounts.isDebt);
-        }
+        onCreate: (Migrator m) {
+          return m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          if (from == 1) {
+            // we added the dueDate property in the change from version 1
+            await m.addColumn(accounts, accounts.isDebt);
+          }
 
-        if (from == 2){
-          await m.addColumn(accounts, accounts.cloudId);
-          await m.addColumn(categories, categories.cloudId);
-          await m.addColumn(operations, operations.cloudId);
+          if (from == 2) {
+            await m.addColumn(accounts, accounts.cloudId);
+            await m.addColumn(categories, categories.cloudId);
+            await m.addColumn(operations, operations.cloudId);
 
-          await m.addColumn(accounts, accounts.synced);
-          await m.addColumn(categories, categories.synced);
-          await m.addColumn(operations, operations.synced);
-        }
+            await m.addColumn(accounts, accounts.synced);
+            await m.addColumn(categories, categories.synced);
+            await m.addColumn(operations, operations.synced);
+          }
 
-        if (from == 3){
-          await m.addColumn(operations, operations.deleted);
-        }
-      }
-  );
-
+          if (from == 3) {
+            await m.addColumn(operations, operations.deleted);
+          }
+        },
+      );
 
   Future deleteAll() {
     return transaction(() async {
@@ -185,22 +187,25 @@ class Database extends _$Database {
     var operations = await OperationDao(this).getAllOperations();
 
     data.putIfAbsent(
-        'account',
-        () => accounts
-            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-            .toList());
+      'account',
+      () => accounts
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
+    );
 
     data.putIfAbsent(
-        'category',
-        () => categories
-            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-            .toList());
+      'category',
+      () => categories
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
+    );
 
     data.putIfAbsent(
-        'operation',
-        () => operations
-            .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-            .toList());
+      'operation',
+      () => operations
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
+    );
 
     return data;
   }
@@ -222,8 +227,10 @@ class Database extends _$Database {
                 synced: false,
               ));
             } else {
-              accounts.add(
-                  AccountDB.fromJson(d, serializer: const _DefaultValueSerializer()));
+              accounts.add(AccountDB.fromJson(
+                d,
+                serializer: const _DefaultValueSerializer(),
+              ));
             }
           }
         });
@@ -247,8 +254,10 @@ class Database extends _$Database {
                 synced: false,
               ));
             } else {
-              categories.add(CategoryDB.fromJson(d,
-                  serializer: const _DefaultValueSerializer()));
+              categories.add(CategoryDB.fromJson(
+                d,
+                serializer: const _DefaultValueSerializer(),
+              ));
             }
           }
         });
@@ -262,7 +271,8 @@ class Database extends _$Database {
                 id: int.parse(d['_id']),
                 cloudId: '',
                 date: DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(d['operation_date'])),
+                  int.parse(d['operation_date']),
+                ),
                 operationType:
                     converter.mapToDart(int.parse(d['operation_type']))!,
                 account: int.parse(d['operation_account_id']),
@@ -273,8 +283,10 @@ class Database extends _$Database {
                 deleted: false,
               ));
             } else {
-              operations.add(OperationDB.fromJson(d,
-                  serializer: const _DefaultValueSerializer()));
+              operations.add(OperationDB.fromJson(
+                d,
+                serializer: const _DefaultValueSerializer(),
+              ));
             }
           }
         });
@@ -284,11 +296,7 @@ class Database extends _$Database {
   }
 
   int? _getId(String id) {
-    if (id.isEmpty) {
-      return null;
-    } else {
-      return int.parse(id);
-    }
+    return id.isEmpty ? null : int.parse(id);
   }
 }
 
@@ -298,7 +306,6 @@ class _DefaultValueSerializer extends ValueSerializer {
   final _operationTypeConverter = const OperationTypeConverter();
   final _budgetTypeConverter = const BudgetTypeConverter();
 
-
   @override
   T fromJson<T>(dynamic json) {
     if (T == DateTime) {
@@ -306,15 +313,16 @@ class _DefaultValueSerializer extends ValueSerializer {
     } else if (T == OperationType) {
       return _operationTypeConverter.mapToDart(json as int) as T;
     } else if (T == BudgetType) {
-      if (json == null){
+      if (json == null) {
         return BudgetType.MONTH as T;
       }
+
       return _budgetTypeConverter.mapToDart(json as int) as T;
-    } else if (T == int && json == null){
+    } else if (T == int && json == null) {
       return 0 as T;
-    } else if (T == String && json == null){
+    } else if (T == String && json == null) {
       return '' as T;
-    } else if (T == bool && json == null){
+    } else if (T == bool && json == null) {
       return false as T;
     }
 

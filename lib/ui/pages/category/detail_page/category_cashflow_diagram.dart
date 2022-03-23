@@ -11,12 +11,12 @@ class CategoryCashflowDiagram extends StatelessWidget {
   final int budget;
   final BudgetType budgetType;
 
-  const CategoryCashflowDiagram(
-      {Key? key,
-      required this.id,
-      required this.budget,
-      required this.budgetType})
-      : super(key: key);
+  const CategoryCashflowDiagram({
+    Key? key,
+    required this.id,
+    required this.budget,
+    required this.budgetType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,28 +58,30 @@ class CategoryCashflowDiagram extends StatelessWidget {
             child: charts.BarChart(
               [
                 charts.Series<SumOnDate, String>(
-                    id: 'Cashflow',
-                    colorFn: (_, __) =>
-                        charts.MaterialPalette.blue.shadeDefault,
-                    domainFn: (SumOnDate sales, _) => DateFormat.yMMM(
-                            Localizations.localeOf(context).toString())
-                        .format(sales.date),
-                    measureFn: (SumOnDate sales, _) => sales.sum,
-                    data: data,
-                    labelAccessorFn: (SumOnDate sales, _) =>
-                        AppLocalizations.of(context).numberFormat(sales.sum))
+                  id: 'Cashflow',
+                  colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                  domainFn: (SumOnDate sales, _) => DateFormat.yMMM(
+                    Localizations.localeOf(context).toString(),
+                  ).format(sales.date),
+                  measureFn: (SumOnDate sales, _) => sales.sum,
+                  data: data,
+                  labelAccessorFn: (SumOnDate sales, _) =>
+                      AppLocalizations.of(context).numberFormat(sales.sum),
+                ),
               ],
               animate: false,
-              primaryMeasureAxis:
-                  const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+              primaryMeasureAxis: const charts.NumericAxisSpec(
+                renderSpec: charts.NoneRenderSpec(),
+              ),
               behaviors: [
                 charts.RangeAnnotation(
                   [
                     charts.LineAnnotationSegment(
-                        budget, charts.RangeAnnotationAxisType.measure,
-                        //startLabel: 'budget',
-                        //endLabel: 'Measure 2 End',
-                        color: charts.MaterialPalette.gray.shade400),
+                      budget, charts.RangeAnnotationAxisType.measure,
+                      //startLabel: 'budget',
+                      //endLabel: 'Measure 2 End',
+                      color: charts.MaterialPalette.gray.shade400,
+                    ),
                   ],
                 ),
               ],

@@ -121,6 +121,7 @@ class AccountInputBloc
   Future<Account> _insertAccount() async {
     var account = Account(title: state.title, isDebt: state.isDebt);
     var _id = await _repository.accounts.insert(account);
+
     return account.copyWith(id: _id);
   }
 
@@ -128,6 +129,7 @@ class AccountInputBloc
     var _newAccount =
         state.account!.copyWith(title: state.title, isDebt: state.isDebt);
     await _repository.accounts.update(_newAccount);
+
     return _newAccount;
   }
 }

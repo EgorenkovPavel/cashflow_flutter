@@ -14,7 +14,7 @@ enum MasterStateAction {
   SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
   SHOW_EMPTY_SUM_MESSAGE,
   SHOW_OPERATION_CREATED_MESSAGE,
-  SHOW_OPERATION_CANCELED_MESSAGE
+  SHOW_OPERATION_CANCELED_MESSAGE,
 }
 
 class MasterState {
@@ -23,17 +23,19 @@ class MasterState {
   final int sum;
   final bool showKeyboard;
 
-  MasterState(
-      {this.action = MasterStateAction.DATA,
-      required this.type,
-      required this.sum,
-      required this.showKeyboard});
+  MasterState({
+    this.action = MasterStateAction.DATA,
+    required this.type,
+    required this.sum,
+    required this.showKeyboard,
+  });
 
-  MasterState copyWith(
-          {MasterStateAction action = MasterStateAction.DATA,
-          OperationType? type,
-          int? sum,
-          bool? showKeyboard}) =>
+  MasterState copyWith({
+    MasterStateAction action = MasterStateAction.DATA,
+    OperationType? type,
+    int? sum,
+    bool? showKeyboard,
+  }) =>
       MasterState(
         action: action,
         type: type ?? this.type,
@@ -61,10 +63,11 @@ class MasterBloc extends Cubit<MasterState> {
         categoryOutStream =
             _repository.categories.watchAllByType(OperationType.OUTPUT),
         super(MasterState(
-            action: MasterStateAction.DATA,
-            type: OperationType.INPUT,
-            sum: 0,
-            showKeyboard: false));
+          action: MasterStateAction.DATA,
+          type: OperationType.INPUT,
+          sum: 0,
+          showKeyboard: false,
+        ));
 
   AccountBalance? get account => _account;
 
@@ -110,7 +113,9 @@ class MasterBloc extends Cubit<MasterState> {
   void backpressed() {
     if (state.showKeyboard) {
       emit(state.copyWith(
-          action: MasterStateAction.HIDE_KEYBOARD, showKeyboard: false));
+        action: MasterStateAction.HIDE_KEYBOARD,
+        showKeyboard: false,
+      ));
     } else {
       emit(state.copyWith(action: MasterStateAction.CLOSE));
     }
@@ -119,14 +124,18 @@ class MasterBloc extends Cubit<MasterState> {
   void onAddNewItem() {
     if (state.showKeyboard) {
       emit(state.copyWith(
-          action: MasterStateAction.HIDE_KEYBOARD, showKeyboard: false));
+        action: MasterStateAction.HIDE_KEYBOARD,
+        showKeyboard: false,
+      ));
     }
   }
 
   void onSumTap() {
     if (!state.showKeyboard) {
       emit(state.copyWith(
-          action: MasterStateAction.SHOW_KEYBOARD, showKeyboard: true));
+        action: MasterStateAction.SHOW_KEYBOARD,
+        showKeyboard: true,
+      ));
     }
   }
 
@@ -166,45 +175,59 @@ class MasterBloc extends Cubit<MasterState> {
     await _repository.operations.delete(_operation!);
     _operation = null;
     emit(state.copyWith(
-        action: MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE));
+      action: MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE,
+    ));
   }
 
   Future<void> onNextTap() async {
     if (_account == null) {
       emit(
-          state.copyWith(action: MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE));
+        state.copyWith(action: MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE),
+      );
+
       return;
     }
 
     if (state.type == OperationType.TRANSFER && _recAccount == null) {
       emit(state.copyWith(
-          action: MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE));
+        action: MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
+      ));
+
       return;
     }
 
     if (state.type == OperationType.INPUT && _categoryIn == null) {
       emit(state.copyWith(
-          action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE));
+        action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE,
+      ));
+
       return;
     }
 
     if (state.type == OperationType.OUTPUT && _categoryOut == null) {
       emit(state.copyWith(
-          action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE));
+        action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE,
+      ));
+
       return;
     }
 
     if (state.sum == 0) {
       emit(state.copyWith(action: MasterStateAction.SHOW_EMPTY_SUM_MESSAGE));
+
       return;
     }
 
     _operation = await _saveOperation();
     emit(state.copyWith(
-        action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE));
+      action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
+    ));
 
     emit(state.copyWith(
-        action: MasterStateAction.HIDE_KEYBOARD, sum: 0, showKeyboard: false));
+      action: MasterStateAction.HIDE_KEYBOARD,
+      sum: 0,
+      showKeyboard: false,
+    ));
   }
 
   Future<Operation> _saveOperation() {
@@ -212,33 +235,36 @@ class MasterBloc extends Cubit<MasterState> {
       case OperationType.INPUT:
         {
           var operation = Operation(
-              date: DateTime.now(),
-              type: state.type,
-              account: _account!.toAccount(),
-              category: _categoryIn,
-              sum: state.sum);
+            date: DateTime.now(),
+            type: state.type,
+            account: _account!.toAccount(),
+            category: _categoryIn,
+            sum: state.sum,
+          );
 
           return _repository.operations.insert(operation);
         }
       case OperationType.OUTPUT:
         {
           var operation = Operation(
-              date: DateTime.now(),
-              type: state.type,
-              account: _account!.toAccount(),
-              category: _categoryOut,
-              sum: state.sum);
+            date: DateTime.now(),
+            type: state.type,
+            account: _account!.toAccount(),
+            category: _categoryOut,
+            sum: state.sum,
+          );
 
           return _repository.operations.insert(operation);
         }
       case OperationType.TRANSFER:
         {
           var operation = Operation(
-              date: DateTime.now(),
-              type: state.type,
-              account: _account!.toAccount(),
-              recAccount: _recAccount!.toAccount(),
-              sum: state.sum);
+            date: DateTime.now(),
+            type: state.type,
+            account: _account!.toAccount(),
+            recAccount: _recAccount!.toAccount(),
+            sum: state.sum,
+          );
 
           return _repository.operations.insert(operation);
         }

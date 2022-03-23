@@ -56,12 +56,13 @@ class ConsolidateReport extends StatelessWidget {
       headerWidgets: [
         const Cell(text: ''),
         ...List.generate(
-            12,
-            (i) => Cell(
-                text:
-                    DateFormat.MMMM(Localizations.localeOf(context).toString())
-                        .format(DateTime(YEAR, i + 1))
-                        .capitalize())),
+          12,
+          (i) => Cell(
+            text: DateFormat.MMMM(Localizations.localeOf(context).toString())
+                .format(DateTime(YEAR, i + 1))
+                .capitalize(),
+          ),
+        ),
         const Cell(text: ''),
         const Cell(
           text: 'Total',
@@ -74,11 +75,12 @@ class ConsolidateReport extends StatelessWidget {
       rightSideItemBuilder: (context, row) {
         return Row(
           children: List.generate(
-              14,
-              (col) => Cell(
-                    text: '$row - $col',
-                    alignment: Alignment.centerRight,
-                  )),
+            14,
+            (col) => Cell(
+              text: '$row - $col',
+              alignment: Alignment.centerRight,
+            ),
+          ),
         );
       },
       itemCount: 100,

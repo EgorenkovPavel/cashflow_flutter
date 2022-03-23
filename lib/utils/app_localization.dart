@@ -16,8 +16,10 @@ class AppLocalizations {
 
   String numberFormat(int number) {
     return NumberFormat.currency(
-            locale: locale.languageCode, symbol: '', decimalDigits: 0)
-        .format(number);
+      locale: locale.languageCode,
+      symbol: '',
+      decimalDigits: 0,
+    ).format(number);
   }
 
   String operationTypeTitle(OperationType type) {
@@ -28,12 +30,13 @@ class AppLocalizations {
         return _localizedValues[locale.languageCode]!['type_output']!;
       case OperationType.TRANSFER:
         return _localizedValues[locale.languageCode]!['type_transfer']!;
-      default: return '';
+      default:
+        return '';
     }
   }
 
-  String budgetTypeTitle(BudgetType type){
-    switch(type){
+  String budgetTypeTitle(BudgetType type) {
+    switch (type) {
       case BudgetType.MONTH:
         return _localizedValues[locale.languageCode]!['budget_type_month']!;
       case BudgetType.YEAR:
@@ -431,7 +434,8 @@ class AppLocalizations {
 
   String get period => _localizedValues[locale.languageCode]!['period']!;
 
-  String get lastChanges => _localizedValues[locale.languageCode]!['last_changes']!;
+  String get lastChanges =>
+      _localizedValues[locale.languageCode]!['last_changes']!;
 
   String get choosePeriod =>
       _localizedValues[locale.languageCode]!['choose_period']!;
@@ -454,9 +458,11 @@ class AppLocalizations {
 
   String get earningIn => _localizedValues[locale.languageCode]!['earning_in']!;
 
-  String get spendingIn => _localizedValues[locale.languageCode]!['spending_in']!;
+  String get spendingIn =>
+      _localizedValues[locale.languageCode]!['spending_in']!;
 
-  String get budgetType => _localizedValues[locale.languageCode]!['budget_type']!;
+  String get budgetType =>
+      _localizedValues[locale.languageCode]!['budget_type']!;
 
   String get source => _localizedValues[locale.languageCode]!['source']!;
 

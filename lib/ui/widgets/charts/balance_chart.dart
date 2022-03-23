@@ -108,13 +108,17 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
   }
 
   DateTime lastMonth(DateTime date) {
-    return DateTime(date.month == 1 ? date.year - 1 : date.year,
-        date.month == 1 ? 12 : date.month - 1);
+    return DateTime(
+      date.month == 1 ? date.year - 1 : date.year,
+      date.month == 1 ? 12 : date.month - 1,
+    );
   }
 
   DateTime nextMonth(DateTime date) {
-    return DateTime(date.month == 12 ? date.year + 1 : date.year,
-        date.month == 12 ? 1 : date.month + 1);
+    return DateTime(
+      date.month == 12 ? date.year + 1 : date.year,
+      date.month == 12 ? 1 : date.month + 1,
+    );
   }
 
   BalanceChartBloc() : super(BalanceChartState([], [], [])) {

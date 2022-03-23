@@ -9,8 +9,11 @@ import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 abstract class BackupSource {
-  Future<void> backup(Map<String, List<Map<String, dynamic>>> data,
-      String catalogId, String fileName);
+  Future<void> backup(
+    Map<String, List<Map<String, dynamic>>> data,
+    String catalogId,
+    String fileName,
+  );
 
   Future<Map<String, dynamic>?> restore(String fileId);
 
@@ -23,8 +26,11 @@ class GoogleDrive extends BackupSource {
   GoogleDrive(this._client);
 
   @override
-  Future<void> backup(Map<String, List<Map<String, dynamic>>> data,
-      String catalogId, String fileName) async {
+  Future<void> backup(
+    Map<String, List<Map<String, dynamic>>> data,
+    String catalogId,
+    String fileName,
+  ) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
     await localFile.writeAsString(jsonEncode(data));
@@ -52,8 +58,10 @@ class GoogleDrive extends BackupSource {
   @override
   Future<Map<String, dynamic>?> restore(String fileId) async {
     try {
-      var file = await drive.DriveApi(_client).files.get(fileId,
-          downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+      var file = await drive.DriveApi(_client).files.get(
+            fileId,
+            downloadOptions: drive.DownloadOptions.fullMedia,
+          ) as drive.Media;
 
       final directory = await getTemporaryDirectory();
       var saveFile = File('${directory.path}/test.json');
@@ -79,6 +87,7 @@ class GoogleDrive extends BackupSource {
       if (kDebugMode) {
         print(e);
       }
+
       return null;
     }
   }
@@ -86,11 +95,12 @@ class GoogleDrive extends BackupSource {
   @override
   Future<List<DriveFile>> getFiles(String catalogId) async {
     var data = await drive.DriveApi(_client).files.list(
-        orderBy: 'folder,name,modifiedTime',
-        spaces: 'drive',
-        q: "'$catalogId' in parents and trashed = false", //only double ""
-        //(mimeType = 'application/vnd.google-apps.folder')
-        $fields: 'files(id,name,parents,mimeType,modifiedTime)');
+          orderBy: 'folder,name,modifiedTime',
+          spaces: 'drive',
+          q: "'$catalogId' in parents and trashed = false", //only double ""
+          //(mimeType = 'application/vnd.google-apps.folder')
+          $fields: 'files(id,name,parents,mimeType,modifiedTime)',
+        );
 
     return data.files!
         .map((f) => DriveFile(

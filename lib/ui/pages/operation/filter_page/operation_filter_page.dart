@@ -41,20 +41,24 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       ),
       Offset.zero & overlay.size,
     );
+
     return position;
   }
 
   void _onAccountChipPressed() async {
     final result = await showMenu<Account>(
-        context: context,
-        position: buttonMenuPosition(_accountKey.currentContext!),
-        items: context
-            .read<OperationFilterBloc>().state.accounts
-            .map((a) => PopupMenuItem<Account>(
-                  value: a,
-                  child: Text(a.title),
-                ))
-            .toList());
+      context: context,
+      position: buttonMenuPosition(_accountKey.currentContext!),
+      items: context
+          .read<OperationFilterBloc>()
+          .state
+          .accounts
+          .map((a) => PopupMenuItem<Account>(
+                value: a,
+                child: Text(a.title),
+              ))
+          .toList(),
+    );
     if (result != null) {
       context.read<OperationFilterBloc>().add(AddAccount(result));
     }
@@ -62,17 +66,20 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
 
   void _onCategoryInPressed() async {
     final result = await showMenu<Category>(
-        context: context,
-        position: buttonMenuPosition(_categoryInKey.currentContext!),
-        items: context
-            .read<OperationFilterBloc>().state.inCategories
-            .map(
-              (c) => PopupMenuItem<Category>(
-                value: c,
-                child: Text(c.title),
-              ),
-            )
-            .toList());
+      context: context,
+      position: buttonMenuPosition(_categoryInKey.currentContext!),
+      items: context
+          .read<OperationFilterBloc>()
+          .state
+          .inCategories
+          .map(
+            (c) => PopupMenuItem<Category>(
+              value: c,
+              child: Text(c.title),
+            ),
+          )
+          .toList(),
+    );
     if (result != null) {
       context.read<OperationFilterBloc>().add(AddCategory(result));
     }
@@ -80,15 +87,18 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
 
   void _onCategoryOutPressed() async {
     final result = await showMenu<Category>(
-        context: context,
-        position: buttonMenuPosition(_categoryOutKey.currentContext!),
-        items: context
-            .read<OperationFilterBloc>().state.outCategories
-            .map((c) => PopupMenuItem<Category>(
-                  value: c,
-                  child: Text(c.title),
-                ))
-            .toList());
+      context: context,
+      position: buttonMenuPosition(_categoryOutKey.currentContext!),
+      items: context
+          .read<OperationFilterBloc>()
+          .state
+          .outCategories
+          .map((c) => PopupMenuItem<Category>(
+                value: c,
+                child: Text(c.title),
+              ))
+          .toList(),
+    );
     if (result != null) {
       context.read<OperationFilterBloc>().add(AddCategory(result));
     }
@@ -110,7 +120,8 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
               Text(AppLocalizations.of(context).period),
               PeriodButton(
                 date: context.select<OperationFilterBloc, DateTimeRange?>(
-                    (bloc) => bloc.state.filter.period),
+                  (bloc) => bloc.state.filter.period,
+                ),
                 onPressed: (date) =>
                     context.read<OperationFilterBloc>().add(SetPeriod(date)),
                 onDelete: () =>
@@ -119,14 +130,16 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
               const SizedBox(height: 8.0),
               Text(AppLocalizations.of(context).accounts),
               InputChip(
-                  key: _accountKey,
-                  avatar: const Icon(Icons.mode_edit),
-                  label: Text(AppLocalizations.of(context).chooseAccount),
-                  onPressed: _onAccountChipPressed),
+                key: _accountKey,
+                avatar: const Icon(Icons.mode_edit),
+                label: Text(AppLocalizations.of(context).chooseAccount),
+                onPressed: _onAccountChipPressed,
+              ),
               Wrap(
                 children: context
                     .select<OperationFilterBloc, Set<Account>>(
-                        (bloc) => bloc.state.filter.accounts)
+                      (bloc) => bloc.state.filter.accounts,
+                    )
                     .map(
                       (account) => InputChip(
                         label: Text(account.title),
@@ -147,22 +160,25 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                 onPressed: _onCategoryInPressed,
               ),
               Wrap(
-                  children: context
-                      .select<OperationFilterBloc, Set<Category>>((bloc) => bloc
-                          .state.filter.categories
+                children: context
+                    .select<OperationFilterBloc, Set<Category>>(
+                      (bloc) => bloc.state.filter.categories
                           .where(
-                              (cat) => cat.operationType == OperationType.INPUT)
-                          .toSet())
-                      .map(
-                        (category) => InputChip(
-                          label: Text(category.title),
-                          deleteIcon: const Icon(Icons.cancel),
-                          onDeleted: () => context
-                              .read<OperationFilterBloc>()
-                              .add(RemoveCategory(category)),
-                        ),
-                      )
-                      .toList()),
+                            (cat) => cat.operationType == OperationType.INPUT,
+                          )
+                          .toSet(),
+                    )
+                    .map(
+                      (category) => InputChip(
+                        label: Text(category.title),
+                        deleteIcon: const Icon(Icons.cancel),
+                        onDeleted: () => context
+                            .read<OperationFilterBloc>()
+                            .add(RemoveCategory(category)),
+                      ),
+                    )
+                    .toList(),
+              ),
               const SizedBox(
                 height: 8.0,
               ),
@@ -174,22 +190,25 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                 onPressed: _onCategoryOutPressed,
               ),
               Wrap(
-                  children: context
-                      .select<OperationFilterBloc, Set<Category>>((bloc) => bloc
-                          .state.filter.categories
-                          .where((cat) =>
-                              cat.operationType == OperationType.OUTPUT)
-                          .toSet())
-                      .map(
-                        (category) => InputChip(
-                          label: Text(category.title),
-                          deleteIcon: const Icon(Icons.cancel),
-                          onDeleted: () => context
-                              .read<OperationFilterBloc>()
-                              .add(RemoveCategory(category)),
-                        ),
-                      )
-                      .toList()),
+                children: context
+                    .select<OperationFilterBloc, Set<Category>>(
+                      (bloc) => bloc.state.filter.categories
+                          .where(
+                            (cat) => cat.operationType == OperationType.OUTPUT,
+                          )
+                          .toSet(),
+                    )
+                    .map(
+                      (category) => InputChip(
+                        label: Text(category.title),
+                        deleteIcon: const Icon(Icons.cancel),
+                        onDeleted: () => context
+                            .read<OperationFilterBloc>()
+                            .add(RemoveCategory(category)),
+                      ),
+                    )
+                    .toList(),
+              ),
             ],
           ),
         ),
@@ -224,9 +243,12 @@ class PeriodButton extends StatelessWidget {
   final void Function() onDelete;
   final void Function(DateTimeRange) onPressed;
 
-  const PeriodButton(
-      {Key? key, this.date, required this.onDelete, required this.onPressed})
-      : super(key: key);
+  const PeriodButton({
+    Key? key,
+    this.date,
+    required this.onDelete,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -235,6 +257,7 @@ class PeriodButton extends StatelessWidget {
           .format(date!.start);
       var end = DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
           .format(date!.end);
+
       return InputChip(
         label: Text('$start - $end'),
         deleteIcon: const Icon(Icons.cancel),
@@ -246,9 +269,10 @@ class PeriodButton extends StatelessWidget {
         label: Text(AppLocalizations.of(context).choosePeriod),
         onPressed: () async {
           var date = await showDateRangePicker(
-              context: context,
-              firstDate: DateTime(2020), //TODO
-              lastDate: DateTime.now());
+            context: context,
+            firstDate: DateTime(2020), //TODO
+            lastDate: DateTime.now(),
+          );
           if (date != null) {
             onPressed(date);
           }

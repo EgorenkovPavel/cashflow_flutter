@@ -10,14 +10,14 @@ class Carousel<T> extends StatelessWidget {
   final ValueChanged<int> onPageChanged;
   final IndexedWidgetBuilder itemBuilder;
 
-  const Carousel(
-      {Key? key,
-      required this.items,
-      required this.onPageChanged,
-      required this.itemBuilder,
-      required this.initialItemFinder,
-      required this.itemHeight})
-      : super(key: key);
+  const Carousel({
+    Key? key,
+    required this.items,
+    required this.onPageChanged,
+    required this.itemBuilder,
+    required this.initialItemFinder,
+    required this.itemHeight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class Carousel<T> extends StatelessWidget {
           keepPage: true,
           viewportFraction: 1 / (constrains.maxHeight / itemHeight),
         );
+
         return Stack(
           children: <Widget>[
             Center(
@@ -53,6 +54,7 @@ class Carousel<T> extends StatelessWidget {
                     var page = !_pageController.position.haveDimensions
                         ? _pageController.initialPage.toDouble()
                         : _pageController.page;
+
                     return Transform.scale(
                       scale: 1 - (min((pos - (page ?? 0)).abs(), 1)) / 10,
                       child: child,
@@ -61,9 +63,11 @@ class Carousel<T> extends StatelessWidget {
                   animation: _pageController,
                   child: GestureDetector(
                     onTap: () {
-                      _pageController.animateToPage(pos,
-                          duration: const Duration(seconds: 1),
-                          curve: const ElasticOutCurve());
+                      _pageController.animateToPage(
+                        pos,
+                        duration: const Duration(seconds: 1),
+                        curve: const ElasticOutCurve(),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
@@ -72,7 +76,9 @@ class Carousel<T> extends StatelessWidget {
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
-                              width: 1.0, color: Theme.of(context).colorScheme.primary),
+                            width: 1.0,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         height: 20.0,
                         child: itemBuilder(context, pos),

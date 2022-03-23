@@ -14,10 +14,11 @@ class GoogleDriveSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _bloc = DriveBloc(
-        dataRepository: context.read<DataRepository>(),
+      dataRepository: context.read<DataRepository>(),
       authBloc: context.read<AuthBloc>(),
       authSource: context.read<AuthSource>(),
     );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Google drive'),
@@ -27,12 +28,12 @@ class GoogleDriveSettingsPage extends StatelessWidget {
         listener: (context, state) {
           if (state == DriveState.SUCCESS_BACKUP) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    Text(AppLocalizations.of(context).mesDatabaseBackuped)));
+              content: Text(AppLocalizations.of(context).mesDatabaseBackuped),
+            ));
           } else if (state == DriveState.SUCCESS_RESTORE) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    Text(AppLocalizations.of(context).mesDatabaseRestored)));
+              content: Text(AppLocalizations.of(context).mesDatabaseRestored),
+            ));
           }
         },
         builder: (context, state) {
@@ -58,7 +59,9 @@ class GoogleDriveSettingsPage extends StatelessWidget {
                 ],
               ),
               if (state == DriveState.IN_PROGRESS)
-                 const Center(child: CircularProgressIndicator(),)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
             ],
           );
         },
@@ -66,8 +69,10 @@ class GoogleDriveSettingsPage extends StatelessWidget {
     );
   }
 
-  Future _backup(BuildContext context,
-      Future<void> Function(String, String) onBackup) async {
+  Future _backup(
+    BuildContext context,
+    Future<void> Function(String, String) onBackup,
+  ) async {
     await showDialog(
       context: context,
       builder: (context) => BackupDialog(
@@ -78,7 +83,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
 
   Future _restore(
     BuildContext context,
-      Future<void> Function(String) onRestore
+    Future<void> Function(String) onRestore,
   ) async {
     await showDialog(
       context: context,

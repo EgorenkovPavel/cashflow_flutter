@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -32,11 +32,9 @@ class OperationList extends StatelessWidget {
                 .index;
           }
 
-          if (min == null) {
-            return const SizedBox();
-          } else {
-            return ListDividerOperation.day(null, operations[min]);
-          }
+          return min == null
+              ? const SizedBox()
+              : ListDividerOperation.day(null, operations[min]);
         },
       );
     }
@@ -50,6 +48,7 @@ class OperationList extends StatelessWidget {
             itemCount: operations.length,
             itemBuilder: (_, index) {
               final itemOperation = operations[index];
+
               return ListTileOperation(
                 itemOperation,
                 onTap: () => _onItemTap(context, itemOperation),
@@ -61,7 +60,9 @@ class OperationList extends StatelessWidget {
               }
 
               return ListDividerOperation.day(
-                  operations[index], operations[index + 1]);
+                operations[index],
+                operations[index + 1],
+              );
             },
           ),
         ),
@@ -77,12 +78,8 @@ class OperationList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (_operations.isEmpty) {
       return EmptyListHint(
-        title: AppLocalizations
-            .of(context)
-            .emptyListOperations,
-        hint: AppLocalizations
-            .of(context)
-            .hintEmptyList,
+        title: AppLocalizations.of(context).emptyListOperations,
+        hint: AppLocalizations.of(context).hintEmptyList,
       );
     }
 

@@ -13,23 +13,25 @@ class AccountBalanceMapper
   @override
   AccountBalanceEntity mapToSql(AccountBalance a) {
     return AccountBalanceEntity(
-        AccountDB(
-          id: a.id,
-          cloudId: a.cloudId,
-          title: a.title,
-          isDebt: a.isDebt,
-          synced: false,
-        ),
-        a.balance);
+      AccountDB(
+        id: a.id,
+        cloudId: a.cloudId,
+        title: a.title,
+        isDebt: a.isDebt,
+        synced: false,
+      ),
+      a.balance,
+    );
   }
 
   @override
   AccountBalance mapToDart(AccountBalanceEntity a) {
     return AccountBalance(
-        id: a.account.id,
-        cloudId: a.account.cloudId,
-        title: a.account.title,
-        isDebt: a.account.isDebt,
-        balance: a.sum);
+      id: a.account.id,
+      cloudId: a.account.cloudId,
+      title: a.account.title,
+      isDebt: a.account.isDebt,
+      balance: a.sum,
+    );
   }
 }

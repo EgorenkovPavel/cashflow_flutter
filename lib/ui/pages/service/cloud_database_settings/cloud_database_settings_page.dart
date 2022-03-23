@@ -27,11 +27,9 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
           } else if (state is SyncStateSynced ||
               state is SyncStateFailed ||
               state is SyncStateNotSynced) {
-            if (context.watch<AuthBloc>().state.isAdmin) {
-              return const AdminSettings();
-            } else {
-              return const ConnectedView();
-            }
+            return context.watch<AuthBloc>().state.isAdmin
+                ? const AdminSettings()
+                : const ConnectedView();
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -54,11 +52,9 @@ class ConnectedView extends StatelessWidget {
           const Text('Database connected'),
           const SizedBox(height: 8.0),
           BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            if (state is SyncStateSynced) {
-              return Text('Last sync ${state.syncDate}');
-            } else {
-              return const SizedBox();
-            }
+            return state is SyncStateSynced
+                ? Text('Last sync ${state.syncDate}')
+                : const SizedBox();
           }),
           const SizedBox(height: 8.0),
           Column(
@@ -99,11 +95,9 @@ class AdminSettings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            if (state is SyncStateSynced) {
-              return Text('Last sync ${state.syncDate}');
-            } else {
-              return const SizedBox();
-            }
+            return state is SyncStateSynced
+                ? Text('Last sync ${state.syncDate}')
+                : const SizedBox();
           }),
           const SizedBox(height: 8.0),
           Row(
@@ -150,7 +144,11 @@ class AdminSettings extends StatelessWidget {
     String barcodeScanRes;
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
     } on PlatformException {
       return;
     }
@@ -189,15 +187,16 @@ class AdminSettings extends StatelessWidget {
         ),
         actions: [
           TextButton(
-              onPressed: () {
-                context.read<SyncBloc>().add(AddUser(User(
-                      id: _idController.text,
-                      name: _nameController.text,
-                      photo: '',
-                    )));
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'))
+            onPressed: () {
+              context.read<SyncBloc>().add(AddUser(User(
+                    id: _idController.text,
+                    name: _nameController.text,
+                    photo: '',
+                  )));
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
         ],
       ),
     );
@@ -214,31 +213,29 @@ class ConnectingView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ElevatedButton(
-            onPressed: () => context.read<SyncBloc>().add(CreateCloudDatabase()),
+            onPressed: () =>
+                context.read<SyncBloc>().add(CreateCloudDatabase()),
             child: const Text('Create local'),
           ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state is Authenticated) {
-                return Column(
-                  children: [
-                    QrImage(
-                      data: jsonEncode(state.user),
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    ),
-                    Text('Id: ${state.user.id}'),
-                    Text('Name: ${state.user.name}'),
-                  ],
-                );
-              } else {
-                return const SizedBox();
-              }
+              return state is Authenticated
+                  ? Column(children: [
+                      QrImage(
+                        data: jsonEncode(state.user),
+                        version: QrVersions.auto,
+                        size: 200.0,
+                      ),
+                      Text('Id: ${state.user.id}'),
+                      Text('Name: ${state.user.name}'),
+                    ])
+                  : const SizedBox();
             },
           ),
           ElevatedButton(
-              onPressed: () => context.read<SyncBloc>().add(RefreshConnection()),
-              child: const Text('Refresh')),
+            onPressed: () => context.read<SyncBloc>().add(RefreshConnection()),
+            child: const Text('Refresh'),
+          ),
         ],
       ),
     );

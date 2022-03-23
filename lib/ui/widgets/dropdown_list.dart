@@ -9,14 +9,14 @@ class DropdownList<T> extends StatelessWidget {
   final List<T> items;
   final WidgetByItem<T> getListItem;
 
-  const DropdownList(
-      {Key? key,
-      this.value,
-      this.hint = '',
-      this.onChange,
-      required this.items,
-      required this.getListItem})
-      : super(key: key);
+  const DropdownList({
+    Key? key,
+    this.value,
+    this.hint = '',
+    this.onChange,
+    required this.items,
+    required this.getListItem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

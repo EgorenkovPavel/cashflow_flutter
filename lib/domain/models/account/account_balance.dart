@@ -7,19 +7,21 @@ class AccountBalance {
   final int balance;
   final bool isDebt;
 
-  const AccountBalance(
-      {required this.id,
-      required this.cloudId,
-      required this.title,
-      required this.balance,
-      this.isDebt = false});
+  const AccountBalance({
+    required this.id,
+    required this.cloudId,
+    required this.title,
+    required this.balance,
+    this.isDebt = false,
+  });
 
-  AccountBalance copyWith(
-          {int? id,
-          String? cloudId,
-          String? title,
-          bool? isDebt,
-          int? balance}) =>
+  AccountBalance copyWith({
+    int? id,
+    String? cloudId,
+    String? title,
+    bool? isDebt,
+    int? balance,
+  }) =>
       AccountBalance(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,

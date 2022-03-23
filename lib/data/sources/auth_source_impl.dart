@@ -20,6 +20,7 @@ class GoogleAuth extends AuthSource{
   Future<bool> isAuthenticated() async {
     final currentUser = _googleSignIn.currentUser;
     var isSignIn = await _googleSignIn.isSignedIn();
+
     return currentUser != null && isSignIn;
   }
 

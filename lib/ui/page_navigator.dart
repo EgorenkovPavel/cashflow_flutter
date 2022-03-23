@@ -6,9 +6,9 @@ import 'package:money_tracker/ui/pages/budget_page/budget_page.dart';
 import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
 import 'package:money_tracker/ui/pages/home/home_page.dart';
+import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
-import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_page.dart';
 import 'package:money_tracker/ui/pages/operation/list_page/operation_list_page.dart';
 import 'package:money_tracker/ui/pages/reports/reports_page.dart';
 import 'package:money_tracker/ui/pages/service/cloud_database_settings/cloud_database_settings_page.dart';
@@ -18,7 +18,6 @@ import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google
 import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
 
 class PageNavigator {
-
   static Future<Account?> openAccountInputPage(BuildContext context) =>
       const _Card<Account>().open(
         context,
@@ -31,8 +30,10 @@ class PageNavigator {
         AccountInputPage.edit(id),
       );
 
-  static Future<Category?> openCategoryInputPage(BuildContext context,
-          {required OperationType type}) =>
+  static Future<Category?> openCategoryInputPage(
+    BuildContext context, {
+    required OperationType type,
+  }) =>
       const _Card<Category>().open(
         context,
         CategoryInputPage.byType(
@@ -40,8 +41,10 @@ class PageNavigator {
         ),
       );
 
-  static Future<Category?> openCategoryEditPage(BuildContext context,
-          {required int id}) =>
+  static Future<Category?> openCategoryEditPage(
+    BuildContext context, {
+    required int id,
+  }) =>
       const _Card<Category>().open(
         context,
         CategoryInputPage.edit(
@@ -69,10 +72,13 @@ class PageNavigator {
   static const _routeOperationFilterName = '/operationFilter';
 
   static Future<OperationListFilter?> openOperationFilterPage(
-          BuildContext context, OperationListFilter filter) =>
+    BuildContext context,
+    OperationListFilter filter,
+  ) =>
       Navigator.of(context).pushNamed<OperationListFilter?>(
-          _routeOperationFilterName,
-          arguments: filter);
+        _routeOperationFilterName,
+        arguments: filter,
+      );
 
   static const _routeOperationListName = '/operationListPage';
 
@@ -94,12 +100,14 @@ class PageNavigator {
   static Future openDataControlPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeDataControlName);
 
-  static const _routeGoogleDriveSettingsName = '/settings/google_drive_settings';
+  static const _routeGoogleDriveSettingsName =
+      '/settings/google_drive_settings';
 
   static Future openGoogleDriveSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeGoogleDriveSettingsName);
 
-  static const _routeCloudDatabaseSettingsName = '/settings/cloud_database__settings';
+  static const _routeCloudDatabaseSettingsName =
+      '/settings/cloud_database__settings';
 
   static Future openCloudDatabaseSettingsPage(BuildContext context) =>
       Navigator.of(context).pushNamed(_routeCloudDatabaseSettingsName);
@@ -135,7 +143,8 @@ class PageNavigator {
     _routeSettingsName: (context) => const SettingsPage(),
     _routeDataControlName: (context) => const DataControlPage(),
     _routeGoogleDriveSettingsName: (context) => const GoogleDriveSettingsPage(),
-    _routeCloudDatabaseSettingsName: (context) => const CloudDatabaseSettingsPage(),
+    _routeCloudDatabaseSettingsName: (context) =>
+        const CloudDatabaseSettingsPage(),
     _routeReportsName: (context) => const ReportsPage(),
   };
 
@@ -166,7 +175,8 @@ class PageNavigator {
         {
           return MaterialPageRoute<OperationListFilter?>(
             builder: (context) => OperationFilterPage(
-                filter: settings.arguments as OperationListFilter),
+              filter: settings.arguments as OperationListFilter,
+            ),
           );
         }
       case _routeBudgetPageName:

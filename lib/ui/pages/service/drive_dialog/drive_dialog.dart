@@ -46,6 +46,7 @@ class _DriveDialogState extends State<DriveDialog> {
     return WillPopScope(
       onWillPop: () async {
         _bloc.onBackPressed();
+
         return false;
       },
       child: Scaffold(
@@ -63,6 +64,7 @@ class _DriveDialogState extends State<DriveDialog> {
               },
               itemBuilder: (BuildContext context, int index) {
                 var f = state.folderList[index];
+
                 return _DriveFileItem(
                   file: f,
                   onTap: () => _bloc.onFileTap(f),
@@ -91,7 +93,7 @@ class _DriveDialogState extends State<DriveDialog> {
               AppLocalizations.of(context).choose.toUpperCase(),
               style: const TextStyle(color: Colors.white),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -115,7 +117,8 @@ class _DriveFileItem extends StatelessWidget {
           file.isFolder ? const Icon(Icons.folder) : const Icon(Icons.remove),
       title: Text(file.title),
       subtitle: Text(
-          '${AppLocalizations.of(context).lastChanges} ${DateFormat.yMMMd().format(file.lastChanges)}'),
+        '${AppLocalizations.of(context).lastChanges} ${DateFormat.yMMMd().format(file.lastChanges)}',
+      ),
       enabled: file.enabled,
       onTap: onTap,
     );

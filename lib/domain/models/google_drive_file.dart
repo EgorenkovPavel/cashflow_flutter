@@ -5,13 +5,15 @@ class DriveFile {
   final DateTime lastChanges;
   final bool enabled;
 
-  DriveFile({required this.enabled,
-      required this.lastChanges,
-      required this.title,
-      required this.id,
-      required this.isFolder});
+  DriveFile({
+    required this.enabled,
+    required this.lastChanges,
+    required this.title,
+    required this.id,
+    required this.isFolder,
+  });
 
-  static DriveFile root(){
+  static DriveFile root() {
     return DriveFile(
       id: 'root',
       title: 'root',

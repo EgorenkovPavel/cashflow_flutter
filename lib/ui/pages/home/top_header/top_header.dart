@@ -36,9 +36,10 @@ class _AccountsList extends StatelessWidget {
           height: _itemSize / 2,
           width: double.infinity,
           margin: EdgeInsets.only(
-              bottom: context.watch<TopHeaderBloc>().state.accounts.isEmpty
-                  ? 0
-                  : _itemSize / 2 + Dimensions.padding * 1),
+            bottom: context.watch<TopHeaderBloc>().state.accounts.isEmpty
+                ? 0
+                : _itemSize / 2 + Dimensions.padding * 1,
+          ),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: const BorderRadius.only(
@@ -84,12 +85,15 @@ class _TotalBalance extends StatelessWidget {
                 ),
                 Text(
                   AppLocalizations.of(context).numberFormat(
-                      context.select<TopHeaderBloc, int>(
-                          (bloc) => bloc.state.totalBalance)),
+                    context.select<TopHeaderBloc, int>(
+                      (bloc) => bloc.state.totalBalance,
+                    ),
+                  ),
                   style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ],
             ),
@@ -116,6 +120,7 @@ class AccountList extends StatelessWidget {
       items.add(accountItem);
       items.add(const SizedBox(width: Dimensions.padding));
     }
+
     return items;
   }
 
@@ -157,7 +162,7 @@ class _AccountItem extends StatelessWidget {
               offset: Offset(0, 10),
               blurRadius: 20.0,
               color: Colors.black38,
-            )
+            ),
           ],
           borderRadius: BorderRadius.circular(8.0),
         ),

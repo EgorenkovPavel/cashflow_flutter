@@ -49,27 +49,25 @@ class AuthListTile extends StatelessWidget {
       builder: (context) {
         final _authState = context.watch<AuthBloc>().state;
 
-        if (_authState is Authenticated) {
-          return ListTile(
-            title: const Text('Google account'),
-            subtitle: const Text('Signed In'),
-            trailing: ElevatedButton(
-                onPressed: () => context.read<AuthBloc>().add(SignOut()),
-                child: const Text('SING OUT' //todo
-                    )),
-          );
-        } else {
-          return ListTile(
-            title: const Text('Google account'),
-            subtitle: const Text('Sign in to backup yout database'),
-            trailing: ElevatedButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(SignIn());
-                },
-                child: const Text('SIGN IN' //TODO
-                    )),
-          );
-        }
+        return _authState is Authenticated
+            ? ListTile(
+                title: const Text('Google account'),
+                subtitle: const Text('Signed In'),
+                trailing: ElevatedButton(
+                  onPressed: () => context.read<AuthBloc>().add(SignOut()),
+                  child: const Text('SING OUT'),
+                ),
+              )
+            : ListTile(
+                title: const Text('Google account'),
+                subtitle: const Text('Sign in to backup yout database'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(SignIn());
+                  },
+                  child: const Text('SIGN IN'),
+                ),
+              );
       },
     );
   }
@@ -116,16 +114,12 @@ class GoogleDriveListTile extends StatelessWidget {
     return Builder(builder: (context) {
       final _authState = context.watch<AuthBloc>().state;
 
-      if (_authState is Authenticated) {
-        return ListTile(
-          title: const Text('Google drive'),
-          onTap: () => PageNavigator.openGoogleDriveSettingsPage(context),
-        );
-      } else {
-        return const ListTile(
-          title: Text('Google drive'),
-        );
-      }
+      return _authState is Authenticated
+          ? ListTile(
+              title: const Text('Google drive'),
+              onTap: () => PageNavigator.openGoogleDriveSettingsPage(context),
+            )
+          : const ListTile(title: Text('Google drive'));
     });
   }
 }

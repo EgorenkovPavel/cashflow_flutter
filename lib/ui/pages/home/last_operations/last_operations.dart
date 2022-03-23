@@ -29,8 +29,9 @@ class LastOperations extends StatelessWidget {
               if (state.operations.isEmpty) {
                 return const _NoOperationsTitle();
               }
+
               return _OperationsList(items: state.operations);
-            }),
+            },),
             //_ShowAllButton(),
           ],
         );

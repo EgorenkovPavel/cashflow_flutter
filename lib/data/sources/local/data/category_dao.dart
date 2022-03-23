@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
+import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
 
 part 'category_dao.g.dart';
@@ -142,7 +142,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           .get();
 
   Stream<List<CategoryCashflowEntity>> watchAllCategoryCashflowBudget(
-      DateTime date) {
+    DateTime date,
+  ) {
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
@@ -176,7 +177,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
-      DateTime date, OperationType type) {
+    DateTime date,
+    OperationType type,
+  ) {
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
@@ -222,9 +225,12 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return query.watch().map((rows) => rows
         .map((row) => SumOnDate(
-            date:
-                DateTime(row.read<int?>(year) ?? 0, row.read<int?>(month) ?? 0),
-            sum: row.read<int?>(sum) ?? 0))
+              date: DateTime(
+                row.read<int?>(year) ?? 0,
+                row.read<int?>(month) ?? 0,
+              ),
+              sum: row.read<int?>(sum) ?? 0,
+            ))
         .toList());
   }
 
@@ -238,8 +244,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return query.watch().map((rows) => rows
         .map((row) => SumOnDate(
-            date: DateTime(row.read<int?>(year) ?? 0),
-            sum: row.read<int?>(sum) ?? 0))
+              date: DateTime(row.read<int?>(year) ?? 0),
+              sum: row.read<int?>(sum) ?? 0,
+            ))
         .toList());
   }
 
@@ -250,10 +257,10 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     return customSelect(
       'SELECT *, '
       'FROM categories c '
-          'LEFT JOIN '
-        '(SELECT category as category, strftime("%m", date) as month, SUM(sum) as sum FROM cashflow WHERE date BETWEEN ? AND ?) AS "cashflow" '
-          'ON c.id = cashflow.category',
-        variables: [
+      'LEFT JOIN '
+      '(SELECT category as category, strftime("%m", date) as month, SUM(sum) as sum FROM cashflow WHERE date BETWEEN ? AND ?) AS "cashflow" '
+      'ON c.id = cashflow.category',
+      variables: [
         Variable.withDateTime(yearStart),
         Variable.withDateTime(yearEnd),
       ],
@@ -272,7 +279,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
-      DateTime date, OperationType type) {
+    DateTime date,
+    OperationType type,
+  ) {
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
     var monthEnd = date.month < 12
@@ -308,7 +317,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
-      OperationType type) {
+    OperationType type,
+  ) {
     return customSelect(
       'SELECT *, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date DESC LIMIT 1) AS "budget" '
