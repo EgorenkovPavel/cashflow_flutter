@@ -10,7 +10,127 @@ class Keyboard extends StatelessWidget {
     required this.onBackPressed,
   }) : super(key: key);
 
-  Widget _button(BuildContext context, Widget? child, onPressed, double width) {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (BuildContext context, constrains) {
+      var _col = constrains.maxWidth / 3;
+
+      return Column(
+        children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 1,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 2,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 3,
+              width: _col,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 4,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 5,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 6,
+              width: _col,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 7,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 8,
+              width: _col,
+            ),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 9,
+              width: _col,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            _Button(child: null, onPressed: null, width: _col),
+            _DigitButton(
+              onDigitPressed: onDigitPressed,
+              digit: 0,
+              width: _col,
+            ),
+            _Button(
+              child: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onPressed: onBackPressed,
+              width: _col,
+            ),
+          ]),
+        ],
+      );
+    });
+  }
+}
+
+class _DigitButton extends StatelessWidget {
+  const _DigitButton({
+    Key? key,
+    required this.onDigitPressed,
+    required this.digit,
+    required this.width,
+  }) : super(key: key);
+
+  final ValueSetter<int> onDigitPressed;
+  final int digit;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Button(
+      child: Text(
+        '$digit',
+        style: Theme.of(context).textTheme.headline6!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
+      onPressed: () => onDigitPressed(digit),
+      width: width,
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  const _Button({
+    Key? key,
+    required this.child,
+    required this.onPressed,
+    required this.width,
+  }) : super(key: key);
+
+  final Widget? child;
+  final void Function()? onPressed;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
     if (child == null) {
       return Padding(
         padding: EdgeInsets.symmetric(
@@ -45,66 +165,5 @@ class Keyboard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _digitButton(BuildContext context, int digit, double width) {
-    return _button(
-      context,
-      Text(
-        '$digit',
-        style: Theme.of(context).textTheme.headline6!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-      ),
-      () => onDigitPressed(digit),
-      width,
-    );
-  }
-
-  Widget _rowButton(List<Widget> buttons) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: buttons,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (BuildContext context, constrains) {
-      var _col = constrains.maxWidth / 3;
-
-      return Column(
-        children: <Widget>[
-          _rowButton(<Widget>[
-            _digitButton(context, 1, _col),
-            _digitButton(context, 2, _col),
-            _digitButton(context, 3, _col),
-          ]),
-          _rowButton(<Widget>[
-            _digitButton(context, 4, _col),
-            _digitButton(context, 5, _col),
-            _digitButton(context, 6, _col),
-          ]),
-          _rowButton(<Widget>[
-            _digitButton(context, 7, _col),
-            _digitButton(context, 8, _col),
-            _digitButton(context, 9, _col),
-          ]),
-          _rowButton(<Widget>[
-            _button(context, null, null, _col),
-            _digitButton(context, 0, _col),
-            _button(
-              context,
-              Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onBackPressed,
-              _col,
-            ),
-          ]),
-        ],
-      );
-    });
   }
 }

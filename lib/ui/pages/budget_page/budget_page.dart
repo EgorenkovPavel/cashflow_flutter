@@ -34,17 +34,6 @@ class _BudgetPageState extends State<BudgetPage> {
     super.dispose();
   }
 
-  Widget _calcTitle(BudgetState state) {
-    var start = widget.type == OperationType.INPUT
-        ? AppLocalizations.of(context).earningIn
-        : AppLocalizations.of(context).spendingIn;
-
-    var date = DateFormat.yMMMM(Localizations.localeOf(context).toString())
-        .format(state.date);
-
-    return Text('$start $date');
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BudgetBloc, BudgetState>(
@@ -52,7 +41,10 @@ class _BudgetPageState extends State<BudgetPage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: _calcTitle(state),
+            title: AppBarTitle(
+              operationType: state.operationType,
+              date: state.date,
+            ),
           ),
           body: CustomScrollView(
             slivers: [
@@ -119,6 +111,30 @@ class _BudgetPageState extends State<BudgetPage> {
         );
       },
     );
+  }
+}
+
+class AppBarTitle extends StatelessWidget {
+  const AppBarTitle({
+    Key? key,
+    required this.operationType,
+    required this.date,
+  }) : super(key: key);
+
+  final OperationType operationType;
+  final DateTime date;
+
+  @override
+  Widget build(BuildContext context) {
+    var start = operationType == OperationType.INPUT
+        ? AppLocalizations.of(context).earningIn
+        : AppLocalizations.of(context).spendingIn;
+
+    var formatDate =
+        DateFormat.yMMMM(Localizations.localeOf(context).toString())
+            .format(date);
+
+    return Text('$start $formatDate');
   }
 }
 

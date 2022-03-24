@@ -112,18 +112,6 @@ class AccountList extends StatelessWidget {
 
   final List<AccountBalance> accounts;
 
-  List<Widget> _items() {
-    var items = <Widget>[];
-    var accountItems = accounts.map((e) => _AccountItem(account: e)).toList();
-    items.add(const SizedBox(width: Dimensions.padding));
-    for (var accountItem in accountItems) {
-      items.add(accountItem);
-      items.add(const SizedBox(width: Dimensions.padding));
-    }
-
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     if (accounts.isEmpty) {
@@ -135,7 +123,11 @@ class AccountList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: Dimensions.padding * 1),
         child: Row(
-          children: _items(),
+          children: accounts
+              .map((e) => _AccountItem(account: e))
+              .expand((element) =>
+                  [element, const SizedBox(width: Dimensions.padding)])
+              .toList(),
         ),
       ),
     );
