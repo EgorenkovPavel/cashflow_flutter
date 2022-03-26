@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class Category {
+class Category extends Equatable{
   final int id;
   final String cloudId;
   final String title;
@@ -35,10 +36,5 @@ class Category {
       );
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Category && runtimeType == other.runtimeType && id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
+  List<Object?> get props => [id];
 }

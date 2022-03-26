@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class OperationListFilter {
+class OperationListFilter extends Equatable{
   final DateTimeRange? period;
   final Set<Account> accounts;
   final Set<Category> categories;
@@ -12,10 +13,10 @@ class OperationListFilter {
     required this.categories,
   });
 
-  OperationListFilter.empty()
+  const OperationListFilter.empty()
       : period = null,
-        accounts = {},
-        categories = {};
+        accounts = const {},
+        categories = const {};
 
   OperationListFilter copyWith({
     DateTimeRange? period,
@@ -27,4 +28,7 @@ class OperationListFilter {
         accounts: accounts ?? this.accounts,
         categories: categories ?? this.categories,
       );
+
+  @override
+  List<Object?> get props => [period, accounts, categories];
 }

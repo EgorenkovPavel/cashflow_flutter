@@ -1,4 +1,6 @@
-class Account {
+import 'package:equatable/equatable.dart';
+
+class Account extends Equatable{
   final int id;
   final String cloudId;
   final String title;
@@ -25,10 +27,5 @@ class Account {
       );
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Account && runtimeType == other.runtimeType && id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
+  List<Object?> get props => [id];
 }

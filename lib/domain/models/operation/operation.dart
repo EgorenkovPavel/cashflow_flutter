@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
+
 import '../account/account.dart';
 import '../category/category.dart';
 import '../enum/operation_type.dart';
 
-class Operation {
+class Operation extends Equatable{
   final int id;
   final String cloudId;
   final bool synced;
@@ -51,4 +53,7 @@ class Operation {
         recAccount: recAccount ?? this.recAccount,
         sum: sum ?? this.sum,
       );
+
+  @override
+  List<Object?> get props => [id];
 }

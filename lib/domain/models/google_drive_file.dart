@@ -1,4 +1,6 @@
-class DriveFile {
+import 'package:equatable/equatable.dart';
+
+class DriveFile extends Equatable{
   final String title;
   final String id;
   final bool isFolder;
@@ -22,4 +24,7 @@ class DriveFile {
       enabled: false,
     );
   }
+
+  @override
+  List<Object?> get props => [id];
 }
