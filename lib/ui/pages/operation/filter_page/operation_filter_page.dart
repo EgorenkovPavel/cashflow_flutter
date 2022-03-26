@@ -15,7 +15,7 @@ class OperationFilterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OperationFilterBloc(context.read<DataRepository>())
-        ..add(Init(filter ?? OperationListFilter.empty())),
+        ..add(Init(filter ?? const OperationListFilter.empty())),
       child: _OperationFilterPage(),
     );
   }
@@ -217,7 +217,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
         TextButton(
           onPressed: () => Navigator.pop(
             context,
-            OperationListFilter.empty(),
+            const OperationListFilter.empty(),
           ),
           child: Text(
             AppLocalizations.of(context).reset.toUpperCase(),
@@ -250,6 +250,17 @@ class PeriodButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
+  Future<void> _onChoosePeriod(BuildContext context) async {
+    var date = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2020), //TODO
+      lastDate: DateTime.now(),
+    );
+    if (date != null) {
+      onPressed(date);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (date != null) {
@@ -267,16 +278,7 @@ class PeriodButton extends StatelessWidget {
       return InputChip(
         avatar: const Icon(Icons.mode_edit),
         label: Text(AppLocalizations.of(context).choosePeriod),
-        onPressed: () async {
-          var date = await showDateRangePicker(
-            context: context,
-            firstDate: DateTime(2020), //TODO
-            lastDate: DateTime.now(),
-          );
-          if (date != null) {
-            onPressed(date);
-          }
-        },
+        onPressed: () => _onChoosePeriod(context),
       );
     }
   }

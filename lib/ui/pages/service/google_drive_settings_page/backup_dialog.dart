@@ -42,6 +42,15 @@ class _BackupDialogState extends State<BackupDialog> {
     Navigator.of(context).pop();
   }
 
+  Future _chooseFolder(BuildContext context) async {
+    var newFolder = await PageNavigator.chooseFolder(context);
+    if (newFolder != null) {
+      setState(() {
+        _folder = newFolder;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -73,14 +82,7 @@ class _BackupDialogState extends State<BackupDialog> {
                   Text(_folder.title),
                   IconButton(
                     icon: const Icon(Icons.arrow_drop_down),
-                    onPressed: () async {
-                      var newFolder = await PageNavigator.chooseFolder(context);
-                      if (newFolder != null) {
-                        setState(() {
-                          _folder = newFolder;
-                        });
-                      }
-                    },
+                    onPressed: () => _chooseFolder(context),
                   ),
                 ],
               ),

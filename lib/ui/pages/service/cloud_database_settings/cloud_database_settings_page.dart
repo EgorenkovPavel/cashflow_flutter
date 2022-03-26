@@ -104,10 +104,6 @@ class AdminSettings extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () => _addUser(context),
-                child: const Text('Add user'),
-              ),
-              ElevatedButton(
                 onPressed: () => _scanQrCode(context),
                 child: const Text('Scan QR code'),
               ),
@@ -161,46 +157,6 @@ class AdminSettings extends StatelessWidget {
     context.read<SyncBloc>().add(AddUser(User.fromJson(userData)));
   }
 
-  Future<void> _addUser(BuildContext context) async {
-    var _idController = TextEditingController();
-    var _nameController = TextEditingController();
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add user'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _idController,
-              decoration: const InputDecoration(
-                labelText: 'Id',
-              ),
-            ),
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Name',
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              context.read<SyncBloc>().add(AddUser(User(
-                    id: _idController.text,
-                    name: _nameController.text,
-                    photo: '',
-                  )));
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class ConnectingView extends StatelessWidget {

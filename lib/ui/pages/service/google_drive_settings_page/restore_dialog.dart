@@ -15,6 +15,27 @@ class RestoreDialog extends StatefulWidget {
 class _RestoreDialogState extends State<RestoreDialog> {
   DriveFile? _file;
 
+  Future<void> _chooseFile(BuildContext context) async {
+    var newFile = await PageNavigator.chooseFile(context);
+    if (newFile != null) {
+      setState(
+            () {
+          _file = newFile;
+        },
+      );
+    }
+  }
+
+  void _onRestore(){
+    if (_file == null) {
+      return;
+    }
+
+    widget.restore(_file!.id);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -34,16 +55,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
             Text(_file?.title ?? ''),
             IconButton(
               icon: const Icon(Icons.arrow_drop_down),
-              onPressed: () async {
-                var newFile = await PageNavigator.chooseFile(context);
-                if (newFile != null) {
-                  setState(
-                        () {
-                      _file = newFile;
-                    },
-                  );
-                }
-              },
+              onPressed: () => _chooseFile(context),
             ),
           ],
         ),
@@ -57,15 +69,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
           ),
         ),
         ElevatedButton(
-          onPressed: () {
-            if (_file == null) {
-              return;
-            }
-
-            widget.restore(_file!.id);
-
-            Navigator.of(context).pop();
-          },
+          onPressed: _onRestore,
           child: Text(
             AppLocalizations.of(context).restore.toUpperCase(),
           ),

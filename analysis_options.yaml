@@ -22,6 +22,7 @@ dart_code_metrics:
     - prefer-conditional-expressions
     - no-equal-then-else
     - avoid-returning-widgets
+    - prefer-extracting-callbacks
   anti-patterns:
     - long-method
     - long-parameter-list

@@ -7,6 +7,16 @@ import 'package:money_tracker/utils/app_localization.dart';
 class DataControlPage extends StatelessWidget {
   const DataControlPage({Key? key}) : super(key: key);
 
+  void _listenState(BuildContext context, DataControlState state){
+    if (state == DataControlState.SUCCESS) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          AppLocalizations.of(context).mesDatabaseDeleted,
+        ),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var _bloc = DataControlBloc(context.read<DataRepository>());
@@ -33,15 +43,7 @@ class DataControlPage extends StatelessWidget {
                   ? const Center(child: CircularProgressIndicator())
                   : const SizedBox();
             },
-            listener: (context, state) {
-              if (state == DataControlState.SUCCESS) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                    AppLocalizations.of(context).mesDatabaseDeleted,
-                  ),
-                ));
-              }
-            },
+            listener: _listenState,
           ),
         ],
       ),

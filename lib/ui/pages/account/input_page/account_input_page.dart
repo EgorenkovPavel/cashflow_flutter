@@ -49,16 +49,26 @@ class _AccountPageState extends State<AccountPage> {
     super.dispose();
   }
 
+  void _listenState(BuildContext context, AccountInputState state){
+    if (state is SavedAccount) {
+      Navigator.of(context).pop(state.account);
+    } else if (state is FetchAccount) {
+      _controller.text = state.title;
+    }
+  }
+
+  String? _titleValidator(String? value){
+    if (value == null || value.isEmpty) {
+      return AppLocalizations.of(context).emptyTitleError;
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AccountInputBloc, AccountInputState>(
-      listener: (context, state) {
-        if (state is SavedAccount) {
-          Navigator.of(context).pop(state.account);
-        } else if (state is FetchAccount) {
-          _controller.text = state.title;
-        }
-      },
+      listener: _listenState,
       child: ItemCard<Account>(
         title: widget.isNew
             ? AppLocalizations.of(context).newAccountCardTitle
@@ -75,13 +85,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
               onChanged: (value) =>
                   context.read<AccountInputBloc>().add(ChangeTitle(value)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context).emptyTitleError;
-                }
-
-                return null;
-              },
+              validator: _titleValidator,
             ),
             Row(
               children: [

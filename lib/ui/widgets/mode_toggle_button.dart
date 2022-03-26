@@ -16,9 +16,7 @@ class ModeToggleButton extends StatelessWidget {
 
     return ToggleButtons(
       isSelected: modes.map((e) => e == mode).toList(),
-      onPressed: (index) {
-        onPressed(modes[index]);
-      },
+      onPressed: (index) => onPressed(modes[index]),
       children: const [Icon(Icons.light_mode), Icon(Icons.dark_mode)],
     );
   }

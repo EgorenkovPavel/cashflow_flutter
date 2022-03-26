@@ -12,6 +12,20 @@ class ListTileOperation extends StatelessWidget {
   const ListTileOperation(this._operation, {Key? key, required this.onTap})
       : super(key: key);
 
+  void _onDuplicate(BuildContext context){
+    Provider.of<DataRepository>(context, listen: false)
+        .operations
+        .duplicate(_operation);
+    Navigator.of(context).pop();
+  }
+
+  void _onDelete(BuildContext context){
+    Provider.of<DataRepository>(context, listen: false)
+        .operations
+        .delete(_operation);
+    Navigator.of(context).pop();
+  }
+
   void onLongPress(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -21,22 +35,12 @@ class ListTileOperation extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.control_point_duplicate),
             title: Text(AppLocalizations.of(context).duplicate),
-            onTap: () {
-              Provider.of<DataRepository>(context, listen: false)
-                  .operations
-                  .duplicate(_operation);
-              Navigator.of(context).pop();
-            },
+            onTap: () => _onDuplicate(context),
           ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: Text(AppLocalizations.of(context).delete),
-            onTap: () {
-              Provider.of<DataRepository>(context, listen: false)
-                  .operations
-                  .delete(_operation);
-              Navigator.of(context).pop();
-            },
+            onTap: () => _onDelete(context),
           ),
         ],
       ),

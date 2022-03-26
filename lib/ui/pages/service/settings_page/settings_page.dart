@@ -62,9 +62,7 @@ class AuthListTile extends StatelessWidget {
                 title: const Text('Google account'),
                 subtitle: const Text('Sign in to backup yout database'),
                 trailing: ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(SignIn());
-                  },
+                  onPressed: () => context.read<AuthBloc>().add(SignIn()),
                   child: const Text('SIGN IN'),
                 ),
               );

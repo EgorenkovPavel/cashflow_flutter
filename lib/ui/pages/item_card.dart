@@ -15,6 +15,12 @@ class ItemCard<T> extends StatelessWidget {
     required this.onSave,
   }) : super(key: key);
 
+  void _onSavePressed(BuildContext context){
+    if (_formKey.currentState!.validate()) {
+      onSave(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -41,11 +47,7 @@ class ItemCard<T> extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      onSave(context);
-                    }
-                  },
+                  onPressed: () => _onSavePressed(context),
                   child: Text(
                     AppLocalizations.of(context).save.toUpperCase(),
                     //style: TextStyle(color: Colors.white),

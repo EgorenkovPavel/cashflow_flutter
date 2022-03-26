@@ -7,7 +7,7 @@ class DriveFile extends Equatable{
   final DateTime lastChanges;
   final bool enabled;
 
-  DriveFile({
+  const DriveFile({
     required this.enabled,
     required this.lastChanges,
     required this.title,

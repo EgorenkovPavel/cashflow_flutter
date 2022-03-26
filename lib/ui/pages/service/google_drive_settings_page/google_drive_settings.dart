@@ -11,6 +11,18 @@ import 'package:money_tracker/utils/app_localization.dart';
 class GoogleDriveSettingsPage extends StatelessWidget {
   const GoogleDriveSettingsPage({Key? key}) : super(key: key);
 
+  void _listenState(BuildContext context, DriveState state){
+    if (state == DriveState.SUCCESS_BACKUP) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context).mesDatabaseBackuped),
+      ));
+    } else if (state == DriveState.SUCCESS_RESTORE) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context).mesDatabaseRestored),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var _bloc = DriveBloc(
@@ -25,17 +37,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
       ),
       body: BlocConsumer<DriveBloc, DriveState>(
         bloc: _bloc,
-        listener: (context, state) {
-          if (state == DriveState.SUCCESS_BACKUP) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context).mesDatabaseBackuped),
-            ));
-          } else if (state == DriveState.SUCCESS_RESTORE) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context).mesDatabaseRestored),
-            ));
-          }
-        },
+        listener: _listenState,
         builder: (context, state) {
           return Stack(
             children: [

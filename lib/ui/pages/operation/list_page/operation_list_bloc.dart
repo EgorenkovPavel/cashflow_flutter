@@ -29,7 +29,7 @@ class OperationListState {
 
   OperationListState.initial()
       : operations = [],
-        filter = OperationListFilter.empty();
+        filter = const OperationListFilter.empty();
 }
 
 class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {

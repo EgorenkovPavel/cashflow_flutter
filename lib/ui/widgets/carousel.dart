@@ -62,13 +62,11 @@ class Carousel<T> extends StatelessWidget {
                   },
                   animation: _pageController,
                   child: GestureDetector(
-                    onTap: () {
-                      _pageController.animateToPage(
-                        pos,
-                        duration: const Duration(seconds: 1),
-                        curve: const ElasticOutCurve(),
-                      );
-                    },
+                    onTap: () => _pageController.animateToPage(
+                      pos,
+                      duration: const Duration(seconds: 1),
+                      curve: const ElasticOutCurve(),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Container(

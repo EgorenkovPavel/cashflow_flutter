@@ -58,24 +58,32 @@ class _CategoryPageState extends State<CategoryPage> {
     super.dispose();
   }
 
+  void _listenState(BuildContext context, CategoryInputState state) {
+    if (state is Saved) {
+      Navigator.of(context).pop(state.category);
+    } else if (state is Restore) {
+      titleController.text = state.title;
+      budgetController.text = state.budget.toString();
+    }
+  }
+
+  String? _titleValidator(String? value){
+    if (value == null || value.isEmpty) {
+      return AppLocalizations.of(context).emptyTitleError;
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CategoryInputBloc, CategoryInputState>(
-      listener: (context, state) {
-        if (state is Saved) {
-          Navigator.of(context).pop(state.category);
-        } else if (state is Restore) {
-          titleController.text = state.title;
-          budgetController.text = state.budget.toString();
-        }
-      },
+      listener: _listenState,
       child: ItemCard(
         title: widget.isNew
             ? AppLocalizations.of(context).newCategoryCardTitle
             : AppLocalizations.of(context).categoryCardTitle,
-        onSave: (context) {
-          context.read<CategoryInputBloc>().add(Save());
-        },
+        onSave: (context) => context.read<CategoryInputBloc>().add(Save()),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,13 +117,7 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
               onChanged: (value) =>
                   context.read<CategoryInputBloc>().add(ChangeTitle(value)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context).emptyTitleError;
-                }
-
-                return null;
-              },
+              validator: _titleValidator,
             ),
             const SizedBox(height: 8.0),
             TextFormField(
@@ -127,13 +129,6 @@ class _CategoryPageState extends State<CategoryPage> {
               onChanged: (value) => context
                   .read<CategoryInputBloc>()
                   .add(ChangeBudget(int.parse(value))),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context).emptyTitleError;
-                }
-
-                return null;
-              },
             ),
             const SizedBox(height: 8.0),
             Row(

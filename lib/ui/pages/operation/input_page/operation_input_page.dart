@@ -193,9 +193,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           content: Text(AppLocalizations.of(context).mesOperationCreated),
           action: SnackBarAction(
             label: AppLocalizations.of(context).cancel,
-            onPressed: () {
-              _bloc.cancelOperation();
-            },
+            onPressed: () => _bloc.cancelOperation(),
           ),
         ),
       );
@@ -255,14 +253,16 @@ class _OperationInputPageState extends State<OperationInputPage>
     }
   }
 
+  Future<bool> _onBackpressed(){
+    _bloc.backpressed();
+
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _bloc.backpressed();
-
-        return Future(() => false);
-      },
+      onWillPop: _onBackpressed,
       child: Scaffold(
         appBar: AppBar(
           title: Text(

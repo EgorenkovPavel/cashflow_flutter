@@ -39,16 +39,40 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     super.dispose();
   }
 
+  void _listenState(BuildContext context, OperationEditState state){
+    if (state is FetchOperation) {
+      _sumController.text = state.sum.toString();
+    } else if (state is Saved) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _onChangeAccount(Account? newValue){
+    if (newValue != null) {
+      context
+          .read<OperationEditBloc>()
+          .add(ChangeAccount(newValue));
+    }
+  }
+
+  String? _sumValidator(String? value){
+    if (value == null || value.isEmpty) {
+      return AppLocalizations.of(context).emptySumError;
+    }
+
+    return null;
+  }
+
+  void _onSavePressed(BuildContext context){
+    if (_formKey.currentState!.validate()) {
+      context.read<OperationEditBloc>().add(Save());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<OperationEditBloc, OperationEditState>(
-      listener: (context, state) {
-        if (state is FetchOperation) {
-          _sumController.text = state.sum.toString();
-        } else if (state is Saved) {
-          Navigator.of(context).pop();
-        }
-      },
+      listener: _listenState,
       child: Form(
         key: _formKey,
         child: Scaffold(
@@ -108,13 +132,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     items: context.select<OperationEditBloc, List<Account>>(
                       (bloc) => bloc.state.accounts,
                     ),
-                    onChange: (newValue) {
-                      if (newValue != null) {
-                        context
-                            .read<OperationEditBloc>()
-                            .add(ChangeAccount(newValue));
-                      }
-                    },
+                    onChange: _onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
                   Title(text: AppLocalizations.of(context).titleAnalytic),
@@ -131,13 +149,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       onChanged: (value) => context
                           .read<OperationEditBloc>()
                           .add(ChangeSum(int.parse(value))),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context).emptySumError;
-                        }
-
-                        return null;
-                      },
+                      validator: _sumValidator,
                     ),
                   ),
                 ],
@@ -150,17 +162,29 @@ class _OperationEditPageState extends State<_OperationEditPage> {
               child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
             ),
             ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  context.read<OperationEditBloc>().add(Save());
-                }
-              },
+              onPressed: () => _onSavePressed(context),
               child: Text(AppLocalizations.of(context).save.toUpperCase()),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onCategoryChange(Category? newValue){
+    if (newValue != null) {
+      context
+          .read<OperationEditBloc>()
+          .add(ChangeCategory(newValue));
+    }
+  }
+
+  void _onRecAccountChange(Account? newValue){
+    if (newValue != null) {
+      context
+          .read<OperationEditBloc>()
+          .add(ChangeRecAccount(newValue));
+    }
   }
 
   Widget analyticMenu() {
@@ -171,13 +195,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             return DropdownList<Category>(
               value: state.category,
               hint: AppLocalizations.of(context).hintCategory,
-              onChange: (Category? newValue) {
-                if (newValue != null) {
-                  context
-                      .read<OperationEditBloc>()
-                      .add(ChangeCategory(newValue));
-                }
-              },
+              onChange: _onCategoryChange,
               items: state.inCategories,
               getListItem: (item) => ListTile(title: Text(item.title)),
             );
@@ -185,13 +203,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             return DropdownList<Category>(
               value: state.category,
               hint: AppLocalizations.of(context).hintCategory,
-              onChange: (Category? newValue) {
-                if (newValue != null) {
-                  context
-                      .read<OperationEditBloc>()
-                      .add(ChangeCategory(newValue));
-                }
-              },
+              onChange: _onCategoryChange,
               items: state.outCategories,
               getListItem: (item) => ListTile(title: Text(item.title)),
             );
@@ -199,13 +211,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             return DropdownList<Account>(
               value: state.recAccount,
               hint: AppLocalizations.of(context).hintAccount,
-              onChange: (Account? newValue) {
-                if (newValue != null) {
-                  context
-                      .read<OperationEditBloc>()
-                      .add(ChangeRecAccount(newValue));
-                }
-              },
+              onChange: _onRecAccountChange,
               items: state.accounts,
               getListItem: (item) => ListTile(title: Text(item.title)),
             );

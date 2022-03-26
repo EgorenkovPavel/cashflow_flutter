@@ -41,14 +41,24 @@ class _DriveDialogState extends State<DriveDialog> {
     super.dispose();
   }
 
+  Future<bool> _onBackpressed() async {
+    _bloc.onBackPressed();
+
+    return false;
+  }
+
+  void _listenState(BuildContext context, DialogDriveState state){
+    if (state.action == DialogDriveAction.JUMP_TO_START) {
+      _listController.jumpTo(0);
+    } else if (state.action == DialogDriveAction.RETURN_RESULT) {
+      Navigator.of(context).pop<DriveFile>(state.result);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        _bloc.onBackPressed();
-
-        return false;
-      },
+      onWillPop: _onBackpressed,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Google drive'),
@@ -72,13 +82,7 @@ class _DriveDialogState extends State<DriveDialog> {
               },
             );
           },
-          listener: (context, state) {
-            if (state.action == DialogDriveAction.JUMP_TO_START) {
-              _listController.jumpTo(0);
-            } else if (state.action == DialogDriveAction.RETURN_RESULT) {
-              Navigator.of(context).pop<DriveFile>(state.result);
-            }
-          },
+          listener: _listenState,
         ),
         persistentFooterButtons: [
           TextButton(

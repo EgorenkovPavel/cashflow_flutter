@@ -60,7 +60,7 @@ class OperationFilterState {
   });
 
   OperationFilterState.initial()
-      : filter = OperationListFilter.empty(),
+      : filter = const OperationListFilter.empty(),
         accounts = [],
         inCategories = [],
         outCategories = [];
