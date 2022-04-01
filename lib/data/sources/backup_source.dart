@@ -33,7 +33,7 @@ class GoogleDrive extends BackupSource {
   ) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
-    await localFile.writeAsString(jsonEncode(data));
+    final res = await localFile.writeAsString(jsonEncode(data));
 
     var media = drive.Media(localFile.openRead(), localFile.lengthSync());
 
@@ -77,7 +77,7 @@ class GoogleDrive extends BackupSource {
       if (kDebugMode) {
         print('Task Done');
       }
-      await saveFile.writeAsBytes(dataStore);
+      final res = await saveFile.writeAsBytes(dataStore);
       if (kDebugMode) {
         print('File saved at ${saveFile.path}');
       }

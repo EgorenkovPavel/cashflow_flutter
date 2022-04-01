@@ -75,7 +75,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
     BuildContext context,
     Future<void> Function(String, String) onBackup,
   ) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) => BackupDialog(
         onBackup: onBackup,
@@ -87,7 +87,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
     BuildContext context,
     Future<void> Function(String) onRestore,
   ) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) => RestoreDialog(
         restore: onRestore,

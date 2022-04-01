@@ -314,11 +314,8 @@ class SyncRepositoryImpl implements SyncRepository{
       var _cloudId =
       await _remoteSource.accounts.add(_mapToCloudAccount(account));
       if (_cloudId.isSuccess()) {
-        var res = await _localSource.accountsSync
+        await _localSource.accountsSync
             .markAsSynced(account.id, _cloudId.getOrDefault(''));
-        if (kDebugMode) {
-          print('$res');
-        }
       }
     }
   }

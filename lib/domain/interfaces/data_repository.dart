@@ -7,11 +7,11 @@ abstract class DataRepository {
 
   OperationDataRepository get operations;
 
-  Future deleteAll();
+  Future<void> deleteAll();
 
   Future<Map<String, List<Map<String, dynamic>>>> exportData();
 
-  Future importData(Map<String, dynamic> data);
+  Future<void> importData(Map<String, dynamic> data);
 }
 
 abstract class AccountDataRepository {
@@ -29,7 +29,7 @@ abstract class AccountDataRepository {
 
   Future<int> insert(Account account);
 
-  Future update(Account account);
+  Future<void> update(Account account);
 }
 
 abstract class CategoryDataRepository {
@@ -63,7 +63,7 @@ abstract class CategoryDataRepository {
 
   Future<int> insert(Category entity);
 
-  Future update(Category entity);
+  Future<void> update(Category entity);
 }
 
 abstract class OperationDataRepository {
@@ -89,9 +89,9 @@ abstract class OperationDataRepository {
 
   Future<Operation> duplicate(Operation entity);
 
-  Future update(Operation operation);
+  Future<void> update(Operation operation);
 
-  Future delete(Operation entity);
+  Future<void> delete(Operation entity);
 
-  Future deleteById(int operationId);
+  Future<void> deleteById(int operationId);
 }

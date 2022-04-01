@@ -15,6 +15,15 @@ dart_code_metrics:
   metrics-exclude:
     - test/**
   rules:
+    - avoid-collection-methods-with-unrelated-types
+    - avoid-dynamic
+    - avoid-global-state
+    - avoid-ignoring-return-values
+    - avoid-late-keyword
+    - avoid-missing-enum-constant-in-map
+    - avoid-non-null-assertion
+    - avoid-throw-in-catch-block
+    - avoid-unnecessary-type-casts
     - newline-before-return
     - no-boolean-literal-compare
     - no-empty-block
@@ -23,6 +32,8 @@ dart_code_metrics:
     - no-equal-then-else
     - avoid-returning-widgets
     - prefer-extracting-callbacks
+    - prefer-single-widget-per-file:
+        ignore-private-widgets: true
   anti-patterns:
     - long-method
     - long-parameter-list

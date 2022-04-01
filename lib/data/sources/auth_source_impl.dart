@@ -39,7 +39,7 @@ class GoogleAuth extends AuthSource{
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await _firebaseAuth.signInWithCredential(credential);
+      final userCredential = await _firebaseAuth.signInWithCredential(credential);
     }
   }
 
@@ -53,7 +53,7 @@ class GoogleAuth extends AuthSource{
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      await _firebaseAuth.signInWithCredential(credential);
+      final userCredential = await _firebaseAuth.signInWithCredential(credential);
     }
   }
 
@@ -61,7 +61,7 @@ class GoogleAuth extends AuthSource{
   Future<void> signOut() async {
     var isAuth = await isAuthenticated();
     if (isAuth) {
-      await _googleSignIn.signOut();
+      final res = await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
     }
   }

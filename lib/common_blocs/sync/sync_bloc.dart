@@ -211,7 +211,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _addUser(AddUser event, Emitter<SyncState> emit) async {
-    await syncRepo.addToDatabase(event.user);
+    final res = await syncRepo.addToDatabase(event.user);
   }
 
   @override
