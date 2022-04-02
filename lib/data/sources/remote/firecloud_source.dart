@@ -68,6 +68,7 @@ class FirecloudSource extends RemoteDataSource {
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
     } catch (e) {
+      print('ERROR _getDatabase ${e.toString()}');
       throw NetworkException();
     }
 
@@ -114,6 +115,7 @@ class FirecloudSource extends RemoteDataSource {
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
     } catch (e) {
+      print('ERROR addUserToDatabase ${e.toString()}');
       throw NetworkException();
     }
   }
@@ -130,6 +132,7 @@ class FirecloudSource extends RemoteDataSource {
 
       return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
     } catch (e) {
+      print('ERROR getAllUsers ${e.toString()}');
       throw NetworkException();
     }
   }
@@ -147,6 +150,7 @@ class FirecloudSource extends RemoteDataSource {
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
     } catch (e) {
+      print('ERROR createDatabase ${e.toString()}');
       throw NetworkException();
     }
   }
@@ -162,6 +166,7 @@ class FirecloudSource extends RemoteDataSource {
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
+      print('ERROR databaseExists ${e.toString()}');
       throw NetworkException();
     }
   }
@@ -170,8 +175,8 @@ class FirecloudSource extends RemoteDataSource {
   @override
   Future<void> connect(User user) async {
     try {
-      var res = await _getDatabase(user.id);
-      var doc = await _db!.get();
+      var _db = await _getDatabase(user.id);
+      var doc = await _db.get();
 
       _isCurrentAdmin = user.id == doc.data()![_DATABASES_ADMIN];
 
@@ -186,6 +191,8 @@ class FirecloudSource extends RemoteDataSource {
     } catch (e) {
       _db = null;
       _isCurrentAdmin = false;
+
+      print('ERROR connect ${e.toString()}');
       throw NetworkException();
     }
   }

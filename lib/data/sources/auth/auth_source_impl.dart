@@ -46,6 +46,7 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } catch (e) {
+      print('ERROR signInSilently ${e.toString()}');
       throw AuthException();
     }
   }
@@ -67,6 +68,7 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } catch (e) {
+      print('ERROR signIn ${e.toString()}');
       throw AuthException();
     }
   }
@@ -81,6 +83,7 @@ class GoogleAuth extends AuthSource {
       final res = await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
     }catch (e){
+      print('ERROR signOut ${e.toString()}');
       throw AuthException();
     }
   }
