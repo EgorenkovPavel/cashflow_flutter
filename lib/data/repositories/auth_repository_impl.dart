@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis_auth/src/auth_client.dart';
-import 'package:money_tracker/data/sources/auth_source.dart';
+import 'package:money_tracker/data/sources/auth/auth_source.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models/user.dart' as model;
 import 'package:money_tracker/utils/exceptions.dart';
