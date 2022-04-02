@@ -22,7 +22,11 @@ class SyncRepositoryImpl implements SyncRepository {
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
 
-  SyncRepositoryImpl(this._remoteSource, this._localSource, this._networkInfo);
+  SyncRepositoryImpl(
+    this._remoteSource,
+    this._localSource,
+    this._networkInfo,
+  );
 
   @override
   Future<Try<void>> addToDatabase(User user) async {

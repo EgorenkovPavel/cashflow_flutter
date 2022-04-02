@@ -167,8 +167,12 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
         ));
       }
       await prefsRepository.setSyncDate(syncDate);
-      syncRepo.isCurrentAdmin().fold((success) => emit(SyncStateSynced(syncDate: syncDate, isAdmin: success)), (failure) => emit(SyncStateSynced(syncDate: syncDate, isAdmin: false)))
-      ;
+      syncRepo.isCurrentAdmin().fold(
+            (success) =>
+                emit(SyncStateSynced(syncDate: syncDate, isAdmin: success)),
+            (failure) =>
+                emit(SyncStateSynced(syncDate: syncDate, isAdmin: false)),
+          );
     } catch (e) {
       emit(const SyncStateNotSynced());
     }

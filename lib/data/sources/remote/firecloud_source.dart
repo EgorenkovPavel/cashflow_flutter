@@ -175,8 +175,8 @@ class FirecloudSource extends RemoteDataSource {
   @override
   Future<void> connect(User user) async {
     try {
-      var _db = await _getDatabase(user.id);
-      var doc = await _db.get();
+      _db = await _getDatabase(user.id);
+      var doc = await _db!.get();
 
       _isCurrentAdmin = user.id == doc.data()![_DATABASES_ADMIN];
 
