@@ -69,9 +69,9 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   @override
-  Future<Try<bool>> isAdmin(User user) async {
+  Try<bool> isCurrentAdmin() {
     try {
-      return Success(await _remoteSource.isAdmin(user));
+      return Success(_remoteSource.isCurrentAdmin());
     } on NoRemoteDBException {
       return NoRemoteDBFailure();
     } on NetworkException {

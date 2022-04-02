@@ -6,10 +6,13 @@ import 'package:money_tracker/domain/models/user.dart' as model;
 import 'package:money_tracker/utils/exceptions.dart';
 import 'package:money_tracker/utils/try.dart';
 
+import '../sources/network_info.dart';
+
 class AuthRepositoryImpl implements AuthRepository {
   final AuthSource _authSource;
+  final NetworkInfo _networkInfo;
 
-  AuthRepositoryImpl(this._authSource);
+  AuthRepositoryImpl(this._authSource, this._networkInfo);
 
   @override
   Future<AuthClient?> getClient() => _authSource.getClient();
@@ -68,4 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
       photo: user.photoURL ?? '',
     );
   }
+
+  @override
+  Stream<bool> isConnectedToInternet() => _networkInfo.connected();
 }

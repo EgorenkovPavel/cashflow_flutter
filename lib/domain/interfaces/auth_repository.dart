@@ -12,5 +12,6 @@ abstract class AuthRepository{
   User? getUser();
   Stream<User?> userChanges();
   Future<AuthClient?> getClient();
+  Stream<bool> isConnectedToInternet();
 
 }

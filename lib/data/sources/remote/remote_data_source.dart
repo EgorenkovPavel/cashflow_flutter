@@ -12,7 +12,7 @@ abstract class RemoteDataSource{
 
   Future<void> deleteAll();
 
-  Future<bool> isAdmin(User user);
+  bool isCurrentAdmin();
   Future<List<User>> getAllUsers();
   Future<void> connect(User user);
   Future<void> disconnect();

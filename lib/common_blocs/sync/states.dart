@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SyncState extends Equatable{
+abstract class SyncState extends Equatable {
   const SyncState();
 }
 
@@ -38,16 +38,20 @@ class SyncStateLoadingFromCloud extends SyncState {
   });
 
   @override
-  List<Object?> get props => [accountCount,categoryCount,operationCount];
+  List<Object?> get props => [accountCount, categoryCount, operationCount];
 }
 
 class SyncStateSynced extends SyncState {
   final DateTime syncDate;
+  final bool isAdmin;
 
-  const SyncStateSynced({required this.syncDate});
+  const SyncStateSynced({
+    required this.isAdmin,
+    required this.syncDate,
+  });
 
   @override
-  List<Object?> get props => [syncDate];
+  List<Object?> get props => [syncDate, isAdmin];
 }
 
 class SyncStateNotSynced extends SyncState {

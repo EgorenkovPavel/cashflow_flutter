@@ -26,6 +26,7 @@ class FirecloudSource extends RemoteDataSource {
   static const String _USERS = 'users';
 
   DocumentReference<Map<String, dynamic>>? _db;
+  bool _isCurrentAdmin = false;
 
   FirecloudSource(this._firestore);
 
@@ -171,14 +172,20 @@ class FirecloudSource extends RemoteDataSource {
     try {
       var res = await _getDatabase(user.id);
       var doc = await _db!.get();
+
+      _isCurrentAdmin = user.id == doc.data()![_DATABASES_ADMIN];
+
     } on NoRemoteDBException {
       _db = null;
+      _isCurrentAdmin = false;
       rethrow;
     } on NetworkException {
       _db = null;
+      _isCurrentAdmin = false;
       rethrow;
     } catch (e) {
       _db = null;
+      _isCurrentAdmin = false;
       throw NetworkException();
     }
   }
@@ -186,20 +193,15 @@ class FirecloudSource extends RemoteDataSource {
   @override
   Future<void> disconnect() async {
     _db = null;
+    _isCurrentAdmin = false;
   }
 
   /// Throws [NoRemoteDBException] and [NetworkException]
   @override
-  Future<bool> isAdmin(User user) async {
+  bool isCurrentAdmin() {
     if (_db == null) {
       throw NoRemoteDBException();
     }
-    try {
-      var res = await _db!.get();
-
-      return user.id == res.data()![_DATABASES_ADMIN];
-    } catch (e) {
-      throw NetworkException();
-    }
+    return _isCurrentAdmin;
   }
 }

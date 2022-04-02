@@ -46,9 +46,11 @@ Future<void> main() async {
   );
   final _firebaseAuth = FirebaseAuth.instance;
 
+  final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
+
   final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
 
-  final AuthRepository _authRepository = AuthRepositoryImpl(_authSource);
+  final AuthRepository _authRepository = AuthRepositoryImpl(_authSource, _networkInfo);
 
   final _cloudSource = FirecloudSource(_firestore);
 
@@ -58,7 +60,6 @@ Future<void> main() async {
 
   final _dataSource = DataRepositoryImpl(_databaseSource);
 
-  final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
 
   final SyncRepository _syncRepo =
       SyncRepositoryImpl(_cloudSource, _databaseSource, _networkInfo);
@@ -70,7 +71,6 @@ Future<void> main() async {
           lazy: false,
           create: (context) => AuthBloc(
             _authRepository,
-            _syncRepo,
           ),
         ),
         BlocProvider(

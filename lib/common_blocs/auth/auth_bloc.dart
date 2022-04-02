@@ -33,25 +33,22 @@ class SignOut extends AuthEvent {
 }
 
 abstract class AuthState extends Equatable {
-  final bool isAdmin;
-
-  const AuthState({required this.isAdmin});
+  const AuthState();
 }
 
 class Authenticated extends AuthState {
   final User user;
 
   const Authenticated({
-    required bool isAdmin,
     required this.user,
-  }) : super(isAdmin: isAdmin);
+  });
 
   @override
   List<Object?> get props => [user];
 }
 
 class NotAuthenticated extends AuthState {
-  const NotAuthenticated() : super(isAdmin: false);
+  const NotAuthenticated();
 
   @override
   List<Object?> get props => [];
@@ -59,15 +56,11 @@ class NotAuthenticated extends AuthState {
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
-  final SyncRepository _syncRepository;
 
   StreamSubscription? _sub;
   StreamSubscription? _subInternet;
 
-  AuthBloc(
-    this._authRepository,
-    this._syncRepository,
-  ) : super(const NotAuthenticated()) {
+  AuthBloc(this._authRepository,) : super(const NotAuthenticated()) {
     on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
     on<SignIn>(_signIn);
@@ -76,7 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _sub = _authRepository.userChanges().listen((user) {
       add(_ChangeAuth(user != null));
     });
-    _subInternet = _syncRepository.connectedToInternet().listen((connected) {
+    _subInternet = _authRepository.isConnectedToInternet().listen((connected) {
       if (connected) {
         add(SignInSilently());
       } else {
@@ -97,40 +90,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     var user = _authRepository.getUser();
 
     if (event.authenticated && user != null) {
-      var isAdmin = await _syncRepository.isAdmin(user);
-      isAdmin.fold(
-        (success) => emit(Authenticated(
-          isAdmin: success,
-          user: user,
-        )),
-        (failure) => emit(Authenticated(
-          isAdmin: false,
-          user: user,
-        )),
-      );
+      emit(Authenticated(
+        user: user,
+      ));
     } else {
       emit(const NotAuthenticated());
     }
   }
 
-  Future<void> _signInSilently(
-    SignInSilently event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _signInSilently(SignInSilently event,
+      Emitter<AuthState> emit,) async {
     await _authRepository.signInSilently();
   }
 
-  Future<void> _signIn(
-    SignIn event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _signIn(SignIn event,
+      Emitter<AuthState> emit,) async {
     await _authRepository.signIn();
   }
 
-  Future<void> _signOut(
-    SignOut event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _signOut(SignOut event,
+      Emitter<AuthState> emit,) async {
     await _authRepository.signOut();
   }
 }
