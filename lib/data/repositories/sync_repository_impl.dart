@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/loading_state.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
 import 'package:money_tracker/data/sources/local/db_converters/budget_type_converter.dart';
 import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
-import 'package:money_tracker/data/sources/local/local_data_source.dart';
+import 'package:money_tracker/data/sources/local/local_sync_source.dart';
 import 'package:money_tracker/data/sources/network_info.dart';
+import 'package:money_tracker/data/sources/remote/cloud_model_extensions.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
 import 'package:money_tracker/data/sources/remote/table_dao.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
@@ -18,7 +18,7 @@ import 'package:money_tracker/utils/try.dart';
 import '../sources/remote/models/cloud_models.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
-  final LocalDataSource _localSource;
+  final LocalSyncSource _localSource;
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
 
@@ -258,40 +258,6 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  CloudAccount _mapToCloudAccount(Account account) {
-    return CloudAccount(
-      id: account.cloudId,
-      title: account.title,
-      isDebt: account.isDebt,
-      deleted: false,
-    );
-  }
-
-  CloudCategory _mapToCloudCategory(model.Category category) {
-    return CloudCategory(
-      id: category.cloudId,
-      title: category.title,
-      operationType:
-          const OperationTypeConverter().mapToSql(category.operationType)!,
-      budgetType: const BudgetTypeConverter().mapToSql(category.budgetType)!,
-      budget: category.budget,
-      deleted: false,
-    );
-  }
-
-  CloudOperation _mapToCloudOperation(Operation operation) {
-    return CloudOperation(
-      id: operation.cloudId,
-      date: operation.date,
-      operationType: const OperationTypeConverter().mapToSql(operation.type)!,
-      account: operation.account.cloudId,
-      category: operation.category?.cloudId,
-      recAccount: operation.recAccount?.cloudId,
-      sum: operation.sum,
-      deleted: operation.deleted,
-    );
-  }
-
   @override
   Stream<LoadingState> loadToCloud() async* {
 
@@ -382,10 +348,10 @@ class SyncRepositoryImpl implements SyncRepository {
     TableDAO<CloudAccount> accounts,
   ) async {
     if (account.cloudId.isNotEmpty) {
-      await accounts.update(_mapToCloudAccount(account));
+      await accounts.update(account.toCloudAccount());
       await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
     } else {
-      var _cloudId = await accounts.add(_mapToCloudAccount(account));
+      var _cloudId = await accounts.add(account.toCloudAccount());
       await _localSource.accountsSync.markAsSynced(account.id, _cloudId);
     }
   }
@@ -396,11 +362,11 @@ class SyncRepositoryImpl implements SyncRepository {
     TableDAO<CloudCategory> categories,
   ) async {
     if (category.cloudId.isNotEmpty) {
-      await categories.update(_mapToCloudCategory(category));
+      await categories.update(category.toCloudCategory());
       await _localSource.categoriesSync
           .markAsSynced(category.id, category.cloudId);
     } else {
-      var _cloudId = await categories.add(_mapToCloudCategory(category));
+      var _cloudId = await categories.add(category.toCloudCategory());
       await _localSource.categoriesSync.markAsSynced(category.id, _cloudId);
     }
   }
@@ -411,11 +377,11 @@ class SyncRepositoryImpl implements SyncRepository {
     TableDAO<CloudOperation> operations,
   ) async {
     if (operation.cloudId.isNotEmpty) {
-      await operations.update(_mapToCloudOperation(operation));
+      await operations.update(operation.toCloudOperation());
       await _localSource.operationsSync
           .markAsSynced(operation.id, operation.cloudId);
     } else {
-      var _cloudId = await operations.add(_mapToCloudOperation(operation));
+      var _cloudId = await operations.add(operation.toCloudOperation());
       await _localSource.operationsSync.markAsSynced(operation.id, _cloudId);
     }
   }

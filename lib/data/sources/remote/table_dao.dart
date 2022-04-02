@@ -1,6 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/data/sources/remote/mappers/cloud_converter.dart';
+import 'mappers/cloud_converter.dart';
 import 'package:money_tracker/utils/exceptions.dart';
 
 import 'models/cloud_models.dart';
