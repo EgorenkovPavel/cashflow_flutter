@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:money_tracker/data/sources/auth_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
@@ -58,25 +58,25 @@ class NotAuthenticated extends AuthState {
 }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthSource _authSource;
-  final SyncRepository _syncRepo;
+  final AuthRepository _authRepository;
+  final SyncRepository _syncRepository;
 
   StreamSubscription? _sub;
   StreamSubscription? _subInternet;
 
   AuthBloc(
-    this._authSource,
-    this._syncRepo,
+    this._authRepository,
+    this._syncRepository,
   ) : super(const NotAuthenticated()) {
     on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
     on<SignIn>(_signIn);
     on<SignOut>(_signOut);
 
-    _sub = _authSource.userChanges().listen((user) {
+    _sub = _authRepository.userChanges().listen((user) {
       add(_ChangeAuth(user != null));
     });
-    _subInternet = _syncRepo.connectedToInternet().listen((connected) {
+    _subInternet = _syncRepository.connectedToInternet().listen((connected) {
       if (connected) {
         add(SignInSilently());
       } else {
@@ -94,9 +94,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {
-    if (event.authenticated) {
-      var user = await _authSource.getUser();
-      var isAdmin = await _syncRepo.isAdmin(user!);
+    var user = _authRepository.getUser();
+
+    if (user != null) {
+      var isAdmin = await _syncRepository.isAdmin(user);
       emit(Authenticated(
         isAdmin: isAdmin,
         user: user,
@@ -107,15 +108,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signInSilently(
-      SignInSilently event, Emitter<AuthState> emit,) async {
-    await _authSource.signInSilently();
+    SignInSilently event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _authRepository.signInSilently();
   }
 
-  Future<void> _signIn(SignIn event, Emitter<AuthState> emit) async {
-    await _authSource.signIn();
+  Future<void> _signIn(
+    SignIn event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _authRepository.signIn();
   }
 
-  Future<void> _signOut(SignOut event, Emitter<AuthState> emit) async {
-    await _authSource.signOut();
+  Future<void> _signOut(
+    SignOut event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _authRepository.signOut();
   }
 }

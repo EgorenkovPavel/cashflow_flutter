@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/sources/auth_source.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
@@ -15,14 +16,14 @@ class DriveBloc extends Cubit<DriveState> {
   GoogleDrive? _driveRepository;
 
   //final AuthBloc _authBloc;
-  final AuthSource authSource;
+  final AuthRepository authRepository;
 
   StreamSubscription? _authSub;
 
   DriveBloc({
     required DataRepository dataRepository,
     required AuthBloc authBloc,
-    required this.authSource,
+    required this.authRepository,
   })  : _dataRepository = dataRepository,
         //_authBloc = authBloc,
         super(DriveState.INITIAL) {
@@ -34,7 +35,7 @@ class DriveBloc extends Cubit<DriveState> {
 
   Future<void> _authState(AuthState event) async {
     if (event is Authenticated) {
-      final client = await authSource.getClient();
+      final client = await authRepository.getClient();
       _driveRepository = client != null ? GoogleDrive(client) : null;
     } else if (event is NotAuthenticated) {
       _driveRepository = null;

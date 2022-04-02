@@ -32,3 +32,7 @@ class Failure<T> extends Try<T>{
   }
 
 }
+
+class AuthFailure extends Failure{
+  AuthFailure(String value) : super(value);
+}

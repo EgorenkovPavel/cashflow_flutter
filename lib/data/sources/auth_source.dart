@@ -1,5 +1,5 @@
 
-import 'package:money_tracker/domain/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 
 abstract class AuthSource{
@@ -8,7 +8,7 @@ abstract class AuthSource{
   Future<void> signInSilently();
   Future<void> signIn();
   Future<void> signOut();
-  Future<User?> getUser();
+  User? getUser();
   Stream<User?> userChanges();
   Future<AuthClient?> getClient();
 

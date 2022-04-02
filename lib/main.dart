@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
+import 'package:money_tracker/data/repositories/auth_repository_impl.dart';
 import 'package:money_tracker/data/repositories/data_repository_impl.dart';
 import 'package:money_tracker/data/repositories/sync_repository_impl.dart';
 import 'package:money_tracker/data/sources/auth_source.dart';
@@ -19,6 +20,7 @@ import 'package:money_tracker/data/sources/local/database_source.dart';
 import 'package:money_tracker/data/sources/network_info.dart';
 import 'package:money_tracker/data/sources/remote/firecloud_source.dart';
 import 'package:money_tracker/data/sources/settings_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/ui/app.dart';
@@ -46,6 +48,8 @@ Future<void> main() async {
 
   final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
 
+  final AuthRepository _authRepository = AuthRepositoryImpl(_authSource);
+
   final _cloudSource = FirecloudSource(_firestore);
 
   final _prefs = await SharedPreferences.getInstance();
@@ -65,7 +69,7 @@ Future<void> main() async {
         BlocProvider(
           lazy: false,
           create: (context) => AuthBloc(
-            _authSource,
+            _authRepository,
             _syncRepo,
           ),
         ),
@@ -80,7 +84,7 @@ Future<void> main() async {
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<AuthSource>(create: (_) => _authSource),
+          RepositoryProvider<AuthRepository>(create: (_) => _authRepository),
           RepositoryProvider<DataRepository>(create: (_) => _dataSource),
           RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
         ],

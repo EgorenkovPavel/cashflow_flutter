@@ -296,8 +296,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final int id;
   final String cloudId;
   final String title;
-  final dynamic operationType;
-  final dynamic budgetType;
+  final OperationType operationType;
+  final BudgetType budgetType;
   final int budget;
   final bool synced;
   CategoryDB(
@@ -365,8 +365,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
       title: serializer.fromJson<String>(json['title']),
-      operationType: serializer.fromJson<dynamic>(json['operationType']),
-      budgetType: serializer.fromJson<dynamic>(json['budgetType']),
+      operationType: serializer.fromJson<OperationType>(json['operationType']),
+      budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
       budget: serializer.fromJson<int>(json['budget']),
       synced: serializer.fromJson<bool>(json['synced']),
     );
@@ -378,8 +378,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
       'title': serializer.toJson<String>(title),
-      'operationType': serializer.toJson<dynamic>(operationType),
-      'budgetType': serializer.toJson<dynamic>(budgetType),
+      'operationType': serializer.toJson<OperationType>(operationType),
+      'budgetType': serializer.toJson<BudgetType>(budgetType),
       'budget': serializer.toJson<int>(budget),
       'synced': serializer.toJson<bool>(synced),
     };
@@ -389,8 +389,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           {int? id,
           String? cloudId,
           String? title,
-          dynamic? operationType,
-          dynamic? budgetType,
+          OperationType? operationType,
+          BudgetType? budgetType,
           int? budget,
           bool? synced}) =>
       CategoryDB(
@@ -436,8 +436,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<int> id;
   final Value<String> cloudId;
   final Value<String> title;
-  final Value<dynamic> operationType;
-  final Value<dynamic> budgetType;
+  final Value<OperationType> operationType;
+  final Value<BudgetType> budgetType;
   final Value<int> budget;
   final Value<bool> synced;
   const CategoriesCompanion({
@@ -453,8 +453,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     this.id = const Value.absent(),
     required String cloudId,
     required String title,
-    required dynamic operationType,
-    required dynamic budgetType,
+    required OperationType operationType,
+    required BudgetType budgetType,
     required int budget,
     this.synced = const Value.absent(),
   })  : cloudId = Value(cloudId),
@@ -466,8 +466,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     Expression<int>? id,
     Expression<String>? cloudId,
     Expression<String>? title,
-    Expression<dynamic>? operationType,
-    Expression<dynamic>? budgetType,
+    Expression<OperationType>? operationType,
+    Expression<BudgetType>? budgetType,
     Expression<int>? budget,
     Expression<bool>? synced,
   }) {
@@ -486,8 +486,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       {Value<int>? id,
       Value<String>? cloudId,
       Value<String>? title,
-      Value<dynamic>? operationType,
-      Value<dynamic>? budgetType,
+      Value<OperationType>? operationType,
+      Value<BudgetType>? budgetType,
       Value<int>? budget,
       Value<bool>? synced}) {
     return CategoriesCompanion(
@@ -572,16 +572,17 @@ class $CategoriesTable extends Categories
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
   @override
-  late final GeneratedColumnWithTypeConverter<dynamic, int?> operationType =
-      GeneratedColumn<int?>('operation_type', aliasedName, false,
+  late final GeneratedColumnWithTypeConverter<OperationType, int?>
+      operationType = GeneratedColumn<int?>(
+              'operation_type', aliasedName, false,
               type: const IntType(), requiredDuringInsert: true)
-          .withConverter<dynamic>($CategoriesTable.$converter0);
+          .withConverter<OperationType>($CategoriesTable.$converter0);
   final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
   @override
-  late final GeneratedColumnWithTypeConverter<dynamic, int?> budgetType =
+  late final GeneratedColumnWithTypeConverter<BudgetType, int?> budgetType =
       GeneratedColumn<int?>('budget_type', aliasedName, false,
               type: const IntType(), requiredDuringInsert: true)
-          .withConverter<dynamic>($CategoriesTable.$converter1);
+          .withConverter<BudgetType>($CategoriesTable.$converter1);
   final VerificationMeta _budgetMeta = const VerificationMeta('budget');
   @override
   late final GeneratedColumn<int?> budget = GeneratedColumn<int?>(
@@ -650,16 +651,17 @@ class $CategoriesTable extends Categories
     return $CategoriesTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<dynamic, int> $converter0 =
+  static TypeConverter<OperationType, int> $converter0 =
       const OperationTypeConverter();
-  static TypeConverter<dynamic, int> $converter1 = const BudgetTypeConverter();
+  static TypeConverter<BudgetType, int> $converter1 =
+      const BudgetTypeConverter();
 }
 
 class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int id;
   final String cloudId;
   final DateTime date;
-  final dynamic operationType;
+  final OperationType operationType;
   final int account;
   final int? category;
   final int? recAccount;
@@ -751,7 +753,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
       date: serializer.fromJson<DateTime>(json['date']),
-      operationType: serializer.fromJson<dynamic>(json['operationType']),
+      operationType: serializer.fromJson<OperationType>(json['operationType']),
       account: serializer.fromJson<int>(json['account']),
       category: serializer.fromJson<int?>(json['category']),
       recAccount: serializer.fromJson<int?>(json['recAccount']),
@@ -767,7 +769,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
       'date': serializer.toJson<DateTime>(date),
-      'operationType': serializer.toJson<dynamic>(operationType),
+      'operationType': serializer.toJson<OperationType>(operationType),
       'account': serializer.toJson<int>(account),
       'category': serializer.toJson<int?>(category),
       'recAccount': serializer.toJson<int?>(recAccount),
@@ -781,7 +783,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           {int? id,
           String? cloudId,
           DateTime? date,
-          dynamic? operationType,
+          OperationType? operationType,
           int? account,
           int? category,
           int? recAccount,
@@ -840,7 +842,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
   final Value<int> id;
   final Value<String> cloudId;
   final Value<DateTime> date;
-  final Value<dynamic> operationType;
+  final Value<OperationType> operationType;
   final Value<int> account;
   final Value<int?> category;
   final Value<int?> recAccount;
@@ -863,7 +865,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     this.id = const Value.absent(),
     required String cloudId,
     required DateTime date,
-    required dynamic operationType,
+    required OperationType operationType,
     required int account,
     this.category = const Value.absent(),
     this.recAccount = const Value.absent(),
@@ -879,7 +881,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     Expression<int>? id,
     Expression<String>? cloudId,
     Expression<DateTime>? date,
-    Expression<dynamic>? operationType,
+    Expression<OperationType>? operationType,
     Expression<int>? account,
     Expression<int?>? category,
     Expression<int?>? recAccount,
@@ -905,7 +907,7 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       {Value<int>? id,
       Value<String>? cloudId,
       Value<DateTime>? date,
-      Value<dynamic>? operationType,
+      Value<OperationType>? operationType,
       Value<int>? account,
       Value<int?>? category,
       Value<int?>? recAccount,
@@ -1008,10 +1010,11 @@ class $OperationsTable extends Operations
   final VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
   @override
-  late final GeneratedColumnWithTypeConverter<dynamic, int?> operationType =
-      GeneratedColumn<int?>('operation_type', aliasedName, false,
+  late final GeneratedColumnWithTypeConverter<OperationType, int?>
+      operationType = GeneratedColumn<int?>(
+              'operation_type', aliasedName, false,
               type: const IntType(), requiredDuringInsert: true)
-          .withConverter<dynamic>($OperationsTable.$converter0);
+          .withConverter<OperationType>($OperationsTable.$converter0);
   final VerificationMeta _accountMeta = const VerificationMeta('account');
   @override
   late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
@@ -1138,7 +1141,7 @@ class $OperationsTable extends Operations
     return $OperationsTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<dynamic, int> $converter0 =
+  static TypeConverter<OperationType, int> $converter0 =
       const OperationTypeConverter();
 }
 
@@ -1655,6 +1658,9 @@ abstract class _$Database extends GeneratedDatabase {
   late final $OperationsTable operations = $OperationsTable(this);
   late final $BalancesTable balances = $BalancesTable(this);
   late final $CashflowsTable cashflows = $CashflowsTable(this);
+  late final AccountDao accountDao = AccountDao(this as Database);
+  late final CategoryDao categoryDao = CategoryDao(this as Database);
+  late final OperationDao operationDao = OperationDao(this as Database);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
