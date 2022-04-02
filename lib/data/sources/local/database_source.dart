@@ -43,7 +43,7 @@ class DatabaseSource implements LocalDataSource, LocalSyncSource{
   LocalSyncTable<Operation> get operationsSync => _operationRepo;
 
   @override
-  Future deleteAll() => db.deleteAll();
+  Future<void> deleteAll() => db.deleteAll();
 
   @override
   Future<Map<String, List<Map<String, dynamic>>>> exportData() => db.getDbData();

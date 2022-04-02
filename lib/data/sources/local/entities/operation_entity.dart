@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:equatable/equatable.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
 import 'package:money_tracker/domain/models.dart';
 
-class OperationDbEntity {
+class OperationDbEntity extends Equatable{
   final OperationDB operation;
   final AccountDB account;
   final CategoryDB? category;
@@ -38,4 +39,8 @@ class OperationDbEntity {
   OperationType get type => operation.operationType;
 
   int get sum => operation.sum;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [operation, account, category, recAccount];
 }

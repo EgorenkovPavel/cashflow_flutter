@@ -1,13 +1,12 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/data/account_dao.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/entities/account_balance_entity.dart';
-import 'package:money_tracker/data/sources/local/local_data_source.dart';
-import 'package:money_tracker/data/sources/local/local_sync_source.dart';
-import 'package:money_tracker/data/sources/local/mappers/account_balance_mapper.dart';
-import 'package:money_tracker/data/sources/local/mappers/account_mapper.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/domain/models.dart';
+import '../data/account_dao.dart';
+import '../data/database.dart';
+import '../entities/account_balance_entity.dart';
+import '../local_sync_source.dart';
+import '../mappers/account_balance_mapper.dart';
+import '../mappers/account_mapper.dart';
+import '../../../../domain/interfaces/data_repository.dart';
+import '../../../../domain/models.dart';
 
 class AccountRepository
     implements LocalSyncTable<Account>, AccountDataRepository {

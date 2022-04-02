@@ -1,12 +1,11 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/data/operation_dao.dart';
-import 'package:money_tracker/data/sources/local/entities/operation_entity.dart';
-import 'package:money_tracker/data/sources/local/local_data_source.dart';
-import 'package:money_tracker/data/sources/local/local_sync_source.dart';
-import 'package:money_tracker/data/sources/local/mappers/operation_mapper.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/domain/models.dart';
+import '../data/database.dart';
+import '../data/operation_dao.dart';
+import '../entities/operation_entity.dart';
+import '../local_sync_source.dart';
+import '../mappers/operation_mapper.dart';
+import '../../../../domain/interfaces/data_repository.dart';
+import '../../../../domain/models.dart';
 
 class OperationRepository
     implements LocalSyncTable<Operation>, OperationDataRepository {

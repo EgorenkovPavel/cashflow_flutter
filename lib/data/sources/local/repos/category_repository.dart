@@ -1,13 +1,12 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/data/category_dao.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/local_data_source.dart';
-import 'package:money_tracker/data/sources/local/local_sync_source.dart';
-import 'package:money_tracker/data/sources/local/mappers/category_cashflow_mapper.dart';
-import 'package:money_tracker/data/sources/local/mappers/category_mapper.dart';
-import 'package:money_tracker/data/sources/local/mappers/category_month_cashflow_mapper.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/domain/models.dart';
+import '../data/category_dao.dart';
+import '../data/database.dart';
+import '../local_sync_source.dart';
+import '../mappers/category_cashflow_mapper.dart';
+import '../mappers/category_mapper.dart';
+import '../mappers/category_month_cashflow_mapper.dart';
+import '../../../../domain/interfaces/data_repository.dart';
+import '../../../../domain/models.dart';
 
 class CategoryRepository
     implements LocalSyncTable<Category>, CategoryDataRepository {
