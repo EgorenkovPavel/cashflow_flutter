@@ -98,10 +98,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (user != null) {
       var isAdmin = await _syncRepository.isAdmin(user);
-      emit(Authenticated(
-        isAdmin: isAdmin,
-        user: user,
-      ));
+      isAdmin.fold(
+        (success) => emit(Authenticated(
+          isAdmin: success,
+          user: user,
+        )),
+        (failure) => emit(const NotAuthenticated()),
+      );
     } else {
       emit(const NotAuthenticated());
     }

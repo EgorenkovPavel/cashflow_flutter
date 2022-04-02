@@ -33,6 +33,14 @@ class Failure<T> extends Try<T>{
 
 }
 
-class AuthFailure extends Failure{
-  AuthFailure(String value) : super(value);
+class AuthFailure<T> extends Failure<T>{
+  AuthFailure() : super('Check internet connection');
+}
+
+class NoRemoteDBFailure<T> extends Failure<T>{
+  NoRemoteDBFailure() : super('No remote db. Try to create new');
+}
+
+class NetworkFailure<T> extends Failure<T>{
+  NetworkFailure() : super('Network connection failure');
 }

@@ -27,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return Success(true);
     } on AuthException {
-      return AuthFailure('Can not sign in. Check internet connection');
+      return AuthFailure();
     }
   }
 
@@ -38,7 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return Success(true);
     } on AuthException {
-      return AuthFailure('Can not sign in. Check internet connection');
+      return AuthFailure();
     }
   }
 
@@ -49,7 +49,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return Success(true);
     } on AuthException {
-      return AuthFailure('Can not sign out. Check internet connection');
+      return AuthFailure();
     }
   }
 

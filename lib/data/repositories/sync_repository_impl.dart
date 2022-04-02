@@ -8,12 +8,12 @@ import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/category/category.dart' as model;
+import 'package:money_tracker/utils/exceptions.dart';
 import 'package:money_tracker/utils/try.dart';
 
 import '../sources/remote/models/cloud_models.dart';
 
-class SyncRepositoryImpl implements SyncRepository{
-
+class SyncRepositoryImpl implements SyncRepository {
   final LocalDataSource _localSource;
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
@@ -21,56 +21,89 @@ class SyncRepositoryImpl implements SyncRepository{
   SyncRepositoryImpl(this._remoteSource, this._localSource, this._networkInfo);
 
   @override
-  Future<Try<void>> addToDatabase(User user) {
-    return _remoteSource.addUserToDatabase(user);
+  Future<Try<void>> addToDatabase(User user) async {
+    try {
+      await _remoteSource.addUserToDatabase(user);
+
+      return Success(true);
+    } on NoRemoteDBException {
+      return NoRemoteDBFailure();
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<Try<void>> createDatabase(User user) {
-    return _remoteSource.createDatabase(user);
+  Future<Try<void>> createDatabase(User user) async {
+    try {
+      await _remoteSource.createDatabase(user);
+
+      return Success(true);
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<Try<bool>> databaseExists(User user) {
-    return _remoteSource.databaseExists(user);
+  Future<Try<bool>> databaseExists(User user) async {
+    try {
+      return Success(await _remoteSource.databaseExists(user));
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<Try<List<User>>> getAll() {
-    return _remoteSource.getAll();
+  Future<Try<List<User>>> getAllUsers() async {
+    try {
+      return Success(await _remoteSource.getAllUsers());
+    } on NoRemoteDBException {
+      return NoRemoteDBFailure();
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<bool> isAdmin(User user) {
-    return _remoteSource.isAdmin(user);
+  Future<Try<bool>> isAdmin(User user) async {
+    try {
+      return Success(await _remoteSource.isAdmin(user));
+    } on NoRemoteDBException {
+      return NoRemoteDBFailure();
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<Try<void>> logIn(User user) {
-    return _remoteSource.connect(user);
+  Future<Try<void>> logIn(User user) async {
+    try {
+      return Success(await _remoteSource.connect(user));
+    } on NoRemoteDBException {
+      return NoRemoteDBFailure();
+    } on NetworkException {
+      return NetworkFailure();
+    }
   }
 
   @override
-  Future<void> logOut() {
-    return _remoteSource.disconnect();
-  }
+  Future<void> logOut() => _remoteSource.disconnect();
 
   @override
   Stream<LoadingState> loadFromCloud(DateTime date) async* {
+    var accounts;
+    var categories;
+    var operations;
 
-    var accountsTry = await _remoteSource.accounts.getAll(date);
-    var categoriesTry = await _remoteSource.categories.getAll(date);
-    var operationsTry = await _remoteSource.operations.getAll(date);
-
-    if (accountsTry.isFailure() ||
-        categoriesTry.isFailure() ||
-        operationsTry.isFailure()) {
+    try {
+      accounts = await _remoteSource.accounts.getAll(date);
+      categories = await _remoteSource.categories.getAll(date);
+      operations = await _remoteSource.operations.getAll(date);
+    } on NoRemoteDBException {
+      return;
+    } on NetworkException {
       return;
     }
-
-    final accounts = accountsTry.getOrDefault([]);
-    final categories = categoriesTry.getOrDefault([]);
-    final operations = operationsTry.getOrDefault([]);
 
     var accountCount = accounts.length;
     var categoryCount = categories.length;
@@ -82,7 +115,7 @@ class SyncRepositoryImpl implements SyncRepository{
       operationCount: operationCount,
     ));
 
-    for (var cloudAccount in accounts){
+    for (var cloudAccount in accounts) {
       if (kDebugMode) {
         print('Load from cloud account ${cloudAccount.title}');
       }
@@ -96,7 +129,7 @@ class SyncRepositoryImpl implements SyncRepository{
       ));
     }
 
-    for (var cloudCategory in categories){
+    for (var cloudCategory in categories) {
       if (kDebugMode) {
         print('Load from cloud category ${cloudCategory.title}');
       }
@@ -110,7 +143,7 @@ class SyncRepositoryImpl implements SyncRepository{
       ));
     }
 
-    for (var cloudOperation in operations){
+    for (var cloudOperation in operations) {
       if (kDebugMode) {
         print('Load from cloud operation ${cloudOperation.id}');
       }
@@ -123,11 +156,11 @@ class SyncRepositoryImpl implements SyncRepository{
         operationCount: operationCount,
       ));
     }
-
   }
 
   Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
-    var _account = await _localSource.accountsSync.getByCloudId(cloudAccount.id);
+    var _account =
+        await _localSource.accountsSync.getByCloudId(cloudAccount.id);
     if (_account == null) {
       await _localSource.accountsSync.insertFromCloud(Account(
         cloudId: cloudAccount.id,
@@ -144,7 +177,7 @@ class SyncRepositoryImpl implements SyncRepository{
 
   Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
     var _category =
-    await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
+        await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
     if (_category == null) {
       await _localSource.categoriesSync.insertFromCloud(model.Category(
         title: cloudCategory.title,
@@ -152,7 +185,7 @@ class SyncRepositoryImpl implements SyncRepository{
         operationType: const OperationTypeConverter()
             .mapToDart(cloudCategory.operationType)!,
         budgetType:
-        const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
+            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
         budget: cloudCategory.budget,
       ));
     } else {
@@ -162,7 +195,7 @@ class SyncRepositoryImpl implements SyncRepository{
         operationType: const OperationTypeConverter()
             .mapToDart(cloudCategory.operationType),
         budgetType:
-        const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
+            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
         budget: cloudCategory.budget,
       ));
     }
@@ -170,16 +203,18 @@ class SyncRepositoryImpl implements SyncRepository{
 
   Future<void> _loadOperationFromCloud(CloudOperation cloudOperation) async {
     var _operation =
-    await _localSource.operationsSync.getByCloudId(cloudOperation.id);
+        await _localSource.operationsSync.getByCloudId(cloudOperation.id);
 
     var _account =
-    await _localSource.accountsSync.getByCloudId(cloudOperation.account);
+        await _localSource.accountsSync.getByCloudId(cloudOperation.account);
     var _category = cloudOperation.category == null
         ? null
-        : await _localSource.categoriesSync.getByCloudId(cloudOperation.category!);
+        : await _localSource.categoriesSync
+            .getByCloudId(cloudOperation.category!);
     var _recAccount = cloudOperation.recAccount == null
         ? null
-        : await _localSource.accountsSync.getByCloudId(cloudOperation.recAccount!);
+        : await _localSource.accountsSync
+            .getByCloudId(cloudOperation.recAccount!);
 
     if (_operation == null) {
       await _localSource.operationsSync.insertFromCloud(Operation(
@@ -224,7 +259,7 @@ class SyncRepositoryImpl implements SyncRepository{
       id: category.cloudId,
       title: category.title,
       operationType:
-      const OperationTypeConverter().mapToSql(category.operationType)!,
+          const OperationTypeConverter().mapToSql(category.operationType)!,
       budgetType: const BudgetTypeConverter().mapToSql(category.budgetType)!,
       budget: category.budget,
       deleted: false,
@@ -246,7 +281,6 @@ class SyncRepositoryImpl implements SyncRepository{
 
   @override
   Stream<LoadingState> loadToCloud() async* {
-
     final accounts = await _localSource.accountsSync.getAllNotSynced();
     final categories = await _localSource.categoriesSync.getAllNotSynced();
     final operations = await _localSource.operationsSync.getAllNotSynced();
@@ -261,7 +295,7 @@ class SyncRepositoryImpl implements SyncRepository{
       operationCount: operationCount,
     ));
 
-    for (var account in accounts){
+    for (var account in accounts) {
       if (kDebugMode) {
         print('Load to cloud account ${account.title}');
       }
@@ -275,7 +309,7 @@ class SyncRepositoryImpl implements SyncRepository{
       ));
     }
 
-    for (var category in categories){
+    for (var category in categories) {
       if (kDebugMode) {
         print('Load to cloud category ${category.title}');
       }
@@ -289,7 +323,7 @@ class SyncRepositoryImpl implements SyncRepository{
       ));
     }
 
-    for (var operation in operations){
+    for (var operation in operations) {
       if (kDebugMode) {
         print('Load to cloud operation ${operation.id}');
       }
@@ -304,55 +338,41 @@ class SyncRepositoryImpl implements SyncRepository{
     }
   }
 
+  /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _loadAccountToCloud(Account account) async {
     if (account.cloudId.isNotEmpty) {
-      var res = await _remoteSource.accounts.update(_mapToCloudAccount(account));
-      if (res.isSuccess()) {
-        await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
-      }
+      await _remoteSource.accounts.update(_mapToCloudAccount(account));
+      await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
     } else {
       var _cloudId =
-      await _remoteSource.accounts.add(_mapToCloudAccount(account));
-      if (_cloudId.isSuccess()) {
-        await _localSource.accountsSync
-            .markAsSynced(account.id, _cloudId.getOrDefault(''));
-      }
+          await _remoteSource.accounts.add(_mapToCloudAccount(account));
+      await _localSource.accountsSync.markAsSynced(account.id, _cloudId);
     }
   }
 
+  /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _loadCategoryToCloud(model.Category category) async {
     if (category.cloudId.isNotEmpty) {
-      var res =
       await _remoteSource.categories.update(_mapToCloudCategory(category));
-      if (res.isSuccess()) {
-        await _localSource.categoriesSync
-            .markAsSynced(category.id, category.cloudId);
-      }
+      await _localSource.categoriesSync
+          .markAsSynced(category.id, category.cloudId);
     } else {
       var _cloudId =
-      await _remoteSource.categories.add(_mapToCloudCategory(category));
-      if (_cloudId.isSuccess()) {
-        await _localSource.categoriesSync
-            .markAsSynced(category.id, _cloudId.getOrDefault(''));
-      }
+          await _remoteSource.categories.add(_mapToCloudCategory(category));
+      await _localSource.categoriesSync.markAsSynced(category.id, _cloudId);
     }
   }
 
+  /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _loadOperationToCloud(Operation operation) async {
     if (operation.cloudId.isNotEmpty) {
-      var res =
       await _remoteSource.operations.update(_mapToCloudOperation(operation));
-      if (res.isSuccess()) {
-        await _localSource.operationsSync
-            .markAsSynced(operation.id, operation.cloudId);
-      }
+      await _localSource.operationsSync
+          .markAsSynced(operation.id, operation.cloudId);
     } else {
       var _cloudId =
-      await _remoteSource.operations.add(_mapToCloudOperation(operation));
-      if (_cloudId.isSuccess()) {
-        await _localSource.operationsSync
-            .markAsSynced(operation.id, _cloudId.getOrDefault(''));
-      }
+          await _remoteSource.operations.add(_mapToCloudOperation(operation));
+      await _localSource.operationsSync.markAsSynced(operation.id, _cloudId);
     }
   }
 
@@ -360,5 +380,4 @@ class SyncRepositoryImpl implements SyncRepository{
   Stream<bool> connectedToInternet() {
     return _networkInfo.connected();
   }
-
 }

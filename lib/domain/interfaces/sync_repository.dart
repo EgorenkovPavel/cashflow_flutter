@@ -9,8 +9,8 @@ abstract class SyncRepository{
 
   Stream<bool> connectedToInternet();
 
-  Future<bool> isAdmin(User user);
-  Future<Try<List<User>>> getAll();
+  Future<Try<bool>> isAdmin(User user);
+  Future<Try<List<User>>> getAllUsers();
   Future<Try<void>> logIn(User user);
   Future<void> logOut();
   Future<Try<void>> addToDatabase(User user);

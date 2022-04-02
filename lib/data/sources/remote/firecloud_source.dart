@@ -9,8 +9,9 @@ import 'package:money_tracker/data/sources/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/user_mapper.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
+import 'package:money_tracker/data/sources/remote/table_dao.dart';
 import 'package:money_tracker/domain/models/user.dart';
-import 'package:money_tracker/utils/try.dart';
+import 'package:money_tracker/utils/exceptions.dart';
 
 import 'models/cloud_models.dart';
 
@@ -30,73 +31,72 @@ class FirecloudSource extends RemoteDataSource {
   FirecloudSource(this._firestore);
 
   @override
-  CloudTable<CloudAccount> get accounts => AccountsDAO(
+  TableDAO<CloudAccount> get accounts => AccountsDAO(
         collection: _db?.collection(_ACCOUNTS),
         key_updated: AccountMapper.KEY_UPDATED,
         mapper: const AccountMapper(),
       );
 
   @override
-  CloudTable<CloudCategory> get categories => CategoriesDAO(
+  TableDAO<CloudCategory> get categories => CategoriesDAO(
         collection: _db?.collection(_CATEGORIES),
         key_updated: CategoryMapper.KEY_UPDATED,
         mapper: const CategoryMapper(),
       );
 
   @override
-  CloudTable<CloudOperation> get operations => OperationDAO(
+  TableDAO<CloudOperation> get operations => OperationDAO(
         collection: _db?.collection(_OPERATIONS),
         key_updated: OperationMapper.KEY_UPDATED,
         mapper: const OperationMapper(),
       );
 
-  Future<Try<DocumentReference<Map<String, dynamic>>>> _getDatabase(
+  /// Throws [NetworkException] and [NoRemoteDBException]
+  Future<DocumentReference<Map<String, dynamic>>> _getDatabase(
     String userId,
   ) async {
+    QuerySnapshot querySnapshot;
     try {
-      QuerySnapshot querySnapshot = await _firestore
+      querySnapshot = await _firestore
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
-
-      return querySnapshot.docs.isNotEmpty
-          ? Success(_firestore
-              .collection(_DATABASES)
-              .doc(querySnapshot.docs.first.id))
-          : Failure('No local found');
     } catch (e) {
-      return Future.value(Failure(e.toString()));
+      throw NetworkException();
+    }
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id);
+    } else {
+      throw NoRemoteDBException();
     }
   }
 
+  ///Throws [NoRemoteDBException] and [NetworkException]
   @override
-  Future<Try<void>> deleteAll() async {
+  Future<void> deleteAll() async {
     if (_db == null) {
-      return Failure('No db');
+      throw NoRemoteDBException();
     }
 
-    var resOperations = await operations.deleteAll();
-    if (resOperations.isFailure()) {
-      return resOperations;
+    try {
+      await operations.deleteAll();
+      await categories.deleteAll();
+      await accounts.deleteAll();
+    }on NoRemoteDBException{
+      rethrow;
+    }on NetworkException{
+      rethrow;
     }
-
-    var resCategories = await categories.deleteAll();
-    if (resCategories.isFailure()) {
-      return resCategories;
-    }
-    var resAccounts = await accounts.deleteAll();
-    if (resAccounts.isFailure()) {
-      return resAccounts;
-    }
-
-    return Success(null);
   }
 
+  ///Throws [NoRemoteDBException] and [NetworkException]
   @override
-  Future<Try<void>> addUserToDatabase(User user) async {
-    if (_db == null) {
-      return Future.value(Failure('No connected cloud database'));
+  Future<void> addUserToDatabase(User user) async {
+    if (_db != null) {
+      throw NoRemoteDBException();
     }
+
     try {
       var doc = await _db!.get();
       var data = doc.data();
@@ -107,31 +107,30 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_USERS)
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
-
-      return Success(null);
     } catch (e) {
-      return Future.value(Failure(e.toString()));
+      throw NetworkException();
     }
   }
 
+  /// Throws [NoRemoteDBException] and [NetworkException]
   @override
-  Future<Try<List<User>>> getAll() async {
+  Future<List<User>> getAllUsers() async {
+    if (_db == null) {
+      throw NoRemoteDBException();
+    }
+
     try {
-      if (_db == null) {
-        return Success(<User>[]);
-      }
       var doc = await _db!.collection(_USERS).get();
 
-      return Success(
-        doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList(),
-      );
+      return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
     } catch (e) {
-      return Failure(e.toString());
+      throw NetworkException();
     }
   }
 
+  /// Throws [NetworkException]
   @override
-  Future<Try<void>> createDatabase(User user) async {
+  Future<void> createDatabase(User user) async {
     try {
       _db = await _firestore.collection(_DATABASES).add({
         _DATABASES_ADMIN: user.id,
@@ -141,48 +140,42 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_USERS)
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
-
-      return Success(null);
     } catch (e) {
-      return Future.value(Failure(e.toString()));
+      throw NetworkException();
     }
   }
 
+  /// Throws [NetworkException]
   @override
-  Future<Try<bool>> databaseExists(User user) async {
+  Future<bool> databaseExists(User user) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: user.id)
           .get();
 
-      return Success(querySnapshot.docs.isNotEmpty);
+      return querySnapshot.docs.isNotEmpty;
     } catch (e) {
-      return Future.value(Failure(e.toString()));
+      throw NetworkException();
     }
   }
 
+  /// Throws [NoRemoteDBException] and [NetworkException]
   @override
-  Future<Try<void>> connect(User user) async {
-    var res = await _getDatabase(user.id);
-
-    return res.fold(
-      (success) async {
-        _db = success;
-        try {
-          var doc = await _db!.get();
-
-          return Success(null);
-        } catch (e) {
-          return Failure(e.toString());
-        }
-      },
-      (failure) {
-        _db = null;
-
-        return Failure(failure);
-      },
-    );
+  Future<void> connect(User user) async {
+    try {
+      var res = await _getDatabase(user.id);
+      var doc = await _db!.get();
+    } on NoRemoteDBException {
+      _db = null;
+      rethrow;
+    } on NetworkException {
+      _db = null;
+      rethrow;
+    } catch (e) {
+      _db = null;
+      throw NetworkException();
+    }
   }
 
   @override
@@ -190,176 +183,18 @@ class FirecloudSource extends RemoteDataSource {
     _db = null;
   }
 
+  /// Throws [NoRemoteDBException] and [NetworkException]
   @override
   Future<bool> isAdmin(User user) async {
     if (_db == null) {
-      return false;
+      throw NoRemoteDBException();
     }
-    var res = await _db!.get();
-
-    return user.id == res.data()![_DATABASES_ADMIN];
-  }
-}
-
-abstract class TableDAO<T> implements CloudTable<T> {
-  final CollectionReference<Map<String, dynamic>>? collection;
-
-  final CloudConverter<T> mapper;
-
-  final String key_updated;
-
-  const TableDAO({
-    required this.collection,
-    required this.mapper,
-    required this.key_updated,
-  });
-
-  @override
-  Future<Try<String>> add(T entity) async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
-    var doc = await collection!.add(mapper.mapToCloud(entity));
-
-    return doc == null ? Failure('Error') : Success(doc.id);
-  }
-
-  @override
-  Future<Try<void>> delete(String cloudId) async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
     try {
-      await collection!.doc(cloudId).update(mapper.deletionMark());
+      var res = await _db!.get();
 
-      return Success(null);
+      return user.id == res.data()![_DATABASES_ADMIN];
     } catch (e) {
-      return Failure(e.toString());
+      throw NetworkException();
     }
-  }
-
-  @override
-  Future<Try<Iterable<T>>> getAll(DateTime dateSince) async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
-    try {
-      var docs = await collection!
-          .where(key_updated, isGreaterThanOrEqualTo: dateSince)
-          .get();
-
-      return Success(docs.docs.map<T>((doc) => mapper.mapToDart(doc)));
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  @override
-  Future<Try<void>> refreshEntitySyncDate(String entityId) async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
-    try {
-      await collection!.doc(entityId).update({key_updated: DateTime.now()});
-
-      return Success(null);
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  @override
-  Future<Try<void>> update(T entity) async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
-    try {
-      await collection!.doc(getId(entity)).update(mapper.mapToCloud(entity));
-
-      return Success(null);
-    } catch (e) {
-      return Failure(e.toString());
-    }
-  }
-
-  @override
-  Future<Try<void>> deleteAll() async {
-    if (collection == null) {
-      return Failure('No cloud db');
-    }
-
-    var queryOperation;
-    try {
-      queryOperation = await collection!.get();
-    } catch (e) {
-      return Failure(e.toString());
-    }
-
-    await Future.forEach<T>(queryOperation, (element) async {
-      var res = await delete(getId(element));
-      if (res.isFailure()) {
-        return res;
-      }
-    });
-
-    return Success(null);
-  }
-
-  String getId(T entity);
-}
-
-class AccountsDAO extends TableDAO<CloudAccount> {
-  const AccountsDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudAccount> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
-
-  @override
-  String getId(CloudAccount entity) {
-    return entity.id;
-  }
-}
-
-class CategoriesDAO extends TableDAO<CloudCategory> {
-  const CategoriesDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudCategory> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
-
-  @override
-  String getId(CloudCategory entity) {
-    return entity.id;
-  }
-}
-
-class OperationDAO extends TableDAO<CloudOperation> {
-  const OperationDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudOperation> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
-
-  @override
-  String getId(CloudOperation entity) {
-    return entity.id;
   }
 }
