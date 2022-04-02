@@ -96,7 +96,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {
     var user = _authRepository.getUser();
 
-    if (user != null) {
+    if (event.authenticated && user != null) {
       var isAdmin = await _syncRepository.isAdmin(user);
       isAdmin.fold(
         (success) => emit(Authenticated(
