@@ -3,58 +3,11 @@ import 'package:money_tracker/data/sources/local/data/database.dart';
 import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/domain/models.dart';
 
+import '../../entities/category_budget_entity.dart';
+import '../../entities/category_cashflow_entity.dart';
+import '../../entities/category_month_cashflow_entity.dart';
+
 part 'category_dao.g.dart';
-
-class CategoryCashflowEntity {
-  CategoryDB category;
-  int monthCashflow;
-  int yearCashflow;
-
-  CategoryCashflowEntity({
-    required this.category,
-    required this.monthCashflow,
-    required this.yearCashflow,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryCashflowEntity &&
-          runtimeType == other.runtimeType &&
-          category == other.category;
-
-  @override
-  int get hashCode => category.hashCode;
-}
-
-class CategoryBudgetEntity {
-  CategoryDB category;
-  int budget;
-
-  CategoryBudgetEntity(this.category, this.budget);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryBudgetEntity &&
-          runtimeType == other.runtimeType &&
-          category == other.category;
-
-  @override
-  int get hashCode => category.hashCode;
-}
-
-class CategoryMonthCashflowEntity {
-  final CategoryDB category;
-  final int month;
-  final int cashflow;
-
-  CategoryMonthCashflowEntity({
-    required this.month,
-    required this.category,
-    required this.cashflow,
-  });
-}
 
 @DriftAccessor(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {

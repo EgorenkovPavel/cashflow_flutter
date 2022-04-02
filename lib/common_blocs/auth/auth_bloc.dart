@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
-import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 abstract class AuthEvent extends Equatable {}
@@ -60,7 +59,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   StreamSubscription? _sub;
   StreamSubscription? _subInternet;
 
-  AuthBloc(this._authRepository,) : super(const NotAuthenticated()) {
+  AuthBloc(
+    this._authRepository,
+  ) : super(const NotAuthenticated()) {
     on<_ChangeAuth>(_changeAuth);
     on<SignInSilently>(_signInSilently);
     on<SignIn>(_signIn);
@@ -98,18 +99,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signInSilently(SignInSilently event,
-      Emitter<AuthState> emit,) async {
-    await _authRepository.signInSilently();
-  }
+  Future<void> _signInSilently(
+    SignInSilently event,
+    Emitter<AuthState> emit,
+  ) async =>
+      await _authRepository.signInSilently();
 
-  Future<void> _signIn(SignIn event,
-      Emitter<AuthState> emit,) async {
-    await _authRepository.signIn();
-  }
+  Future<void> _signIn(
+    SignIn event,
+    Emitter<AuthState> emit,
+  ) async =>
+      await _authRepository.signIn();
 
-  Future<void> _signOut(SignOut event,
-      Emitter<AuthState> emit,) async {
-    await _authRepository.signOut();
-  }
+  Future<void> _signOut(
+    SignOut event,
+    Emitter<AuthState> emit,
+  ) async =>
+      await _authRepository.signOut();
 }
