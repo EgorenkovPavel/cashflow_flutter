@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/common_blocs/sync/loading_state.dart';
+import 'package:money_tracker/data/sources/local/data/database.dart';
 import 'package:money_tracker/data/sources/local/db_converters/budget_type_converter.dart';
 import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/data/sources/local/local_data_source.dart';
 import 'package:money_tracker/data/sources/network_info.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
+import 'package:money_tracker/data/sources/remote/table_dao.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/domain/models/category/category.dart' as model;
@@ -91,14 +95,23 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> loadFromCloud(DateTime date) async* {
+
+    final accountTable = _remoteSource.accounts;
+    final categoryTable = _remoteSource.categories;
+    final operationsTable = _remoteSource.operations;
+
+    if (accountTable == null || categoryTable == null || operationsTable == null){
+      return;
+    }
+
     var accounts;
     var categories;
     var operations;
 
     try {
-      accounts = await _remoteSource.accounts.getAll(date);
-      categories = await _remoteSource.categories.getAll(date);
-      operations = await _remoteSource.operations.getAll(date);
+      accounts = await accountTable.getAll(date);
+      categories = await categoryTable.getAll(date);
+      operations = await operationsTable.getAll(date);
     } on NoRemoteDBException {
       return;
     } on NetworkException {
@@ -281,6 +294,17 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> loadToCloud() async* {
+
+    //TODO rewrite to streamController
+
+    final accountTable = _remoteSource.accounts;
+    final categoryTable = _remoteSource.categories;
+    final operationTable = _remoteSource.operations;
+
+    if (accountTable == null || categoryTable == null || operationTable == null){
+      return;
+    }
+
     final accounts = await _localSource.accountsSync.getAllNotSynced();
     final categories = await _localSource.categoriesSync.getAllNotSynced();
     final operations = await _localSource.operationsSync.getAllNotSynced();
@@ -299,7 +323,11 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load to cloud account ${account.title}');
       }
-      await _loadAccountToCloud(account);
+      try {
+        await _loadAccountToCloud(account, accountTable);
+      }on NetworkException{
+        return;
+      }
 
       accountCount--;
       yield (LoadingState(
@@ -313,7 +341,12 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load to cloud category ${category.title}');
       }
-      await _loadCategoryToCloud(category);
+
+      try {
+        await _loadCategoryToCloud(category, categoryTable);
+      }on NetworkException{
+        return;
+      }
 
       categoryCount--;
       yield (LoadingState(
@@ -327,7 +360,12 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load to cloud operation ${operation.id}');
       }
-      await _loadOperationToCloud(operation);
+
+      try {
+        await _loadOperationToCloud(operation, operationTable);
+      }on NetworkException{
+        return;
+      }
 
       operationCount--;
       yield (LoadingState(
@@ -339,39 +377,45 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadAccountToCloud(Account account) async {
+  Future<void> _loadAccountToCloud(
+    Account account,
+    TableDAO<CloudAccount> accounts,
+  ) async {
     if (account.cloudId.isNotEmpty) {
-      await _remoteSource.accounts.update(_mapToCloudAccount(account));
+      await accounts.update(_mapToCloudAccount(account));
       await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
     } else {
-      var _cloudId =
-          await _remoteSource.accounts.add(_mapToCloudAccount(account));
+      var _cloudId = await accounts.add(_mapToCloudAccount(account));
       await _localSource.accountsSync.markAsSynced(account.id, _cloudId);
     }
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadCategoryToCloud(model.Category category) async {
+  Future<void> _loadCategoryToCloud(
+    model.Category category,
+    TableDAO<CloudCategory> categories,
+  ) async {
     if (category.cloudId.isNotEmpty) {
-      await _remoteSource.categories.update(_mapToCloudCategory(category));
+      await categories.update(_mapToCloudCategory(category));
       await _localSource.categoriesSync
           .markAsSynced(category.id, category.cloudId);
     } else {
-      var _cloudId =
-          await _remoteSource.categories.add(_mapToCloudCategory(category));
+      var _cloudId = await categories.add(_mapToCloudCategory(category));
       await _localSource.categoriesSync.markAsSynced(category.id, _cloudId);
     }
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadOperationToCloud(Operation operation) async {
+  Future<void> _loadOperationToCloud(
+    Operation operation,
+    TableDAO<CloudOperation> operations,
+  ) async {
     if (operation.cloudId.isNotEmpty) {
-      await _remoteSource.operations.update(_mapToCloudOperation(operation));
+      await operations.update(_mapToCloudOperation(operation));
       await _localSource.operationsSync
           .markAsSynced(operation.id, operation.cloudId);
     } else {
-      var _cloudId =
-          await _remoteSource.operations.add(_mapToCloudOperation(operation));
+      var _cloudId = await operations.add(_mapToCloudOperation(operation));
       await _localSource.operationsSync.markAsSynced(operation.id, _cloudId);
     }
   }

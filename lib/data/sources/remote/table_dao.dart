@@ -6,7 +6,7 @@ import 'package:money_tracker/utils/exceptions.dart';
 import 'models/cloud_models.dart';
 
 abstract class TableDAO<T> {
-  final CollectionReference<Map<String, dynamic>>? _collection;
+  final CollectionReference<Map<String, dynamic>> _collection;
 
   final CloudConverter<T> _mapper;
 
@@ -20,41 +20,29 @@ abstract class TableDAO<T> {
         _mapper = mapper,
         _key_updated = key_updated;
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<String> add(T entity) async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     try {
-      var doc = await _collection!.add(_mapper.mapToCloud(entity));
+      var doc = await _collection.add(_mapper.mapToCloud(entity));
       return doc.id;
     } catch (e) {
       throw NetworkException();
     }
   }
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<void> delete(String cloudId) async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     try {
-      await _collection!.doc(cloudId).update(_mapper.deletionMark());
+      await _collection.doc(cloudId).update(_mapper.deletionMark());
     } catch (e) {
       throw NetworkException();
     }
   }
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<Iterable<T>> getAll(DateTime dateSince) async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     try {
-      var docs = await _collection!
+      var docs = await _collection
           .where(_key_updated, isGreaterThanOrEqualTo: dateSince)
           .get();
 
@@ -64,41 +52,29 @@ abstract class TableDAO<T> {
     }
   }
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<void> refreshEntitySyncDate(String entityId) async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     try {
-      await _collection!.doc(entityId).update({_key_updated: DateTime.now()});
+      await _collection.doc(entityId).update({_key_updated: DateTime.now()});
     } catch (e) {
       throw NetworkException();
     }
   }
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<void> update(T entity) async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     try {
-      await _collection!.doc(getId(entity)).update(_mapper.mapToCloud(entity));
+      await _collection.doc(getId(entity)).update(_mapper.mapToCloud(entity));
     } catch (e) {
       throw NetworkException();
     }
   }
 
-  /// Throws [NoRemoteDBException] and [NetworkException]
+  /// Throws [NetworkException]
   Future<void> deleteAll() async {
-    if (_collection == null) {
-      throw NoRemoteDBException();
-    }
-
     var queryOperation;
     try {
-      queryOperation = await _collection!.get();
+      queryOperation = await _collection.get();
 
       await Future.forEach<T>(queryOperation, (element) async {
         await delete(getId(element));

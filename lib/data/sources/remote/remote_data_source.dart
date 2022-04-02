@@ -6,9 +6,9 @@ import 'models/cloud_models.dart';
 
 abstract class RemoteDataSource{
 
-  TableDAO<CloudAccount> get accounts;
-  TableDAO<CloudCategory> get categories;
-  TableDAO<CloudOperation> get operations;
+  TableDAO<CloudAccount>? get accounts;
+  TableDAO<CloudCategory>? get categories;
+  TableDAO<CloudOperation>? get operations;
 
   Future<void> deleteAll();
 

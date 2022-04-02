@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/data/sources/remote/mappers/account_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/category_mapper.dart';
-import 'package:money_tracker/data/sources/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/user_mapper.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
@@ -31,25 +30,31 @@ class FirecloudSource extends RemoteDataSource {
   FirecloudSource(this._firestore);
 
   @override
-  TableDAO<CloudAccount> get accounts => AccountsDAO(
-        collection: _db?.collection(_ACCOUNTS),
-        key_updated: AccountMapper.KEY_UPDATED,
-        mapper: const AccountMapper(),
-      );
+  TableDAO<CloudAccount>? get accounts => _db != null
+      ? AccountsDAO(
+          collection: _db!.collection(_ACCOUNTS),
+          key_updated: AccountMapper.KEY_UPDATED,
+          mapper: const AccountMapper(),
+        )
+      : null;
 
   @override
-  TableDAO<CloudCategory> get categories => CategoriesDAO(
-        collection: _db?.collection(_CATEGORIES),
-        key_updated: CategoryMapper.KEY_UPDATED,
-        mapper: const CategoryMapper(),
-      );
+  TableDAO<CloudCategory>? get categories => _db != null
+      ? CategoriesDAO(
+          collection: _db!.collection(_CATEGORIES),
+          key_updated: CategoryMapper.KEY_UPDATED,
+          mapper: const CategoryMapper(),
+        )
+      : null;
 
   @override
-  TableDAO<CloudOperation> get operations => OperationDAO(
-        collection: _db?.collection(_OPERATIONS),
-        key_updated: OperationMapper.KEY_UPDATED,
-        mapper: const OperationMapper(),
-      );
+  TableDAO<CloudOperation>? get operations => _db != null
+      ? OperationDAO(
+          collection: _db!.collection(_OPERATIONS),
+          key_updated: OperationMapper.KEY_UPDATED,
+          mapper: const OperationMapper(),
+        )
+      : null;
 
   /// Throws [NetworkException] and [NoRemoteDBException]
   Future<DocumentReference<Map<String, dynamic>>> _getDatabase(
@@ -80,12 +85,12 @@ class FirecloudSource extends RemoteDataSource {
     }
 
     try {
-      await operations.deleteAll();
-      await categories.deleteAll();
-      await accounts.deleteAll();
-    }on NoRemoteDBException{
+      await operations?.deleteAll();
+      await categories?.deleteAll();
+      await accounts?.deleteAll();
+    } on NoRemoteDBException {
       rethrow;
-    }on NetworkException{
+    } on NetworkException {
       rethrow;
     }
   }
