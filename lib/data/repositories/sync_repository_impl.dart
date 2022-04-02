@@ -109,9 +109,9 @@ class SyncRepositoryImpl implements SyncRepository {
       return;
     }
 
-    var accounts;
-    var categories;
-    var operations;
+    Iterable<CloudAccount> accounts;
+    Iterable<CloudCategory> categories;
+    Iterable<CloudOperation> operations;
 
     try {
       accounts = await accountTable.getAll(date);

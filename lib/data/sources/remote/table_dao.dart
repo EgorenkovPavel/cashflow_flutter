@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'mappers/cloud_converter.dart';
 import 'package:money_tracker/utils/exceptions.dart';
 
@@ -26,6 +27,9 @@ abstract class TableDAO<T> {
       var doc = await _collection.add(_mapper.mapToCloud(entity));
       return doc.id;
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR add ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -35,6 +39,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(cloudId).update(_mapper.deletionMark());
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR delete ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -48,6 +55,9 @@ abstract class TableDAO<T> {
 
       return docs.docs.map<T>((doc) => _mapper.mapToDart(doc));
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR getAll ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -57,6 +67,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(entityId).update({_key_updated: DateTime.now()});
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR refreshEntitySyncDate ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -66,6 +79,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(getId(entity)).update(_mapper.mapToCloud(entity));
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR update ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -84,6 +100,9 @@ abstract class TableDAO<T> {
     } on NetworkException {
       rethrow;
     } catch (e) {
+      if (kDebugMode) {
+        print('ERROR deleteAll ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
