@@ -24,6 +24,8 @@ extension CloudCategoryMapper on Category {
         budget: this.budget,
         deleted: false,
       );
+
+
 }
 
 extension CloudOperationMapper on Operation {

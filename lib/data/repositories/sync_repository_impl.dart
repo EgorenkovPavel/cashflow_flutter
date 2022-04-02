@@ -1,21 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:money_tracker/common_blocs/sync/loading_state.dart';
-import 'package:money_tracker/data/sources/local/db_converters/budget_type_converter.dart';
-import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
-import 'package:money_tracker/data/sources/local/local_sync_source.dart';
-import 'package:money_tracker/data/sources/network_info.dart';
-import 'package:money_tracker/data/sources/remote/cloud_model_extensions.dart';
-import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
-import 'package:money_tracker/data/sources/remote/table_dao.dart';
-import 'package:money_tracker/domain/interfaces/sync_repository.dart';
-import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/domain/models/category/category.dart' as model;
-import 'package:money_tracker/utils/exceptions.dart';
-import 'package:money_tracker/utils/try.dart';
 
+import '../../common_blocs/sync/loading_state.dart';
+import '../../domain/interfaces/sync_repository.dart';
+import '../../domain/models.dart';
+import '../../domain/models/category/category.dart' as model;
+import '../../utils/exceptions.dart';
+import '../../utils/try.dart';
+import '../sources/local/db_converters/operation_type_converter.dart';
+import '../sources/local/local_sync_source.dart';
+import '../sources/network_info.dart';
+import '../sources/remote/cloud_model_extensions.dart';
+import '../sources/remote/model_mapper.dart';
 import '../sources/remote/models/cloud_models.dart';
+import '../sources/remote/remote_data_source.dart';
+import '../sources/remote/table_dao.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;
@@ -95,12 +95,13 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> loadFromCloud(DateTime date) async* {
-
     final accountTable = _remoteSource.accounts;
     final categoryTable = _remoteSource.categories;
     final operationsTable = _remoteSource.operations;
 
-    if (accountTable == null || categoryTable == null || operationsTable == null){
+    if (accountTable == null ||
+        categoryTable == null ||
+        operationsTable == null) {
       return;
     }
 
@@ -175,16 +176,13 @@ class SyncRepositoryImpl implements SyncRepository {
     var _account =
         await _localSource.accountsSync.getByCloudId(cloudAccount.id);
     if (_account == null) {
-      await _localSource.accountsSync.insertFromCloud(Account(
-        cloudId: cloudAccount.id,
-        title: cloudAccount.title,
-        isDebt: cloudAccount.isDebt,
-      ));
+      await _localSource.accountsSync.insertFromCloud(
+        const AccountModelMapper().insertModel(cloudAccount),
+      );
     } else {
-      await _localSource.accountsSync.updateFromCloud(_account.copyWith(
-        title: cloudAccount.title,
-        isDebt: cloudAccount.isDebt,
-      ));
+      await _localSource.accountsSync.updateFromCloud(
+        const AccountModelMapper().updateModel(_account, cloudAccount),
+      );
     }
   }
 
@@ -192,25 +190,13 @@ class SyncRepositoryImpl implements SyncRepository {
     var _category =
         await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
     if (_category == null) {
-      await _localSource.categoriesSync.insertFromCloud(model.Category(
-        title: cloudCategory.title,
-        cloudId: cloudCategory.id,
-        operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType)!,
-        budgetType:
-            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
-        budget: cloudCategory.budget,
-      ));
+      await _localSource.categoriesSync.insertFromCloud(
+        const CategoryModelMapper().insertModel(cloudCategory),
+      );
     } else {
-      await _localSource.categoriesSync.updateFromCloud(_category.copyWith(
-        title: cloudCategory.title,
-        cloudId: cloudCategory.id,
-        operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType),
-        budgetType:
-            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
-        budget: cloudCategory.budget,
-      ));
+      await _localSource.categoriesSync.updateFromCloud(
+        const CategoryModelMapper().updateModel(_category, cloudCategory),
+      );
     }
   }
 
@@ -260,14 +246,15 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> loadToCloud() async* {
-
     //TODO rewrite to streamController
 
     final accountTable = _remoteSource.accounts;
     final categoryTable = _remoteSource.categories;
     final operationTable = _remoteSource.operations;
 
-    if (accountTable == null || categoryTable == null || operationTable == null){
+    if (accountTable == null ||
+        categoryTable == null ||
+        operationTable == null) {
       return;
     }
 
@@ -291,7 +278,7 @@ class SyncRepositoryImpl implements SyncRepository {
       }
       try {
         await _loadAccountToCloud(account, accountTable);
-      }on NetworkException{
+      } on NetworkException {
         return;
       }
 
@@ -310,7 +297,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
       try {
         await _loadCategoryToCloud(category, categoryTable);
-      }on NetworkException{
+      } on NetworkException {
         return;
       }
 
@@ -329,7 +316,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
       try {
         await _loadOperationToCloud(operation, operationTable);
-      }on NetworkException{
+      } on NetworkException {
         return;
       }
 

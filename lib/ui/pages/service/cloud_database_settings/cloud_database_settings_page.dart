@@ -19,8 +19,7 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Cloud local'),
       ),
-      body: BlocConsumer<SyncBloc, SyncState>(
-        listener: (context, state) {},
+      body: BlocBuilder<SyncBloc, SyncState>(
         builder: (context, state) {
           if (state is SyncStateNoDb) {
             return const ConnectingView();
