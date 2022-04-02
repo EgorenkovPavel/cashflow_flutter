@@ -103,7 +103,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           isAdmin: success,
           user: user,
         )),
-        (failure) => emit(const NotAuthenticated()),
+        (failure) => emit(Authenticated(
+          isAdmin: false,
+          user: user,
+        )),
       );
     } else {
       emit(const NotAuthenticated());
