@@ -5,7 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class AuthEvent extends Equatable {}
+abstract class AuthEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class _ChangeAuth extends AuthEvent {
   final bool authenticated;
@@ -16,20 +19,11 @@ class _ChangeAuth extends AuthEvent {
   List<Object?> get props => [authenticated];
 }
 
-class SignInSilently extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}
+class SignInSilently extends AuthEvent {}
 
-class SignIn extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}
+class SignIn extends AuthEvent {}
 
-class SignOut extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}
+class SignOut extends AuthEvent {}
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -91,9 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     var user = _authRepository.getUser();
 
     if (event.authenticated && user != null) {
-      emit(Authenticated(
-        user: user,
-      ));
+      emit(Authenticated(user: user));
     } else {
       emit(const NotAuthenticated());
     }

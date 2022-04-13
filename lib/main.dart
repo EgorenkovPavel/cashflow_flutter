@@ -60,7 +60,6 @@ Future<void> main() async {
 
   final _dataSource = DataRepositoryImpl(_databaseSource);
 
-
   final SyncRepository _syncRepo =
       SyncRepositoryImpl(_cloudSource, _databaseSource, _networkInfo);
 
