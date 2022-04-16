@@ -18,6 +18,12 @@ class DropdownList<T> extends StatelessWidget {
     required this.getListItem,
   }) : super(key: key);
 
+  void _onChanged(T? newValue){
+    if (onChange != null) {
+      onChange!(newValue);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,11 +42,7 @@ class DropdownList<T> extends StatelessWidget {
         iconSize: 24,
         elevation: 16,
         underline: const SizedBox(),
-        onChanged: (T? newValue) {
-          if (onChange != null) {
-            onChange!(newValue);
-          }
-        },
+        onChanged: _onChanged,
         items: items
             .map((item) =>
                 DropdownMenuItem<T>(value: item, child: getListItem(item)))
