@@ -140,7 +140,7 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -163,7 +163,7 @@ class Database extends _$Database {
             await m.addColumn(operations, operations.synced);
           }
 
-          if (from == 3) {
+          if (from == 4) {
             await m.addColumn(operations, operations.deleted);
           }
         },
