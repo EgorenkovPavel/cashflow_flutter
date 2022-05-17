@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,65 +30,71 @@ import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
-  final db = Database();
-  final _databaseSource = DatabaseSource(db);
+  runZonedGuarded<Future<void>>(() async {
+    final db = Database();
+    final _databaseSource = DatabaseSource(db);
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
 
-  final _firestore = FirebaseFirestore.instance;
-  _firestore.settings = const Settings(persistenceEnabled: false);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  final _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/drive',
-    ],
-  );
-  final _firebaseAuth = FirebaseAuth.instance;
+    final _firestore = FirebaseFirestore.instance;
+    _firestore.settings = const Settings(persistenceEnabled: false);
 
-  final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
-
-  final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
-
-  final AuthRepository _authRepository =
-      AuthRepositoryImpl(_authSource, _networkInfo);
-
-  final _cloudSource = FirecloudSource(_firestore);
-
-  final _prefs = await SharedPreferences.getInstance();
-
-  final _prefsRepo = SharedPrefs(_prefs);
-
-  final _dataSource = DataRepositoryImpl(_databaseSource);
-
-  final SyncRepository _syncRepo =
-      SyncRepositoryImpl(_cloudSource, _databaseSource, _networkInfo);
-
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          lazy: false,
-          create: (context) => AuthBloc(_authRepository),
-        ),
-        BlocProvider(
-          lazy: false,
-          create: (context) => SyncBloc(
-            authBloc: context.read<AuthBloc>(),
-            prefsRepository: _prefsRepo,
-            syncRepo: _syncRepo,
-          ),
-        ),
+    final _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/drive',
       ],
-      child: MultiRepositoryProvider(
+    );
+    final _firebaseAuth = FirebaseAuth.instance;
+
+    final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
+
+    final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
+
+    final AuthRepository _authRepository =
+        AuthRepositoryImpl(_authSource, _networkInfo);
+
+    final _cloudSource = FirecloudSource(_firestore);
+
+    final _prefs = await SharedPreferences.getInstance();
+
+    final _prefsRepo = SharedPrefs(_prefs);
+
+    final _dataSource = DataRepositoryImpl(_databaseSource);
+
+    final SyncRepository _syncRepo =
+        SyncRepositoryImpl(_cloudSource, _databaseSource, _networkInfo);
+
+    runApp(
+      MultiBlocProvider(
         providers: [
-          RepositoryProvider<AuthRepository>(create: (_) => _authRepository),
-          RepositoryProvider<DataRepository>(create: (_) => _dataSource),
-          RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
+          BlocProvider(
+            lazy: false,
+            create: (context) => AuthBloc(_authRepository),
+          ),
+          BlocProvider(
+            lazy: false,
+            create: (context) => SyncBloc(
+              authBloc: context.read<AuthBloc>(),
+              prefsRepository: _prefsRepo,
+              syncRepo: _syncRepo,
+            ),
+          ),
         ],
-        child: const MyApp(),
+        child: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider<AuthRepository>(create: (_) => _authRepository),
+            RepositoryProvider<DataRepository>(create: (_) => _dataSource),
+            RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
+          ],
+          child: const MyApp(),
+        ),
       ),
-    ),
-  );
+    );
+  },
+      (error, stack) =>
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
 }
