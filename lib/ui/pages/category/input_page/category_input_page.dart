@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -67,7 +68,7 @@ class _CategoryPageState extends State<CategoryPage> {
     }
   }
 
-  String? _titleValidator(String? value){
+  String? _titleValidator(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context).emptyTitleError;
     }
@@ -126,9 +127,12 @@ class _CategoryPageState extends State<CategoryPage> {
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context).budget,
               ),
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               onChanged: (value) => context
                   .read<CategoryInputBloc>()
-                  .add(ChangeBudget(int.parse(value))),
+                  .add(ChangeBudget(int.parse(value.isEmpty ? "0" : value))),
             ),
             const SizedBox(height: 8.0),
             Row(
