@@ -56,9 +56,9 @@ class AccountRepository
 
   @override
   Future<Account?> getByCloudId(String cloudId) async {
-    var _account = await accountDao.getAccountByCloudId(cloudId);
+    var account = await accountDao.getAccountByCloudId(cloudId);
 
-    return _account == null ? null : _mapAccount(_account);
+    return account == null ? null : _mapAccount(account);
   }
 
   @override

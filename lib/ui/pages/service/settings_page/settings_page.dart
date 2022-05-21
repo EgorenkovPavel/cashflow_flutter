@@ -47,9 +47,9 @@ class AuthListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final _authState = context.watch<AuthBloc>().state;
+        final authState = context.watch<AuthBloc>().state;
 
-        return _authState is Authenticated
+        return authState is Authenticated
             ? ListTile(
                 title: const Text('Google account'),
                 subtitle: const Text('Signed In'),
@@ -78,15 +78,15 @@ class CloudDatabaseListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final _authState = context.watch<AuthBloc>().state;
-        final _syncState = context.watch<SyncBloc>().state;
+        final authState = context.watch<AuthBloc>().state;
+        final syncState = context.watch<SyncBloc>().state;
 
-        if (_authState is NotAuthenticated) {
+        if (authState is NotAuthenticated) {
           return const ListTile(
             title: Text('Cloud local'),
             subtitle: Text('No local. Sign in to connect'),
           );
-        } else if (_syncState is! SyncStateNoDb) {
+        } else if (syncState is! SyncStateNoDb) {
           return ListTile(
             title: const Text('Cloud local'),
             subtitle: const Text('Database connected'),
@@ -110,9 +110,9 @@ class GoogleDriveListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      final _authState = context.watch<AuthBloc>().state;
+      final authState = context.watch<AuthBloc>().state;
 
-      return _authState is Authenticated
+      return authState is Authenticated
           ? ListTile(
               title: const Text('Google drive'),
               onTap: () => PageNavigator.openGoogleDriveSettingsPage(context),

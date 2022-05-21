@@ -19,7 +19,7 @@ class DataControlPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _bloc = DataControlBloc(context.read<DataRepository>());
+    var bloc = DataControlBloc(context.read<DataRepository>());
 
     return Scaffold(
       appBar: AppBar(
@@ -30,14 +30,14 @@ class DataControlPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              onPressed: () => _bloc.deleteAll(),
+              onPressed: () => bloc.deleteAll(),
               child: Text(
                 AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
               ),
             ),
           ),
           BlocConsumer<DataControlBloc, DataControlState>(
-            bloc: _bloc,
+            bloc: bloc,
             builder: (context, state) {
               return state == DataControlState.IN_PROGRESS
                   ? const Center(child: CircularProgressIndicator())

@@ -91,14 +91,14 @@ class AccountInputBloc
   }
 
   Future<void> _fetch(Fetch event, Emitter<AccountInputState> emit) async {
-    var _account = await _repository.accounts.getById(event.accountId);
-    var _title = _account.title;
-    var _isDebt = _account.isDebt;
+    var account = await _repository.accounts.getById(event.accountId);
+    var title = account.title;
+    var isDebt = account.isDebt;
 
     emit(FetchAccount(
-      account: _account,
-      title: _title,
-      isDebt: _isDebt,
+      account: account,
+      title: title,
+      isDebt: isDebt,
     ));
   }
 
@@ -120,16 +120,16 @@ class AccountInputBloc
 
   Future<Account> _insertAccount() async {
     var account = Account(title: state.title, isDebt: state.isDebt);
-    var _id = await _repository.accounts.insert(account);
+    var id = await _repository.accounts.insert(account);
 
-    return account.copyWith(id: _id);
+    return account.copyWith(id: id);
   }
 
   Future<Account> _updateAccount() async {
-    var _newAccount =
+    var newAccount =
         state.account!.copyWith(title: state.title, isDebt: state.isDebt);
-    await _repository.accounts.update(_newAccount);
+    await _repository.accounts.update(newAccount);
 
-    return _newAccount;
+    return newAccount;
   }
 }

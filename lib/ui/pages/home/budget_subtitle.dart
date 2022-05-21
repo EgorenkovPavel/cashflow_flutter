@@ -47,16 +47,16 @@ class BudgetSubtitle extends StatelessWidget {
           .categories
           .watchCashflowByType(DateTime.now(), type),
       builder: (context, snapshot) {
-        var _cashflow = 0;
-        var _budget = 0;
+        var cashflow = 0;
+        var budget = 0;
         if (snapshot.hasError) {
           if (kDebugMode) {
             print(snapshot.error);
           }
         }
         if (snapshot.hasData) {
-          _cashflow = _calcCashflow(snapshot.data!);
-          _budget = _calcBudget(snapshot.data!);
+          cashflow = _calcCashflow(snapshot.data!);
+          budget = _calcBudget(snapshot.data!);
         }
 
         return Subtitle(
@@ -83,14 +83,14 @@ class BudgetSubtitle extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                NumberFormat().format(_cashflow),
+                NumberFormat().format(cashflow),
                 style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context).primaryColor.withOpacity(0.8),
                     ),
               ),
               Text(
-                'of ${NumberFormat().format(_budget)}',
+                'of ${NumberFormat().format(budget)}',
                 style: Theme.of(context).textTheme.caption,
               ),
             ],

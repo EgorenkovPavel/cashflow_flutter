@@ -78,7 +78,7 @@ class OperationRepository
 
   @override
   Future<Operation> insert(Operation entity) async {
-    final _id = await operationDao.insertOperation(OperationsCompanion(
+    final id = await operationDao.insertOperation(OperationsCompanion(
       cloudId: Value(entity.cloudId),
       date: Value(entity.date),
       operationType: Value(entity.type),
@@ -88,7 +88,7 @@ class OperationRepository
       sum: Value(entity.sum),
     ));
 
-    return entity.copyWith(id: _id);
+    return entity.copyWith(id: id);
   }
 
   @override

@@ -136,9 +136,9 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     InitById event,
     Emitter<CategoryInputState> emit,
   ) async {
-    var _category = await _repository.categories.getById(event.categoryId);
+    var category = await _repository.categories.getById(event.categoryId);
 
-    emit(Restore(category: _category));
+    emit(Restore(category: category));
   }
 
   void _changeTitle(ChangeTitle event, Emitter<CategoryInputState> emit) {
@@ -158,25 +158,25 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
 
   Future<void> _save(Save event, Emitter<CategoryInputState> emit) async {
     if (state.category == null) {
-      var _category = Category(
+      var category = Category(
         title: state.title,
         operationType: state.operationType,
         budgetType: state.budgetType,
         budget: state.budget,
       );
 
-      var id = await _repository.categories.insert(_category);
-      emit(Saved(category: _category.copyWith(id: id), state: state));
+      var id = await _repository.categories.insert(category);
+      emit(Saved(category: category.copyWith(id: id), state: state));
     } else {
-      var _newCategory = state.category!.copyWith(
+      var newCategory = state.category!.copyWith(
         title: state.title,
         operationType: state.operationType,
         budgetType: state.budgetType,
         budget: state.budget,
       );
 
-      await _repository.categories.update(_newCategory);
-      emit(Saved(category: _newCategory, state: state));
+      await _repository.categories.update(newCategory);
+      emit(Saved(category: newCategory, state: state));
     }
   }
 }

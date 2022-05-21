@@ -89,21 +89,21 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   }
 
   void _previousYear(PreviousYear event, Emitter<BudgetState> emit) {
-    final _date = state.date.month == 1
+    final date = state.date.month == 1
         ? DateTime(state.date.year - 1, 12)
         : DateTime(state.date.year, state.date.month - 1);
 
-    emit(BudgetState.state(state: state, date: _date));
-    _watchCashflow(_date, state.operationType);
+    emit(BudgetState.state(state: state, date: date));
+    _watchCashflow(date, state.operationType);
   }
 
   void _nextYear(NextYear event, Emitter<BudgetState> emit) {
-    final _date = state.date.month == 12
+    final date = state.date.month == 12
         ? DateTime(state.date.year + 1, 1)
         : DateTime(state.date.year, state.date.month + 1);
 
-    emit(BudgetState.state(state: state, date: _date));
-    _watchCashflow(_date, state.operationType);
+    emit(BudgetState.state(state: state, date: date));
+    _watchCashflow(date, state.operationType);
   }
 
   void _showAll(ShowAll event, Emitter<BudgetState> emit) {

@@ -51,7 +51,7 @@ void main(){
     });
 
     test('set drive file name', () async {
-      final name = 'drive file name';
+      const name = 'drive file name';
 
       when(mockSharedPreferences.setString(any, any)).thenAnswer((_) => Future.value(true));
 

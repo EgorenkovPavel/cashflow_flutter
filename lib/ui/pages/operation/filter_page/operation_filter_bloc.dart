@@ -132,17 +132,17 @@ class OperationFilterBloc
   }
 
   Future<void> _init(Init event, Emitter<OperationFilterState> emit) async {
-    final _accounts = await _repository.accounts.getAll();
-    final _inCategories =
+    final accounts = await _repository.accounts.getAll();
+    final inCategories =
         await _repository.categories.getAllByType(OperationType.INPUT);
-    final _outCategories =
+    final outCategories =
         await _repository.categories.getAllByType(OperationType.OUTPUT);
 
     emit(OperationFilterState(
       filter: event.filter,
-      accounts: _accounts,
-      inCategories: _inCategories,
-      outCategories: _outCategories,
+      accounts: accounts,
+      inCategories: inCategories,
+      outCategories: outCategories,
     ));
   }
 

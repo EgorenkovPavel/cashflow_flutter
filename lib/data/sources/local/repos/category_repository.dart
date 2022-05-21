@@ -84,9 +84,9 @@ class CategoryRepository
 
   @override
   Future<Category?> getByCloudId(String cloudId) async {
-    var _category = await categoryDao.getCategoryByCloudId(cloudId);
+    var category = await categoryDao.getCategoryByCloudId(cloudId);
 
-    return _category == null ? null : _mapCategory(_category);
+    return category == null ? null : _mapCategory(category);
   }
 
   @override

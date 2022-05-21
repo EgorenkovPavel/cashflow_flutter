@@ -32,63 +32,63 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
     final db = Database();
-    final _databaseSource = DatabaseSource(db);
+    final databaseSource = DatabaseSource(db);
 
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-    final _firestore = FirebaseFirestore.instance;
-    _firestore.settings = const Settings(persistenceEnabled: false);
+    final firestore = FirebaseFirestore.instance;
+    firestore.settings = const Settings(persistenceEnabled: false);
 
-    final _googleSignIn = GoogleSignIn(
+    final googleSignIn = GoogleSignIn(
       scopes: [
         'email',
         'https://www.googleapis.com/auth/drive',
       ],
     );
-    final _firebaseAuth = FirebaseAuth.instance;
+    final firebaseAuth = FirebaseAuth.instance;
 
-    final NetworkInfo _networkInfo = NetworkInfoImpl(Connectivity());
+    final NetworkInfo networkInfo = NetworkInfoImpl(Connectivity());
 
-    final AuthSource _authSource = GoogleAuth(_googleSignIn, _firebaseAuth);
+    final AuthSource authSource = GoogleAuth(googleSignIn, firebaseAuth);
 
-    final AuthRepository _authRepository =
-        AuthRepositoryImpl(_authSource, _networkInfo);
+    final AuthRepository authRepository =
+        AuthRepositoryImpl(authSource, networkInfo);
 
-    final _cloudSource = FirecloudSource(_firestore);
+    final cloudSource = FirecloudSource(firestore);
 
-    final _prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
 
-    final _prefsRepo = SharedPrefs(_prefs);
+    final prefsRepo = SharedPrefs(prefs);
 
-    final _dataSource = DataRepositoryImpl(_databaseSource);
+    final dataSource = DataRepositoryImpl(databaseSource);
 
-    final SyncRepository _syncRepo =
-        SyncRepositoryImpl(_cloudSource, _databaseSource, _networkInfo);
+    final SyncRepository syncRepo =
+        SyncRepositoryImpl(cloudSource, databaseSource, networkInfo);
 
     runApp(
       MultiBlocProvider(
         providers: [
           BlocProvider(
             lazy: false,
-            create: (context) => AuthBloc(_authRepository),
+            create: (context) => AuthBloc(authRepository),
           ),
           BlocProvider(
             lazy: false,
             create: (context) => SyncBloc(
               authBloc: context.read<AuthBloc>(),
-              prefsRepository: _prefsRepo,
-              syncRepo: _syncRepo,
+              prefsRepository: prefsRepo,
+              syncRepo: syncRepo,
             ),
           ),
         ],
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider<AuthRepository>(create: (_) => _authRepository),
-            RepositoryProvider<DataRepository>(create: (_) => _dataSource),
-            RepositoryProvider<SharedPrefs>(create: (_) => _prefsRepo),
+            RepositoryProvider<AuthRepository>(create: (_) => authRepository),
+            RepositoryProvider<DataRepository>(create: (_) => dataSource),
+            RepositoryProvider<SharedPrefs>(create: (_) => prefsRepo),
           ],
           child: const MyApp(),
         ),

@@ -1,5 +1,4 @@
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/domain/models.dart';
 
 abstract class LocalDataSource{
 

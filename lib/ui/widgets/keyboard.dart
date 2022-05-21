@@ -13,7 +13,7 @@ class Keyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext context, constrains) {
-      var _col = constrains.maxWidth / 3;
+      var col = constrains.maxWidth / 3;
 
       return Column(
         children: <Widget>[
@@ -21,67 +21,67 @@ class Keyboard extends StatelessWidget {
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 1,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 2,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 3,
-              width: _col,
+              width: col,
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 4,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 5,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 6,
-              width: _col,
+              width: col,
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 7,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 8,
-              width: _col,
+              width: col,
             ),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 9,
-              width: _col,
+              width: col,
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            _Button(child: null, onPressed: null, width: _col),
+            _Button(child: null, onPressed: null, width: col),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 0,
-              width: _col,
+              width: col,
             ),
             _Button(
+              onPressed: onBackPressed,
+              width: col,
               child: Icon(
                 Icons.arrow_back,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onPressed: onBackPressed,
-              width: _col,
             ),
           ]),
         ],
@@ -105,14 +105,14 @@ class _DigitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Button(
+      onPressed: () => onDigitPressed(digit),
+      width: width,
       child: Text(
         '$digit',
         style: Theme.of(context).textTheme.headline6!.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
       ),
-      onPressed: () => onDigitPressed(digit),
-      width: width,
     );
   }
 }

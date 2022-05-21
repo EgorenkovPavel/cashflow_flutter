@@ -25,7 +25,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _bloc = DriveBloc(
+    var bloc = DriveBloc(
       dataRepository: context.read<DataRepository>(),
       authBloc: context.read<AuthBloc>(),
       authRepository: context.read<AuthRepository>(),
@@ -36,7 +36,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
         title: const Text('Google drive'),
       ),
       body: BlocConsumer<DriveBloc, DriveState>(
-        bloc: _bloc,
+        bloc: bloc,
         listener: _listenState,
         builder: (context, state) {
           return Stack(
@@ -47,13 +47,13 @@ class GoogleDriveSettingsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ElevatedButton(
-                    onPressed: () => _backup(context, _bloc.backup),
+                    onPressed: () => _backup(context, bloc.backup),
                     child: Text(
                       AppLocalizations.of(context).backup.toUpperCase(),
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => _restore(context, _bloc.restore),
+                    onPressed: () => _restore(context, bloc.restore),
                     child: Text(
                       AppLocalizations.of(context).restore.toUpperCase(),
                     ),

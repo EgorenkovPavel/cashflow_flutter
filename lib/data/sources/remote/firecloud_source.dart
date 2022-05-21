@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:money_tracker/data/sources/remote/mappers/account_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/category_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
@@ -68,7 +69,9 @@ class FirecloudSource extends RemoteDataSource {
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
     } catch (e) {
-      print('ERROR _getDatabase ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR _getDatabase ${e.toString()}');
+      }
       throw NetworkException();
     }
 
@@ -115,7 +118,9 @@ class FirecloudSource extends RemoteDataSource {
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
     } catch (e) {
-      print('ERROR addUserToDatabase ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR addUserToDatabase ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -132,7 +137,9 @@ class FirecloudSource extends RemoteDataSource {
 
       return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
     } catch (e) {
-      print('ERROR getAllUsers ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR getAllUsers ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -150,7 +157,9 @@ class FirecloudSource extends RemoteDataSource {
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
     } catch (e) {
-      print('ERROR createDatabase ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR createDatabase ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -166,7 +175,9 @@ class FirecloudSource extends RemoteDataSource {
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
-      print('ERROR databaseExists ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR databaseExists ${e.toString()}');
+      }
       throw NetworkException();
     }
   }
@@ -192,7 +203,9 @@ class FirecloudSource extends RemoteDataSource {
       _db = null;
       _isCurrentAdmin = false;
 
-      print('ERROR connect ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR connect ${e.toString()}');
+      }
       throw NetworkException();
     }
   }

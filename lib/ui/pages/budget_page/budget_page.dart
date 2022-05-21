@@ -352,14 +352,14 @@ class _CategoryItem extends StatelessWidget {
   }
 
   double _progress() {
-    var _cash = _cashflow();
-    var _budget = category.category.budget;
-    if (_cash == 0) {
+    var cash = _cashflow();
+    var budget = category.category.budget;
+    if (cash == 0) {
       return 0;
-    } else if (_cash > _budget || _budget == 0) {
+    } else if (cash > budget || budget == 0) {
       return 1;
     } else {
-      return _cash / _budget;
+      return cash / budget;
     }
   }
 

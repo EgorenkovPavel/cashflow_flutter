@@ -122,12 +122,12 @@ class BalanceChartBloc extends Bloc<BalanceChartEvent, BalanceChartState> {
   }
 
   BalanceChartBloc() : super(BalanceChartState([], [], [])) {
-    var _now = DateTime.now();
+    var now = DateTime.now();
 
     dates = [
-      lastMonth(_now),
-      DateTime(_now.year, _now.month),
-      nextMonth(_now),
+      lastMonth(now),
+      DateTime(now.year, now.month),
+      nextMonth(now),
     ];
 
     budget.add(ValueOnDate(dates[1], 0));

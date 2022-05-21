@@ -23,7 +23,7 @@ class Carousel<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constrains) {
-        var _pageController = PageController(
+        var pageController = PageController(
           initialPage: items.indexWhere(initialItemFinder),
           keepPage: true,
           viewportFraction: 1 / (constrains.maxHeight / itemHeight),
@@ -44,25 +44,25 @@ class Carousel<T> extends StatelessWidget {
               ),
             ),
             PageView.builder(
-              controller: _pageController,
+              controller: pageController,
               scrollDirection: Axis.vertical,
               itemCount: items.length,
               onPageChanged: onPageChanged,
               itemBuilder: (context, pos) {
                 return AnimatedBuilder(
                   builder: (BuildContext context, Widget? child) {
-                    var page = !_pageController.position.haveDimensions
-                        ? _pageController.initialPage.toDouble()
-                        : _pageController.page;
+                    var page = !pageController.position.haveDimensions
+                        ? pageController.initialPage.toDouble()
+                        : pageController.page;
 
                     return Transform.scale(
                       scale: 1 - (min((pos - (page ?? 0)).abs(), 1)) / 10,
                       child: child,
                     );
                   },
-                  animation: _pageController,
+                  animation: pageController,
                   child: GestureDetector(
-                    onTap: () => _pageController.animateToPage(
+                    onTap: () => pageController.animateToPage(
                       pos,
                       duration: const Duration(seconds: 1),
                       curve: const ElasticOutCurve(),

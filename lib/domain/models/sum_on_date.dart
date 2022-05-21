@@ -5,7 +5,7 @@ class SumOnDate extends Equatable{
   final DateTime date;
   final int sum;
 
-  SumOnDate({required this.date, required this.sum});
+  const SumOnDate({required this.date, required this.sum});
 
   @override
   List<Object?> get props => [date, sum];

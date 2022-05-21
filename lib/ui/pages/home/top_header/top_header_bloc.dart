@@ -44,11 +44,11 @@ class TopHeaderBloc extends Bloc<TopHeaderEvent, TopHeaderState> {
   }
 
   void _changeBalance(ChangeBalance event, Emitter<TopHeaderState> emit) {
-    final _balance = event.accounts.fold<int>(
+    final balance = event.accounts.fold<int>(
       0,
       (previousValue, element) => previousValue + element.balance,
     );
-    emit(TopHeaderState(totalBalance: _balance, accounts: event.accounts));
+    emit(TopHeaderState(totalBalance: balance, accounts: event.accounts));
   }
 
   @override

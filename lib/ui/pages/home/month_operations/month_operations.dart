@@ -188,16 +188,16 @@ class _MonthOperation extends StatelessWidget {
   }
 
   double _progress(int cashflow, int budget) {
-    var _progress = 0.0;
+    var progress = 0.0;
     if (cashflow == 0) {
-      _progress = 0;
+      progress = 0;
     } else if (cashflow > budget || budget == 0) {
-      _progress = 1;
+      progress = 1;
     } else {
-      _progress = cashflow / budget;
+      progress = cashflow / budget;
     }
 
-    return _progress;
+    return progress;
   }
 
   double getAlign() {

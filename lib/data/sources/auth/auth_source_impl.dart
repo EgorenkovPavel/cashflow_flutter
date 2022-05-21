@@ -1,5 +1,6 @@
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/data/sources/auth/auth_source.dart';
@@ -46,7 +47,9 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } catch (e) {
-      print('ERROR signInSilently ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR signInSilently ${e.toString()}');
+      }
       throw AuthException();
     }
   }
@@ -68,7 +71,9 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } catch (e) {
-      print('ERROR signIn ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR signIn ${e.toString()}');
+      }
       throw AuthException();
     }
   }
@@ -83,7 +88,9 @@ class GoogleAuth extends AuthSource {
       final res = await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
     }catch (e){
-      print('ERROR signOut ${e.toString()}');
+      if (kDebugMode) {
+        print('ERROR signOut ${e.toString()}');
+      }
       throw AuthException();
     }
   }

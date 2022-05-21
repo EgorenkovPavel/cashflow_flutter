@@ -9,7 +9,7 @@ class OperationDbEntity extends Equatable{
   final CategoryDB? category;
   final AccountDB? recAccount;
 
-  OperationDbEntity({
+  const OperationDbEntity({
     required this.operation,
     required this.account,
     this.category,

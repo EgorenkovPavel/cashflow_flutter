@@ -227,19 +227,19 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
   }
 
   Future<void> _fetch(Fetch event, Emitter<OperationEditState> emit) async {
-    final _operation = await _repository.operations.getById(event.operationId);
-    emit(FetchOperation(operation: _operation, state: state));
+    final operation = await _repository.operations.getById(event.operationId);
+    emit(FetchOperation(operation: operation, state: state));
 
-    final _accounts = await _repository.accounts.getAll();
-    final _categories = await _repository.categories.getAll();
+    final accounts = await _repository.accounts.getAll();
+    final categories = await _repository.categories.getAll();
 
     emit(Data.state(
       state: state,
-      accounts: _accounts,
-      inCategories: _categories
+      accounts: accounts,
+      inCategories: categories
           .where((category) => category.operationType == OperationType.INPUT)
           .toList(),
-      outCategories: _categories
+      outCategories: categories
           .where((category) => category.operationType == OperationType.OUTPUT)
           .toList(),
     ));
@@ -281,7 +281,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
   }
 
   Future<void> _save(Save event, Emitter<OperationEditState> emit) async {
-    final _date = DateTime(
+    final date = DateTime(
       state.date.year,
       state.date.month,
       state.date.day,
@@ -289,8 +289,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
       state.time.minute,
     );
     if (state.operationType == OperationType.TRANSFER) {
-      var _newOperation = state.operation.copyWith(
-        date: _date,
+      var newOperation = state.operation.copyWith(
+        date: date,
         type: state.operationType,
         account: state.account,
         category: null,
@@ -298,10 +298,10 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         sum: state.sum,
       );
 
-      await _repository.operations.insert(_newOperation);
+      await _repository.operations.insert(newOperation);
     } else {
-      var _newOperation = state.operation.copyWith(
-        date: _date,
+      var newOperation = state.operation.copyWith(
+        date: date,
         type: state.operationType,
         account: state.account,
         category: state.category,
@@ -309,7 +309,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         sum: state.sum,
       );
 
-      await _repository.operations.update(_newOperation);
+      await _repository.operations.update(newOperation);
     }
 
     emit(Saved(state: state));

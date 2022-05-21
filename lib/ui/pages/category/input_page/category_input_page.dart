@@ -22,15 +22,15 @@ class CategoryInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = CategoryInputBloc(context.read<DataRepository>());
+    final bloc = CategoryInputBloc(context.read<DataRepository>());
     if (id != null) {
-      _bloc.add(InitById(id!));
+      bloc.add(InitById(id!));
     } else {
-      _bloc.add(InitByType(type!));
+      bloc.add(InitByType(type!));
     }
 
     return BlocProvider(
-      create: (context) => _bloc,
+      create: (context) => bloc,
       child: CategoryPage(
         isNew: id == null,
       ),

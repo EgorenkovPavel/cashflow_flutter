@@ -57,7 +57,7 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
     _subOperations = _repository.operations
         .watchAllByFilter(OperationListFilter(
       accounts: {Account(id: event.accountId, title: '', isDebt: false)},
-      categories: {},
+      categories: const {},
     ))
         .listen((event) {
       add(OperationsChanged(event));

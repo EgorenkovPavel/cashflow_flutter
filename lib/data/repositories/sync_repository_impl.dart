@@ -177,49 +177,49 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
-    var _account =
+    var account =
         await _localSource.accountsSync.getByCloudId(cloudAccount.id);
-    if (_account == null) {
+    if (account == null) {
       await _localSource.accountsSync.insertFromCloud(
         const AccountModelMapper().insertModel(cloudAccount),
       );
     } else {
       await _localSource.accountsSync.updateFromCloud(
-        const AccountModelMapper().updateModel(_account, cloudAccount),
+        const AccountModelMapper().updateModel(account, cloudAccount),
       );
     }
   }
 
   Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
-    var _category =
+    var category =
         await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
-    if (_category == null) {
+    if (category == null) {
       await _localSource.categoriesSync.insertFromCloud(
         const CategoryModelMapper().insertModel(cloudCategory),
       );
     } else {
       await _localSource.categoriesSync.updateFromCloud(
-        const CategoryModelMapper().updateModel(_category, cloudCategory),
+        const CategoryModelMapper().updateModel(category, cloudCategory),
       );
     }
   }
 
   Future<void> _loadOperationFromCloud(CloudOperation cloudOperation) async {
-    var _operation =
+    var operation =
         await _localSource.operationsSync.getByCloudId(cloudOperation.id);
 
-    var _account =
+    var account =
         await _localSource.accountsSync.getByCloudId(cloudOperation.account);
-    var _category = cloudOperation.category == null
+    var category = cloudOperation.category == null
         ? null
         : await _localSource.categoriesSync
             .getByCloudId(cloudOperation.category!);
-    var _recAccount = cloudOperation.recAccount == null
+    var recAccount = cloudOperation.recAccount == null
         ? null
         : await _localSource.accountsSync
             .getByCloudId(cloudOperation.recAccount!);
 
-    if (_operation == null) {
+    if (operation == null) {
       await _localSource.operationsSync.insertFromCloud(Operation(
         cloudId: cloudOperation.id,
         synced: true,
@@ -227,22 +227,22 @@ class SyncRepositoryImpl implements SyncRepository {
         date: cloudOperation.date,
         type: const OperationTypeConverter()
             .mapToDart(cloudOperation.operationType)!,
-        account: _account!,
-        category: _category,
-        recAccount: _recAccount,
+        account: account!,
+        category: category,
+        recAccount: recAccount,
         sum: cloudOperation.sum,
       ));
     } else {
-      await _localSource.operationsSync.updateFromCloud(_operation.copyWith(
+      await _localSource.operationsSync.updateFromCloud(operation.copyWith(
         cloudId: cloudOperation.id,
         synced: true,
         deleted: cloudOperation.deleted,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
             .mapToDart(cloudOperation.operationType),
-        account: _account!,
-        category: _category,
-        recAccount: _recAccount,
+        account: account!,
+        category: category,
+        recAccount: recAccount,
         sum: cloudOperation.sum,
       ));
     }
@@ -342,8 +342,8 @@ class SyncRepositoryImpl implements SyncRepository {
       await accounts.update(account.toCloudAccount());
       await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
     } else {
-      var _cloudId = await accounts.add(account.toCloudAccount());
-      await _localSource.accountsSync.markAsSynced(account.id, _cloudId);
+      var cloudId = await accounts.add(account.toCloudAccount());
+      await _localSource.accountsSync.markAsSynced(account.id, cloudId);
     }
   }
 
@@ -357,8 +357,8 @@ class SyncRepositoryImpl implements SyncRepository {
       await _localSource.categoriesSync
           .markAsSynced(category.id, category.cloudId);
     } else {
-      var _cloudId = await categories.add(category.toCloudCategory());
-      await _localSource.categoriesSync.markAsSynced(category.id, _cloudId);
+      var cloudId = await categories.add(category.toCloudCategory());
+      await _localSource.categoriesSync.markAsSynced(category.id, cloudId);
     }
   }
 
@@ -372,8 +372,8 @@ class SyncRepositoryImpl implements SyncRepository {
       await _localSource.operationsSync
           .markAsSynced(operation.id, operation.cloudId);
     } else {
-      var _cloudId = await operations.add(operation.toCloudOperation());
-      await _localSource.operationsSync.markAsSynced(operation.id, _cloudId);
+      var cloudId = await operations.add(operation.toCloudOperation());
+      await _localSource.operationsSync.markAsSynced(operation.id, cloudId);
     }
   }
 

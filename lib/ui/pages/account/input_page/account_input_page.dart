@@ -17,13 +17,13 @@ class AccountInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = AccountInputBloc(context.read<DataRepository>());
+    final bloc = AccountInputBloc(context.read<DataRepository>());
     if (id != null) {
-      _bloc.add(Fetch(id!));
+      bloc.add(Fetch(id!));
     }
 
     return BlocProvider(
-      create: (context) => _bloc,
+      create: (context) => bloc,
       child: AccountPage(
         isNew: id == null,
       ),

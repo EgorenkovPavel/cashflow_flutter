@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class BalanceOnDate extends Equatable{
-  DateTime date;
-  int sum;
+  final DateTime date;
+  final int sum;
 
-  BalanceOnDate(this.date, this.sum);
+  const BalanceOnDate(this.date, this.sum);
 
   @override
   List<Object?> get props => [date, sum];

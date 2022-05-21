@@ -6,7 +6,7 @@ class CategoryMonthCashflowEntity extends Equatable{
   final int month;
   final int cashflow;
 
-  CategoryMonthCashflowEntity({
+  const CategoryMonthCashflowEntity({
     required this.month,
     required this.category,
     required this.cashflow,

@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 import '../local/data/database.dart';
 
 class CategoryCashflowEntity extends Equatable{
-  CategoryDB category;
-  int monthCashflow;
-  int yearCashflow;
+  final CategoryDB category;
+  final int monthCashflow;
+  final int yearCashflow;
 
-  CategoryCashflowEntity({
+  const CategoryCashflowEntity({
     required this.category,
     required this.monthCashflow,
     required this.yearCashflow,
