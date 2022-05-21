@@ -298,7 +298,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         sum: state.sum,
       );
 
-      await _repository.operations.insert(newOperation);
+      await _repository.operations.update(newOperation);
     } else {
       var newOperation = state.operation.copyWith(
         date: date,

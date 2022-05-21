@@ -619,9 +619,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .write(entity);
 
     if (entity.deleted.present) {
-      if (entity.deleted.value) {
+      if (!entity.deleted.value) {
         var operation = await getOperationById(operationId);
         var operationData = OperationsCompanion(
+          id: Value(operationId),
           cloudId: Value(operation.operation.cloudId),
           date: Value(operation.date),
           operationType: Value(operation.type),
@@ -631,6 +632,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           sum: Value(operation.sum),
           deleted: Value(operation.operation.deleted),
         );
+        _deleteAnalyticByOperationId(operationId);
         _insertAnalytic(operationData);
       } else {
         _deleteAnalyticByOperationId(operationId);
@@ -640,11 +642,23 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return id;
   }
 
-  Future<int> updateOperation(OperationDB entity) {
-    return transaction(() async {
-      await deleteOperation(entity);
+  Future<int> updateOperation(OperationDB entity) async {
+    // return transaction(() async {
+      // await deleteOperation(entity);
 
-      return await insertOperation(OperationsCompanion(
+      // return await insertOperation(OperationsCompanion(
+      //   id: Value(entity.id),
+      //   cloudId: Value(entity.cloudId),
+      //   date: Value(entity.date),
+      //   operationType: Value(entity.operationType),
+      //   account: Value(entity.account),
+      //   category: Value(entity.category),
+      //   recAccount: Value(entity.recAccount),
+      //   sum: Value(entity.sum),
+      //   deleted: Value(entity.deleted),
+      // ));
+
+      return await updateFields(entity.id, OperationsCompanion(
         id: Value(entity.id),
         cloudId: Value(entity.cloudId),
         date: Value(entity.date),
@@ -655,7 +669,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         sum: Value(entity.sum),
         deleted: Value(entity.deleted),
       ));
-    });
+    // });
   }
 
   Future deleteOperation(OperationDB entity) {
