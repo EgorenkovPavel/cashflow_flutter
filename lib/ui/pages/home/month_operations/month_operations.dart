@@ -41,24 +41,29 @@ class MonthOperations extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: BlocProvider(
-            create: (context) =>
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              BlocProvider(
+                create: (context) =>
                 MonthOperationsBloc(context.read<DataRepository>())
                   ..add(Fetch(OperationType.INPUT)),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                _MonthOperation(
+                child: const _MonthOperation(
                   operationType: OperationType.INPUT,
                 ),
-                SizedBox(
-                  width: Dimensions.padding,
-                ),
-                _MonthOperation(
+              ),
+              const SizedBox(
+                width: Dimensions.padding,
+              ),
+              BlocProvider(
+                create: (context) =>
+                    MonthOperationsBloc(context.read<DataRepository>())
+                      ..add(Fetch(OperationType.OUTPUT)),
+                child: const _MonthOperation(
                   operationType: OperationType.OUTPUT,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
