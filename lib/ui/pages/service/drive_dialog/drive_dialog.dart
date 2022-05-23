@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/dialog_drive_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -29,7 +31,7 @@ class _DriveDialogState extends State<DriveDialog> {
   void initState() {
     super.initState();
     _bloc = DialogDriveBloc(
-      repository: context.read<GoogleDrive>(),
+      repository: context.read<AuthRepository>(),
       mode: widget.mode,
     );
     _bloc.loadFolders();

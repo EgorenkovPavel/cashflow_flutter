@@ -3,6 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
+import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 class DialogDriveState {
@@ -41,13 +42,14 @@ enum DialogMode {
 }
 
 class DialogDriveBloc extends Cubit<DialogDriveState> {
-  final GoogleDrive _repository;
+  final AuthRepository _authRepository;
+  GoogleDrive? _repository;
   final DialogMode mode;
 
   final rootFolder = _Stack<DriveFile>();
 
-  DialogDriveBloc({required GoogleDrive repository, required this.mode})
-      : _repository = repository,
+  DialogDriveBloc({required AuthRepository repository, required this.mode})
+      : _authRepository = repository,
         super(DialogDriveState(
           action: DialogDriveAction.NO_ACTION,
           folderList: [],
@@ -57,14 +59,23 @@ class DialogDriveBloc extends Cubit<DialogDriveState> {
     );
   }
 
+  Future<void> _init() async {
+    _repository = GoogleDrive((await _authRepository.getClient())!);
+  }
+
   Future<void> loadFolders() async {
+    if (_repository == null){
+      await _init();
+    }
+
     try {
-      var files = await _repository.getFiles(rootFolder.top().id);
+
+      var files = await _repository?.getFiles(rootFolder.top().id);
 
       emit(
         DialogDriveState(
           action: DialogDriveAction.JUMP_TO_START,
-          folderList: files,
+          folderList: files ?? [],
         ),
       );
     } catch (e) {
