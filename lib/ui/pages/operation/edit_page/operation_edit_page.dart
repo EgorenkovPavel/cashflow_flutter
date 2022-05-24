@@ -39,7 +39,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     super.dispose();
   }
 
-  void _listenState(BuildContext context, OperationEditState state){
+  void _listenState(BuildContext context, OperationEditState state) {
     if (state is FetchOperation) {
       _sumController.text = state.sum.toString();
     } else if (state is Saved) {
@@ -47,15 +47,13 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     }
   }
 
-  void _onChangeAccount(Account? newValue){
+  void _onChangeAccount(Account? newValue) {
     if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(ChangeAccount(newValue));
+      context.read<OperationEditBloc>().add(ChangeAccount(newValue));
     }
   }
 
-  String? _sumValidator(String? value){
+  String? _sumValidator(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context).emptySumError;
     }
@@ -63,7 +61,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     return null;
   }
 
-  void _onSavePressed(BuildContext context){
+  void _onSavePressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<OperationEditBloc>().add(Save());
     }
@@ -85,6 +83,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Title(text: 'Cloud ID'),
+                  Text(context.select<OperationEditBloc, String>(
+                      (bloc) => bloc.state.operation.cloudId)),
                   Title(text: AppLocalizations.of(context).titleDate),
                   Row(
                     children: <Widget>[
@@ -171,19 +172,15 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     );
   }
 
-  void _onCategoryChange(Category? newValue){
+  void _onCategoryChange(Category? newValue) {
     if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(ChangeCategory(newValue));
+      context.read<OperationEditBloc>().add(ChangeCategory(newValue));
     }
   }
 
-  void _onRecAccountChange(Account? newValue){
+  void _onRecAccountChange(Account? newValue) {
     if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(ChangeRecAccount(newValue));
+      context.read<OperationEditBloc>().add(ChangeRecAccount(newValue));
     }
   }
 
