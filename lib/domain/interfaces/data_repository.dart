@@ -93,5 +93,8 @@ abstract class OperationDataRepository {
 
   Future<void> delete(Operation entity);
 
+  Future<void> recover(Operation entity);
+
   Future<void> deleteById(int operationId);
+
 }

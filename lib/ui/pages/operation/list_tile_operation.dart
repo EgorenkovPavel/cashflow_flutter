@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/domain/models/operation/operation.dart';
 import 'package:money_tracker/domain/models/enum/operation_type.dart';
+import 'package:money_tracker/domain/models/operation/operation.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -12,17 +12,24 @@ class ListTileOperation extends StatelessWidget {
   const ListTileOperation(this._operation, {Key? key, required this.onTap})
       : super(key: key);
 
-  void _onDuplicate(BuildContext context){
+  void _onDuplicate(BuildContext context) {
     Provider.of<DataRepository>(context, listen: false)
         .operations
         .duplicate(_operation);
     Navigator.of(context).pop();
   }
 
-  void _onDelete(BuildContext context){
+  void _onDelete(BuildContext context) {
     Provider.of<DataRepository>(context, listen: false)
         .operations
         .delete(_operation);
+    Navigator.of(context).pop();
+  }
+
+  void _onRecover(BuildContext context) {
+    Provider.of<DataRepository>(context, listen: false)
+        .operations
+        .recover(_operation);
     Navigator.of(context).pop();
   }
 
@@ -37,11 +44,18 @@ class ListTileOperation extends StatelessWidget {
             title: Text(AppLocalizations.of(context).duplicate),
             onTap: () => _onDuplicate(context),
           ),
-          ListTile(
-            leading: const Icon(Icons.delete),
-            title: Text(AppLocalizations.of(context).delete),
-            onTap: () => _onDelete(context),
-          ),
+          if (_operation.deleted)
+            ListTile(
+              leading: const Icon(Icons.delete_outline),
+              title: Text(AppLocalizations.of(context).recover),
+              onTap: () => _onRecover(context),
+            ),
+          if (!_operation.deleted)
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: Text(AppLocalizations.of(context).delete),
+              onTap: () => _onDelete(context),
+            ),
         ],
       ),
     );
@@ -52,10 +66,16 @@ class ListTileOperation extends StatelessWidget {
     return ListTile(
       subtitle: Row(
         children: [
-          Text(_operation.account.title,),
-          const SizedBox(width: 8,),
+          Text(
+            _operation.account.title,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
           if (_operation.synced) const Icon(Icons.check),
-          const SizedBox(width: 8,),
+          const SizedBox(
+            width: 8,
+          ),
           if (_operation.deleted) const Icon(Icons.cancel),
         ],
       ),

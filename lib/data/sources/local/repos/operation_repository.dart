@@ -115,6 +115,10 @@ class OperationRepository
       operationDao.deleteOperationById(operationId);
 
   @override
+  Future recover(Operation entity) =>
+      operationDao.recoverOperation(_mapOperationDB(entity));
+
+  @override
   Future<List<Operation>> getAllNotSynced() async {
     return _mapOperationList(
       await operationDao.getAllOperationItemsNotSynced(),

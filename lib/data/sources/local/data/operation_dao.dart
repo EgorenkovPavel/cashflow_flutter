@@ -676,7 +676,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future deleteOperation(OperationDB entity) {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(entity.id)))
-          .write(const OperationsCompanion(deleted: Value(true)));
+          .write(const OperationsCompanion(deleted: Value(true), synced: Value(false)));
       await _deleteAnalytic(entity);
     });
   }
@@ -684,9 +684,13 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future deleteOperationById(int operationId) async {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(operationId)))
-          .write(const OperationsCompanion(deleted: Value(true)));
+          .write(const OperationsCompanion(deleted: Value(true), synced: Value(false)));
       await _deleteAnalyticByOperationId(operationId);
     });
+  }
+
+  Future recoverOperation(OperationDB entity) {
+    return updateOperation(entity.copyWith(deleted: false, synced: false));
   }
 
   Future<void> batchInsert(List<OperationDB> operationData) async {

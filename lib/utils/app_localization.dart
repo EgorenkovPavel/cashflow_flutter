@@ -129,6 +129,7 @@ class AppLocalizations {
       'create': 'Create',
       'save': 'Save',
       'delete': 'Delete',
+      'recover': 'Recover',
       'duplicate': 'Duplicate',
       'next': 'Next',
       'more': 'More',
@@ -230,6 +231,7 @@ class AppLocalizations {
       'create': 'Создать',
       'save': 'Сохранить',
       'delete': 'Удалить',
+      'recover': 'Восстановить',
       'duplicate': 'Дублировать',
       'next': 'Далее',
       'more': 'Еще',
@@ -477,6 +479,8 @@ class AppLocalizations {
   String get save => _localizedValues[locale.languageCode]!['save']!;
 
   String get delete => _localizedValues[locale.languageCode]!['delete']!;
+
+  String get recover => _localizedValues[locale.languageCode]!['recover']!;
 
   String get duplicate => _localizedValues[locale.languageCode]!['duplicate']!;
 
