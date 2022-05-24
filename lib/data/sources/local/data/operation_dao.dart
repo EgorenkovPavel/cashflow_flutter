@@ -660,6 +660,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
       return await updateFields(entity.id, OperationsCompanion(
         id: Value(entity.id),
+        synced: Value(entity.synced),
         cloudId: Value(entity.cloudId),
         date: Value(entity.date),
         operationType: Value(entity.operationType),

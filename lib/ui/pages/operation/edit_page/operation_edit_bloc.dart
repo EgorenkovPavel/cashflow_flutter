@@ -291,6 +291,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     if (state.operationType == OperationType.TRANSFER) {
       var newOperation = state.operation.copyWith(
         date: date,
+        synced: false,
         type: state.operationType,
         account: state.account,
         category: null,
@@ -302,6 +303,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     } else {
       var newOperation = state.operation.copyWith(
         date: date,
+        synced: false,
         type: state.operationType,
         account: state.account,
         category: state.category,
