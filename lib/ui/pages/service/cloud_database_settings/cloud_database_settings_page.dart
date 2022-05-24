@@ -31,11 +31,65 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
             }
           } else if (state is SyncStateInProgress) {
             return const Center(child: CircularProgressIndicator());
+          } else if (state is SyncStateLoadingToCloud) {
+            return SyncToCloud(state: state);
+          } else if (state is SyncStateLoadingFromCloud) {
+            return SyncFromCloud(state: state);
           } else {
             //TODO discribe other states
             return const SizedBox();
           }
         },
+      ),
+    );
+  }
+}
+
+class SyncToCloud extends StatelessWidget {
+  final SyncStateLoadingToCloud state;
+
+  const SyncToCloud({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.cloud_upload_outlined,
+            color: Colors.black,
+            size: 48,
+          ),
+          Text('Accounts ${state.accountCount}'),
+          Text('Categories ${state.categoryCount}'),
+          Text('Operations ${state.operationCount}'),
+        ],
+      ),
+    );
+  }
+}
+
+class SyncFromCloud extends StatelessWidget {
+  final SyncStateLoadingFromCloud state;
+
+  const SyncFromCloud({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.cloud_download_outlined,
+            color: Colors.black,
+            size: 48,
+          ),
+          Text('Accounts ${state.accountCount}'),
+          Text('Categories ${state.categoryCount}'),
+          Text('Operations ${state.operationCount}'),
+        ],
       ),
     );
   }
