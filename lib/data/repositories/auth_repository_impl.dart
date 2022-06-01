@@ -12,7 +12,11 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthSource _authSource;
   final NetworkInfo _networkInfo;
 
-  AuthRepositoryImpl(this._authSource, this._networkInfo);
+  AuthRepositoryImpl({
+    required AuthSource authSource,
+    required NetworkInfo networkInfo,
+  })  : _authSource = authSource,
+        _networkInfo = networkInfo;
 
   @override
   Future<AuthClient?> getClient() => _authSource.getClient();

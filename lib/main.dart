@@ -29,66 +29,34 @@ import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/ui/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'injection_container.dart';
+
 Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
-    final db = Database();
-    final databaseSource = DatabaseSource(db);
 
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-
-    final firestore = FirebaseFirestore.instance;
-    firestore.settings = const Settings(persistenceEnabled: false);
-
-    final googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/drive',
-      ],
-    );
-    final firebaseAuth = FirebaseAuth.instance;
-
-    final NetworkInfo networkInfo = NetworkInfoImpl(Connectivity());
-
-    final AuthSource authSource = GoogleAuth(googleSignIn, firebaseAuth);
-
-    final AuthRepository authRepository =
-        AuthRepositoryImpl(authSource, networkInfo);
-
-    final cloudSource = FirecloudSource(firestore);
-
-    final prefs = await SharedPreferences.getInstance();
-
-    final prefsRepo = SharedPrefs(prefs);
-
-    final dataSource = DataRepositoryImpl(databaseSource);
-
-    final SyncRepository syncRepo =
-        SyncRepositoryImpl(cloudSource, databaseSource, networkInfo);
+    await init();
 
     runApp(
       MultiBlocProvider(
         providers: [
           BlocProvider(
             lazy: false,
-            create: (context) => AuthBloc(authRepository),
+            create: (context) => AuthBloc(sl()),
           ),
           BlocProvider(
             lazy: false,
             create: (context) => SyncBloc(
               authBloc: context.read<AuthBloc>(),
-              prefsRepository: prefsRepo,
-              syncRepo: syncRepo,
+              prefsRepository: sl(),
+              syncRepo: sl(),
             ),
           ),
         ],
         child: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider<AuthRepository>(create: (_) => authRepository),
-            RepositoryProvider<DataRepository>(create: (_) => dataSource),
-            RepositoryProvider<SharedPrefs>(create: (_) => prefsRepo),
+            RepositoryProvider<AuthRepository>(create: (_) => sl()),
+            RepositoryProvider<DataRepository>(create: (_) => sl()),
+            RepositoryProvider<SharedPrefs>(create: (_) => sl()),
           ],
           child: const MyApp(),
         ),

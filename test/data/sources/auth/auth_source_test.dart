@@ -19,7 +19,7 @@ void main(){
   setUp((){
     googleSignIn = MockGoogleSignIn();
     firebaseAuth = MockFirebaseAuth();
-    authSource = GoogleAuth(googleSignIn, firebaseAuth);
+    authSource = GoogleAuth(googleSignIn: googleSignIn, firebaseAuth: firebaseAuth);
   });
 
   test('should return false when not authentificated ', () async {

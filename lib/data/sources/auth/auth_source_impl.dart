@@ -10,7 +10,11 @@ class GoogleAuth extends AuthSource {
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
 
-  GoogleAuth(this._googleSignIn, this._firebaseAuth);
+  GoogleAuth({
+    required GoogleSignIn googleSignIn,
+    required FirebaseAuth firebaseAuth,
+  })  : _googleSignIn = googleSignIn,
+        _firebaseAuth = firebaseAuth;
 
   @override
   Stream<User?> userChanges() => _firebaseAuth.authStateChanges();
@@ -87,7 +91,7 @@ class GoogleAuth extends AuthSource {
     try {
       final res = await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
-    }catch (e){
+    } catch (e) {
       if (kDebugMode) {
         print('ERROR signOut ${e.toString()}');
       }

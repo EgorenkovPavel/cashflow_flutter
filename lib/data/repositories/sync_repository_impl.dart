@@ -22,11 +22,13 @@ class SyncRepositoryImpl implements SyncRepository {
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
 
-  SyncRepositoryImpl(
-    this._remoteSource,
-    this._localSource,
-    this._networkInfo,
-  );
+  SyncRepositoryImpl({
+    required RemoteDataSource remoteSource,
+    required LocalSyncSource localSource,
+    required NetworkInfo networkInfo,
+  })  : _remoteSource = remoteSource,
+        _localSource = localSource,
+        _networkInfo = networkInfo;
 
   @override
   Future<Try<void>> addToDatabase(User user) async {
@@ -177,8 +179,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
-    var account =
-        await _localSource.accountsSync.getByCloudId(cloudAccount.id);
+    var account = await _localSource.accountsSync.getByCloudId(cloudAccount.id);
     if (account == null) {
       await _localSource.accountsSync.insertFromCloud(
         const AccountModelMapper().insertModel(cloudAccount),
