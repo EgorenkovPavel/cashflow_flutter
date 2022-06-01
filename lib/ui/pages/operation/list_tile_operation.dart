@@ -81,7 +81,7 @@ class ListTileOperation extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .headline5!
-            .copyWith(color: _operation.type.color()),
+            .copyWith(color: _operation.type.color),
       ),
       onTap: onTap,
       onLongPress: () => onLongPress(context),
