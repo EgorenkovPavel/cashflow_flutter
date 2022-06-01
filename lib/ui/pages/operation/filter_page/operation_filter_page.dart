@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -14,7 +14,7 @@ class OperationFilterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OperationFilterBloc(context.read<DataRepository>())
+      create: (context) => sl<OperationFilterBloc>()
         ..add(Init(filter ?? const OperationListFilter.empty())),
       child: _OperationFilterPage(),
     );

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/domain/interfaces/auth_repository.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/ui/pages/service/google_drive_settings_page/backup_dialog.dart';
-import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
-import 'package:money_tracker/ui/pages/service/google_drive_settings_page/restore_dialog.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import '../../../../injection_container.dart';
+import 'backup_dialog.dart';
+import 'google_drive_settings_bloc.dart';
+import 'restore_dialog.dart';
+import '../../../../utils/app_localization.dart';
 
 class GoogleDriveSettingsPage extends StatelessWidget {
   const GoogleDriveSettingsPage({Key? key}) : super(key: key);
@@ -25,11 +23,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DriveBloc(
-      dataRepository: context.read<DataRepository>(),
-      authBloc: context.read<AuthBloc>(),
-      authRepository: context.read<AuthRepository>(),
-    );
+    var bloc = sl<DriveBloc>();
 
     return Scaffold(
       appBar: AppBar(

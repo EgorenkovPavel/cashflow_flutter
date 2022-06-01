@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/top_header/top_header_bloc.dart';
 import 'package:money_tracker/ui/themes.dart';
@@ -15,8 +15,7 @@ class TopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          TopHeaderBloc(context.read<DataRepository>())..add(Fetch()),
+      create: (context) => sl<TopHeaderBloc>()..add(Fetch()),
       child: Column(
         children: [
           _TotalBalance(),

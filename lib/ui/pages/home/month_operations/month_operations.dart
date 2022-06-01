@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/month_operations/month_operations_bloc.dart';
 import 'package:money_tracker/ui/themes.dart';
@@ -46,8 +46,7 @@ class MonthOperations extends StatelessWidget {
             children: [
               BlocProvider(
                 create: (context) =>
-                MonthOperationsBloc(context.read<DataRepository>())
-                  ..add(Fetch(OperationType.INPUT)),
+                    sl<MonthOperationsBloc>()..add(Fetch(OperationType.INPUT)),
                 child: const _MonthOperation(
                   operationType: OperationType.INPUT,
                 ),
@@ -57,8 +56,7 @@ class MonthOperations extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) =>
-                    MonthOperationsBloc(context.read<DataRepository>())
-                      ..add(Fetch(OperationType.OUTPUT)),
+                    sl<MonthOperationsBloc>()..add(Fetch(OperationType.OUTPUT)),
                 child: const _MonthOperation(
                   operationType: OperationType.OUTPUT,
                 ),

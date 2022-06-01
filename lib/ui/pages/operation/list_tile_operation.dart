@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models/enum/operation_type.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/utils/app_localization.dart';
-import 'package:provider/provider.dart';
 
 class ListTileOperation extends StatelessWidget {
   final Operation _operation;
@@ -13,23 +13,17 @@ class ListTileOperation extends StatelessWidget {
       : super(key: key);
 
   void _onDuplicate(BuildContext context) {
-    Provider.of<DataRepository>(context, listen: false)
-        .operations
-        .duplicate(_operation);
+    sl<DataRepository>().operations.duplicate(_operation);
     Navigator.of(context).pop();
   }
 
   void _onDelete(BuildContext context) {
-    Provider.of<DataRepository>(context, listen: false)
-        .operations
-        .delete(_operation);
+    sl<DataRepository>().operations.delete(_operation);
     Navigator.of(context).pop();
   }
 
   void _onRecover(BuildContext context) {
-    Provider.of<DataRepository>(context, listen: false)
-        .operations
-        .recover(_operation);
+    sl<DataRepository>().operations.recover(_operation);
     Navigator.of(context).pop();
   }
 

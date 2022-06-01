@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
@@ -16,8 +16,7 @@ class OperationEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          OperationEditBloc(context.read<DataRepository>())..add(Fetch(id)),
+      create: (context) => sl<OperationEditBloc>()..add(Fetch(id)),
       child: _OperationEditPage(),
     );
   }
@@ -83,7 +82,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Title(text: 'Cloud ID'),
+                  const Title(text: 'Cloud ID'), // TODO
                   Text(context.select<OperationEditBloc, String>(
                       (bloc) => bloc.state.operation.cloudId)),
                   Title(text: AppLocalizations.of(context).titleDate),

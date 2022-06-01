@@ -41,14 +41,14 @@ enum DialogMode {
   CHOOSE_FOLDER,
 }
 
-class DialogDriveBloc extends Cubit<DialogDriveState> {
+class DriveDialogBloc extends Cubit<DialogDriveState> {
   final AuthRepository _authRepository;
   GoogleDrive? _repository;
   final DialogMode mode;
 
   final rootFolder = _Stack<DriveFile>();
 
-  DialogDriveBloc({required AuthRepository repository, required this.mode})
+  DriveDialogBloc({required AuthRepository repository, required this.mode})
       : _authRepository = repository,
         super(DialogDriveState(
           action: DialogDriveAction.NO_ACTION,

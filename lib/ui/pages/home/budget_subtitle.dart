@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/subtitle.dart';
-import 'package:provider/provider.dart';
 
 class BudgetSubtitle extends StatelessWidget {
   final OperationType type;
@@ -42,8 +42,7 @@ class BudgetSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CategoryCashflow>>(
-      stream: context
-          .read<DataRepository>()
+      stream: sl<DataRepository>() // TODO
           .categories
           .watchCashflowByType(DateTime.now(), type),
       builder: (context, snapshot) {

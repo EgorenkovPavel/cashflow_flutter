@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
@@ -22,7 +22,7 @@ class CategoryInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = CategoryInputBloc(context.read<DataRepository>());
+    final bloc = sl<CategoryInputBloc>();
     if (id != null) {
       bloc.add(InitById(id!));
     } else {

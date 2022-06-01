@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
@@ -19,7 +20,7 @@ class DataControlPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataControlBloc(context.read<DataRepository>());
+    var bloc = sl<DataControlBloc>();
 
     return Scaffold(
       appBar: AppBar(

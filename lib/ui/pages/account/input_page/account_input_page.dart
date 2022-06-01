@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -17,7 +17,7 @@ class AccountInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = AccountInputBloc(context.read<DataRepository>());
+    final bloc = sl<AccountInputBloc>();
     if (id != null) {
       bloc.add(Fetch(id!));
     }
@@ -49,7 +49,7 @@ class _AccountPageState extends State<AccountPage> {
     super.dispose();
   }
 
-  void _listenState(BuildContext context, AccountInputState state){
+  void _listenState(BuildContext context, AccountInputState state) {
     if (state is SavedAccount) {
       Navigator.of(context).pop(state.account);
     } else if (state is FetchAccount) {
@@ -57,7 +57,7 @@ class _AccountPageState extends State<AccountPage> {
     }
   }
 
-  String? _titleValidator(String? value){
+  String? _titleValidator(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context).emptyTitleError;
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations/last_operations_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
@@ -14,8 +14,7 @@ class LastOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          LastOperationsBloc(context.read<DataRepository>())..add(Fetch()),
+      create: (context) => sl<LastOperationsBloc>()..add(Fetch()),
       child: Builder(builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -25,13 +24,14 @@ class LastOperations extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             BlocBuilder<LastOperationsBloc, LastOperationsState>(
-                builder: (context, state) {
-              if (state.operations.isEmpty) {
-                return const _NoOperationsTitle();
-              }
+              builder: (context, state) {
+                if (state.operations.isEmpty) {
+                  return const _NoOperationsTitle();
+                }
 
-              return _OperationsList(items: state.operations);
-            },),
+                return _OperationsList(items: state.operations);
+              },
+            ),
             //_ShowAllButton(),
           ],
         );

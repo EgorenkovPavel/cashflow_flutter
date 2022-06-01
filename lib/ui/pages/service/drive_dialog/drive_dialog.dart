@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/data/sources/backup_source.dart';
-import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/service/drive_dialog/dialog_drive_bloc.dart';
+import 'package:money_tracker/injection_container.dart';
+import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
 
 class DriveDialog extends StatefulWidget {
@@ -25,15 +23,12 @@ class DriveDialog extends StatefulWidget {
 
 class _DriveDialogState extends State<DriveDialog> {
   final ScrollController _listController = ScrollController();
-  late final DialogDriveBloc _bloc;
+  late final DriveDialogBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = DialogDriveBloc(
-      repository: context.read<AuthRepository>(),
-      mode: widget.mode,
-    );
+    _bloc = sl(param1: widget.mode);
     _bloc.loadFolders();
   }
 
@@ -43,7 +38,7 @@ class _DriveDialogState extends State<DriveDialog> {
     super.dispose();
   }
 
-  Future<bool> _onBackpressed() async {
+  Future<bool> _onBackPressed() async {
     _bloc.onBackPressed();
 
     return false;
@@ -60,12 +55,12 @@ class _DriveDialogState extends State<DriveDialog> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onBackpressed,
+      onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Google drive'),
         ),
-        body: BlocConsumer<DialogDriveBloc, DialogDriveState>(
+        body: BlocConsumer<DriveDialogBloc, DialogDriveState>(
           bloc: _bloc,
           builder: (context, state) {
             return ListView.separated(

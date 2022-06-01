@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/utils/app_localization.dart';
@@ -25,7 +26,7 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = BudgetBloc(context.read<DataRepository>())..add(Fetch(widget.type));
+    _bloc = sl<BudgetBloc>()..add(Fetch(widget.type));
   }
 
   @override

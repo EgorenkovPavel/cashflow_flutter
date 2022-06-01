@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_page/operation_list_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
@@ -23,7 +23,7 @@ class OperationListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OperationListBloc(context.read<DataRepository>())
+      create: (context) => sl<OperationListBloc>()
         ..add(Fetch(const OperationListFilter.empty())),
       child: Builder(builder: (context) {
         return Scaffold(

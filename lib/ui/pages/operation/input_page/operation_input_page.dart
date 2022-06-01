@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
+import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
@@ -134,7 +134,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   @override
   void initState() {
     super.initState();
-    _bloc = MasterBloc(context.read<DataRepository>());
+    _bloc = sl<MasterBloc>();
     _bloc.start();
 
     _animationController = AnimationController(
@@ -253,7 +253,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     }
   }
 
-  Future<bool> _onBackpressed(){
+  Future<bool> _onBackPressed(){
     _bloc.backpressed();
 
     return Future.value(false);
@@ -262,7 +262,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onBackpressed,
+      onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
