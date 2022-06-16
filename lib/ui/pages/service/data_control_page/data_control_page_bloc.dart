@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bloc/bloc.dart';
-import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
+
+import '../../../../domain/interfaces/backup_repository.dart';
 
 enum DataControlState{
   INITIAL,
@@ -11,13 +12,13 @@ enum DataControlState{
 
 class DataControlBloc extends Cubit<DataControlState>{
 
-  final DataRepository _dataRepository;
+  final BackupRepository _backupRepository;
 
-  DataControlBloc(this._dataRepository) : super(DataControlState.INITIAL);
+  DataControlBloc(this._backupRepository) : super(DataControlState.INITIAL);
 
   Future<void> deleteAll() async {
     emit(DataControlState.IN_PROGRESS);
-    await _dataRepository.deleteAll();
+    await _backupRepository.deleteAll();
     emit(DataControlState.SUCCESS);
   }
 

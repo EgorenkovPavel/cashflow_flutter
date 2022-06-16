@@ -6,12 +6,13 @@ import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
-import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
+
+import '../../../../domain/interfaces/backup_repository.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
 
 class DriveBloc extends Cubit<DriveState> {
-  final DataRepository _dataRepository;
+  final BackupRepository _backupRepository;
   GoogleDrive? _driveRepository;
 
   //final AuthBloc _authBloc;
@@ -20,10 +21,10 @@ class DriveBloc extends Cubit<DriveState> {
   StreamSubscription? _authSub;
 
   DriveBloc({
-    required DataRepository dataRepository,
+    required BackupRepository backupRepository,
     required AuthBloc authBloc,
     required this.authRepository,
-  })  : _dataRepository = dataRepository,
+  })  : _backupRepository = backupRepository,
         //_authBloc = authBloc,
         super(DriveState.INITIAL) {
     _authState(authBloc.state);
@@ -46,7 +47,7 @@ class DriveBloc extends Cubit<DriveState> {
       return;
     }
     emit(DriveState.IN_PROGRESS);
-    var data = await _dataRepository.exportData();
+    var data = await _backupRepository.exportData();
     await _driveRepository!.backup(data, catalogId, fileName);
     emit(DriveState.SUCCESS_BACKUP);
   }
@@ -61,7 +62,7 @@ class DriveBloc extends Cubit<DriveState> {
       return;
       // TODO add bad state emit
     }
-    await _dataRepository.importData(data);
+    await _backupRepository.importData(data);
     emit(DriveState.SUCCESS_RESTORE);
   }
 

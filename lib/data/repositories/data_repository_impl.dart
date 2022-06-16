@@ -19,13 +19,4 @@ class DataRepositoryImpl implements DataRepository {
   @override
   OperationDataRepository get operations => _localSource.operations;
 
-  @override
-  Future deleteAll() => _localSource.deleteAll();
-
-  @override
-  Future<Map<String, List<Map<String, dynamic>>>> exportData() =>
-      _localSource.exportData();
-
-  @override
-  Future importData(Map<String, dynamic> data) => _localSource.importData(data);
-}
+  }

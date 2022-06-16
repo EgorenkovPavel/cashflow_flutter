@@ -2,15 +2,28 @@ import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 
-class BackupRepositoryImpl implements BackupRepository{
+import '../sources/local/local_data_source.dart';
 
+class BackupRepositoryImpl implements BackupRepository {
   final BackupSource _backupSource;
+  final LocalDataSource _localSource;
 
-  BackupRepositoryImpl(this._backupSource);
+  BackupRepositoryImpl({
+    required BackupSource backupSource,
+    required LocalDataSource localSource,
+  }) : _backupSource = backupSource, _localSource = localSource;
 
   @override
-  Future<void> backup(Map<String, List<Map<String, dynamic>>> data, String catalogId, String fileName) {
-    return _backupSource.backup(data, catalogId, fileName);
+  Future<void> backup(
+    Map<String, List<Map<String, dynamic>>> data,
+    String catalogId,
+    String fileName,
+  ) {
+    return _backupSource.backup(
+      data,
+      catalogId,
+      fileName,
+    );
   }
 
   @override
@@ -23,4 +36,13 @@ class BackupRepositoryImpl implements BackupRepository{
     return _backupSource.restore(fileId);
   }
 
+  @override
+  Future deleteAll() => _localSource.deleteAll();
+
+  @override
+  Future<Map<String, List<Map<String, dynamic>>>> exportData() =>
+      _localSource.exportData();
+
+  @override
+  Future importData(Map<String, dynamic> data) => _localSource.importData(data);
 }

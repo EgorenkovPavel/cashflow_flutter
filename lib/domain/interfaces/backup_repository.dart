@@ -10,4 +10,10 @@ abstract class BackupRepository {
   Future<Map<String, dynamic>?> restore(String fileId);
 
   Future<List<DriveFile>> getFiles(String catalogId);
+
+  Future<void> deleteAll();
+
+  Future<Map<String, List<Map<String, dynamic>>>> exportData();
+
+  Future<void> importData(Map<String, dynamic> data);
 }

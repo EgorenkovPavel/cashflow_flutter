@@ -6,7 +6,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:money_tracker/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
+import 'package:money_tracker/domain/interfaces/backup_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common_blocs/auth/auth_bloc.dart';
@@ -100,6 +102,11 @@ Future<void> init() async {
         networkInfo: sl(),
       ));
 
+  sl.registerLazySingleton<BackupRepository>(() => BackupRepositoryImpl(
+        backupSource: sl(),
+        localSource: sl(),
+      ));
+
   // BLOCs
 
   sl.registerLazySingleton(() => AuthBloc(sl()));
@@ -117,7 +124,7 @@ Future<void> init() async {
           ));
 
   sl.registerFactory(() => DriveBloc(
-        dataRepository: sl(),
+        backupRepository: sl(),
         authBloc: sl(),
         authRepository: sl(),
       ));
