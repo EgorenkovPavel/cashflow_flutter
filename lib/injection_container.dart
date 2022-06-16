@@ -24,7 +24,7 @@ import 'data/sources/network_info.dart';
 import 'data/sources/remote/firecloud_source.dart';
 import 'data/sources/settings_source.dart';
 import 'domain/interfaces/auth_repository.dart';
-import 'domain/interfaces/data_repository.dart';
+import 'domain/interfaces/data/data_repository.dart';
 import 'domain/interfaces/sync_repository.dart';
 import 'ui/pages/account/detail_page/account_detail_bloc.dart';
 import 'ui/pages/account/input_page/account_input_bloc.dart';

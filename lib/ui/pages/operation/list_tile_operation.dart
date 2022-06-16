@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models/enum/operation_type.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
 import 'package:money_tracker/injection_container.dart';

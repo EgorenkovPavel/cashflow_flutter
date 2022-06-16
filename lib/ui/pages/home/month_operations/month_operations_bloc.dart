@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 abstract class MonthOperationsEvent {}

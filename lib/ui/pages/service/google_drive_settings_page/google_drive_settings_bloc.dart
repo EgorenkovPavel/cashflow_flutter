@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 
 enum DriveState { INITIAL, IN_PROGRESS, SUCCESS_BACKUP, SUCCESS_RESTORE }
 

@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-import '../../../../domain/interfaces/data_repository.dart';
+import '../../../../domain/interfaces/data/category_data_repository.dart';
 import '../../../../domain/models.dart';
 import '../../entities/category_cashflow_entity.dart';
 import '../../entities/category_month_cashflow_entity.dart';

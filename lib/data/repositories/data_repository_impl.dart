@@ -1,5 +1,9 @@
 import 'package:money_tracker/data/sources/local/local_data_source.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+
+import '../../domain/interfaces/data/account_data_repository.dart';
+import '../../domain/interfaces/data/category_data_repository.dart';
+import '../../domain/interfaces/data/data_repository.dart';
+import '../../domain/interfaces/data/operation_data_repository.dart';
 
 class DataRepositoryImpl implements DataRepository {
   final LocalDataSource _localSource;

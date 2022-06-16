@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
 enum MasterStateAction {

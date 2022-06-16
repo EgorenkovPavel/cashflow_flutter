@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart';
+import '../../../../domain/interfaces/data/operation_data_repository.dart';
 import '../data/database.dart';
 import '../data/operation_dao.dart';
 import '../entities/operation_entity.dart';
 import '../local_sync_source.dart';
 import '../mappers/operation_mapper.dart';
-import '../../../../domain/interfaces/data_repository.dart';
 import '../../../../domain/models.dart';
 
 class OperationRepository

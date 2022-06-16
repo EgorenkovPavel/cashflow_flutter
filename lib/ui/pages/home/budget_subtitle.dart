@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
