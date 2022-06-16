@@ -4,7 +4,7 @@ import '../account/account.dart';
 import '../category/category.dart';
 import '../enum/operation_type.dart';
 
-class Operation extends Equatable{
+class Operation extends Equatable {
   final int id;
   final String cloudId;
   final bool synced;
@@ -28,6 +28,42 @@ class Operation extends Equatable{
     this.recAccount,
     required this.sum,
   });
+
+  const Operation.input(
+      {this.id = 0,
+      this.cloudId = '',
+      this.synced = false,
+      this.deleted = false,
+      required this.date,
+      required this.account,
+      required this.category,
+      required this.sum})
+      : type = OperationType.INPUT,
+        recAccount = null;
+
+  const Operation.output(
+      {this.id = 0,
+        this.cloudId = '',
+        this.synced = false,
+        this.deleted = false,
+        required this.date,
+        required this.account,
+        required this.category,
+        required this.sum})
+      : type = OperationType.OUTPUT,
+        recAccount = null;
+
+  const Operation.transfer(
+      {this.id = 0,
+        this.cloudId = '',
+        this.synced = false,
+        this.deleted = false,
+        required this.date,
+        required this.account,
+        required this.recAccount,
+        required this.sum})
+      : type = OperationType.TRANSFER,
+        category = null;
 
   Operation copyWith({
     int? id,
