@@ -56,7 +56,7 @@ class SyncToCloud extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.cloud_upload_outlined,
             color: Colors.black,
             size: 48,
@@ -81,7 +81,7 @@ class SyncFromCloud extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.cloud_download_outlined,
             color: Colors.black,
             size: 48,
