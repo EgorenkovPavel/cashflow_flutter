@@ -10,7 +10,6 @@ abstract class DataRepository {
 
   OperationDataRepository get operations;
 
-
 }
 
 
