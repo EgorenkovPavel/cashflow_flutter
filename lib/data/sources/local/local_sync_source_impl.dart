@@ -13,9 +13,9 @@ class LocalSyncSourceImpl extends LocalSyncSource{
 
   final Database db;
 
-  final AccountDataRepositoryImpl _accountRepo;
-  final CategoryDataRepositoryImpl _categoryRepo;
-  final OperationDataRepositoryImpl _operationRepo;
+  final LocalSyncTable<Account> _accountRepo;
+  final LocalSyncTable<Category> _categoryRepo;
+  final LocalSyncTable<Operation> _operationRepo;
 
   LocalSyncSourceImpl(this.db)
       : _accountRepo = AccountDataRepositoryImpl(AccountDao(db)),

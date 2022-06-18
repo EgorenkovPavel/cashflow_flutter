@@ -15,9 +15,9 @@ class DataRepositoryImpl implements DataRepository {
 
   final Database db;
 
-  final AccountDataRepositoryImpl _accountRepo;
-  final CategoryDataRepositoryImpl _categoryRepo;
-  final OperationDataRepositoryImpl _operationRepo;
+  final AccountDataRepository _accountRepo;
+  final CategoryDataRepository _categoryRepo;
+  final OperationDataRepository _operationRepo;
 
   DataRepositoryImpl(this.db) :
         _accountRepo = AccountDataRepositoryImpl(AccountDao(db)),
