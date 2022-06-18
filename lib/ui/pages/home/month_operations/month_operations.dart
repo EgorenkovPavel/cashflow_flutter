@@ -52,7 +52,7 @@ class MonthOperations extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: Dimensions.padding,
+                height: Dimensions.padding,
               ),
               BlocProvider(
                 create: (context) =>

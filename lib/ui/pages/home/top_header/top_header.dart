@@ -125,8 +125,8 @@ class AccountList extends StatelessWidget {
           children: accounts
               .map((e) => _AccountItem(account: e))
               .expand((element) =>
-                  [element, const SizedBox(width: Dimensions.padding)])
-              .toList(),
+                  [const SizedBox(width: Dimensions.padding), element])
+              .toList()..add(const SizedBox(width: Dimensions.padding)),
         ),
       ),
     );
