@@ -19,14 +19,24 @@ import 'data/repositories/data_repository_impl.dart';
 import 'data/repositories/sync_repository_impl.dart';
 import 'data/sources/auth/auth_source.dart';
 import 'data/sources/auth/auth_source_impl.dart';
+import 'data/sources/local/data/account_dao.dart';
+import 'data/sources/local/data/category_dao.dart';
 import 'data/sources/local/data/database.dart';
+import 'data/sources/local/data/operation_dao.dart';
 import 'data/sources/local/local_sync_source.dart';
+import 'data/sources/local/repos/account_data_repository_impl.dart';
+import 'data/sources/local/repos/category_data_repository_impl.dart';
+import 'data/sources/local/repos/operation_data_repository_impl.dart';
 import 'data/sources/network_info.dart';
 import 'data/sources/remote/firecloud_source.dart';
 import 'data/sources/settings_source.dart';
 import 'domain/interfaces/auth_repository.dart';
+import 'domain/interfaces/data/account_data_repository.dart';
+import 'domain/interfaces/data/category_data_repository.dart';
 import 'domain/interfaces/data/data_repository.dart';
+import 'domain/interfaces/data/operation_data_repository.dart';
 import 'domain/interfaces/sync_repository.dart';
+import 'domain/models.dart';
 import 'ui/pages/account/detail_page/account_detail_bloc.dart';
 import 'ui/pages/account/input_page/account_input_bloc.dart';
 import 'ui/pages/budget_page/budget_bloc.dart';
@@ -52,9 +62,26 @@ Future<void> init() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+  sl.registerLazySingleton<AccountDataRepositoryImpl>(
+      () => AccountDataRepositoryImpl(AccountDao(sl<Database>())));
+  sl.registerLazySingleton<CategoryDataRepositoryImpl>(
+      () => CategoryDataRepositoryImpl(CategoryDao(sl<Database>())));
+  sl.registerLazySingleton<OperationDataRepositoryImpl>(
+      () => OperationDataRepositoryImpl(OperationDao(sl<Database>())));
+
+  sl.registerLazySingleton<LocalSyncTable<Account>>(
+      () => sl<AccountDataRepositoryImpl>());
+  sl.registerLazySingleton<LocalSyncTable<Category>>(
+      () => sl<CategoryDataRepositoryImpl>());
+  sl.registerLazySingleton<LocalSyncTable<Operation>>(
+      () => sl<OperationDataRepositoryImpl>());
+
   sl.registerLazySingleton<Database>(() => Database());
-  sl.registerLazySingleton<LocalSyncSource>(
-      () => LocalSyncSourceImpl(sl<Database>()));
+  sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(
+        accountRepo: sl<LocalSyncTable<Account>>(),
+        categoryRepo: sl<LocalSyncTable<Category>>(),
+        operationRepo: sl<LocalSyncTable<Operation>>(),
+      ));
 
   sl.registerLazySingleton<FirebaseFirestore>(() {
     final firestore = FirebaseFirestore.instance;
@@ -94,8 +121,16 @@ Future<void> init() async {
   sl.registerLazySingleton<SettingsSource>(
       () => SharedPrefs(sl<SharedPreferences>()));
 
+  sl.registerLazySingleton<AccountDataRepository>(() => sl<AccountDataRepositoryImpl>());
+  sl.registerLazySingleton<CategoryDataRepository>(() => sl<CategoryDataRepositoryImpl>());
+  sl.registerLazySingleton<OperationDataRepository>(() => sl<OperationDataRepositoryImpl>());
+
   sl.registerLazySingleton<DataRepository>(
-      () => DataRepositoryImpl(sl<Database>()));
+      () => DataRepositoryImpl(
+        accountRepo: sl<AccountDataRepository>(),
+        categoryRepo: sl<CategoryDataRepository>(),
+        operationRepo: sl<OperationDataRepository>(),
+      ));
 
   sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
         localSource: sl<LocalSyncSource>(),

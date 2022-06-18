@@ -1,35 +1,24 @@
 import 'package:money_tracker/data/sources/local/local_sync_source.dart';
 
 import '../../../domain/models.dart';
-import 'data/account_dao.dart';
-import 'data/category_dao.dart';
-import 'data/database.dart';
-import 'data/operation_dao.dart';
-import 'repos/account_data_repository_impl.dart';
-import 'repos/category_data_repository_impl.dart';
-import 'repos/operation_data_repository_impl.dart';
 
-class LocalSyncSourceImpl extends LocalSyncSource{
+class LocalSyncSourceImpl extends LocalSyncSource {
+  final LocalSyncTable<Account> accountRepo;
+  final LocalSyncTable<Category> categoryRepo;
+  final LocalSyncTable<Operation> operationRepo;
 
-  final Database db;
-
-  final LocalSyncTable<Account> _accountRepo;
-  final LocalSyncTable<Category> _categoryRepo;
-  final LocalSyncTable<Operation> _operationRepo;
-
-  LocalSyncSourceImpl(this.db)
-      : _accountRepo = AccountDataRepositoryImpl(AccountDao(db)),
-        _categoryRepo = CategoryDataRepositoryImpl(CategoryDao(db)),
-        _operationRepo = OperationDataRepositoryImpl(OperationDao(db));
-
+  LocalSyncSourceImpl({
+    required this.accountRepo,
+    required this.categoryRepo,
+    required this.operationRepo,
+  });
 
   @override
-  LocalSyncTable<Account> get accountsSync => _accountRepo;
+  LocalSyncTable<Account> get accountsSync => accountRepo;
 
   @override
-  LocalSyncTable<Category> get categoriesSync => _categoryRepo;
+  LocalSyncTable<Category> get categoriesSync => categoryRepo;
 
   @override
-  LocalSyncTable<Operation> get operationsSync => _operationRepo;
-
+  LocalSyncTable<Operation> get operationsSync => operationRepo;
 }
