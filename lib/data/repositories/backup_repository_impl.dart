@@ -1,23 +1,22 @@
-import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
-import 'package:money_tracker/domain/models/google_drive_file.dart';
 
-import '../sources/local/local_backup_source.dart';
+import '../sources/local/data/database.dart';
 
 class BackupRepositoryImpl implements BackupRepository {
-  final LocalBackupSource _localSource;
+  final Database db;
 
-  BackupRepositoryImpl({
-    required LocalBackupSource localSource,
-  }) :  _localSource = localSource;
+  BackupRepositoryImpl(this.db);
 
   @override
-  Future deleteAll() => _localSource.deleteAll();
+  Future<void> deleteAll() => db.deleteAll();
 
   @override
-  Future<Map<String, List<Map<String, dynamic>>>> exportData() =>
-      _localSource.exportData();
+  Future<Map<String, List<Map<String, dynamic>>>> exportData() => db.getDbData();
 
   @override
-  Future importData(Map<String, dynamic> data) => _localSource.importData(data);
+  Future importData(Map<String, dynamic> data) async {
+    await deleteAll();
+
+    return db.loadData(data);
+  }
 }

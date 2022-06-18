@@ -20,8 +20,6 @@ import 'data/repositories/sync_repository_impl.dart';
 import 'data/sources/auth/auth_source.dart';
 import 'data/sources/auth/auth_source_impl.dart';
 import 'data/sources/local/data/database.dart';
-import 'data/sources/local/local_backup_source.dart';
-import 'data/sources/local/local_backup_source_impl.dart';
 import 'data/sources/local/local_sync_source.dart';
 import 'data/sources/network_info.dart';
 import 'data/sources/remote/firecloud_source.dart';
@@ -55,8 +53,8 @@ Future<void> init() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   sl.registerLazySingleton<Database>(() => Database());
-  sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(sl<Database>()));
-  sl.registerLazySingleton<LocalBackupSource>(() => LocalBackupSourceImpl(sl<Database>()));
+  sl.registerLazySingleton<LocalSyncSource>(
+      () => LocalSyncSourceImpl(sl<Database>()));
 
   sl.registerLazySingleton<FirebaseFirestore>(() {
     final firestore = FirebaseFirestore.instance;
@@ -74,7 +72,8 @@ Future<void> init() async {
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl<Connectivity>()));
+  sl.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(sl<Connectivity>()));
 
   sl.registerLazySingleton<AuthSource>(() => GoogleAuth(
         firebaseAuth: sl<FirebaseAuth>(),
@@ -92,9 +91,11 @@ Future<void> init() async {
 
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
-  sl.registerLazySingleton<SettingsSource>(() => SharedPrefs(sl<SharedPreferences>()));
+  sl.registerLazySingleton<SettingsSource>(
+      () => SharedPrefs(sl<SharedPreferences>()));
 
-  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(sl<Database>()));
+  sl.registerLazySingleton<DataRepository>(
+      () => DataRepositoryImpl(sl<Database>()));
 
   sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
         localSource: sl<LocalSyncSource>(),
@@ -102,11 +103,8 @@ Future<void> init() async {
         networkInfo: sl<NetworkInfo>(),
       ));
 
-
-
-  sl.registerLazySingleton<BackupRepository>(() => BackupRepositoryImpl(
-        localSource: sl<LocalBackupSource>(),
-      ));
+  sl.registerLazySingleton<BackupRepository>(
+      () => BackupRepositoryImpl(sl<Database>()));
 
   // BLOCs
 
