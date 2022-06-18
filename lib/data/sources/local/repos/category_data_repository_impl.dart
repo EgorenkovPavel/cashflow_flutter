@@ -11,11 +11,11 @@ import '../mappers/category_cashflow_mapper.dart';
 import '../mappers/category_mapper.dart';
 import '../mappers/category_month_cashflow_mapper.dart';
 
-class CategoryRepository
+class CategoryDataRepositoryImpl
     implements LocalSyncTable<Category>, CategoryDataRepository {
   final CategoryDao categoryDao;
 
-  CategoryRepository(this.categoryDao);
+  CategoryDataRepositoryImpl(this.categoryDao);
 
   List<Category> _mapCategoryList(List<CategoryDB> list) =>
       const CategoryMapper().mapListToDart(list);

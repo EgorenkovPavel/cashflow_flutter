@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:money_tracker/data/repositories/backup_repository_impl.dart';
+import 'package:money_tracker/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,8 +20,8 @@ import 'data/repositories/sync_repository_impl.dart';
 import 'data/sources/auth/auth_source.dart';
 import 'data/sources/auth/auth_source_impl.dart';
 import 'data/sources/local/data/database.dart';
-import 'data/sources/local/database_source.dart';
-import 'data/sources/local/local_data_source.dart';
+import 'data/sources/local/local_backup_source.dart';
+import 'data/sources/local/local_backup_source_impl.dart';
 import 'data/sources/local/local_sync_source.dart';
 import 'data/sources/network_info.dart';
 import 'data/sources/remote/firecloud_source.dart';
@@ -53,97 +54,97 @@ Future<void> init() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  sl.registerLazySingleton(() => Database());
-  sl.registerLazySingleton(() => DatabaseSource(sl()));
-  sl.registerLazySingleton<LocalDataSource>(() => sl<DatabaseSource>());
-  sl.registerLazySingleton<LocalSyncSource>(() => sl<DatabaseSource>());
+  sl.registerLazySingleton<Database>(() => Database());
+  sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(sl<Database>()));
+  sl.registerLazySingleton<LocalBackupSource>(() => LocalBackupSourceImpl(sl<Database>()));
 
-  sl.registerLazySingleton(() {
+  sl.registerLazySingleton<FirebaseFirestore>(() {
     final firestore = FirebaseFirestore.instance;
     firestore.settings = const Settings(persistenceEnabled: false);
     return firestore;
   });
 
-  sl.registerLazySingleton(() => GoogleSignIn(
+  sl.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn(
         scopes: [
           'email',
           'https://www.googleapis.com/auth/drive',
         ],
       ));
 
-  sl.registerLazySingleton(() => FirebaseAuth.instance);
+  sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
-  sl.registerLazySingleton(() => Connectivity());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<Connectivity>(() => Connectivity());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl<Connectivity>()));
 
   sl.registerLazySingleton<AuthSource>(() => GoogleAuth(
-        firebaseAuth: sl(),
-        googleSignIn: sl(),
+        firebaseAuth: sl<FirebaseAuth>(),
+        googleSignIn: sl<GoogleSignIn>(),
       ));
 
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-        authSource: sl(),
-        networkInfo: sl(),
+        authSource: sl<AuthSource>(),
+        networkInfo: sl<NetworkInfo>(),
       ));
 
   sl.registerLazySingleton<RemoteDataSource>(() => FirecloudSource(sl()));
 
   final prefs = await SharedPreferences.getInstance();
 
-  sl.registerLazySingleton(() => prefs);
+  sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
-  sl.registerLazySingleton<SettingsSource>(() => SharedPrefs(sl()));
+  sl.registerLazySingleton<SettingsSource>(() => SharedPrefs(sl<SharedPreferences>()));
 
-  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(sl()));
+  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(sl<Database>()));
 
   sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
-        localSource: sl(),
-        remoteSource: sl(),
-        networkInfo: sl(),
+        localSource: sl<LocalSyncSource>(),
+        remoteSource: sl<RemoteDataSource>(),
+        networkInfo: sl<NetworkInfo>(),
       ));
 
+
+
   sl.registerLazySingleton<BackupRepository>(() => BackupRepositoryImpl(
-        backupSource: sl(),
-        localSource: sl(),
+        localSource: sl<LocalBackupSource>(),
       ));
 
   // BLOCs
 
-  sl.registerLazySingleton(() => AuthBloc(sl()));
+  sl.registerLazySingleton(() => AuthBloc(sl<AuthRepository>()));
 
   sl.registerLazySingleton(() => SyncBloc(
-        authBloc: sl(),
-        prefsRepository: sl(),
-        syncRepo: sl(),
+        authBloc: sl<AuthBloc>(),
+        prefsRepository: sl<SettingsSource>(),
+        syncRepo: sl<SyncRepository>(),
       ));
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
       (mode, _) => DriveDialogBloc(
-            repository: sl(),
+            repository: sl<AuthRepository>(),
             mode: mode,
           ));
 
   sl.registerFactory(() => DriveBloc(
-        backupRepository: sl(),
-        authBloc: sl(),
-        authRepository: sl(),
+        backupRepository: sl<BackupRepository>(),
+        authBloc: sl<AuthBloc>(),
+        authRepository: sl<AuthRepository>(),
       ));
 
-  sl.registerFactory(() => AccountDetailBloc(sl()));
-  sl.registerFactory(() => AccountInputBloc(sl()));
+  sl.registerFactory(() => AccountDetailBloc(sl<DataRepository>()));
+  sl.registerFactory(() => AccountInputBloc(sl<DataRepository>()));
 
-  sl.registerFactory(() => BudgetBloc(sl()));
-  sl.registerFactory(() => CategoryDetailBloc(sl()));
-  sl.registerFactory(() => CategoryInputBloc(sl()));
+  sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));
+  sl.registerFactory(() => CategoryDetailBloc(sl<DataRepository>()));
+  sl.registerFactory(() => CategoryInputBloc(sl<DataRepository>()));
 
-  sl.registerFactory(() => LastOperationsBloc(sl()));
-  sl.registerFactory(() => MonthOperationsBloc(sl()));
-  sl.registerFactory(() => TopHeaderBloc(sl()));
+  sl.registerFactory(() => LastOperationsBloc(sl<DataRepository>()));
+  sl.registerFactory(() => MonthOperationsBloc(sl<DataRepository>()));
+  sl.registerFactory(() => TopHeaderBloc(sl<DataRepository>()));
 
-  sl.registerFactory(() => OperationEditBloc(sl()));
-  sl.registerFactory(() => OperationFilterBloc(sl()));
-  sl.registerFactory(() => MasterBloc(sl()));
-  sl.registerFactory(() => OperationListBloc(sl()));
-  sl.registerFactory(() => ReportsBloc(sl()));
-  sl.registerFactory(() => DataControlBloc(sl()));
+  sl.registerFactory(() => OperationEditBloc(sl<DataRepository>()));
+  sl.registerFactory(() => OperationFilterBloc(sl<DataRepository>()));
+  sl.registerFactory(() => MasterBloc(sl<DataRepository>()));
+  sl.registerFactory(() => OperationListBloc(sl<DataRepository>()));
+  sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
+  sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));
 }

@@ -8,11 +8,11 @@ import '../mappers/account_balance_mapper.dart';
 import '../mappers/account_mapper.dart';
 import '../../../../domain/models.dart';
 
-class AccountRepository
+class AccountDataRepositoryImpl
     implements LocalSyncTable<Account>, AccountDataRepository {
   final AccountDao accountDao;
 
-  AccountRepository(this.accountDao);
+  AccountDataRepositoryImpl(this.accountDao);
 
   List<Account> _mapAccountList(List<AccountDB> list) =>
       const AccountMapper().mapListToDart(list);

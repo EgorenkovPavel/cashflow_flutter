@@ -7,11 +7,11 @@ import '../local_sync_source.dart';
 import '../mappers/operation_mapper.dart';
 import '../../../../domain/models.dart';
 
-class OperationRepository
+class OperationDataRepositoryImpl
     implements LocalSyncTable<Operation>, OperationDataRepository {
   final OperationDao operationDao;
 
-  OperationRepository(this.operationDao);
+  OperationDataRepositoryImpl(this.operationDao);
 
   List<Operation> _mapOperationList(List<OperationDbEntity> list) =>
       const OperationMapper().mapListToDart(list);
