@@ -2,9 +2,9 @@ import '../../../domain/models.dart';
 
 abstract class LocalSyncSource{
 
-  LocalSyncTable<Account> get accountsSync;
-  LocalSyncTable<Category> get categoriesSync;
-  LocalSyncTable<Operation> get operationsSync;
+  LocalSyncTable<Account> get accounts;
+  LocalSyncTable<Category> get categories;
+  LocalSyncTable<Operation> get operations;
 
 }
 

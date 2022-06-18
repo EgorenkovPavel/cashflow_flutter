@@ -14,11 +14,11 @@ class LocalSyncSourceImpl extends LocalSyncSource {
   });
 
   @override
-  LocalSyncTable<Account> get accountsSync => accountRepo;
+  LocalSyncTable<Account> get accounts => accountRepo;
 
   @override
-  LocalSyncTable<Category> get categoriesSync => categoryRepo;
+  LocalSyncTable<Category> get categories => categoryRepo;
 
   @override
-  LocalSyncTable<Operation> get operationsSync => operationRepo;
+  LocalSyncTable<Operation> get operations => operationRepo;
 }

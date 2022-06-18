@@ -179,13 +179,13 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
-    var account = await _localSource.accountsSync.getByCloudId(cloudAccount.id);
+    var account = await _localSource.accounts.getByCloudId(cloudAccount.id);
     if (account == null) {
-      await _localSource.accountsSync.insertFromCloud(
+      await _localSource.accounts.insertFromCloud(
         const AccountModelMapper().insertModel(cloudAccount),
       );
     } else {
-      await _localSource.accountsSync.updateFromCloud(
+      await _localSource.accounts.updateFromCloud(
         const AccountModelMapper().updateModel(account, cloudAccount),
       );
     }
@@ -193,13 +193,13 @@ class SyncRepositoryImpl implements SyncRepository {
 
   Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
     var category =
-        await _localSource.categoriesSync.getByCloudId(cloudCategory.id);
+        await _localSource.categories.getByCloudId(cloudCategory.id);
     if (category == null) {
-      await _localSource.categoriesSync.insertFromCloud(
+      await _localSource.categories.insertFromCloud(
         const CategoryModelMapper().insertModel(cloudCategory),
       );
     } else {
-      await _localSource.categoriesSync.updateFromCloud(
+      await _localSource.categories.updateFromCloud(
         const CategoryModelMapper().updateModel(category, cloudCategory),
       );
     }
@@ -207,21 +207,21 @@ class SyncRepositoryImpl implements SyncRepository {
 
   Future<void> _loadOperationFromCloud(CloudOperation cloudOperation) async {
     var operation =
-        await _localSource.operationsSync.getByCloudId(cloudOperation.id);
+        await _localSource.operations.getByCloudId(cloudOperation.id);
 
     var account =
-        await _localSource.accountsSync.getByCloudId(cloudOperation.account);
+        await _localSource.accounts.getByCloudId(cloudOperation.account);
     var category = cloudOperation.category == null
         ? null
-        : await _localSource.categoriesSync
+        : await _localSource.categories
             .getByCloudId(cloudOperation.category!);
     var recAccount = cloudOperation.recAccount == null
         ? null
-        : await _localSource.accountsSync
+        : await _localSource.accounts
             .getByCloudId(cloudOperation.recAccount!);
 
     if (operation == null) {
-      await _localSource.operationsSync.insertFromCloud(Operation(
+      await _localSource.operations.insertFromCloud(Operation(
         cloudId: cloudOperation.id,
         synced: true,
         deleted: cloudOperation.deleted,
@@ -234,7 +234,7 @@ class SyncRepositoryImpl implements SyncRepository {
         sum: cloudOperation.sum,
       ));
     } else {
-      await _localSource.operationsSync.updateFromCloud(operation.copyWith(
+      await _localSource.operations.updateFromCloud(operation.copyWith(
         cloudId: cloudOperation.id,
         synced: true,
         deleted: cloudOperation.deleted,
@@ -263,9 +263,9 @@ class SyncRepositoryImpl implements SyncRepository {
       return;
     }
 
-    final accounts = await _localSource.accountsSync.getAllNotSynced();
-    final categories = await _localSource.categoriesSync.getAllNotSynced();
-    final operations = await _localSource.operationsSync.getAllNotSynced();
+    final accounts = await _localSource.accounts.getAllNotSynced();
+    final categories = await _localSource.categories.getAllNotSynced();
+    final operations = await _localSource.operations.getAllNotSynced();
 
     var accountCount = accounts.length;
     var categoryCount = categories.length;
@@ -341,10 +341,10 @@ class SyncRepositoryImpl implements SyncRepository {
   ) async {
     if (account.cloudId.isNotEmpty) {
       await accounts.update(account.toCloudAccount());
-      await _localSource.accountsSync.markAsSynced(account.id, account.cloudId);
+      await _localSource.accounts.markAsSynced(account.id, account.cloudId);
     } else {
       var cloudId = await accounts.add(account.toCloudAccount());
-      await _localSource.accountsSync.markAsSynced(account.id, cloudId);
+      await _localSource.accounts.markAsSynced(account.id, cloudId);
     }
   }
 
@@ -355,11 +355,11 @@ class SyncRepositoryImpl implements SyncRepository {
   ) async {
     if (category.cloudId.isNotEmpty) {
       await categories.update(category.toCloudCategory());
-      await _localSource.categoriesSync
+      await _localSource.categories
           .markAsSynced(category.id, category.cloudId);
     } else {
       var cloudId = await categories.add(category.toCloudCategory());
-      await _localSource.categoriesSync.markAsSynced(category.id, cloudId);
+      await _localSource.categories.markAsSynced(category.id, cloudId);
     }
   }
 
@@ -370,11 +370,11 @@ class SyncRepositoryImpl implements SyncRepository {
   ) async {
     if (operation.cloudId.isNotEmpty) {
       await operations.update(operation.toCloudOperation());
-      await _localSource.operationsSync
+      await _localSource.operations
           .markAsSynced(operation.id, operation.cloudId);
     } else {
       var cloudId = await operations.add(operation.toCloudOperation());
-      await _localSource.operationsSync.markAsSynced(operation.id, cloudId);
+      await _localSource.operations.markAsSynced(operation.id, cloudId);
     }
   }
 
