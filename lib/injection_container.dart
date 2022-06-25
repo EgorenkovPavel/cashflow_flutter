@@ -29,7 +29,7 @@ import 'data/sources/local/repos/category_data_repository_impl.dart';
 import 'data/sources/local/repos/operation_data_repository_impl.dart';
 import 'data/interfaces/network_info.dart';
 import 'data/sources/network_info_impl.dart';
-import 'data/sources/remote/firecloud_source.dart';
+import 'data/sources/remote/remote_source_impl.dart';
 import 'data/interfaces/settings_source.dart';
 import 'data/sources/settings_source_impl.dart';
 import 'domain/interfaces/auth_repository.dart';
@@ -114,7 +114,7 @@ Future<void> init() async {
         networkInfo: sl<NetworkInfo>(),
       ));
 
-  sl.registerLazySingleton<RemoteDataSource>(() => FirecloudSource(sl()));
+  sl.registerLazySingleton<RemoteDataSource>(() => RemoteSourceImpl(sl()));
 
   final prefs = await SharedPreferences.getInstance();
 

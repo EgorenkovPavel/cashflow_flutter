@@ -14,7 +14,7 @@ import 'package:money_tracker/utils/exceptions.dart';
 
 import 'models/cloud_models.dart';
 
-class FirecloudSource extends RemoteDataSource {
+class RemoteSourceImpl extends RemoteDataSource {
   final FirebaseFirestore _firestore;
 
   static const String _DATABASES = 'databases';
@@ -28,7 +28,7 @@ class FirecloudSource extends RemoteDataSource {
   DocumentReference<Map<String, dynamic>>? _db;
   bool _isCurrentAdmin = false;
 
-  FirecloudSource(this._firestore);
+  RemoteSourceImpl(this._firestore);
 
   @override
   TableDAO<CloudAccount>? get accounts => _db != null
