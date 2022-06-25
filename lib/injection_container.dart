@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:money_tracker/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/data/sources/local/local_sync_source_impl.dart';
-import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
+import 'package:money_tracker/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,19 +17,21 @@ import 'common_blocs/sync/sync_bloc.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'data/repositories/data_repository_impl.dart';
 import 'data/repositories/sync_repository_impl.dart';
-import 'data/sources/auth/auth_source.dart';
-import 'data/sources/auth/auth_source_impl.dart';
+import 'data/interfaces/auth_source.dart';
+import 'data/sources/auth_source_impl.dart';
 import 'data/sources/local/data/account_dao.dart';
 import 'data/sources/local/data/category_dao.dart';
 import 'data/sources/local/data/database.dart';
 import 'data/sources/local/data/operation_dao.dart';
-import 'data/sources/local/local_sync_source.dart';
+import 'data/interfaces/local_sync_source.dart';
 import 'data/sources/local/repos/account_data_repository_impl.dart';
 import 'data/sources/local/repos/category_data_repository_impl.dart';
 import 'data/sources/local/repos/operation_data_repository_impl.dart';
-import 'data/sources/network_info.dart';
+import 'data/interfaces/network_info.dart';
+import 'data/sources/network_info_impl.dart';
 import 'data/sources/remote/firecloud_source.dart';
-import 'data/sources/settings_source.dart';
+import 'data/interfaces/settings_source.dart';
+import 'data/sources/settings_source_impl.dart';
 import 'domain/interfaces/auth_repository.dart';
 import 'domain/interfaces/data/account_data_repository.dart';
 import 'domain/interfaces/data/category_data_repository.dart';
@@ -119,7 +121,7 @@ Future<void> init() async {
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
   sl.registerLazySingleton<SettingsSource>(
-      () => SharedPrefs(sl<SharedPreferences>()));
+      () => SettingsSourceImpl(sl<SharedPreferences>()));
 
   sl.registerLazySingleton<AccountDataRepository>(() => sl<AccountDataRepositoryImpl>());
   sl.registerLazySingleton<CategoryDataRepository>(() => sl<CategoryDataRepositoryImpl>());

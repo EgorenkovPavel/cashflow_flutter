@@ -3,7 +3,7 @@ import '../../../../domain/interfaces/data/operation_data_repository.dart';
 import '../data/database.dart';
 import '../data/operation_dao.dart';
 import '../entities/operation_entity.dart';
-import '../local_sync_source.dart';
+import '../../../interfaces/local_sync_source.dart';
 import '../mappers/operation_mapper.dart';
 import '../../../../domain/models.dart';
 

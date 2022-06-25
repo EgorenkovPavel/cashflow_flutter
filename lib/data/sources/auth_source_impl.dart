@@ -2,7 +2,7 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:money_tracker/data/sources/auth/auth_source.dart';
+import 'package:money_tracker/data/interfaces/auth_source.dart';
 import 'package:money_tracker/utils/exceptions.dart';
 
 class GoogleAuth extends AuthSource {
@@ -50,7 +50,8 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(AuthException('Error when sign in silently'), stackTrace);
+      Error.throwWithStackTrace(
+          const AuthException('Error when sign in silently'), stackTrace);
     }
   }
 
@@ -71,7 +72,8 @@ class GoogleAuth extends AuthSource {
         credential,
       );
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(AuthException('Error when sign in'), stackTrace);
+      Error.throwWithStackTrace(
+          const AuthException('Error when sign in'), stackTrace);
     }
   }
 
@@ -85,7 +87,8 @@ class GoogleAuth extends AuthSource {
       final res = await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(AuthException('Error when sign out'), stackTrace);
+      Error.throwWithStackTrace(
+          const AuthException('Error when sign out'), stackTrace);
     }
   }
 

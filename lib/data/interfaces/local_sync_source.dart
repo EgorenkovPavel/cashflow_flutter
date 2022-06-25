@@ -1,4 +1,4 @@
-import '../../../domain/models.dart';
+import '../../domain/models.dart';
 
 abstract class LocalSyncSource{
 

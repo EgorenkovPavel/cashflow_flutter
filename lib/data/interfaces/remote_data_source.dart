@@ -2,7 +2,7 @@
 import 'package:money_tracker/data/sources/remote/table_dao.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-import 'models/cloud_models.dart';
+import '../sources/remote/models/cloud_models.dart';
 
 abstract class RemoteDataSource{
 

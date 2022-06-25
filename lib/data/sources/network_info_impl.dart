@@ -1,8 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-abstract class NetworkInfo {
-  Stream<bool> connected();
-}
+import '../interfaces/network_info.dart';
 
 class NetworkInfoImpl implements NetworkInfo {
   final Connectivity connectivity;

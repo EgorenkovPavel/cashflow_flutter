@@ -1,24 +1,15 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class SettingsSource{
+import '../interfaces/settings_source.dart';
 
-  DateTime get syncDate;
-  Future<void> setSyncDate(DateTime date);
-
-  String get googleDriveFileName;
-  Future<void> setGoogleDriveFileName(String name);
-}
-
-class SharedPrefs implements SettingsSource {
+class SettingsSourceImpl implements SettingsSource {
   static const String _KEY_SYNC_DATE = 'sync_date';
   static const String _KEY_GOOGLE_DRIVE_FILE_NAME = 'google_drive_file_name';
   static const String _DEFAULT_GOOGLE_DRIVE_FILE_NAME = 'Cashflow backup';
 
   final SharedPreferences prefs;
 
-  SharedPrefs(this.prefs);
+  SettingsSourceImpl(this.prefs);
 
   @override
   DateTime get syncDate =>
@@ -31,7 +22,7 @@ class SharedPrefs implements SettingsSource {
   @override
   String get googleDriveFileName =>
       prefs.getString(_KEY_GOOGLE_DRIVE_FILE_NAME) ??
-      _DEFAULT_GOOGLE_DRIVE_FILE_NAME;
+          _DEFAULT_GOOGLE_DRIVE_FILE_NAME;
 
   @override
   Future<void> setGoogleDriveFileName(String name) =>

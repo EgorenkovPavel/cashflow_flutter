@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
-import 'package:money_tracker/data/sources/settings_source.dart';
+import 'package:money_tracker/data/interfaces/settings_source.dart';
 import 'package:money_tracker/domain/interfaces/sync_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 

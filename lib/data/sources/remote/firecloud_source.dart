@@ -7,7 +7,7 @@ import 'package:money_tracker/data/sources/remote/mappers/account_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/category_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/user_mapper.dart';
-import 'package:money_tracker/data/sources/remote/remote_data_source.dart';
+import 'package:money_tracker/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/data/sources/remote/table_dao.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:money_tracker/utils/exceptions.dart';

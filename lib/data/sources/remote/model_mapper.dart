@@ -1,5 +1,5 @@
-import 'package:money_tracker/data/sources/remote/models/cloud_account.dart';
-import 'package:money_tracker/data/sources/remote/models/cloud_category.dart';
+import 'models/cloud_account.dart';
+import 'models/cloud_category.dart';
 
 import '../../../domain/models.dart';
 import '../local/db_converters/budget_type_converter.dart';

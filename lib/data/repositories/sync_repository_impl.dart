@@ -9,12 +9,12 @@ import '../../domain/models/category/category.dart' as model;
 import '../../utils/exceptions.dart';
 import '../../utils/try.dart';
 import '../sources/local/db_converters/operation_type_converter.dart';
-import '../sources/local/local_sync_source.dart';
-import '../sources/network_info.dart';
+import '../interfaces/local_sync_source.dart';
+import '../interfaces/network_info.dart';
 import '../sources/remote/cloud_model_extensions.dart';
 import '../sources/remote/model_mapper.dart';
 import '../sources/remote/models/cloud_models.dart';
-import '../sources/remote/remote_data_source.dart';
+import '../interfaces/remote_data_source.dart';
 import '../sources/remote/table_dao.dart';
 
 class SyncRepositoryImpl implements SyncRepository {

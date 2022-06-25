@@ -1,4 +1,4 @@
-import 'package:money_tracker/data/sources/local/local_sync_source.dart';
+import 'package:money_tracker/data/interfaces/local_sync_source.dart';
 
 import '../../../domain/models.dart';
 

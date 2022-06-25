@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/data/sources/settings_source.dart';
+import 'package:money_tracker/data/interfaces/settings_source.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';

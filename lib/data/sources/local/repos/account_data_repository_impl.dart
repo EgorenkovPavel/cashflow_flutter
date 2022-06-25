@@ -3,7 +3,7 @@ import '../../../../domain/interfaces/data/account_data_repository.dart';
 import '../data/account_dao.dart';
 import '../data/database.dart';
 import '../entities/account_balance_entity.dart';
-import '../local_sync_source.dart';
+import '../../../interfaces/local_sync_source.dart';
 import '../mappers/account_balance_mapper.dart';
 import '../mappers/account_mapper.dart';
 import '../../../../domain/models.dart';
