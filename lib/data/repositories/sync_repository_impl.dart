@@ -15,7 +15,7 @@ import '../sources/remote/cloud_model_extensions.dart';
 import '../sources/remote/model_mapper.dart';
 import '../sources/remote/models/cloud_models.dart';
 import '../interfaces/remote_data_source.dart';
-import '../sources/remote/table_dao.dart';
+import '../sources/remote/daos/table_dao.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;

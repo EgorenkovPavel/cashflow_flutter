@@ -1,9 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/utils/exceptions.dart';
 
-import 'mappers/cloud_converter.dart';
-import 'models/cloud_models.dart';
+import '../mappers/cloud_converter.dart';
+import '../models/cloud_models.dart';
 
 abstract class TableDAO<T> {
   final CollectionReference<Map<String, dynamic>> _collection;
@@ -26,7 +25,8 @@ abstract class TableDAO<T> {
       var doc = await _collection.add(_mapper.mapToCloud(entity));
       return doc.id;
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when add to $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when add to $T cloud database'), stackTrace);
     }
   }
 
@@ -35,7 +35,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(cloudId).update(_mapper.deletionMark());
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when delete from $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when delete from $T cloud database'),
+          stackTrace);
     }
   }
 
@@ -48,7 +50,9 @@ abstract class TableDAO<T> {
 
       return docs.docs.map<T>((doc) => _mapper.mapToDart(doc));
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when get all from $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when get all from $T cloud database'),
+          stackTrace);
     }
   }
 
@@ -57,7 +61,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(entityId).update({_key_updated: DateTime.now()});
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when refresh sync date in $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when refresh sync date in $T cloud database'),
+          stackTrace);
     }
   }
 
@@ -66,7 +72,9 @@ abstract class TableDAO<T> {
     try {
       await _collection.doc(getId(entity)).update(_mapper.mapToCloud(entity));
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when update in $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when update in $T cloud database'),
+          stackTrace);
     }
   }
 
@@ -84,7 +92,9 @@ abstract class TableDAO<T> {
     } on NetworkException {
       rethrow;
     } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when delete all in $T cloud database'), stackTrace);
+      Error.throwWithStackTrace(
+          NetworkException('Error when delete all in $T cloud database'),
+          stackTrace);
     }
   }
 
@@ -97,10 +107,10 @@ class AccountsDAO extends TableDAO<CloudAccount> {
     required CloudConverter<CloudAccount> mapper,
     required String key_updated,
   }) : super(
-    collection: collection,
-    mapper: mapper,
-    key_updated: key_updated,
-  );
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
 
   @override
   String getId(CloudAccount entity) => entity.id;
@@ -112,10 +122,10 @@ class CategoriesDAO extends TableDAO<CloudCategory> {
     required CloudConverter<CloudCategory> mapper,
     required String key_updated,
   }) : super(
-    collection: collection,
-    mapper: mapper,
-    key_updated: key_updated,
-  );
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
 
   @override
   String getId(CloudCategory entity) => entity.id;
@@ -127,10 +137,10 @@ class OperationDAO extends TableDAO<CloudOperation> {
     required CloudConverter<CloudOperation> mapper,
     required String key_updated,
   }) : super(
-    collection: collection,
-    mapper: mapper,
-    key_updated: key_updated,
-  );
+          collection: collection,
+          mapper: mapper,
+          key_updated: key_updated,
+        );
 
   @override
   String getId(CloudOperation entity) => entity.id;

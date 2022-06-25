@@ -1,5 +1,5 @@
 
-import 'package:money_tracker/data/sources/remote/table_dao.dart';
+import 'package:money_tracker/data/sources/remote/daos/table_dao.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
 import '../sources/remote/models/cloud_models.dart';
