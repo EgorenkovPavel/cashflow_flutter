@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:money_tracker/data/sources/backup_source.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models.dart';
@@ -78,10 +77,8 @@ class DriveDialogBloc extends Cubit<DialogDriveState> {
           folderList: files ?? [],
         ),
       );
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(Exception('Error when load folders in drive dialog bloc'), stackTrace);
     }
   }
 

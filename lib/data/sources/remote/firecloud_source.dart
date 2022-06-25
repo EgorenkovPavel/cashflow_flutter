@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:money_tracker/data/sources/remote/mappers/account_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/category_mapper.dart';
 import 'package:money_tracker/data/sources/remote/mappers/operation_mapper.dart';
@@ -68,11 +67,8 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_DATABASES)
           .where(_DATABASES_USERS, arrayContains: userId)
           .get();
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR _getDatabase ${e.toString()}');
-      }
-      throw NetworkException();
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(NetworkException('Error when get cloud database'), stackTrace);
     }
 
     if (querySnapshot.docs.isNotEmpty) {
@@ -117,11 +113,8 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_USERS)
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR addUserToDatabase ${e.toString()}');
-      }
-      throw NetworkException();
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(NetworkException('Error when add user to cloud database'), stackTrace);
     }
   }
 
@@ -136,11 +129,8 @@ class FirecloudSource extends RemoteDataSource {
       var doc = await _db!.collection(_USERS).get();
 
       return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR getAllUsers ${e.toString()}');
-      }
-      throw NetworkException();
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(NetworkException('Error when get all user from cloud database'), stackTrace);
     }
   }
 
@@ -156,11 +146,8 @@ class FirecloudSource extends RemoteDataSource {
           .collection(_USERS)
           .doc(user.id)
           .set(const UserMapper().mapToCloud(user));
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR createDatabase ${e.toString()}');
-      }
-      throw NetworkException();
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(NetworkException('Error when create cloud database'), stackTrace);
     }
   }
 
@@ -174,11 +161,8 @@ class FirecloudSource extends RemoteDataSource {
           .get();
 
       return querySnapshot.docs.isNotEmpty;
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR databaseExists ${e.toString()}');
-      }
-      throw NetworkException();
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(NetworkException('Error when check cloud database exists'), stackTrace);
     }
   }
 
@@ -199,14 +183,11 @@ class FirecloudSource extends RemoteDataSource {
       _db = null;
       _isCurrentAdmin = false;
       rethrow;
-    } catch (e) {
+    } on Object catch (e, stackTrace) {
       _db = null;
       _isCurrentAdmin = false;
 
-      if (kDebugMode) {
-        print('ERROR connect ${e.toString()}');
-      }
-      throw NetworkException();
+      Error.throwWithStackTrace(NetworkException('Error when connect to cloud database'), stackTrace);
     }
   }
 

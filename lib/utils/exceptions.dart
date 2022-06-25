@@ -1,6 +1,15 @@
 
-class AuthException implements Exception{}
+class AuthException implements Exception{
+  final String message;
 
-class NetworkException implements Exception{}
+  const AuthException(this.message);
+}
+
+class NetworkException implements Exception{
+  final String message;
+
+  NetworkException(this.message);
+
+}
 
 class NoRemoteDBException implements Exception{}

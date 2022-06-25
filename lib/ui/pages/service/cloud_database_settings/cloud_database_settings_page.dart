@@ -29,6 +29,8 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
             } else {
               return const ConnectedView();
             }
+          } else if (state is SyncStateNotSynced) {
+            return const ConnectedView();
           } else if (state is SyncStateInProgress) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is SyncStateLoadingToCloud) {

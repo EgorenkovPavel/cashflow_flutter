@@ -173,8 +173,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
             (failure) =>
                 emit(SyncStateSynced(syncDate: syncDate, isAdmin: false)),
           );
-    } catch (e) {
+    } on Object catch (e, stackTrace) {
       emit(const SyncStateNotSynced());
+      Error.throwWithStackTrace(Exception('Error when sync data in sync bloc'), stackTrace);
     }
   }
 

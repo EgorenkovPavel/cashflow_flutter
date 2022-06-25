@@ -142,7 +142,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
       try {
         await _loadAccountFromCloud(cloudAccount);
-      }on Object catch(_, stackTrace){
+      } on Object catch(_, stackTrace){
         Error.throwWithStackTrace(
             Exception(
                 'Sync account error. Account id=${cloudAccount.id}'),
