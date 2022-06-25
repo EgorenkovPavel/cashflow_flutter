@@ -1,6 +1,6 @@
 import 'package:money_tracker/domain/models/category/category_month_cashflow.dart';
 
-import '../../entities/category_month_cashflow_entity.dart';
+import '../entities/category_month_cashflow_entity.dart';
 import 'category_mapper.dart';
 import 'mapper.dart';
 

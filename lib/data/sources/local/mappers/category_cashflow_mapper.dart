@@ -1,7 +1,7 @@
 import 'package:money_tracker/data/sources/local/mappers/category_mapper.dart';
 import 'package:money_tracker/domain/models.dart';
 
-import '../../entities/category_cashflow_entity.dart';
+import '../entities/category_cashflow_entity.dart';
 import 'mapper.dart';
 
 class CategoryCashflowMapper

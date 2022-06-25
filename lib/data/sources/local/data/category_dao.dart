@@ -4,9 +4,9 @@ import '../../../../domain/models/sum_on_date.dart';
 import 'database.dart';
 import '../db_converters/operation_type_converter.dart';
 
-import '../../entities/category_budget_entity.dart';
-import '../../entities/category_cashflow_entity.dart';
-import '../../entities/category_month_cashflow_entity.dart';
+import '../entities/category_budget_entity.dart';
+import '../entities/category_cashflow_entity.dart';
+import '../entities/category_month_cashflow_entity.dart';
 
 part 'category_dao.g.dart';
 

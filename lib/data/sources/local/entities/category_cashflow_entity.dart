@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../local/data/database.dart';
+import '../data/database.dart';
 
 class CategoryCashflowEntity extends Equatable{
   final CategoryDB category;
