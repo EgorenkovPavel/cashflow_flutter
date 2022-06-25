@@ -585,21 +585,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     );
   }
 
-  Future insertOperationItem(OperationDbEntity entity) {
-    var operationData = OperationsCompanion(
-      cloudId: Value(entity.operation.cloudId),
-      date: Value(entity.date),
-      operationType: Value(entity.type),
-      account: Value(entity.account.id),
-      category: Value(entity.category?.id),
-      recAccount: Value(entity.recAccount?.id),
-      sum: Value(entity.sum),
-      deleted: Value(entity.operation.deleted),
-    );
-
-    return insertOperation(operationData);
-  }
-
   Future<int> insertOperation(OperationsCompanion entity) {
     return transaction(() async {
       var id = await into(operations).insert(entity);
@@ -615,49 +600,37 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<int> updateFields(int operationId, OperationsCompanion entity) async {
-    var id = await (update(operations)..where((t) => t.id.equals(operationId)))
-        .write(entity);
+    return transaction(() async {
+      var id = await(update(operations)
+        ..where((t) => t.id.equals(operationId)))
+          .write(entity);
 
-    if (entity.deleted.present) {
-      if (!entity.deleted.value) {
-        var operation = await getOperationById(operationId);
-        var operationData = OperationsCompanion(
-          id: Value(operationId),
-          cloudId: Value(operation.operation.cloudId),
-          date: Value(operation.date),
-          operationType: Value(operation.type),
-          account: Value(operation.account.id),
-          category: Value(operation.category?.id),
-          recAccount: Value(operation.recAccount?.id),
-          sum: Value(operation.sum),
-          deleted: Value(operation.operation.deleted),
-        );
-        _deleteAnalyticByOperationId(operationId);
-        _insertAnalytic(operationData);
-      } else {
-        _deleteAnalyticByOperationId(operationId);
+      if (entity.deleted.present) {
+        if (!entity.deleted.value) {
+          var operation = await getOperationById(operationId);
+          var operationData = OperationsCompanion(
+            id: Value(operationId),
+            cloudId: Value(operation.operation.cloudId),
+            date: Value(operation.date),
+            operationType: Value(operation.type),
+            account: Value(operation.account.id),
+            category: Value(operation.category?.id),
+            recAccount: Value(operation.recAccount?.id),
+            sum: Value(operation.sum),
+            deleted: Value(operation.operation.deleted),
+          );
+          await _deleteAnalyticByOperationId(operationId);
+          await _insertAnalytic(operationData);
+        } else {
+          await _deleteAnalyticByOperationId(operationId);
+        }
       }
-    }
 
-    return id;
+      return id;
+    });
   }
 
   Future<int> updateOperation(OperationDB entity) async {
-    // return transaction(() async {
-      // await deleteOperation(entity);
-
-      // return await insertOperation(OperationsCompanion(
-      //   id: Value(entity.id),
-      //   cloudId: Value(entity.cloudId),
-      //   date: Value(entity.date),
-      //   operationType: Value(entity.operationType),
-      //   account: Value(entity.account),
-      //   category: Value(entity.category),
-      //   recAccount: Value(entity.recAccount),
-      //   sum: Value(entity.sum),
-      //   deleted: Value(entity.deleted),
-      // ));
-
       return await updateFields(entity.id, OperationsCompanion(
         id: Value(entity.id),
         synced: Value(entity.synced),
