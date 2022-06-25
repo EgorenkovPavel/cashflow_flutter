@@ -1,4 +1,4 @@
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -318,18 +318,18 @@ class PieDiagram extends StatelessWidget {
         SizedBox(
           width: 200.0,
           height: 200.0,
-          child: charts.PieChart(
-            [
-              charts.Series<CategoryCashflow, int>(
-                id: 'Cashflow',
-                domainFn: (CategoryCashflow sales, _) => sales.category.id,
-                measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
-                data: list,
-              ),
-            ],
-            animate: true,
-            animationDuration: _duration,
-          ),
+          // child: charts.PieChart(
+          //   [
+          //     charts.Series<CategoryCashflow, int>(
+          //       id: 'Cashflow',
+          //       domainFn: (CategoryCashflow sales, _) => sales.category.id,
+          //       measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
+          //       data: list,
+          //     ),
+          //   ],
+          //   animate: true,
+          //   animationDuration: _duration,
+          // ),
         ),
         IconButton(
           onPressed: onForwardPressed,
