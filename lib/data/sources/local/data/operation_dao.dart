@@ -1,7 +1,8 @@
 import 'package:drift/drift.dart';
-import 'database.dart';
-import '../entities/operation_entity.dart';
+
 import '../../../../domain/models/enum/operation_type.dart';
+import '../entities/operation_entity.dart';
+import 'database.dart';
 
 part 'operation_dao.g.dart';
 
@@ -539,7 +540,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
 
-    return (select(operations)..where((o) => o.cloudId.equals(cloudId)))
+    return (select(operations)
+          ..where((o) => o.cloudId.equals(cloudId))
+          ..limit(1))
         .join(
           [
             innerJoin(
@@ -601,8 +604,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future<int> updateFields(int operationId, OperationsCompanion entity) async {
     return transaction(() async {
-      var id = await(update(operations)
-        ..where((t) => t.id.equals(operationId)))
+      var id = await (update(operations)
+            ..where((t) => t.id.equals(operationId)))
           .write(entity);
 
       if (entity.deleted.present) {
@@ -631,25 +634,28 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   }
 
   Future<int> updateOperation(OperationDB entity) async {
-      return await updateFields(entity.id, OperationsCompanion(
-        id: Value(entity.id),
-        synced: Value(entity.synced),
-        cloudId: Value(entity.cloudId),
-        date: Value(entity.date),
-        operationType: Value(entity.operationType),
-        account: Value(entity.account),
-        category: Value(entity.category),
-        recAccount: Value(entity.recAccount),
-        sum: Value(entity.sum),
-        deleted: Value(entity.deleted),
-      ));
+    return await updateFields(
+        entity.id,
+        OperationsCompanion(
+          id: Value(entity.id),
+          synced: Value(entity.synced),
+          cloudId: Value(entity.cloudId),
+          date: Value(entity.date),
+          operationType: Value(entity.operationType),
+          account: Value(entity.account),
+          category: Value(entity.category),
+          recAccount: Value(entity.recAccount),
+          sum: Value(entity.sum),
+          deleted: Value(entity.deleted),
+        ));
     // });
   }
 
   Future deleteOperation(OperationDB entity) {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(entity.id)))
-          .write(const OperationsCompanion(deleted: Value(true), synced: Value(false)));
+          .write(const OperationsCompanion(
+              deleted: Value(true), synced: Value(false)));
       await _deleteAnalytic(entity);
     });
   }
@@ -657,7 +663,8 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   Future deleteOperationById(int operationId) async {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(operationId)))
-          .write(const OperationsCompanion(deleted: Value(true), synced: Value(false)));
+          .write(const OperationsCompanion(
+              deleted: Value(true), synced: Value(false)));
       await _deleteAnalyticByOperationId(operationId);
     });
   }

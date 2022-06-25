@@ -59,7 +59,10 @@ class DriveDialogBloc extends Cubit<DialogDriveState> {
   }
 
   Future<void> _init() async {
-    _repository = GoogleDrive((await _authRepository.getClient())!);
+    final client = await _authRepository.getClient();
+    if (client != null) {
+      _repository = GoogleDrive(client);
+    }
   }
 
   Future<void> loadFolders() async {

@@ -52,10 +52,14 @@ class OperationDataRepositoryImpl
       operationDao.getOperationById(id).then((value) => _mapOperation(value));
 
   @override
-  Future<Operation?> getByCloudId(String cloudId) =>
-      operationDao.getOperationByCloudId(cloudId).then((value) {
-        return value == null ? null : _mapOperation(value);
-      });
+  Future<Operation?> getByCloudId(String cloudId) async {
+    final operation = await operationDao.getOperationByCloudId(cloudId);
+    if (operation == null){
+      return null;
+    }else{
+      return _mapOperation(operation);
+    }
+  }
 
   @override
   Stream<List<Operation>> watchAllByAccount(int accountId) => operationDao
