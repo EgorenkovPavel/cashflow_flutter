@@ -139,7 +139,15 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load from cloud account ${cloudAccount.title}');
       }
-      await _loadAccountFromCloud(cloudAccount);
+
+      try {
+        await _loadAccountFromCloud(cloudAccount);
+      }on Object catch(_, stackTrace){
+        Error.throwWithStackTrace(
+            Exception(
+                'Sync account error. Account id=${cloudAccount.id}'),
+            stackTrace);
+      }
 
       accountCount--;
       yield (LoadingState(
@@ -153,7 +161,14 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load from cloud category ${cloudCategory.title}');
       }
-      await _loadCategoryFromCloud(cloudCategory);
+      try {
+        await _loadCategoryFromCloud(cloudCategory);
+      } on Object catch(_, stackTrace){
+        Error.throwWithStackTrace(
+            Exception(
+                'Sync category error. Category id=${cloudCategory.id}'),
+            stackTrace);
+      }
 
       categoryCount--;
       yield (LoadingState(
@@ -167,7 +182,15 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load from cloud operation ${cloudOperation.id}');
       }
-      await _loadOperationFromCloud(cloudOperation);
+
+      try {
+        await _loadOperationFromCloud(cloudOperation);
+      } on Object catch (_, stackTrace) {
+        Error.throwWithStackTrace(
+            Exception(
+                'Sync operation error. Operation id=${cloudOperation.id}'),
+            stackTrace);
+      }
 
       operationCount--;
       yield (LoadingState(
@@ -192,8 +215,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
-    var category =
-        await _localSource.categories.getByCloudId(cloudCategory.id);
+    var category = await _localSource.categories.getByCloudId(cloudCategory.id);
     if (category == null) {
       await _localSource.categories.insertFromCloud(
         const CategoryModelMapper().insertModel(cloudCategory),
@@ -213,12 +235,10 @@ class SyncRepositoryImpl implements SyncRepository {
         await _localSource.accounts.getByCloudId(cloudOperation.account);
     var category = cloudOperation.category == null
         ? null
-        : await _localSource.categories
-            .getByCloudId(cloudOperation.category!);
+        : await _localSource.categories.getByCloudId(cloudOperation.category!);
     var recAccount = cloudOperation.recAccount == null
         ? null
-        : await _localSource.accounts
-            .getByCloudId(cloudOperation.recAccount!);
+        : await _localSource.accounts.getByCloudId(cloudOperation.recAccount!);
 
     if (operation == null) {
       await _localSource.operations.insertFromCloud(Operation(
@@ -355,8 +375,7 @@ class SyncRepositoryImpl implements SyncRepository {
   ) async {
     if (category.cloudId.isNotEmpty) {
       await categories.update(category.toCloudCategory());
-      await _localSource.categories
-          .markAsSynced(category.id, category.cloudId);
+      await _localSource.categories.markAsSynced(category.id, category.cloudId);
     } else {
       var cloudId = await categories.add(category.toCloudCategory());
       await _localSource.categories.markAsSynced(category.id, cloudId);
