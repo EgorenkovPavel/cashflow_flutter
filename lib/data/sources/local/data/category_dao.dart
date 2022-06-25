@@ -1,7 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/db_converters/operation_type_converter.dart';
-import 'package:money_tracker/domain/models.dart';
+import '../../../../domain/models/enum/operation_type.dart';
+import '../../../../domain/models/sum_on_date.dart';
+import 'database.dart';
+import '../db_converters/operation_type_converter.dart';
 
 import '../../entities/category_budget_entity.dart';
 import '../../entities/category_cashflow_entity.dart';

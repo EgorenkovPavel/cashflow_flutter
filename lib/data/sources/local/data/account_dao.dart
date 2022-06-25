@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/entities/account_balance_entity.dart';
-import 'package:money_tracker/data/sources/local/entities/balance_on_date_entity.dart';
+import 'database.dart';
+import '../entities/account_balance_entity.dart';
+import '../entities/balance_on_date_entity.dart';
 
 part 'account_dao.g.dart';
 
