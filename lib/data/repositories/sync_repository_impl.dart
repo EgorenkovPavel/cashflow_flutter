@@ -44,9 +44,9 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   @override
-  Future<Try<void>> createDatabase(User user) async {
+  Future<Try<void>> createDatabase({required User admin}) async {
     try {
-      await _remoteSource.createDatabase(user);
+      await _remoteSource.createDatabase(admin);
 
       return Success(true);
     } on NetworkException {
@@ -55,9 +55,9 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   @override
-  Future<Try<bool>> databaseExists(User user) async {
+  Future<Try<bool>> databaseExists({required User admin}) async {
     try {
-      return Success(await _remoteSource.databaseExists(user));
+      return Success(await _remoteSource.databaseExists(admin));
     } on NetworkException {
       return NetworkFailure();
     }

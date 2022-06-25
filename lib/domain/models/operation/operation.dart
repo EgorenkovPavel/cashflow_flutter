@@ -43,25 +43,25 @@ class Operation extends Equatable {
 
   const Operation.output(
       {this.id = 0,
-        this.cloudId = '',
-        this.synced = false,
-        this.deleted = false,
-        required this.date,
-        required this.account,
-        required this.category,
-        required this.sum})
+      this.cloudId = '',
+      this.synced = false,
+      this.deleted = false,
+      required this.date,
+      required this.account,
+      required this.category,
+      required this.sum})
       : type = OperationType.OUTPUT,
         recAccount = null;
 
   const Operation.transfer(
       {this.id = 0,
-        this.cloudId = '',
-        this.synced = false,
-        this.deleted = false,
-        required this.date,
-        required this.account,
-        required this.recAccount,
-        required this.sum})
+      this.cloudId = '',
+      this.synced = false,
+      this.deleted = false,
+      required this.date,
+      required this.account,
+      required this.recAccount,
+      required this.sum})
       : type = OperationType.TRANSFER,
         category = null;
 
@@ -91,5 +91,16 @@ class Operation extends Equatable {
       );
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [
+        id,
+        cloudId,
+        synced,
+        deleted,
+        date,
+        type,
+        account,
+        category,
+        recAccount,
+        sum
+      ];
 }

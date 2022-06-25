@@ -120,7 +120,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     Emitter<SyncState> emit,
   ) async {
     emit(const SyncStateInProgress());
-    var res = await syncRepo.databaseExists(event.user);
+    var res = await syncRepo.databaseExists(admin: event.user);
 
     return res.fold(
       (success) async {
@@ -175,7 +175,8 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
           );
     } on Object catch (e, stackTrace) {
       emit(const SyncStateNotSynced());
-      Error.throwWithStackTrace(Exception('Error when sync data in sync bloc'), stackTrace);
+      Error.throwWithStackTrace(
+          Exception('Error when sync data in sync bloc'), stackTrace);
     }
   }
 
@@ -187,8 +188,8 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       return;
     }
     emit(const SyncStateInProgress());
-    var res =
-        await syncRepo.createDatabase((_authBloc.state as Authenticated).user);
+    var res = await syncRepo.createDatabase(
+        admin: (_authBloc.state as Authenticated).user);
     if (res.isFailure()) {
       emit(const SyncStateFailed());
 

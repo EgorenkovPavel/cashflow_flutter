@@ -14,7 +14,7 @@ abstract class SyncRepository{
   Future<Try<void>> logIn(User user);
   Future<void> logOut();
   Future<Try<void>> addToDatabase(User user);
-  Future<Try<void>> createDatabase(User user);
-  Future<Try<bool>> databaseExists(User user);
+  Future<Try<void>> createDatabase({required User admin});
+  Future<Try<bool>> databaseExists({required User admin});
 
 }
