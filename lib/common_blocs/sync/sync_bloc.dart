@@ -176,7 +176,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     } on Object catch (e, stackTrace) {
       emit(const SyncStateNotSynced());
       Error.throwWithStackTrace(
-          Exception('Error when sync data in sync bloc'), stackTrace);
+        Exception('Error when sync data in sync bloc'),
+        stackTrace,
+      );
     }
   }
 
@@ -189,7 +191,8 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
     emit(const SyncStateInProgress());
     var res = await syncRepo.createDatabase(
-        admin: (_authBloc.state as Authenticated).user);
+      admin: (_authBloc.state as Authenticated).user,
+    );
     if (res.isFailure()) {
       emit(const SyncStateFailed());
 

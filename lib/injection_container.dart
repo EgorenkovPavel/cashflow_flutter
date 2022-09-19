@@ -6,31 +6,31 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:money_tracker/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/data/sources/local/local_sync_source_impl.dart';
-import 'package:money_tracker/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common_blocs/auth/auth_bloc.dart';
 import 'common_blocs/sync/sync_bloc.dart';
+import 'data/interfaces/auth_source.dart';
+import 'data/interfaces/local_sync_source.dart';
+import 'data/interfaces/network_info.dart';
+import 'data/interfaces/settings_source.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'data/repositories/data_repository_impl.dart';
 import 'data/repositories/sync_repository_impl.dart';
-import 'data/interfaces/auth_source.dart';
 import 'data/sources/auth_source_impl.dart';
 import 'data/sources/local/data/account_dao.dart';
 import 'data/sources/local/data/category_dao.dart';
 import 'data/sources/local/data/database.dart';
 import 'data/sources/local/data/operation_dao.dart';
-import 'data/interfaces/local_sync_source.dart';
 import 'data/sources/local/repos/account_data_repository_impl.dart';
 import 'data/sources/local/repos/category_data_repository_impl.dart';
 import 'data/sources/local/repos/operation_data_repository_impl.dart';
-import 'data/interfaces/network_info.dart';
 import 'data/sources/network_info_impl.dart';
 import 'data/sources/remote/remote_source_impl.dart';
-import 'data/interfaces/settings_source.dart';
 import 'data/sources/settings_source_impl.dart';
 import 'domain/interfaces/auth_repository.dart';
 import 'domain/interfaces/data/account_data_repository.dart';
@@ -65,18 +65,24 @@ Future<void> init() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   sl.registerLazySingleton<AccountDataRepositoryImpl>(
-      () => AccountDataRepositoryImpl(AccountDao(sl<Database>())));
+    () => AccountDataRepositoryImpl(AccountDao(sl<Database>())),
+  );
   sl.registerLazySingleton<CategoryDataRepositoryImpl>(
-      () => CategoryDataRepositoryImpl(CategoryDao(sl<Database>())));
+    () => CategoryDataRepositoryImpl(CategoryDao(sl<Database>())),
+  );
   sl.registerLazySingleton<OperationDataRepositoryImpl>(
-      () => OperationDataRepositoryImpl(OperationDao(sl<Database>())));
+    () => OperationDataRepositoryImpl(OperationDao(sl<Database>())),
+  );
 
   sl.registerLazySingleton<LocalSyncTable<Account>>(
-      () => sl<AccountDataRepositoryImpl>());
+    () => sl<AccountDataRepositoryImpl>(),
+  );
   sl.registerLazySingleton<LocalSyncTable<Category>>(
-      () => sl<CategoryDataRepositoryImpl>());
+    () => sl<CategoryDataRepositoryImpl>(),
+  );
   sl.registerLazySingleton<LocalSyncTable<Operation>>(
-      () => sl<OperationDataRepositoryImpl>());
+    () => sl<OperationDataRepositoryImpl>(),
+  );
 
   sl.registerLazySingleton<Database>(() => Database());
   sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(
@@ -102,7 +108,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
   sl.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(sl<Connectivity>()));
+    () => NetworkInfoImpl(sl<Connectivity>()),
+  );
 
   sl.registerLazySingleton<AuthSource>(() => GoogleAuth(
         firebaseAuth: sl<FirebaseAuth>(),
@@ -121,14 +128,20 @@ Future<void> init() async {
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
   sl.registerLazySingleton<SettingsSource>(
-      () => SettingsSourceImpl(sl<SharedPreferences>()));
+    () => SettingsSourceImpl(sl<SharedPreferences>()),
+  );
 
-  sl.registerLazySingleton<AccountDataRepository>(() => sl<AccountDataRepositoryImpl>());
-  sl.registerLazySingleton<CategoryDataRepository>(() => sl<CategoryDataRepositoryImpl>());
-  sl.registerLazySingleton<OperationDataRepository>(() => sl<OperationDataRepositoryImpl>());
+  sl.registerLazySingleton<AccountDataRepository>(
+    () => sl<AccountDataRepositoryImpl>(),
+  );
+  sl.registerLazySingleton<CategoryDataRepository>(
+    () => sl<CategoryDataRepositoryImpl>(),
+  );
+  sl.registerLazySingleton<OperationDataRepository>(
+    () => sl<OperationDataRepositoryImpl>(),
+  );
 
-  sl.registerLazySingleton<DataRepository>(
-      () => DataRepositoryImpl(
+  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
         accountRepo: sl<AccountDataRepository>(),
         categoryRepo: sl<CategoryDataRepository>(),
         operationRepo: sl<OperationDataRepository>(),
@@ -141,7 +154,8 @@ Future<void> init() async {
       ));
 
   sl.registerLazySingleton<BackupRepository>(
-      () => BackupRepositoryImpl(sl<Database>()));
+    () => BackupRepositoryImpl(sl<Database>()),
+  );
 
   // BLOCs
 
@@ -154,10 +168,11 @@ Future<void> init() async {
       ));
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
-      (mode, _) => DriveDialogBloc(
-            repository: sl<AuthRepository>(),
-            mode: mode,
-          ));
+    (mode, _) => DriveDialogBloc(
+      repository: sl<AuthRepository>(),
+      mode: mode,
+    ),
+  );
 
   sl.registerFactory(() => DriveBloc(
         backupRepository: sl<BackupRepository>(),

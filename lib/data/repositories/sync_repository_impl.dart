@@ -8,14 +8,14 @@ import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
 import '../../utils/exceptions.dart';
 import '../../utils/try.dart';
-import '../sources/local/db_converters/operation_type_converter.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
+import '../interfaces/remote_data_source.dart';
+import '../sources/local/db_converters/operation_type_converter.dart';
 import '../sources/remote/cloud_model_extensions.dart';
+import '../sources/remote/daos/table_dao.dart';
 import '../sources/remote/model_mapper.dart';
 import '../sources/remote/models/cloud_models.dart';
-import '../interfaces/remote_data_source.dart';
-import '../sources/remote/daos/table_dao.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;
@@ -142,11 +142,13 @@ class SyncRepositoryImpl implements SyncRepository {
 
       try {
         await _loadAccountFromCloud(cloudAccount);
-      } on Object catch(_, stackTrace){
+      } on Object catch (_, stackTrace) {
         Error.throwWithStackTrace(
-            Exception(
-                'Sync account error. Account id=${cloudAccount.id}'),
-            stackTrace);
+          Exception(
+            'Sync account error. Account id=${cloudAccount.id}',
+          ),
+          stackTrace,
+        );
       }
 
       accountCount--;
@@ -163,11 +165,11 @@ class SyncRepositoryImpl implements SyncRepository {
       }
       try {
         await _loadCategoryFromCloud(cloudCategory);
-      } on Object catch(_, stackTrace){
+      } on Object catch (_, stackTrace) {
         Error.throwWithStackTrace(
-            Exception(
-                'Sync category error. Category id=${cloudCategory.id}'),
-            stackTrace);
+          Exception('Sync category error. Category id=${cloudCategory.id}'),
+          stackTrace,
+        );
       }
 
       categoryCount--;
@@ -187,9 +189,11 @@ class SyncRepositoryImpl implements SyncRepository {
         await _loadOperationFromCloud(cloudOperation);
       } on Object catch (_, stackTrace) {
         Error.throwWithStackTrace(
-            Exception(
-                'Sync operation error. Operation id=${cloudOperation.id}'),
-            stackTrace);
+          Exception(
+            'Sync operation error. Operation id=${cloudOperation.id}',
+          ),
+          stackTrace,
+        );
       }
 
       operationCount--;

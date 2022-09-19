@@ -51,7 +51,9 @@ class GoogleAuth extends AuthSource {
       );
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          const AuthException('Error when sign in silently'), stackTrace);
+        const AuthException('Error when sign in silently'),
+        stackTrace,
+      );
     }
   }
 
@@ -73,7 +75,9 @@ class GoogleAuth extends AuthSource {
       );
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          const AuthException('Error when sign in'), stackTrace);
+        const AuthException('Error when sign in'),
+        stackTrace,
+      );
     }
   }
 
@@ -88,7 +92,9 @@ class GoogleAuth extends AuthSource {
       await _firebaseAuth.signOut();
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          const AuthException('Error when sign out'), stackTrace);
+        const AuthException('Error when sign out'),
+        stackTrace,
+      );
     }
   }
 
