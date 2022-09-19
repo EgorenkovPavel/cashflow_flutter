@@ -7,7 +7,7 @@ import 'package:money_tracker/ui/pages/category/detail_page/category_cashflow_di
 import 'package:money_tracker/ui/pages/category/detail_page/category_detail_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class CategoryDetailPage extends StatelessWidget {
   final int id;
@@ -105,7 +105,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            '${AppLocalizations.of(context).budget} $budget ${AppLocalizations.of(context).in_period} ${AppLocalizations.of(context).budgetTypeTitle(budgetType)}',
+            '${context.loc.budget} $budget ${context.loc.inPeriod} ${context.loc.budgetTypeTitle(budgetType)}',
           ),
         ),
         Padding(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class TypeRadioButton<T> extends StatelessWidget {
   final void Function(T) onChange;
@@ -46,10 +46,9 @@ class _TypeItem<T> extends StatelessWidget {
 
   String getTitle(BuildContext context) {
     if (_type is OperationType) {
-      return AppLocalizations.of(context)
-          .operationTypeTitle(_type as OperationType);
+      return context.loc.operationTypeTitle(_type as OperationType);
     } else if (_type is BudgetType) {
-      return AppLocalizations.of(context).budgetTypeTitle(_type as BudgetType);
+      return context.loc.budgetTypeTitle(_type as BudgetType);
     } else {
       return _type.toString();
     }

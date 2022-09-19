@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/utils/extensions.dart';
+
 import '../../../../injection_container.dart';
 import 'backup_dialog.dart';
 import 'google_drive_settings_bloc.dart';
 import 'restore_dialog.dart';
-import '../../../../utils/app_localization.dart';
 
 class GoogleDriveSettingsPage extends StatelessWidget {
   const GoogleDriveSettingsPage({Key? key}) : super(key: key);
 
-  void _listenState(BuildContext context, DriveState state){
+  void _listenState(BuildContext context, DriveState state) {
     if (state == DriveState.SUCCESS_BACKUP) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).mesDatabaseBackuped),
+        content: Text(context.loc.mesDatabaseBackuped),
       ));
     } else if (state == DriveState.SUCCESS_RESTORE) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context).mesDatabaseRestored),
+        content: Text(context.loc.mesDatabaseRestored),
       ));
     }
   }
@@ -42,15 +43,11 @@ class GoogleDriveSettingsPage extends StatelessWidget {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () => _backup(context, bloc.backup),
-                    child: Text(
-                      AppLocalizations.of(context).backup.toUpperCase(),
-                    ),
+                    child: Text(context.loc.backup.toUpperCase()),
                   ),
                   ElevatedButton(
                     onPressed: () => _restore(context, bloc.restore),
-                    child: Text(
-                      AppLocalizations.of(context).restore.toUpperCase(),
-                    ),
+                    child: Text(context.loc.restore.toUpperCase()),
                   ),
                 ],
               ),

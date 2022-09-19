@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class DriveDialog extends StatefulWidget {
   final DialogMode mode;
@@ -44,7 +44,7 @@ class _DriveDialogState extends State<DriveDialog> {
     return false;
   }
 
-  void _listenState(BuildContext context, DialogDriveState state){
+  void _listenState(BuildContext context, DialogDriveState state) {
     if (state.action == DialogDriveAction.JUMP_TO_START) {
       _listController.jumpTo(0);
     } else if (state.action == DialogDriveAction.RETURN_RESULT) {
@@ -84,14 +84,12 @@ class _DriveDialogState extends State<DriveDialog> {
         persistentFooterButtons: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              AppLocalizations.of(context).cancel.toUpperCase(),
-            ),
+            child: Text(context.loc.cancel.toUpperCase()),
           ),
           ElevatedButton(
             onPressed: () => _bloc.choose(),
             child: Text(
-              AppLocalizations.of(context).choose.toUpperCase(),
+              context.loc.choose.toUpperCase(),
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -118,7 +116,7 @@ class _DriveFileItem extends StatelessWidget {
           file.isFolder ? const Icon(Icons.folder) : const Icon(Icons.remove),
       title: Text(file.title),
       subtitle: Text(
-        '${AppLocalizations.of(context).lastChanges} ${DateFormat.yMMMd().format(file.lastChanges)}',
+        '${context.loc.lastChanges} ${DateFormat.yMMMd().format(file.lastChanges)}',
       ),
       enabled: file.enabled,
       onTap: onTap,

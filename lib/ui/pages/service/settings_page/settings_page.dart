@@ -4,7 +4,7 @@ import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/common_blocs/sync/states.dart';
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -14,9 +14,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context).itemMenuService,
-        ),
+        title: Text(context.loc.itemMenuService),
       ),
       body: Builder(
         builder: (BuildContext context) {
@@ -130,7 +128,7 @@ class DataControlListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(AppLocalizations.of(context).titleDataControl),
+      title: Text(context.loc.titleDataControl),
       onTap: () => PageNavigator.openDataControlPage(context),
     );
   }

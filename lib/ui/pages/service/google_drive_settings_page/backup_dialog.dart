@@ -3,7 +3,7 @@ import 'package:money_tracker/data/interfaces/settings_source.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class BackupDialog extends StatefulWidget {
   final Future<void> Function(String folderId, String title) onBackup;
@@ -54,7 +54,7 @@ class _BackupDialogState extends State<BackupDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context).backup),
+      title: Text(context.loc.backup),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -63,7 +63,7 @@ class _BackupDialogState extends State<BackupDialog> {
               controller: _controller,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                labelText: AppLocalizations.of(context).title,
+                labelText: context.loc.title,
               ),
             ),
             const SizedBox(
@@ -94,13 +94,11 @@ class _BackupDialogState extends State<BackupDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+          child: Text(context.loc.cancel.toUpperCase()),
         ),
         ElevatedButton(
           onPressed: () => _save(),
-          child: Text(
-            AppLocalizations.of(context).backup.toUpperCase(),
-          ),
+          child: Text(context.loc.backup.toUpperCase()),
         ),
       ],
     );

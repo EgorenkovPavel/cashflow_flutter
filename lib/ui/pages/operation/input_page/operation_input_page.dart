@@ -7,7 +7,7 @@ import 'package:money_tracker/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/ui/widgets/keyboard.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class OperationInputPage extends StatefulWidget {
   const OperationInputPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       stream: _bloc.accountStream.map((list) => type == OperationType.TRANSFER
           ? list
           : list.where((element) => !element.isDebt).toList()),
-      emptyListMessage: AppLocalizations.of(context).noAccounts,
+      emptyListMessage: context.loc.noAccounts,
       initialItemFinder: (account) =>
           _bloc.account != null && account.id == _bloc.account!.id,
       onItemChanged: (account) => _bloc.onAccountChanged(account),
@@ -38,7 +38,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget categoryInPageView(BuildContext context) {
     return CarouselList<Category>(
       stream: _bloc.categoryInStream,
-      emptyListMessage: AppLocalizations.of(context).noCategories,
+      emptyListMessage: context.loc.noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryIn != null && category.id == _bloc.categoryIn!.id,
       onItemChanged: (category) => _bloc.onCategoryInChanged(category),
@@ -49,7 +49,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget categoryOutPageView(BuildContext context) {
     return CarouselList<Category>(
       stream: _bloc.categoryOutStream,
-      emptyListMessage: AppLocalizations.of(context).noCategories,
+      emptyListMessage: context.loc.noCategories,
       initialItemFinder: (category) =>
           _bloc.categoryOut != null && category.id == _bloc.categoryOut!.id,
       onItemChanged: (category) => _bloc.onCategoryOutChanged(category),
@@ -60,7 +60,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget recAccountPageView(BuildContext context) {
     return CarouselList<AccountBalance>(
       stream: _bloc.accountStream,
-      emptyListMessage: AppLocalizations.of(context).noAccounts,
+      emptyListMessage: context.loc.noAccounts,
       initialItemFinder: (account) =>
           _bloc.recAccount != null && account.id == _bloc.recAccount!.id,
       onItemChanged: (account) => _bloc.onRecAccountChanged(account),
@@ -110,19 +110,19 @@ class _OperationInputPageState extends State<OperationInputPage>
     switch (type) {
       case OperationType.INPUT:
         return buildList(
-          AppLocalizations.of(context).categories,
+          context.loc.categories,
           addNewInCategory,
           categoryInPageView(context),
         );
       case OperationType.OUTPUT:
         return buildList(
-          AppLocalizations.of(context).categories,
+          context.loc.categories,
           addNewOutCategory,
           categoryOutPageView(context),
         );
       case OperationType.TRANSFER:
         return buildList(
-          AppLocalizations.of(context).receiver,
+          context.loc.receiver,
           addNewRecAccount,
           recAccountPageView(context),
         );
@@ -164,35 +164,35 @@ class _OperationInputPageState extends State<OperationInputPage>
     } else if (state.action == MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).emptyAccountError),
+          content: Text(context.loc.emptyAccountError),
         ),
       );
     } else if (state.action == MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).emptyCategoryError),
+          content: Text(context.loc.emptyCategoryError),
         ),
       );
     } else if (state.action ==
         MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).emptyRecAccountError),
+          content: Text(context.loc.emptyRecAccountError),
         ),
       );
     } else if (state.action == MasterStateAction.SHOW_EMPTY_SUM_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).emptySumError),
+          content: Text(context.loc.emptySumError),
         ),
       );
     } else if (state.action ==
         MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).mesOperationCreated),
+          content: Text(context.loc.mesOperationCreated),
           action: SnackBarAction(
-            label: AppLocalizations.of(context).cancel,
+            label: context.loc.cancel,
             onPressed: () => _bloc.cancelOperation(),
           ),
         ),
@@ -201,7 +201,7 @@ class _OperationInputPageState extends State<OperationInputPage>
         MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).mesOperationCanceled),
+          content: Text(context.loc.mesOperationCanceled),
         ),
       );
     }
@@ -253,7 +253,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     }
   }
 
-  Future<bool> _onBackPressed(){
+  Future<bool> _onBackPressed() {
     _bloc.backpressed();
 
     return Future.value(false);
@@ -265,9 +265,7 @@ class _OperationInputPageState extends State<OperationInputPage>
       onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context).titleMaster,
-          ),
+          title: Text(context.loc.titleMaster),
         ),
         body: BlocConsumer<MasterBloc, MasterState>(
           bloc: _bloc,
@@ -296,8 +294,8 @@ class _OperationInputPageState extends State<OperationInputPage>
                     children: <Widget>[
                       buildList(
                         state.type == OperationType.TRANSFER
-                            ? AppLocalizations.of(context).source
-                            : AppLocalizations.of(context).accounts,
+                            ? context.loc.source
+                            : context.loc.accounts,
                         addNewAccount,
                         accountPageView(context, state.type),
                       ),
@@ -333,7 +331,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                             TextButton(
                               onPressed: () => _bloc.onMoreTap(),
                               child: Text(
-                                AppLocalizations.of(context).more.toUpperCase(),
+                                context.loc.more.toUpperCase(),
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
@@ -368,8 +366,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                         height: 48.0,
                                         alignment: Alignment.center,
                                         child: Text(
-                                          AppLocalizations.of(context)
-                                              .numberFormat(state.sum),
+                                          context.loc.numberFormat(state.sum),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4,
@@ -392,9 +389,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                             TextButton(
                               onPressed: () => _bloc.onNextTap(),
                               child: Text(
-                                AppLocalizations.of(context)
-                                    .create
-                                    .toUpperCase(),
+                                context.loc.create.toUpperCase(),
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
@@ -444,7 +439,7 @@ class _AccountItem extends StatelessWidget {
       children: <Widget>[
         Text(account.title),
         Text(
-          AppLocalizations.of(context).numberFormat(account.balance),
+          context.loc.numberFormat(account.balance),
           style: Theme.of(context).textTheme.caption,
         ),
       ],

@@ -6,7 +6,6 @@ import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/reports/reports_bloc.dart';
-import 'package:money_tracker/utils/app_localization.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
 const double _FIRST_COLUMN_WIDTH = 100;
@@ -21,7 +20,7 @@ class ReportsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).titleReports),
+        title: Text(context.loc.titleReports),
       ),
       body: BlocProvider<ReportsBloc>(
         create: (context) => sl<ReportsBloc>()

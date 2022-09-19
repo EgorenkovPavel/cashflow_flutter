@@ -6,7 +6,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class OperationList extends StatelessWidget {
@@ -78,8 +78,8 @@ class OperationList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (_operations.isEmpty) {
       return EmptyListHint(
-        title: AppLocalizations.of(context).emptyListOperations,
-        hint: AppLocalizations.of(context).hintEmptyList,
+        title: context.loc.emptyListOperations,
+        hint: context.loc.hintEmptyList,
       );
     }
 

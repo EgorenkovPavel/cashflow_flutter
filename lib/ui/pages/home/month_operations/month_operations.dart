@@ -6,8 +6,8 @@ import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/month_operations/month_operations_bloc.dart';
 import 'package:money_tracker/ui/themes.dart';
-import 'package:money_tracker/utils/app_localization.dart';
 import 'package:money_tracker/utils/date_util.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class MonthOperations extends StatelessWidget {
   const MonthOperations({
@@ -24,7 +24,7 @@ class MonthOperations extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '${AppLocalizations.of(context).operationsIn} ',
+                  text: '${context.loc.operationsIn} ',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 TextSpan(
@@ -142,8 +142,8 @@ class _MonthOperation extends StatelessWidget {
           children: [
             Text(
               operationType == OperationType.INPUT
-                  ? AppLocalizations.of(context).earning
-                  : AppLocalizations.of(context).spending,
+                  ? context.loc.earning
+                  : context.loc.spending,
               style: Theme.of(context).textTheme.headline6,
             ),
             Stack(
@@ -179,7 +179,7 @@ class _MonthOperation extends StatelessWidget {
                 ),
               ],
             ),
-            Text(AppLocalizations.of(context).numberFormat(
+            Text(context.loc.numberFormat(
               context.select<MonthOperationsBloc, int>(
                 (bloc) => bloc.state.cashflow[operationType] ?? 0,
               ),

@@ -6,7 +6,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/last_operations/last_operations_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/ui/pages/operation/list_tile_operation.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class LastOperations extends StatelessWidget {
   const LastOperations({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class LastOperations extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              AppLocalizations.of(context).titleLastOperations,
+              context.loc.titleLastOperations,
               style: Theme.of(context).textTheme.headline6,
             ),
             BlocBuilder<LastOperationsBloc, LastOperationsState>(
@@ -78,7 +78,7 @@ class _NoOperationsTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(AppLocalizations.of(context).noOperations),
+      child: Text(context.loc.noOperations),
     );
   }
 }
@@ -104,7 +104,7 @@ class _ShowAllButton extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
               ),
               Text(
-                AppLocalizations.of(context).btnShowAll.toUpperCase(),
+                context.loc.btnShowAll.toUpperCase(),
                 style: const TextStyle()
                     .copyWith(color: Theme.of(context).colorScheme.primary),
               ),

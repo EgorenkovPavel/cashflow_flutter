@@ -6,7 +6,7 @@ import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/category/input_page/category_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class CategoryInputPage extends StatelessWidget {
   final OperationType? type;
@@ -70,7 +70,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   String? _titleValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context).emptyTitleError;
+      return context.loc.emptyTitleError;
     }
 
     return null;
@@ -82,8 +82,8 @@ class _CategoryPageState extends State<CategoryPage> {
       listener: _listenState,
       child: ItemCard(
         title: widget.isNew
-            ? AppLocalizations.of(context).newCategoryCardTitle
-            : AppLocalizations.of(context).categoryCardTitle,
+            ? context.loc.newCategoryCardTitle
+            : context.loc.categoryCardTitle,
         onSave: (context) => context.read<CategoryInputBloc>().add(Save()),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -94,13 +94,13 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    AppLocalizations.of(context).titleType,
+                    context.loc.titleType,
                     style: Theme.of(context).textTheme.caption,
                   ),
                   const SizedBox(
                     width: 8.0,
                   ),
-                  Text(AppLocalizations.of(context).operationTypeTitle(
+                  Text(context.loc.operationTypeTitle(
                     context.select<CategoryInputBloc, OperationType>(
                       (bloc) => bloc.state.operationType,
                     ),
@@ -114,7 +114,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: titleController,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).title,
+                labelText: context.loc.title,
               ),
               onChanged: (value) =>
                   context.read<CategoryInputBloc>().add(ChangeTitle(value)),
@@ -125,7 +125,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: budgetController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).budget,
+                labelText: context.loc.budget,
               ),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
@@ -137,7 +137,7 @@ class _CategoryPageState extends State<CategoryPage> {
             const SizedBox(height: 8.0),
             Row(
               children: [
-                Text(AppLocalizations.of(context).budgetType),
+                Text(context.loc.budgetType),
                 const SizedBox(width: 16.0),
                 TypeRadioButton<BudgetType>(
                   onChange: (type) => context

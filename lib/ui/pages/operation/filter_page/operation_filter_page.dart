@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_bloc.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class OperationFilterPage extends StatelessWidget {
   const OperationFilterPage({Key? key, this.filter}) : super(key: key);
@@ -108,7 +108,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).titleFilters),
+        title: Text(context.loc.titleFilters),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -117,7 +117,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(height: 8.0),
-              Text(AppLocalizations.of(context).period),
+              Text(context.loc.period),
               PeriodButton(
                 date: context.select<OperationFilterBloc, DateTimeRange?>(
                   (bloc) => bloc.state.filter.period,
@@ -128,11 +128,11 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                     context.read<OperationFilterBloc>().add(ResetPediod()),
               ),
               const SizedBox(height: 8.0),
-              Text(AppLocalizations.of(context).accounts),
+              Text(context.loc.accounts),
               InputChip(
                 key: _accountKey,
                 avatar: const Icon(Icons.mode_edit),
-                label: Text(AppLocalizations.of(context).chooseAccount),
+                label: Text(context.loc.chooseAccount),
                 onPressed: _onAccountChipPressed,
               ),
               Wrap(
@@ -152,11 +152,11 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                     .toList(),
               ),
               const SizedBox(height: 8.0),
-              Text(AppLocalizations.of(context).inputCategory),
+              Text(context.loc.inputCategory),
               InputChip(
                 key: _categoryInKey,
                 avatar: const Icon(Icons.mode_edit),
-                label: Text(AppLocalizations.of(context).chooseCategory),
+                label: Text(context.loc.chooseCategory),
                 onPressed: _onCategoryInPressed,
               ),
               Wrap(
@@ -182,11 +182,11 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
               const SizedBox(
                 height: 8.0,
               ),
-              Text(AppLocalizations.of(context).outputCategory),
+              Text(context.loc.outputCategory),
               InputChip(
                 key: _categoryOutKey,
                 avatar: const Icon(Icons.mode_edit),
-                label: Text(AppLocalizations.of(context).chooseCategory),
+                label: Text(context.loc.chooseCategory),
                 onPressed: _onCategoryOutPressed,
               ),
               Wrap(
@@ -219,9 +219,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
             context,
             const OperationListFilter.empty(),
           ),
-          child: Text(
-            AppLocalizations.of(context).reset.toUpperCase(),
-          ),
+          child: Text(context.loc.reset.toUpperCase()),
         ),
         ElevatedButton(
           onPressed: () => Navigator.pop(
@@ -229,7 +227,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
             context.read<OperationFilterBloc>().state.filter,
           ),
           child: Text(
-            AppLocalizations.of(context).apply.toUpperCase(),
+            context.loc.apply.toUpperCase(),
             style: const TextStyle(color: Colors.white),
           ),
         ),
@@ -277,7 +275,7 @@ class PeriodButton extends StatelessWidget {
     } else {
       return InputChip(
         avatar: const Icon(Icons.mode_edit),
-        label: Text(AppLocalizations.of(context).choosePeriod),
+        label: Text(context.loc.choosePeriod),
         onPressed: () => _onChoosePeriod(context),
       );
     }

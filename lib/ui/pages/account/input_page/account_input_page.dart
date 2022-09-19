@@ -4,7 +4,7 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/ui/pages/item_card.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class AccountInputPage extends StatelessWidget {
   final int? id;
@@ -59,7 +59,7 @@ class _AccountPageState extends State<AccountPage> {
 
   String? _titleValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context).emptyTitleError;
+      return context.loc.emptyTitleError;
     }
 
     return null;
@@ -71,8 +71,8 @@ class _AccountPageState extends State<AccountPage> {
       listener: _listenState,
       child: ItemCard<Account>(
         title: widget.isNew
-            ? AppLocalizations.of(context).newAccountCardTitle
-            : AppLocalizations.of(context).accountCardTitle,
+            ? context.loc.newAccountCardTitle
+            : context.loc.accountCardTitle,
         onSave: (context) => context.read<AccountInputBloc>().add(Save()),
         child: Column(
           children: [
@@ -81,7 +81,7 @@ class _AccountPageState extends State<AccountPage> {
               controller: _controller,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).title,
+                labelText: context.loc.title,
               ),
               onChanged: (value) =>
                   context.read<AccountInputBloc>().add(ChangeTitle(value)),

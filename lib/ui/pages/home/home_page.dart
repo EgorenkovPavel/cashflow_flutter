@@ -4,7 +4,7 @@ import 'package:money_tracker/ui/pages/home/last_operations/last_operations.dart
 import 'package:money_tracker/ui/pages/home/month_operations/month_operations.dart';
 import 'package:money_tracker/ui/pages/home/sync_button.dart';
 import 'package:money_tracker/ui/pages/home/top_header/top_header.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
           children: [
             const TopHeader(),
             _AddButton(
-              title: AppLocalizations.of(context).btnAddAccount,
+              title: context.loc.btnAddAccount,
               onPressed: () => PageNavigator.openAccountInputPage(context),
             ),
             const MonthOperations(),

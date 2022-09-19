@@ -5,7 +5,7 @@ import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/home/top_header/top_header_bloc.dart';
 import 'package:money_tracker/ui/themes.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 const double _itemSize = 100.0;
 
@@ -77,13 +77,13 @@ class _TotalBalance extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  AppLocalizations.of(context).titleTotalBalance,
+                  context.loc.titleTotalBalance,
                   style: Theme.of(context).textTheme.headline6!.copyWith(
                         color: Colors.white.withOpacity(0.5),
                       ),
                 ),
                 Text(
-                  AppLocalizations.of(context).numberFormat(
+                  context.loc.numberFormat(
                     context.select<TopHeaderBloc, int>(
                       (bloc) => bloc.state.totalBalance,
                     ),
@@ -172,7 +172,7 @@ class _AccountItem extends StatelessWidget {
                   ),
             ),
             Text(
-              AppLocalizations.of(context).numberFormat(account.balance),
+              context.loc.numberFormat(account.balance),
               style: Theme.of(context).textTheme.headline6!.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

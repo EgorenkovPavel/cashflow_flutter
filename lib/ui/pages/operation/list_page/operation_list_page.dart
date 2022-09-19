@@ -5,7 +5,7 @@ import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/operation/list_page/operation_list_bloc.dart';
 import 'package:money_tracker/ui/pages/operation/operation_list.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class OperationListPage extends StatelessWidget {
   const OperationListPage({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class OperationListPage extends StatelessWidget {
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(AppLocalizations.of(context).operations),
+            title: Text(context.loc.operations),
             actions: [
               IconButton(
                 onPressed: () => _onFilterPressed(context),

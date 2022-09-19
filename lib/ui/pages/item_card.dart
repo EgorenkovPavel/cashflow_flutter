@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class ItemCard<T> extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -15,7 +15,7 @@ class ItemCard<T> extends StatelessWidget {
     required this.onSave,
   }) : super(key: key);
 
-  void _onSavePressed(BuildContext context){
+  void _onSavePressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       onSave(context);
     }
@@ -42,16 +42,11 @@ class ItemCard<T> extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(null),
-                  child: Text(
-                    AppLocalizations.of(context).cancel.toUpperCase(),
-                  ),
+                  child: Text(context.loc.cancel.toUpperCase()),
                 ),
                 ElevatedButton(
                   onPressed: () => _onSavePressed(context),
-                  child: Text(
-                    AppLocalizations.of(context).save.toUpperCase(),
-                    //style: TextStyle(color: Colors.white),
-                  ),
+                  child: Text(context.loc.save.toUpperCase()),
                 ),
               ]),
             ],

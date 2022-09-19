@@ -6,7 +6,7 @@ import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import 'package:money_tracker/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/ui/widgets/type_radio_button.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class OperationEditPage extends StatelessWidget {
   final int id;
@@ -54,7 +54,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
 
   String? _sumValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context).emptySumError;
+      return context.loc.emptySumError;
     }
 
     return null;
@@ -74,7 +74,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
         key: _formKey,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(AppLocalizations.of(context).operationCardTitle),
+            title: Text(context.loc.operationCardTitle),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -85,7 +85,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   const Title(text: 'Cloud ID'), // TODO
                   Text(context.select<OperationEditBloc, String>(
                       (bloc) => bloc.state.operation.cloudId)),
-                  Title(text: AppLocalizations.of(context).titleDate),
+                  Title(text: context.loc.titleDate),
                   Row(
                     children: <Widget>[
                       DateButton(
@@ -109,7 +109,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       ),
                     ],
                   ),
-                  Title(text: AppLocalizations.of(context).titleType),
+                  Title(text: context.loc.titleType),
                   TypeRadioButton<OperationType>(
                     type: context.select<OperationEditBloc, OperationType>(
                       (bloc) => bloc.state.operationType,
@@ -123,19 +123,19 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       OperationType.TRANSFER,
                     ],
                   ),
-                  Title(text: AppLocalizations.of(context).titleAccount),
+                  Title(text: context.loc.titleAccount),
                   DropdownList<Account>(
                     value: context.select<OperationEditBloc, Account>(
                       (bloc) => bloc.state.account,
                     ),
-                    hint: AppLocalizations.of(context).hintAccount,
+                    hint: context.loc.hintAccount,
                     items: context.select<OperationEditBloc, List<Account>>(
                       (bloc) => bloc.state.accounts,
                     ),
                     onChange: _onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
-                  Title(text: AppLocalizations.of(context).titleAnalytic),
+                  Title(text: context.loc.titleAnalytic),
                   analyticMenu(),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -144,7 +144,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       controller: _sumController,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context).titleSum,
+                        labelText: context.loc.titleSum,
                       ),
                       onChanged: (value) => context
                           .read<OperationEditBloc>()
@@ -159,11 +159,11 @@ class _OperationEditPageState extends State<_OperationEditPage> {
           persistentFooterButtons: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(AppLocalizations.of(context).cancel.toUpperCase()),
+              child: Text(context.loc.cancel.toUpperCase()),
             ),
             ElevatedButton(
               onPressed: () => _onSavePressed(context),
-              child: Text(AppLocalizations.of(context).save.toUpperCase()),
+              child: Text(context.loc.save.toUpperCase()),
             ),
           ],
         ),
@@ -190,7 +190,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
           case OperationType.INPUT:
             return DropdownList<Category>(
               value: state.category,
-              hint: AppLocalizations.of(context).hintCategory,
+              hint: context.loc.hintCategory,
               onChange: _onCategoryChange,
               items: state.inCategories,
               getListItem: (item) => ListTile(title: Text(item.title)),
@@ -198,7 +198,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
           case OperationType.OUTPUT:
             return DropdownList<Category>(
               value: state.category,
-              hint: AppLocalizations.of(context).hintCategory,
+              hint: context.loc.hintCategory,
               onChange: _onCategoryChange,
               items: state.outCategories,
               getListItem: (item) => ListTile(title: Text(item.title)),
@@ -206,7 +206,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
           case OperationType.TRANSFER:
             return DropdownList<Account>(
               value: state.recAccount,
-              hint: AppLocalizations.of(context).hintAccount,
+              hint: context.loc.hintAccount,
               onChange: _onRecAccountChange,
               items: state.accounts,
               getListItem: (item) => ListTile(title: Text(item.title)),

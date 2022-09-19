@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class RestoreDialog extends StatefulWidget {
   final void Function(String fileId) restore;
@@ -19,14 +19,14 @@ class _RestoreDialogState extends State<RestoreDialog> {
     var newFile = await PageNavigator.chooseFile(context);
     if (newFile != null) {
       setState(
-            () {
+        () {
           _file = newFile;
         },
       );
     }
   }
 
-  void _onRestore(){
+  void _onRestore() {
     if (_file == null) {
       return;
     }
@@ -39,7 +39,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context).restore),
+      title: Text(context.loc.restore),
       content: Container(
         padding: const EdgeInsets.only(left: 8.0),
         width: double.infinity,
@@ -64,15 +64,11 @@ class _RestoreDialogState extends State<RestoreDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            AppLocalizations.of(context).cancel.toUpperCase(),
-          ),
+          child: Text(context.loc.cancel.toUpperCase()),
         ),
         ElevatedButton(
           onPressed: _onRestore,
-          child: Text(
-            AppLocalizations.of(context).restore.toUpperCase(),
-          ),
+          child: Text(context.loc.restore.toUpperCase()),
         ),
       ],
     );

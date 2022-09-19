@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page_bloc.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class DataControlPage extends StatelessWidget {
   const DataControlPage({Key? key}) : super(key: key);
 
-  void _listenState(BuildContext context, DataControlState state){
+  void _listenState(BuildContext context, DataControlState state) {
     if (state == DataControlState.SUCCESS) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          AppLocalizations.of(context).mesDatabaseDeleted,
-        ),
+        content: Text(context.loc.mesDatabaseDeleted),
       ));
     }
   }
@@ -23,7 +21,7 @@ class DataControlPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).titleDataControl),
+        title: Text(context.loc.titleDataControl),
       ),
       body: Stack(
         children: [
@@ -31,9 +29,7 @@ class DataControlPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () => bloc.deleteAll(),
-              child: Text(
-                AppLocalizations.of(context).btnDeleteAll.toUpperCase(),
-              ),
+              child: Text(context.loc.btnDeleteAll.toUpperCase()),
             ),
           ),
           BlocConsumer<DataControlBloc, DataControlState>(

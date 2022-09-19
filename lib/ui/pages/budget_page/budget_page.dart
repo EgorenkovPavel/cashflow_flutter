@@ -6,7 +6,7 @@ import 'package:money_tracker/domain/models.dart';
 import 'package:money_tracker/injection_container.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/ui/pages/budget_page/budget_bloc.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class BudgetPage extends StatefulWidget {
   const BudgetPage({Key? key, required this.type}) : super(key: key);
@@ -63,8 +63,7 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                 pinned: true,
                 delegate: BudgetTypeHeaderDelegate(
-                  title: AppLocalizations.of(context)
-                      .budgetTypeTitle(BudgetType.MONTH),
+                  title: context.loc.budgetTypeTitle(BudgetType.MONTH),
                   cashflow: state.itemsMonthBudget.fold(
                     0,
                     (previousValue, element) =>
@@ -83,8 +82,7 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
               SliverPersistentHeader(
                 delegate: BudgetTypeHeaderDelegate(
-                  title: AppLocalizations.of(context)
-                      .budgetTypeTitle(BudgetType.YEAR),
+                  title: context.loc.budgetTypeTitle(BudgetType.YEAR),
                   cashflow: state.itemsYearBudget.fold(
                     0,
                     (previousValue, element) =>
@@ -127,12 +125,10 @@ class AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var start = operationType == OperationType.INPUT
-        ? AppLocalizations.of(context).earningIn
-        : AppLocalizations.of(context).spendingIn;
+        ? context.loc.earningIn
+        : context.loc.spendingIn;
 
-    var formatDate =
-        DateFormat.yMMMM(Localizations.localeOf(context).toString())
-            .format(date);
+    var formatDate = DateFormat.yMMMM().format(date);
 
     return Text('$start $formatDate');
   }
@@ -172,7 +168,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
               const Spacer(),
               Text(
-                AppLocalizations.of(context).numberFormat(cashflow),
+                context.loc.numberFormat(cashflow),
                 style: Theme.of(context).textTheme.headline6,
               ),
               showAll
@@ -258,7 +254,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            AppLocalizations.of(context).titleCashflow,
+            context.loc.titleCashflow,
             style: Theme.of(context).textTheme.headline6,
           ),
           TweenAnimationBuilder<int>(
@@ -269,7 +265,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             duration: _duration,
             builder: (context, cashflow, _) {
               return Text(
-                AppLocalizations.of(context).numberFormat(cashflow),
+                context.loc.numberFormat(cashflow),
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
@@ -370,9 +366,9 @@ class _CategoryItem extends StatelessWidget {
           PageNavigator.openCategoryPage(context, category.category.id),
       title: Text(category.category.title),
       subtitle: Text(
-        AppLocalizations.of(context).numberFormat(category.category.budget),
+        context.loc.numberFormat(category.category.budget),
       ),
-      trailing: Text(AppLocalizations.of(context).numberFormat(_cashflow())),
+      trailing: Text(context.loc.numberFormat(_cashflow())),
       leading: CircularProgressIndicator(
         value: _progress(),
       ),

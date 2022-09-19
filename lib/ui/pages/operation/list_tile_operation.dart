@@ -3,7 +3,7 @@ import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models/enum/operation_type.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
 import 'package:money_tracker/injection_container.dart';
-import 'package:money_tracker/utils/app_localization.dart';
+import 'package:money_tracker/utils/extensions.dart';
 
 class ListTileOperation extends StatelessWidget {
   final Operation _operation;
@@ -35,19 +35,19 @@ class ListTileOperation extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: const Icon(Icons.control_point_duplicate),
-            title: Text(AppLocalizations.of(context).duplicate),
+            title: Text(context.loc.duplicate),
             onTap: () => _onDuplicate(context),
           ),
           if (_operation.deleted)
             ListTile(
               leading: const Icon(Icons.delete_outline),
-              title: Text(AppLocalizations.of(context).recover),
+              title: Text(context.loc.recover),
               onTap: () => _onRecover(context),
             ),
           if (!_operation.deleted)
             ListTile(
               leading: const Icon(Icons.delete),
-              title: Text(AppLocalizations.of(context).delete),
+              title: Text(context.loc.delete),
               onTap: () => _onDelete(context),
             ),
         ],
@@ -77,7 +77,7 @@ class ListTileOperation extends StatelessWidget {
           ? Text(_operation.recAccount!.title)
           : Text(_operation.category!.title),
       trailing: Text(
-        AppLocalizations.of(context).numberFormat(_operation.sum),
+        context.loc.numberFormat(_operation.sum),
         style: Theme.of(context)
             .textTheme
             .headline5!
