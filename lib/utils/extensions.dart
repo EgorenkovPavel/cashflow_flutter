@@ -43,11 +43,11 @@ extension AppLocalizationExtended on AppLocalizations{
   String operationTypeTitle(OperationType type) {
     switch (type) {
       case OperationType.INPUT:
-        return this.typeInput;
+        return typeInput;
       case OperationType.OUTPUT:
-        return this.typeOutput;
+        return typeOutput;
       case OperationType.TRANSFER:
-        return this.typeTransfer;
+        return typeTransfer;
       default:
         return '';
     }
@@ -56,9 +56,9 @@ extension AppLocalizationExtended on AppLocalizations{
   String budgetTypeTitle(BudgetType type) {
     switch (type) {
       case BudgetType.MONTH:
-        return this.budgetTypeMonth;
+        return budgetTypeMonth;
       case BudgetType.YEAR:
-        return this.budgetTypeYear;
+        return budgetTypeYear;
     }
   }
 }

@@ -128,7 +128,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 labelText: context.loc.budget,
               ),
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly,
               ],
               onChanged: (value) => context
                   .read<CategoryInputBloc>()

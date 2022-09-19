@@ -84,7 +84,8 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 children: <Widget>[
                   const Title(text: 'Cloud ID'), // TODO
                   Text(context.select<OperationEditBloc, String>(
-                      (bloc) => bloc.state.operation.cloudId)),
+                    (bloc) => bloc.state.operation.cloudId,
+                  )),
                   Title(text: context.loc.titleDate),
                   Row(
                     children: <Widget>[
