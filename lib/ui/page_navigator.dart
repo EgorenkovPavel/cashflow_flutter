@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models.dart';
-import 'package:money_tracker/ui/pages/account/detail_page/account_detail_page.dart';
-import 'package:money_tracker/ui/pages/account/input_page/account_input_page.dart';
-import 'package:money_tracker/ui/pages/budget_page/budget_page.dart';
-import 'package:money_tracker/ui/pages/category/detail_page/category_detail_page.dart';
-import 'package:money_tracker/ui/pages/category/input_page/category_input_page.dart';
-import 'package:money_tracker/ui/pages/home/home_page.dart';
-import 'package:money_tracker/ui/pages/operation/edit_page/operation_edit_page.dart';
-import 'package:money_tracker/ui/pages/operation/filter_page/operation_filter_page.dart';
-import 'package:money_tracker/ui/pages/operation/input_page/operation_input_page.dart';
-import 'package:money_tracker/ui/pages/operation/list_page/operation_list_page.dart';
-import 'package:money_tracker/ui/pages/reports/reports_page.dart';
-import 'package:money_tracker/ui/pages/service/cloud_database_settings/cloud_database_settings_page.dart';
-import 'package:money_tracker/ui/pages/service/data_control_page/data_control_page.dart';
-import 'package:money_tracker/ui/pages/service/drive_dialog/drive_dialog.dart';
-import 'package:money_tracker/ui/pages/service/google_drive_settings_page/google_drive_settings.dart';
-import 'package:money_tracker/ui/pages/service/settings_page/settings_page.dart';
+
+import 'pages/account/detail_page/account_detail_page.dart';
+import 'pages/account/input_page/account_input_page.dart';
+import 'pages/budget_page/budget_page.dart';
+import 'pages/category/detail_page/category_detail_page.dart';
+import 'pages/category/input_page/category_input_page.dart';
+import 'pages/home/home_page.dart';
+import 'pages/operation/edit_page/operation_edit_page.dart';
+import 'pages/operation/filter_page/operation_filter_page.dart';
+import 'pages/operation/input_page/operation_input_page.dart';
+import 'pages/operation/list_page/operation_list_page.dart';
+import 'pages/reports/reports_page.dart';
+import 'pages/service/cloud_database_settings/cloud_database_settings_page.dart';
+import 'pages/service/data_control_page/data_control_page.dart';
+import 'pages/service/drive_dialog/drive_dialog.dart';
+import 'pages/service/google_drive_settings_page/google_drive_settings.dart';
+import 'pages/service/settings_page/settings_page.dart';
 
 class PageNavigator {
   static Future<Account?> openAccountInputPage(BuildContext context) =>
@@ -137,15 +138,14 @@ class PageNavigator {
 
   static Map<String, Widget Function(BuildContext)> routes =
       <String, WidgetBuilder>{
-    routeRootName: (context) => const HomePage(),
-    _routeOperationListName: (context) => const OperationListPage(),
-    _routeOperationInputName: (context) => const OperationInputPage(),
-    _routeSettingsName: (context) => const SettingsPage(),
-    _routeDataControlName: (context) => const DataControlPage(),
-    _routeGoogleDriveSettingsName: (context) => const GoogleDriveSettingsPage(),
-    _routeCloudDatabaseSettingsName: (context) =>
-        const CloudDatabaseSettingsPage(),
-    _routeReportsName: (context) => const ReportsPage(),
+    routeRootName: (_) => const HomePage(),
+    _routeOperationListName: (_) => const OperationListPage(),
+    _routeOperationInputName: (_) => const OperationInputPage(),
+    _routeSettingsName: (_) => const SettingsPage(),
+    _routeDataControlName: (_) => const DataControlPage(),
+    _routeGoogleDriveSettingsName: (_) => const GoogleDriveSettingsPage(),
+    _routeCloudDatabaseSettingsName: (_) => const CloudDatabaseSettingsPage(),
+    _routeReportsName: (_) => const ReportsPage(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
