@@ -78,7 +78,7 @@ class _MonthOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => PageNavigator.openBudgetPage(context, operationType),
+      onTap: () => sl<PageNavigator>().openBudgetPage(context, operationType),
       // child: Card(
       //   child: Padding(
       //     padding: const EdgeInsets.all(16.0),

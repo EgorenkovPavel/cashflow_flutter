@@ -9,6 +9,8 @@ import 'package:money_tracker/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/utils/extensions.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../../injection_container.dart';
+
 class OperationList extends StatelessWidget {
   final List<Operation> _operations;
 
@@ -70,8 +72,8 @@ class OperationList extends StatelessWidget {
     );
   }
 
-  static Future _onItemTap(BuildContext context, item) {
-    return PageNavigator.openOperationEditPage(context, item.id);
+  static void _onItemTap(BuildContext context, item) {
+    sl<PageNavigator>().openOperationEditPage(context, item.id);
   }
 
   @override

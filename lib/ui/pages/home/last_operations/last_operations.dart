@@ -60,7 +60,7 @@ class _OperationsList extends StatelessWidget {
                 ListTileOperation(
                   e,
                   onTap: () =>
-                      PageNavigator.openOperationEditPage(context, e.id),
+                      sl<PageNavigator>().openOperationEditPage(context, e.id),
                 ),
               ])
           .toList()
@@ -93,7 +93,7 @@ class _ShowAllButton extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: TextButton(
-        onPressed: () => PageNavigator.openOperationListPage(context),
+        onPressed: () => sl<PageNavigator>().openOperationListPage(context),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Row(

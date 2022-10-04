@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:money_tracker/domain/models.dart';
 
 import 'pages/account/detail_page/account_detail_page.dart';
@@ -18,190 +19,168 @@ import 'pages/service/drive_dialog/drive_dialog.dart';
 import 'pages/service/google_drive_settings_page/google_drive_settings.dart';
 import 'pages/service/settings_page/settings_page.dart';
 
-class PageNavigator {
-  static Future<Account?> openAccountInputPage(BuildContext context) =>
-      const _Card<Account>().open(
-        context,
-        const AccountInputPage.input(),
-      );
+class PageNavigator extends GoRouter {
+  PageNavigator()
+      : super(
+          routes: <GoRoute>[
+            GoRoute(
+              path: '/',
+              builder: (context, state) => const HomePage(),
+              routes: <GoRoute>[
+                GoRoute(
+                  name: 'account',
+                  path: 'account/:fid',
+                  builder: (context, state) =>
+                      AccountDetailPage(id: int.parse(state.params['fid']!)),
+                ),
+                GoRoute(
+                  name: 'category',
+                  path: 'category/:fid',
+                  builder: (context, state) =>
+                      CategoryDetailPage(id: int.parse(state.params['fid']!)),
+                ),
+                GoRoute(
+                  name: 'operation',
+                  path: 'operation',
+                  builder: (context, state) => const OperationListPage(),
+                  routes: <GoRoute>[
+                    GoRoute(
+                      name: 'operationId',
+                      path: 'edit/:fid',
+                      builder: (context, state) => OperationEditPage(
+                        id: int.parse(state.params['fid']!),
+                      ),
+                    ),
+                    GoRoute(
+                      name: 'operationNew',
+                      path: 'new',
+                      builder: (context, state) => const OperationInputPage(),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  name: 'budget',
+                  path: 'budget/:fid',
+                  builder: (context, state) => BudgetPage(
+                    type: OperationType.values.firstWhere(
+                      (element) => element.toString() == state.params['fid'],
+                    ),
+                  ),
+                ),
+                GoRoute(
+                  name: 'settings',
+                  path: 'settings',
+                  builder: (context, state) => const SettingsPage(),
+                  routes: <GoRoute>[
+                    GoRoute(
+                      name: 'dataControl',
+                      path: 'dataControl',
+                      builder: (context, state) => const DataControlPage(),
+                    ),
+                    GoRoute(
+                      name: 'googleDriveSettings',
+                      path: 'googleDriveSettings',
+                      builder: (context, state) =>
+                          const GoogleDriveSettingsPage(),
+                    ),
+                    GoRoute(
+                      name: 'cloudDatabaseSettings',
+                      path: 'cloudDatabaseSettings',
+                      builder: (context, state) =>
+                          const CloudDatabaseSettingsPage(),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  name: 'reports',
+                  path: 'reports',
+                  builder: (context, state) => const ReportsPage(),
+                ),
+              ],
+            ),
+          ],
+        );
 
-  static Future<Account?> openAccountEditPage(BuildContext context, int id) =>
-      const _Card<Account>().open(
-        context,
-        AccountInputPage.edit(id),
-      );
+  void openAccountPage(BuildContext context, int accountId) =>
+      context.go(context.namedLocation(
+        'account',
+        params: <String, String>{'fid': accountId.toString()},
+      ));
 
-  static Future<Category?> openCategoryInputPage(
+  void openCategoryPage(BuildContext context, int categoryId) =>
+      context.go(context.namedLocation(
+        'category',
+        params: <String, String>{'fid': categoryId.toString()},
+      ));
+
+  void openOperationListPage(BuildContext context) =>
+      context.go(context.namedLocation('operation'));
+
+  void openOperationEditPage(BuildContext context, int operationId) =>
+      context.go(context.namedLocation(
+        'operationId',
+        params: <String, String>{'fid': operationId.toString()},
+      ));
+
+  void openOperationInputPage(BuildContext context) =>
+      context.go(context.namedLocation('operationNew'));
+
+  void openSettingsPage(BuildContext context) =>
+      context.go(context.namedLocation('settings'));
+
+  void openDataControlPage(BuildContext context) =>
+      context.go(context.namedLocation('dataControl'));
+
+  void openGoogleDriveSettingsPage(BuildContext context) =>
+      context.go(context.namedLocation('googleDriveSettings'));
+
+  void openCloudDatabaseSettingsPage(BuildContext context) =>
+      context.go(context.namedLocation('cloudDatabaseSettings'));
+
+  void openReportsPage(BuildContext context) =>
+      context.go(context.namedLocation('reports'));
+
+  void openBudgetPage(BuildContext context, OperationType operationType) =>
+      context.go(context.namedLocation(
+        'budget',
+        params: <String, String>{'fid': operationType.toString()},
+      ));
+
+  Future<Account?> openAccountInputDialog(BuildContext context) =>
+      const _Card<Account>().open(context, const AccountInputPage.input());
+
+  Future<Account?> openAccountEditDialog(BuildContext context, int id) =>
+      const _Card<Account>().open(context, AccountInputPage.edit(id));
+
+  Future<Category?> openCategoryInputDialog(
     BuildContext context, {
     required OperationType type,
   }) =>
-      const _Card<Category>().open(
-        context,
-        CategoryInputPage.byType(
-          type: type,
-        ),
-      );
+      const _Card<Category>()
+          .open(context, CategoryInputPage.byType(type: type));
 
-  static Future<Category?> openCategoryEditPage(
+  Future<Category?> openCategoryEditDialog(
     BuildContext context, {
     required int id,
   }) =>
-      const _Card<Category>().open(
-        context,
-        CategoryInputPage.edit(
-          id: id,
-        ),
-      );
+      const _Card<Category>().open(context, CategoryInputPage.edit(id: id));
 
-  static const _routeAccountName = '/account';
-
-  static Future openAccountPage(BuildContext context, int accountId) =>
-      Navigator.of(context).pushNamed(_routeAccountName, arguments: accountId);
-
-  static const _routeCategoryName = '/category';
-
-  static void openCategoryPage(BuildContext context, int categoryId) =>
-      Navigator.of(context)
-          .pushNamed(_routeCategoryName, arguments: categoryId);
-
-  static const _routeOperationName = '/operation';
-
-  static Future openOperationEditPage(BuildContext context, int operationId) =>
-      Navigator.of(context)
-          .pushNamed(_routeOperationName, arguments: operationId);
-
-  static const _routeOperationFilterName = '/operationFilter';
-
-  static Future<OperationListFilter?> openOperationFilterPage(
+  Future<OperationListFilter?> openOperationFilterPage(
     BuildContext context,
     OperationListFilter filter,
   ) =>
-      Navigator.of(context).pushNamed<OperationListFilter?>(
-        _routeOperationFilterName,
-        arguments: filter,
+      const _Card<OperationListFilter>().open(
+        context,
+        OperationFilterPage(
+          filter: filter,
+        ),
       );
 
-  static const _routeOperationListName = '/operationListPage';
+  Future<DriveFile?> chooseFileDialog(BuildContext context) =>
+      const _Card<DriveFile>().open(context, const DriveDialog.chooseFile());
 
-  static Future openOperationListPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeOperationListName);
-
-  static const _routeOperationInputName = '/masterPageNew';
-
-  static Future openOperationInputPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeOperationInputName);
-
-  static const _routeSettingsName = '/settings';
-
-  static Future openSettingsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeSettingsName);
-
-  static const _routeDataControlName = '/settings/data_control';
-
-  static Future openDataControlPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeDataControlName);
-
-  static const _routeGoogleDriveSettingsName =
-      '/settings/google_drive_settings';
-
-  static Future openGoogleDriveSettingsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeGoogleDriveSettingsName);
-
-  static const _routeCloudDatabaseSettingsName =
-      '/settings/cloud_database__settings';
-
-  static Future openCloudDatabaseSettingsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeCloudDatabaseSettingsName);
-
-  static const _routeReportsName = '/reports';
-
-  static void openReportsPage(BuildContext context) =>
-      Navigator.of(context).pushNamed(_routeReportsName);
-
-  static const _routeBudgetPageName = '/budget_page';
-
-  static Future openBudgetPage(BuildContext context, OperationType type) =>
-      Navigator.of(context).pushNamed(_routeBudgetPageName, arguments: type);
-
-  static const _routeGoogleDriveChooseFile = '/google_drive_choose_file';
-
-  static const _routeGoogleDriveChooseFolder = '/google_drive_choose_folder';
-
-  static Future<DriveFile?> chooseFile(BuildContext context) =>
-      Navigator.of(context).pushNamed<DriveFile?>(_routeGoogleDriveChooseFile);
-
-  static Future<DriveFile?> chooseFolder(BuildContext context) =>
-      Navigator.of(context)
-          .pushNamed<DriveFile?>(_routeGoogleDriveChooseFolder);
-
-  static const routeRootName = '/';
-
-  static Map<String, Widget Function(BuildContext)> routes =
-      <String, WidgetBuilder>{
-    routeRootName: (_) => const HomePage(),
-    _routeOperationListName: (_) => const OperationListPage(),
-    _routeOperationInputName: (_) => const OperationInputPage(),
-    _routeSettingsName: (_) => const SettingsPage(),
-    _routeDataControlName: (_) => const DataControlPage(),
-    _routeGoogleDriveSettingsName: (_) => const GoogleDriveSettingsPage(),
-    _routeCloudDatabaseSettingsName: (_) => const CloudDatabaseSettingsPage(),
-    _routeReportsName: (_) => const ReportsPage(),
-  };
-
-  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case _routeAccountName:
-        {
-          return MaterialPageRoute(
-            builder: (context) =>
-                AccountDetailPage(id: settings.arguments as int),
-          );
-        }
-      case _routeCategoryName:
-        {
-          return MaterialPageRoute(
-            builder: (context) =>
-                CategoryDetailPage(id: settings.arguments as int),
-          );
-        }
-      case _routeOperationName:
-        {
-          return MaterialPageRoute(
-            builder: (context) =>
-                OperationEditPage(id: settings.arguments as int),
-          );
-        }
-      case _routeOperationFilterName:
-        {
-          return MaterialPageRoute<OperationListFilter?>(
-            builder: (context) => OperationFilterPage(
-              filter: settings.arguments as OperationListFilter,
-            ),
-          );
-        }
-      case _routeBudgetPageName:
-        {
-          return MaterialPageRoute(
-            builder: (context) =>
-                BudgetPage(type: settings.arguments as OperationType),
-          );
-        }
-      case _routeGoogleDriveChooseFile:
-        {
-          return MaterialPageRoute<DriveFile?>(
-            builder: (context) => const DriveDialog.chooseFile(),
-          );
-        }
-      case _routeGoogleDriveChooseFolder:
-        {
-          return MaterialPageRoute<DriveFile?>(
-            builder: (context) => const DriveDialog.chooseFolder(),
-          );
-        }
-      default:
-        return null;
-    }
-  }
+  Future<DriveFile?> chooseFolderDialog(BuildContext context) =>
+      const _Card<DriveFile>().open(context, const DriveDialog.chooseFolder());
 }
 
 class _Card<T> {

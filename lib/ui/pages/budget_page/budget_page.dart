@@ -103,7 +103,7 @@ class _BudgetPageState extends State<BudgetPage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () =>
-                PageNavigator.openCategoryInputPage(context, type: widget.type),
+                sl<PageNavigator>().openCategoryInputDialog(context, type: widget.type),
             child: const Icon(Icons.add),
           ),
         );
@@ -363,7 +363,7 @@ class _CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () =>
-          PageNavigator.openCategoryPage(context, category.category.id),
+          sl<PageNavigator>().openCategoryPage(context, category.category.id),
       title: Text(category.category.title),
       subtitle: Text(
         context.loc.numberFormat(category.category.budget),

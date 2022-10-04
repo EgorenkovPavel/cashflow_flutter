@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
@@ -30,7 +31,10 @@ Future<void> main() async {
         ),
       );
     },
-    (error, stack) =>
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
+    (error, stack) {
+      if (!kDebugMode) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      }
+    },
   );
 }

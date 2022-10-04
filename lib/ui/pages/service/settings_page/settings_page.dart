@@ -7,6 +7,8 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../injection_container.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -88,13 +90,13 @@ class CloudDatabaseListTile extends StatelessWidget {
           return ListTile(
             title: const Text('Cloud local'),
             subtitle: const Text('Database connected'),
-            onTap: () => PageNavigator.openCloudDatabaseSettingsPage(context),
+            onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
           );
         } else {
           return ListTile(
             title: const Text('Cloud local'),
             subtitle: const Text('Tap to connect'),
-            onTap: () => PageNavigator.openCloudDatabaseSettingsPage(context),
+            onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
           );
         }
       },
@@ -113,7 +115,7 @@ class GoogleDriveListTile extends StatelessWidget {
       return authState is Authenticated
           ? ListTile(
               title: const Text('Google drive'),
-              onTap: () => PageNavigator.openGoogleDriveSettingsPage(context),
+              onTap: () => sl<PageNavigator>().openGoogleDriveSettingsPage(context),
             )
           : const ListTile(title: Text('Google drive'));
     });
@@ -129,7 +131,7 @@ class DataControlListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(context.loc.titleDataControl),
-      onTap: () => PageNavigator.openDataControlPage(context),
+      onTap: () => sl<PageNavigator>().openDataControlPage(context),
     );
   }
 }

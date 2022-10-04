@@ -3,6 +3,8 @@ import 'package:money_tracker/domain/models/google_drive_file.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
+import '../../../../injection_container.dart';
+
 class RestoreDialog extends StatefulWidget {
   final void Function(String fileId) restore;
 
@@ -16,7 +18,7 @@ class _RestoreDialogState extends State<RestoreDialog> {
   DriveFile? _file;
 
   Future<void> _chooseFile(BuildContext context) async {
-    var newFile = await PageNavigator.chooseFile(context);
+    var newFile = await sl<PageNavigator>().chooseFileDialog(context);
     if (newFile != null) {
       setState(
         () {

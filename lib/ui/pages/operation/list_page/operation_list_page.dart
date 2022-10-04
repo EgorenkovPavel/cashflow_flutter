@@ -11,7 +11,7 @@ class OperationListPage extends StatelessWidget {
   const OperationListPage({Key? key}) : super(key: key);
 
   Future<void> _onFilterPressed(BuildContext context) async {
-    var newFilter = await PageNavigator.openOperationFilterPage(
+    var newFilter = await sl<PageNavigator>().openOperationFilterPage(
       context,
       context.read<OperationListBloc>().state.filter,
     );
@@ -40,7 +40,7 @@ class OperationListPage extends StatelessWidget {
             context.watch<OperationListBloc>().state.operations,
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => PageNavigator.openOperationInputPage(context),
+            onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
             child: const Icon(Icons.add),
           ),
         );

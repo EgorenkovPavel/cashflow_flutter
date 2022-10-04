@@ -77,7 +77,7 @@ class BudgetSubtitle extends StatelessWidget {
               ],
             ),
           ),
-          onPress: () => PageNavigator.openBudgetPage(context, type),
+          onPress: () => sl<PageNavigator>().openBudgetPage(context, type),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

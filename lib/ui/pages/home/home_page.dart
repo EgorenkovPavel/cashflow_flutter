@@ -6,6 +6,8 @@ import 'package:money_tracker/ui/pages/home/sync_button.dart';
 import 'package:money_tracker/ui/pages/home/top_header/top_header.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
+import '../../../injection_container.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -18,11 +20,11 @@ class HomePage extends StatelessWidget {
         actions: [
           const SyncButton(),
           IconButton(
-            onPressed: () => PageNavigator.openReportsPage(context),
+            onPressed: () => sl<PageNavigator>().openReportsPage(context),
             icon: const Icon(Icons.analytics),
           ),
           IconButton(
-            onPressed: () => PageNavigator.openSettingsPage(context),
+            onPressed: () => sl<PageNavigator>().openSettingsPage(context),
             icon: const Icon(Icons.settings_sharp),
           ),
         ],
@@ -33,7 +35,7 @@ class HomePage extends StatelessWidget {
             const TopHeader(),
             _AddButton(
               title: context.loc.btnAddAccount,
-              onPressed: () => PageNavigator.openAccountInputPage(context),
+              onPressed: () => sl<PageNavigator>().openAccountInputDialog(context),
             ),
             const MonthOperations(),
             const SizedBox(height: 8.0),
@@ -42,7 +44,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => PageNavigator.openOperationInputPage(context),
+        onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
         child: const Icon(Icons.add),
       ),
     );

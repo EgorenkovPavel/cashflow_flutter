@@ -10,6 +10,7 @@ import 'package:money_tracker/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/domain/interfaces/backup_repository.dart';
+import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common_blocs/auth/auth_bloc.dart';
@@ -63,6 +64,9 @@ Future<void> init() async {
   await Firebase.initializeApp();
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  sl.registerSingleton<RouterConfig<Object>>(PageNavigator());
+  sl.registerSingleton<PageNavigator>(PageNavigator());
 
   sl.registerLazySingleton<AccountDataRepositoryImpl>(
     () => AccountDataRepositoryImpl(AccountDao(sl<Database>())),

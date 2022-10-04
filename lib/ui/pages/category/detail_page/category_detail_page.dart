@@ -26,7 +26,7 @@ class CategoryDetailPage extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () =>
-                      PageNavigator.openCategoryEditPage(context, id: id),
+                      sl<PageNavigator>().openCategoryEditDialog(context, id: id),
                   icon: const Icon(Icons.edit),
                 ),
               ],
@@ -58,7 +58,7 @@ class CategoryDetailPage extends StatelessWidget {
                                 ListTileOperation(
                                   e,
                                   onTap: () =>
-                                      PageNavigator.openOperationEditPage(
+                                      sl<PageNavigator>().openOperationEditPage(
                                     context,
                                     e.id,
                                   ),
@@ -73,7 +73,7 @@ class CategoryDetailPage extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => PageNavigator.openOperationInputPage(context),
+              onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
               child: const Icon(Icons.add),
             ),
           );

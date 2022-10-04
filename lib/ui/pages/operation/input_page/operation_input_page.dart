@@ -208,7 +208,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewAccount() async {
-    var account = await PageNavigator.openAccountInputPage(context);
+    var account = await sl<PageNavigator>().openAccountInputDialog(context);
     if (account != null) {
       var accountBalance = AccountBalance(
         id: account.id,
@@ -221,7 +221,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewInCategory() async {
-    var category = await PageNavigator.openCategoryInputPage(
+    var category = await sl<PageNavigator>().openCategoryInputDialog(
       context,
       type: OperationType.INPUT,
     );
@@ -231,7 +231,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewOutCategory() async {
-    var category = await PageNavigator.openCategoryInputPage(
+    var category = await sl<PageNavigator>().openCategoryInputDialog(
       context,
       type: OperationType.OUTPUT,
     );
@@ -241,7 +241,7 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   Future<void> addNewRecAccount() async {
-    var account = await PageNavigator.openAccountInputPage(context);
+    var account = await sl<PageNavigator>().openAccountInputDialog(context);
     if (account != null) {
       var accountBalance = AccountBalance(
         id: account.id,

@@ -43,7 +43,7 @@ class _BackupDialogState extends State<BackupDialog> {
   }
 
   Future _chooseFolder(BuildContext context) async {
-    var newFolder = await PageNavigator.chooseFolder(context);
+    var newFolder = await sl<PageNavigator>().chooseFolderDialog(context);
     if (newFolder != null) {
       setState(() {
         _folder = newFolder;
