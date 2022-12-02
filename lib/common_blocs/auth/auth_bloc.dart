@@ -9,7 +9,7 @@ part 'auth_bloc.freezed.dart';
 
 @freezed
 class AuthEvent with _$AuthEvent {
-  const factory AuthEvent.changeAuth({required bool isAuthenticated}) =
+  const factory AuthEvent.changeAuth({required User? user}) =
       _ChangeAuthAuthEvent;
 
   const factory AuthEvent.signInSilently() = _SignInSilentlyAuthEvent;
@@ -56,14 +56,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ));
 
     _sub = _authRepository.userChanges().listen((user) {
-      add(AuthEvent.changeAuth(isAuthenticated: user != null));
+      add(AuthEvent.changeAuth(user: user));
     });
 
     _subInternet = _authRepository.isConnectedToInternet().listen((connected) {
       if (connected) {
         add(const AuthEvent.signInSilently());
       } else {
-        add(const AuthEvent.changeAuth(isAuthenticated: false));
+        add(const AuthEvent.changeAuth(user: null));
       }
     });
   }
@@ -80,30 +80,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _ChangeAuthAuthEvent event,
     Emitter<AuthState> emit,
   ) async {
-    var user = _authRepository.getUser();
-
-    if (event.isAuthenticated && user != null) {
+    final user = event.user;
+    if (user != null) {
       emit(AuthState.authenticated(user: user));
     } else {
       emit(const AuthState.notAuthenticated());
     }
   }
 
-  Future<void> _signInSilently(
+  FutureOr<void> _signInSilently(
     _SignInSilentlyAuthEvent event,
     Emitter<AuthState> emit,
-  ) async =>
-      await _authRepository.signInSilently();
+  ) =>
+      _authRepository.signInSilently();
 
-  Future<void> _signIn(
+  FutureOr<void> _signIn(
     _SignInAuthEvent event,
     Emitter<AuthState> emit,
-  ) async =>
-      await _authRepository.signIn();
+  ) =>
+      _authRepository.signIn();
 
-  Future<void> _signOut(
+  FutureOr<void> _signOut(
     _SignOutAuthEvent event,
     Emitter<AuthState> emit,
-  ) async =>
-      await _authRepository.signOut();
+  ) =>
+      _authRepository.signOut();
 }

@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isAuthenticated) changeAuth,
+    required TResult Function(User? user) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -26,7 +26,7 @@ mixin _$AuthEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isAuthenticated)? changeAuth,
+    TResult? Function(User? user)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -34,7 +34,7 @@ mixin _$AuthEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isAuthenticated)? changeAuth,
+    TResult Function(User? user)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -91,7 +91,7 @@ abstract class _$$_ChangeAuthAuthEventCopyWith<$Res> {
           $Res Function(_$_ChangeAuthAuthEvent) then) =
       __$$_ChangeAuthAuthEventCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isAuthenticated});
+  $Res call({User? user});
 }
 
 /// @nodoc
@@ -105,13 +105,13 @@ class __$$_ChangeAuthAuthEventCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isAuthenticated = null,
+    Object? user = freezed,
   }) {
     return _then(_$_ChangeAuthAuthEvent(
-      isAuthenticated: null == isAuthenticated
-          ? _value.isAuthenticated
-          : isAuthenticated // ignore: cast_nullable_to_non_nullable
-              as bool,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 }
@@ -119,14 +119,14 @@ class __$$_ChangeAuthAuthEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ChangeAuthAuthEvent implements _ChangeAuthAuthEvent {
-  const _$_ChangeAuthAuthEvent({required this.isAuthenticated});
+  const _$_ChangeAuthAuthEvent({required this.user});
 
   @override
-  final bool isAuthenticated;
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthEvent.changeAuth(isAuthenticated: $isAuthenticated)';
+    return 'AuthEvent.changeAuth(user: $user)';
   }
 
   @override
@@ -134,12 +134,11 @@ class _$_ChangeAuthAuthEvent implements _ChangeAuthAuthEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeAuthAuthEvent &&
-            (identical(other.isAuthenticated, isAuthenticated) ||
-                other.isAuthenticated == isAuthenticated));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isAuthenticated);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
@@ -151,36 +150,36 @@ class _$_ChangeAuthAuthEvent implements _ChangeAuthAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isAuthenticated) changeAuth,
+    required TResult Function(User? user) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
   }) {
-    return changeAuth(isAuthenticated);
+    return changeAuth(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isAuthenticated)? changeAuth,
+    TResult? Function(User? user)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
   }) {
-    return changeAuth?.call(isAuthenticated);
+    return changeAuth?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isAuthenticated)? changeAuth,
+    TResult Function(User? user)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
     required TResult orElse(),
   }) {
     if (changeAuth != null) {
-      return changeAuth(isAuthenticated);
+      return changeAuth(user);
     }
     return orElse();
   }
@@ -224,10 +223,10 @@ class _$_ChangeAuthAuthEvent implements _ChangeAuthAuthEvent {
 }
 
 abstract class _ChangeAuthAuthEvent implements AuthEvent {
-  const factory _ChangeAuthAuthEvent({required final bool isAuthenticated}) =
+  const factory _ChangeAuthAuthEvent({required final User? user}) =
       _$_ChangeAuthAuthEvent;
 
-  bool get isAuthenticated;
+  User? get user;
   @JsonKey(ignore: true)
   _$$_ChangeAuthAuthEventCopyWith<_$_ChangeAuthAuthEvent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -272,7 +271,7 @@ class _$_SignInSilentlyAuthEvent implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isAuthenticated) changeAuth,
+    required TResult Function(User? user) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -283,7 +282,7 @@ class _$_SignInSilentlyAuthEvent implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isAuthenticated)? changeAuth,
+    TResult? Function(User? user)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -294,7 +293,7 @@ class _$_SignInSilentlyAuthEvent implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isAuthenticated)? changeAuth,
+    TResult Function(User? user)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -386,7 +385,7 @@ class _$_SignInAuthEvent implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isAuthenticated) changeAuth,
+    required TResult Function(User? user) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -397,7 +396,7 @@ class _$_SignInAuthEvent implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isAuthenticated)? changeAuth,
+    TResult? Function(User? user)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -408,7 +407,7 @@ class _$_SignInAuthEvent implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isAuthenticated)? changeAuth,
+    TResult Function(User? user)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -500,7 +499,7 @@ class _$_SignOutAuthEvent implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isAuthenticated) changeAuth,
+    required TResult Function(User? user) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -511,7 +510,7 @@ class _$_SignOutAuthEvent implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isAuthenticated)? changeAuth,
+    TResult? Function(User? user)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -522,7 +521,7 @@ class _$_SignOutAuthEvent implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isAuthenticated)? changeAuth,
+    TResult Function(User? user)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
