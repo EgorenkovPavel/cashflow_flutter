@@ -31,8 +31,7 @@ class _OperationInputPageState extends State<OperationInputPage>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
-    )
-      ..addListener(() => setState(() {}));
+    )..addListener(() => setState(() {}));
     _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
@@ -84,10 +83,9 @@ class _OperationInputPageState extends State<OperationInputPage>
           content: Text(context.loc.mesOperationCreated),
           action: SnackBarAction(
             label: context.loc.cancel,
-            onPressed: () =>
-                context
-                    .read<MasterBloc>()
-                    .add(const MasterEvent.cancelOperation()),
+            onPressed: () => context
+                .read<MasterBloc>()
+                .add(const MasterEvent.cancelOperation()),
           ),
         ),
       );
@@ -109,8 +107,8 @@ class _OperationInputPageState extends State<OperationInputPage>
 
   void _onChangeOperationType(BuildContext context, OperationType newValue) {
     context.read<MasterBloc>().add(
-      MasterEvent.changeOperationType(operationType: newValue),
-    );
+          MasterEvent.changeOperationType(operationType: newValue),
+        );
   }
 
   @override
@@ -119,151 +117,163 @@ class _OperationInputPageState extends State<OperationInputPage>
       create: (context) => sl<MasterBloc>(),
       child: Builder(builder: (context) {
         return BlocListener<MasterBloc, MasterState>(
-            listener: (context, state) => _stateListener(context, state),
-            child: WillPopScope(
-              onWillPop: () => _onBackPressed(context),
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Text(context.loc.titleMaster),
-                ),
-                body: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0,
-                        vertical: 8.0,
-                      ),
-                      child: TypeRadioButton<OperationType>(
-                        type: context.select<MasterBloc, OperationType>(
-                                (bloc) => bloc.state.operationType),
-                        items: const [
-                          OperationType.INPUT,
-                          OperationType.OUTPUT,
-                          OperationType.TRANSFER,
-                        ],
-                        onChange: (operationType) =>
-                            _onChangeOperationType(context, operationType),
-                      ),
+          listener: (context, state) => _stateListener(context, state),
+          child: WillPopScope(
+            onWillPop: () => _onBackPressed(context),
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(context.loc.titleMaster),
+              ),
+              body: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 8.0,
                     ),
-                    Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          const AccountList(),
-                          context
-                              .select<MasterBloc, OperationType>(
-                                  (bloc) => bloc.state.operationType)
-                              .map(
-                            INPUT: () => const CategoryInList(),
-                            OUTPUT: () => const CategoryOutList(),
-                            TRANSFER: () => const AccountRecList(),
-                          ),
-                        ],
+                    child: TypeRadioButton<OperationType>(
+                      type: context.select<MasterBloc, OperationType>(
+                        (bloc) => bloc.state.operationType,
                       ),
+                      items: const [
+                        OperationType.INPUT,
+                        OperationType.OUTPUT,
+                        OperationType.TRANSFER,
+                      ],
+                      onChange: (operationType) =>
+                          _onChangeOperationType(context, operationType),
                     ),
-                    Builder(
-                      builder: (BuildContext context) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 6.0),
-                            //Same as `blurRadius` i guess
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16.0),
-                              ),
-                              color: Theme.of(context)
-                                  .dialogBackgroundColor, //Colors.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(0.0, 1.0), //(x,y)
-                                  blurRadius: 6.0,
-                                ),
-                              ],
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        const AccountList(),
+                        context
+                            .select<MasterBloc, OperationType>(
+                              (bloc) => bloc.state.operationType,
+                            )
+                            .map(
+                              INPUT: () => const CategoryInList(),
+                              OUTPUT: () => const CategoryOutList(),
+                              TRANSFER: () => const AccountRecList(),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                BarButton(
-                                    onPressed: () => context
-                                        .read<MasterBloc>()
-                                        .add(const MasterEvent.moreTap()),
-                                    title: context.loc.more),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: GestureDetector(
-                                          onTap: () => context
-                                              .read<MasterBloc>()
-                                              .add(const MasterEvent.sumTap()),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .bottomAppBarColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                              border: Border.all(
-                                                color: context.select<MasterBloc, bool>((bloc) => bloc.state.showKeyboard)
-                                                    ? Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary
-                                                    : Theme.of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                width: 2.0,
+                      ],
+                    ),
+                  ),
+                  Builder(
+                    builder: (BuildContext context) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 6.0),
+                          //Same as `blurRadius` i guess
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(16.0),
+                            ),
+                            color: Theme.of(context)
+                                .dialogBackgroundColor, //Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              BarButton(
+                                onPressed: () => context
+                                    .read<MasterBloc>()
+                                    .add(const MasterEvent.moreTap()),
+                                title: context.loc.more,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () => context
+                                            .read<MasterBloc>()
+                                            .add(const MasterEvent.sumTap()),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .bottomAppBarColor,
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            border: Border.all(
+                                              color: context
+                                                      .select<MasterBloc, bool>(
+                                                (bloc) =>
+                                                    bloc.state.showKeyboard,
+                                              )
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          width: double.infinity,
+                                          height: 48.0,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            context.loc.numberFormat(
+                                              context.select<MasterBloc, int>(
+                                                (bloc) => bloc.state.sum,
                                               ),
                                             ),
-                                            width: double.infinity,
-                                            height: 48.0,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              context.loc
-                                                  .numberFormat(context.select<MasterBloc, int>((bloc) => bloc.state.sum)),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
                                           ),
                                         ),
                                       ),
-                                      SizeTransition(
-                                        axis: Axis.vertical,
-                                        sizeFactor: _animation,
-                                        child: Keyboard(
-                                          onDigitPressed: (int digit) =>
-                                              context.read<MasterBloc>().add(
-                                                    MasterEvent.digitTap(
-                                                        digit: digit),
+                                    ),
+                                    SizeTransition(
+                                      axis: Axis.vertical,
+                                      sizeFactor: _animation,
+                                      child: Keyboard(
+                                        onDigitPressed: (int digit) =>
+                                            context.read<MasterBloc>().add(
+                                                  MasterEvent.digitTap(
+                                                    digit: digit,
                                                   ),
-                                          onBackPressed: () => context
-                                              .read<MasterBloc>()
-                                              .add(const MasterEvent
-                                                  .backKeyTap()),
-                                        ),
+                                                ),
+                                        onBackPressed: () => context
+                                            .read<MasterBloc>()
+                                            .add(
+                                              const MasterEvent.backKeyTap(),
+                                            ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                BarButton(
-                                    onPressed: () => context
-                                        .read<MasterBloc>()
-                                        .add(const MasterEvent.nextTap()),
-                                    title: context.loc.create),
-                              ],
-                            ),
+                              ),
+                              BarButton(
+                                onPressed: () => context
+                                    .read<MasterBloc>()
+                                    .add(const MasterEvent.nextTap()),
+                                title: context.loc.create,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
+          ),
         );
       }),
     );
@@ -287,10 +297,7 @@ class BarButton extends StatelessWidget {
       child: Text(
         title.toUpperCase(),
         style: TextStyle(
-          color: Theme
-              .of(context)
-              .colorScheme
-              .primary,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
     );
@@ -324,7 +331,8 @@ class AccountList extends StatelessWidget {
     final operationType = context
         .select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
     final accounts = context.select<MasterBloc, List<AccountBalance>>(
-            (bloc) => bloc.state.accounts);
+      (bloc) => bloc.state.accounts,
+    );
 
     return ItemsList(
       title: operationType == OperationType.TRANSFER
@@ -332,10 +340,11 @@ class AccountList extends StatelessWidget {
           : context.loc.accounts,
       onAdd: () => _addNewAccount(context),
       list: AccountPageView(
-          accounts: operationType == OperationType.TRANSFER
-              ? accounts
-              : accounts.where((element) => !element.isDebt).toList(),
-          onItemChanged: (account) => _onChangeAccount(context, account)),
+        accounts: operationType == OperationType.TRANSFER
+            ? accounts
+            : accounts.where((element) => !element.isDebt).toList(),
+        onItemChanged: (account) => _onChangeAccount(context, account),
+      ),
     );
   }
 }
@@ -368,7 +377,8 @@ class CategoryInList extends StatelessWidget {
       onAdd: () => _addNewInCategory(context),
       list: CategoryPageView(
         categories: context.select<MasterBloc, List<Category>>(
-                (bloc) => bloc.state.inCategories),
+          (bloc) => bloc.state.inCategories,
+        ),
         onItemChanged: (category) => _onChangeInCategory(context, category),
       ),
     );
@@ -403,7 +413,8 @@ class CategoryOutList extends StatelessWidget {
       onAdd: () => _addNewOutCategory(context),
       list: CategoryPageView(
         categories: context.select<MasterBloc, List<Category>>(
-                (bloc) => bloc.state.outCategories),
+          (bloc) => bloc.state.outCategories,
+        ),
         onItemChanged: (category) => _onChangeOutCategory(context, category),
       ),
     );
@@ -441,7 +452,8 @@ class AccountRecList extends StatelessWidget {
       onAdd: () => _addNewRecAccount(context),
       list: AccountPageView(
         accounts: context.select<MasterBloc, List<AccountBalance>>(
-                (bloc) => bloc.state.accounts),
+          (bloc) => bloc.state.accounts,
+        ),
         onItemChanged: (account) => _onChangeRecAccount(context, account),
       ),
     );
@@ -473,10 +485,7 @@ class ItemsList extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .subtitle2,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 IconButton(
                   icon: const Icon(

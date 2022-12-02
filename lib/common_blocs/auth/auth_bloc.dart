@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
@@ -61,9 +61,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     _subInternet = _authRepository.isConnectedToInternet().listen((connected) {
       if (connected) {
-        add(AuthEvent.signInSilently());
+        add(const AuthEvent.signInSilently());
       } else {
-        add(AuthEvent.changeAuth(isAuthenticated: false));
+        add(const AuthEvent.changeAuth(isAuthenticated: false));
       }
     });
   }

@@ -98,6 +98,7 @@ Future<void> init() async {
   sl.registerLazySingleton<FirebaseFirestore>(() {
     final firestore = FirebaseFirestore.instance;
     firestore.settings = const Settings(persistenceEnabled: false);
+
     return firestore;
   });
 

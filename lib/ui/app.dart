@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/ui/page_navigator.dart';
-import 'package:money_tracker/ui/themes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:money_tracker/ui/themes.dart';
 
 import '../injection_container.dart';
 

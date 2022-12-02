@@ -135,7 +135,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                     .add(OperationFilterEvent.setPeriod(period: date)),
                 onDelete: () => context
                     .read<OperationFilterBloc>()
-                    .add(OperationFilterEvent.resetPeriod()),
+                    .add(const OperationFilterEvent.resetPeriod()),
               ),
               const SizedBox(height: 8.0),
               Text(context.loc.accounts),

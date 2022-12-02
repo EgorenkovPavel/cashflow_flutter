@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:money_tracker/domain/models/operation/operation.dart';
 import 'package:money_tracker/ui/page_navigator.dart';

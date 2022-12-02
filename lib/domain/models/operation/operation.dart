@@ -29,40 +29,40 @@ class Operation extends Equatable {
     required this.sum,
   });
 
-  const Operation.input(
-      {this.id = 0,
-      this.cloudId = '',
-      this.synced = false,
-      this.deleted = false,
-      required this.date,
-      required this.account,
-      required this.category,
-      required this.sum})
-      : type = OperationType.INPUT,
+  const Operation.input({
+    this.id = 0,
+    this.cloudId = '',
+    this.synced = false,
+    this.deleted = false,
+    required this.date,
+    required this.account,
+    required this.category,
+    required this.sum,
+  })  : type = OperationType.INPUT,
         recAccount = null;
 
-  const Operation.output(
-      {this.id = 0,
-      this.cloudId = '',
-      this.synced = false,
-      this.deleted = false,
-      required this.date,
-      required this.account,
-      required this.category,
-      required this.sum})
-      : type = OperationType.OUTPUT,
+  const Operation.output({
+    this.id = 0,
+    this.cloudId = '',
+    this.synced = false,
+    this.deleted = false,
+    required this.date,
+    required this.account,
+    required this.category,
+    required this.sum,
+  })  : type = OperationType.OUTPUT,
         recAccount = null;
 
-  const Operation.transfer(
-      {this.id = 0,
-      this.cloudId = '',
-      this.synced = false,
-      this.deleted = false,
-      required this.date,
-      required this.account,
-      required this.recAccount,
-      required this.sum})
-      : type = OperationType.TRANSFER,
+  const Operation.transfer({
+    this.id = 0,
+    this.cloudId = '',
+    this.synced = false,
+    this.deleted = false,
+    required this.date,
+    required this.account,
+    required this.recAccount,
+    required this.sum,
+  })  : type = OperationType.TRANSFER,
         category = null;
 
   Operation copyWith({
@@ -101,6 +101,6 @@ class Operation extends Equatable {
         account,
         category,
         recAccount,
-        sum
+        sum,
       ];
 }

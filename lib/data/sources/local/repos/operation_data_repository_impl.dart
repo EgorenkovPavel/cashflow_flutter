@@ -54,11 +54,8 @@ class OperationDataRepositoryImpl
   @override
   Future<Operation?> getByCloudId(String cloudId) async {
     final operation = await operationDao.getOperationByCloudId(cloudId);
-    if (operation == null){
-      return null;
-    }else{
-      return _mapOperation(operation);
-    }
+
+    return operation == null ? null : _mapOperation(operation);
   }
 
   @override

@@ -52,10 +52,10 @@ class AccountInputState with _$AccountInputState {
       );
 
   Account? get account => map(
-    main: (state) => state.account,
-    fetch: (state) => state.account,
-    saved: (state) => state.account,
-  );
+        main: (state) => state.account,
+        fetch: (state) => state.account,
+        saved: (state) => state.account,
+      );
 }
 
 class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
@@ -76,7 +76,9 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   }
 
   Future<void> _fetch(
-      _FetchAccountInputEvent event, Emitter<AccountInputState> emit) async {
+    _FetchAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
     var account = await _repository.accounts.getById(event.accountId);
     var title = account.title;
     var isDebt = account.isDebt;
@@ -89,7 +91,9 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   }
 
   void _changeTitle(
-      _ChangeTitleAccountInputEvent event, Emitter<AccountInputState> emit) {
+    _ChangeTitleAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) {
     emit(AccountInputState.main(
       title: event.title,
       isDebt: state.isDebt,
@@ -98,7 +102,9 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   }
 
   void _changeIsDebt(
-      _ChangeIsDebtAccountInputEvent event, Emitter<AccountInputState> emit) {
+    _ChangeIsDebtAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) {
     emit(AccountInputState.main(
       title: state.title,
       isDebt: event.isDebt,
@@ -107,7 +113,9 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   }
 
   Future<void> _save(
-      _SaveAccountInputEvent event, Emitter<AccountInputState> emit) async {
+    _SaveAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
     if (state.account == null) {
       emit(AccountInputState.saved(
         title: state.title,

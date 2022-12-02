@@ -11,8 +11,9 @@ part 'top_header_bloc.freezed.dart';
 class TopHeaderEvent with _$TopHeaderEvent {
   const factory TopHeaderEvent.fetch() = _FetchTopHeaderEvent;
 
-  const factory TopHeaderEvent.changeBalance(
-      {required List<AccountBalance> accounts}) = _ChangeBalanceTopHeaderEvent;
+  const factory TopHeaderEvent.changeBalance({
+    required List<AccountBalance> accounts,
+  }) = _ChangeBalanceTopHeaderEvent;
 }
 
 @freezed
@@ -45,7 +46,9 @@ class TopHeaderBloc extends Bloc<TopHeaderEvent, TopHeaderState> {
   }
 
   void _changeBalance(
-      _ChangeBalanceTopHeaderEvent event, Emitter<TopHeaderState> emit) {
+    _ChangeBalanceTopHeaderEvent event,
+    Emitter<TopHeaderState> emit,
+  ) {
     final balance = event.accounts.fold<int>(
       0,
       (previousValue, element) => previousValue + element.balance,

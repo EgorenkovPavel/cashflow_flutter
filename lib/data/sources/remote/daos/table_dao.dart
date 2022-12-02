@@ -23,10 +23,13 @@ abstract class TableDAO<T> {
   Future<String> add(T entity) async {
     try {
       var doc = await _collection.add(_mapper.mapToCloud(entity));
+
       return doc.id;
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when add to $T cloud database'), stackTrace);
+        NetworkException('Error when add to $T cloud database'),
+        stackTrace,
+      );
     }
   }
 
@@ -36,8 +39,9 @@ abstract class TableDAO<T> {
       await _collection.doc(cloudId).update(_mapper.deletionMark());
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when delete from $T cloud database'),
-          stackTrace);
+        NetworkException('Error when delete from $T cloud database'),
+        stackTrace,
+      );
     }
   }
 
@@ -51,8 +55,9 @@ abstract class TableDAO<T> {
       return docs.docs.map<T>((doc) => _mapper.mapToDart(doc));
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when get all from $T cloud database'),
-          stackTrace);
+        NetworkException('Error when get all from $T cloud database'),
+        stackTrace,
+      );
     }
   }
 
@@ -62,8 +67,9 @@ abstract class TableDAO<T> {
       await _collection.doc(entityId).update({_key_updated: DateTime.now()});
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when refresh sync date in $T cloud database'),
-          stackTrace);
+        NetworkException('Error when refresh sync date in $T cloud database'),
+        stackTrace,
+      );
     }
   }
 
@@ -73,8 +79,9 @@ abstract class TableDAO<T> {
       await _collection.doc(getId(entity)).update(_mapper.mapToCloud(entity));
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when update in $T cloud database'),
-          stackTrace);
+        NetworkException('Error when update in $T cloud database'),
+        stackTrace,
+      );
     }
   }
 
@@ -93,8 +100,9 @@ abstract class TableDAO<T> {
       rethrow;
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-          NetworkException('Error when delete all in $T cloud database'),
-          stackTrace);
+        NetworkException('Error when delete all in $T cloud database'),
+        stackTrace,
+      );
     }
   }
 

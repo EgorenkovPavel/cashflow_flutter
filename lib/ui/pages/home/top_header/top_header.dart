@@ -15,7 +15,7 @@ class TopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<TopHeaderBloc>()..add(TopHeaderEvent.fetch()),
+      create: (context) => sl<TopHeaderBloc>()..add(const TopHeaderEvent.fetch()),
       child: Column(
         children: [
           _TotalBalance(),

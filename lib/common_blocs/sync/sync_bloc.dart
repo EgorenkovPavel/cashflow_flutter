@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/data/interfaces/settings_source.dart';
@@ -56,8 +56,10 @@ class SyncState with _$SyncState {
     required int operationCount,
   }) = _LoadingFromCloudSyncState;
 
-  const factory SyncState.synced(
-      {required DateTime syncDate, required bool isAdmin}) = _SyncedSyncState;
+  const factory SyncState.synced({
+    required DateTime syncDate,
+    required bool isAdmin,
+  }) = _SyncedSyncState;
 
   const factory SyncState.notSynced() = _NotSyncedSyncState;
 
@@ -98,13 +100,15 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       if (user != null) {
         add(SyncEvent.authAuthenticated(user: user));
       } else {
-        add(SyncEvent.notAuth());
+        add(const SyncEvent.notAuth());
       }
     });
   }
 
   FutureOr<void> _authProgress(
-      _AuthProgressSyncEvent event, Emitter<SyncState> emit) {
+    _AuthProgressSyncEvent event,
+    Emitter<SyncState> emit,
+  ) {
     emit(const SyncState.inProgress());
   }
 
@@ -120,10 +124,10 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
         if (success) {
           var resLogIn = await syncRepo.logIn(event.user);
 
-          return resLogIn.fold((success) => add(SyncEvent.syncNow()),
-              (failure) {
-            emit(const SyncState.failure());
-          });
+          return resLogIn.fold(
+            (success) => add(const SyncEvent.syncNow()),
+            (failure) => emit(const SyncState.failure()),
+          );
         } else {
           emit(const SyncState.noDB());
         }
@@ -139,7 +143,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   Future<void> _syncData(
-      _SyncDataSyncEvent event, Emitter<SyncState> emit) async {
+    _SyncDataSyncEvent event,
+    Emitter<SyncState> emit,
+  ) async {
     if (!_authBloc.state.isAuthenticated) {
       return;
     }
@@ -193,7 +199,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       return;
     }
 
-    add(SyncEvent.syncNow());
+    add(const SyncEvent.syncNow());
   }
 
   FutureOr<void> _syncNow(SyncEvent event, Emitter<SyncState> emit) {
@@ -203,20 +209,31 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _syncLastDay(
-      _SyncLastDaySyncEvent event, Emitter<SyncState> emit) {
+    _SyncLastDaySyncEvent event,
+    Emitter<SyncState> emit,
+  ) {
     add(SyncEvent.syncData(
-        syncDate: prefsRepository.syncDate.subtract(const Duration(days: 1))));
+      syncDate: prefsRepository.syncDate.subtract(const Duration(days: 1)),
+    ));
   }
 
-  FutureOr<void> _syncLastMonth(_SyncLastMonthSyncEvent event, Emitter<SyncState> emit) {
-    add(SyncEvent.syncData(syncDate: prefsRepository.syncDate.subtract(const Duration(days: 30))));
+  FutureOr<void> _syncLastMonth(
+    _SyncLastMonthSyncEvent event,
+    Emitter<SyncState> emit,
+  ) {
+    add(SyncEvent.syncData(
+      syncDate: prefsRepository.syncDate.subtract(const Duration(days: 30)),
+    ));
   }
 
   FutureOr<void> _syncAll(_SyncAllSyncEvent event, Emitter<SyncState> emit) {
     add(SyncEvent.syncData(syncDate: DateTime.utc(1970, 1, 1)));
   }
 
-  FutureOr<void> _addUser(_AddUserSyncEvent event, Emitter<SyncState> emit) async {
+  FutureOr<void> _addUser(
+    _AddUserSyncEvent event,
+    Emitter<SyncState> emit,
+  ) async {
     final res = await syncRepo.addToDatabase(event.user);
   }
 

@@ -635,19 +635,20 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
 
   Future<int> updateOperation(OperationDB entity) async {
     return await updateFields(
-        entity.id,
-        OperationsCompanion(
-          id: Value(entity.id),
-          synced: Value(entity.synced),
-          cloudId: Value(entity.cloudId),
-          date: Value(entity.date),
-          operationType: Value(entity.operationType),
-          account: Value(entity.account),
-          category: Value(entity.category),
-          recAccount: Value(entity.recAccount),
-          sum: Value(entity.sum),
-          deleted: Value(entity.deleted),
-        ));
+      entity.id,
+      OperationsCompanion(
+        id: Value(entity.id),
+        synced: Value(entity.synced),
+        cloudId: Value(entity.cloudId),
+        date: Value(entity.date),
+        operationType: Value(entity.operationType),
+        account: Value(entity.account),
+        category: Value(entity.category),
+        recAccount: Value(entity.recAccount),
+        sum: Value(entity.sum),
+        deleted: Value(entity.deleted),
+      ),
+    );
     // });
   }
 
@@ -655,7 +656,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(entity.id)))
           .write(const OperationsCompanion(
-              deleted: Value(true), synced: Value(false)));
+        deleted: Value(true),
+        synced: Value(false),
+      ));
       await _deleteAnalytic(entity);
     });
   }
@@ -664,7 +667,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     return transaction(() async {
       await (update(operations)..where((tbl) => tbl.id.equals(operationId)))
           .write(const OperationsCompanion(
-              deleted: Value(true), synced: Value(false)));
+        deleted: Value(true),
+        synced: Value(false),
+      ));
       await _deleteAnalyticByOperationId(operationId);
     });
   }

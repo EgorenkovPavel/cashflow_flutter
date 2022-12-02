@@ -23,11 +23,7 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
           return state.map(
             noDB: (_) => const ConnectingView(),
             synced: (state) {
-              if (state.isAdmin) {
-                return const AdminSettings();
-              } else {
-                return const ConnectedView();
-              }
+              return state.isAdmin ? const AdminSettings() : const ConnectedView();
             },
             notSynced: (_) => const ConnectedView(),
             inProgress: (_) => const Center(child: CircularProgressIndicator()),
@@ -72,9 +68,9 @@ class SyncToCloud extends StatelessWidget {
             color: Colors.black,
             size: 48,
           ),
-          Text('Accounts ${accountCount}'),
-          Text('Categories ${categoryCount}'),
-          Text('Operations ${operationCount}'),
+          Text('Accounts $accountCount'),
+          Text('Categories $categoryCount'),
+          Text('Operations $operationCount'),
         ],
       ),
     );
@@ -104,9 +100,9 @@ class SyncFromCloud extends StatelessWidget {
             color: Colors.black,
             size: 48,
           ),
-          Text('Accounts ${accountCount}'),
-          Text('Categories ${categoryCount}'),
-          Text('Operations ${operationCount}'),
+          Text('Accounts $accountCount'),
+          Text('Categories $categoryCount'),
+          Text('Operations $operationCount'),
         ],
       ),
     );
@@ -137,22 +133,22 @@ class ConnectedView extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () =>
-                    context.read<SyncBloc>().add(SyncEvent.syncNow()),
+                    context.read<SyncBloc>().add(const SyncEvent.syncNow()),
                 child: const Text('Sync'),
               ),
               ElevatedButton(
                 onPressed: () =>
-                    context.read<SyncBloc>().add(SyncEvent.syncLastDay()),
+                    context.read<SyncBloc>().add(const SyncEvent.syncLastDay()),
                 child: const Text('Sync last day'),
               ),
               ElevatedButton(
                 onPressed: () =>
-                    context.read<SyncBloc>().add(SyncEvent.syncLastMonth()),
+                    context.read<SyncBloc>().add(const SyncEvent.syncLastMonth()),
                 child: const Text('Sync last month'),
               ),
               ElevatedButton(
                 onPressed: () =>
-                    context.read<SyncBloc>().add(SyncEvent.syncAll()),
+                    context.read<SyncBloc>().add(const SyncEvent.syncAll()),
                 child: const Text('Sync all'),
               ),
             ],
@@ -194,19 +190,19 @@ class AdminSettings extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncNow()),
+                onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncNow()),
                 child: const Text('Sync'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncLastDay()),
+                onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncLastDay()),
                 child: const Text('Sync last day'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncLastMonth()),
+                onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncLastMonth()),
                 child: const Text('Sync last month'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncAll()),
+                onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncAll()),
                 child: const Text('Sync all'),
               ),
             ],
@@ -249,7 +245,7 @@ class ConnectingView extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () =>
-                context.read<SyncBloc>().add(SyncEvent.createCloudDatabase()),
+                context.read<SyncBloc>().add(const SyncEvent.createCloudDatabase()),
             child: const Text('Create local'),
           ),
           BlocBuilder<AuthBloc, AuthState>(
@@ -271,7 +267,7 @@ class ConnectingView extends StatelessWidget {
             },
           ),
           ElevatedButton(
-            onPressed: () => context.read<SyncBloc>().add(SyncEvent.refreshConnection()),
+            onPressed: () => context.read<SyncBloc>().add(const SyncEvent.refreshConnection()),
             child: const Text('Refresh'),
           ),
         ],

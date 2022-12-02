@@ -80,7 +80,7 @@ class SyncButton extends StatelessWidget {
         }),
         actions: [
           TextButton(
-            onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncNow()),
+            onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncNow()),
             child: Text('Sync'.toUpperCase()),
           ),
           TextButton(

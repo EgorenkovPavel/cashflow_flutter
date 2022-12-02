@@ -19,8 +19,9 @@ class BudgetEvent with _$BudgetEvent {
   const factory BudgetEvent.showAll({required BudgetType budgetType}) =
       _ShowAllBudgetEvent;
 
-  const factory BudgetEvent.changeItems(
-      {required List<CategoryCashflow> items}) = _ChangeItemsBudgetEvent;
+  const factory BudgetEvent.changeItems({
+    required List<CategoryCashflow> items,
+  }) = _ChangeItemsBudgetEvent;
 }
 
 @freezed
@@ -65,7 +66,10 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     _watchCashflow(state.date, event.operationtype);
   }
 
-  void _previousYear(_PreviousYearBudgetEvent event, Emitter<BudgetState> emit) {
+  void _previousYear(
+    _PreviousYearBudgetEvent event,
+    Emitter<BudgetState> emit,
+  ) {
     final date = state.date.month == 1
         ? DateTime(state.date.year - 1, 12)
         : DateTime(state.date.year, state.date.month - 1);

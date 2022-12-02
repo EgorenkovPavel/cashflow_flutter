@@ -203,6 +203,7 @@ class RemoteSourceImpl extends RemoteDataSource {
     if (_db == null) {
       throw NoRemoteDBException();
     }
+
     return _isCurrentAdmin;
   }
 }

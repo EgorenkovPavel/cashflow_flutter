@@ -12,12 +12,13 @@ class CategoryDetailEvent with _$CategoryDetailEvent {
   const factory CategoryDetailEvent.fetch({required int categoryId}) =
       _FetchCategoryDetailEvent;
 
-  const factory CategoryDetailEvent.changeCategory(
-      {required Category category}) = _ChangeCategoryCategoryDetailEvent;
+  const factory CategoryDetailEvent.changeCategory({
+    required Category category,
+  }) = _ChangeCategoryCategoryDetailEvent;
 
-  const factory CategoryDetailEvent.changeOperations(
-          {required List<Operation> operations}) =
-      _ChangeOperationsCategoryDetailEvent;
+  const factory CategoryDetailEvent.changeOperations({
+    required List<Operation> operations,
+  }) = _ChangeOperationsCategoryDetailEvent;
 }
 
 @freezed
@@ -38,7 +39,7 @@ class CategoryDetailBloc
   StreamSubscription? _subOperations;
 
   CategoryDetailBloc(this._repository)
-      : super(CategoryDetailState(
+      : super(const CategoryDetailState(
           budgetType: BudgetType.MONTH,
           title: '',
           operations: [],
@@ -52,7 +53,9 @@ class CategoryDetailBloc
   }
 
   void _fetch(
-      _FetchCategoryDetailEvent event, Emitter<CategoryDetailState> emit) {
+    _FetchCategoryDetailEvent event,
+    Emitter<CategoryDetailState> emit,
+  ) {
     _subCategory =
         _repository.categories.watchById(event.categoryId).listen((category) {
       add(CategoryDetailEvent.changeCategory(category: category));
