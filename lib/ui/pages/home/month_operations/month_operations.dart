@@ -45,8 +45,10 @@ class MonthOperations extends StatelessWidget {
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               BlocProvider(
-                create: (context) =>
-                    sl<MonthOperationsBloc>()..add(Fetch(OperationType.INPUT)),
+                create: (context) => sl<MonthOperationsBloc>()
+                  ..add(const MonthOperationsEvent.fetch(
+                    operationType: OperationType.INPUT,
+                  )),
                 child: const _MonthOperation(
                   operationType: OperationType.INPUT,
                 ),
@@ -55,8 +57,10 @@ class MonthOperations extends StatelessWidget {
                 height: Dimensions.padding,
               ),
               BlocProvider(
-                create: (context) =>
-                    sl<MonthOperationsBloc>()..add(Fetch(OperationType.OUTPUT)),
+                create: (context) => sl<MonthOperationsBloc>()
+                  ..add(const MonthOperationsEvent.fetch(
+                    operationType: OperationType.OUTPUT,
+                  )),
                 child: const _MonthOperation(
                   operationType: OperationType.OUTPUT,
                 ),

@@ -24,7 +24,7 @@ class Carousel<T> extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constrains) {
         var pageController = PageController(
-          initialPage: items.indexWhere(initialItemFinder),
+          //initialPage: items.indexWhere(initialItemFinder),
           keepPage: true,
           viewportFraction: 1 / (constrains.maxHeight / itemHeight),
         );

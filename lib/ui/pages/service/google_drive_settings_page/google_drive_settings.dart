@@ -11,15 +11,23 @@ class GoogleDriveSettingsPage extends StatelessWidget {
   const GoogleDriveSettingsPage({Key? key}) : super(key: key);
 
   void _listenState(BuildContext context, DriveState state) {
-    if (state == DriveState.SUCCESS_BACKUP) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(context.loc.mesDatabaseBackuped),
-      ));
-    } else if (state == DriveState.SUCCESS_RESTORE) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(context.loc.mesDatabaseRestored),
-      ));
-    }
+    state.mapOrNull(
+      successBackup: (state) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(context.loc.mesDatabaseBackuped),
+        ));
+      },
+      successRestore: (state) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(context.loc.mesDatabaseRestored),
+        ));
+      },
+      failure: (state) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('ERROR'),
+        ));
+      },
+    );
   }
 
   @override
@@ -42,16 +50,25 @@ class GoogleDriveSettingsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ElevatedButton(
-                    onPressed: () => _backup(context, bloc.backup),
+                    onPressed: () => _backup(
+                      context,
+                      (catalogId, fileName) => bloc.add(DriveEvent.backup(
+                        catalogId: catalogId,
+                        fileName: fileName,
+                      )),
+                    ),
                     child: Text(context.loc.backup.toUpperCase()),
                   ),
                   ElevatedButton(
-                    onPressed: () => _restore(context, bloc.restore),
+                    onPressed: () => _restore(
+                      context,
+                      (fileId) => bloc.add(DriveEvent.restore(fileId: fileId)),
+                    ),
                     child: Text(context.loc.restore.toUpperCase()),
                   ),
                 ],
               ),
-              if (state == DriveState.IN_PROGRESS)
+              if (state.inProgress)
                 const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -64,7 +81,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
 
   Future _backup(
     BuildContext context,
-    Future<void> Function(String, String) onBackup,
+    void Function(String, String) onBackup,
   ) async {
     await showDialog<void>(
       context: context,
@@ -76,7 +93,7 @@ class GoogleDriveSettingsPage extends StatelessWidget {
 
   Future _restore(
     BuildContext context,
-    Future<void> Function(String) onRestore,
+    void Function(String) onRestore,
   ) async {
     await showDialog<void>(
       context: context,

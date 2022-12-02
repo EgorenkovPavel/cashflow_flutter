@@ -21,11 +21,11 @@ class OperationDbEntity extends Equatable{
     switch (operation.operationType) {
       case OperationType.INPUT:
       case OperationType.OUTPUT:
-        return operation.copyWith(account: account.id, category: category!.id);
+        return operation.copyWith(account: account.id, category: Value(category!.id));
       case OperationType.TRANSFER:
         return operation.copyWith(
           account: account.id,
-          recAccount: recAccount!.id,
+          recAccount: Value(recAccount!.id),
         );
       default:
         throw InvalidDataException('');

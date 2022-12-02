@@ -5,34 +5,24 @@ class BudgetTypeConverter extends TypeConverter<BudgetType, int> {
   const BudgetTypeConverter();
 
   @override
-  BudgetType? mapToDart(int? fromDb) {
-    if (fromDb == null) {
-      return null;
-    }
-
+  BudgetType fromSql(int fromDb) {
     switch (fromDb) {
       case 1:
         return BudgetType.MONTH;
       case 2:
         return BudgetType.YEAR;
       default:
-        return null;
+        return BudgetType.MONTH; // TODO
     }
   }
 
   @override
-  int? mapToSql(BudgetType? value) {
-    if (value == null) {
-      return null;
-    }
-
+  int toSql(BudgetType value) {
     switch (value) {
       case BudgetType.MONTH:
         return 1;
       case BudgetType.YEAR:
         return 2;
-      default:
-        return null;
     }
   }
 }

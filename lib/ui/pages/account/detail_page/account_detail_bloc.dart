@@ -1,41 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class AccountDetailEvent {}
+part 'account_detail_bloc.freezed.dart';
 
-class Fetch extends AccountDetailEvent {
-  final int accountId;
+@freezed
+class AccountDetailEvent with _$AccountDetailEvent {
+  const factory AccountDetailEvent.fetch({required int accountId}) =
+      _FetchAccountDetailEvent;
 
-  Fetch(this.accountId);
+  const factory AccountDetailEvent.titleChanged({required String title}) =
+      _TitleChangedAccountDetailEvent;
+
+  const factory AccountDetailEvent.operationsChanged({
+    required List<Operation> operations,
+  }) = _OperationsChangedAccountDetailEvent;
 }
 
-class TitleChanged extends AccountDetailEvent {
-  final String title;
-
-  TitleChanged(this.title);
-}
-
-class OperationsChanged extends AccountDetailEvent {
-  final List<Operation> operations;
-
-  OperationsChanged(this.operations);
-}
-
-class AccountDetailState {
-  final String title;
-  final List<Operation> operations;
-
-  AccountDetailState({
-    required this.title,
-    required this.operations,
-  });
-
-  AccountDetailState.initial()
-      : title = '',
-        operations = [];
+@freezed
+class AccountDetailState with _$AccountDetailState {
+  const factory AccountDetailState({
+    required String title,
+    required List<Operation> operations,
+  }) = _AccountDetailState;
 }
 
 class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
@@ -43,33 +33,41 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
   StreamSubscription? _subTitle;
   StreamSubscription? _subOperations;
 
-  AccountDetailBloc(this._repository) : super(AccountDetailState.initial()) {
-    on<Fetch>(_fetch);
-    on<TitleChanged>(_titleChanged);
-    on<OperationsChanged>(_operationsChanged);
+  AccountDetailBloc(this._repository)
+      : super(const AccountDetailState(title: '', operations: [])) {
+    on<AccountDetailEvent>((event, emitter) => event.map(
+          fetch: (event) => _fetch(event, emitter),
+          titleChanged: (event) => _titleChanged(event, emitter),
+          operationsChanged: (event) => _operationsChanged(event, emitter),
+        ));
   }
 
-  Future<void> _fetch(Fetch event, Emitter<AccountDetailState> emit) async {
+  Future<void> _fetch(
+    _FetchAccountDetailEvent event,
+    Emitter<AccountDetailState> emit,
+  ) async {
     _subTitle = _repository.accounts.watchById(event.accountId).listen((event) {
-      add(TitleChanged(event.title));
+      add(AccountDetailEvent.titleChanged(title: event.title));
     });
 
     _subOperations = _repository.operations
         .watchAllByFilter(OperationListFilter(
       accounts: {Account(id: event.accountId, title: '', isDebt: false)},
       categories: const {},
-    ))
-        .listen((event) {
-      add(OperationsChanged(event));
+    )).listen((event) {
+      add(AccountDetailEvent.operationsChanged(operations: event));
     });
   }
 
-  void _titleChanged(TitleChanged event, Emitter<AccountDetailState> emit) {
+  void _titleChanged(
+    _TitleChangedAccountDetailEvent event,
+    Emitter<AccountDetailState> emit,
+  ) {
     emit(AccountDetailState(title: event.title, operations: state.operations));
   }
 
   void _operationsChanged(
-    OperationsChanged event,
+    _OperationsChangedAccountDetailEvent event,
     Emitter<AccountDetailState> emit,
   ) {
     emit(AccountDetailState(title: state.title, operations: event.operations));

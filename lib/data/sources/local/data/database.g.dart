@@ -2,38 +2,19 @@
 
 part of 'database.dart';
 
-// **************************************************************************
-// MoorGenerator
-// **************************************************************************
-
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class AccountDB extends DataClass implements Insertable<AccountDB> {
   final int id;
   final String cloudId;
   final String title;
   final bool isDebt;
   final bool synced;
-  AccountDB(
+  const AccountDB(
       {required this.id,
       required this.cloudId,
       required this.title,
       required this.isDebt,
       required this.synced});
-  factory AccountDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return AccountDB(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      cloudId: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
-      title: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
-      isDebt: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}is_debt'])!,
-      synced: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}synced'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -208,39 +189,50 @@ class $AccountsTable extends Accounts
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $AccountsTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _cloudIdMeta =
+      const VerificationMeta('cloudId');
   @override
-  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> cloudId = GeneratedColumn<String>(
       'cloud_id', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
-  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
   @override
-  late final GeneratedColumn<bool?> isDebt = GeneratedColumn<bool?>(
-      'is_debt', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (is_debt IN (0, 1))',
-      defaultValue: const Constant(false));
-  final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  late final GeneratedColumn<bool> isDebt =
+      GeneratedColumn<bool>('is_debt', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_debt" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }),
+          defaultValue: const Constant(false));
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
-      'synced', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (synced IN (0, 1))',
-      defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> synced =
+      GeneratedColumn<bool>('synced', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }),
+          defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [id, cloudId, title, isDebt, synced];
   @override
@@ -282,8 +274,19 @@ class $AccountsTable extends Accounts
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   AccountDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return AccountDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AccountDB(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      cloudId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}cloud_id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      isDebt: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_debt'])!,
+      synced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}synced'])!,
+    );
   }
 
   @override
@@ -300,7 +303,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final BudgetType budgetType;
   final int budget;
   final bool synced;
-  CategoryDB(
+  const CategoryDB(
       {required this.id,
       required this.cloudId,
       required this.title,
@@ -308,25 +311,6 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       required this.budgetType,
       required this.budget,
       required this.synced});
-  factory CategoryDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return CategoryDB(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      cloudId: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
-      title: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
-      operationType: $CategoriesTable.$converter0.mapToDart(const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}operation_type']))!,
-      budgetType: $CategoriesTable.$converter1.mapToDart(const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}budget_type']))!,
-      budget: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}budget'])!,
-      synced: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}synced'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -334,12 +318,12 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
     {
-      final converter = $CategoriesTable.$converter0;
-      map['operation_type'] = Variable<int>(converter.mapToSql(operationType)!);
+      final converter = $CategoriesTable.$converteroperationType;
+      map['operation_type'] = Variable<int>(converter.toSql(operationType));
     }
     {
-      final converter = $CategoriesTable.$converter1;
-      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType)!);
+      final converter = $CategoriesTable.$converterbudgetType;
+      map['budget_type'] = Variable<int>(converter.toSql(budgetType));
     }
     map['budget'] = Variable<int>(budget);
     map['synced'] = Variable<bool>(synced);
@@ -466,8 +450,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     Expression<int>? id,
     Expression<String>? cloudId,
     Expression<String>? title,
-    Expression<OperationType>? operationType,
-    Expression<BudgetType>? budgetType,
+    Expression<int>? operationType,
+    Expression<int>? budgetType,
     Expression<int>? budget,
     Expression<bool>? synced,
   }) {
@@ -514,13 +498,13 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       map['title'] = Variable<String>(title.value);
     }
     if (operationType.present) {
-      final converter = $CategoriesTable.$converter0;
+      final converter = $CategoriesTable.$converteroperationType;
       map['operation_type'] =
-          Variable<int>(converter.mapToSql(operationType.value)!);
+          Variable<int>(converter.toSql(operationType.value));
     }
     if (budgetType.present) {
-      final converter = $CategoriesTable.$converter1;
-      map['budget_type'] = Variable<int>(converter.mapToSql(budgetType.value)!);
+      final converter = $CategoriesTable.$converterbudgetType;
+      map['budget_type'] = Variable<int>(converter.toSql(budgetType.value));
     }
     if (budget.present) {
       map['budget'] = Variable<int>(budget.value);
@@ -552,50 +536,58 @@ class $CategoriesTable extends Categories
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CategoriesTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _cloudIdMeta =
+      const VerificationMeta('cloudId');
   @override
-  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> cloudId = GeneratedColumn<String>(
       'cloud_id', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
-  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _operationTypeMeta =
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
   @override
-  late final GeneratedColumnWithTypeConverter<OperationType, int?>
-      operationType = GeneratedColumn<int?>(
-              'operation_type', aliasedName, false,
-              type: const IntType(), requiredDuringInsert: true)
-          .withConverter<OperationType>($CategoriesTable.$converter0);
-  final VerificationMeta _budgetTypeMeta = const VerificationMeta('budgetType');
+  late final GeneratedColumnWithTypeConverter<OperationType, int>
+      operationType = GeneratedColumn<int>('operation_type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<OperationType>(
+              $CategoriesTable.$converteroperationType);
+  static const VerificationMeta _budgetTypeMeta =
+      const VerificationMeta('budgetType');
   @override
-  late final GeneratedColumnWithTypeConverter<BudgetType, int?> budgetType =
-      GeneratedColumn<int?>('budget_type', aliasedName, false,
-              type: const IntType(), requiredDuringInsert: true)
-          .withConverter<BudgetType>($CategoriesTable.$converter1);
-  final VerificationMeta _budgetMeta = const VerificationMeta('budget');
+  late final GeneratedColumnWithTypeConverter<BudgetType, int> budgetType =
+      GeneratedColumn<int>('budget_type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<BudgetType>($CategoriesTable.$converterbudgetType);
+  static const VerificationMeta _budgetMeta = const VerificationMeta('budget');
   @override
-  late final GeneratedColumn<int?> budget = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> budget = GeneratedColumn<int>(
       'budget', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
-      'synced', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (synced IN (0, 1))',
-      defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> synced =
+      GeneratedColumn<bool>('synced', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }),
+          defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns =>
       [id, cloudId, title, operationType, budgetType, budget, synced];
@@ -642,8 +634,25 @@ class $CategoriesTable extends Categories
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   CategoryDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return CategoryDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CategoryDB(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      cloudId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}cloud_id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      operationType: $CategoriesTable.$converteroperationType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.int, data['${effectivePrefix}operation_type'])!),
+      budgetType: $CategoriesTable.$converterbudgetType.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}budget_type'])!),
+      budget: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}budget'])!,
+      synced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}synced'])!,
+    );
   }
 
   @override
@@ -651,9 +660,9 @@ class $CategoriesTable extends Categories
     return $CategoriesTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<OperationType, int> $converter0 =
+  static TypeConverter<OperationType, int> $converteroperationType =
       const OperationTypeConverter();
-  static TypeConverter<BudgetType, int> $converter1 =
+  static TypeConverter<BudgetType, int> $converterbudgetType =
       const BudgetTypeConverter();
 }
 
@@ -668,7 +677,7 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
   final int sum;
   final bool synced;
   final bool deleted;
-  OperationDB(
+  const OperationDB(
       {required this.id,
       required this.cloudId,
       required this.date,
@@ -679,31 +688,6 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
       required this.sum,
       required this.synced,
       required this.deleted});
-  factory OperationDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return OperationDB(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      cloudId: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}cloud_id'])!,
-      date: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
-      operationType: $OperationsTable.$converter0.mapToDart(const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}operation_type']))!,
-      account: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}account'])!,
-      category: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}category']),
-      recAccount: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}rec_account']),
-      sum: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}sum'])!,
-      synced: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}synced'])!,
-      deleted: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}deleted'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -711,15 +695,15 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     map['cloud_id'] = Variable<String>(cloudId);
     map['date'] = Variable<DateTime>(date);
     {
-      final converter = $OperationsTable.$converter0;
-      map['operation_type'] = Variable<int>(converter.mapToSql(operationType)!);
+      final converter = $OperationsTable.$converteroperationType;
+      map['operation_type'] = Variable<int>(converter.toSql(operationType));
     }
     map['account'] = Variable<int>(account);
     if (!nullToAbsent || category != null) {
-      map['category'] = Variable<int?>(category);
+      map['category'] = Variable<int>(category);
     }
     if (!nullToAbsent || recAccount != null) {
-      map['rec_account'] = Variable<int?>(recAccount);
+      map['rec_account'] = Variable<int>(recAccount);
     }
     map['sum'] = Variable<int>(sum);
     map['synced'] = Variable<bool>(synced);
@@ -785,8 +769,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
           DateTime? date,
           OperationType? operationType,
           int? account,
-          int? category,
-          int? recAccount,
+          Value<int?> category = const Value.absent(),
+          Value<int?> recAccount = const Value.absent(),
           int? sum,
           bool? synced,
           bool? deleted}) =>
@@ -796,8 +780,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
         date: date ?? this.date,
         operationType: operationType ?? this.operationType,
         account: account ?? this.account,
-        category: category ?? this.category,
-        recAccount: recAccount ?? this.recAccount,
+        category: category.present ? category.value : this.category,
+        recAccount: recAccount.present ? recAccount.value : this.recAccount,
         sum: sum ?? this.sum,
         synced: synced ?? this.synced,
         deleted: deleted ?? this.deleted,
@@ -881,10 +865,10 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
     Expression<int>? id,
     Expression<String>? cloudId,
     Expression<DateTime>? date,
-    Expression<OperationType>? operationType,
+    Expression<int>? operationType,
     Expression<int>? account,
-    Expression<int?>? category,
-    Expression<int?>? recAccount,
+    Expression<int>? category,
+    Expression<int>? recAccount,
     Expression<int>? sum,
     Expression<bool>? synced,
     Expression<bool>? deleted,
@@ -941,18 +925,18 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       map['date'] = Variable<DateTime>(date.value);
     }
     if (operationType.present) {
-      final converter = $OperationsTable.$converter0;
+      final converter = $OperationsTable.$converteroperationType;
       map['operation_type'] =
-          Variable<int>(converter.mapToSql(operationType.value)!);
+          Variable<int>(converter.toSql(operationType.value));
     }
     if (account.present) {
       map['account'] = Variable<int>(account.value);
     }
     if (category.present) {
-      map['category'] = Variable<int?>(category.value);
+      map['category'] = Variable<int>(category.value);
     }
     if (recAccount.present) {
-      map['rec_account'] = Variable<int?>(recAccount.value);
+      map['rec_account'] = Variable<int>(recAccount.value);
     }
     if (sum.present) {
       map['sum'] = Variable<int>(sum.value);
@@ -990,73 +974,91 @@ class $OperationsTable extends Operations
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $OperationsTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _cloudIdMeta = const VerificationMeta('cloudId');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _cloudIdMeta =
+      const VerificationMeta('cloudId');
   @override
-  late final GeneratedColumn<String?> cloudId = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> cloudId = GeneratedColumn<String>(
       'cloud_id', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
-  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
       'date', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _operationTypeMeta =
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _operationTypeMeta =
       const VerificationMeta('operationType');
   @override
-  late final GeneratedColumnWithTypeConverter<OperationType, int?>
-      operationType = GeneratedColumn<int?>(
-              'operation_type', aliasedName, false,
-              type: const IntType(), requiredDuringInsert: true)
-          .withConverter<OperationType>($OperationsTable.$converter0);
-  final VerificationMeta _accountMeta = const VerificationMeta('account');
+  late final GeneratedColumnWithTypeConverter<OperationType, int>
+      operationType = GeneratedColumn<int>('operation_type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<OperationType>(
+              $OperationsTable.$converteroperationType);
+  static const VerificationMeta _accountMeta =
+      const VerificationMeta('account');
   @override
-  late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> account = GeneratedColumn<int>(
       'account', aliasedName, false,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'NULL REFERENCES account(id)');
-  final VerificationMeta _categoryMeta = const VerificationMeta('category');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES accounts (id)'));
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
   @override
-  late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> category = GeneratedColumn<int>(
       'category', aliasedName, true,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'NULL REFERENCES category(id)');
-  final VerificationMeta _recAccountMeta = const VerificationMeta('recAccount');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES categories (id)'));
+  static const VerificationMeta _recAccountMeta =
+      const VerificationMeta('recAccount');
   @override
-  late final GeneratedColumn<int?> recAccount = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> recAccount = GeneratedColumn<int>(
       'rec_account', aliasedName, true,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'NULL REFERENCES account(id)');
-  final VerificationMeta _sumMeta = const VerificationMeta('sum');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES accounts (id)'));
+  static const VerificationMeta _sumMeta = const VerificationMeta('sum');
   @override
-  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> sum = GeneratedColumn<int>(
       'sum', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _syncedMeta = const VerificationMeta('synced');
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool?> synced = GeneratedColumn<bool?>(
-      'synced', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (synced IN (0, 1))',
-      defaultValue: const Constant(false));
-  final VerificationMeta _deletedMeta = const VerificationMeta('deleted');
+  late final GeneratedColumn<bool> synced =
+      GeneratedColumn<bool>('synced', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }),
+          defaultValue: const Constant(false));
+  static const VerificationMeta _deletedMeta =
+      const VerificationMeta('deleted');
   @override
-  late final GeneratedColumn<bool?> deleted = GeneratedColumn<bool?>(
-      'deleted', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (deleted IN (0, 1))',
-      defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> deleted =
+      GeneratedColumn<bool>('deleted', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("deleted" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }),
+          defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1132,8 +1134,30 @@ class $OperationsTable extends Operations
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   OperationDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return OperationDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OperationDB(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      cloudId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}cloud_id'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      operationType: $OperationsTable.$converteroperationType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.int, data['${effectivePrefix}operation_type'])!),
+      account: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}account'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category']),
+      recAccount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}rec_account']),
+      sum: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sum'])!,
+      synced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}synced'])!,
+      deleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}deleted'])!,
+    );
   }
 
   @override
@@ -1141,7 +1165,7 @@ class $OperationsTable extends Operations
     return $OperationsTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<OperationType, int> $converter0 =
+  static TypeConverter<OperationType, int> $converteroperationType =
       const OperationTypeConverter();
 }
 
@@ -1150,24 +1174,11 @@ class BalanceDB extends DataClass implements Insertable<BalanceDB> {
   final int operation;
   final int account;
   final int sum;
-  BalanceDB(
+  const BalanceDB(
       {required this.date,
       required this.operation,
       required this.account,
       required this.sum});
-  factory BalanceDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return BalanceDB(
-      date: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
-      operation: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}operation'])!,
-      account: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}account'])!,
-      sum: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}sum'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1322,30 +1333,34 @@ class $BalancesTable extends Balances
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $BalancesTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
-  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
       'date', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _operationMeta = const VerificationMeta('operation');
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _operationMeta =
+      const VerificationMeta('operation');
   @override
-  late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> operation = GeneratedColumn<int>(
       'operation', aliasedName, false,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'NULL REFERENCES operation(id)');
-  final VerificationMeta _accountMeta = const VerificationMeta('account');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES operations (id)'));
+  static const VerificationMeta _accountMeta =
+      const VerificationMeta('account');
   @override
-  late final GeneratedColumn<int?> account = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> account = GeneratedColumn<int>(
       'account', aliasedName, false,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'NULL REFERENCES account(id)');
-  final VerificationMeta _sumMeta = const VerificationMeta('sum');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES accounts (id)'));
+  static const VerificationMeta _sumMeta = const VerificationMeta('sum');
   @override
-  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> sum = GeneratedColumn<int>(
       'sum', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, account, sum];
   @override
@@ -1388,8 +1403,17 @@ class $BalancesTable extends Balances
   Set<GeneratedColumn> get $primaryKey => {operation, account};
   @override
   BalanceDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return BalanceDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BalanceDB(
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      operation: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation'])!,
+      account: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}account'])!,
+      sum: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sum'])!,
+    );
   }
 
   @override
@@ -1403,24 +1427,11 @@ class CashflowDB extends DataClass implements Insertable<CashflowDB> {
   final int operation;
   final int category;
   final int sum;
-  CashflowDB(
+  const CashflowDB(
       {required this.date,
       required this.operation,
       required this.category,
       required this.sum});
-  factory CashflowDB.fromData(Map<String, dynamic> data, {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return CashflowDB(
-      date: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
-      operation: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}operation'])!,
-      category: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}category'])!,
-      sum: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}sum'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1575,30 +1586,34 @@ class $CashflowsTable extends Cashflows
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CashflowsTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
-  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
       'date', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _operationMeta = const VerificationMeta('operation');
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _operationMeta =
+      const VerificationMeta('operation');
   @override
-  late final GeneratedColumn<int?> operation = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> operation = GeneratedColumn<int>(
       'operation', aliasedName, false,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'NULL REFERENCES operation(id)');
-  final VerificationMeta _categoryMeta = const VerificationMeta('category');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES operations (id)'));
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
   @override
-  late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> category = GeneratedColumn<int>(
       'category', aliasedName, false,
-      type: const IntType(),
+      type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'NULL REFERENCES category(id)');
-  final VerificationMeta _sumMeta = const VerificationMeta('sum');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES categories (id)'));
+  static const VerificationMeta _sumMeta = const VerificationMeta('sum');
   @override
-  late final GeneratedColumn<int?> sum = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> sum = GeneratedColumn<int>(
       'sum', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [date, operation, category, sum];
   @override
@@ -1641,8 +1656,17 @@ class $CashflowsTable extends Cashflows
   Set<GeneratedColumn> get $primaryKey => {operation, category};
   @override
   CashflowDB map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return CashflowDB.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CashflowDB(
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      operation: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category'])!,
+      sum: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sum'])!,
+    );
   }
 
   @override
@@ -1652,7 +1676,7 @@ class $CashflowsTable extends Cashflows
 }
 
 abstract class _$Database extends GeneratedDatabase {
-  _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  _$Database(QueryExecutor e) : super(e);
   late final $AccountsTable accounts = $AccountsTable(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $OperationsTable operations = $OperationsTable(this);
@@ -1662,7 +1686,8 @@ abstract class _$Database extends GeneratedDatabase {
   late final CategoryDao categoryDao = CategoryDao(this as Database);
   late final OperationDao operationDao = OperationDao(this as Database);
   @override
-  Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [accounts, categories, operations, balances, cashflows];

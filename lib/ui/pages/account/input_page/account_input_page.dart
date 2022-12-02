@@ -19,7 +19,7 @@ class AccountInputPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = sl<AccountInputBloc>();
     if (id != null) {
-      bloc.add(Fetch(id!));
+      bloc.add(AccountInputEvent.fetch(accountId: id!));
     }
 
     return BlocProvider(
@@ -50,9 +50,9 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _listenState(BuildContext context, AccountInputState state) {
-    if (state is SavedAccount) {
+    if (state.isSaved) {
       Navigator.of(context).pop(state.account);
-    } else if (state is FetchAccount) {
+    } else if (state.isFetched) {
       _controller.text = state.title;
     }
   }
@@ -73,7 +73,8 @@ class _AccountPageState extends State<AccountPage> {
         title: widget.isNew
             ? context.loc.newAccountCardTitle
             : context.loc.accountCardTitle,
-        onSave: (context) => context.read<AccountInputBloc>().add(Save()),
+        onSave: (context) =>
+            context.read<AccountInputBloc>().add(AccountInputEvent.save()),
         child: Column(
           children: [
             TextFormField(
@@ -83,8 +84,9 @@ class _AccountPageState extends State<AccountPage> {
               decoration: InputDecoration(
                 labelText: context.loc.title,
               ),
-              onChanged: (value) =>
-                  context.read<AccountInputBloc>().add(ChangeTitle(value)),
+              onChanged: (value) => context
+                  .read<AccountInputBloc>()
+                  .add(AccountInputEvent.changeTitle(title: value)),
               validator: _titleValidator,
             ),
             Row(
@@ -93,8 +95,9 @@ class _AccountPageState extends State<AccountPage> {
                   value: context.select<AccountInputBloc, bool>(
                     (bloc) => bloc.state.isDebt,
                   ),
-                  onChanged: (val) =>
-                      context.read<AccountInputBloc>().add(ChangeIsDebt(val!)),
+                  onChanged: (val) => context
+                      .read<AccountInputBloc>()
+                      .add(AccountInputEvent.changeIsDebt(isDebt: val!)),
                 ),
                 const Text('Is debt'),
               ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/common_blocs/sync/states.dart';
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 
 class SyncButton extends StatelessWidget {
@@ -11,114 +10,77 @@ class SyncButton extends StatelessWidget {
     return BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
       return IconButton(
         onPressed: () => onPressed(context),
-        icon: iconBySyncState(state),
+        icon: _appBarIcon(state),
       );
     });
   }
 
-  String getTitle(SyncState state) {
-    if (state is SyncStateInProgress) {
-      return 'In progress';
-    } else if (state is SyncStateSynced) {
-      return 'Synced';
-    } else if (state is SyncStateLoadingToCloud) {
-      return 'Loading to remote';
-    } else if (state is SyncStateLoadingFromCloud) {
-      return 'Loading from remote';
-    } else if (state is SyncStateNoDb) {
-      return 'No local';
-    } else if (state is SyncStateNotSynced) {
-      return 'Not synced';
-    } else if (state is SyncStateFailed) {
-      return 'Failed';
-    } else {
-      return '';
-    }
-  }
+  String _getTitle(SyncState state) => state.map(
+        inProgress: (_) => 'In progress',
+        synced: (_) => 'Synced',
+        loadingToCloud: (_) => 'Loading to remote',
+        loadingFromCloud: (_) => 'Loading from remote',
+        noDB: (_) => 'No local',
+        notSynced: (_) => 'Not synced',
+        failure: (_) => 'Failed',
+      );
 
-  Icon iconBySyncState(SyncState state, {Color? color, double? size}) {
-    if (state is SyncStateInProgress) {
-      return Icon(
-        Icons.loop,
+  Icon _appBarIcon(SyncState state) => _iconBySyncState(state);
+
+  Icon _dialogIcon(SyncState state) =>
+      _iconBySyncState(state, color: Colors.black, size: 48);
+
+  Icon _iconBySyncState(SyncState state, {Color? color, double? size}) => Icon(
+        state.map(
+          inProgress: (_) => Icons.loop,
+          loadingToCloud: (_) => Icons.cloud_upload_outlined,
+          loadingFromCloud: (_) => Icons.cloud_download_outlined,
+          synced: (_) => Icons.cloud_done_outlined,
+          notSynced: (_) => Icons.warning_amber_outlined,
+          failure: (_) => Icons.sync_problem,
+          noDB: (_) => Icons.cloud_off_outlined,
+        ),
         color: color,
         size: size,
       );
-    } else if (state is SyncStateSynced) {
-      return Icon(
-        Icons.cloud_done_outlined,
-        color: color,
-        size: size,
-      );
-    } else if (state is SyncStateLoadingToCloud) {
-      return Icon(
-        Icons.cloud_upload_outlined,
-        color: color,
-        size: size,
-      );
-    } else if (state is SyncStateLoadingFromCloud) {
-      return Icon(
-        Icons.cloud_download_outlined,
-        color: color,
-        size: size,
-      );
-    } else if (state is SyncStateNoDb) {
-      return Icon(
-        Icons.cloud_off_outlined,
-        color: color,
-        size: size,
-      );
-    } else if (state is SyncStateNotSynced) {
-      return Icon(
-        Icons.warning_amber_outlined,
-        color: color,
-        size: size,
-      );
-    } else if (state is SyncStateFailed) {
-      return Icon(
-        Icons.sync_problem,
-        color: color,
-        size: size,
-      );
-    } else {
-      return const Icon(null);
-    }
-  }
 
   void onPressed(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: BlocBuilder<SyncBloc, SyncState>(
-          builder: (context, state) => Text(getTitle(state)),
+          builder: (context, state) => Text(_getTitle(state)),
         ),
         content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-          if (state is SyncStateLoadingToCloud) {
-            return Column(
+          return state.map(
+            loadingToCloud: (state) => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                iconBySyncState(state, color: Colors.black, size: 48),
+                _dialogIcon(state),
                 Text('Accounts ${state.accountCount}'),
                 Text('Categories ${state.categoryCount}'),
                 Text('Operations ${state.operationCount}'),
               ],
-            );
-          } else if (state is SyncStateLoadingFromCloud) {
-            return Column(
+            ),
+            loadingFromCloud: (state) => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                iconBySyncState(state, color: Colors.black, size: 48),
+                _dialogIcon(state),
                 Text('Accounts ${state.accountCount}'),
                 Text('Categories ${state.categoryCount}'),
                 Text('Operations ${state.operationCount}'),
               ],
-            );
-          } else {
-            return iconBySyncState(state, color: Colors.black, size: 48);
-          }
+            ),
+            synced: (state) => _dialogIcon(state),
+            inProgress: (state) => _dialogIcon(state),
+            failure: (state) => _dialogIcon(state),
+            noDB: (state) => _dialogIcon(state),
+            notSynced: (state) => _dialogIcon(state),
+          );
         }),
         actions: [
           TextButton(
-            onPressed: () => context.read<SyncBloc>().add(SyncNow()),
+            onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncNow()),
             child: Text('Sync'.toUpperCase()),
           ),
           TextButton(

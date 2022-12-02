@@ -43,9 +43,9 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType)!,
+            .fromSql(cloudCategory.operationType)!,
         budgetType:
-        const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
+        const BudgetTypeConverter().fromSql(cloudCategory.budgetType)!,
         budget: cloudCategory.budget,
       );
 
@@ -55,9 +55,9 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType),
+            .fromSql(cloudCategory.operationType),
         budgetType:
-        const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
+        const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
         budget: cloudCategory.budget,
       );
 

@@ -53,7 +53,7 @@ import 'ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'ui/pages/operation/list_page/operation_list_bloc.dart';
 import 'ui/pages/reports/reports_bloc.dart';
-import 'ui/pages/service/data_control_page/data_control_page_bloc.dart';
+import 'ui/pages/service/data_control_page/data_control_bloc.dart';
 import 'ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import 'ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
 

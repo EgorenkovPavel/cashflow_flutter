@@ -17,7 +17,8 @@ class CategoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CategoryDetailBloc>()..add(Fetch(id)),
+      create: (context) => sl<CategoryDetailBloc>()
+        ..add(CategoryDetailEvent.fetch(categoryId: id)),
       child: BlocBuilder<CategoryDetailBloc, CategoryDetailState>(
         builder: (context, state) {
           return Scaffold(
@@ -25,8 +26,8 @@ class CategoryDetailPage extends StatelessWidget {
               title: Text(state.title),
               actions: [
                 IconButton(
-                  onPressed: () =>
-                      sl<PageNavigator>().openCategoryEditDialog(context, id: id),
+                  onPressed: () => sl<PageNavigator>()
+                      .openCategoryEditDialog(context, id: id),
                   icon: const Icon(Icons.edit),
                 ),
               ],
@@ -73,7 +74,8 @@ class CategoryDetailPage extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
+              onPressed: () =>
+                  sl<PageNavigator>().openOperationInputPage(context),
               child: const Icon(Icons.add),
             ),
           );

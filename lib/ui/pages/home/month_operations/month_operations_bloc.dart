@@ -1,36 +1,30 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class MonthOperationsEvent {}
+part 'month_operations_bloc.freezed.dart';
 
-class Fetch extends MonthOperationsEvent {
-  final OperationType operationType;
+@freezed
+class MonthOperationsEvent with _$MonthOperationsEvent {
+  const factory MonthOperationsEvent.fetch({
+    required OperationType operationType,
+  }) = _FetchMonthOperationsEvent;
 
-  Fetch(this.operationType);
+  const factory MonthOperationsEvent.changeCategories({
+    required OperationType operationType,
+    required List<CategoryCashflow> categories,
+  }) = _ChangeCategoriesMonthOperationsEvent;
 }
 
-class ChangeCategories extends MonthOperationsEvent {
-  final List<CategoryCashflow> categories;
-  final OperationType operationType;
-
-  ChangeCategories({required this.operationType, required this.categories});
-}
-
-class MonthOperationsState {
-  final Map<OperationType, int> cashflow;
-  final Map<OperationType, int> budget;
-
-  MonthOperationsState({
-    required this.cashflow,
-    required this.budget,
-  });
-
-  MonthOperationsState.initial()
-      : budget = Map.fromIterable(OperationType.values, value: (_) => 0),
-        cashflow = Map.fromIterable(OperationType.values, value: (_) => 0);
+@freezed
+class MonthOperationsState with _$MonthOperationsState {
+  const factory MonthOperationsState({
+    required Map<OperationType, int> cashflow,
+    required Map<OperationType, int> budget,
+  }) = _MonthOperationsState;
 }
 
 class MonthOperationsBloc
@@ -39,16 +33,24 @@ class MonthOperationsBloc
   StreamSubscription? _sub;
 
   MonthOperationsBloc(this._repository)
-      : super(MonthOperationsState.initial()) {
-    on<Fetch>(_fetch);
-    on<ChangeCategories>(_changeCategories);
+      : super(const MonthOperationsState(
+          budget: {},
+          cashflow: {},
+        )) {
+    on<MonthOperationsEvent>((event, emitter) => event.map(
+          fetch: (event) => _fetch(event, emitter),
+          changeCategories: (event) => _changeCategories(event, emitter),
+        ));
   }
 
-  void _fetch(Fetch event, Emitter<MonthOperationsState> emit) {
+  void _fetch(
+    _FetchMonthOperationsEvent event,
+    Emitter<MonthOperationsState> emit,
+  ) {
     _sub = _repository.categories
         .watchCashflowByType(DateTime.now(), event.operationType)
         .listen((items) {
-      add(ChangeCategories(
+      add(MonthOperationsEvent.changeCategories(
         categories: items,
         operationType: event.operationType,
       ));
@@ -56,7 +58,7 @@ class MonthOperationsBloc
   }
 
   void _changeCategories(
-    ChangeCategories event,
+    _ChangeCategoriesMonthOperationsEvent event,
     Emitter<MonthOperationsState> emit,
   ) {
     emit(MonthOperationsState(

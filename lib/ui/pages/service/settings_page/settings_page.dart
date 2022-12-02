@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/common_blocs/sync/states.dart';
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/extensions.dart';
@@ -49,12 +48,12 @@ class AuthListTile extends StatelessWidget {
       builder: (context) {
         final authState = context.watch<AuthBloc>().state;
 
-        return authState is Authenticated
+        return authState.isAuthenticated
             ? ListTile(
                 title: const Text('Google account'),
                 subtitle: const Text('Signed In'),
                 trailing: ElevatedButton(
-                  onPressed: () => context.read<AuthBloc>().add(SignOut()),
+                  onPressed: () => context.read<AuthBloc>().add(AuthEvent.signOut()),
                   child: const Text('SING OUT'),
                 ),
               )
@@ -62,7 +61,7 @@ class AuthListTile extends StatelessWidget {
                 title: const Text('Google account'),
                 subtitle: const Text('Sign in to backup yout database'),
                 trailing: ElevatedButton(
-                  onPressed: () => context.read<AuthBloc>().add(SignIn()),
+                  onPressed: () => context.read<AuthBloc>().add(AuthEvent.signIn()),
                   child: const Text('SIGN IN'),
                 ),
               );
@@ -81,23 +80,23 @@ class CloudDatabaseListTile extends StatelessWidget {
         final authState = context.watch<AuthBloc>().state;
         final syncState = context.watch<SyncBloc>().state;
 
-        if (authState is NotAuthenticated) {
+        if (!authState.isAuthenticated) {
           return const ListTile(
             title: Text('Cloud local'),
             subtitle: Text('No local. Sign in to connect'),
           );
-        } else if (syncState is! SyncStateNoDb) {
-          return ListTile(
-            title: const Text('Cloud local'),
-            subtitle: const Text('Database connected'),
-            onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
-          );
-        } else {
-          return ListTile(
-            title: const Text('Cloud local'),
-            subtitle: const Text('Tap to connect'),
-            onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
-          );
+        } else{
+          return syncState.maybeMap(
+              noDB: (_) => ListTile(
+                title: const Text('Cloud local'),
+                subtitle: const Text('Tap to connect'),
+                onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
+              ),
+              orElse: () => ListTile(
+                title: const Text('Cloud local'),
+                subtitle: const Text('Database connected'),
+                onTap: () => sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
+              ));
         }
       },
     );
@@ -112,7 +111,7 @@ class GoogleDriveListTile extends StatelessWidget {
     return Builder(builder: (context) {
       final authState = context.watch<AuthBloc>().state;
 
-      return authState is Authenticated
+      return authState.isAuthenticated
           ? ListTile(
               title: const Text('Google drive'),
               onTap: () => sl<PageNavigator>().openGoogleDriveSettingsPage(context),

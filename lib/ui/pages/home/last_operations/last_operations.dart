@@ -14,7 +14,8 @@ class LastOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<LastOperationsBloc>()..add(Fetch()),
+      create: (context) =>
+          sl<LastOperationsBloc>()..add(LastOperationsEvent.fetch()),
       child: Builder(builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,

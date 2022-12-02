@@ -13,7 +13,7 @@ class AccountDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<AccountDetailBloc>()..add(Fetch(id)),
+      create: (context) => sl<AccountDetailBloc>()..add(AccountDetailEvent.fetch(accountId: id)),
       child: Builder(
         builder: (context) {
           return Scaffold(

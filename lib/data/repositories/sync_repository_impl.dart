@@ -251,7 +251,7 @@ class SyncRepositoryImpl implements SyncRepository {
         deleted: cloudOperation.deleted,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
-            .mapToDart(cloudOperation.operationType)!,
+            .fromSql(cloudOperation.operationType)!,
         account: account!,
         category: category,
         recAccount: recAccount,
@@ -264,7 +264,7 @@ class SyncRepositoryImpl implements SyncRepository {
         deleted: cloudOperation.deleted,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
-            .mapToDart(cloudOperation.operationType),
+            .fromSql(cloudOperation.operationType),
         account: account!,
         category: category,
         recAccount: recAccount,

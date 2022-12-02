@@ -16,7 +16,8 @@ class OperationEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<OperationEditBloc>()..add(Fetch(id)),
+      create: (context) => sl<OperationEditBloc>()
+        ..add(OperationEditEvent.fetch(operationId: id)),
       child: _OperationEditPage(),
     );
   }
@@ -39,16 +40,18 @@ class _OperationEditPageState extends State<_OperationEditPage> {
   }
 
   void _listenState(BuildContext context, OperationEditState state) {
-    if (state is FetchOperation) {
+    if (state.isFetched) {
       _sumController.text = state.sum.toString();
-    } else if (state is Saved) {
+    } else if (state.isSaved) {
       Navigator.of(context).pop();
     }
   }
 
   void _onChangeAccount(Account? newValue) {
     if (newValue != null) {
-      context.read<OperationEditBloc>().add(ChangeAccount(newValue));
+      context
+          .read<OperationEditBloc>()
+          .add(OperationEditEvent.changeAccount(account: newValue));
     }
   }
 
@@ -62,7 +65,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
 
   void _onSavePressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<OperationEditBloc>().add(Save());
+      context.read<OperationEditBloc>().add(const OperationEditEvent.save());
     }
   }
 
@@ -96,7 +99,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                         ).format(context.select<OperationEditBloc, DateTime>(
                           (bloc) => bloc.state.date,
                         )),
-                        onPressed: _selectDate,
+                        onPressed: () => _selectDate(context),
                       ),
                       const SizedBox(width: 16.0),
                       DateButton(
@@ -106,7 +109,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                               (bloc) => bloc.state.time,
                             )
                             .format(context),
-                        onPressed: _selectTime,
+                        onPressed: () => _selectTime(context),
                       ),
                     ],
                   ),
@@ -117,7 +120,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     ),
                     onChange: (newValue) => context
                         .read<OperationEditBloc>()
-                        .add(ChangeOperationType(newValue)),
+                        .add(OperationEditEvent.changeOperationType(
+                          operationType: newValue,
+                        )),
                     items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
@@ -149,7 +154,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       ),
                       onChanged: (value) => context
                           .read<OperationEditBloc>()
-                          .add(ChangeSum(int.parse(value))),
+                          .add(OperationEditEvent.changeSum(
+                            sum: int.parse(value),
+                          )),
                       validator: _sumValidator,
                     ),
                   ),
@@ -174,13 +181,17 @@ class _OperationEditPageState extends State<_OperationEditPage> {
 
   void _onCategoryChange(Category? newValue) {
     if (newValue != null) {
-      context.read<OperationEditBloc>().add(ChangeCategory(newValue));
+      context
+          .read<OperationEditBloc>()
+          .add(OperationEditEvent.changeCategory(category: newValue));
     }
   }
 
   void _onRecAccountChange(Account? newValue) {
     if (newValue != null) {
-      context.read<OperationEditBloc>().add(ChangeRecAccount(newValue));
+      context
+          .read<OperationEditBloc>()
+          .add(OperationEditEvent.changeRecAccount(recAccount: newValue));
     }
   }
 
@@ -219,7 +230,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
     );
   }
 
-  void _selectDate() async {
+  void _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
       initialDate: context.read<OperationEditBloc>().state.date,
@@ -227,17 +238,21 @@ class _OperationEditPageState extends State<_OperationEditPage> {
       lastDate: DateTime(2101),
     );
     if (picked != null) {
-      context.read<OperationEditBloc>().add(ChangeDate(picked));
+      context
+          .read<OperationEditBloc>()
+          .add(OperationEditEvent.changeDate(date: picked));
     }
   }
 
-  void _selectTime() async {
+  void _selectTime(BuildContext context) async {
     final picked = await showTimePicker(
       context: context,
       initialTime: context.read<OperationEditBloc>().state.time,
     );
     if (picked != null) {
-      context.read<OperationEditBloc>().add(ChangeTime(picked));
+      context
+          .read<OperationEditBloc>()
+          .add(OperationEditEvent.changeTime(time: picked));
     }
   }
 }

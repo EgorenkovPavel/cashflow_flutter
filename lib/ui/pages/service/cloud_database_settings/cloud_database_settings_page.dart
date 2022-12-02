@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/common_blocs/sync/states.dart';
 import 'package:money_tracker/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/domain/models/user.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -21,26 +20,29 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
       ),
       body: BlocBuilder<SyncBloc, SyncState>(
         builder: (context, state) {
-          if (state is SyncStateNoDb) {
-            return const ConnectingView();
-          } else if (state is SyncStateSynced) {
-            if (state.isAdmin) {
-              return const AdminSettings();
-            } else {
-              return const ConnectedView();
-            }
-          } else if (state is SyncStateNotSynced) {
-            return const ConnectedView();
-          } else if (state is SyncStateInProgress) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is SyncStateLoadingToCloud) {
-            return SyncToCloud(state: state);
-          } else if (state is SyncStateLoadingFromCloud) {
-            return SyncFromCloud(state: state);
-          } else {
-            //TODO discribe other states
-            return const SizedBox();
-          }
+          return state.map(
+            noDB: (_) => const ConnectingView(),
+            synced: (state) {
+              if (state.isAdmin) {
+                return const AdminSettings();
+              } else {
+                return const ConnectedView();
+              }
+            },
+            notSynced: (_) => const ConnectedView(),
+            inProgress: (_) => const Center(child: CircularProgressIndicator()),
+            loadingToCloud: (state) => SyncToCloud(
+              accountCount: state.accountCount,
+              categoryCount: state.categoryCount,
+              operationCount: state.operationCount,
+            ),
+            loadingFromCloud: (state) => SyncFromCloud(
+              accountCount: state.accountCount,
+              categoryCount: state.categoryCount,
+              operationCount: state.operationCount,
+            ),
+            failure: (_) => const SizedBox(), // TODO
+          );
         },
       ),
     );
@@ -48,9 +50,16 @@ class CloudDatabaseSettingsPage extends StatelessWidget {
 }
 
 class SyncToCloud extends StatelessWidget {
-  final SyncStateLoadingToCloud state;
+  final int accountCount;
+  final int categoryCount;
+  final int operationCount;
 
-  const SyncToCloud({super.key, required this.state});
+  const SyncToCloud({
+    super.key,
+    required this.accountCount,
+    required this.categoryCount,
+    required this.operationCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +72,9 @@ class SyncToCloud extends StatelessWidget {
             color: Colors.black,
             size: 48,
           ),
-          Text('Accounts ${state.accountCount}'),
-          Text('Categories ${state.categoryCount}'),
-          Text('Operations ${state.operationCount}'),
+          Text('Accounts ${accountCount}'),
+          Text('Categories ${categoryCount}'),
+          Text('Operations ${operationCount}'),
         ],
       ),
     );
@@ -73,9 +82,16 @@ class SyncToCloud extends StatelessWidget {
 }
 
 class SyncFromCloud extends StatelessWidget {
-  final SyncStateLoadingFromCloud state;
+  final int accountCount;
+  final int categoryCount;
+  final int operationCount;
 
-  const SyncFromCloud({super.key, required this.state});
+  const SyncFromCloud({
+    super.key,
+    required this.accountCount,
+    required this.categoryCount,
+    required this.operationCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +104,9 @@ class SyncFromCloud extends StatelessWidget {
             color: Colors.black,
             size: 48,
           ),
-          Text('Accounts ${state.accountCount}'),
-          Text('Categories ${state.categoryCount}'),
-          Text('Operations ${state.operationCount}'),
+          Text('Accounts ${accountCount}'),
+          Text('Categories ${categoryCount}'),
+          Text('Operations ${operationCount}'),
         ],
       ),
     );
@@ -110,28 +126,33 @@ class ConnectedView extends StatelessWidget {
           const Text('Database connected'),
           const SizedBox(height: 8.0),
           BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            return state is SyncStateSynced
-                ? Text('Last sync ${state.syncDate}')
-                : const SizedBox();
+            return state.maybeMap(
+              synced: (state) => Text('Last sync ${state.syncDate}'),
+              orElse: () => const SizedBox(),
+            );
           }),
           const SizedBox(height: 8.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncNow()),
+                onPressed: () =>
+                    context.read<SyncBloc>().add(SyncEvent.syncNow()),
                 child: const Text('Sync'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncLastDay()),
+                onPressed: () =>
+                    context.read<SyncBloc>().add(SyncEvent.syncLastDay()),
                 child: const Text('Sync last day'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncLastMonth()),
+                onPressed: () =>
+                    context.read<SyncBloc>().add(SyncEvent.syncLastMonth()),
                 child: const Text('Sync last month'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncAll()),
+                onPressed: () =>
+                    context.read<SyncBloc>().add(SyncEvent.syncAll()),
                 child: const Text('Sync all'),
               ),
             ],
@@ -153,9 +174,10 @@ class AdminSettings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
-            return state is SyncStateSynced
-                ? Text('Last sync ${state.syncDate}')
-                : const SizedBox();
+            return state.maybeMap(
+              synced: (state) => Text('Last sync ${state.syncDate}'),
+              orElse: () => const SizedBox(),
+            );
           }),
           const SizedBox(height: 8.0),
           Row(
@@ -172,19 +194,19 @@ class AdminSettings extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncNow()),
+                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncNow()),
                 child: const Text('Sync'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncLastDay()),
+                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncLastDay()),
                 child: const Text('Sync last day'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncLastMonth()),
+                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncLastMonth()),
                 child: const Text('Sync last month'),
               ),
               ElevatedButton(
-                onPressed: () => context.read<SyncBloc>().add(SyncAll()),
+                onPressed: () => context.read<SyncBloc>().add(SyncEvent.syncAll()),
                 child: const Text('Sync all'),
               ),
             ],
@@ -212,7 +234,7 @@ class AdminSettings extends StatelessWidget {
 
     var userData = jsonDecode(barcodeScanRes);
 
-    context.read<SyncBloc>().add(AddUser(User.fromJson(userData)));
+    context.read<SyncBloc>().add(SyncEvent.addUser(user: User.fromJson(userData)));
   }
 }
 
@@ -227,26 +249,29 @@ class ConnectingView extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () =>
-                context.read<SyncBloc>().add(CreateCloudDatabase()),
+                context.read<SyncBloc>().add(SyncEvent.createCloudDatabase()),
             child: const Text('Create local'),
           ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              return state is Authenticated
-                  ? Column(children: [
-                      QrImage(
-                        data: jsonEncode(state.user),
-                        version: QrVersions.auto,
-                        size: 200.0,
-                      ),
-                      Text('Id: ${state.user.id}'),
-                      Text('Name: ${state.user.name}'),
-                    ])
-                  : const SizedBox();
+              final user = state.user;
+              if (user == null) {
+                return const SizedBox();
+              } else {
+                return Column(children: [
+                  QrImage(
+                    data: jsonEncode(state.user),
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
+                  Text('Id: ${user.id}'),
+                  Text('Name: ${user.name}'),
+                ]);
+              }
             },
           ),
           ElevatedButton(
-            onPressed: () => context.read<SyncBloc>().add(RefreshConnection()),
+            onPressed: () => context.read<SyncBloc>().add(SyncEvent.refreshConnection()),
             child: const Text('Refresh'),
           ),
         ],

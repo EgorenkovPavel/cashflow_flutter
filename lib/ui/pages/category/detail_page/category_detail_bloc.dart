@@ -1,63 +1,33 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class CategoryDetailEvent {}
+part 'category_detail_bloc.freezed.dart';
 
-class Fetch extends CategoryDetailEvent {
-  final int categoryId;
+@freezed
+class CategoryDetailEvent with _$CategoryDetailEvent {
+  const factory CategoryDetailEvent.fetch({required int categoryId}) =
+      _FetchCategoryDetailEvent;
 
-  Fetch(this.categoryId);
+  const factory CategoryDetailEvent.changeCategory(
+      {required Category category}) = _ChangeCategoryCategoryDetailEvent;
+
+  const factory CategoryDetailEvent.changeOperations(
+          {required List<Operation> operations}) =
+      _ChangeOperationsCategoryDetailEvent;
 }
 
-class ChangeCategory extends CategoryDetailEvent {
-  final Category category;
-
-  ChangeCategory(this.category);
-}
-
-class ChangeOperations extends CategoryDetailEvent {
-  final List<Operation> operations;
-
-  ChangeOperations(this.operations);
-}
-
-class CategoryDetailState {
-  final String title;
-  final int budget;
-  final BudgetType budgetType;
-  final List<Operation> operations;
-
-  CategoryDetailState({
-    required this.budgetType,
-    required this.title,
-    required this.budget,
-    required this.operations,
-  });
-
-  CategoryDetailState.initial()
-      : budgetType = BudgetType.MONTH,
-        title = '',
-        budget = 0,
-        operations = [];
-
-  CategoryDetailState.category({
-    required Category category,
-    required CategoryDetailState state,
-  })  : title = category.title,
-        budget = category.budget,
-        budgetType = category.budgetType,
-        operations = state.operations;
-
-  CategoryDetailState.operations({
+@freezed
+class CategoryDetailState with _$CategoryDetailState {
+  const factory CategoryDetailState({
+    required BudgetType budgetType,
+    required String title,
+    required int budget,
     required List<Operation> operations,
-    required CategoryDetailState state,
-  })  : title = state.title,
-        budget = state.budget,
-        budgetType = state.budgetType,
-        operations = operations;
+  }) = _CategoryDetailState;
 }
 
 class CategoryDetailBloc
@@ -67,39 +37,49 @@ class CategoryDetailBloc
   StreamSubscription<Category>? _subCategory;
   StreamSubscription? _subOperations;
 
-  CategoryDetailBloc(this._repository) : super(CategoryDetailState.initial()) {
-    on<Fetch>(_fetch);
-    on<ChangeCategory>(_changeCategory);
-    on<ChangeOperations>(_changeOperations);
+  CategoryDetailBloc(this._repository)
+      : super(CategoryDetailState(
+          budgetType: BudgetType.MONTH,
+          title: '',
+          operations: [],
+          budget: 0,
+        )) {
+    on<CategoryDetailEvent>((event, emitter) => event.map(
+          fetch: (event) => _fetch(event, emitter),
+          changeCategory: (event) => _changeCategory(event, emitter),
+          changeOperations: (event) => _changeOperations(event, emitter),
+        ));
   }
 
-  void _fetch(Fetch event, Emitter<CategoryDetailState> emit) {
+  void _fetch(
+      _FetchCategoryDetailEvent event, Emitter<CategoryDetailState> emit) {
     _subCategory =
         _repository.categories.watchById(event.categoryId).listen((category) {
-      add(ChangeCategory(category));
+      add(CategoryDetailEvent.changeCategory(category: category));
     });
     _subOperations = _repository.operations
         .watchAllByCategory(event.categoryId)
         .listen((items) {
-      add(ChangeOperations(items));
+      add(CategoryDetailEvent.changeOperations(operations: items));
     });
   }
 
   void _changeCategory(
-    ChangeCategory event,
+    _ChangeCategoryCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    emit(CategoryDetailState.category(category: event.category, state: state));
+    emit(state.copyWith(
+      budget: event.category.budget,
+      title: event.category.title,
+      budgetType: event.category.budgetType,
+    ));
   }
 
   void _changeOperations(
-    ChangeOperations event,
+    _ChangeOperationsCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    emit(CategoryDetailState.operations(
-      operations: event.operations,
-      state: state,
-    ));
+    emit(state.copyWith(operations: event.operations));
   }
 
   @override

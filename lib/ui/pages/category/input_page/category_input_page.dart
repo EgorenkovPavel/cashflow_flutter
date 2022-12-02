@@ -24,9 +24,9 @@ class CategoryInputPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = sl<CategoryInputBloc>();
     if (id != null) {
-      bloc.add(InitById(id!));
+      bloc.add(CategoryInputEvent.initById(categoryId: id!));
     } else {
-      bloc.add(InitByType(type!));
+      bloc.add(CategoryInputEvent.initByType(operationType: type!));
     }
 
     return BlocProvider(
@@ -60,9 +60,9 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   void _listenState(BuildContext context, CategoryInputState state) {
-    if (state is Saved) {
+    if (state.isSaved) {
       Navigator.of(context).pop(state.category);
-    } else if (state is Restore) {
+    } else if (state.isFetched) {
       titleController.text = state.title;
       budgetController.text = state.budget.toString();
     }
@@ -84,7 +84,9 @@ class _CategoryPageState extends State<CategoryPage> {
         title: widget.isNew
             ? context.loc.newCategoryCardTitle
             : context.loc.categoryCardTitle,
-        onSave: (context) => context.read<CategoryInputBloc>().add(Save()),
+        onSave: (context) => context
+            .read<CategoryInputBloc>()
+            .add(const CategoryInputEvent.save()),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,8 +118,9 @@ class _CategoryPageState extends State<CategoryPage> {
               decoration: InputDecoration(
                 labelText: context.loc.title,
               ),
-              onChanged: (value) =>
-                  context.read<CategoryInputBloc>().add(ChangeTitle(value)),
+              onChanged: (value) => context
+                  .read<CategoryInputBloc>()
+                  .add(CategoryInputEvent.changeTitle(title: value)),
               validator: _titleValidator,
             ),
             const SizedBox(height: 8.0),
@@ -130,9 +133,11 @@ class _CategoryPageState extends State<CategoryPage> {
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              onChanged: (value) => context
-                  .read<CategoryInputBloc>()
-                  .add(ChangeBudget(int.parse(value.isEmpty ? "0" : value))),
+              onChanged: (value) => context.read<CategoryInputBloc>().add(
+                    CategoryInputEvent.changeBudget(
+                      budget: int.parse(value.isEmpty ? "0" : value),
+                    ),
+                  ),
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -140,9 +145,9 @@ class _CategoryPageState extends State<CategoryPage> {
                 Text(context.loc.budgetType),
                 const SizedBox(width: 16.0),
                 TypeRadioButton<BudgetType>(
-                  onChange: (type) => context
-                      .read<CategoryInputBloc>()
-                      .add(ChangeBudgetType(type)),
+                  onChange: (type) => context.read<CategoryInputBloc>().add(
+                        CategoryInputEvent.changeBudgetType(budgetType: type),
+                      ),
                   type: context.select<CategoryInputBloc, BudgetType>(
                     (bloc) => bloc.state.budgetType,
                   ),

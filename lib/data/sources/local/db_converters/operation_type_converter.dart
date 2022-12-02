@@ -6,10 +6,7 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
   const OperationTypeConverter();
 
   @override
-  OperationType? mapToDart(int? fromDb) {
-    if (fromDb == null) {
-      return null;
-    }
+  OperationType fromSql(int fromDb) {
 
     switch (fromDb) {
       case 1:
@@ -19,16 +16,12 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
       case 3:
         return OperationType.TRANSFER;
       default:
-        return null;
+        return OperationType.INPUT; //TODO
     }
   }
 
   @override
-  int? mapToSql(OperationType? value) {
-    if (value == null) {
-      return null;
-    }
-
+  int toSql(OperationType value) {
     switch (value) {
       case OperationType.INPUT:
         return 1;
@@ -36,8 +29,6 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
         return 2;
       case OperationType.TRANSFER:
         return 3;
-      default:
-        return null;
     }
   }
 }

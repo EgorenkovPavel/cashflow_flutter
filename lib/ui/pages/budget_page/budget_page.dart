@@ -25,7 +25,7 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = sl<BudgetBloc>()..add(Fetch(widget.type));
+    _bloc = sl<BudgetBloc>()..add(BudgetEvent.fetch(operationtype: widget.type));
   }
 
   @override
@@ -56,8 +56,8 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                 delegate: DiagramDelegate(
                   items: state.itemsAll,
-                  onBackPressed: () => _bloc.add(PreviousYear()),
-                  onForwardPressed: () => _bloc.add(NextYear()),
+                  onBackPressed: () => _bloc.add(const BudgetEvent.previousYear()),
+                  onForwardPressed: () => _bloc.add(const BudgetEvent.nextYear()),
                 ),
               ),
               SliverPersistentHeader(
@@ -70,7 +70,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         previousValue + element.monthCashflow,
                   ),
                   showAll: state.showAllMonthBudget,
-                  onPressed: () => _bloc.add(ShowAll(BudgetType.MONTH)),
+                  onPressed: () => _bloc.add(const BudgetEvent.showAll(budgetType: BudgetType.MONTH)),
                 ),
               ),
               SliverList(
@@ -89,7 +89,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         previousValue + element.yearCashflow,
                   ),
                   showAll: state.showAllYearBudget,
-                  onPressed: () => _bloc.add(ShowAll(BudgetType.YEAR)),
+                  onPressed: () => _bloc.add(const BudgetEvent.showAll(budgetType: BudgetType.YEAR)),
                 ),
               ),
               SliverList(
@@ -311,7 +311,7 @@ class PieDiagram extends StatelessWidget {
           onPressed: onBackPressed,
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        SizedBox(
+        const SizedBox(
           width: 200.0,
           height: 200.0,
           // child: charts.PieChart(

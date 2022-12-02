@@ -15,7 +15,9 @@ class OperationFilterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<OperationFilterBloc>()
-        ..add(Init(filter ?? const OperationListFilter.empty())),
+        ..add(OperationFilterEvent.init(
+          filter: filter ?? const OperationListFilter.empty(),
+        )),
       child: _OperationFilterPage(),
     );
   }
@@ -60,7 +62,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
-      context.read<OperationFilterBloc>().add(AddAccount(result));
+      context
+          .read<OperationFilterBloc>()
+          .add(OperationFilterEvent.addAccount(account: result));
     }
   }
 
@@ -81,7 +85,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
-      context.read<OperationFilterBloc>().add(AddCategory(result));
+      context
+          .read<OperationFilterBloc>()
+          .add(OperationFilterEvent.addCategory(category: result));
     }
   }
 
@@ -100,7 +106,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
-      context.read<OperationFilterBloc>().add(AddCategory(result));
+      context
+          .read<OperationFilterBloc>()
+          .add(OperationFilterEvent.addCategory(category: result));
     }
   }
 
@@ -122,10 +130,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                 date: context.select<OperationFilterBloc, DateTimeRange?>(
                   (bloc) => bloc.state.filter.period,
                 ),
-                onPressed: (date) =>
-                    context.read<OperationFilterBloc>().add(SetPeriod(date)),
-                onDelete: () =>
-                    context.read<OperationFilterBloc>().add(ResetPediod()),
+                onPressed: (date) => context
+                    .read<OperationFilterBloc>()
+                    .add(OperationFilterEvent.setPeriod(period: date)),
+                onDelete: () => context
+                    .read<OperationFilterBloc>()
+                    .add(OperationFilterEvent.resetPeriod()),
               ),
               const SizedBox(height: 8.0),
               Text(context.loc.accounts),
@@ -146,7 +156,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                         deleteIcon: const Icon(Icons.cancel),
                         onDeleted: () => context
                             .read<OperationFilterBloc>()
-                            .add(RemoveAccount(account)),
+                            .add(OperationFilterEvent.removeAccount(
+                              account: account,
+                            )),
                       ),
                     )
                     .toList(),
@@ -174,7 +186,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                         deleteIcon: const Icon(Icons.cancel),
                         onDeleted: () => context
                             .read<OperationFilterBloc>()
-                            .add(RemoveCategory(category)),
+                            .add(OperationFilterEvent.removeCategory(
+                              category: category,
+                            )),
                       ),
                     )
                     .toList(),
@@ -204,7 +218,9 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
                         deleteIcon: const Icon(Icons.cancel),
                         onDeleted: () => context
                             .read<OperationFilterBloc>()
-                            .add(RemoveCategory(category)),
+                            .add(OperationFilterEvent.removeCategory(
+                              category: category,
+                            )),
                       ),
                     )
                     .toList(),

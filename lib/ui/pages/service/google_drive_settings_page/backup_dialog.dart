@@ -6,7 +6,7 @@ import 'package:money_tracker/ui/page_navigator.dart';
 import 'package:money_tracker/utils/extensions.dart';
 
 class BackupDialog extends StatefulWidget {
-  final Future<void> Function(String folderId, String title) onBackup;
+  final void Function(String folderId, String title) onBackup;
 
   const BackupDialog({Key? key, required this.onBackup}) : super(key: key);
 
@@ -36,7 +36,7 @@ class _BackupDialogState extends State<BackupDialog> {
       return;
     }
 
-    await widget.onBackup(_folder.id, _controller.text);
+    widget.onBackup(_folder.id, _controller.text);
     await sl<SettingsSource>().setGoogleDriveFileName(_controller.text);
 
     Navigator.of(context).pop();

@@ -1,50 +1,42 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/domain/models/user.dart';
 
-abstract class AuthEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
+part 'auth_bloc.freezed.dart';
+
+@freezed
+class AuthEvent with _$AuthEvent {
+  const factory AuthEvent.changeAuth({required bool isAuthenticated}) =
+      _ChangeAuthAuthEvent;
+
+  const factory AuthEvent.signInSilently() = _SignInSilentlyAuthEvent;
+
+  const factory AuthEvent.signIn() = _SignInAuthEvent;
+
+  const factory AuthEvent.signOut() = _SignOutAuthEvent;
 }
 
-class _ChangeAuth extends AuthEvent {
-  final bool authenticated;
+@freezed
+class AuthState with _$AuthState {
+  const AuthState._();
 
-  _ChangeAuth(this.authenticated);
+  const factory AuthState.authenticated({required User user}) =
+      _AuthenticatedAuthState;
 
-  @override
-  List<Object?> get props => [authenticated];
-}
+  const factory AuthState.notAuthenticated() = _NotAuthenticatedAuthState;
 
-class SignInSilently extends AuthEvent {}
+  User? get user => map(
+        authenticated: (state) => state.user,
+        notAuthenticated: (state) => null,
+      );
 
-class SignIn extends AuthEvent {}
-
-class SignOut extends AuthEvent {}
-
-abstract class AuthState extends Equatable {
-  const AuthState();
-}
-
-class Authenticated extends AuthState {
-  final User user;
-
-  const Authenticated({
-    required this.user,
-  });
-
-  @override
-  List<Object?> get props => [user];
-}
-
-class NotAuthenticated extends AuthState {
-  const NotAuthenticated();
-
-  @override
-  List<Object?> get props => [];
+  bool get isAuthenticated => map(
+        authenticated: (state) => true,
+        notAuthenticated: (state) => false,
+      );
 }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -55,20 +47,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(
     this._authRepository,
-  ) : super(const NotAuthenticated()) {
-    on<_ChangeAuth>(_changeAuth);
-    on<SignInSilently>(_signInSilently);
-    on<SignIn>(_signIn);
-    on<SignOut>(_signOut);
+  ) : super(const AuthState.notAuthenticated()) {
+    on<AuthEvent>((event, emitter) => event.map(
+          changeAuth: (event) => _changeAuth(event, emitter),
+          signInSilently: (event) => _signInSilently(event, emitter),
+          signIn: (event) => _signIn(event, emitter),
+          signOut: (event) => _signOut(event, emitter),
+        ));
 
     _sub = _authRepository.userChanges().listen((user) {
-      add(_ChangeAuth(user != null));
+      add(AuthEvent.changeAuth(isAuthenticated: user != null));
     });
+
     _subInternet = _authRepository.isConnectedToInternet().listen((connected) {
       if (connected) {
-        add(SignInSilently());
+        add(AuthEvent.signInSilently());
       } else {
-        add(_ChangeAuth(false));
+        add(AuthEvent.changeAuth(isAuthenticated: false));
       }
     });
   }
@@ -81,30 +76,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     return super.close();
   }
 
-  Future<void> _changeAuth(_ChangeAuth event, Emitter<AuthState> emit) async {
+  Future<void> _changeAuth(
+    _ChangeAuthAuthEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     var user = _authRepository.getUser();
 
-    if (event.authenticated && user != null) {
-      emit(Authenticated(user: user));
+    if (event.isAuthenticated && user != null) {
+      emit(AuthState.authenticated(user: user));
     } else {
-      emit(const NotAuthenticated());
+      emit(const AuthState.notAuthenticated());
     }
   }
 
   Future<void> _signInSilently(
-    SignInSilently event,
+    _SignInSilentlyAuthEvent event,
     Emitter<AuthState> emit,
   ) async =>
       await _authRepository.signInSilently();
 
   Future<void> _signIn(
-    SignIn event,
+    _SignInAuthEvent event,
     Emitter<AuthState> emit,
   ) async =>
       await _authRepository.signIn();
 
   Future<void> _signOut(
-    SignOut event,
+    _SignOutAuthEvent event,
     Emitter<AuthState> emit,
   ) async =>
       await _authRepository.signOut();

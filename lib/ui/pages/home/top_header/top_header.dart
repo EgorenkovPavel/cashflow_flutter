@@ -15,7 +15,7 @@ class TopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<TopHeaderBloc>()..add(Fetch()),
+      create: (context) => sl<TopHeaderBloc>()..add(TopHeaderEvent.fetch()),
       child: Column(
         children: [
           _TotalBalance(),
@@ -126,7 +126,8 @@ class AccountList extends StatelessWidget {
               .map((e) => _AccountItem(account: e))
               .expand((element) =>
                   [const SizedBox(width: Dimensions.padding), element])
-              .toList()..add(const SizedBox(width: Dimensions.padding)),
+              .toList()
+            ..add(const SizedBox(width: Dimensions.padding)),
         ),
       ),
     );

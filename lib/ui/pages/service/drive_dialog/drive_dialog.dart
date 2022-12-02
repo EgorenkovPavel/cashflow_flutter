@@ -29,7 +29,7 @@ class _DriveDialogState extends State<DriveDialog> {
   void initState() {
     super.initState();
     _bloc = sl(param1: widget.mode);
-    _bloc.loadFolders();
+    _bloc.add(const DialogDriveEvent.loadFolders());
   }
 
   @override
@@ -39,17 +39,19 @@ class _DriveDialogState extends State<DriveDialog> {
   }
 
   Future<bool> _onBackPressed() async {
-    _bloc.onBackPressed();
+    _bloc.add(const DialogDriveEvent.backPressed());
 
     return false;
   }
 
   void _listenState(BuildContext context, DialogDriveState state) {
-    if (state.action == DialogDriveAction.JUMP_TO_START) {
-      _listController.jumpTo(0);
-    } else if (state.action == DialogDriveAction.RETURN_RESULT) {
-      Navigator.of(context).pop<DriveFile>(state.result);
-    }
+    state.mapOrNull(success: (state) {
+      if (state.action == DialogDriveAction.JUMP_TO_START) {
+        _listController.jumpTo(0);
+      } else if (state.action == DialogDriveAction.RETURN_RESULT) {
+        Navigator.of(context).pop<DriveFile>(state.result);
+      }
+    });
   }
 
   @override
@@ -63,18 +65,33 @@ class _DriveDialogState extends State<DriveDialog> {
         body: BlocConsumer<DriveDialogBloc, DialogDriveState>(
           bloc: _bloc,
           builder: (context, state) {
-            return ListView.separated(
-              controller: _listController,
-              itemCount: state.folderList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider();
-              },
-              itemBuilder: (BuildContext context, int index) {
-                var f = state.folderList[index];
+            return state.map(
+              success: (state) {
+                return ListView.separated(
+                  controller: _listController,
+                  itemCount: state.folderList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const Divider();
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    var f = state.folderList[index];
 
-                return _DriveFileItem(
-                  file: f,
-                  onTap: () => _bloc.onFileTap(f),
+                    return _DriveFileItem(
+                      file: f,
+                      onTap: () =>
+                          _bloc.add(DialogDriveEvent.onFileTap(file: f)),
+                    );
+                  },
+                );
+              },
+              failure: (state) {
+                return const Center(
+                  child: Text('ERROR'),
+                );
+              },
+              inProgress: (state) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               },
             );
@@ -87,7 +104,7 @@ class _DriveDialogState extends State<DriveDialog> {
             child: Text(context.loc.cancel.toUpperCase()),
           ),
           ElevatedButton(
-            onPressed: () => _bloc.choose(),
+            onPressed: () => _bloc.add(const DialogDriveEvent.choose()),
             child: Text(
               context.loc.choose.toUpperCase(),
               style: const TextStyle(color: Colors.white),

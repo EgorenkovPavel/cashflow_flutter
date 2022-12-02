@@ -1,49 +1,51 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/domain/models.dart';
 
-abstract class TopHeaderEvent {}
+part 'top_header_bloc.freezed.dart';
 
-class Fetch extends TopHeaderEvent {}
+@freezed
+class TopHeaderEvent with _$TopHeaderEvent {
+  const factory TopHeaderEvent.fetch() = _FetchTopHeaderEvent;
 
-class ChangeBalance extends TopHeaderEvent {
-  final List<AccountBalance> accounts;
-
-  ChangeBalance({required this.accounts});
+  const factory TopHeaderEvent.changeBalance(
+      {required List<AccountBalance> accounts}) = _ChangeBalanceTopHeaderEvent;
 }
 
-class TopHeaderState {
-  final int totalBalance;
-  final List<AccountBalance> accounts;
-
-  TopHeaderState({
-    required this.totalBalance,
-    required this.accounts,
-  });
-
-  TopHeaderState.initial()
-      : totalBalance = 0,
-        accounts = [];
+@freezed
+class TopHeaderState with _$TopHeaderState {
+  const factory TopHeaderState({
+    required int totalBalance,
+    required List<AccountBalance> accounts,
+  }) = _TopHeaderState;
 }
 
 class TopHeaderBloc extends Bloc<TopHeaderEvent, TopHeaderState> {
   final DataRepository _repository;
   StreamSubscription? _sub;
 
-  TopHeaderBloc(this._repository) : super(TopHeaderState.initial()) {
-    on<Fetch>(_fetch);
-    on<ChangeBalance>(_changeBalance);
+  TopHeaderBloc(this._repository)
+      : super(const TopHeaderState(
+          accounts: [],
+          totalBalance: 0,
+        )) {
+    on<TopHeaderEvent>((event, emitter) => event.map(
+          fetch: (event) => _fetch(event, emitter),
+          changeBalance: (event) => _changeBalance(event, emitter),
+        ));
   }
 
-  void _fetch(Fetch event, Emitter<TopHeaderState> emit) {
+  void _fetch(_FetchTopHeaderEvent event, Emitter<TopHeaderState> emit) {
     _sub = _repository.accounts.watchAllBalance().listen((items) {
-      add(ChangeBalance(accounts: items));
+      add(TopHeaderEvent.changeBalance(accounts: items));
     });
   }
 
-  void _changeBalance(ChangeBalance event, Emitter<TopHeaderState> emit) {
+  void _changeBalance(
+      _ChangeBalanceTopHeaderEvent event, Emitter<TopHeaderState> emit) {
     final balance = event.accounts.fold<int>(
       0,
       (previousValue, element) => previousValue + element.balance,
