@@ -74,7 +74,7 @@ class _AccountPageState extends State<AccountPage> {
             ? context.loc.newAccountCardTitle
             : context.loc.accountCardTitle,
         onSave: (context) =>
-            context.read<AccountInputBloc>().add(AccountInputEvent.save()),
+            context.read<AccountInputBloc>().add(const AccountInputEvent.save()),
         child: Column(
           children: [
             TextFormField(

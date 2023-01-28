@@ -35,7 +35,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
 
   RelativeRect buttonMenuPosition(BuildContext c) {
     final bar = c.findRenderObject() as RenderBox;
-    final overlay = Overlay.of(c)!.context.findRenderObject() as RenderBox;
+    final overlay = Overlay.of(c).context.findRenderObject() as RenderBox;
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
         bar.localToGlobal(bar.size.bottomLeft(Offset.zero), ancestor: overlay),

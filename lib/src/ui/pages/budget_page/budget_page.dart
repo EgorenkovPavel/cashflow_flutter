@@ -164,12 +164,12 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const Spacer(),
               Text(
                 context.loc.numberFormat(cashflow),
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               showAll
                   ? const Icon(Icons.arrow_drop_down)
@@ -255,7 +255,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
         children: [
           Text(
             context.loc.titleCashflow,
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           TweenAnimationBuilder<int>(
             tween: IntTween(
@@ -268,7 +268,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
                 context.loc.numberFormat(cashflow),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(color: Theme.of(context).colorScheme.primary),
               );
             },

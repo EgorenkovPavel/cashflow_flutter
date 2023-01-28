@@ -17,8 +17,8 @@ extension CloudCategoryMapper on Category {
         id: cloudId,
         title: title,
         operationType:
-            const OperationTypeConverter().toSql(operationType)!,
-        budgetType: const BudgetTypeConverter().toSql(budgetType)!,
+            const OperationTypeConverter().toSql(operationType),
+        budgetType: const BudgetTypeConverter().toSql(budgetType),
         budget: budget,
         deleted: false,
       );
@@ -30,7 +30,7 @@ extension CloudOperationMapper on Operation {
   CloudOperation toCloudOperation() => CloudOperation(
         id: cloudId,
         date: date,
-        operationType: const OperationTypeConverter().toSql(type)!,
+        operationType: const OperationTypeConverter().toSql(type),
         account: account.cloudId,
         category: category?.cloudId,
         recAccount: recAccount?.cloudId,

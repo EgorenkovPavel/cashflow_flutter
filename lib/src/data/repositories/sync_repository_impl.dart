@@ -246,7 +246,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
     if (operation == null) {
       final type =
-          OperationTypeConverter().fromSql(cloudOperation.operationType);
+          const OperationTypeConverter().fromSql(cloudOperation.operationType);
 
       final newOperation = type.map(
         INPUT: () => Operation.input(

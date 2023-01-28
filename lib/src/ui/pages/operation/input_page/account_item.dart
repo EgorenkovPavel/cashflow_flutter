@@ -19,7 +19,7 @@ class AccountItem extends StatelessWidget {
         Text(account.title),
         Text(
           context.loc.numberFormat(account.balance),
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

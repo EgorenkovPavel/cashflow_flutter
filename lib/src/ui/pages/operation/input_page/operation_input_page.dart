@@ -233,7 +233,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                             ),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline4,
+                                                .headlineMedium,
                                           ),
                                         ),
                                       ),
@@ -485,7 +485,7 @@ class ItemsList extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 IconButton(
                   icon: const Icon(

@@ -97,7 +97,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 children: <Widget>[
                   Text(
                     context.loc.titleType,
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(
                     width: 8.0,

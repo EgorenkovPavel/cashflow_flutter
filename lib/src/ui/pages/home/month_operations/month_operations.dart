@@ -25,13 +25,13 @@ class MonthOperations extends StatelessWidget {
               children: [
                 TextSpan(
                   text: '${context.loc.operationsIn} ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 TextSpan(
                   text: DateFormat.MMMM(
                     Localizations.localeOf(context).toString(),
                   ).format(DateTime.now()),
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),
                 ),
@@ -148,7 +148,7 @@ class _MonthOperation extends StatelessWidget {
               operationType == OperationType.INPUT
                   ? context.loc.earning
                   : context.loc.spending,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Stack(
               children: [

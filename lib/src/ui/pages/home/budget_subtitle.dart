@@ -66,11 +66,11 @@ class BudgetSubtitle extends StatelessWidget {
                   text: type == OperationType.INPUT
                       ? 'Earning in '
                       : 'Spending in ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 TextSpan(
                   text: DateFormat.MMMM().format(DateTime.now()),
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),
                 ),
@@ -83,14 +83,14 @@ class BudgetSubtitle extends StatelessWidget {
             children: [
               Text(
                 NumberFormat().format(cashflow),
-                style: Theme.of(context).textTheme.headline6!.copyWith(
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context).primaryColor.withOpacity(0.8),
                     ),
               ),
               Text(
                 'of ${NumberFormat().format(budget)}',
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
           ),

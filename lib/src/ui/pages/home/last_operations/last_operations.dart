@@ -22,7 +22,7 @@ class LastOperations extends StatelessWidget {
           children: [
             Text(
               context.loc.titleLastOperations,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             BlocBuilder<LastOperationsBloc, LastOperationsState>(
               builder: (context, state) {

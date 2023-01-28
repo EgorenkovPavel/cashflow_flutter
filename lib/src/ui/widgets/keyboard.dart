@@ -109,7 +109,7 @@ class _DigitButton extends StatelessWidget {
       width: width,
       child: Text(
         '$digit',
-        style: Theme.of(context).textTheme.headline6!.copyWith(
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
       ),

@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'account.dart';
 
 part 'account_balance.freezed.dart';
 

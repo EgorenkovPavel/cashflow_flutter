@@ -239,11 +239,11 @@ class Database extends _$Database {
                 title: d['category_title'],
                 operationType: converter.fromSql(
                   int.parse(d['category_type']),
-                )!,
+                ),
                 budget: int.parse(d['category_budget']),
                 budgetType: const BudgetTypeConverter().fromSql(
                   int.parse(d['category_budget_type']),
-                )!,
+                ),
                 synced: false,
               ));
             } else {
@@ -267,7 +267,7 @@ class Database extends _$Database {
                   int.parse(d['operation_date']),
                 ),
                 operationType:
-                    converter.fromSql(int.parse(d['operation_type']))!,
+                    converter.fromSql(int.parse(d['operation_type'])),
                 account: int.parse(d['operation_account_id']),
                 category: _getId(d['operation_category_id']),
                 recAccount: _getId(d['operation_recipient_account_id']),

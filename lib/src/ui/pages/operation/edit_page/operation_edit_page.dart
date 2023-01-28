@@ -298,7 +298,7 @@ class Title extends StatelessWidget {
       padding: const EdgeInsets.only(left: 0.0, top: 8.0),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.caption,
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

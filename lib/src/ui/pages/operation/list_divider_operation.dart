@@ -86,7 +86,7 @@ class _TitleDivider extends StatelessWidget {
         ),
         child: Text(
           _calcTitle(context),
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.bodySmall,
           textAlign: TextAlign.center,
         ),
       ),

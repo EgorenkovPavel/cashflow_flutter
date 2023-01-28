@@ -22,14 +22,14 @@ class EmptyListHint extends StatelessWidget {
             title,
             style: Theme.of(context)
                 .textTheme
-                .headline5!
+                .headlineSmall!
                 .copyWith(color: Colors.grey),
           ),
           Text(
             hint,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2!
+                .titleSmall!
                 .copyWith(color: Colors.grey),
           ),
         ],

@@ -78,7 +78,7 @@ class _TotalBalance extends StatelessWidget {
               children: [
                 Text(
                   context.loc.titleTotalBalance,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Colors.white.withOpacity(0.5),
                       ),
                 ),
@@ -88,7 +88,7 @@ class _TotalBalance extends StatelessWidget {
                       (bloc) => bloc.state.totalBalance,
                     ),
                   ),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: Colors.white,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -167,14 +167,14 @@ class _AccountItem extends StatelessWidget {
           children: [
             Text(
               account.title,
-              style: Theme.of(context).textTheme.caption!.copyWith(
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     fontSize: 13,
                     color: Colors.black87,
                   ),
             ),
             Text(
               context.loc.numberFormat(account.balance),
-              style: Theme.of(context).textTheme.headline6!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
