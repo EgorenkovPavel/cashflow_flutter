@@ -1,13 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../data/database.dart';
 
-class CategoryBudgetEntity extends Equatable{
-  final CategoryDB category;
-  final int budget;
+part 'category_budget_entity.freezed.dart';
 
-  const CategoryBudgetEntity(this.category, this.budget);
-
-  @override
-  List<Object?> get props => [category, budget];
+@freezed
+class CategoryBudgetEntity with _$CategoryBudgetEntity {
+  const factory CategoryBudgetEntity({
+    required CategoryDB category,
+    required int budget,
+  }) = _CategoryBudgetEntity;
 }

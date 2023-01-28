@@ -2625,6 +2625,8 @@ abstract class _$$_ChangeAccountMasterEventCopyWith<$Res> {
       __$$_ChangeAccountMasterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountBalance account});
+
+  $AccountBalanceCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -2646,6 +2648,14 @@ class __$$_ChangeAccountMasterEventCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as AccountBalance,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBalanceCopyWith<$Res> get account {
+    return $AccountBalanceCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -2862,6 +2872,8 @@ abstract class _$$_ChangeInCategoryMasterEventCopyWith<$Res> {
       __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -2884,6 +2896,14 @@ class __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -3101,6 +3121,8 @@ abstract class _$$_ChangeOutCategoryMasterEventCopyWith<$Res> {
       __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -3123,6 +3145,14 @@ class __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -3340,6 +3370,8 @@ abstract class _$$_ChangeRecAccountMasterEventCopyWith<$Res> {
       __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountBalance account});
+
+  $AccountBalanceCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -3362,6 +3394,14 @@ class __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as AccountBalance,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBalanceCopyWith<$Res> get account {
+    return $AccountBalanceCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -4018,6 +4058,12 @@ abstract class $MasterStateCopyWith<$Res> {
       List<AccountBalance> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  $AccountBalanceCopyWith<$Res>? get account;
+  $CategoryCopyWith<$Res>? get categoryIn;
+  $CategoryCopyWith<$Res>? get categoryOut;
+  $AccountBalanceCopyWith<$Res>? get recAccount;
+  $OperationCopyWith<$Res>? get operation;
 }
 
 /// @nodoc
@@ -4097,6 +4143,66 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
               as List<Category>,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBalanceCopyWith<$Res>? get account {
+    if (_value.account == null) {
+      return null;
+    }
+
+    return $AccountBalanceCopyWith<$Res>(_value.account!, (value) {
+      return _then(_value.copyWith(account: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get categoryIn {
+    if (_value.categoryIn == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.categoryIn!, (value) {
+      return _then(_value.copyWith(categoryIn: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get categoryOut {
+    if (_value.categoryOut == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.categoryOut!, (value) {
+      return _then(_value.copyWith(categoryOut: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBalanceCopyWith<$Res>? get recAccount {
+    if (_value.recAccount == null) {
+      return null;
+    }
+
+    return $AccountBalanceCopyWith<$Res>(_value.recAccount!, (value) {
+      return _then(_value.copyWith(recAccount: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OperationCopyWith<$Res>? get operation {
+    if (_value.operation == null) {
+      return null;
+    }
+
+    return $OperationCopyWith<$Res>(_value.operation!, (value) {
+      return _then(_value.copyWith(operation: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -4120,6 +4226,17 @@ abstract class _$$_MasterStateCopyWith<$Res>
       List<AccountBalance> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  @override
+  $AccountBalanceCopyWith<$Res>? get account;
+  @override
+  $CategoryCopyWith<$Res>? get categoryIn;
+  @override
+  $CategoryCopyWith<$Res>? get categoryOut;
+  @override
+  $AccountBalanceCopyWith<$Res>? get recAccount;
+  @override
+  $OperationCopyWith<$Res>? get operation;
 }
 
 /// @nodoc

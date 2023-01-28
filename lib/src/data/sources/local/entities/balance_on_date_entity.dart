@@ -1,11 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class BalanceOnDate extends Equatable{
-  final DateTime date;
-  final int sum;
+part 'balance_on_date_entity.freezed.dart';
 
-  const BalanceOnDate(this.date, this.sum);
-
-  @override
-  List<Object?> get props => [date, sum];
+@freezed
+class BalanceOnDate with _$BalanceOnDate {
+  const factory BalanceOnDate({
+    required DateTime date,
+    required int sum,
+  }) = _BalanceOnDate;
 }

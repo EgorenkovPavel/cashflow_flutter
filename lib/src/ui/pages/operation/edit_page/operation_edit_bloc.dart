@@ -87,10 +87,15 @@ class OperationEditState with _$OperationEditState {
   }) = _SavedOperationEditState;
 
   factory OperationEditState.initial() => OperationEditState.main(
-        operation: Operation(
+        operation: Operation.input(
           date: DateTime.now(),
-          type: OperationType.INPUT,
           account: const Account(title: '', isDebt: false),
+          category: const Category(
+            title: '',
+            budget: 0,
+            operationType: OperationType.INPUT,
+            budgetType: BudgetType.MONTH,
+          ),
           sum: 0,
         ),
         date: DateTime.now(),
@@ -157,8 +162,16 @@ class OperationEditState with _$OperationEditState {
         operationType: operation.type,
         date: operation.date,
         account: operation.account,
-        category: operation.category,
-        recAccount: operation.recAccount,
+        category: operation.map(
+          input: (operation) => operation.category,
+          output: (operation) => operation.category,
+          transfer: (operation) => null,
+        ),
+        recAccount: operation.map(
+          input: (operation) => null,
+          output: (operation) => null,
+          transfer: (operation) => operation.recAccount,
+        ),
         sum: operation.sum,
         time: TimeOfDay.fromDateTime(operation.date),
         accounts: state.accounts,
@@ -189,9 +202,9 @@ class OperationEditState with _$OperationEditState {
       );
 
   bool get isSaved => maybeMap(
-    saved: (_) => true,
-    orElse: () => false,
-  );
+        saved: (_) => true,
+        orElse: () => false,
+      );
 }
 
 class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
@@ -298,25 +311,40 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
       state.time.minute,
     );
     if (state.operationType == OperationType.TRANSFER) {
-      var newOperation = state.operation.copyWith(
-        date: date,
+      var newOperation = Operation.transfer(
+        cloudId: state.operation.cloudId,
+        deleted: state.operation.deleted,
+        id: state.operation.id,
         synced: false,
-        type: state.operationType,
+        date: date,
         account: state.account,
-        category: null,
-        recAccount: state.recAccount,
+        recAccount: state.recAccount!,
         sum: state.sum,
       );
 
       await _repository.operations.update(newOperation);
-    } else {
-      var newOperation = state.operation.copyWith(
-        date: date,
+    } else if (state.operationType == OperationType.INPUT) {
+      var newOperation = Operation.input(
         synced: false,
-        type: state.operationType,
+        id: state.operation.id,
+        deleted: state.operation.deleted,
+        cloudId: state.operation.cloudId,
+        date: date,
         account: state.account,
-        category: state.category,
-        recAccount: null,
+        category: state.category!,
+        sum: state.sum,
+      );
+
+      await _repository.operations.update(newOperation);
+    } else if (state.operationType == OperationType.OUTPUT) {
+      var newOperation = Operation.output(
+        synced: false,
+        id: state.operation.id,
+        deleted: state.operation.deleted,
+        cloudId: state.operation.cloudId,
+        date: date,
+        account: state.account,
+        category: state.category!,
         sum: state.sum,
       );
 

@@ -1,16 +1,12 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class LoadingState extends Equatable{
-  final int accountCount;
-  final int categoryCount;
-  final int operationCount;
+part 'loading_state.freezed.dart';
 
-  const LoadingState({
-    required this.accountCount,
-    required this.categoryCount,
-    required this.operationCount,
-  });
-
-  @override
-  List<Object?> get props => [accountCount,categoryCount,operationCount];
+@freezed
+class LoadingState with _$LoadingState {
+  const factory LoadingState({
+    required int accountCount,
+    required int categoryCount,
+    required int operationCount,
+  }) = _LoadingState;
 }

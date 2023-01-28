@@ -295,8 +295,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryBudgetEntity(
-                  _categoryDBFromRow(row),
-                  row.read<int>('budget'),
+                  category: _categoryDBFromRow(row),
+                  budget: row.read<int>('budget'),
                 ),
               )
               .toList(),

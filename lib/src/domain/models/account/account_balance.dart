@@ -1,44 +1,16 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'account.dart';
 
-class AccountBalance extends Equatable{
-  final int id;
-  final String cloudId;
-  final String title;
-  final int balance;
-  final bool isDebt;
+part 'account_balance.freezed.dart';
 
-  const AccountBalance({
-    required this.id,
-    required this.cloudId,
-    required this.title,
-    required this.balance,
-    this.isDebt = false,
-  });
-
-  AccountBalance copyWith({
-    int? id,
-    String? cloudId,
-    String? title,
-    bool? isDebt,
-    int? balance,
-  }) =>
-      AccountBalance(
-        id: id ?? this.id,
-        cloudId: cloudId ?? this.cloudId,
-        title: title ?? this.title,
-        isDebt: isDebt ?? this.isDebt,
-        balance: balance ?? this.balance,
-      );
-
-  Account toAccount() => Account(
-        id: id,
-        cloudId: cloudId,
-        title: title,
-        isDebt: isDebt,
-      );
-
-  @override
-  List<Object?> get props => [id, cloudId, title, balance, isDebt];
+@freezed
+class AccountBalance with _$AccountBalance {
+  const factory AccountBalance({
+    required int id,
+    required String cloudId,
+    required String title,
+    required int balance,
+    @Default(false) bool isDebt,
+  }) = _AccountBalance;
 }

@@ -757,6 +757,8 @@ abstract class _$$_MainAccountInputStateCopyWith<$Res>
   @override
   @useResult
   $Res call({String title, bool isDebt, Account? account});
+
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -788,6 +790,18 @@ class __$$_MainAccountInputStateCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res>? get account {
+    if (_value.account == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.account!, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -928,6 +942,8 @@ abstract class _$$_SavedAccountInputStateCopyWith<$Res>
   @override
   @useResult
   $Res call({String title, bool isDebt, Account savedAccount});
+
+  $AccountCopyWith<$Res> get savedAccount;
 }
 
 /// @nodoc
@@ -959,6 +975,14 @@ class __$$_SavedAccountInputStateCopyWithImpl<$Res>
           : savedAccount // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get savedAccount {
+    return $AccountCopyWith<$Res>(_value.savedAccount, (value) {
+      return _then(_value.copyWith(savedAccount: value));
+    });
   }
 }
 
@@ -1100,6 +1124,8 @@ abstract class _$$_FetchAccountInputStateCopyWith<$Res>
   @override
   @useResult
   $Res call({String title, bool isDebt, Account fetchedAccount});
+
+  $AccountCopyWith<$Res> get fetchedAccount;
 }
 
 /// @nodoc
@@ -1131,6 +1157,14 @@ class __$$_FetchAccountInputStateCopyWithImpl<$Res>
           : fetchedAccount // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get fetchedAccount {
+    return $AccountCopyWith<$Res>(_value.fetchedAccount, (value) {
+      return _then(_value.copyWith(fetchedAccount: value));
+    });
   }
 }
 

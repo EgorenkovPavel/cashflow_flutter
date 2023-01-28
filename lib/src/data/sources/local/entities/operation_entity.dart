@@ -1,34 +1,33 @@
-import 'package:drift/drift.dart';
-import 'package:equatable/equatable.dart';
+import 'package:drift/drift.dart' as drift;
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/data/sources/local/data/database.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-class OperationDbEntity extends Equatable{
-  final OperationDB operation;
-  final AccountDB account;
-  final CategoryDB? category;
-  final AccountDB? recAccount;
+part 'operation_entity.freezed.dart';
 
-  const OperationDbEntity({
-    required this.operation,
-    required this.account,
-    this.category,
-    this.recAccount,
-  });
+@freezed
+class OperationDbEntity with _$OperationDbEntity{
+  const OperationDbEntity._();
+  const factory OperationDbEntity({
+    required OperationDB operation,
+    required AccountDB account,
+    CategoryDB? category,
+    AccountDB? recAccount,
+}) = _OperationDbEntity;
 
-  //TODO rewrite to date, type, account, category, recAccount sum
+  // //TODO rewrite to date, type, account, category, recAccount sum
   OperationDB get operationData {
     switch (operation.operationType) {
       case OperationType.INPUT:
       case OperationType.OUTPUT:
-        return operation.copyWith(account: account.id, category: Value(category!.id));
+        return operation.copyWith(account: account.id, category: drift.Value(category!.id));
       case OperationType.TRANSFER:
         return operation.copyWith(
           account: account.id,
-          recAccount: Value(recAccount!.id),
+          recAccount: drift.Value(recAccount!.id),
         );
       default:
-        throw InvalidDataException('');
+        throw drift.InvalidDataException('');
     }
   }
 
@@ -40,7 +39,4 @@ class OperationDbEntity extends Equatable{
 
   int get sum => operation.sum;
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [operation, account, category, recAccount];
-}
+ }

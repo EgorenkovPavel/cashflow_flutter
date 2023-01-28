@@ -13,14 +13,14 @@ class AccountBalanceMapper
   @override
   AccountBalanceEntity mapToSql(AccountBalance a) {
     return AccountBalanceEntity(
-      AccountDB(
+      account: AccountDB(
         id: a.id,
         cloudId: a.cloudId,
         title: a.title,
         isDebt: a.isDebt,
         synced: false,
       ),
-      a.balance,
+      sum: a.balance,
     );
   }
 

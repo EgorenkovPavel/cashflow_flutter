@@ -1,19 +1,16 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class DriveFile extends Equatable{
-  final String title;
-  final String id;
-  final bool isFolder;
-  final DateTime lastChanges;
-  final bool enabled;
+part 'google_drive_file.freezed.dart';
 
-  const DriveFile({
-    required this.enabled,
-    required this.lastChanges,
-    required this.title,
-    required this.id,
-    required this.isFolder,
-  });
+@freezed
+class DriveFile with _$DriveFile {
+  const factory DriveFile({
+    required String title,
+    required String id,
+    required bool isFolder,
+    required DateTime lastChanges,
+    required bool enabled,
+  }) = _DriveFile;
 
   static DriveFile root() {
     return DriveFile(
@@ -24,7 +21,4 @@ class DriveFile extends Equatable{
       enabled: false,
     );
   }
-
-  @override
-  List<Object?> get props => [id];
 }

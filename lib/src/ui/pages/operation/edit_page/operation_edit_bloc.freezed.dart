@@ -889,6 +889,8 @@ abstract class _$$_ChangeAccountOperationEditEventCopyWith<$Res> {
       __$$_ChangeAccountOperationEditEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Account account});
+
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -912,6 +914,14 @@ class __$$_ChangeAccountOperationEditEventCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -1080,6 +1090,8 @@ abstract class _$$_ChangeCategoryOperationEditEventCopyWith<$Res> {
       __$$_ChangeCategoryOperationEditEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -1103,6 +1115,14 @@ class __$$_ChangeCategoryOperationEditEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -1272,6 +1292,8 @@ abstract class _$$_ChangeRecAccountOperationEditEventCopyWith<$Res> {
       __$$_ChangeRecAccountOperationEditEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Account recAccount});
+
+  $AccountCopyWith<$Res> get recAccount;
 }
 
 /// @nodoc
@@ -1295,6 +1317,14 @@ class __$$_ChangeRecAccountOperationEditEventCopyWithImpl<$Res>
           : recAccount // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get recAccount {
+    return $AccountCopyWith<$Res>(_value.recAccount, (value) {
+      return _then(_value.copyWith(recAccount: value));
+    });
   }
 }
 
@@ -1988,6 +2018,11 @@ abstract class $OperationEditStateCopyWith<$Res> {
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  $OperationCopyWith<$Res> get operation;
+  $AccountCopyWith<$Res> get account;
+  $CategoryCopyWith<$Res>? get category;
+  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc
@@ -2062,6 +2097,46 @@ class _$OperationEditStateCopyWithImpl<$Res, $Val extends OperationEditState>
               as List<Category>,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OperationCopyWith<$Res> get operation {
+    return $OperationCopyWith<$Res>(_value.operation, (value) {
+      return _then(_value.copyWith(operation: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
+      return _then(_value.copyWith(category: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res>? get recAccount {
+    if (_value.recAccount == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.recAccount!, (value) {
+      return _then(_value.copyWith(recAccount: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -2084,6 +2159,15 @@ abstract class _$$_MainOperationEditStateCopyWith<$Res>
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  @override
+  $OperationCopyWith<$Res> get operation;
+  @override
+  $AccountCopyWith<$Res> get account;
+  @override
+  $CategoryCopyWith<$Res>? get category;
+  @override
+  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc
@@ -2513,6 +2597,15 @@ abstract class _$$_FetchedOperationEditStateCopyWith<$Res>
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  @override
+  $OperationCopyWith<$Res> get operation;
+  @override
+  $AccountCopyWith<$Res> get account;
+  @override
+  $CategoryCopyWith<$Res>? get category;
+  @override
+  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc
@@ -2943,6 +3036,15 @@ abstract class _$$_SavedOperationEditStateCopyWith<$Res>
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  @override
+  $OperationCopyWith<$Res> get operation;
+  @override
+  $AccountCopyWith<$Res> get account;
+  @override
+  $CategoryCopyWith<$Res>? get category;
+  @override
+  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc

@@ -343,6 +343,8 @@ abstract class _$$_OnFileTapDialogDriveEventCopyWith<$Res> {
       __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>;
   @useResult
   $Res call({DriveFile file});
+
+  $DriveFileCopyWith<$Res> get file;
 }
 
 /// @nodoc
@@ -365,6 +367,14 @@ class __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>
           : file // ignore: cast_nullable_to_non_nullable
               as DriveFile,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DriveFileCopyWith<$Res> get file {
+    return $DriveFileCopyWith<$Res>(_value.file, (value) {
+      return _then(_value.copyWith(file: value));
+    });
   }
 }
 
@@ -816,6 +826,8 @@ abstract class _$$_SuccessDialogDriveStateCopyWith<$Res> {
       {DriveFile? result,
       DialogDriveAction action,
       List<DriveFile> folderList});
+
+  $DriveFileCopyWith<$Res>? get result;
 }
 
 /// @nodoc
@@ -847,6 +859,18 @@ class __$$_SuccessDialogDriveStateCopyWithImpl<$Res>
           : folderList // ignore: cast_nullable_to_non_nullable
               as List<DriveFile>,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DriveFileCopyWith<$Res>? get result {
+    if (_value.result == null) {
+      return null;
+    }
+
+    return $DriveFileCopyWith<$Res>(_value.result!, (value) {
+      return _then(_value.copyWith(result: value));
+    });
   }
 }
 

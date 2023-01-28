@@ -87,6 +87,11 @@ class MockGoogleSignIn extends _i1.Mock implements _i5.GoogleSignIn {
         returnValue: <String>[],
       ) as List<String>);
   @override
+  bool get forceCodeForRefreshToken => (super.noSuchMethod(
+        Invocation.getter(#forceCodeForRefreshToken),
+        returnValue: false,
+      ) as bool);
+  @override
   _i7.Stream<_i5.GoogleSignInAccount?> get onCurrentUserChanged =>
       (super.noSuchMethod(
         Invocation.getter(#onCurrentUserChanged),
@@ -509,6 +514,38 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
         )),
       ) as _i7.Future<_i4.UserCredential>);
   @override
+  _i7.Future<_i4.UserCredential> signInWithAuthProvider(
+          _i3.AuthProvider? provider) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signInWithAuthProvider,
+          [provider],
+        ),
+        returnValue: _i7.Future<_i4.UserCredential>.value(_FakeUserCredential_2(
+          this,
+          Invocation.method(
+            #signInWithAuthProvider,
+            [provider],
+          ),
+        )),
+      ) as _i7.Future<_i4.UserCredential>);
+  @override
+  _i7.Future<_i4.UserCredential> signInWithProvider(
+          _i3.AuthProvider? provider) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signInWithProvider,
+          [provider],
+        ),
+        returnValue: _i7.Future<_i4.UserCredential>.value(_FakeUserCredential_2(
+          this,
+          Invocation.method(
+            #signInWithProvider,
+            [provider],
+          ),
+        )),
+      ) as _i7.Future<_i4.UserCredential>);
+  @override
   _i7.Future<_i4.ConfirmationResult> signInWithPhoneNumber(
     String? phoneNumber, [
     _i4.RecaptchaVerifier? verifier,
@@ -578,7 +615,8 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
       ) as _i7.Future<String>);
   @override
   _i7.Future<void> verifyPhoneNumber({
-    required String? phoneNumber,
+    String? phoneNumber,
+    _i3.PhoneMultiFactorInfo? multiFactorInfo,
     required _i3.PhoneVerificationCompleted? verificationCompleted,
     required _i3.PhoneVerificationFailed? verificationFailed,
     required _i3.PhoneCodeSent? codeSent,
@@ -586,6 +624,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
     String? autoRetrievedSmsCodeForTesting,
     Duration? timeout = const Duration(seconds: 30),
     int? forceResendingToken,
+    _i3.MultiFactorSession? multiFactorSession,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -593,6 +632,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
           [],
           {
             #phoneNumber: phoneNumber,
+            #multiFactorInfo: multiFactorInfo,
             #verificationCompleted: verificationCompleted,
             #verificationFailed: verificationFailed,
             #codeSent: codeSent,
@@ -600,6 +640,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
             #autoRetrievedSmsCodeForTesting: autoRetrievedSmsCodeForTesting,
             #timeout: timeout,
             #forceResendingToken: forceResendingToken,
+            #multiFactorSession: multiFactorSession,
           },
         ),
         returnValue: _i7.Future<void>.value(),

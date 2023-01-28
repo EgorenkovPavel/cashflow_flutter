@@ -1,106 +1,69 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../account/account.dart';
 import '../category/category.dart';
 import '../enum/operation_type.dart';
 
-class Operation extends Equatable {
-  final int id;
-  final String cloudId;
-  final bool synced;
-  final bool deleted;
-  final DateTime date;
-  final OperationType type;
-  final Account account;
-  final Category? category;
-  final Account? recAccount;
-  final int sum;
+part 'operation.freezed.dart';
 
-  const Operation({
-    this.id = 0,
-    this.cloudId = '',
-    this.synced = false,
-    this.deleted = false,
-    required this.date,
-    required this.type,
-    required this.account,
-    this.category,
-    this.recAccount,
-    required this.sum,
-  });
+@freezed
+class Operation with _$Operation {
+  const Operation._();
 
-  const Operation.input({
-    this.id = 0,
-    this.cloudId = '',
-    this.synced = false,
-    this.deleted = false,
-    required this.date,
-    required this.account,
-    required this.category,
-    required this.sum,
-  })  : type = OperationType.INPUT,
-        recAccount = null;
+  const factory Operation.input({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    @Default(false) bool synced,
+    @Default(false) bool deleted,
+    required DateTime date,
+    required Account account,
+    required Category category,
+    required int sum,
+  }) = _InputOperation;
 
-  const Operation.output({
-    this.id = 0,
-    this.cloudId = '',
-    this.synced = false,
-    this.deleted = false,
-    required this.date,
-    required this.account,
-    required this.category,
-    required this.sum,
-  })  : type = OperationType.OUTPUT,
-        recAccount = null;
+  const factory Operation.output({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    @Default(false) bool synced,
+    @Default(false) bool deleted,
+    required DateTime date,
+    required Account account,
+    required Category category,
+    required int sum,
+  }) = _OutputOperation;
 
-  const Operation.transfer({
-    this.id = 0,
-    this.cloudId = '',
-    this.synced = false,
-    this.deleted = false,
-    required this.date,
-    required this.account,
-    required this.recAccount,
-    required this.sum,
-  })  : type = OperationType.TRANSFER,
-        category = null;
+  const factory Operation.transfer({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    @Default(false) bool synced,
+    @Default(false) bool deleted,
+    required DateTime date,
+    required Account account,
+    required Account recAccount,
+    required int sum,
+  }) = _TransferOperation;
 
-  Operation copyWith({
-    int? id,
-    String? cloudId,
-    bool? synced,
-    bool? deleted,
-    DateTime? date,
-    OperationType? type,
-    Account? account,
-    Category? category,
-    Account? recAccount,
-    int? sum,
-  }) =>
-      Operation(
-        id: id ?? this.id,
-        cloudId: cloudId ?? this.cloudId,
-        synced: synced ?? this.synced,
-        deleted: deleted ?? this.deleted,
-        date: date ?? this.date,
-        type: type ?? this.type,
-        account: account ?? this.account,
-        category: category ?? this.category,
-        recAccount: recAccount ?? this.recAccount,
-        sum: sum ?? this.sum,
+  String get analyticTitle => map(
+        input: (operation) => operation.category.title,
+        output: (operation) => operation.category.title,
+        transfer: (operation) => operation.recAccount.title,
       );
 
-  @override
-  List<Object?> get props => [
-        id,
-        cloudId,
-        synced,
-        deleted,
-        date,
-        type,
-        account,
-        category,
-        recAccount,
-        sum,
-      ];
+  OperationType get type => map(
+        input: (_) => OperationType.INPUT,
+        output: (_) => OperationType.OUTPUT,
+        transfer: (_) => OperationType.TRANSFER,
+      );
+
+  Category? get category => map(
+        input: (operation) => operation.category,
+        output: (operation) => operation.category,
+        transfer: (operation) => null,
+      );
+
+  Account? get recAccount => map(
+        input: (operation) => null,
+        output: (operation) => null,
+        transfer: (operation) => operation.recAccount,
+      );
 }

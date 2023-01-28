@@ -1222,6 +1222,8 @@ abstract class _$$_MainCategoryInputStateCopyWith<$Res>
       BudgetType budgetType,
       String title,
       int budget});
+
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -1263,6 +1265,18 @@ class __$$_MainCategoryInputStateCopyWithImpl<$Res>
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -1453,6 +1467,8 @@ abstract class _$$_FetchedCategoryInputStateCopyWith<$Res>
       BudgetType budgetType,
       String title,
       int budget});
+
+  $CategoryCopyWith<$Res> get fetchedCategory;
 }
 
 /// @nodoc
@@ -1495,6 +1511,14 @@ class __$$_FetchedCategoryInputStateCopyWithImpl<$Res>
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get fetchedCategory {
+    return $CategoryCopyWith<$Res>(_value.fetchedCategory, (value) {
+      return _then(_value.copyWith(fetchedCategory: value));
+    });
   }
 }
 
@@ -1685,6 +1709,8 @@ abstract class _$$_SavedCategoryInputStateCopyWith<$Res>
       BudgetType budgetType,
       String title,
       int budget});
+
+  $CategoryCopyWith<$Res> get savedCategory;
 }
 
 /// @nodoc
@@ -1726,6 +1752,14 @@ class __$$_SavedCategoryInputStateCopyWithImpl<$Res>
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get savedCategory {
+    return $CategoryCopyWith<$Res>(_value.savedCategory, (value) {
+      return _then(_value.copyWith(savedCategory: value));
+    });
   }
 }
 

@@ -80,8 +80,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((rows) {
       return rows
           .map((row) => AccountBalanceEntity(
-                row.readTable(accounts),
-                row.read(sumBalance) ?? 0,
+                account: row.readTable(accounts),
+                sum: row.read(sumBalance) ?? 0,
               ))
           .toList();
     });
@@ -106,8 +106,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
     return result
         .map((row) => AccountBalanceEntity(
-              row.readTable(accounts),
-              row.read(sumBalance) ?? 0,
+              account: row.readTable(accounts),
+              sum: row.read(sumBalance) ?? 0,
             ))
         .toList();
   }
@@ -155,8 +155,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((list) {
       return list
           .map((c) => BalanceOnDate(
-                DateTime(c.read(year)!, c.read(month)!, c.read(day)!),
-                c.read(sumBalance)!,
+                date: DateTime(c.read(year)!, c.read(month)!, c.read(day)!),
+                sum: c.read(sumBalance)!,
               ))
           .toList();
     });
@@ -171,6 +171,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
     return query
         .watchSingle()
-        .map((c) => BalanceOnDate(date, c.read(sumBalance) ?? 0));
+        .map((c) => BalanceOnDate(date: date, sum: c.read(sumBalance) ?? 0));
   }
 }

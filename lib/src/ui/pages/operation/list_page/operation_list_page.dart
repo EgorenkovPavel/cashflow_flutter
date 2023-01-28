@@ -24,7 +24,7 @@ class OperationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<OperationListBloc>()
-        ..add(Fetch(const OperationListFilter.empty())),
+        ..add(Fetch(const OperationListFilter())),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(

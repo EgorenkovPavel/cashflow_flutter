@@ -239,6 +239,8 @@ abstract class _$$_ChangeCategoryCategoryDetailEventCopyWith<$Res> {
       __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -262,6 +264,14 @@ class __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 

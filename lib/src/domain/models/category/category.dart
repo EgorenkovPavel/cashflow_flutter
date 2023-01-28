@@ -1,42 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/budget_type.dart';
 import '../enum/operation_type.dart';
 
-class Category extends Equatable{
-  final int id;
-  final String cloudId;
-  final String title;
-  final OperationType operationType;
-  final BudgetType budgetType;
-  final int budget;
+part 'category.freezed.dart';
 
-  const Category({
-    required this.budgetType,
-    required this.budget,
-    this.id = 0,
-    this.cloudId = '',
-    required this.title,
-    required this.operationType,
-  });
-
-  Category copyWith({
-    int? id,
-    String? cloudId,
-    String? title,
-    OperationType? operationType,
-    BudgetType? budgetType,
-    int? budget,
-  }) =>
-      Category(
-        id: id ?? this.id,
-        cloudId: cloudId ?? this.cloudId,
-        title: title ?? this.title,
-        operationType: operationType ?? this.operationType,
-        budgetType: budgetType ?? this.budgetType,
-        budget: budget ?? this.budget,
-      );
-
-  @override
-  List<Object?> get props => [id, cloudId, title, operationType, budgetType, budget];
+@freezed
+class Category with _$Category {
+  const factory Category({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    required String title,
+    required OperationType operationType,
+    required BudgetType budgetType,
+    required int budget,
+  }) = _Category;
 }

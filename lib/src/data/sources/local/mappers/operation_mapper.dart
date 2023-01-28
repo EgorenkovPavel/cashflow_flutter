@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_renaming_method_parameters
-
 import 'package:money_tracker/src/data/sources/local/data/database.dart';
 import 'package:money_tracker/src/data/sources/local/entities/operation_entity.dart';
 import 'package:money_tracker/src/domain/models.dart';
@@ -13,50 +11,102 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
 
   @override
   OperationDbEntity mapToSql(Operation o) {
-    return OperationDbEntity(
-      operation: mapToOperationData(o),
-      account: const AccountMapper().mapToSql(o.account),
-      category: o.category == null
-          ? null
-          : const CategoryMapper().mapToSql(o.category!),
-      recAccount: o.recAccount == null
-          ? null
-          : const AccountMapper().mapToSql(o.recAccount!),
+    return o.map(
+      input: (o) => OperationDbEntity(
+        operation: mapToOperationData(o),
+        account: const AccountMapper().mapToSql(o.account),
+        category: const CategoryMapper().mapToSql(o.category),
+        recAccount: null,
+      ),
+      output: (o) => OperationDbEntity(
+        operation: mapToOperationData(o),
+        account: const AccountMapper().mapToSql(o.account),
+        category: const CategoryMapper().mapToSql(o.category),
+        recAccount: null,
+      ),
+      transfer: (o) => OperationDbEntity(
+        operation: mapToOperationData(o),
+        account: const AccountMapper().mapToSql(o.account),
+        category: null,
+        recAccount: const AccountMapper().mapToSql(o.recAccount),
+      ),
     );
   }
 
   @override
   Operation mapToDart(OperationDbEntity o) {
-    return Operation(
-      id: o.operationData.id,
-      cloudId: o.operation.cloudId,
-      synced: o.synced,
-      deleted: o.operation.deleted,
-      date: o.operationData.date,
-      type: o.operationData.operationType,
-      account: const AccountMapper().mapToDart(o.account),
-      category: o.category == null
-          ? null
-          : const CategoryMapper().mapToDart(o.category!),
-      recAccount: o.recAccount == null
-          ? null
-          : const AccountMapper().mapToDart(o.recAccount!),
-      sum: o.operationData.sum,
+    return o.operationData.operationType.map(
+      INPUT: () => Operation.input(
+        id: o.operationData.id,
+        cloudId: o.operation.cloudId,
+        synced: o.synced,
+        deleted: o.operation.deleted,
+        date: o.operationData.date,
+        account: const AccountMapper().mapToDart(o.account),
+        category: const CategoryMapper().mapToDart(o.category!),
+        sum: o.operationData.sum,
+      ),
+      OUTPUT: () => Operation.output(
+        id: o.operationData.id,
+        cloudId: o.operation.cloudId,
+        synced: o.synced,
+        deleted: o.operation.deleted,
+        date: o.operationData.date,
+        account: const AccountMapper().mapToDart(o.account),
+        category: const CategoryMapper().mapToDart(o.category!),
+        sum: o.operationData.sum,
+      ),
+      TRANSFER: () => Operation.transfer(
+        id: o.operationData.id,
+        cloudId: o.operation.cloudId,
+        synced: o.synced,
+        deleted: o.operation.deleted,
+        date: o.operationData.date,
+        account: const AccountMapper().mapToDart(o.account),
+        recAccount: const AccountMapper().mapToDart(o.recAccount!),
+        sum: o.operationData.sum,
+      ),
     );
   }
 
   OperationDB mapToOperationData(Operation o) {
-    return OperationDB(
-      id: o.id,
-      cloudId: o.cloudId,
-      date: o.date,
-      operationType: o.type,
-      account: o.account.id,
-      category: o.category?.id,
-      recAccount: o.recAccount?.id,
-      sum: o.sum,
-      synced: false,
-      deleted: o.deleted,
+    return o.map(
+      input: (o) => OperationDB(
+        id: o.id,
+        cloudId: o.cloudId,
+        date: o.date,
+        operationType: o.type,
+        account: o.account.id,
+        category: o.category.id,
+        recAccount: null,
+        sum: o.sum,
+        synced: false,
+        deleted: o.deleted,
+      ),
+      output: (o) => OperationDB(
+        id: o.id,
+        cloudId: o.cloudId,
+        date: o.date,
+        operationType: o.type,
+        account: o.account.id,
+        category: o.category.id,
+        recAccount: null,
+        sum: o.sum,
+        synced: false,
+        deleted: o.deleted,
+      ),
+      transfer: (o) => OperationDB(
+        id: o.id,
+        cloudId: o.cloudId,
+        date: o.date,
+        operationType: o.type,
+        account: o.account.id,
+        category: null,
+        recAccount: o.recAccount.id,
+        sum: o.sum,
+        synced: false,
+        deleted: o.deleted,
+      ),
     );
   }
 }

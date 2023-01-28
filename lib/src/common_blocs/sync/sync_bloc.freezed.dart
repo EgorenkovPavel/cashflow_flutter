@@ -1105,6 +1105,8 @@ abstract class _$$_AddUserSyncEventCopyWith<$Res> {
       __$$_AddUserSyncEventCopyWithImpl<$Res>;
   @useResult
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -1126,6 +1128,14 @@ class __$$_AddUserSyncEventCopyWithImpl<$Res>
           : user // ignore: cast_nullable_to_non_nullable
               as User,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
@@ -1458,6 +1468,8 @@ abstract class _$$_AuthAuthenticatedSyncEventCopyWith<$Res> {
       __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>;
   @useResult
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -1480,6 +1492,14 @@ class __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>
           : user // ignore: cast_nullable_to_non_nullable
               as User,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 

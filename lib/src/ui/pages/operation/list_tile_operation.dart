@@ -73,14 +73,12 @@ class ListTileOperation extends StatelessWidget {
           if (_operation.deleted) const Icon(Icons.cancel),
         ],
       ),
-      title: _operation.type == OperationType.TRANSFER
-          ? Text(_operation.recAccount!.title)
-          : Text(_operation.category!.title),
+      title: Text(_operation.analyticTitle),
       trailing: Text(
         context.loc.numberFormat(_operation.sum),
         style: Theme.of(context)
             .textTheme
-            .headline5!
+            .headlineSmall!
             .copyWith(color: _operation.type.color),
       ),
       onTap: onTap,

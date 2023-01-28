@@ -245,31 +245,74 @@ class SyncRepositoryImpl implements SyncRepository {
         : await _localSource.accounts.getByCloudId(cloudOperation.recAccount!);
 
     if (operation == null) {
-      await _localSource.operations.insertFromCloud(Operation(
-        cloudId: cloudOperation.id,
-        synced: true,
-        deleted: cloudOperation.deleted,
-        date: cloudOperation.date,
-        type: const OperationTypeConverter()
-            .fromSql(cloudOperation.operationType)!,
-        account: account!,
-        category: category,
-        recAccount: recAccount,
-        sum: cloudOperation.sum,
-      ));
+      final type =
+          OperationTypeConverter().fromSql(cloudOperation.operationType);
+
+      final newOperation = type.map(
+        INPUT: () => Operation.input(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          category: category!,
+          sum: cloudOperation.sum,
+        ),
+        OUTPUT: () => Operation.output(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          category: category!,
+          sum: cloudOperation.sum,
+        ),
+        TRANSFER: () => Operation.transfer(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          recAccount: recAccount!,
+          sum: cloudOperation.sum,
+        ),
+      );
+
+      await _localSource.operations.insertFromCloud(newOperation);
     } else {
-      await _localSource.operations.updateFromCloud(operation.copyWith(
-        cloudId: cloudOperation.id,
-        synced: true,
-        deleted: cloudOperation.deleted,
-        date: cloudOperation.date,
-        type: const OperationTypeConverter()
-            .fromSql(cloudOperation.operationType),
-        account: account!,
-        category: category,
-        recAccount: recAccount,
-        sum: cloudOperation.sum,
-      ));
+      final type =
+          const OperationTypeConverter().fromSql(cloudOperation.operationType);
+
+      final newOperation = type.map(
+        INPUT: () => Operation.input(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          category: category!,
+          sum: cloudOperation.sum,
+        ),
+        OUTPUT: () => Operation.output(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          category: category!,
+          sum: cloudOperation.sum,
+        ),
+        TRANSFER: () => Operation.transfer(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: account!,
+          recAccount: recAccount!,
+          sum: cloudOperation.sum,
+        ),
+      );
+      await _localSource.operations.updateFromCloud(newOperation);
     }
   }
 

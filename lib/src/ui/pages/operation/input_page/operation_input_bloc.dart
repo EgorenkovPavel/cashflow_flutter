@@ -212,31 +212,25 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       operationType: op.type,
       action: MasterStateAction.DATA,
     ));
-    switch (op.type) {
-      case OperationType.INPUT:
-        emit(state.copyWith(
-          categoryIn: op.category,
-          action: MasterStateAction.SET_IN_CATEGORY,
-        ));
-        break;
-      case OperationType.OUTPUT:
-        emit(state.copyWith(
-          categoryOut: op.category,
-          action: MasterStateAction.SET_OUT_CATEGORY,
-        ));
-        break;
-      case OperationType.TRANSFER:
-        emit(state.copyWith(
-          recAccount: AccountBalance(
-            id: op.recAccount!.id,
-            cloudId: op.recAccount!.cloudId,
-            title: op.recAccount!.title,
-            balance: 0,
-          ),
-          action: MasterStateAction.SET_REC_ACCOUNT,
-        ));
-        break;
-    }
+    op.map(
+      input: (operation) => emit(state.copyWith(
+        categoryIn: operation.category,
+        action: MasterStateAction.SET_IN_CATEGORY,
+      )),
+      output: (operation) => emit(state.copyWith(
+        categoryOut: operation.category,
+        action: MasterStateAction.SET_OUT_CATEGORY,
+      )),
+      transfer: (operation) => emit(state.copyWith(
+        recAccount: AccountBalance(
+          id: operation.recAccount.id,
+          cloudId: operation.recAccount.cloudId,
+          title: operation.recAccount.title,
+          balance: 0,
+        ),
+        action: MasterStateAction.SET_REC_ACCOUNT,
+      )),
+    );
   }
 
   FutureOr<void> _backPressed(
@@ -426,11 +420,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     switch (state.operationType) {
       case OperationType.INPUT:
         {
-          var operation = Operation(
+          var operation = Operation.input(
             date: DateTime.now(),
-            type: state.operationType,
-            account: state.account!.toAccount(),
-            category: state.categoryIn,
+            account: toAccount(state.account!),
+            category: state.categoryIn!,
             sum: state.sum,
           );
 
@@ -438,11 +431,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         }
       case OperationType.OUTPUT:
         {
-          var operation = Operation(
+          var operation = Operation.output(
             date: DateTime.now(),
-            type: state.operationType,
-            account: state.account!.toAccount(),
-            category: state.categoryOut,
+            account: toAccount(state.account!),
+            category: state.categoryOut!,
             sum: state.sum,
           );
 
@@ -450,11 +442,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         }
       case OperationType.TRANSFER:
         {
-          var operation = Operation(
+          var operation = Operation.transfer(
             date: DateTime.now(),
-            type: state.operationType,
-            account: state.account!.toAccount(),
-            recAccount: state.recAccount!.toAccount(),
+            account: toAccount(state.account!),
+            recAccount: toAccount(state.recAccount!),
             sum: state.sum,
           );
 
@@ -466,4 +457,11 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         }
     }
   }
+
+  Account toAccount(AccountBalance accountBalance) => Account(
+    id: accountBalance.id,
+    cloudId: accountBalance.cloudId,
+    title: accountBalance.title,
+    isDebt: accountBalance.isDebt,
+  );
 }

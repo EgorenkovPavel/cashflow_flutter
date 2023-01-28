@@ -118,6 +118,8 @@ abstract class _$$_InitOperationFilterEventCopyWith<$Res> {
       __$$_InitOperationFilterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationListFilter filter});
+
+  $OperationListFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -140,6 +142,14 @@ class __$$_InitOperationFilterEventCopyWithImpl<$Res>
           : filter // ignore: cast_nullable_to_non_nullable
               as OperationListFilter,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OperationListFilterCopyWith<$Res> get filter {
+    return $OperationListFilterCopyWith<$Res>(_value.filter, (value) {
+      return _then(_value.copyWith(filter: value));
+    });
   }
 }
 
@@ -609,6 +619,8 @@ abstract class _$$_AddAccountOperationFilterEventCopyWith<$Res> {
       __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Account account});
+
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -632,6 +644,14 @@ class __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -783,6 +803,8 @@ abstract class _$$_RemoveAccountOperationFilterEventCopyWith<$Res> {
       __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Account account});
+
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -806,6 +828,14 @@ class __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
@@ -960,6 +990,8 @@ abstract class _$$_AddCategoryOperationFilterEventCopyWith<$Res> {
       __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -983,6 +1015,14 @@ class __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -1138,6 +1178,8 @@ abstract class _$$_RemoveCategoryOperationFilterEventCopyWith<$Res> {
       __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
+
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -1161,6 +1203,14 @@ class __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value));
+    });
   }
 }
 
@@ -1332,6 +1382,8 @@ abstract class $OperationFilterStateCopyWith<$Res> {
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  $OperationListFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -1372,6 +1424,14 @@ class _$OperationFilterStateCopyWithImpl<$Res,
               as List<Category>,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OperationListFilterCopyWith<$Res> get filter {
+    return $OperationListFilterCopyWith<$Res>(_value.filter, (value) {
+      return _then(_value.copyWith(filter: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -1387,6 +1447,9 @@ abstract class _$$_OperationFilterStateCopyWith<$Res>
       List<Account> accounts,
       List<Category> inCategories,
       List<Category> outCategories});
+
+  @override
+  $OperationListFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc

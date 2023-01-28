@@ -16,7 +16,7 @@ class OperationFilterPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<OperationFilterBloc>()
         ..add(OperationFilterEvent.init(
-          filter: filter ?? const OperationListFilter.empty(),
+          filter: filter ?? const OperationListFilter(),
         )),
       child: _OperationFilterPage(),
     );
@@ -233,7 +233,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
         TextButton(
           onPressed: () => Navigator.pop(
             context,
-            const OperationListFilter.empty(),
+            const OperationListFilter(),
           ),
           child: Text(context.loc.reset.toUpperCase()),
         ),

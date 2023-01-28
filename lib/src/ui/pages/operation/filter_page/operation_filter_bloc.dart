@@ -45,7 +45,7 @@ class OperationFilterState with _$OperationFilterState {
   }) = _OperationFilterState;
 
   factory OperationFilterState.initial() => const OperationFilterState(
-        filter: OperationListFilter.empty(),
+        filter: OperationListFilter(),
         accounts: [],
         inCategories: [],
         outCategories: [],

@@ -1,12 +1,11 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:equatable/equatable.dart';
+part 'sum_on_date.freezed.dart';
 
-class SumOnDate extends Equatable{
-  final DateTime date;
-  final int sum;
-
-  const SumOnDate({required this.date, required this.sum});
-
-  @override
-  List<Object?> get props => [date, sum];
+@freezed
+class SumOnDate with _$SumOnDate {
+  const factory SumOnDate({
+    required DateTime date,
+    required int sum,
+  }) = _SumOnDate;
 }

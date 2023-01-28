@@ -1,18 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../data/database.dart';
 
-class CategoryCashflowEntity extends Equatable{
-  final CategoryDB category;
-  final int monthCashflow;
-  final int yearCashflow;
+part 'category_cashflow_entity.freezed.dart';
 
-  const CategoryCashflowEntity({
-    required this.category,
-    required this.monthCashflow,
-    required this.yearCashflow,
-  });
-
-  @override
-  List<Object?> get props => [category,monthCashflow,yearCashflow];
+@freezed
+class CategoryCashflowEntity with _$CategoryCashflowEntity {
+  const factory CategoryCashflowEntity({
+    required CategoryDB category,
+    required int monthCashflow,
+    required int yearCashflow,
+  }) = _CategoryCashflowEntity;
 }
