@@ -165,7 +165,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       } else {
         emit(SyncState.synced(syncDate: syncDate, isAdmin: false));
       }
-    } on Object catch (e, stackTrace) {
+    } on Object catch (e) {
       emit(const SyncState.notSynced());
     }
   }
