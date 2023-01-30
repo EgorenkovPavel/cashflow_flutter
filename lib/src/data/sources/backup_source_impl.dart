@@ -15,10 +15,10 @@ class GoogleDrive extends BackupSource {
 
   @override
   Future<void> backup(
-      Map<String, List<Map<String, dynamic>>> data,
-      String catalogId,
-      String fileName,
-      ) async {
+    Map<String, List<Map<String, dynamic>>> data,
+    String catalogId,
+    String fileName,
+  ) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
     final res = await localFile.writeAsString(jsonEncode(data));
@@ -30,22 +30,16 @@ class GoogleDrive extends BackupSource {
     file.parents = [catalogId];
     file.mimeType = 'application/json';
 
-    try {
-      var response =
-      await drive.DriveApi(_client).files.create(file, uploadMedia: media);
-      debugPrint(response.toString());
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(Exception('Error when backup in bacup source'), stackTrace);
-    }
+    var response =
+        await drive.DriveApi(_client).files.create(file, uploadMedia: media);
   }
 
   @override
   Future<Map<String, dynamic>> restore(String fileId) async {
-    try {
       var file = await drive.DriveApi(_client).files.get(
-        fileId,
-        downloadOptions: drive.DownloadOptions.fullMedia,
-      ) as drive.Media;
+            fileId,
+            downloadOptions: drive.DownloadOptions.fullMedia,
+          ) as drive.Media;
 
       final directory = await getTemporaryDirectory();
       var saveFile = File('${directory.path}/test.json');
@@ -63,31 +57,28 @@ class GoogleDrive extends BackupSource {
       debugPrint('File saved at ${saveFile.path}');
 
       return jsonDecode(saveFile.readAsStringSync());
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(Exception('Error when restore in backup source'), stackTrace);
-    }
   }
 
   @override
   Future<List<DriveFile>> getFiles(String catalogId) async {
     var data = await drive.DriveApi(_client).files.list(
-      orderBy: 'folder,name,modifiedTime',
-      spaces: 'drive',
-      q: "'$catalogId' in parents and trashed = false", //only double ""
-      //(mimeType = 'application/vnd.google-apps.folder')
-      $fields: 'files(id,name,parents,mimeType,modifiedTime)',
-    );
+          orderBy: 'folder,name,modifiedTime',
+          spaces: 'drive',
+          q: "'$catalogId' in parents and trashed = false", //only double ""
+          //(mimeType = 'application/vnd.google-apps.folder')
+          $fields: 'files(id,name,parents,mimeType,modifiedTime)',
+        );
 
     return data.files!
         .map((f) => DriveFile(
-      title: f.name!,
-      id: f.id!,
-      isFolder: f.mimeType == 'application/vnd.google-apps.folder',
-      lastChanges: f.modifiedTime!,
-      enabled: f.mimeType == 'application/vnd.google-apps.folder' ||
-          f.mimeType == 'application/json' ||
-          f.mimeType == 'text/plain',
-    ))
+              title: f.name!,
+              id: f.id!,
+              isFolder: f.mimeType == 'application/vnd.google-apps.folder',
+              lastChanges: f.modifiedTime!,
+              enabled: f.mimeType == 'application/vnd.google-apps.folder' ||
+                  f.mimeType == 'application/json' ||
+                  f.mimeType == 'text/plain',
+            ))
         .toList();
   }
 }

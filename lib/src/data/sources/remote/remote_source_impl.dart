@@ -62,14 +62,10 @@ class RemoteSourceImpl extends RemoteDataSource {
     String userId,
   ) async {
     QuerySnapshot querySnapshot;
-    try {
-      querySnapshot = await _firestore
-          .collection(_DATABASES)
-          .where(_DATABASES_USERS, arrayContains: userId)
-          .get();
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when get cloud database'), stackTrace);
-    }
+    querySnapshot = await _firestore
+        .collection(_DATABASES)
+        .where(_DATABASES_USERS, arrayContains: userId)
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       return _firestore.collection(_DATABASES).doc(querySnapshot.docs.first.id);
@@ -103,19 +99,15 @@ class RemoteSourceImpl extends RemoteDataSource {
       throw NoRemoteDBException();
     }
 
-    try {
-      var doc = await _db!.get();
-      var data = doc.data();
-      data![_DATABASES_USERS].add(user.id);
-      await _db!.set(data);
+    var doc = await _db!.get();
+    var data = doc.data();
+    data![_DATABASES_USERS].add(user.id);
+    await _db!.set(data);
 
-      await _db!
-          .collection(_USERS)
-          .doc(user.id)
-          .set(const UserMapper().mapToCloud(user));
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when add user to cloud database'), stackTrace);
-    }
+    await _db!
+        .collection(_USERS)
+        .doc(user.id)
+        .set(const UserMapper().mapToCloud(user));
   }
 
   /// Throws [NoRemoteDBException] and [NetworkException]
@@ -125,45 +117,33 @@ class RemoteSourceImpl extends RemoteDataSource {
       throw NoRemoteDBException();
     }
 
-    try {
-      var doc = await _db!.collection(_USERS).get();
+    var doc = await _db!.collection(_USERS).get();
 
-      return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when get all user from cloud database'), stackTrace);
-    }
+    return doc.docs.map((doc) => const UserMapper().mapToDart(doc)).toList();
   }
 
   /// Throws [NetworkException]
   @override
   Future<void> createDatabase(User user) async {
-    try {
-      _db = await _firestore.collection(_DATABASES).add({
-        _DATABASES_ADMIN: user.id,
-        _DATABASES_USERS: [user.id],
-      });
-      await _db!
-          .collection(_USERS)
-          .doc(user.id)
-          .set(const UserMapper().mapToCloud(user));
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when create cloud database'), stackTrace);
-    }
+    _db = await _firestore.collection(_DATABASES).add({
+      _DATABASES_ADMIN: user.id,
+      _DATABASES_USERS: [user.id],
+    });
+    await _db!
+        .collection(_USERS)
+        .doc(user.id)
+        .set(const UserMapper().mapToCloud(user));
   }
 
   /// Throws [NetworkException]
   @override
   Future<bool> databaseExists(User user) async {
-    try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection(_DATABASES)
-          .where(_DATABASES_USERS, arrayContains: user.id)
-          .get();
+    QuerySnapshot querySnapshot = await _firestore
+        .collection(_DATABASES)
+        .where(_DATABASES_USERS, arrayContains: user.id)
+        .get();
 
-      return querySnapshot.docs.isNotEmpty;
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(NetworkException('Error when check cloud database exists'), stackTrace);
-    }
+    return querySnapshot.docs.isNotEmpty;
   }
 
   /// Throws [NoRemoteDBException] and [NetworkException]
@@ -174,7 +154,6 @@ class RemoteSourceImpl extends RemoteDataSource {
       var doc = await _db!.get();
 
       _isCurrentAdmin = user.id == doc.data()![_DATABASES_ADMIN];
-
     } on NoRemoteDBException {
       _db = null;
       _isCurrentAdmin = false;
@@ -186,8 +165,6 @@ class RemoteSourceImpl extends RemoteDataSource {
     } on Object catch (e, stackTrace) {
       _db = null;
       _isCurrentAdmin = false;
-
-      Error.throwWithStackTrace(NetworkException('Error when connect to cloud database'), stackTrace);
     }
   }
 

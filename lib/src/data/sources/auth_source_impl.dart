@@ -34,27 +34,20 @@ class GoogleAuth extends AuthSource {
       return;
     }
 
-    try {
-      final googleUser = await _googleSignIn.signInSilently();
-      final googleAuth = await googleUser?.authentication;
+    final googleUser = await _googleSignIn.signInSilently();
+    final googleAuth = await googleUser?.authentication;
 
-      if (googleUser == null || googleAuth == null) {
-        return;
-      }
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      final userCredential = await _firebaseAuth.signInWithCredential(
-        credential,
-      );
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(
-        const AuthException('Error when sign in silently'),
-        stackTrace,
-      );
+    if (googleUser == null || googleAuth == null) {
+      return;
     }
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final userCredential = await _firebaseAuth.signInWithCredential(
+      credential,
+    );
   }
 
   @override
@@ -63,22 +56,16 @@ class GoogleAuth extends AuthSource {
     if (isAuth) {
       return;
     }
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      final userCredential = await _firebaseAuth.signInWithCredential(
-        credential,
-      );
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(
-        const AuthException('Error when sign in'),
-        stackTrace,
-      );
-    }
+
+    final googleUser = await _googleSignIn.signIn();
+    final googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    final userCredential = await _firebaseAuth.signInWithCredential(
+      credential,
+    );
   }
 
   @override
@@ -87,15 +74,9 @@ class GoogleAuth extends AuthSource {
     if (!isAuth) {
       return;
     }
-    try {
-      final res = await _googleSignIn.signOut();
-      await _firebaseAuth.signOut();
-    } on Object catch (e, stackTrace) {
-      Error.throwWithStackTrace(
-        const AuthException('Error when sign out'),
-        stackTrace,
-      );
-    }
+
+    final res = await _googleSignIn.signOut();
+    await _firebaseAuth.signOut();
   }
 
   @override

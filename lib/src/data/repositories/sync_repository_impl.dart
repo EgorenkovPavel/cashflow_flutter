@@ -94,16 +94,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load from cloud account ${cloudAccount.title}');
       }
 
-      try {
-        await _loadAccountFromCloud(cloudAccount);
-      } on Object catch (_, stackTrace) {
-        Error.throwWithStackTrace(
-          Exception(
-            'Sync account error. Account id=${cloudAccount.id}',
-          ),
-          stackTrace,
-        );
-      }
+      await _loadAccountFromCloud(cloudAccount);
 
       accountCount--;
       yield (LoadingState(
@@ -117,14 +108,8 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load from cloud category ${cloudCategory.title}');
       }
-      try {
-        await _loadCategoryFromCloud(cloudCategory);
-      } on Object catch (_, stackTrace) {
-        Error.throwWithStackTrace(
-          Exception('Sync category error. Category id=${cloudCategory.id}'),
-          stackTrace,
-        );
-      }
+
+      await _loadCategoryFromCloud(cloudCategory);
 
       categoryCount--;
       yield (LoadingState(
@@ -139,16 +124,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load from cloud operation ${cloudOperation.id}');
       }
 
-      try {
-        await _loadOperationFromCloud(cloudOperation);
-      } on Object catch (_, stackTrace) {
-        Error.throwWithStackTrace(
-          Exception(
-            'Sync operation error. Operation id=${cloudOperation.id}',
-          ),
-          stackTrace,
-        );
-      }
+      await _loadOperationFromCloud(cloudOperation);
 
       operationCount--;
       yield (LoadingState(
