@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
+
 import 'package:money_tracker/src/ui/pages/category/detail_page/category_cashflow_diagram.dart';
 import 'package:money_tracker/src/ui/pages/category/detail_page/category_detail_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
@@ -26,8 +27,7 @@ class CategoryDetailPage extends StatelessWidget {
               title: Text(state.title),
               actions: [
                 IconButton(
-                  onPressed: () => sl<PageNavigator>()
-                      .openCategoryEditDialog(context, id: id),
+                  onPressed: () => context.openCategoryEditDialog(id: id),
                   icon: const Icon(Icons.edit),
                 ),
               ],
@@ -59,10 +59,7 @@ class CategoryDetailPage extends StatelessWidget {
                                 ListTileOperation(
                                   e,
                                   onTap: () =>
-                                      sl<PageNavigator>().openOperationEditPage(
-                                    context,
-                                    e.id,
-                                  ),
+                                      context.openOperationEditPage(e.id),
                                 ),
                               ],
                             )
@@ -74,8 +71,7 @@ class CategoryDetailPage extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () =>
-                  sl<PageNavigator>().openOperationInputPage(context),
+              onPressed: () => context.openOperationInputPage(),
               child: const Icon(Icons.add),
             ),
           );

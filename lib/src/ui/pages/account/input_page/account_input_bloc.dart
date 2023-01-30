@@ -7,14 +7,17 @@ part 'account_input_bloc.freezed.dart';
 
 @freezed
 class AccountInputEvent with _$AccountInputEvent {
-  const factory AccountInputEvent.fetch({required int accountId}) =
-      _FetchAccountInputEvent;
+  const factory AccountInputEvent.fetch({
+    required int accountId,
+  }) = _FetchAccountInputEvent;
 
-  const factory AccountInputEvent.changeTitle({required String title}) =
-      _ChangeTitleAccountInputEvent;
+  const factory AccountInputEvent.changeTitle({
+    required String title,
+  }) = _ChangeTitleAccountInputEvent;
 
-  const factory AccountInputEvent.changeIsDebt({required bool isDebt}) =
-      _ChangeIsDebtAccountInputEvent;
+  const factory AccountInputEvent.changeIsDebt({
+    required bool isDebt,
+  }) = _ChangeIsDebtAccountInputEvent;
 
   const factory AccountInputEvent.save() = _SaveAccountInputEvent;
 }

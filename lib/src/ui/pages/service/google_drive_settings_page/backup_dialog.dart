@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/data/interfaces/settings_source.dart';
 import 'package:money_tracker/src/domain/models/google_drive_file.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class BackupDialog extends StatefulWidget {
@@ -43,7 +43,7 @@ class _BackupDialogState extends State<BackupDialog> {
   }
 
   Future _chooseFolder(BuildContext context) async {
-    var newFolder = await sl<PageNavigator>().chooseFolderDialog(context);
+    var newFolder = await context.chooseFolderDialog();
     if (newFolder != null) {
       setState(() {
         _folder = newFolder;

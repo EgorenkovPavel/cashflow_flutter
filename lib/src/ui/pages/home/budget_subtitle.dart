@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/subtitle.dart';
 
 class BudgetSubtitle extends StatelessWidget {
@@ -77,7 +77,7 @@ class BudgetSubtitle extends StatelessWidget {
               ],
             ),
           ),
-          onPress: () => sl<PageNavigator>().openBudgetPage(context, type),
+          onPress: () => context.openBudgetPage(type),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

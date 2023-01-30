@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/account/detail_page/account_detail_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/operation_list.dart';
 
@@ -13,7 +13,8 @@ class AccountDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<AccountDetailBloc>()..add(AccountDetailEvent.fetch(accountId: id)),
+      create: (context) =>
+          sl<AccountDetailBloc>()..add(AccountDetailEvent.fetch(accountId: id)),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -21,8 +22,7 @@ class AccountDetailPage extends StatelessWidget {
               title: Text(context.watch<AccountDetailBloc>().state.title),
               actions: <Widget>[
                 IconButton(
-                  onPressed: () =>
-                      sl<PageNavigator>().openAccountEditDialog(context, id),
+                  onPressed: () => context.openAccountEditDialog(id),
                   icon: const Icon(Icons.edit),
                 ),
               ],
@@ -31,7 +31,7 @@ class AccountDetailPage extends StatelessWidget {
               context.watch<AccountDetailBloc>().state.operations,
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
+              onPressed: () => context.openOperationInputPage(),
               child: const Icon(Icons.add),
             ),
           );

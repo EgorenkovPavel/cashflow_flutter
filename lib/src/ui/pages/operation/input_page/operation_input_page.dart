@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
@@ -308,7 +308,7 @@ class AccountList extends StatelessWidget {
   const AccountList({Key? key}) : super(key: key);
 
   Future<void> _addNewAccount(BuildContext context) async {
-    var account = await sl<PageNavigator>().openAccountInputDialog(context);
+    var account = await context.openAccountInputDialog();
     if (account != null) {
       var accountBalance = AccountBalance(
         id: account.id,
@@ -353,8 +353,7 @@ class CategoryInList extends StatelessWidget {
   const CategoryInList({Key? key}) : super(key: key);
 
   Future<void> _addNewInCategory(BuildContext context) async {
-    var category = await sl<PageNavigator>().openCategoryInputDialog(
-      context,
+    var category = await context.openCategoryInputDialog(
       type: OperationType.INPUT,
     );
     if (category != null) {
@@ -389,8 +388,7 @@ class CategoryOutList extends StatelessWidget {
   const CategoryOutList({Key? key}) : super(key: key);
 
   Future<void> _addNewOutCategory(BuildContext context) async {
-    var category = await sl<PageNavigator>().openCategoryInputDialog(
-      context,
+    var category = await context.openCategoryInputDialog(
       type: OperationType.OUTPUT,
     );
     if (category != null) {
@@ -425,7 +423,7 @@ class AccountRecList extends StatelessWidget {
   const AccountRecList({Key? key}) : super(key: key);
 
   Future<void> _addNewRecAccount(BuildContext context) async {
-    var account = await sl<PageNavigator>().openAccountInputDialog(context);
+    var account = await context.openAccountInputDialog();
     if (account != null) {
       var accountBalance = AccountBalance(
         id: account.id,

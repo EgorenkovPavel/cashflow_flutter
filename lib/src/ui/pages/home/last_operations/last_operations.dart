@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/last_operations/last_operations_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
@@ -28,12 +28,11 @@ class LastOperations extends StatelessWidget {
               builder: (context, state) {
                 if (state.operations.isEmpty) {
                   return const _NoOperationsTitle();
+                } else {
+                  return _OperationsList(items: state.operations);
                 }
-
-                return _OperationsList(items: state.operations);
               },
             ),
-            //_ShowAllButton(),
           ],
         );
       }),
@@ -60,12 +59,11 @@ class _OperationsList extends StatelessWidget {
                   ListDividerOperation.day(items[items.indexOf(e) - 1], e),
                 ListTileOperation(
                   e,
-                  onTap: () =>
-                      sl<PageNavigator>().openOperationEditPage(context, e.id),
+                  onTap: () => context.openOperationEditPage(e.id),
                 ),
               ])
           .toList()
-        ..add(const _ShowAllButton()),
+        ..add(const _ShowAllOperationsButton()),
     );
   }
 }
@@ -84,33 +82,27 @@ class _NoOperationsTitle extends StatelessWidget {
   }
 }
 
-class _ShowAllButton extends StatelessWidget {
-  const _ShowAllButton({
+class _ShowAllOperationsButton extends StatelessWidget {
+  const _ShowAllOperationsButton({
     Key? key,
   }) : super(key: key);
+
+  void _onPressed(BuildContext context) => context.openOperationListPage();
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: TextButton(
-        onPressed: () => sl<PageNavigator>().openOperationListPage(context),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.arrow_downward,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              Text(
-                context.loc.btnShowAll.toUpperCase(),
-                style: const TextStyle()
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-            ],
-          ),
+      child: TextButton.icon(
+        onPressed: () => _onPressed(context),
+        icon: Icon(
+          Icons.arrow_downward,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        label: Text(
+          context.loc.btnShowAll.toUpperCase(),
+          style: const TextStyle()
+              .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );

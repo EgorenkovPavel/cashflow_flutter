@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
@@ -25,7 +25,8 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = sl<BudgetBloc>()..add(BudgetEvent.fetch(operationtype: widget.type));
+    _bloc = sl<BudgetBloc>()
+      ..add(BudgetEvent.fetch(operationtype: widget.type));
   }
 
   @override
@@ -56,8 +57,10 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                 delegate: DiagramDelegate(
                   items: state.itemsAll,
-                  onBackPressed: () => _bloc.add(const BudgetEvent.previousYear()),
-                  onForwardPressed: () => _bloc.add(const BudgetEvent.nextYear()),
+                  onBackPressed: () =>
+                      _bloc.add(const BudgetEvent.previousYear()),
+                  onForwardPressed: () =>
+                      _bloc.add(const BudgetEvent.nextYear()),
                 ),
               ),
               SliverPersistentHeader(
@@ -70,7 +73,9 @@ class _BudgetPageState extends State<BudgetPage> {
                         previousValue + element.monthCashflow,
                   ),
                   showAll: state.showAllMonthBudget,
-                  onPressed: () => _bloc.add(const BudgetEvent.showAll(budgetType: BudgetType.MONTH)),
+                  onPressed: () => _bloc.add(
+                    const BudgetEvent.showAll(budgetType: BudgetType.MONTH),
+                  ),
                 ),
               ),
               SliverList(
@@ -89,7 +94,9 @@ class _BudgetPageState extends State<BudgetPage> {
                         previousValue + element.yearCashflow,
                   ),
                   showAll: state.showAllYearBudget,
-                  onPressed: () => _bloc.add(const BudgetEvent.showAll(budgetType: BudgetType.YEAR)),
+                  onPressed: () => _bloc.add(
+                    const BudgetEvent.showAll(budgetType: BudgetType.YEAR),
+                  ),
                 ),
               ),
               SliverList(
@@ -102,8 +109,7 @@ class _BudgetPageState extends State<BudgetPage> {
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () =>
-                sl<PageNavigator>().openCategoryInputDialog(context, type: widget.type),
+            onPressed: () => context.openCategoryInputDialog(type: widget.type),
             child: const Icon(Icons.add),
           ),
         );
@@ -362,8 +368,7 @@ class _CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () =>
-          sl<PageNavigator>().openCategoryPage(context, category.category.id),
+      onTap: () => context.openCategoryPage(category.category.id),
       title: Text(category.category.title),
       subtitle: Text(
         context.loc.numberFormat(category.category.budget),

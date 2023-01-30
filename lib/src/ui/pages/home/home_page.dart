@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/last_operations/last_operations.dart';
 import 'package:money_tracker/src/ui/pages/home/month_operations/month_operations.dart';
 import 'package:money_tracker/src/ui/pages/home/sync_button.dart';
 import 'package:money_tracker/src/ui/pages/home/top_header/top_header.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
-
-import '../../../injection_container.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,11 +18,11 @@ class HomePage extends StatelessWidget {
         actions: [
           const SyncButton(),
           IconButton(
-            onPressed: () => sl<PageNavigator>().openReportsPage(context),
+            onPressed: () => context.openReportsPage(),
             icon: const Icon(Icons.analytics),
           ),
           IconButton(
-            onPressed: () => sl<PageNavigator>().openSettingsPage(context),
+            onPressed: () => context.openSettingsPage(),
             icon: const Icon(Icons.settings_sharp),
           ),
         ],
@@ -35,7 +33,7 @@ class HomePage extends StatelessWidget {
             const TopHeader(),
             _AddButton(
               title: context.loc.btnAddAccount,
-              onPressed: () => sl<PageNavigator>().openAccountInputDialog(context),
+              onPressed: () => context.openAccountInputDialog(),
             ),
             const MonthOperations(),
             const SizedBox(height: 8.0),
@@ -44,7 +42,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
+        onPressed: () => context.openOperationInputPage(),
         child: const Icon(Icons.add),
       ),
     );

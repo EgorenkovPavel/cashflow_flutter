@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/top_header/top_header_bloc.dart';
 import 'package:money_tracker/src/ui/themes.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
@@ -145,10 +145,10 @@ class _AccountItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => sl<PageNavigator>().openAccountPage(context, account.id),
+      onTap: () => context.openAccountPage(account.id),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           boxShadow: const [
             BoxShadow(
               offset: Offset(0, 10),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_page/operation_list_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
@@ -11,8 +11,7 @@ class OperationListPage extends StatelessWidget {
   const OperationListPage({Key? key}) : super(key: key);
 
   Future<void> _onFilterPressed(BuildContext context) async {
-    var newFilter = await sl<PageNavigator>().openOperationFilterPage(
-      context,
+    var newFilter = await context.openOperationFilterPage(
       context.read<OperationListBloc>().state.filter,
     );
     if (newFilter != null) {
@@ -40,7 +39,7 @@ class OperationListPage extends StatelessWidget {
             context.watch<OperationListBloc>().state.operations,
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => sl<PageNavigator>().openOperationInputPage(context),
+            onPressed: () => context.openOperationInputPage(),
             child: const Icon(Icons.add),
           ),
         );

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
-
-import '../../../../injection_container.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -59,7 +57,7 @@ class AuthListTile extends StatelessWidget {
               )
             : ListTile(
                 title: const Text('Google account'),
-                subtitle: const Text('Sign in to backup yout database'),
+                subtitle: const Text('Sign in to backup your database'),
                 trailing: ElevatedButton(
                   onPressed: () =>
                       context.read<AuthBloc>().add(const AuthEvent.signIn()),
@@ -91,14 +89,12 @@ class CloudDatabaseListTile extends StatelessWidget {
             noDB: (_) => ListTile(
               title: const Text('Cloud local'),
               subtitle: const Text('Tap to connect'),
-              onTap: () =>
-                  sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
+              onTap: () => context.openCloudDatabaseSettingsPage(),
             ),
             orElse: () => ListTile(
               title: const Text('Cloud local'),
               subtitle: const Text('Database connected'),
-              onTap: () =>
-                  sl<PageNavigator>().openCloudDatabaseSettingsPage(context),
+              onTap: () => context.openCloudDatabaseSettingsPage(),
             ),
           );
         }
@@ -118,8 +114,7 @@ class GoogleDriveListTile extends StatelessWidget {
       return authState.isAuthenticated
           ? ListTile(
               title: const Text('Google drive'),
-              onTap: () =>
-                  sl<PageNavigator>().openGoogleDriveSettingsPage(context),
+              onTap: () => context.openGoogleDriveSettingsPage(),
             )
           : const ListTile(title: Text('Google drive'));
     });
@@ -135,7 +130,7 @@ class DataControlListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(context.loc.titleDataControl),
-      onTap: () => sl<PageNavigator>().openDataControlPage(context),
+      onTap: () => context.openDataControlPage(),
     );
   }
 }

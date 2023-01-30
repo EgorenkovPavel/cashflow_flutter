@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/page_navigator.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/month_operations/month_operations_bloc.dart';
 import 'package:money_tracker/src/ui/themes.dart';
 import 'package:money_tracker/src/utils/date_util.dart';
@@ -82,7 +82,7 @@ class _MonthOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => sl<PageNavigator>().openBudgetPage(context, operationType),
+      onTap: () => context.openBudgetPage(operationType),
       // child: Card(
       //   child: Padding(
       //     padding: const EdgeInsets.all(16.0),
