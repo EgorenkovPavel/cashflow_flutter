@@ -117,25 +117,17 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     Emitter<SyncState> emit,
   ) async {
     emit(const SyncState.inProgress());
-    var res = await syncRepo.databaseExists(admin: event.user);
 
-    return res.fold(
-      (success) async {
-        if (success) {
-          var resLogIn = await syncRepo.logIn(event.user);
-
-          return resLogIn.fold(
-            (success) => add(const SyncEvent.syncNow()),
-            (failure) => emit(const SyncState.failure()),
-          );
-        } else {
-          emit(const SyncState.noDB());
-        }
-      },
-      (failure) {
-        emit(const SyncState.failure());
-      },
-    );
+    try {
+      if (await syncRepo.databaseExists(admin: event.user)) {
+        await syncRepo.logIn(event.user);
+        add(const SyncEvent.syncNow());
+      } else {
+        emit(const SyncState.noDB());
+      }
+    } catch (e) {
+      emit(const SyncState.failure());
+    }
   }
 
   FutureOr<void> _notAuth(_NotAuthSyncEvent event, Emitter<SyncState> emit) {
@@ -168,12 +160,11 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
         ));
       }
       await prefsRepository.setSyncDate(syncDate);
-      syncRepo.isCurrentAdmin().fold(
-            (success) =>
-                emit(SyncState.synced(syncDate: syncDate, isAdmin: success)),
-            (failure) =>
-                emit(SyncState.synced(syncDate: syncDate, isAdmin: false)),
-          );
+      if (syncRepo.isCurrentAdmin()) {
+        emit(SyncState.synced(syncDate: syncDate, isAdmin: true));
+      } else {
+        emit(SyncState.synced(syncDate: syncDate, isAdmin: false));
+      }
     } on Object catch (e, stackTrace) {
       emit(const SyncState.notSynced());
       Error.throwWithStackTrace(
@@ -192,19 +183,17 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       return;
     }
     emit(const SyncState.inProgress());
-    var res = await syncRepo.createDatabase(admin: user);
-    if (res.isFailure()) {
+    try {
+      await syncRepo.createDatabase(admin: user);
+      add(const SyncEvent.syncNow());
+    } catch (e) {
       emit(const SyncState.failure());
-
-      return;
     }
-
-    add(const SyncEvent.syncNow());
   }
 
   FutureOr<void> _syncNow(SyncEvent event, Emitter<SyncState> emit) {
     add(SyncEvent.syncData(
-      syncDate: prefsRepository.syncDate.subtract(const Duration(minutes: 30)),
+      syncDate: _beforeLastSyncDate(const Duration(minutes: 30)),
     ));
   }
 
@@ -213,7 +202,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     Emitter<SyncState> emit,
   ) {
     add(SyncEvent.syncData(
-      syncDate: prefsRepository.syncDate.subtract(const Duration(days: 1)),
+      syncDate: _beforeLastSyncDate(const Duration(days: 1)),
     ));
   }
 
@@ -222,7 +211,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     Emitter<SyncState> emit,
   ) {
     add(SyncEvent.syncData(
-      syncDate: prefsRepository.syncDate.subtract(const Duration(days: 30)),
+      syncDate: _beforeLastSyncDate(const Duration(days: 30)),
     ));
   }
 
@@ -230,12 +219,14 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     add(SyncEvent.syncData(syncDate: DateTime.utc(1970, 1, 1)));
   }
 
+  DateTime _beforeLastSyncDate(Duration duration) =>
+      prefsRepository.syncDate.subtract(duration);
+
   FutureOr<void> _addUser(
     _AddUserSyncEvent event,
     Emitter<SyncState> emit,
-  ) async {
-    final res = await syncRepo.addToDatabase(event.user);
-  }
+  ) =>
+      syncRepo.addToDatabase(event.user);
 
   @override
   Future<void> close() {

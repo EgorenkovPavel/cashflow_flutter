@@ -3,8 +3,6 @@ import 'package:googleapis_auth/src/auth_client.dart';
 import 'package:money_tracker/src/data/interfaces/auth_source.dart';
 import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/src/domain/models/user.dart' as model;
-import 'package:money_tracker/src/utils/exceptions.dart';
-import 'package:money_tracker/src/utils/try.dart';
 
 import '../interfaces/network_info.dart';
 
@@ -28,37 +26,13 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> isAuthenticated() => _authSource.isAuthenticated();
 
   @override
-  Future<Try<void>> signIn() async {
-    try {
-      await _authSource.signIn();
-
-      return Success(true);
-    } on AuthException {
-      return AuthFailure();
-    }
-  }
+  Future<void> signIn() => _authSource.signIn();
 
   @override
-  Future<Try<void>> signInSilently() async {
-    try {
-      await _authSource.signInSilently();
-
-      return Success(true);
-    } on AuthException {
-      return AuthFailure();
-    }
-  }
+  Future<void> signInSilently() => _authSource.signInSilently();
 
   @override
-  Future<Try<void>> signOut() async {
-    try {
-      await _authSource.signOut();
-
-      return Success(true);
-    } on AuthException {
-      return AuthFailure();
-    }
-  }
+  Future<void> signOut() => _authSource.signOut();
 
   @override
   Stream<model.User?> userChanges() =>

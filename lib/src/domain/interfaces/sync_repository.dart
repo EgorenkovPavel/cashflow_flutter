@@ -1,6 +1,5 @@
 import 'package:money_tracker/src/common_blocs/sync/loading_state.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
-import 'package:money_tracker/src/utils/try.dart';
 
 abstract class SyncRepository{
 
@@ -9,12 +8,12 @@ abstract class SyncRepository{
 
   Stream<bool> connectedToInternet();
 
-  Try<bool> isCurrentAdmin();
-  Future<Try<List<User>>> getAllUsers();
-  Future<Try<void>> logIn(User user);
+  bool isCurrentAdmin();
+  Future<List<User>> getAllUsers();
+  Future<void> logIn(User user);
   Future<void> logOut();
-  Future<Try<void>> addToDatabase(User user);
-  Future<Try<void>> createDatabase({required User admin});
-  Future<Try<bool>> databaseExists({required User admin});
+  Future<void> addToDatabase(User user);
+  Future<void> createDatabase({required User admin});
+  Future<bool> databaseExists({required User admin});
 
 }

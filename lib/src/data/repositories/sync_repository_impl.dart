@@ -7,7 +7,6 @@ import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
 import '../../utils/exceptions.dart';
-import '../../utils/try.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
@@ -31,70 +30,25 @@ class SyncRepositoryImpl implements SyncRepository {
         _networkInfo = networkInfo;
 
   @override
-  Future<Try<void>> addToDatabase(User user) async {
-    try {
-      await _remoteSource.addUserToDatabase(user);
-
-      return Success(true);
-    } on NoRemoteDBException {
-      return NoRemoteDBFailure();
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  Future<void> addToDatabase(User user) =>
+      _remoteSource.addUserToDatabase(user);
 
   @override
-  Future<Try<void>> createDatabase({required User admin}) async {
-    try {
-      await _remoteSource.createDatabase(admin);
-
-      return Success(true);
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  Future<void> createDatabase({required User admin}) =>
+      _remoteSource.createDatabase(admin);
 
   @override
-  Future<Try<bool>> databaseExists({required User admin}) async {
-    try {
-      return Success(await _remoteSource.databaseExists(admin));
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  Future<bool> databaseExists({required User admin}) =>
+      _remoteSource.databaseExists(admin);
 
   @override
-  Future<Try<List<User>>> getAllUsers() async {
-    try {
-      return Success(await _remoteSource.getAllUsers());
-    } on NoRemoteDBException {
-      return NoRemoteDBFailure();
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  Future<List<User>> getAllUsers() => _remoteSource.getAllUsers();
 
   @override
-  Try<bool> isCurrentAdmin() {
-    try {
-      return Success(_remoteSource.isCurrentAdmin());
-    } on NoRemoteDBException {
-      return NoRemoteDBFailure();
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  bool isCurrentAdmin() => _remoteSource.isCurrentAdmin();
 
   @override
-  Future<Try<void>> logIn(User user) async {
-    try {
-      return Success(await _remoteSource.connect(user));
-    } on NoRemoteDBException {
-      return NoRemoteDBFailure();
-    } on NetworkException {
-      return NetworkFailure();
-    }
-  }
+  Future<void> logIn(User user) => _remoteSource.connect(user);
 
   @override
   Future<void> logOut() => _remoteSource.disconnect();
