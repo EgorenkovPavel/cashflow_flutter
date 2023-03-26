@@ -3,8 +3,8 @@ import 'package:money_tracker/src/domain/models/user.dart';
 
 abstract class SyncRepository{
 
-  Stream<LoadingState> loadFromCloud(DateTime date);
-  Stream<LoadingState> loadToCloud();
+  Stream<LoadingState> downloadFromCloud(DateTime date);
+  Stream<LoadingState> uploadToCloud();
 
   Stream<bool> connectedToInternet();
 

@@ -143,7 +143,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
 
     try {
-      await for (var event in syncRepo.loadToCloud()) {
+      await for (var event in syncRepo.uploadToCloud()) {
         emit(SyncState.loadingToCloud(
           accountCount: event.accountCount,
           categoryCount: event.categoryCount,
@@ -152,7 +152,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       }
 
       var syncDate = DateTime.now();
-      await for (var event in syncRepo.loadFromCloud(event.syncDate)) {
+      await for (var event in syncRepo.downloadFromCloud(event.syncDate)) {
         emit(SyncState.loadingFromCloud(
           accountCount: event.accountCount,
           categoryCount: event.categoryCount,

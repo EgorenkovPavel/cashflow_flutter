@@ -54,7 +54,7 @@ class SyncRepositoryImpl implements SyncRepository {
   Future<void> logOut() => _remoteSource.disconnect();
 
   @override
-  Stream<LoadingState> loadFromCloud(DateTime date) async* {
+  Stream<LoadingState> downloadFromCloud(DateTime date) async* {
     final accountTable = _remoteSource.accounts;
     final categoryTable = _remoteSource.categories;
     final operationsTable = _remoteSource.operations;
@@ -94,7 +94,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load from cloud account ${cloudAccount.title}');
       }
 
-      await _loadAccountFromCloud(cloudAccount);
+      await _downloadAccountFromCloud(cloudAccount);
 
       accountCount--;
       yield (LoadingState(
@@ -109,7 +109,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load from cloud category ${cloudCategory.title}');
       }
 
-      await _loadCategoryFromCloud(cloudCategory);
+      await _downloadCategoryFromCloud(cloudCategory);
 
       categoryCount--;
       yield (LoadingState(
@@ -124,7 +124,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load from cloud operation ${cloudOperation.id}');
       }
 
-      await _loadOperationFromCloud(cloudOperation);
+      await _downloadOperationFromCloud(cloudOperation);
 
       operationCount--;
       yield (LoadingState(
@@ -135,7 +135,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<void> _loadAccountFromCloud(CloudAccount cloudAccount) async {
+  Future<void> _downloadAccountFromCloud(CloudAccount cloudAccount) async {
     var account = await _localSource.accounts.getByCloudId(cloudAccount.id);
     if (account == null) {
       await _localSource.accounts.insertFromCloud(
@@ -148,7 +148,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<void> _loadCategoryFromCloud(CloudCategory cloudCategory) async {
+  Future<void> _downloadCategoryFromCloud(CloudCategory cloudCategory) async {
     var category = await _localSource.categories.getByCloudId(cloudCategory.id);
     if (category == null) {
       await _localSource.categories.insertFromCloud(
@@ -161,7 +161,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<void> _loadOperationFromCloud(CloudOperation cloudOperation) async {
+  Future<void> _downloadOperationFromCloud(CloudOperation cloudOperation) async {
     var operation =
         await _localSource.operations.getByCloudId(cloudOperation.id);
 
@@ -247,7 +247,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   @override
-  Stream<LoadingState> loadToCloud() async* {
+  Stream<LoadingState> uploadToCloud() async* {
     //TODO rewrite to streamController
 
     final accountTable = _remoteSource.accounts;
@@ -279,7 +279,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud account ${account.title}');
       }
       try {
-        await _loadAccountToCloud(account, accountTable);
+        await _uploadAccountToCloud(account, accountTable);
       } on NetworkException {
         return;
       }
@@ -298,7 +298,7 @@ class SyncRepositoryImpl implements SyncRepository {
       }
 
       try {
-        await _loadCategoryToCloud(category, categoryTable);
+        await _uploadCategoryToCloud(category, categoryTable);
       } on NetworkException {
         return;
       }
@@ -317,7 +317,7 @@ class SyncRepositoryImpl implements SyncRepository {
       }
 
       try {
-        await _loadOperationToCloud(operation, operationTable);
+        await _uploadOperationToCloud(operation, operationTable);
       } on NetworkException {
         return;
       }
@@ -332,7 +332,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadAccountToCloud(
+  Future<void> _uploadAccountToCloud(
     Account account,
     TableDAO<CloudAccount> accounts,
   ) async {
@@ -346,7 +346,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadCategoryToCloud(
+  Future<void> _uploadCategoryToCloud(
     model.Category category,
     TableDAO<CloudCategory> categories,
   ) async {
@@ -360,7 +360,7 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _loadOperationToCloud(
+  Future<void> _uploadOperationToCloud(
     Operation operation,
     TableDAO<CloudOperation> operations,
   ) async {
