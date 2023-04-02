@@ -76,7 +76,7 @@ class OperationFilterState with _$OperationFilterState {
   ) =>
       OperationFilterState(
         filter: state.filter
-            .copyWith(accounts: state.filter.accounts..add(account)),
+            .copyWith(accounts: state.filter.accounts.toSet()..add(account)),
         accounts: state.accounts,
         inCategories: state.inCategories,
         outCategories: state.outCategories,
@@ -88,7 +88,7 @@ class OperationFilterState with _$OperationFilterState {
   ) =>
       OperationFilterState(
         filter: state.filter.copyWith(
-          accounts: state.filter.accounts
+          accounts: state.filter.accounts.toSet()
             ..removeWhere((a) => a.id == account.id),
         ),
         accounts: state.accounts,
@@ -101,8 +101,9 @@ class OperationFilterState with _$OperationFilterState {
     Category category,
   ) =>
       OperationFilterState(
-        filter: state.filter
-            .copyWith(categories: state.filter.categories..add(category)),
+        filter: state.filter.copyWith(
+          categories: state.filter.categories.toSet()..add(category),
+        ),
         accounts: state.accounts,
         inCategories: state.inCategories,
         outCategories: state.outCategories,
@@ -114,7 +115,7 @@ class OperationFilterState with _$OperationFilterState {
   ) =>
       OperationFilterState(
         filter: state.filter.copyWith(
-          categories: state.filter.categories
+          categories: state.filter.categories.toSet()
             ..removeWhere((c) => c.id == category.id),
         ),
         accounts: state.accounts,

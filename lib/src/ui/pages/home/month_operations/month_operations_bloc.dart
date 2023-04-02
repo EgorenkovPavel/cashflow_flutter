@@ -63,9 +63,17 @@ class MonthOperationsBloc
   ) {
     emit(MonthOperationsState(
       cashflow: Map.from(state.cashflow)
-        ..update(event.operationType, (_) => _calcCashflow(event.categories)),
+        ..update(
+          event.operationType,
+          (_) => _calcCashflow(event.categories),
+          ifAbsent: () => _calcCashflow(event.categories),
+        ),
       budget: Map.from(state.budget)
-        ..update(event.operationType, (_) => _calcBudget(event.categories)),
+        ..update(
+          event.operationType,
+          (_) => _calcBudget(event.categories),
+          ifAbsent: () => _calcBudget(event.categories),
+        ),
     ));
   }
 
