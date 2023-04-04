@@ -75,7 +75,13 @@ class SyncButton extends StatelessWidget {
             inProgress: (state) => _dialogIcon(state),
             failure: (state) => _dialogIcon(state),
             noDB: (state) => _dialogIcon(state),
-            notSynced: (state) => _dialogIcon(state),
+            notSynced: (state) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _dialogIcon(state),
+                Text(state.message),
+              ],
+            ),
           );
         }),
         actions: [

@@ -2031,7 +2031,7 @@ mixin _$SyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) =>
@@ -2044,7 +2044,7 @@ mixin _$SyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) =>
@@ -2057,7 +2057,7 @@ mixin _$SyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -2163,7 +2163,7 @@ class _$_InProgressSyncState extends _InProgressSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -2179,7 +2179,7 @@ class _$_InProgressSyncState extends _InProgressSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -2195,7 +2195,7 @@ class _$_InProgressSyncState extends _InProgressSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -2357,7 +2357,7 @@ class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -2373,7 +2373,7 @@ class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -2389,7 +2389,7 @@ class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -2562,7 +2562,7 @@ class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -2578,7 +2578,7 @@ class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -2594,7 +2594,7 @@ class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -2750,7 +2750,7 @@ class _$_SyncedSyncState extends _SyncedSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -2766,7 +2766,7 @@ class _$_SyncedSyncState extends _SyncedSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -2782,7 +2782,7 @@ class _$_SyncedSyncState extends _SyncedSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -2859,6 +2859,8 @@ abstract class _$$_NotSyncedSyncStateCopyWith<$Res> {
   factory _$$_NotSyncedSyncStateCopyWith(_$_NotSyncedSyncState value,
           $Res Function(_$_NotSyncedSyncState) then) =
       __$$_NotSyncedSyncStateCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -2868,26 +2870,51 @@ class __$$_NotSyncedSyncStateCopyWithImpl<$Res>
   __$$_NotSyncedSyncStateCopyWithImpl(
       _$_NotSyncedSyncState _value, $Res Function(_$_NotSyncedSyncState) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_NotSyncedSyncState(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_NotSyncedSyncState extends _NotSyncedSyncState {
-  const _$_NotSyncedSyncState() : super._();
+  const _$_NotSyncedSyncState({required this.message}) : super._();
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'SyncState.notSynced()';
+    return 'SyncState.notSynced(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotSyncedSyncState);
+        (other.runtimeType == runtimeType &&
+            other is _$_NotSyncedSyncState &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_NotSyncedSyncStateCopyWith<_$_NotSyncedSyncState> get copyWith =>
+      __$$_NotSyncedSyncStateCopyWithImpl<_$_NotSyncedSyncState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2900,11 +2927,11 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
-    return notSynced();
+    return notSynced(message);
   }
 
   @override
@@ -2916,11 +2943,11 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
-    return notSynced?.call();
+    return notSynced?.call(message);
   }
 
   @override
@@ -2932,13 +2959,13 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
   }) {
     if (notSynced != null) {
-      return notSynced();
+      return notSynced(message);
     }
     return orElse();
   }
@@ -2992,8 +3019,14 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
 }
 
 abstract class _NotSyncedSyncState extends SyncState {
-  const factory _NotSyncedSyncState() = _$_NotSyncedSyncState;
+  const factory _NotSyncedSyncState({required final String message}) =
+      _$_NotSyncedSyncState;
   const _NotSyncedSyncState._() : super._();
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$_NotSyncedSyncStateCopyWith<_$_NotSyncedSyncState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -3042,7 +3075,7 @@ class _$_FailureSyncState extends _FailureSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -3058,7 +3091,7 @@ class _$_FailureSyncState extends _FailureSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -3074,7 +3107,7 @@ class _$_FailureSyncState extends _FailureSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),
@@ -3184,7 +3217,7 @@ class _$_NoDBSyncState extends _NoDBSyncState {
             int accountCount, int categoryCount, int operationCount)
         loadingFromCloud,
     required TResult Function(DateTime syncDate, bool isAdmin) synced,
-    required TResult Function() notSynced,
+    required TResult Function(String message) notSynced,
     required TResult Function() failure,
     required TResult Function() noDB,
   }) {
@@ -3200,7 +3233,7 @@ class _$_NoDBSyncState extends _NoDBSyncState {
     TResult? Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult? Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult? Function()? notSynced,
+    TResult? Function(String message)? notSynced,
     TResult? Function()? failure,
     TResult? Function()? noDB,
   }) {
@@ -3216,7 +3249,7 @@ class _$_NoDBSyncState extends _NoDBSyncState {
     TResult Function(int accountCount, int categoryCount, int operationCount)?
         loadingFromCloud,
     TResult Function(DateTime syncDate, bool isAdmin)? synced,
-    TResult Function()? notSynced,
+    TResult Function(String message)? notSynced,
     TResult Function()? failure,
     TResult Function()? noDB,
     required TResult orElse(),

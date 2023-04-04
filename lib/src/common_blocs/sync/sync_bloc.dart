@@ -61,7 +61,7 @@ class SyncState with _$SyncState {
     required bool isAdmin,
   }) = _SyncedSyncState;
 
-  const factory SyncState.notSynced() = _NotSyncedSyncState;
+  const factory SyncState.notSynced({required String message}) = _NotSyncedSyncState;
 
   const factory SyncState.failure() = _FailureSyncState;
 
@@ -80,7 +80,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     required this.prefsRepository,
     required this.syncRepo,
   })  : _authBloc = authBloc,
-        super(const SyncState.notSynced()) {
+        super(const SyncState.notSynced(message: 'Not started yet')) {
     on<SyncEvent>((event, emitter) => event.map(
           createCloudDatabase: (event) => _createCloudDatabase(event, emitter),
           refreshConnection: (event) => _syncNow(event, emitter),
@@ -131,7 +131,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _notAuth(_NotAuthSyncEvent event, Emitter<SyncState> emit) {
-    emit(const SyncState.notSynced());
+    emit(const SyncState.notSynced(message: 'Not authenticated'));
   }
 
   Future<void> _syncData(
@@ -166,7 +166,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
         emit(SyncState.synced(syncDate: syncDate, isAdmin: false));
       }
     } on Object catch (e) {
-      emit(const SyncState.notSynced());
+      emit(SyncState.notSynced(message: e.toString()));
     }
   }
 
