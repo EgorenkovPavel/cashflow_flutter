@@ -9,11 +9,14 @@ import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/src/ui/app.dart';
 
 import 'src/injection_container.dart';
+import 'src/utils/app_bloc_observer.dart';
 
 Future<void> main() async {
   runZonedGuarded<Future<void>>(
     () async {
       await init();
+
+      Bloc.observer = AppBlocObserver();
 
       runApp(
         MultiBlocProvider(
