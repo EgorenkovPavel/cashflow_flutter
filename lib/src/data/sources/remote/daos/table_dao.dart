@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:money_tracker/src/utils/exceptions.dart';
 
 import '../mappers/cloud_converter.dart';
 import '../models/cloud_models.dart';

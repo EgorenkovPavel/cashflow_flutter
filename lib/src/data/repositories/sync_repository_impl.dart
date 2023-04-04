@@ -6,7 +6,6 @@ import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
-import '../../utils/exceptions.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
@@ -69,15 +68,9 @@ class SyncRepositoryImpl implements SyncRepository {
     Iterable<CloudCategory> categories;
     Iterable<CloudOperation> operations;
 
-    try {
-      accounts = await accountTable.getAll(date);
-      categories = await categoryTable.getAll(date);
-      operations = await operationsTable.getAll(date);
-    } on NoRemoteDBException {
-      return;
-    } on NetworkException {
-      return;
-    }
+    accounts = await accountTable.getAll(date);
+    categories = await categoryTable.getAll(date);
+    operations = await operationsTable.getAll(date);
 
     var accountCount = accounts.length;
     var categoryCount = categories.length;
@@ -161,7 +154,8 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<void> _downloadOperationFromCloud(CloudOperation cloudOperation) async {
+  Future<void> _downloadOperationFromCloud(
+      CloudOperation cloudOperation) async {
     var operation =
         await _localSource.operations.getByCloudId(cloudOperation.id);
 
@@ -278,11 +272,8 @@ class SyncRepositoryImpl implements SyncRepository {
       if (kDebugMode) {
         print('Load to cloud account ${account.title}');
       }
-      try {
-        await _uploadAccountToCloud(account, accountTable);
-      } on NetworkException {
-        return;
-      }
+
+      await _uploadAccountToCloud(account, accountTable);
 
       accountCount--;
       yield (LoadingState(
@@ -297,11 +288,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud category ${category.title}');
       }
 
-      try {
-        await _uploadCategoryToCloud(category, categoryTable);
-      } on NetworkException {
-        return;
-      }
+      await _uploadCategoryToCloud(category, categoryTable);
 
       categoryCount--;
       yield (LoadingState(
@@ -316,11 +303,7 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud operation ${operation.id}');
       }
 
-      try {
-        await _uploadOperationToCloud(operation, operationTable);
-      } on NetworkException {
-        return;
-      }
+      await _uploadOperationToCloud(operation, operationTable);
 
       operationCount--;
       yield (LoadingState(
