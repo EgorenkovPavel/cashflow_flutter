@@ -127,6 +127,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       }
     } catch (e) {
       emit(const SyncState.failure());
+      rethrow;
     }
   }
 
@@ -167,6 +168,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       }
     } on Object catch (e) {
       emit(SyncState.notSynced(message: e.toString()));
+      rethrow;
     }
   }
 
@@ -184,6 +186,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       add(const SyncEvent.syncNow());
     } catch (e) {
       emit(const SyncState.failure());
+      rethrow;
     }
   }
 
