@@ -209,6 +209,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
       final newOperation = type.map(
         INPUT: () => Operation.input(
+          id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
@@ -218,6 +219,7 @@ class SyncRepositoryImpl implements SyncRepository {
           sum: cloudOperation.sum,
         ),
         OUTPUT: () => Operation.output(
+          id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
@@ -227,6 +229,7 @@ class SyncRepositoryImpl implements SyncRepository {
           sum: cloudOperation.sum,
         ),
         TRANSFER: () => Operation.transfer(
+          id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
