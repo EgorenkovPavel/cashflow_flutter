@@ -6,6 +6,7 @@ import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
+import '../../utils/exceptions.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
@@ -154,50 +155,97 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<void> _downloadOperationFromCloud(
-      CloudOperation cloudOperation) async {
-    var operation =
-        await _localSource.operations.getByCloudId(cloudOperation.id);
-
-    var account =
+  Future<Account> _getAccountByCloudOperation(
+    CloudOperation cloudOperation,
+  ) async {
+    final account =
         await _localSource.accounts.getByCloudId(cloudOperation.account);
-    var category = cloudOperation.category == null
-        ? null
-        : await _localSource.categories.getByCloudId(cloudOperation.category!);
-    var recAccount = cloudOperation.recAccount == null
-        ? null
-        : await _localSource.accounts.getByCloudId(cloudOperation.recAccount!);
+    if (account == null) {
+      throw NetworkException(
+        'Can\'t find account by cloudId ${cloudOperation.account} in operation ${cloudOperation.id}',
+      );
+    } else {
+      return account;
+    }
+  }
+
+  Future<model.Category> _getCategoryByCloudOperation(
+    CloudOperation cloudOperation,
+  ) async {
+    if (cloudOperation.category == null) {
+      throw NetworkException(
+        'Try to fetch category on null value in operation ${cloudOperation.id}',
+      );
+    } else {
+      final category = await _localSource.categories.getByCloudId(
+        cloudOperation.category!,
+      );
+      if (category == null) {
+        throw NetworkException(
+          'Can\'t find category by cloudId ${cloudOperation.category} in operation ${cloudOperation.id}',
+        );
+      } else {
+        return category;
+      }
+    }
+  }
+
+  Future<Account> _getRecAccountByCloudOperation(
+    CloudOperation cloudOperation,
+  ) async {
+    if (cloudOperation.recAccount == null) {
+      throw NetworkException(
+        'Try to fetch rec account on null value in operation ${cloudOperation.id}',
+      );
+    } else {
+      final account =
+          await _localSource.accounts.getByCloudId(cloudOperation.recAccount!);
+      if (account == null) {
+        throw NetworkException(
+          'Can\'t find rec account by cloudId ${cloudOperation.recAccount} in operation ${cloudOperation.id}',
+        );
+      } else {
+        return account;
+      }
+    }
+  }
+
+  Future<void> _downloadOperationFromCloud(
+    CloudOperation cloudOperation,
+  ) async {
+    final operation =
+        await _localSource.operations.getByCloudId(cloudOperation.id);
 
     if (operation == null) {
       final type =
           const OperationTypeConverter().fromSql(cloudOperation.operationType);
 
-      final newOperation = type.map(
-        INPUT: () => Operation.input(
+      final newOperation = await type.map(
+        INPUT: () async => Operation.input(
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          category: category!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
-        OUTPUT: () => Operation.output(
+        OUTPUT: () async => Operation.output(
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          category: category!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
-        TRANSFER: () => Operation.transfer(
+        TRANSFER: () async => Operation.transfer(
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          recAccount: recAccount!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
       );
@@ -207,35 +255,35 @@ class SyncRepositoryImpl implements SyncRepository {
       final type =
           const OperationTypeConverter().fromSql(cloudOperation.operationType);
 
-      final newOperation = type.map(
-        INPUT: () => Operation.input(
+      final newOperation = await type.map(
+        INPUT: () async => Operation.input(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          category: category!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
-        OUTPUT: () => Operation.output(
+        OUTPUT: () async => Operation.output(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          category: category!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
-        TRANSFER: () => Operation.transfer(
+        TRANSFER: () async => Operation.transfer(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: account!,
-          recAccount: recAccount!,
+          account: await _getAccountByCloudOperation(cloudOperation),
+          recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
         ),
       );
