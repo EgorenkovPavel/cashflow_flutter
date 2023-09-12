@@ -50,12 +50,12 @@ class _$CategoryMonthCashflowEntityCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
     Object? month = null,
     Object? cashflow = null,
   }) {
     return _then(_value.copyWith(
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDB,
@@ -96,12 +96,12 @@ class __$$_CategoryMonthCashflowEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
     Object? month = null,
     Object? cashflow = null,
   }) {
     return _then(_$_CategoryMonthCashflowEntity(
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDB,
@@ -140,15 +140,15 @@ class _$_CategoryMonthCashflowEntity implements _CategoryMonthCashflowEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CategoryMonthCashflowEntity &&
-            const DeepCollectionEquality().equals(other.category, category) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.month, month) || other.month == month) &&
             (identical(other.cashflow, cashflow) ||
                 other.cashflow == cashflow));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(category), month, cashflow);
+  int get hashCode => Object.hash(runtimeType, category, month, cashflow);
 
   @JsonKey(ignore: true)
   @override

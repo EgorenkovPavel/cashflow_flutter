@@ -19,6 +19,7 @@ mixin _$CloudAccount {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
+  String get currency => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +33,8 @@ abstract class $CloudAccountCopyWith<$Res> {
           CloudAccount value, $Res Function(CloudAccount) then) =
       _$CloudAccountCopyWithImpl<$Res, CloudAccount>;
   @useResult
-  $Res call({String id, String title, bool isDebt, bool deleted});
+  $Res call(
+      {String id, String title, bool isDebt, String currency, bool deleted});
 }
 
 /// @nodoc
@@ -51,6 +53,7 @@ class _$CloudAccountCopyWithImpl<$Res, $Val extends CloudAccount>
     Object? id = null,
     Object? title = null,
     Object? isDebt = null,
+    Object? currency = null,
     Object? deleted = null,
   }) {
     return _then(_value.copyWith(
@@ -66,6 +69,10 @@ class _$CloudAccountCopyWithImpl<$Res, $Val extends CloudAccount>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -82,7 +89,8 @@ abstract class _$$_CloudAccountCopyWith<$Res>
       __$$_CloudAccountCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, bool isDebt, bool deleted});
+  $Res call(
+      {String id, String title, bool isDebt, String currency, bool deleted});
 }
 
 /// @nodoc
@@ -99,6 +107,7 @@ class __$$_CloudAccountCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? isDebt = null,
+    Object? currency = null,
     Object? deleted = null,
   }) {
     return _then(_$_CloudAccount(
@@ -114,6 +123,10 @@ class __$$_CloudAccountCopyWithImpl<$Res>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -129,6 +142,7 @@ class _$_CloudAccount implements _CloudAccount {
       {required this.id,
       required this.title,
       required this.isDebt,
+      required this.currency,
       required this.deleted});
 
   @override
@@ -138,11 +152,13 @@ class _$_CloudAccount implements _CloudAccount {
   @override
   final bool isDebt;
   @override
+  final String currency;
+  @override
   final bool deleted;
 
   @override
   String toString() {
-    return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, deleted: $deleted)';
+    return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, currency: $currency, deleted: $deleted)';
   }
 
   @override
@@ -153,11 +169,14 @@ class _$_CloudAccount implements _CloudAccount {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
             (identical(other.deleted, deleted) || other.deleted == deleted));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, isDebt, deleted);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, isDebt, currency, deleted);
 
   @JsonKey(ignore: true)
   @override
@@ -171,6 +190,7 @@ abstract class _CloudAccount implements CloudAccount {
       {required final String id,
       required final String title,
       required final bool isDebt,
+      required final String currency,
       required final bool deleted}) = _$_CloudAccount;
 
   @override
@@ -179,6 +199,8 @@ abstract class _CloudAccount implements CloudAccount {
   String get title;
   @override
   bool get isDebt;
+  @override
+  String get currency;
   @override
   bool get deleted;
   @override

@@ -47,11 +47,11 @@ class _$AccountBalanceEntityCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = freezed,
+    Object? account = null,
     Object? sum = null,
   }) {
     return _then(_value.copyWith(
-      account: freezed == account
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as AccountDB,
@@ -85,11 +85,11 @@ class __$$_AccountBalanceEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = freezed,
+    Object? account = null,
     Object? sum = null,
   }) {
     return _then(_$_AccountBalanceEntity(
-      account: freezed == account
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as AccountDB,
@@ -121,13 +121,12 @@ class _$_AccountBalanceEntity implements _AccountBalanceEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountBalanceEntity &&
-            const DeepCollectionEquality().equals(other.account, account) &&
+            (identical(other.account, account) || other.account == account) &&
             (identical(other.sum, sum) || other.sum == sum));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(account), sum);
+  int get hashCode => Object.hash(runtimeType, account, sum);
 
   @JsonKey(ignore: true)
   @override

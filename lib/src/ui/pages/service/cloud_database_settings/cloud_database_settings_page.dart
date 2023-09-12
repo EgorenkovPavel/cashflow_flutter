@@ -255,7 +255,7 @@ class ConnectingView extends StatelessWidget {
                 return const SizedBox();
               } else {
                 return Column(children: [
-                  QrImage(
+                  QrImageView(
                     data: jsonEncode(state.user),
                     version: QrVersions.auto,
                     size: 200.0,

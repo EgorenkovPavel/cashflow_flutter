@@ -121,6 +121,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
                   id: Value(a.id),
                   cloudId: a.cloudId,
                   title: a.title,
+                  currency: a.currency,
                   isDebt: Value(a.isDebt),
                 ))
             .toList(),

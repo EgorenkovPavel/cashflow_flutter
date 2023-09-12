@@ -50,13 +50,13 @@ final _router = GoRouter(
           name: 'account',
           path: 'account/:fid',
           builder: (context, state) =>
-              AccountDetailPage(id: int.parse(state.params['fid']!)),
+              AccountDetailPage(id: int.parse(state.pathParameters['fid']!)),
         ),
         GoRoute(
           name: 'category',
           path: 'category/:fid',
           builder: (context, state) =>
-              CategoryDetailPage(id: int.parse(state.params['fid']!)),
+              CategoryDetailPage(id: int.parse(state.pathParameters['fid']!)),
         ),
         GoRoute(
           name: 'operation',
@@ -67,7 +67,7 @@ final _router = GoRouter(
               name: 'operationId',
               path: 'edit/:fid',
               builder: (context, state) => OperationEditPage(
-                id: int.parse(state.params['fid']!),
+                id: int.parse(state.pathParameters['fid']!),
               ),
             ),
             GoRoute(
@@ -82,7 +82,7 @@ final _router = GoRouter(
           path: 'budget/:fid',
           builder: (context, state) => BudgetPage(
             type: OperationType.values.firstWhere(
-              (element) => element.toString() == state.params['fid'],
+              (element) => element.toString() == state.pathParameters['fid'],
             ),
           ),
         ),
@@ -121,19 +121,19 @@ final _router = GoRouter(
 extension PageNavigator on BuildContext {
   void openAccountPage(int accountId) => go(namedLocation(
         'account',
-        params: <String, String>{'fid': accountId.toString()},
+        pathParameters: <String, String>{'fid': accountId.toString()},
       ));
 
   void openCategoryPage(int categoryId) => go(namedLocation(
         'category',
-        params: <String, String>{'fid': categoryId.toString()},
+    pathParameters: <String, String>{'fid': categoryId.toString()},
       ));
 
   void openOperationListPage() => go(namedLocation('operation'));
 
   void openOperationEditPage(int operationId) => go(namedLocation(
         'operationId',
-        params: <String, String>{'fid': operationId.toString()},
+    pathParameters: <String, String>{'fid': operationId.toString()},
       ));
 
   void openOperationInputPage() => go(namedLocation('operationNew'));
@@ -152,7 +152,7 @@ extension PageNavigator on BuildContext {
 
   void openBudgetPage(OperationType operationType) => go(namedLocation(
         'budget',
-        params: <String, String>{'fid': operationType.toString()},
+    pathParameters: <String, String>{'fid': operationType.toString()},
       ));
 
   Future<Account?> openAccountInputDialog() =>

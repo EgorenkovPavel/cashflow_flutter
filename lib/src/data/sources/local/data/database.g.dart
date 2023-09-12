@@ -29,32 +29,34 @@ class $AccountsTable extends Accounts
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _currencyMeta =
+      const VerificationMeta('currency');
+  @override
+  late final GeneratedColumnWithTypeConverter<Currency, String> currency =
+      GeneratedColumn<String>('currency', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<Currency>($AccountsTable.$convertercurrency);
   static const VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
   @override
-  late final GeneratedColumn<bool> isDebt =
-      GeneratedColumn<bool>('is_debt', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: false,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("is_debt" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }),
-          defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> isDebt = GeneratedColumn<bool>(
+      'is_debt', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_debt" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> synced =
-      GeneratedColumn<bool>('synced', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: false,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }),
-          defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+      'synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   @override
-  List<GeneratedColumn> get $columns => [id, cloudId, title, isDebt, synced];
+  List<GeneratedColumn> get $columns =>
+      [id, cloudId, title, currency, isDebt, synced];
   @override
   String get aliasedName => _alias ?? 'accounts';
   @override
@@ -79,6 +81,7 @@ class $AccountsTable extends Accounts
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
+    context.handle(_currencyMeta, const VerificationResult.success());
     if (data.containsKey('is_debt')) {
       context.handle(_isDebtMeta,
           isDebt.isAcceptableOrUnknown(data['is_debt']!, _isDebtMeta));
@@ -102,6 +105,9 @@ class $AccountsTable extends Accounts
           .read(DriftSqlType.string, data['${effectivePrefix}cloud_id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      currency: $AccountsTable.$convertercurrency.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}currency'])!),
       isDebt: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_debt'])!,
       synced: attachedDatabase.typeMapping
@@ -113,18 +119,23 @@ class $AccountsTable extends Accounts
   $AccountsTable createAlias(String alias) {
     return $AccountsTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Currency, String> $convertercurrency =
+      const CurrencyConverter();
 }
 
 class AccountDB extends DataClass implements Insertable<AccountDB> {
   final int id;
   final String cloudId;
   final String title;
+  final Currency currency;
   final bool isDebt;
   final bool synced;
   const AccountDB(
       {required this.id,
       required this.cloudId,
       required this.title,
+      required this.currency,
       required this.isDebt,
       required this.synced});
   @override
@@ -133,6 +144,10 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     map['id'] = Variable<int>(id);
     map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
+    {
+      final converter = $AccountsTable.$convertercurrency;
+      map['currency'] = Variable<String>(converter.toSql(currency));
+    }
     map['is_debt'] = Variable<bool>(isDebt);
     map['synced'] = Variable<bool>(synced);
     return map;
@@ -143,6 +158,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
       id: Value(id),
       cloudId: Value(cloudId),
       title: Value(title),
+      currency: Value(currency),
       isDebt: Value(isDebt),
       synced: Value(synced),
     );
@@ -155,6 +171,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
       title: serializer.fromJson<String>(json['title']),
+      currency: serializer.fromJson<Currency>(json['currency']),
       isDebt: serializer.fromJson<bool>(json['isDebt']),
       synced: serializer.fromJson<bool>(json['synced']),
     );
@@ -166,6 +183,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
       'title': serializer.toJson<String>(title),
+      'currency': serializer.toJson<Currency>(currency),
       'isDebt': serializer.toJson<bool>(isDebt),
       'synced': serializer.toJson<bool>(synced),
     };
@@ -175,12 +193,14 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
           {int? id,
           String? cloudId,
           String? title,
+          Currency? currency,
           bool? isDebt,
           bool? synced}) =>
       AccountDB(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
+        currency: currency ?? this.currency,
         isDebt: isDebt ?? this.isDebt,
         synced: synced ?? this.synced,
       );
@@ -190,6 +210,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
           ..write('id: $id, ')
           ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
+          ..write('currency: $currency, ')
           ..write('isDebt: $isDebt, ')
           ..write('synced: $synced')
           ..write(')'))
@@ -197,7 +218,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
   }
 
   @override
-  int get hashCode => Object.hash(id, cloudId, title, isDebt, synced);
+  int get hashCode => Object.hash(id, cloudId, title, currency, isDebt, synced);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -205,6 +226,7 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
           other.id == this.id &&
           other.cloudId == this.cloudId &&
           other.title == this.title &&
+          other.currency == this.currency &&
           other.isDebt == this.isDebt &&
           other.synced == this.synced);
 }
@@ -213,12 +235,14 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
   final Value<int> id;
   final Value<String> cloudId;
   final Value<String> title;
+  final Value<Currency> currency;
   final Value<bool> isDebt;
   final Value<bool> synced;
   const AccountsCompanion({
     this.id = const Value.absent(),
     this.cloudId = const Value.absent(),
     this.title = const Value.absent(),
+    this.currency = const Value.absent(),
     this.isDebt = const Value.absent(),
     this.synced = const Value.absent(),
   });
@@ -226,14 +250,17 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
     this.id = const Value.absent(),
     required String cloudId,
     required String title,
+    required Currency currency,
     this.isDebt = const Value.absent(),
     this.synced = const Value.absent(),
   })  : cloudId = Value(cloudId),
-        title = Value(title);
+        title = Value(title),
+        currency = Value(currency);
   static Insertable<AccountDB> custom({
     Expression<int>? id,
     Expression<String>? cloudId,
     Expression<String>? title,
+    Expression<String>? currency,
     Expression<bool>? isDebt,
     Expression<bool>? synced,
   }) {
@@ -241,6 +268,7 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
       if (id != null) 'id': id,
       if (cloudId != null) 'cloud_id': cloudId,
       if (title != null) 'title': title,
+      if (currency != null) 'currency': currency,
       if (isDebt != null) 'is_debt': isDebt,
       if (synced != null) 'synced': synced,
     });
@@ -250,12 +278,14 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
       {Value<int>? id,
       Value<String>? cloudId,
       Value<String>? title,
+      Value<Currency>? currency,
       Value<bool>? isDebt,
       Value<bool>? synced}) {
     return AccountsCompanion(
       id: id ?? this.id,
       cloudId: cloudId ?? this.cloudId,
       title: title ?? this.title,
+      currency: currency ?? this.currency,
       isDebt: isDebt ?? this.isDebt,
       synced: synced ?? this.synced,
     );
@@ -273,6 +303,10 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
+    if (currency.present) {
+      final converter = $AccountsTable.$convertercurrency;
+      map['currency'] = Variable<String>(converter.toSql(currency.value));
+    }
     if (isDebt.present) {
       map['is_debt'] = Variable<bool>(isDebt.value);
     }
@@ -288,6 +322,7 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
           ..write('id: $id, ')
           ..write('cloudId: $cloudId, ')
           ..write('title: $title, ')
+          ..write('currency: $currency, ')
           ..write('isDebt: $isDebt, ')
           ..write('synced: $synced')
           ..write(')'))
@@ -343,16 +378,13 @@ class $CategoriesTable extends Categories
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> synced =
-      GeneratedColumn<bool>('synced', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: false,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }),
-          defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+      'synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns =>
       [id, cloudId, title, operationType, budgetType, budget, synced];
@@ -734,29 +766,23 @@ class $OperationsTable extends Operations
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> synced =
-      GeneratedColumn<bool>('synced', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: false,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("synced" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }),
-          defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+      'synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _deletedMeta =
       const VerificationMeta('deleted');
   @override
-  late final GeneratedColumn<bool> deleted =
-      GeneratedColumn<bool>('deleted', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: false,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("deleted" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }),
-          defaultValue: const Constant(false));
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+      'deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1350,17 +1376,20 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
   final Value<int> operation;
   final Value<int> account;
   final Value<int> sum;
+  final Value<int> rowid;
   const BalancesCompanion({
     this.date = const Value.absent(),
     this.operation = const Value.absent(),
     this.account = const Value.absent(),
     this.sum = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   BalancesCompanion.insert({
     required DateTime date,
     required int operation,
     required int account,
     required int sum,
+    this.rowid = const Value.absent(),
   })  : date = Value(date),
         operation = Value(operation),
         account = Value(account),
@@ -1370,12 +1399,14 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
     Expression<int>? operation,
     Expression<int>? account,
     Expression<int>? sum,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (date != null) 'date': date,
       if (operation != null) 'operation': operation,
       if (account != null) 'account': account,
       if (sum != null) 'sum': sum,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
@@ -1383,12 +1414,14 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
       {Value<DateTime>? date,
       Value<int>? operation,
       Value<int>? account,
-      Value<int>? sum}) {
+      Value<int>? sum,
+      Value<int>? rowid}) {
     return BalancesCompanion(
       date: date ?? this.date,
       operation: operation ?? this.operation,
       account: account ?? this.account,
       sum: sum ?? this.sum,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -1407,6 +1440,9 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
     if (sum.present) {
       map['sum'] = Variable<int>(sum.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -1416,7 +1452,8 @@ class BalancesCompanion extends UpdateCompanion<BalanceDB> {
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('account: $account, ')
-          ..write('sum: $sum')
+          ..write('sum: $sum, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1603,17 +1640,20 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
   final Value<int> operation;
   final Value<int> category;
   final Value<int> sum;
+  final Value<int> rowid;
   const CashflowsCompanion({
     this.date = const Value.absent(),
     this.operation = const Value.absent(),
     this.category = const Value.absent(),
     this.sum = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   CashflowsCompanion.insert({
     required DateTime date,
     required int operation,
     required int category,
     required int sum,
+    this.rowid = const Value.absent(),
   })  : date = Value(date),
         operation = Value(operation),
         category = Value(category),
@@ -1623,12 +1663,14 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
     Expression<int>? operation,
     Expression<int>? category,
     Expression<int>? sum,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (date != null) 'date': date,
       if (operation != null) 'operation': operation,
       if (category != null) 'category': category,
       if (sum != null) 'sum': sum,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
@@ -1636,12 +1678,14 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
       {Value<DateTime>? date,
       Value<int>? operation,
       Value<int>? category,
-      Value<int>? sum}) {
+      Value<int>? sum,
+      Value<int>? rowid}) {
     return CashflowsCompanion(
       date: date ?? this.date,
       operation: operation ?? this.operation,
       category: category ?? this.category,
       sum: sum ?? this.sum,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -1660,6 +1704,9 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
     if (sum.present) {
       map['sum'] = Variable<int>(sum.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -1669,7 +1716,8 @@ class CashflowsCompanion extends UpdateCompanion<CashflowDB> {
           ..write('date: $date, ')
           ..write('operation: $operation, ')
           ..write('category: $category, ')
-          ..write('sum: $sum')
+          ..write('sum: $sum, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }

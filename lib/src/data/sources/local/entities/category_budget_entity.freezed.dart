@@ -47,11 +47,11 @@ class _$CategoryBudgetEntityCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
     Object? budget = null,
   }) {
     return _then(_value.copyWith(
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDB,
@@ -85,11 +85,11 @@ class __$$_CategoryBudgetEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
     Object? budget = null,
   }) {
     return _then(_$_CategoryBudgetEntity(
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDB,
@@ -121,13 +121,13 @@ class _$_CategoryBudgetEntity implements _CategoryBudgetEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CategoryBudgetEntity &&
-            const DeepCollectionEquality().equals(other.category, category) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.budget, budget) || other.budget == budget));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(category), budget);
+  int get hashCode => Object.hash(runtimeType, category, budget);
 
   @JsonKey(ignore: true)
   @override

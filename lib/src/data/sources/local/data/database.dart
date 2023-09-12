@@ -12,6 +12,9 @@ import 'package:money_tracker/src/domain/models/enum/operation_type.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../domain/models/enum/currency.dart';
+import '../db_converters/currency_converter.dart';
+
 part 'database.g.dart';
 
 @DataClassName('AccountDB')
@@ -24,6 +27,8 @@ class Accounts extends Table {
   TextColumn get cloudId => text()();
 
   TextColumn get title => text()();
+
+  TextColumn get currency => text().map(const CurrencyConverter())();
 
   BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
 
@@ -159,6 +164,11 @@ class Database extends _$Database {
           if (from < 6) {
             await m.addColumn(operations, operations.deleted);
           }
+
+          if (from < 7){
+            await m.addColumn(accounts, accounts.currency);
+            // upgrade currency column to RUB
+          }
         },
       );
 
@@ -217,6 +227,7 @@ class Database extends _$Database {
                 cloudId: '',
                 title: d['account_title'],
                 isDebt: false,
+                currency: Currency.RUB,
                 synced: false,
               ));
             } else {
@@ -298,6 +309,7 @@ class _DefaultValueSerializer extends ValueSerializer {
 
   final _operationTypeConverter = const OperationTypeConverter();
   final _budgetTypeConverter = const BudgetTypeConverter();
+  final _currencyConverter = const CurrencyConverter();
 
   @override
   T fromJson<T>(dynamic json) {
@@ -311,6 +323,14 @@ class _DefaultValueSerializer extends ValueSerializer {
       }
 
       return _budgetTypeConverter.fromSql(json as int) as T;
+
+    } else if (T == Currency) {
+      if (json == null) {
+        return Currency.RUB as T;
+      }
+
+      return _currencyConverter.fromSql(json as String) as T;
+
     } else if (T == int && json == null) {
       return 0 as T;
     } else if (T == String && json == null) {

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/models/enum/currency.dart';
 
 part 'account_detail_bloc.freezed.dart';
 
@@ -52,9 +53,17 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
 
     _subOperations = _repository.operations
         .watchAllByFilter(OperationListFilter(
-      accounts: {Account(id: event.accountId, title: '', isDebt: false)},
+      accounts: {
+        Account(
+          id: event.accountId,
+          title: '',
+          isDebt: false,
+          currency: Currency.RUB,
+        ),
+      },
       categories: const {},
-    )).listen((event) {
+    ))
+        .listen((event) {
       add(AccountDetailEvent.operationsChanged(operations: event));
     });
   }

@@ -1,4 +1,5 @@
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
+import 'package:money_tracker/src/data/sources/local/db_converters/currency_converter.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/src/data/sources/remote/models/cloud_models.dart';
 import 'package:money_tracker/src/domain/models.dart';
@@ -9,6 +10,7 @@ extension CloudAccountMapper on Account {
         title: title,
         isDebt: isDebt,
         deleted: false,
+        currency: const CurrencyConverter().toSql(currency),
       );
 }
 
@@ -16,14 +18,11 @@ extension CloudCategoryMapper on Category {
   CloudCategory toCloudCategory() => CloudCategory(
         id: cloudId,
         title: title,
-        operationType:
-            const OperationTypeConverter().toSql(operationType),
+        operationType: const OperationTypeConverter().toSql(operationType),
         budgetType: const BudgetTypeConverter().toSql(budgetType),
         budget: budget,
         deleted: false,
       );
-
-
 }
 
 extension CloudOperationMapper on Operation {

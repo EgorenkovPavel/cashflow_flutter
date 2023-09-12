@@ -52,17 +52,17 @@ class _$OperationDbEntityCopyWithImpl<$Res, $Val extends OperationDbEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? operation = freezed,
-    Object? account = freezed,
+    Object? operation = null,
+    Object? account = null,
     Object? category = freezed,
     Object? recAccount = freezed,
   }) {
     return _then(_value.copyWith(
-      operation: freezed == operation
+      operation: null == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
               as OperationDB,
-      account: freezed == account
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as AccountDB,
@@ -104,17 +104,17 @@ class __$$_OperationDbEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? operation = freezed,
-    Object? account = freezed,
+    Object? operation = null,
+    Object? account = null,
     Object? category = freezed,
     Object? recAccount = freezed,
   }) {
     return _then(_$_OperationDbEntity(
-      operation: freezed == operation
+      operation: null == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
               as OperationDB,
-      account: freezed == account
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as AccountDB,
@@ -159,20 +159,18 @@ class _$_OperationDbEntity extends _OperationDbEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_OperationDbEntity &&
-            const DeepCollectionEquality().equals(other.operation, operation) &&
-            const DeepCollectionEquality().equals(other.account, account) &&
-            const DeepCollectionEquality().equals(other.category, category) &&
-            const DeepCollectionEquality()
-                .equals(other.recAccount, recAccount));
+            (identical(other.operation, operation) ||
+                other.operation == operation) &&
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.recAccount, recAccount) ||
+                other.recAccount == recAccount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(operation),
-      const DeepCollectionEquality().hash(account),
-      const DeepCollectionEquality().hash(category),
-      const DeepCollectionEquality().hash(recAccount));
+  int get hashCode =>
+      Object.hash(runtimeType, operation, account, category, recAccount);
 
   @JsonKey(ignore: true)
   @override

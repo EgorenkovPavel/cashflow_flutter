@@ -15,6 +15,7 @@ class AccountMapper extends Mapper<Account, AccountDB> {
       cloudId: a.cloudId,
       title: a.title,
       isDebt: a.isDebt,
+      currency: a.currency,
       synced: false,
     );
   }
@@ -26,6 +27,7 @@ class AccountMapper extends Mapper<Account, AccountDB> {
       cloudId: a.cloudId,
       title: a.title,
       isDebt: a.isDebt,
+      currency: a.currency,
     );
   }
 }

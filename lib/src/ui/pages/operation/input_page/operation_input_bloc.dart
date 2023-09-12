@@ -203,6 +203,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         id: op.account.id,
         cloudId: op.cloudId,
         title: op.account.title,
+        currency: op.account.currency,
         balance: 0,
       ),
       action: MasterStateAction.SET_ACCOUNT,
@@ -226,6 +227,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           id: operation.recAccount.id,
           cloudId: operation.recAccount.cloudId,
           title: operation.recAccount.title,
+          currency: operation.recAccount.currency,
           balance: 0,
         ),
         action: MasterStateAction.SET_REC_ACCOUNT,
@@ -463,5 +465,6 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     cloudId: accountBalance.cloudId,
     title: accountBalance.title,
     isDebt: accountBalance.isDebt,
+    currency: accountBalance.currency,
   );
 }

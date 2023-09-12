@@ -6,6 +6,9 @@ import 'package:money_tracker/src/ui/pages/account/input_page/account_input_bloc
 import 'package:money_tracker/src/ui/pages/item_card.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../domain/models/enum/currency.dart';
+import '../../input_fields/currency_field.dart';
+
 class AccountInputPage extends StatelessWidget {
   final int? id;
 
@@ -73,8 +76,9 @@ class _AccountPageState extends State<AccountPage> {
         title: widget.isNew
             ? context.loc.newAccountCardTitle
             : context.loc.accountCardTitle,
-        onSave: (context) =>
-            context.read<AccountInputBloc>().add(const AccountInputEvent.save()),
+        onSave: (context) => context
+            .read<AccountInputBloc>()
+            .add(const AccountInputEvent.save()),
         child: Column(
           children: [
             TextFormField(
@@ -102,9 +106,18 @@ class _AccountPageState extends State<AccountPage> {
                 const Text('Is debt'),
               ],
             ),
+            CurrencyField(
+              currency: context.select<AccountInputBloc, Currency>(
+                  (bloc) => bloc.state.currency),
+              onChange: (val) => context
+                  .read<AccountInputBloc>()
+                  .add(AccountInputEvent.changeCurrency(currency: val)),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+

@@ -20,6 +20,7 @@ mixin _$Account {
   String get cloudId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AccountCopyWith<Account> get copyWith => throw _privateConstructorUsedError;
@@ -30,7 +31,8 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res, Account>;
   @useResult
-  $Res call({int id, String cloudId, String title, bool isDebt});
+  $Res call(
+      {int id, String cloudId, String title, bool isDebt, Currency currency});
 }
 
 /// @nodoc
@@ -50,6 +52,7 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? cloudId = null,
     Object? title = null,
     Object? isDebt = null,
+    Object? currency = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -68,6 +71,10 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
     ) as $Val);
   }
 }
@@ -79,7 +86,8 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
       __$$_AccountCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String cloudId, String title, bool isDebt});
+  $Res call(
+      {int id, String cloudId, String title, bool isDebt, Currency currency});
 }
 
 /// @nodoc
@@ -96,6 +104,7 @@ class __$$_AccountCopyWithImpl<$Res>
     Object? cloudId = null,
     Object? title = null,
     Object? isDebt = null,
+    Object? currency = null,
   }) {
     return _then(_$_Account(
       id: null == id
@@ -114,6 +123,10 @@ class __$$_AccountCopyWithImpl<$Res>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
     ));
   }
 }
@@ -125,7 +138,8 @@ class _$_Account implements _Account {
       {this.id = 0,
       this.cloudId = '',
       required this.title,
-      required this.isDebt});
+      required this.isDebt,
+      required this.currency});
 
   @override
   @JsonKey()
@@ -137,10 +151,12 @@ class _$_Account implements _Account {
   final String title;
   @override
   final bool isDebt;
+  @override
+  final Currency currency;
 
   @override
   String toString() {
-    return 'Account(id: $id, cloudId: $cloudId, title: $title, isDebt: $isDebt)';
+    return 'Account(id: $id, cloudId: $cloudId, title: $title, isDebt: $isDebt, currency: $currency)';
   }
 
   @override
@@ -151,11 +167,14 @@ class _$_Account implements _Account {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+            (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, cloudId, title, isDebt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, cloudId, title, isDebt, currency);
 
   @JsonKey(ignore: true)
   @override
@@ -169,7 +188,8 @@ abstract class _Account implements Account {
       {final int id,
       final String cloudId,
       required final String title,
-      required final bool isDebt}) = _$_Account;
+      required final bool isDebt,
+      required final Currency currency}) = _$_Account;
 
   @override
   int get id;
@@ -179,6 +199,8 @@ abstract class _Account implements Account {
   String get title;
   @override
   bool get isDebt;
+  @override
+  Currency get currency;
   @override
   @JsonKey(ignore: true)
   _$$_AccountCopyWith<_$_Account> get copyWith =>

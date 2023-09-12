@@ -18,6 +18,7 @@ class AccountBalanceMapper
         cloudId: a.cloudId,
         title: a.title,
         isDebt: a.isDebt,
+        currency: a.currency,
         synced: false,
       ),
       sum: a.balance,
@@ -31,6 +32,7 @@ class AccountBalanceMapper
       cloudId: a.account.cloudId,
       title: a.account.title,
       isDebt: a.account.isDebt,
+      currency: a.account.currency,
       balance: a.sum,
     );
   }

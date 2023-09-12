@@ -314,6 +314,7 @@ class AccountList extends StatelessWidget {
         id: account.id,
         cloudId: account.cloudId,
         title: account.title,
+        currency: account.currency,
         balance: 0,
       );
       context
@@ -429,6 +430,7 @@ class AccountRecList extends StatelessWidget {
         id: account.id,
         cloudId: account.cloudId,
         title: account.title,
+        currency: account.currency,
         balance: 0,
       );
       context

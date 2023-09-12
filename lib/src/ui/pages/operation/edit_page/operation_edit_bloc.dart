@@ -6,6 +6,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
+import '../../../../domain/models/enum/currency.dart';
+
 part 'operation_edit_bloc.freezed.dart';
 
 @freezed
@@ -89,7 +91,7 @@ class OperationEditState with _$OperationEditState {
   factory OperationEditState.initial() => OperationEditState.main(
         operation: Operation.input(
           date: DateTime.now(),
-          account: const Account(title: '', isDebt: false),
+          account: const Account(title: '', isDebt: false, currency: Currency.RUB),
           category: const Category(
             title: '',
             budget: 0,
@@ -101,7 +103,7 @@ class OperationEditState with _$OperationEditState {
         date: DateTime.now(),
         time: TimeOfDay.now(),
         operationType: OperationType.INPUT,
-        account: const Account(title: '', isDebt: false),
+        account: const Account(title: '', isDebt: false, currency: Currency.RUB),
         sum: 0,
         accounts: [],
         inCategories: [],

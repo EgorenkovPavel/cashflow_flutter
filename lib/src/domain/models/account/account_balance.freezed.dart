@@ -19,6 +19,7 @@ mixin _$AccountBalance {
   int get id => throw _privateConstructorUsedError;
   String get cloudId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
   int get balance => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
 
@@ -33,7 +34,13 @@ abstract class $AccountBalanceCopyWith<$Res> {
           AccountBalance value, $Res Function(AccountBalance) then) =
       _$AccountBalanceCopyWithImpl<$Res, AccountBalance>;
   @useResult
-  $Res call({int id, String cloudId, String title, int balance, bool isDebt});
+  $Res call(
+      {int id,
+      String cloudId,
+      String title,
+      Currency currency,
+      int balance,
+      bool isDebt});
 }
 
 /// @nodoc
@@ -52,6 +59,7 @@ class _$AccountBalanceCopyWithImpl<$Res, $Val extends AccountBalance>
     Object? id = null,
     Object? cloudId = null,
     Object? title = null,
+    Object? currency = null,
     Object? balance = null,
     Object? isDebt = null,
   }) {
@@ -68,6 +76,10 @@ class _$AccountBalanceCopyWithImpl<$Res, $Val extends AccountBalance>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -88,7 +100,13 @@ abstract class _$$_AccountBalanceCopyWith<$Res>
       __$$_AccountBalanceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String cloudId, String title, int balance, bool isDebt});
+  $Res call(
+      {int id,
+      String cloudId,
+      String title,
+      Currency currency,
+      int balance,
+      bool isDebt});
 }
 
 /// @nodoc
@@ -105,6 +123,7 @@ class __$$_AccountBalanceCopyWithImpl<$Res>
     Object? id = null,
     Object? cloudId = null,
     Object? title = null,
+    Object? currency = null,
     Object? balance = null,
     Object? isDebt = null,
   }) {
@@ -121,6 +140,10 @@ class __$$_AccountBalanceCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -140,6 +163,7 @@ class _$_AccountBalance implements _AccountBalance {
       {required this.id,
       required this.cloudId,
       required this.title,
+      required this.currency,
       required this.balance,
       this.isDebt = false});
 
@@ -150,6 +174,8 @@ class _$_AccountBalance implements _AccountBalance {
   @override
   final String title;
   @override
+  final Currency currency;
+  @override
   final int balance;
   @override
   @JsonKey()
@@ -157,7 +183,7 @@ class _$_AccountBalance implements _AccountBalance {
 
   @override
   String toString() {
-    return 'AccountBalance(id: $id, cloudId: $cloudId, title: $title, balance: $balance, isDebt: $isDebt)';
+    return 'AccountBalance(id: $id, cloudId: $cloudId, title: $title, currency: $currency, balance: $balance, isDebt: $isDebt)';
   }
 
   @override
@@ -168,13 +194,15 @@ class _$_AccountBalance implements _AccountBalance {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, cloudId, title, balance, isDebt);
+      Object.hash(runtimeType, id, cloudId, title, currency, balance, isDebt);
 
   @JsonKey(ignore: true)
   @override
@@ -188,6 +216,7 @@ abstract class _AccountBalance implements AccountBalance {
       {required final int id,
       required final String cloudId,
       required final String title,
+      required final Currency currency,
       required final int balance,
       final bool isDebt}) = _$_AccountBalance;
 
@@ -197,6 +226,8 @@ abstract class _AccountBalance implements AccountBalance {
   String get cloudId;
   @override
   String get title;
+  @override
+  Currency get currency;
   @override
   int get balance;
   @override

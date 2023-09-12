@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/models/enum/currency.dart';
 
 part 'account_input_bloc.freezed.dart';
 
@@ -19,6 +20,10 @@ class AccountInputEvent with _$AccountInputEvent {
     required bool isDebt,
   }) = _ChangeIsDebtAccountInputEvent;
 
+  const factory AccountInputEvent.changeCurrency({
+    required Currency currency,
+  }) = _ChangeCurrencyAccoutnInputEvent;
+
   const factory AccountInputEvent.save() = _SaveAccountInputEvent;
 }
 
@@ -29,18 +34,21 @@ class AccountInputState with _$AccountInputState {
   const factory AccountInputState.main({
     required String title,
     required bool isDebt,
+    required Currency currency,
     Account? account,
   }) = _MainAccountInputState;
 
   const factory AccountInputState.saved({
     required String title,
     required bool isDebt,
+    required Currency currency,
     required Account savedAccount,
   }) = _SavedAccountInputState;
 
   const factory AccountInputState.fetch({
     required String title,
     required bool isDebt,
+    required Currency currency,
     required Account fetchedAccount,
   }) = _FetchAccountInputState;
 
@@ -68,12 +76,14 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
       : super(const AccountInputState.main(
           title: '',
           isDebt: false,
+          currency: Currency.RUB,
           account: null,
         )) {
     on<AccountInputEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
           changeTitle: (event) => _changeTitle(event, emitter),
           changeIsDebt: (event) => _changeIsDebt(event, emitter),
+          changeCurrency: (event) => _changeCurrency(event, emitter),
           save: (event) => _save(event, emitter),
         ));
   }
@@ -85,11 +95,13 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     var account = await _repository.accounts.getById(event.accountId);
     var title = account.title;
     var isDebt = account.isDebt;
+    var currency = account.currency;
 
     emit(AccountInputState.fetch(
       fetchedAccount: account,
       title: title,
       isDebt: isDebt,
+      currency: currency,
     ));
   }
 
@@ -101,6 +113,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
       title: event.title,
       isDebt: state.isDebt,
       account: state.account,
+      currency: state.currency,
     ));
   }
 
@@ -112,6 +125,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
       title: state.title,
       isDebt: event.isDebt,
       account: state.account,
+      currency: state.currency,
     ));
   }
 
@@ -123,29 +137,50 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
       emit(AccountInputState.saved(
         title: state.title,
         isDebt: state.isDebt,
+        currency: state.currency,
         savedAccount: await _insertAccount(),
       ));
     } else {
       emit(AccountInputState.saved(
         title: state.title,
         isDebt: state.isDebt,
+        currency: state.currency,
         savedAccount: await _updateAccount(),
       ));
     }
   }
 
   Future<Account> _insertAccount() async {
-    var account = Account(title: state.title, isDebt: state.isDebt);
+    var account = Account(
+      title: state.title,
+      isDebt: state.isDebt,
+      currency: state.currency,
+    );
     var id = await _repository.accounts.insert(account);
 
     return account.copyWith(id: id);
   }
 
   Future<Account> _updateAccount() async {
-    var newAccount =
-        state.account!.copyWith(title: state.title, isDebt: state.isDebt);
+    var newAccount = state.account!.copyWith(
+      title: state.title,
+      isDebt: state.isDebt,
+      currency: state.currency,
+    );
     await _repository.accounts.update(newAccount);
 
     return newAccount;
+  }
+
+  _changeCurrency(
+    _ChangeCurrencyAccoutnInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) {
+    emit(AccountInputState.main(
+      title: state.title,
+      isDebt: state.isDebt,
+      account: state.account,
+      currency: event.currency,
+    ));
   }
 }
