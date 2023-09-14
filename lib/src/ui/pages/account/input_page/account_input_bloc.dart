@@ -29,55 +29,25 @@ class AccountInputEvent with _$AccountInputEvent {
 
 @freezed
 class AccountInputState with _$AccountInputState {
-  const AccountInputState._();
-
-  const factory AccountInputState.main({
+  const factory AccountInputState({
     required String title,
     required bool isDebt,
     required Currency currency,
     Account? account,
-  }) = _MainAccountInputState;
-
-  const factory AccountInputState.saved({
-    required String title,
-    required bool isDebt,
-    required Currency currency,
-    required Account savedAccount,
-  }) = _SavedAccountInputState;
-
-  const factory AccountInputState.fetch({
-    required String title,
-    required bool isDebt,
-    required Currency currency,
-    required Account fetchedAccount,
-  }) = _FetchAccountInputState;
-
-  bool get isSaved => maybeMap(
-        saved: (_) => true,
-        orElse: () => false,
-      );
-
-  bool get isFetched => maybeMap(
-        fetch: (_) => true,
-        orElse: () => false,
-      );
-
-  Account? get account => map(
-        main: (state) => state.account,
-        fetch: (state) => state.account,
-        saved: (state) => state.account,
-      );
+    required bool isSaved,
+  }) = _AccountInputState;
 }
 
 class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   final DataRepository _repository;
 
   AccountInputBloc(this._repository)
-      : super(const AccountInputState.main(
+      : super(const AccountInputState(
           title: '',
           isDebt: false,
           currency: Currency.RUB,
           account: null,
+          isSaved: false,
         )) {
     on<AccountInputEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
@@ -92,13 +62,13 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _FetchAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
-    var account = await _repository.accounts.getById(event.accountId);
+    final account = await _repository.accounts.getById(event.accountId);
     var title = account.title;
     var isDebt = account.isDebt;
     var currency = account.currency;
 
-    emit(AccountInputState.fetch(
-      fetchedAccount: account,
+    emit(state.copyWith(
+      account: account,
       title: title,
       isDebt: isDebt,
       currency: currency,
@@ -109,24 +79,21 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _ChangeTitleAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) {
-    emit(AccountInputState.main(
-      title: event.title,
-      isDebt: state.isDebt,
-      account: state.account,
-      currency: state.currency,
-    ));
+    emit(state.copyWith(title: event.title));
   }
 
   void _changeIsDebt(
     _ChangeIsDebtAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) {
-    emit(AccountInputState.main(
-      title: state.title,
-      isDebt: event.isDebt,
-      account: state.account,
-      currency: state.currency,
-    ));
+    emit(state.copyWith(isDebt: event.isDebt));
+  }
+
+  _changeCurrency(
+    _ChangeCurrencyAccoutnInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) {
+    emit(state.copyWith(currency: event.currency));
   }
 
   Future<void> _save(
@@ -134,18 +101,14 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     Emitter<AccountInputState> emit,
   ) async {
     if (state.account == null) {
-      emit(AccountInputState.saved(
-        title: state.title,
-        isDebt: state.isDebt,
-        currency: state.currency,
-        savedAccount: await _insertAccount(),
+      emit(state.copyWith(
+        account: await _insertAccount(),
+        isSaved: true,
       ));
     } else {
-      emit(AccountInputState.saved(
-        title: state.title,
-        isDebt: state.isDebt,
-        currency: state.currency,
-        savedAccount: await _updateAccount(),
+      emit(state.copyWith(
+        account: await _updateAccount(),
+        isSaved: true,
       ));
     }
   }
@@ -170,17 +133,5 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     await _repository.accounts.update(newAccount);
 
     return newAccount;
-  }
-
-  _changeCurrency(
-    _ChangeCurrencyAccoutnInputEvent event,
-    Emitter<AccountInputState> emit,
-  ) {
-    emit(AccountInputState.main(
-      title: state.title,
-      isDebt: state.isDebt,
-      account: state.account,
-      currency: event.currency,
-    ));
   }
 }

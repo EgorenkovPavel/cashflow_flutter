@@ -26,7 +26,7 @@ class ListTileOperation extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  void onLongPress(BuildContext context) {
+  void _onLongPress(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -81,7 +81,7 @@ class ListTileOperation extends StatelessWidget {
             .copyWith(color: _operation.type.color),
       ),
       onTap: onTap,
-      onLongPress: () => onLongPress(context),
+      onLongPress: () => _onLongPress(context),
     );
   }
 }

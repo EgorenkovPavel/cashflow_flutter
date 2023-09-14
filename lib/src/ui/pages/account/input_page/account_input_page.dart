@@ -55,7 +55,7 @@ class _AccountPageState extends State<AccountPage> {
   void _listenState(BuildContext context, AccountInputState state) {
     if (state.isSaved) {
       Navigator.of(context).pop(state.account);
-    } else if (state.isFetched) {
+    } else if (_controller.text != state.title) {
       _controller.text = state.title;
     }
   }
@@ -68,6 +68,10 @@ class _AccountPageState extends State<AccountPage> {
     return null;
   }
 
+  _onSave(BuildContext context) => context
+      .read<AccountInputBloc>()
+      .add(const AccountInputEvent.save());
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AccountInputBloc, AccountInputState>(
@@ -76,9 +80,7 @@ class _AccountPageState extends State<AccountPage> {
         title: widget.isNew
             ? context.loc.newAccountCardTitle
             : context.loc.accountCardTitle,
-        onSave: (context) => context
-            .read<AccountInputBloc>()
-            .add(const AccountInputEvent.save()),
+        onSave: (context) => _onSave(context),
         child: Column(
           children: [
             TextFormField(
@@ -108,7 +110,8 @@ class _AccountPageState extends State<AccountPage> {
             ),
             CurrencyField(
               currency: context.select<AccountInputBloc, Currency>(
-                  (bloc) => bloc.state.currency),
+                (bloc) => bloc.state.currency,
+              ),
               onChange: (val) => context
                   .read<AccountInputBloc>()
                   .add(AccountInputEvent.changeCurrency(currency: val)),
@@ -119,5 +122,3 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 }
-
-

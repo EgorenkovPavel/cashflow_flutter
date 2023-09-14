@@ -856,68 +856,8 @@ mixin _$AccountInputState {
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
   Currency get currency => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)
-        main,
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)
-        saved,
-    required TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)
-        fetch,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult? Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainAccountInputState value) main,
-    required TResult Function(_SavedAccountInputState value) saved,
-    required TResult Function(_FetchAccountInputState value) fetch,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainAccountInputState value)? main,
-    TResult? Function(_SavedAccountInputState value)? saved,
-    TResult? Function(_FetchAccountInputState value)? fetch,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainAccountInputState value)? main,
-    TResult Function(_SavedAccountInputState value)? saved,
-    TResult Function(_FetchAccountInputState value)? fetch,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  Account? get account => throw _privateConstructorUsedError;
+  bool get isSaved => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AccountInputStateCopyWith<AccountInputState> get copyWith =>
@@ -930,7 +870,14 @@ abstract class $AccountInputStateCopyWith<$Res> {
           AccountInputState value, $Res Function(AccountInputState) then) =
       _$AccountInputStateCopyWithImpl<$Res, AccountInputState>;
   @useResult
-  $Res call({String title, bool isDebt, Currency currency});
+  $Res call(
+      {String title,
+      bool isDebt,
+      Currency currency,
+      Account? account,
+      bool isSaved});
+
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -949,54 +896,10 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
     Object? title = null,
     Object? isDebt = null,
     Object? currency = null,
+    Object? account = freezed,
+    Object? isSaved = null,
   }) {
     return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      isDebt: null == isDebt
-          ? _value.isDebt
-          : isDebt // ignore: cast_nullable_to_non_nullable
-              as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_MainAccountInputStateCopyWith<$Res>
-    implements $AccountInputStateCopyWith<$Res> {
-  factory _$$_MainAccountInputStateCopyWith(_$_MainAccountInputState value,
-          $Res Function(_$_MainAccountInputState) then) =
-      __$$_MainAccountInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String title, bool isDebt, Currency currency, Account? account});
-
-  $AccountCopyWith<$Res>? get account;
-}
-
-/// @nodoc
-class __$$_MainAccountInputStateCopyWithImpl<$Res>
-    extends _$AccountInputStateCopyWithImpl<$Res, _$_MainAccountInputState>
-    implements _$$_MainAccountInputStateCopyWith<$Res> {
-  __$$_MainAccountInputStateCopyWithImpl(_$_MainAccountInputState _value,
-      $Res Function(_$_MainAccountInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? isDebt = null,
-    Object? currency = null,
-    Object? account = freezed,
-  }) {
-    return _then(_$_MainAccountInputState(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -1013,7 +916,11 @@ class __$$_MainAccountInputStateCopyWithImpl<$Res>
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account?,
-    ));
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 
   @override
@@ -1024,20 +931,81 @@ class __$$_MainAccountInputStateCopyWithImpl<$Res>
     }
 
     return $AccountCopyWith<$Res>(_value.account!, (value) {
-      return _then(_value.copyWith(account: value));
+      return _then(_value.copyWith(account: value) as $Val);
     });
   }
 }
 
 /// @nodoc
+abstract class _$$_AccountInputStateCopyWith<$Res>
+    implements $AccountInputStateCopyWith<$Res> {
+  factory _$$_AccountInputStateCopyWith(_$_AccountInputState value,
+          $Res Function(_$_AccountInputState) then) =
+      __$$_AccountInputStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String title,
+      bool isDebt,
+      Currency currency,
+      Account? account,
+      bool isSaved});
 
-class _$_MainAccountInputState extends _MainAccountInputState {
-  const _$_MainAccountInputState(
+  @override
+  $AccountCopyWith<$Res>? get account;
+}
+
+/// @nodoc
+class __$$_AccountInputStateCopyWithImpl<$Res>
+    extends _$AccountInputStateCopyWithImpl<$Res, _$_AccountInputState>
+    implements _$$_AccountInputStateCopyWith<$Res> {
+  __$$_AccountInputStateCopyWithImpl(
+      _$_AccountInputState _value, $Res Function(_$_AccountInputState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? isDebt = null,
+    Object? currency = null,
+    Object? account = freezed,
+    Object? isSaved = null,
+  }) {
+    return _then(_$_AccountInputState(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      isDebt: null == isDebt
+          ? _value.isDebt
+          : isDebt // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+      account: freezed == account
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account?,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AccountInputState implements _AccountInputState {
+  const _$_AccountInputState(
       {required this.title,
       required this.isDebt,
       required this.currency,
-      this.account})
-      : super._();
+      this.account,
+      required this.isSaved});
 
   @override
   final String title;
@@ -1047,129 +1015,46 @@ class _$_MainAccountInputState extends _MainAccountInputState {
   final Currency currency;
   @override
   final Account? account;
+  @override
+  final bool isSaved;
 
   @override
   String toString() {
-    return 'AccountInputState.main(title: $title, isDebt: $isDebt, currency: $currency, account: $account)';
+    return 'AccountInputState(title: $title, isDebt: $isDebt, currency: $currency, account: $account, isSaved: $isSaved)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MainAccountInputState &&
+            other is _$_AccountInputState &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
-            (identical(other.account, account) || other.account == account));
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, title, isDebt, currency, account);
+      Object.hash(runtimeType, title, isDebt, currency, account, isSaved);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MainAccountInputStateCopyWith<_$_MainAccountInputState> get copyWith =>
-      __$$_MainAccountInputStateCopyWithImpl<_$_MainAccountInputState>(
+  _$$_AccountInputStateCopyWith<_$_AccountInputState> get copyWith =>
+      __$$_AccountInputStateCopyWithImpl<_$_AccountInputState>(
           this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)
-        main,
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)
-        saved,
-    required TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)
-        fetch,
-  }) {
-    return main(title, isDebt, currency, account);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult? Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-  }) {
-    return main?.call(title, isDebt, currency, account);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-    required TResult orElse(),
-  }) {
-    if (main != null) {
-      return main(title, isDebt, currency, account);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainAccountInputState value) main,
-    required TResult Function(_SavedAccountInputState value) saved,
-    required TResult Function(_FetchAccountInputState value) fetch,
-  }) {
-    return main(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainAccountInputState value)? main,
-    TResult? Function(_SavedAccountInputState value)? saved,
-    TResult? Function(_FetchAccountInputState value)? fetch,
-  }) {
-    return main?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainAccountInputState value)? main,
-    TResult Function(_SavedAccountInputState value)? saved,
-    TResult Function(_FetchAccountInputState value)? fetch,
-    required TResult orElse(),
-  }) {
-    if (main != null) {
-      return main(this);
-    }
-    return orElse();
-  }
 }
 
-abstract class _MainAccountInputState extends AccountInputState {
-  const factory _MainAccountInputState(
+abstract class _AccountInputState implements AccountInputState {
+  const factory _AccountInputState(
       {required final String title,
       required final bool isDebt,
       required final Currency currency,
-      final Account? account}) = _$_MainAccountInputState;
-  const _MainAccountInputState._() : super._();
+      final Account? account,
+      required final bool isSaved}) = _$_AccountInputState;
 
   @override
   String get title;
@@ -1177,439 +1062,12 @@ abstract class _MainAccountInputState extends AccountInputState {
   bool get isDebt;
   @override
   Currency get currency;
+  @override
   Account? get account;
   @override
-  @JsonKey(ignore: true)
-  _$$_MainAccountInputStateCopyWith<_$_MainAccountInputState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_SavedAccountInputStateCopyWith<$Res>
-    implements $AccountInputStateCopyWith<$Res> {
-  factory _$$_SavedAccountInputStateCopyWith(_$_SavedAccountInputState value,
-          $Res Function(_$_SavedAccountInputState) then) =
-      __$$_SavedAccountInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String title, bool isDebt, Currency currency, Account savedAccount});
-
-  $AccountCopyWith<$Res> get savedAccount;
-}
-
-/// @nodoc
-class __$$_SavedAccountInputStateCopyWithImpl<$Res>
-    extends _$AccountInputStateCopyWithImpl<$Res, _$_SavedAccountInputState>
-    implements _$$_SavedAccountInputStateCopyWith<$Res> {
-  __$$_SavedAccountInputStateCopyWithImpl(_$_SavedAccountInputState _value,
-      $Res Function(_$_SavedAccountInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? isDebt = null,
-    Object? currency = null,
-    Object? savedAccount = null,
-  }) {
-    return _then(_$_SavedAccountInputState(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      isDebt: null == isDebt
-          ? _value.isDebt
-          : isDebt // ignore: cast_nullable_to_non_nullable
-              as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      savedAccount: null == savedAccount
-          ? _value.savedAccount
-          : savedAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get savedAccount {
-    return $AccountCopyWith<$Res>(_value.savedAccount, (value) {
-      return _then(_value.copyWith(savedAccount: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_SavedAccountInputState extends _SavedAccountInputState {
-  const _$_SavedAccountInputState(
-      {required this.title,
-      required this.isDebt,
-      required this.currency,
-      required this.savedAccount})
-      : super._();
-
-  @override
-  final String title;
-  @override
-  final bool isDebt;
-  @override
-  final Currency currency;
-  @override
-  final Account savedAccount;
-
-  @override
-  String toString() {
-    return 'AccountInputState.saved(title: $title, isDebt: $isDebt, currency: $currency, savedAccount: $savedAccount)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_SavedAccountInputState &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.savedAccount, savedAccount) ||
-                other.savedAccount == savedAccount));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, isDebt, currency, savedAccount);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_SavedAccountInputStateCopyWith<_$_SavedAccountInputState> get copyWith =>
-      __$$_SavedAccountInputStateCopyWithImpl<_$_SavedAccountInputState>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)
-        main,
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)
-        saved,
-    required TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)
-        fetch,
-  }) {
-    return saved(title, isDebt, currency, savedAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult? Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-  }) {
-    return saved?.call(title, isDebt, currency, savedAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(title, isDebt, currency, savedAccount);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainAccountInputState value) main,
-    required TResult Function(_SavedAccountInputState value) saved,
-    required TResult Function(_FetchAccountInputState value) fetch,
-  }) {
-    return saved(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainAccountInputState value)? main,
-    TResult? Function(_SavedAccountInputState value)? saved,
-    TResult? Function(_FetchAccountInputState value)? fetch,
-  }) {
-    return saved?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainAccountInputState value)? main,
-    TResult Function(_SavedAccountInputState value)? saved,
-    TResult Function(_FetchAccountInputState value)? fetch,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SavedAccountInputState extends AccountInputState {
-  const factory _SavedAccountInputState(
-      {required final String title,
-      required final bool isDebt,
-      required final Currency currency,
-      required final Account savedAccount}) = _$_SavedAccountInputState;
-  const _SavedAccountInputState._() : super._();
-
-  @override
-  String get title;
-  @override
-  bool get isDebt;
-  @override
-  Currency get currency;
-  Account get savedAccount;
+  bool get isSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_SavedAccountInputStateCopyWith<_$_SavedAccountInputState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_FetchAccountInputStateCopyWith<$Res>
-    implements $AccountInputStateCopyWith<$Res> {
-  factory _$$_FetchAccountInputStateCopyWith(_$_FetchAccountInputState value,
-          $Res Function(_$_FetchAccountInputState) then) =
-      __$$_FetchAccountInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String title, bool isDebt, Currency currency, Account fetchedAccount});
-
-  $AccountCopyWith<$Res> get fetchedAccount;
-}
-
-/// @nodoc
-class __$$_FetchAccountInputStateCopyWithImpl<$Res>
-    extends _$AccountInputStateCopyWithImpl<$Res, _$_FetchAccountInputState>
-    implements _$$_FetchAccountInputStateCopyWith<$Res> {
-  __$$_FetchAccountInputStateCopyWithImpl(_$_FetchAccountInputState _value,
-      $Res Function(_$_FetchAccountInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? isDebt = null,
-    Object? currency = null,
-    Object? fetchedAccount = null,
-  }) {
-    return _then(_$_FetchAccountInputState(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      isDebt: null == isDebt
-          ? _value.isDebt
-          : isDebt // ignore: cast_nullable_to_non_nullable
-              as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      fetchedAccount: null == fetchedAccount
-          ? _value.fetchedAccount
-          : fetchedAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get fetchedAccount {
-    return $AccountCopyWith<$Res>(_value.fetchedAccount, (value) {
-      return _then(_value.copyWith(fetchedAccount: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_FetchAccountInputState extends _FetchAccountInputState {
-  const _$_FetchAccountInputState(
-      {required this.title,
-      required this.isDebt,
-      required this.currency,
-      required this.fetchedAccount})
-      : super._();
-
-  @override
-  final String title;
-  @override
-  final bool isDebt;
-  @override
-  final Currency currency;
-  @override
-  final Account fetchedAccount;
-
-  @override
-  String toString() {
-    return 'AccountInputState.fetch(title: $title, isDebt: $isDebt, currency: $currency, fetchedAccount: $fetchedAccount)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_FetchAccountInputState &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.fetchedAccount, fetchedAccount) ||
-                other.fetchedAccount == fetchedAccount));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, isDebt, currency, fetchedAccount);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_FetchAccountInputStateCopyWith<_$_FetchAccountInputState> get copyWith =>
-      __$$_FetchAccountInputStateCopyWithImpl<_$_FetchAccountInputState>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)
-        main,
-    required TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)
-        saved,
-    required TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)
-        fetch,
-  }) {
-    return fetch(title, isDebt, currency, fetchedAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult? Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult? Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-  }) {
-    return fetch?.call(title, isDebt, currency, fetchedAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account? account)?
-        main,
-    TResult Function(
-            String title, bool isDebt, Currency currency, Account savedAccount)?
-        saved,
-    TResult Function(String title, bool isDebt, Currency currency,
-            Account fetchedAccount)?
-        fetch,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(title, isDebt, currency, fetchedAccount);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainAccountInputState value) main,
-    required TResult Function(_SavedAccountInputState value) saved,
-    required TResult Function(_FetchAccountInputState value) fetch,
-  }) {
-    return fetch(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainAccountInputState value)? main,
-    TResult? Function(_SavedAccountInputState value)? saved,
-    TResult? Function(_FetchAccountInputState value)? fetch,
-  }) {
-    return fetch?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainAccountInputState value)? main,
-    TResult Function(_SavedAccountInputState value)? saved,
-    TResult Function(_FetchAccountInputState value)? fetch,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FetchAccountInputState extends AccountInputState {
-  const factory _FetchAccountInputState(
-      {required final String title,
-      required final bool isDebt,
-      required final Currency currency,
-      required final Account fetchedAccount}) = _$_FetchAccountInputState;
-  const _FetchAccountInputState._() : super._();
-
-  @override
-  String get title;
-  @override
-  bool get isDebt;
-  @override
-  Currency get currency;
-  Account get fetchedAccount;
-  @override
-  @JsonKey(ignore: true)
-  _$$_FetchAccountInputStateCopyWith<_$_FetchAccountInputState> get copyWith =>
+  _$$_AccountInputStateCopyWith<_$_AccountInputState> get copyWith =>
       throw _privateConstructorUsedError;
 }
