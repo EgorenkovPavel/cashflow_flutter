@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:money_tracker/data/local/data/database.dart';
 import 'package:money_tracker/domain/models.dart';
 
@@ -18,10 +19,10 @@ class OperationItem {
     switch (operation.operationType) {
       case OperationType.INPUT:
       case OperationType.OUTPUT:
-        return operation.copyWith(account: account.id, category: category!.id);
+        return operation.copyWith(account: account.id, category: Value(category!.id));
       case OperationType.TRANSFER:
         return operation.copyWith(
-            account: account.id, recAccount: recAccount!.id);
+            account: account.id, recAccount: Value(recAccount!.id));
     }
   }
 

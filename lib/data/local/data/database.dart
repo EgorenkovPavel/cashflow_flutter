@@ -66,13 +66,13 @@ class Operations extends Table {
       integer().named('operation_type').map(const OperationTypeConverter())();
 
   IntColumn get account =>
-      integer().customConstraint('NULL REFERENCES account(id)')();
+      integer().references(Accounts, #id)();
 
   IntColumn get category =>
-      integer().nullable().customConstraint('NULL REFERENCES category(id)')();
+      integer().nullable().references(Categories, #id)();
 
   IntColumn get recAccount =>
-      integer().nullable().customConstraint('NULL REFERENCES account(id)')();
+      integer().nullable().references(Accounts, #id)();
 
   IntColumn get sum => integer()();
 
@@ -87,10 +87,10 @@ class Balances extends Table {
   DateTimeColumn get date => dateTime()();
 
   IntColumn get operation =>
-      integer().customConstraint('NULL REFERENCES operation(id)')();
+      integer().references(Operations, #id)();
 
   IntColumn get account =>
-      integer().customConstraint('NULL REFERENCES account(id)')();
+      integer().references(Accounts, #id)();
 
   IntColumn get sum => integer()();
 
@@ -106,10 +106,10 @@ class Cashflows extends Table {
   DateTimeColumn get date => dateTime()();
 
   IntColumn get operation =>
-      integer().customConstraint('NULL REFERENCES operation(id)')();
+      integer().references(Operations, #id)();
 
   IntColumn get category =>
-      integer().customConstraint('NULL REFERENCES category(id)')();
+      integer().references(Categories, #id)();
 
   IntColumn get sum => integer()();
 
@@ -232,11 +232,11 @@ class Database extends _$Database {
                 id: int.parse(d['_id']),
                 cloudId: '',
                 title: d['category_title'],
-                operationType: converter.mapToDart(
+                operationType: converter.fromSql(
                   int.parse(d['category_type']),
                 )!,
                 budget: int.parse(d['category_budget']),
-                budgetType: const BudgetTypeConverter().mapToDart(
+                budgetType: const BudgetTypeConverter().fromSql(
                   int.parse(d['category_budget_type']),
                 )!,
                 synced: false,
@@ -259,7 +259,7 @@ class Database extends _$Database {
                 date: DateTime.fromMillisecondsSinceEpoch(
                     int.parse(d['operation_date'])),
                 operationType:
-                    converter.mapToDart(int.parse(d['operation_type']))!,
+                    converter.fromSql(int.parse(d['operation_type']))!,
                 account: int.parse(d['operation_account_id']),
                 category: _getId(d['operation_category_id']),
                 recAccount: _getId(d['operation_recipient_account_id']),
@@ -298,12 +298,12 @@ class _DefaultValueSerializer extends ValueSerializer {
     if (T == DateTime) {
       return DateTime.fromMillisecondsSinceEpoch(json as int) as T;
     } else if (T == OperationType) {
-      return _operationTypeConverter.mapToDart(json as int) as T;
+      return _operationTypeConverter.fromSql(json as int) as T;
     } else if (T == BudgetType) {
       if (json == null){
         return BudgetType.MONTH as T;
       }
-      return _budgetTypeConverter.mapToDart(json as int) as T;
+      return _budgetTypeConverter.fromSql(json as int) as T;
     } else if (T == int && json == null){
       return 0 as T;
     } else if (T == String && json == null){
@@ -320,9 +320,9 @@ class _DefaultValueSerializer extends ValueSerializer {
     if (value is DateTime) {
       return value.millisecondsSinceEpoch;
     } else if (value is OperationType) {
-      return _operationTypeConverter.mapToSql(value);
+      return _operationTypeConverter.toSql(value);
     } else if (value is BudgetType) {
-      return _budgetTypeConverter.mapToSql(value);
+      return _budgetTypeConverter.toSql(value);
     }
 
     return value;

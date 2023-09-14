@@ -145,8 +145,8 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return query.watch().map((list) {
       return list
           .map((c) => BalanceOnDate(
-              DateTime(c.read(year), c.read(month), c.read(day)),
-              c.read(sumBalance)))
+              DateTime(c.read(year)!, c.read(month)!, c.read(day)!),
+              c.read<int>(sumBalance)!))
           .toList();
     });
   }

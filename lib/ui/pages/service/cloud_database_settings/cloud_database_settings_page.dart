@@ -233,7 +233,7 @@ class ConnectingView extends StatelessWidget {
               if (state is AuthStateAuthenticated) {
                 return Column(
                   children: [
-                    QrImage(
+                    QrImageView(
                       data: jsonEncode(state.user),
                       version: QrVersions.auto,
                       size: 200.0,

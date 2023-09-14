@@ -117,7 +117,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       (select(categories)
             ..where(
               (cat) => cat.operationType.equals(
-                const OperationTypeConverter().mapToSql(type),
+                const OperationTypeConverter().toSql(type),
               ),
             )
             ..orderBy(
@@ -131,7 +131,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       (select(categories)
             ..where(
               (cat) => cat.operationType.equals(
-                const OperationTypeConverter().mapToSql(type),
+                const OperationTypeConverter().toSql(type),
               ),
             )
             ..orderBy(
@@ -166,7 +166,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data),
+                  category: CategoryDB(
+                    id: row.read('id'),
+                    title: row.read('title'),
+                    synced: row.read('synced'),
+                    cloudId: row.read('cloudId'),
+                    budget: row.read('budget'),
+                    budgetType: row.read('budget_type'),
+                    operationType: row.read('operation_type'),
+                  ),
+                  //CategoryDB.fromData(row.data),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -195,14 +204,22 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(OperationTypeConverter().toSql(type)),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data),
+                  category: CategoryDB(
+                    id: row.read('id'),
+                    title: row.read('title'),
+                    synced: row.read('synced'),
+                    cloudId: row.read('cloudId'),
+                    budget: row.read('budget'),
+                    budgetType: row.read('budget_type'),
+                    operationType: row.read('operation_type'),
+                  ),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -222,9 +239,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return query.watch().map((rows) => rows
         .map((row) => SumOnDate(
-            date:
-                DateTime(row.read<int?>(year) ?? 0, row.read<int?>(month) ?? 0),
-            sum: row.read<int?>(sum) ?? 0))
+            date: DateTime(row.read<int>(year) ?? 0, row.read<int>(month) ?? 0),
+            sum: row.read<int>(sum) ?? 0))
         .toList());
   }
 
@@ -238,8 +254,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
     return query.watch().map((rows) => rows
         .map((row) => SumOnDate(
-            date: DateTime(row.read<int?>(year) ?? 0),
-            sum: row.read<int?>(sum) ?? 0))
+            date: DateTime(row.read<int>(year) ?? 0),
+            sum: row.read<int>(sum) ?? 0))
         .toList());
   }
 
@@ -250,10 +266,10 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     return customSelect(
       'SELECT *, '
       'FROM categories c '
-          'LEFT JOIN '
-        '(SELECT category as category, strftime("%m", date) as month, SUM(sum) as sum FROM cashflow WHERE date BETWEEN ? AND ?) AS "cashflow" '
-          'ON c.id = cashflow.category',
-        variables: [
+      'LEFT JOIN '
+      '(SELECT category as category, strftime("%m", date) as month, SUM(sum) as sum FROM cashflow WHERE date BETWEEN ? AND ?) AS "cashflow" '
+      'ON c.id = cashflow.category',
+      variables: [
         Variable.withDateTime(yearStart),
         Variable.withDateTime(yearEnd),
       ],
@@ -262,7 +278,15 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           (rows) => rows
               .map(
                 (row) => CategoryMonthCashflowEntity(
-                  category: CategoryDB.fromData(row.data),
+                  category: CategoryDB(
+                    id: row.read('id'),
+                    title: row.read('title'),
+                    synced: row.read('synced'),
+                    cloudId: row.read('cloudId'),
+                    budget: row.read('budget'),
+                    budgetType: row.read('budget_type'),
+                    operationType: row.read('operation_type'),
+                  ),
                   month: row.read<int?>('month') ?? 0,
                   cashflow: row.read<int?>('sum') ?? 0,
                 ),
@@ -291,14 +315,22 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(OperationTypeConverter().toSql(type)),
       ],
       readsFrom: {categories, cashflows},
     ).get().then(
           (rows) => rows
               .map(
                 (row) => CategoryCashflowEntity(
-                  category: CategoryDB.fromData(row.data),
+                  category: CategoryDB(
+                    id: row.read('id'),
+                    title: row.read('title'),
+                    synced: row.read('synced'),
+                    cloudId: row.read('cloudId'),
+                    budget: row.read('budget'),
+                    budgetType: row.read('budget_type'),
+                    operationType: row.read('operation_type'),
+                  ),
                   monthCashflow: row.read<int?>('monthCashflow') ?? 0,
                   yearCashflow: row.read<int?>('yearCashflow') ?? 0,
                 ),
@@ -317,14 +349,22 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       'ORDER BY title;',
       variables: [
         Variable.withDateTime(DateTime.now()),
-        Variable.withInt(OperationTypeConverter().mapToSql(type)!),
+        Variable.withInt(OperationTypeConverter().toSql(type)),
       ],
       readsFrom: {categories},
     ).watch().map(
           (rows) => rows
               .map(
                 (row) => CategoryBudgetEntity(
-                  CategoryDB.fromData(row.data),
+                  CategoryDB(
+                    id: row.read('id'),
+                    title: row.read('title'),
+                    synced: row.read('synced'),
+                    cloudId: row.read('cloudId'),
+                    budget: row.read('budget'),
+                    budgetType: row.read('budget_type'),
+                    operationType: row.read('operation_type'),
+                  ),
                   row.read<int>('budget'),
                 ),
               )
@@ -362,7 +402,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     ).watch().map(
           (rows) => rows
               .map(
-                (row) => OperationTypeConverter().mapToDart(
+                (row) => OperationTypeConverter().fromSql(
                           row.read<int>('operation_type'),
                         ) ==
                         OperationType.INPUT

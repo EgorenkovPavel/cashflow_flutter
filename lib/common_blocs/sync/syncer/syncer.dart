@@ -105,9 +105,9 @@ class Syncer {
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType)!,
+            .fromSql(cloudCategory.operationType)!,
         budgetType:
-            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType)!,
+            const BudgetTypeConverter().fromSql(cloudCategory.budgetType)!,
         budget: cloudCategory.budget,
       ));
     } else {
@@ -115,9 +115,9 @@ class Syncer {
         title: cloudCategory.title,
         cloudId: cloudCategory.id,
         operationType: const OperationTypeConverter()
-            .mapToDart(cloudCategory.operationType),
+            .fromSql(cloudCategory.operationType),
         budgetType:
-            const BudgetTypeConverter().mapToDart(cloudCategory.budgetType),
+            const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
         budget: cloudCategory.budget,
       ));
     }
@@ -141,7 +141,7 @@ class Syncer {
         cloudId: cloudOperation.id,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
-            .mapToDart(cloudOperation.operationType)!,
+            .fromSql(cloudOperation.operationType)!,
         account: _account!,
         category: _category,
         recAccount: _recAccount,
@@ -152,7 +152,7 @@ class Syncer {
         cloudId: cloudOperation.id,
         date: cloudOperation.date,
         type: const OperationTypeConverter()
-            .mapToDart(cloudOperation.operationType),
+            .fromSql(cloudOperation.operationType),
         account: _account!,
         category: _category,
         recAccount: _recAccount,
@@ -177,8 +177,8 @@ class Syncer {
       id: category.cloudId,
       title: category.title,
       operationType:
-          const OperationTypeConverter().mapToSql(category.operationType)!,
-      budgetType: const BudgetTypeConverter().mapToSql(category.budgetType)!,
+          const OperationTypeConverter().toSql(category.operationType)!,
+      budgetType: const BudgetTypeConverter().toSql(category.budgetType)!,
       budget: category.budget,
       deleted: false,
     );
@@ -188,7 +188,7 @@ class Syncer {
     return CloudOperation(
       id: operation.cloudId,
       date: operation.date,
-      operationType: const OperationTypeConverter().mapToSql(operation.type)!,
+      operationType: const OperationTypeConverter().toSql(operation.type)!,
       account: operation.account.cloudId,
       category: operation.category?.cloudId,
       recAccount: operation.recAccount?.cloudId,
