@@ -10,6 +10,7 @@ import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/src/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/src/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/backup_repository.dart';
+import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../src/common_blocs/auth/auth_bloc.dart';
@@ -167,6 +168,8 @@ Future<void> init() async {
         prefsRepository: sl<SettingsSource>(),
         syncRepo: sl<SyncRepository>(),
       ));
+
+  sl.registerLazySingleton<AccountBalanceBloc>(() => AccountBalanceBloc(sl()));
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
     (mode, _) => DriveDialogBloc(
