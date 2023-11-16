@@ -93,11 +93,11 @@ class _$AccountBalanceCopyWithImpl<$Res, $Val extends AccountBalance>
 }
 
 /// @nodoc
-abstract class _$$_AccountBalanceCopyWith<$Res>
+abstract class _$$AccountBalanceImplCopyWith<$Res>
     implements $AccountBalanceCopyWith<$Res> {
-  factory _$$_AccountBalanceCopyWith(
-          _$_AccountBalance value, $Res Function(_$_AccountBalance) then) =
-      __$$_AccountBalanceCopyWithImpl<$Res>;
+  factory _$$AccountBalanceImplCopyWith(_$AccountBalanceImpl value,
+          $Res Function(_$AccountBalanceImpl) then) =
+      __$$AccountBalanceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -110,11 +110,11 @@ abstract class _$$_AccountBalanceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AccountBalanceCopyWithImpl<$Res>
-    extends _$AccountBalanceCopyWithImpl<$Res, _$_AccountBalance>
-    implements _$$_AccountBalanceCopyWith<$Res> {
-  __$$_AccountBalanceCopyWithImpl(
-      _$_AccountBalance _value, $Res Function(_$_AccountBalance) _then)
+class __$$AccountBalanceImplCopyWithImpl<$Res>
+    extends _$AccountBalanceCopyWithImpl<$Res, _$AccountBalanceImpl>
+    implements _$$AccountBalanceImplCopyWith<$Res> {
+  __$$AccountBalanceImplCopyWithImpl(
+      _$AccountBalanceImpl _value, $Res Function(_$AccountBalanceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +127,7 @@ class __$$_AccountBalanceCopyWithImpl<$Res>
     Object? balance = null,
     Object? isDebt = null,
   }) {
-    return _then(_$_AccountBalance(
+    return _then(_$AccountBalanceImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -158,14 +158,15 @@ class __$$_AccountBalanceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AccountBalance implements _AccountBalance {
-  const _$_AccountBalance(
+class _$AccountBalanceImpl extends _AccountBalance {
+  const _$AccountBalanceImpl(
       {required this.id,
       required this.cloudId,
       required this.title,
       required this.currency,
       required this.balance,
-      this.isDebt = false});
+      this.isDebt = false})
+      : super._();
 
   @override
   final int id;
@@ -190,7 +191,7 @@ class _$_AccountBalance implements _AccountBalance {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountBalance &&
+            other is _$AccountBalanceImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.title, title) || other.title == title) &&
@@ -207,18 +208,20 @@ class _$_AccountBalance implements _AccountBalance {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountBalanceCopyWith<_$_AccountBalance> get copyWith =>
-      __$$_AccountBalanceCopyWithImpl<_$_AccountBalance>(this, _$identity);
+  _$$AccountBalanceImplCopyWith<_$AccountBalanceImpl> get copyWith =>
+      __$$AccountBalanceImplCopyWithImpl<_$AccountBalanceImpl>(
+          this, _$identity);
 }
 
-abstract class _AccountBalance implements AccountBalance {
+abstract class _AccountBalance extends AccountBalance {
   const factory _AccountBalance(
       {required final int id,
       required final String cloudId,
       required final String title,
       required final Currency currency,
       required final int balance,
-      final bool isDebt}) = _$_AccountBalance;
+      final bool isDebt}) = _$AccountBalanceImpl;
+  const _AccountBalance._() : super._();
 
   @override
   int get id;
@@ -234,6 +237,6 @@ abstract class _AccountBalance implements AccountBalance {
   bool get isDebt;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountBalanceCopyWith<_$_AccountBalance> get copyWith =>
+  _$$AccountBalanceImplCopyWith<_$AccountBalanceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

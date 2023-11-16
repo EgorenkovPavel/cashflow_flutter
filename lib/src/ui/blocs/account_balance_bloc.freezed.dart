@@ -90,25 +90,25 @@ class _$AccountBalanceEventCopyWithImpl<$Res, $Val extends AccountBalanceEvent>
 }
 
 /// @nodoc
-abstract class _$$_ChangeBalanceAccountBalanceEventCopyWith<$Res>
+abstract class _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res>
     implements $AccountBalanceEventCopyWith<$Res> {
-  factory _$$_ChangeBalanceAccountBalanceEventCopyWith(
-          _$_ChangeBalanceAccountBalanceEvent value,
-          $Res Function(_$_ChangeBalanceAccountBalanceEvent) then) =
-      __$$_ChangeBalanceAccountBalanceEventCopyWithImpl<$Res>;
+  factory _$$ChangeBalanceAccountBalanceEventImplCopyWith(
+          _$ChangeBalanceAccountBalanceEventImpl value,
+          $Res Function(_$ChangeBalanceAccountBalanceEventImpl) then) =
+      __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<AccountBalance> accounts});
 }
 
 /// @nodoc
-class __$$_ChangeBalanceAccountBalanceEventCopyWithImpl<$Res>
+class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
     extends _$AccountBalanceEventCopyWithImpl<$Res,
-        _$_ChangeBalanceAccountBalanceEvent>
-    implements _$$_ChangeBalanceAccountBalanceEventCopyWith<$Res> {
-  __$$_ChangeBalanceAccountBalanceEventCopyWithImpl(
-      _$_ChangeBalanceAccountBalanceEvent _value,
-      $Res Function(_$_ChangeBalanceAccountBalanceEvent) _then)
+        _$ChangeBalanceAccountBalanceEventImpl>
+    implements _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res> {
+  __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl(
+      _$ChangeBalanceAccountBalanceEventImpl _value,
+      $Res Function(_$ChangeBalanceAccountBalanceEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +116,7 @@ class __$$_ChangeBalanceAccountBalanceEventCopyWithImpl<$Res>
   $Res call({
     Object? accounts = null,
   }) {
-    return _then(_$_ChangeBalanceAccountBalanceEvent(
+    return _then(_$ChangeBalanceAccountBalanceEventImpl(
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
@@ -127,9 +127,9 @@ class __$$_ChangeBalanceAccountBalanceEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeBalanceAccountBalanceEvent
+class _$ChangeBalanceAccountBalanceEventImpl
     implements _ChangeBalanceAccountBalanceEvent {
-  const _$_ChangeBalanceAccountBalanceEvent(
+  const _$ChangeBalanceAccountBalanceEventImpl(
       {required final List<AccountBalance> accounts})
       : _accounts = accounts;
 
@@ -150,7 +150,7 @@ class _$_ChangeBalanceAccountBalanceEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeBalanceAccountBalanceEvent &&
+            other is _$ChangeBalanceAccountBalanceEventImpl &&
             const DeepCollectionEquality().equals(other._accounts, _accounts));
   }
 
@@ -161,10 +161,10 @@ class _$_ChangeBalanceAccountBalanceEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeBalanceAccountBalanceEventCopyWith<
-          _$_ChangeBalanceAccountBalanceEvent>
-      get copyWith => __$$_ChangeBalanceAccountBalanceEventCopyWithImpl<
-          _$_ChangeBalanceAccountBalanceEvent>(this, _$identity);
+  _$$ChangeBalanceAccountBalanceEventImplCopyWith<
+          _$ChangeBalanceAccountBalanceEventImpl>
+      get copyWith => __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<
+          _$ChangeBalanceAccountBalanceEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -228,14 +228,14 @@ abstract class _ChangeBalanceAccountBalanceEvent
     implements AccountBalanceEvent {
   const factory _ChangeBalanceAccountBalanceEvent(
           {required final List<AccountBalance> accounts}) =
-      _$_ChangeBalanceAccountBalanceEvent;
+      _$ChangeBalanceAccountBalanceEventImpl;
 
   @override
   List<AccountBalance> get accounts;
   @override
   @JsonKey(ignore: true)
-  _$$_ChangeBalanceAccountBalanceEventCopyWith<
-          _$_ChangeBalanceAccountBalanceEvent>
+  _$$ChangeBalanceAccountBalanceEventImplCopyWith<
+          _$ChangeBalanceAccountBalanceEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -282,22 +282,22 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
 }
 
 /// @nodoc
-abstract class _$$_AccountBalanceStateCopyWith<$Res>
+abstract class _$$AccountBalanceStateImplCopyWith<$Res>
     implements $AccountBalanceStateCopyWith<$Res> {
-  factory _$$_AccountBalanceStateCopyWith(_$_AccountBalanceState value,
-          $Res Function(_$_AccountBalanceState) then) =
-      __$$_AccountBalanceStateCopyWithImpl<$Res>;
+  factory _$$AccountBalanceStateImplCopyWith(_$AccountBalanceStateImpl value,
+          $Res Function(_$AccountBalanceStateImpl) then) =
+      __$$AccountBalanceStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<AccountBalance> accounts});
 }
 
 /// @nodoc
-class __$$_AccountBalanceStateCopyWithImpl<$Res>
-    extends _$AccountBalanceStateCopyWithImpl<$Res, _$_AccountBalanceState>
-    implements _$$_AccountBalanceStateCopyWith<$Res> {
-  __$$_AccountBalanceStateCopyWithImpl(_$_AccountBalanceState _value,
-      $Res Function(_$_AccountBalanceState) _then)
+class __$$AccountBalanceStateImplCopyWithImpl<$Res>
+    extends _$AccountBalanceStateCopyWithImpl<$Res, _$AccountBalanceStateImpl>
+    implements _$$AccountBalanceStateImplCopyWith<$Res> {
+  __$$AccountBalanceStateImplCopyWithImpl(_$AccountBalanceStateImpl _value,
+      $Res Function(_$AccountBalanceStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -305,7 +305,7 @@ class __$$_AccountBalanceStateCopyWithImpl<$Res>
   $Res call({
     Object? accounts = null,
   }) {
-    return _then(_$_AccountBalanceState(
+    return _then(_$AccountBalanceStateImpl(
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
@@ -316,8 +316,9 @@ class __$$_AccountBalanceStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AccountBalanceState implements _AccountBalanceState {
-  const _$_AccountBalanceState({required final List<AccountBalance> accounts})
+class _$AccountBalanceStateImpl implements _AccountBalanceState {
+  const _$AccountBalanceStateImpl(
+      {required final List<AccountBalance> accounts})
       : _accounts = accounts;
 
   final List<AccountBalance> _accounts;
@@ -337,7 +338,7 @@ class _$_AccountBalanceState implements _AccountBalanceState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountBalanceState &&
+            other is _$AccountBalanceStateImpl &&
             const DeepCollectionEquality().equals(other._accounts, _accounts));
   }
 
@@ -348,19 +349,20 @@ class _$_AccountBalanceState implements _AccountBalanceState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountBalanceStateCopyWith<_$_AccountBalanceState> get copyWith =>
-      __$$_AccountBalanceStateCopyWithImpl<_$_AccountBalanceState>(
+  _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
+      __$$AccountBalanceStateImplCopyWithImpl<_$AccountBalanceStateImpl>(
           this, _$identity);
 }
 
 abstract class _AccountBalanceState implements AccountBalanceState {
   const factory _AccountBalanceState(
-      {required final List<AccountBalance> accounts}) = _$_AccountBalanceState;
+          {required final List<AccountBalance> accounts}) =
+      _$AccountBalanceStateImpl;
 
   @override
   List<AccountBalance> get accounts;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountBalanceStateCopyWith<_$_AccountBalanceState> get copyWith =>
+  _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

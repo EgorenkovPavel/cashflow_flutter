@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
 
 import '../domain/models.dart';
 import 'pages/account/detail_page/account_detail_page.dart';
@@ -11,7 +12,6 @@ import 'pages/category/input_page/category_input_page.dart';
 import 'pages/home/home_page.dart';
 import 'pages/operation/edit_page/operation_edit_page.dart';
 import 'pages/operation/filter_page/operation_filter_page.dart';
-import 'pages/operation/input_page/operation_input_page.dart';
 import 'pages/operation/list_page/operation_list_page.dart';
 import 'pages/reports/reports_page.dart';
 import 'pages/service/cloud_database_settings/cloud_database_settings_page.dart';
@@ -22,7 +22,7 @@ import 'pages/service/settings_page/settings_page.dart';
 import 'themes.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,20 +62,18 @@ final _router = GoRouter(
           name: 'operation',
           path: 'operation',
           builder: (context, state) => const OperationListPage(),
-          routes: <GoRoute>[
-            GoRoute(
-              name: 'operationId',
-              path: 'edit/:fid',
-              builder: (context, state) => OperationEditPage(
-                id: int.parse(state.pathParameters['fid']!),
-              ),
-            ),
-            GoRoute(
-              name: 'operationNew',
-              path: 'new',
-              builder: (context, state) => const OperationInputPage(),
-            ),
-          ],
+        ),
+        GoRoute(
+          name: 'operationId',
+          path: 'operation/edit/:fid',
+          builder: (context, state) => OperationEditPage.edit(
+            int.parse(state.pathParameters['fid']!),
+          ),
+        ),
+        GoRoute(
+          name: 'operationNew',
+          path: 'operation/new',
+          builder: (context, state) => const OperationInputPage(),
         ),
         GoRoute(
           name: 'budget',

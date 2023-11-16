@@ -70,23 +70,25 @@ class _$CategoryCashflowEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CategoryCashflowEntityCopyWith<$Res>
+abstract class _$$CategoryCashflowEntityImplCopyWith<$Res>
     implements $CategoryCashflowEntityCopyWith<$Res> {
-  factory _$$_CategoryCashflowEntityCopyWith(_$_CategoryCashflowEntity value,
-          $Res Function(_$_CategoryCashflowEntity) then) =
-      __$$_CategoryCashflowEntityCopyWithImpl<$Res>;
+  factory _$$CategoryCashflowEntityImplCopyWith(
+          _$CategoryCashflowEntityImpl value,
+          $Res Function(_$CategoryCashflowEntityImpl) then) =
+      __$$CategoryCashflowEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDB category, int monthCashflow, int yearCashflow});
 }
 
 /// @nodoc
-class __$$_CategoryCashflowEntityCopyWithImpl<$Res>
+class __$$CategoryCashflowEntityImplCopyWithImpl<$Res>
     extends _$CategoryCashflowEntityCopyWithImpl<$Res,
-        _$_CategoryCashflowEntity>
-    implements _$$_CategoryCashflowEntityCopyWith<$Res> {
-  __$$_CategoryCashflowEntityCopyWithImpl(_$_CategoryCashflowEntity _value,
-      $Res Function(_$_CategoryCashflowEntity) _then)
+        _$CategoryCashflowEntityImpl>
+    implements _$$CategoryCashflowEntityImplCopyWith<$Res> {
+  __$$CategoryCashflowEntityImplCopyWithImpl(
+      _$CategoryCashflowEntityImpl _value,
+      $Res Function(_$CategoryCashflowEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +98,7 @@ class __$$_CategoryCashflowEntityCopyWithImpl<$Res>
     Object? monthCashflow = null,
     Object? yearCashflow = null,
   }) {
-    return _then(_$_CategoryCashflowEntity(
+    return _then(_$CategoryCashflowEntityImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -115,8 +117,8 @@ class __$$_CategoryCashflowEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryCashflowEntity implements _CategoryCashflowEntity {
-  const _$_CategoryCashflowEntity(
+class _$CategoryCashflowEntityImpl implements _CategoryCashflowEntity {
+  const _$CategoryCashflowEntityImpl(
       {required this.category,
       required this.monthCashflow,
       required this.yearCashflow});
@@ -137,7 +139,7 @@ class _$_CategoryCashflowEntity implements _CategoryCashflowEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryCashflowEntity &&
+            other is _$CategoryCashflowEntityImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.monthCashflow, monthCashflow) ||
@@ -153,16 +155,16 @@ class _$_CategoryCashflowEntity implements _CategoryCashflowEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryCashflowEntityCopyWith<_$_CategoryCashflowEntity> get copyWith =>
-      __$$_CategoryCashflowEntityCopyWithImpl<_$_CategoryCashflowEntity>(
-          this, _$identity);
+  _$$CategoryCashflowEntityImplCopyWith<_$CategoryCashflowEntityImpl>
+      get copyWith => __$$CategoryCashflowEntityImplCopyWithImpl<
+          _$CategoryCashflowEntityImpl>(this, _$identity);
 }
 
 abstract class _CategoryCashflowEntity implements CategoryCashflowEntity {
   const factory _CategoryCashflowEntity(
       {required final CategoryDB category,
       required final int monthCashflow,
-      required final int yearCashflow}) = _$_CategoryCashflowEntity;
+      required final int yearCashflow}) = _$CategoryCashflowEntityImpl;
 
   @override
   CategoryDB get category;
@@ -172,6 +174,6 @@ abstract class _CategoryCashflowEntity implements CategoryCashflowEntity {
   int get yearCashflow;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryCashflowEntityCopyWith<_$_CategoryCashflowEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CategoryCashflowEntityImplCopyWith<_$CategoryCashflowEntityImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

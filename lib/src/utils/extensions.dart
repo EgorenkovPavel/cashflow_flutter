@@ -1,10 +1,10 @@
-
-
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/models/enum/budget_type.dart';
+import '../domain/models/enum/currency.dart';
 import '../domain/models/enum/operation_type.dart';
 
 extension StringExtension on String {
@@ -13,29 +13,29 @@ extension StringExtension on String {
   }
 }
 
-extension DateTimeExtension on DateTime{
-  DateTime startOfMonth(DateTime date){
+extension DateTimeExtension on DateTime {
+  DateTime startOfMonth(DateTime date) {
     return DateTime(date.year, date.month).add(const Duration());
   }
 }
 
-extension MapExtension on Map<String, dynamic>{
-  dynamic getOrDefault(String key, dynamic value){
-    return containsKey(key)
-        ? this[key]
-        : value;
+extension MapExtension on Map<String, dynamic> {
+  dynamic getOrDefault(String key, dynamic value) {
+    return containsKey(key) ? this[key] : value;
   }
 }
 
-extension AppLocalization on BuildContext{
+extension AppLocalization on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this);
+
+  MaterialLocalizations get materialLoc => MaterialLocalizations.of(this);
 }
 
-extension AppLocalizationExtended on AppLocalizations{
-  String numberFormat(int number) {
+extension AppLocalizationExtended on AppLocalizations {
+  String numberFormat(int number, Currency currency) {
     return NumberFormat.currency(
       //locale: locale.languageCode,
-      symbol: '',
+      symbol: currency.symbol,
       decimalDigits: 0,
     ).format(number);
   }
@@ -59,6 +59,17 @@ extension AppLocalizationExtended on AppLocalizations{
         return budgetTypeMonth;
       case BudgetType.YEAR:
         return budgetTypeYear;
+    }
+  }
+
+  String currencyTitle(Currency type) {
+    switch (type) {
+      case Currency.RUB:
+        return 'RUB';
+      case Currency.USD:
+        return 'USD';
+      case Currency.EUR:
+        return 'EUR';
     }
   }
 }

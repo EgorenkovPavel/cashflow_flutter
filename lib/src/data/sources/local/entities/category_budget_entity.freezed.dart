@@ -64,22 +64,22 @@ class _$CategoryBudgetEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CategoryBudgetEntityCopyWith<$Res>
+abstract class _$$CategoryBudgetEntityImplCopyWith<$Res>
     implements $CategoryBudgetEntityCopyWith<$Res> {
-  factory _$$_CategoryBudgetEntityCopyWith(_$_CategoryBudgetEntity value,
-          $Res Function(_$_CategoryBudgetEntity) then) =
-      __$$_CategoryBudgetEntityCopyWithImpl<$Res>;
+  factory _$$CategoryBudgetEntityImplCopyWith(_$CategoryBudgetEntityImpl value,
+          $Res Function(_$CategoryBudgetEntityImpl) then) =
+      __$$CategoryBudgetEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDB category, int budget});
 }
 
 /// @nodoc
-class __$$_CategoryBudgetEntityCopyWithImpl<$Res>
-    extends _$CategoryBudgetEntityCopyWithImpl<$Res, _$_CategoryBudgetEntity>
-    implements _$$_CategoryBudgetEntityCopyWith<$Res> {
-  __$$_CategoryBudgetEntityCopyWithImpl(_$_CategoryBudgetEntity _value,
-      $Res Function(_$_CategoryBudgetEntity) _then)
+class __$$CategoryBudgetEntityImplCopyWithImpl<$Res>
+    extends _$CategoryBudgetEntityCopyWithImpl<$Res, _$CategoryBudgetEntityImpl>
+    implements _$$CategoryBudgetEntityImplCopyWith<$Res> {
+  __$$CategoryBudgetEntityImplCopyWithImpl(_$CategoryBudgetEntityImpl _value,
+      $Res Function(_$CategoryBudgetEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +88,7 @@ class __$$_CategoryBudgetEntityCopyWithImpl<$Res>
     Object? category = null,
     Object? budget = null,
   }) {
-    return _then(_$_CategoryBudgetEntity(
+    return _then(_$CategoryBudgetEntityImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -103,8 +103,9 @@ class __$$_CategoryBudgetEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryBudgetEntity implements _CategoryBudgetEntity {
-  const _$_CategoryBudgetEntity({required this.category, required this.budget});
+class _$CategoryBudgetEntityImpl implements _CategoryBudgetEntity {
+  const _$CategoryBudgetEntityImpl(
+      {required this.category, required this.budget});
 
   @override
   final CategoryDB category;
@@ -120,7 +121,7 @@ class _$_CategoryBudgetEntity implements _CategoryBudgetEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryBudgetEntity &&
+            other is _$CategoryBudgetEntityImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.budget, budget) || other.budget == budget));
@@ -132,15 +133,16 @@ class _$_CategoryBudgetEntity implements _CategoryBudgetEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryBudgetEntityCopyWith<_$_CategoryBudgetEntity> get copyWith =>
-      __$$_CategoryBudgetEntityCopyWithImpl<_$_CategoryBudgetEntity>(
-          this, _$identity);
+  _$$CategoryBudgetEntityImplCopyWith<_$CategoryBudgetEntityImpl>
+      get copyWith =>
+          __$$CategoryBudgetEntityImplCopyWithImpl<_$CategoryBudgetEntityImpl>(
+              this, _$identity);
 }
 
 abstract class _CategoryBudgetEntity implements CategoryBudgetEntity {
   const factory _CategoryBudgetEntity(
       {required final CategoryDB category,
-      required final int budget}) = _$_CategoryBudgetEntity;
+      required final int budget}) = _$CategoryBudgetEntityImpl;
 
   @override
   CategoryDB get category;
@@ -148,6 +150,6 @@ abstract class _CategoryBudgetEntity implements CategoryBudgetEntity {
   int get budget;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryBudgetEntityCopyWith<_$_CategoryBudgetEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CategoryBudgetEntityImplCopyWith<_$CategoryBudgetEntityImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -11,18 +11,6 @@ part 'operation_input_bloc.freezed.dart';
 
 @freezed
 class MasterEvent with _$MasterEvent {
-  const factory MasterEvent.changeAccounts({
-    required List<AccountBalance> accounts,
-  }) = _ChangeAccountsMasterEvent;
-
-  const factory MasterEvent.changeInCategories({
-    required List<Category> categories,
-  }) = _ChangeInCategoriesMasterEvent;
-
-  const factory MasterEvent.changeOutCategories({
-    required List<Category> categories,
-  }) = _ChangeOutCategoriesMasterEvent;
-
   const factory MasterEvent.backPressed() = _BackPressedMasterEvent;
 
   const factory MasterEvent.start() = _StartMasterEvent;
@@ -30,6 +18,8 @@ class MasterEvent with _$MasterEvent {
   const factory MasterEvent.addNewItem() = _AddNewItemMassterEvent;
 
   const factory MasterEvent.sumTap() = _SumTapMasterEvent;
+
+  const factory MasterEvent.recSumTap() = _RecSumTapMasterEvent;
 
   const factory MasterEvent.changeOperationType({
     required OperationType operationType,
@@ -83,43 +73,38 @@ class MasterState with _$MasterState {
     required MasterStateAction action,
     required OperationType operationType,
     required int sum,
+    required int recSum,
     required bool showKeyboard,
+    required bool highlightSum,
+    required bool highlightRecSum,
     AccountBalance? account,
     Category? categoryIn,
     Category? categoryOut,
     AccountBalance? recAccount,
     Operation? operation,
-    required List<AccountBalance> accounts,
-    required List<Category> inCategories,
-    required List<Category> outCategories,
   }) = _MasterState;
 }
 
 class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final DataRepository _repository;
-  StreamSubscription? accountsSub;
-  StreamSubscription? categoriesInSub;
-  StreamSubscription? categoriesOutSub;
 
   MasterBloc(this._repository)
       : super(const MasterState(
-          accounts: [],
-          inCategories: [],
-          outCategories: [],
           action: MasterStateAction.DATA,
           operationType: OperationType.INPUT,
           sum: 0,
+          recSum: 0,
           showKeyboard: false,
+          highlightSum: false,
+          highlightRecSum: false,
         )) {
     on<MasterEvent>(
       (event, emitter) => event.map(
-        changeAccounts: (event) => _changeAccounts(event, emitter),
-        changeInCategories: (event) => _changeInCategories(event, emitter),
-        changeOutCategories: (event) => _changeOutCategories(event, emitter),
         backPressed: (event) => _backPressed(event, emitter),
         start: (event) => _start(event, emitter),
         addNewItem: (event) => _addNewItem(event, emitter),
         sumTap: (event) => _sumTap(event, emitter),
+        recSumTap: (event) => _recSumTap(event, emitter),
         changeOperationType: (event) => _changeOperationType(event, emitter),
         digitTap: (event) => _digitTap(event, emitter),
         backKeyTap: (event) => _backKeyTap(event, emitter),
@@ -133,59 +118,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       ),
     );
 
-    accountsSub = _repository.accounts.watchAllBalance().listen(
-          (accounts) => add(MasterEvent.changeAccounts(accounts: accounts)),
-        );
-
-    categoriesInSub =
-        _repository.categories.watchAllByType(OperationType.INPUT).listen(
-              (categories) =>
-                  add(MasterEvent.changeInCategories(categories: categories)),
-            );
-
-    categoriesOutSub =
-        _repository.categories.watchAllByType(OperationType.OUTPUT).listen(
-              (categories) =>
-                  add(MasterEvent.changeOutCategories(categories: categories)),
-            );
-
     add(const MasterEvent.start());
-  }
-
-  _changeAccounts(
-    _ChangeAccountsMasterEvent event,
-    Emitter<MasterState> emit,
-  ) =>
-      emit(state.copyWith(
-        accounts: event.accounts,
-        action: MasterStateAction.DATA,
-      ));
-
-  _changeInCategories(
-    _ChangeInCategoriesMasterEvent event,
-    Emitter<MasterState> emit,
-  ) =>
-      emit(state.copyWith(
-        inCategories: event.categories,
-        action: MasterStateAction.DATA,
-      ));
-
-  _changeOutCategories(
-    _ChangeOutCategoriesMasterEvent event,
-    Emitter<MasterState> emit,
-  ) =>
-      emit(state.copyWith(
-        outCategories: event.categories,
-        action: MasterStateAction.DATA,
-      ));
-
-  @override
-  Future<void> close() {
-    accountsSub?.cancel();
-    categoriesInSub?.cancel();
-    categoriesOutSub?.cancel();
-
-    return super.close();
   }
 
   FutureOr<void> _start(
@@ -257,17 +190,35 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       emit(state.copyWith(
         action: MasterStateAction.HIDE_KEYBOARD,
         showKeyboard: false,
+        highlightSum: false,
+        highlightRecSum: false,
       ));
     }
   }
 
   FutureOr<void> _sumTap(_SumTapMasterEvent event, Emitter<MasterState> emit) {
-    if (!state.showKeyboard) {
-      emit(state.copyWith(
-        action: MasterStateAction.SHOW_KEYBOARD,
-        showKeyboard: true,
-      ));
-    }
+    emit(state.copyWith(
+      action: !state.showKeyboard
+          ? MasterStateAction.SHOW_KEYBOARD
+          : MasterStateAction.DATA,
+      showKeyboard: true,
+      highlightSum: true,
+      highlightRecSum: false,
+    ));
+  }
+
+  FutureOr<void> _recSumTap(
+    _RecSumTapMasterEvent event,
+    Emitter<MasterState> emit,
+  ) {
+    emit(state.copyWith(
+      action: !state.showKeyboard
+          ? MasterStateAction.SHOW_KEYBOARD
+          : MasterStateAction.DATA,
+      showKeyboard: true,
+      highlightSum: false,
+      highlightRecSum: true,
+    ));
   }
 
   FutureOr<void> _changeOperationType(
@@ -284,20 +235,34 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _DigitTapMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(state.copyWith(
-      sum: state.sum * 10 + event.digit,
-      action: MasterStateAction.DATA,
-    ));
+    if (state.highlightSum) {
+      emit(state.copyWith(
+        sum: state.sum * 10 + event.digit,
+        action: MasterStateAction.DATA,
+      ));
+    } else if (state.highlightRecSum) {
+      emit(state.copyWith(
+        recSum: state.recSum * 10 + event.digit,
+        action: MasterStateAction.DATA,
+      ));
+    }
   }
 
   FutureOr _backKeyTap(
     _BackKeyTapMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(state.copyWith(
-      sum: (state.sum / 10).floor(),
-      action: MasterStateAction.DATA,
-    ));
+    if (state.highlightSum) {
+      emit(state.copyWith(
+        sum: (state.sum / 10).floor(),
+        action: MasterStateAction.DATA,
+      ));
+    } else if (state.highlightRecSum) {
+      emit(state.copyWith(
+        recSum: (state.recSum / 10).floor(),
+        action: MasterStateAction.DATA,
+      ));
+    }
   }
 
   FutureOr<void> _moreTap(
@@ -414,6 +379,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     emit(state.copyWith(
       action: MasterStateAction.HIDE_KEYBOARD,
       sum: 0,
+      recSum: 0,
       showKeyboard: false,
     ));
   }
@@ -449,6 +415,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
             account: toAccount(state.account!),
             recAccount: toAccount(state.recAccount!),
             sum: state.sum,
+            recSum: state.recSum,
           );
 
           return _repository.operations.insert(operation);
@@ -461,10 +428,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   }
 
   Account toAccount(AccountBalance accountBalance) => Account(
-    id: accountBalance.id,
-    cloudId: accountBalance.cloudId,
-    title: accountBalance.title,
-    isDebt: accountBalance.isDebt,
-    currency: accountBalance.currency,
-  );
+        id: accountBalance.id,
+        cloudId: accountBalance.cloudId,
+        title: accountBalance.title,
+        isDebt: accountBalance.isDebt,
+        currency: accountBalance.currency,
+      );
 }

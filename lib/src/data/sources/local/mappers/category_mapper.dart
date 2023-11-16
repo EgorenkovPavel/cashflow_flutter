@@ -15,6 +15,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
       operationType: c.operationType,
       budgetType: c.budgetType,
       budget: c.budget,
+      currency: c.currency,
       synced: false,
     );
   }
@@ -28,6 +29,7 @@ class CategoryMapper extends Mapper<Category, CategoryDB> {
       operationType: c.operationType,
       budgetType: c.budgetType,
       budget: c.budget,
+      currency: c.currency,
     );
   }
 }

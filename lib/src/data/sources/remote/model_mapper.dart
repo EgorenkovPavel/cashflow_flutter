@@ -45,6 +45,7 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         budgetType:
             const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
         budget: cloudCategory.budget,
+        currency: const CurrencyConverter().fromSql(cloudCategory.currency),
       );
 
   @override

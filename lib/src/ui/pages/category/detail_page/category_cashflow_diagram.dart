@@ -10,11 +10,11 @@ class CategoryCashflowDiagram extends StatelessWidget {
   final BudgetType budgetType;
 
   const CategoryCashflowDiagram({
-    Key? key,
+    super.key,
     required this.id,
     required this.budget,
     required this.budgetType,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

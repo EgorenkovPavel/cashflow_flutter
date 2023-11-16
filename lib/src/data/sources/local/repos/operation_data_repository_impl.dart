@@ -87,6 +87,7 @@ class OperationDataRepositoryImpl
       category: Value(entity.category?.id),
       recAccount: Value(entity.recAccount?.id),
       sum: Value(entity.sum),
+      recSum: Value(entity.recSum),
     ));
 
     return entity.copyWith(id: id);
@@ -148,6 +149,7 @@ class OperationDataRepositoryImpl
       category: Value(operation.category?.id),
       recAccount: Value(operation.recAccount?.id),
       sum: Value(operation.sum),
+      recSum: Value(operation.recSum),
       synced: const Value(true),
       deleted: Value(operation.deleted),
     ));
@@ -165,6 +167,7 @@ class OperationDataRepositoryImpl
         category: Value(operation.category?.id),
         recAccount: Value(operation.recAccount?.id),
         sum: Value(operation.sum),
+        recSum: Value(operation.recSum),
         synced: const Value(true),
         deleted: Value(operation.deleted),
       ),

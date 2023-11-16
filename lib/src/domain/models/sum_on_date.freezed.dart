@@ -62,21 +62,22 @@ class _$SumOnDateCopyWithImpl<$Res, $Val extends SumOnDate>
 }
 
 /// @nodoc
-abstract class _$$_SumOnDateCopyWith<$Res> implements $SumOnDateCopyWith<$Res> {
-  factory _$$_SumOnDateCopyWith(
-          _$_SumOnDate value, $Res Function(_$_SumOnDate) then) =
-      __$$_SumOnDateCopyWithImpl<$Res>;
+abstract class _$$SumOnDateImplCopyWith<$Res>
+    implements $SumOnDateCopyWith<$Res> {
+  factory _$$SumOnDateImplCopyWith(
+          _$SumOnDateImpl value, $Res Function(_$SumOnDateImpl) then) =
+      __$$SumOnDateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime date, int sum});
 }
 
 /// @nodoc
-class __$$_SumOnDateCopyWithImpl<$Res>
-    extends _$SumOnDateCopyWithImpl<$Res, _$_SumOnDate>
-    implements _$$_SumOnDateCopyWith<$Res> {
-  __$$_SumOnDateCopyWithImpl(
-      _$_SumOnDate _value, $Res Function(_$_SumOnDate) _then)
+class __$$SumOnDateImplCopyWithImpl<$Res>
+    extends _$SumOnDateCopyWithImpl<$Res, _$SumOnDateImpl>
+    implements _$$SumOnDateImplCopyWith<$Res> {
+  __$$SumOnDateImplCopyWithImpl(
+      _$SumOnDateImpl _value, $Res Function(_$SumOnDateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +86,7 @@ class __$$_SumOnDateCopyWithImpl<$Res>
     Object? date = null,
     Object? sum = null,
   }) {
-    return _then(_$_SumOnDate(
+    return _then(_$SumOnDateImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -100,8 +101,8 @@ class __$$_SumOnDateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SumOnDate implements _SumOnDate {
-  const _$_SumOnDate({required this.date, required this.sum});
+class _$SumOnDateImpl implements _SumOnDate {
+  const _$SumOnDateImpl({required this.date, required this.sum});
 
   @override
   final DateTime date;
@@ -117,7 +118,7 @@ class _$_SumOnDate implements _SumOnDate {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SumOnDate &&
+            other is _$SumOnDateImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.sum, sum) || other.sum == sum));
   }
@@ -128,13 +129,13 @@ class _$_SumOnDate implements _SumOnDate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SumOnDateCopyWith<_$_SumOnDate> get copyWith =>
-      __$$_SumOnDateCopyWithImpl<_$_SumOnDate>(this, _$identity);
+  _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
+      __$$SumOnDateImplCopyWithImpl<_$SumOnDateImpl>(this, _$identity);
 }
 
 abstract class _SumOnDate implements SumOnDate {
   const factory _SumOnDate(
-      {required final DateTime date, required final int sum}) = _$_SumOnDate;
+      {required final DateTime date, required final int sum}) = _$SumOnDateImpl;
 
   @override
   DateTime get date;
@@ -142,6 +143,6 @@ abstract class _SumOnDate implements SumOnDate {
   int get sum;
   @override
   @JsonKey(ignore: true)
-  _$$_SumOnDateCopyWith<_$_SumOnDate> get copyWith =>
+  _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

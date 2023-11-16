@@ -21,6 +21,7 @@ extension CloudCategoryMapper on Category {
         operationType: const OperationTypeConverter().toSql(operationType),
         budgetType: const BudgetTypeConverter().toSql(budgetType),
         budget: budget,
+        currency: const CurrencyConverter().toSql(currency),
         deleted: false,
       );
 }
@@ -34,6 +35,11 @@ extension CloudOperationMapper on Operation {
         category: category?.cloudId,
         recAccount: recAccount?.cloudId,
         sum: sum,
+        recSum: map(
+          input: (operation) => 0,
+          output: (operation) => 0,
+          transfer: (operation) => operation.recSum,
+        ),
         deleted: deleted,
       );
 }

@@ -4,19 +4,17 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/src/ui/pages/item_card.dart';
+import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/models/enum/currency.dart';
-import '../../input_fields/currency_field.dart';
 
 class AccountInputPage extends StatelessWidget {
   final int? id;
 
-  const AccountInputPage.input({Key? key})
-      : id = null,
-        super(key: key);
+  const AccountInputPage.input({super.key}) : id = null;
 
-  const AccountInputPage.edit(this.id, {Key? key}) : super(key: key);
+  const AccountInputPage.edit(this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class AccountInputPage extends StatelessWidget {
 class AccountPage extends StatefulWidget {
   final bool isNew;
 
-  const AccountPage({Key? key, required this.isNew}) : super(key: key);
+  const AccountPage({super.key, required this.isNew});
 
   @override
   _AccountPageState createState() => _AccountPageState();
@@ -68,9 +66,8 @@ class _AccountPageState extends State<AccountPage> {
     return null;
   }
 
-  _onSave(BuildContext context) => context
-      .read<AccountInputBloc>()
-      .add(const AccountInputEvent.save());
+  _onSave(BuildContext context) =>
+      context.read<AccountInputBloc>().add(const AccountInputEvent.save());
 
   @override
   Widget build(BuildContext context) {
@@ -108,13 +105,18 @@ class _AccountPageState extends State<AccountPage> {
                 const Text('Is debt'),
               ],
             ),
-            CurrencyField(
-              currency: context.select<AccountInputBloc, Currency>(
-                (bloc) => bloc.state.currency,
-              ),
+            TypeRadioButton<Currency>(
               onChange: (val) => context
                   .read<AccountInputBloc>()
                   .add(AccountInputEvent.changeCurrency(currency: val)),
+              type: context.select<AccountInputBloc, Currency>(
+                (bloc) => bloc.state.currency,
+              ),
+              items: const [
+                Currency.RUB,
+                Currency.USD,
+                Currency.EUR,
+              ],
             ),
           ],
         ),

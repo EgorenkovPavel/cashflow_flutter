@@ -69,22 +69,22 @@ class _$LoadingStateCopyWithImpl<$Res, $Val extends LoadingState>
 }
 
 /// @nodoc
-abstract class _$$_LoadingStateCopyWith<$Res>
+abstract class _$$LoadingStateImplCopyWith<$Res>
     implements $LoadingStateCopyWith<$Res> {
-  factory _$$_LoadingStateCopyWith(
-          _$_LoadingState value, $Res Function(_$_LoadingState) then) =
-      __$$_LoadingStateCopyWithImpl<$Res>;
+  factory _$$LoadingStateImplCopyWith(
+          _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
+      __$$LoadingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int accountCount, int categoryCount, int operationCount});
 }
 
 /// @nodoc
-class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$LoadingStateCopyWithImpl<$Res, _$_LoadingState>
-    implements _$$_LoadingStateCopyWith<$Res> {
-  __$$_LoadingStateCopyWithImpl(
-      _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
+class __$$LoadingStateImplCopyWithImpl<$Res>
+    extends _$LoadingStateCopyWithImpl<$Res, _$LoadingStateImpl>
+    implements _$$LoadingStateImplCopyWith<$Res> {
+  __$$LoadingStateImplCopyWithImpl(
+      _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_LoadingStateCopyWithImpl<$Res>
     Object? categoryCount = null,
     Object? operationCount = null,
   }) {
-    return _then(_$_LoadingState(
+    return _then(_$LoadingStateImpl(
       accountCount: null == accountCount
           ? _value.accountCount
           : accountCount // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_LoadingStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadingState implements _LoadingState {
-  const _$_LoadingState(
+class _$LoadingStateImpl implements _LoadingState {
+  const _$LoadingStateImpl(
       {required this.accountCount,
       required this.categoryCount,
       required this.operationCount});
@@ -135,7 +135,7 @@ class _$_LoadingState implements _LoadingState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadingState &&
+            other is _$LoadingStateImpl &&
             (identical(other.accountCount, accountCount) ||
                 other.accountCount == accountCount) &&
             (identical(other.categoryCount, categoryCount) ||
@@ -151,15 +151,15 @@ class _$_LoadingState implements _LoadingState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadingStateCopyWith<_$_LoadingState> get copyWith =>
-      __$$_LoadingStateCopyWithImpl<_$_LoadingState>(this, _$identity);
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
+      __$$LoadingStateImplCopyWithImpl<_$LoadingStateImpl>(this, _$identity);
 }
 
 abstract class _LoadingState implements LoadingState {
   const factory _LoadingState(
       {required final int accountCount,
       required final int categoryCount,
-      required final int operationCount}) = _$_LoadingState;
+      required final int operationCount}) = _$LoadingStateImpl;
 
   @override
   int get accountCount;
@@ -169,6 +169,6 @@ abstract class _LoadingState implements LoadingState {
   int get operationCount;
   @override
   @JsonKey(ignore: true)
-  _$$_LoadingStateCopyWith<_$_LoadingState> get copyWith =>
+  _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

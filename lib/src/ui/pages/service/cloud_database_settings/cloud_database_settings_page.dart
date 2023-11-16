@@ -10,7 +10,7 @@ import 'package:money_tracker/src/domain/models/user.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {
-  const CloudDatabaseSettingsPage({Key? key}) : super(key: key);
+  const CloudDatabaseSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class SyncFromCloud extends StatelessWidget {
 }
 
 class ConnectedView extends StatelessWidget {
-  const ConnectedView({Key? key}) : super(key: key);
+  const ConnectedView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +160,7 @@ class ConnectedView extends StatelessWidget {
 }
 
 class AdminSettings extends StatelessWidget {
-  const AdminSettings({Key? key}) : super(key: key);
+  const AdminSettings({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -230,12 +230,13 @@ class AdminSettings extends StatelessWidget {
 
     var userData = jsonDecode(barcodeScanRes);
 
+    if (!context.mounted) return;
     context.read<SyncBloc>().add(SyncEvent.addUser(user: User.fromJson(userData)));
   }
 }
 
 class ConnectingView extends StatelessWidget {
-  const ConnectingView({Key? key}) : super(key: key);
+  const ConnectingView({super.key});
 
   @override
   Widget build(BuildContext context) {

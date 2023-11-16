@@ -78,26 +78,28 @@ class _$LastOperationsEventCopyWithImpl<$Res, $Val extends LastOperationsEvent>
 }
 
 /// @nodoc
-abstract class _$$_FetchLastOperationsEventCopyWith<$Res> {
-  factory _$$_FetchLastOperationsEventCopyWith(
-          _$_FetchLastOperationsEvent value,
-          $Res Function(_$_FetchLastOperationsEvent) then) =
-      __$$_FetchLastOperationsEventCopyWithImpl<$Res>;
+abstract class _$$FetchLastOperationsEventImplCopyWith<$Res> {
+  factory _$$FetchLastOperationsEventImplCopyWith(
+          _$FetchLastOperationsEventImpl value,
+          $Res Function(_$FetchLastOperationsEventImpl) then) =
+      __$$FetchLastOperationsEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FetchLastOperationsEventCopyWithImpl<$Res>
-    extends _$LastOperationsEventCopyWithImpl<$Res, _$_FetchLastOperationsEvent>
-    implements _$$_FetchLastOperationsEventCopyWith<$Res> {
-  __$$_FetchLastOperationsEventCopyWithImpl(_$_FetchLastOperationsEvent _value,
-      $Res Function(_$_FetchLastOperationsEvent) _then)
+class __$$FetchLastOperationsEventImplCopyWithImpl<$Res>
+    extends _$LastOperationsEventCopyWithImpl<$Res,
+        _$FetchLastOperationsEventImpl>
+    implements _$$FetchLastOperationsEventImplCopyWith<$Res> {
+  __$$FetchLastOperationsEventImplCopyWithImpl(
+      _$FetchLastOperationsEventImpl _value,
+      $Res Function(_$FetchLastOperationsEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FetchLastOperationsEvent implements _FetchLastOperationsEvent {
-  const _$_FetchLastOperationsEvent();
+class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
+  const _$FetchLastOperationsEventImpl();
 
   @override
   String toString() {
@@ -108,7 +110,7 @@ class _$_FetchLastOperationsEvent implements _FetchLastOperationsEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FetchLastOperationsEvent);
+            other is _$FetchLastOperationsEventImpl);
   }
 
   @override
@@ -181,27 +183,27 @@ class _$_FetchLastOperationsEvent implements _FetchLastOperationsEvent {
 }
 
 abstract class _FetchLastOperationsEvent implements LastOperationsEvent {
-  const factory _FetchLastOperationsEvent() = _$_FetchLastOperationsEvent;
+  const factory _FetchLastOperationsEvent() = _$FetchLastOperationsEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_ChangeOperationsLastOperationsEventCopyWith<$Res> {
-  factory _$$_ChangeOperationsLastOperationsEventCopyWith(
-          _$_ChangeOperationsLastOperationsEvent value,
-          $Res Function(_$_ChangeOperationsLastOperationsEvent) then) =
-      __$$_ChangeOperationsLastOperationsEventCopyWithImpl<$Res>;
+abstract class _$$ChangeOperationsLastOperationsEventImplCopyWith<$Res> {
+  factory _$$ChangeOperationsLastOperationsEventImplCopyWith(
+          _$ChangeOperationsLastOperationsEventImpl value,
+          $Res Function(_$ChangeOperationsLastOperationsEventImpl) then) =
+      __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Operation> operations});
 }
 
 /// @nodoc
-class __$$_ChangeOperationsLastOperationsEventCopyWithImpl<$Res>
+class __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>
     extends _$LastOperationsEventCopyWithImpl<$Res,
-        _$_ChangeOperationsLastOperationsEvent>
-    implements _$$_ChangeOperationsLastOperationsEventCopyWith<$Res> {
-  __$$_ChangeOperationsLastOperationsEventCopyWithImpl(
-      _$_ChangeOperationsLastOperationsEvent _value,
-      $Res Function(_$_ChangeOperationsLastOperationsEvent) _then)
+        _$ChangeOperationsLastOperationsEventImpl>
+    implements _$$ChangeOperationsLastOperationsEventImplCopyWith<$Res> {
+  __$$ChangeOperationsLastOperationsEventImplCopyWithImpl(
+      _$ChangeOperationsLastOperationsEventImpl _value,
+      $Res Function(_$ChangeOperationsLastOperationsEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -209,7 +211,7 @@ class __$$_ChangeOperationsLastOperationsEventCopyWithImpl<$Res>
   $Res call({
     Object? operations = null,
   }) {
-    return _then(_$_ChangeOperationsLastOperationsEvent(
+    return _then(_$ChangeOperationsLastOperationsEventImpl(
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
@@ -220,9 +222,9 @@ class __$$_ChangeOperationsLastOperationsEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeOperationsLastOperationsEvent
+class _$ChangeOperationsLastOperationsEventImpl
     implements _ChangeOperationsLastOperationsEvent {
-  const _$_ChangeOperationsLastOperationsEvent(
+  const _$ChangeOperationsLastOperationsEventImpl(
       {required final List<Operation> operations})
       : _operations = operations;
 
@@ -243,7 +245,7 @@ class _$_ChangeOperationsLastOperationsEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeOperationsLastOperationsEvent &&
+            other is _$ChangeOperationsLastOperationsEventImpl &&
             const DeepCollectionEquality()
                 .equals(other._operations, _operations));
   }
@@ -255,10 +257,10 @@ class _$_ChangeOperationsLastOperationsEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeOperationsLastOperationsEventCopyWith<
-          _$_ChangeOperationsLastOperationsEvent>
-      get copyWith => __$$_ChangeOperationsLastOperationsEventCopyWithImpl<
-          _$_ChangeOperationsLastOperationsEvent>(this, _$identity);
+  _$$ChangeOperationsLastOperationsEventImplCopyWith<
+          _$ChangeOperationsLastOperationsEventImpl>
+      get copyWith => __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<
+          _$ChangeOperationsLastOperationsEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -330,12 +332,12 @@ abstract class _ChangeOperationsLastOperationsEvent
     implements LastOperationsEvent {
   const factory _ChangeOperationsLastOperationsEvent(
           {required final List<Operation> operations}) =
-      _$_ChangeOperationsLastOperationsEvent;
+      _$ChangeOperationsLastOperationsEventImpl;
 
   List<Operation> get operations;
   @JsonKey(ignore: true)
-  _$$_ChangeOperationsLastOperationsEventCopyWith<
-          _$_ChangeOperationsLastOperationsEvent>
+  _$$ChangeOperationsLastOperationsEventImplCopyWith<
+          _$ChangeOperationsLastOperationsEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -382,22 +384,22 @@ class _$LastOperationsStateCopyWithImpl<$Res, $Val extends LastOperationsState>
 }
 
 /// @nodoc
-abstract class _$$_LastOperationsStateCopyWith<$Res>
+abstract class _$$LastOperationsStateImplCopyWith<$Res>
     implements $LastOperationsStateCopyWith<$Res> {
-  factory _$$_LastOperationsStateCopyWith(_$_LastOperationsState value,
-          $Res Function(_$_LastOperationsState) then) =
-      __$$_LastOperationsStateCopyWithImpl<$Res>;
+  factory _$$LastOperationsStateImplCopyWith(_$LastOperationsStateImpl value,
+          $Res Function(_$LastOperationsStateImpl) then) =
+      __$$LastOperationsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Operation> operations});
 }
 
 /// @nodoc
-class __$$_LastOperationsStateCopyWithImpl<$Res>
-    extends _$LastOperationsStateCopyWithImpl<$Res, _$_LastOperationsState>
-    implements _$$_LastOperationsStateCopyWith<$Res> {
-  __$$_LastOperationsStateCopyWithImpl(_$_LastOperationsState _value,
-      $Res Function(_$_LastOperationsState) _then)
+class __$$LastOperationsStateImplCopyWithImpl<$Res>
+    extends _$LastOperationsStateCopyWithImpl<$Res, _$LastOperationsStateImpl>
+    implements _$$LastOperationsStateImplCopyWith<$Res> {
+  __$$LastOperationsStateImplCopyWithImpl(_$LastOperationsStateImpl _value,
+      $Res Function(_$LastOperationsStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -405,7 +407,7 @@ class __$$_LastOperationsStateCopyWithImpl<$Res>
   $Res call({
     Object? operations = null,
   }) {
-    return _then(_$_LastOperationsState(
+    return _then(_$LastOperationsStateImpl(
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
@@ -416,8 +418,8 @@ class __$$_LastOperationsStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LastOperationsState implements _LastOperationsState {
-  const _$_LastOperationsState({required final List<Operation> operations})
+class _$LastOperationsStateImpl implements _LastOperationsState {
+  const _$LastOperationsStateImpl({required final List<Operation> operations})
       : _operations = operations;
 
   final List<Operation> _operations;
@@ -437,7 +439,7 @@ class _$_LastOperationsState implements _LastOperationsState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LastOperationsState &&
+            other is _$LastOperationsStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._operations, _operations));
   }
@@ -449,19 +451,19 @@ class _$_LastOperationsState implements _LastOperationsState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LastOperationsStateCopyWith<_$_LastOperationsState> get copyWith =>
-      __$$_LastOperationsStateCopyWithImpl<_$_LastOperationsState>(
+  _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
+      __$$LastOperationsStateImplCopyWithImpl<_$LastOperationsStateImpl>(
           this, _$identity);
 }
 
 abstract class _LastOperationsState implements LastOperationsState {
   const factory _LastOperationsState(
-      {required final List<Operation> operations}) = _$_LastOperationsState;
+      {required final List<Operation> operations}) = _$LastOperationsStateImpl;
 
   @override
   List<Operation> get operations;
   @override
   @JsonKey(ignore: true)
-  _$$_LastOperationsStateCopyWith<_$_LastOperationsState> get copyWith =>
+  _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -5,15 +5,17 @@ abstract class CategoryDataRepository {
 
   Future<List<Category>> getAll();
 
+  Stream<List<CategoryCashflow>> watchCashflow(DateTime date);
+
   Stream<List<CategoryCashflow>> watchCashflowByType(
-      DateTime date,
-      OperationType type,
-      );
+    DateTime date,
+    OperationType type,
+  );
 
   Future<List<CategoryCashflow>> getCashflowByType(
-      DateTime date,
-      OperationType type,
-      );
+    DateTime date,
+    OperationType type,
+  );
 
   Future<List<CategoryMonthCashflow>> getCashflowByYear(int year);
 

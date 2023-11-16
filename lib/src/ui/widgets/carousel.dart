@@ -11,13 +11,13 @@ class Carousel<T> extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
 
   const Carousel({
-    Key? key,
+    super.key,
     required this.items,
     required this.onPageChanged,
     required this.itemBuilder,
     required this.initialItemFinder,
     required this.itemHeight,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

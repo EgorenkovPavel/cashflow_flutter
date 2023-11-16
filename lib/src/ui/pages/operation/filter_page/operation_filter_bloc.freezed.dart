@@ -111,11 +111,11 @@ class _$OperationFilterEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_InitOperationFilterEventCopyWith<$Res> {
-  factory _$$_InitOperationFilterEventCopyWith(
-          _$_InitOperationFilterEvent value,
-          $Res Function(_$_InitOperationFilterEvent) then) =
-      __$$_InitOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$InitOperationFilterEventImplCopyWith<$Res> {
+  factory _$$InitOperationFilterEventImplCopyWith(
+          _$InitOperationFilterEventImpl value,
+          $Res Function(_$InitOperationFilterEventImpl) then) =
+      __$$InitOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationListFilter filter});
 
@@ -123,12 +123,13 @@ abstract class _$$_InitOperationFilterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitOperationFilterEventCopyWithImpl<$Res>
+class __$$InitOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_InitOperationFilterEvent>
-    implements _$$_InitOperationFilterEventCopyWith<$Res> {
-  __$$_InitOperationFilterEventCopyWithImpl(_$_InitOperationFilterEvent _value,
-      $Res Function(_$_InitOperationFilterEvent) _then)
+        _$InitOperationFilterEventImpl>
+    implements _$$InitOperationFilterEventImplCopyWith<$Res> {
+  __$$InitOperationFilterEventImplCopyWithImpl(
+      _$InitOperationFilterEventImpl _value,
+      $Res Function(_$InitOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -136,7 +137,7 @@ class __$$_InitOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? filter = null,
   }) {
-    return _then(_$_InitOperationFilterEvent(
+    return _then(_$InitOperationFilterEventImpl(
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
@@ -155,8 +156,8 @@ class __$$_InitOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InitOperationFilterEvent implements _InitOperationFilterEvent {
-  const _$_InitOperationFilterEvent({required this.filter});
+class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
+  const _$InitOperationFilterEventImpl({required this.filter});
 
   @override
   final OperationListFilter filter;
@@ -170,7 +171,7 @@ class _$_InitOperationFilterEvent implements _InitOperationFilterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InitOperationFilterEvent &&
+            other is _$InitOperationFilterEventImpl &&
             (identical(other.filter, filter) || other.filter == filter));
   }
 
@@ -180,9 +181,9 @@ class _$_InitOperationFilterEvent implements _InitOperationFilterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitOperationFilterEventCopyWith<_$_InitOperationFilterEvent>
-      get copyWith => __$$_InitOperationFilterEventCopyWithImpl<
-          _$_InitOperationFilterEvent>(this, _$identity);
+  _$$InitOperationFilterEventImplCopyWith<_$InitOperationFilterEventImpl>
+      get copyWith => __$$InitOperationFilterEventImplCopyWithImpl<
+          _$InitOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -285,38 +286,38 @@ class _$_InitOperationFilterEvent implements _InitOperationFilterEvent {
 abstract class _InitOperationFilterEvent implements OperationFilterEvent {
   const factory _InitOperationFilterEvent(
           {required final OperationListFilter filter}) =
-      _$_InitOperationFilterEvent;
+      _$InitOperationFilterEventImpl;
 
   OperationListFilter get filter;
   @JsonKey(ignore: true)
-  _$$_InitOperationFilterEventCopyWith<_$_InitOperationFilterEvent>
+  _$$InitOperationFilterEventImplCopyWith<_$InitOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ResetPeriodOperationFilterEventCopyWith<$Res> {
-  factory _$$_ResetPeriodOperationFilterEventCopyWith(
-          _$_ResetPeriodOperationFilterEvent value,
-          $Res Function(_$_ResetPeriodOperationFilterEvent) then) =
-      __$$_ResetPeriodOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$ResetPeriodOperationFilterEventImplCopyWith<$Res> {
+  factory _$$ResetPeriodOperationFilterEventImplCopyWith(
+          _$ResetPeriodOperationFilterEventImpl value,
+          $Res Function(_$ResetPeriodOperationFilterEventImpl) then) =
+      __$$ResetPeriodOperationFilterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ResetPeriodOperationFilterEventCopyWithImpl<$Res>
+class __$$ResetPeriodOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_ResetPeriodOperationFilterEvent>
-    implements _$$_ResetPeriodOperationFilterEventCopyWith<$Res> {
-  __$$_ResetPeriodOperationFilterEventCopyWithImpl(
-      _$_ResetPeriodOperationFilterEvent _value,
-      $Res Function(_$_ResetPeriodOperationFilterEvent) _then)
+        _$ResetPeriodOperationFilterEventImpl>
+    implements _$$ResetPeriodOperationFilterEventImplCopyWith<$Res> {
+  __$$ResetPeriodOperationFilterEventImplCopyWithImpl(
+      _$ResetPeriodOperationFilterEventImpl _value,
+      $Res Function(_$ResetPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ResetPeriodOperationFilterEvent
+class _$ResetPeriodOperationFilterEventImpl
     implements _ResetPeriodOperationFilterEvent {
-  const _$_ResetPeriodOperationFilterEvent();
+  const _$ResetPeriodOperationFilterEventImpl();
 
   @override
   String toString() {
@@ -327,7 +328,7 @@ class _$_ResetPeriodOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ResetPeriodOperationFilterEvent);
+            other is _$ResetPeriodOperationFilterEventImpl);
   }
 
   @override
@@ -434,27 +435,27 @@ class _$_ResetPeriodOperationFilterEvent
 abstract class _ResetPeriodOperationFilterEvent
     implements OperationFilterEvent {
   const factory _ResetPeriodOperationFilterEvent() =
-      _$_ResetPeriodOperationFilterEvent;
+      _$ResetPeriodOperationFilterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_SetPeriodOperationFilterEventCopyWith<$Res> {
-  factory _$$_SetPeriodOperationFilterEventCopyWith(
-          _$_SetPeriodOperationFilterEvent value,
-          $Res Function(_$_SetPeriodOperationFilterEvent) then) =
-      __$$_SetPeriodOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$SetPeriodOperationFilterEventImplCopyWith<$Res> {
+  factory _$$SetPeriodOperationFilterEventImplCopyWith(
+          _$SetPeriodOperationFilterEventImpl value,
+          $Res Function(_$SetPeriodOperationFilterEventImpl) then) =
+      __$$SetPeriodOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DateTimeRange period});
 }
 
 /// @nodoc
-class __$$_SetPeriodOperationFilterEventCopyWithImpl<$Res>
+class __$$SetPeriodOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_SetPeriodOperationFilterEvent>
-    implements _$$_SetPeriodOperationFilterEventCopyWith<$Res> {
-  __$$_SetPeriodOperationFilterEventCopyWithImpl(
-      _$_SetPeriodOperationFilterEvent _value,
-      $Res Function(_$_SetPeriodOperationFilterEvent) _then)
+        _$SetPeriodOperationFilterEventImpl>
+    implements _$$SetPeriodOperationFilterEventImplCopyWith<$Res> {
+  __$$SetPeriodOperationFilterEventImplCopyWithImpl(
+      _$SetPeriodOperationFilterEventImpl _value,
+      $Res Function(_$SetPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -462,7 +463,7 @@ class __$$_SetPeriodOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? period = null,
   }) {
-    return _then(_$_SetPeriodOperationFilterEvent(
+    return _then(_$SetPeriodOperationFilterEventImpl(
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -473,9 +474,9 @@ class __$$_SetPeriodOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SetPeriodOperationFilterEvent
+class _$SetPeriodOperationFilterEventImpl
     implements _SetPeriodOperationFilterEvent {
-  const _$_SetPeriodOperationFilterEvent({required this.period});
+  const _$SetPeriodOperationFilterEventImpl({required this.period});
 
   @override
   final DateTimeRange period;
@@ -489,7 +490,7 @@ class _$_SetPeriodOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SetPeriodOperationFilterEvent &&
+            other is _$SetPeriodOperationFilterEventImpl &&
             (identical(other.period, period) || other.period == period));
   }
 
@@ -499,9 +500,10 @@ class _$_SetPeriodOperationFilterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SetPeriodOperationFilterEventCopyWith<_$_SetPeriodOperationFilterEvent>
-      get copyWith => __$$_SetPeriodOperationFilterEventCopyWithImpl<
-          _$_SetPeriodOperationFilterEvent>(this, _$identity);
+  _$$SetPeriodOperationFilterEventImplCopyWith<
+          _$SetPeriodOperationFilterEventImpl>
+      get copyWith => __$$SetPeriodOperationFilterEventImplCopyWithImpl<
+          _$SetPeriodOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -603,20 +605,22 @@ class _$_SetPeriodOperationFilterEvent
 
 abstract class _SetPeriodOperationFilterEvent implements OperationFilterEvent {
   const factory _SetPeriodOperationFilterEvent(
-      {required final DateTimeRange period}) = _$_SetPeriodOperationFilterEvent;
+          {required final DateTimeRange period}) =
+      _$SetPeriodOperationFilterEventImpl;
 
   DateTimeRange get period;
   @JsonKey(ignore: true)
-  _$$_SetPeriodOperationFilterEventCopyWith<_$_SetPeriodOperationFilterEvent>
+  _$$SetPeriodOperationFilterEventImplCopyWith<
+          _$SetPeriodOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AddAccountOperationFilterEventCopyWith<$Res> {
-  factory _$$_AddAccountOperationFilterEventCopyWith(
-          _$_AddAccountOperationFilterEvent value,
-          $Res Function(_$_AddAccountOperationFilterEvent) then) =
-      __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$AddAccountOperationFilterEventImplCopyWith<$Res> {
+  factory _$$AddAccountOperationFilterEventImplCopyWith(
+          _$AddAccountOperationFilterEventImpl value,
+          $Res Function(_$AddAccountOperationFilterEventImpl) then) =
+      __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Account account});
 
@@ -624,13 +628,13 @@ abstract class _$$_AddAccountOperationFilterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>
+class __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_AddAccountOperationFilterEvent>
-    implements _$$_AddAccountOperationFilterEventCopyWith<$Res> {
-  __$$_AddAccountOperationFilterEventCopyWithImpl(
-      _$_AddAccountOperationFilterEvent _value,
-      $Res Function(_$_AddAccountOperationFilterEvent) _then)
+        _$AddAccountOperationFilterEventImpl>
+    implements _$$AddAccountOperationFilterEventImplCopyWith<$Res> {
+  __$$AddAccountOperationFilterEventImplCopyWithImpl(
+      _$AddAccountOperationFilterEventImpl _value,
+      $Res Function(_$AddAccountOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -638,7 +642,7 @@ class __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? account = null,
   }) {
-    return _then(_$_AddAccountOperationFilterEvent(
+    return _then(_$AddAccountOperationFilterEventImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -657,9 +661,9 @@ class __$$_AddAccountOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddAccountOperationFilterEvent
+class _$AddAccountOperationFilterEventImpl
     implements _AddAccountOperationFilterEvent {
-  const _$_AddAccountOperationFilterEvent({required this.account});
+  const _$AddAccountOperationFilterEventImpl({required this.account});
 
   @override
   final Account account;
@@ -673,7 +677,7 @@ class _$_AddAccountOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddAccountOperationFilterEvent &&
+            other is _$AddAccountOperationFilterEventImpl &&
             (identical(other.account, account) || other.account == account));
   }
 
@@ -683,9 +687,10 @@ class _$_AddAccountOperationFilterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddAccountOperationFilterEventCopyWith<_$_AddAccountOperationFilterEvent>
-      get copyWith => __$$_AddAccountOperationFilterEventCopyWithImpl<
-          _$_AddAccountOperationFilterEvent>(this, _$identity);
+  _$$AddAccountOperationFilterEventImplCopyWith<
+          _$AddAccountOperationFilterEventImpl>
+      get copyWith => __$$AddAccountOperationFilterEventImplCopyWithImpl<
+          _$AddAccountOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -787,20 +792,21 @@ class _$_AddAccountOperationFilterEvent
 
 abstract class _AddAccountOperationFilterEvent implements OperationFilterEvent {
   const factory _AddAccountOperationFilterEvent(
-      {required final Account account}) = _$_AddAccountOperationFilterEvent;
+      {required final Account account}) = _$AddAccountOperationFilterEventImpl;
 
   Account get account;
   @JsonKey(ignore: true)
-  _$$_AddAccountOperationFilterEventCopyWith<_$_AddAccountOperationFilterEvent>
+  _$$AddAccountOperationFilterEventImplCopyWith<
+          _$AddAccountOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_RemoveAccountOperationFilterEventCopyWith<$Res> {
-  factory _$$_RemoveAccountOperationFilterEventCopyWith(
-          _$_RemoveAccountOperationFilterEvent value,
-          $Res Function(_$_RemoveAccountOperationFilterEvent) then) =
-      __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$RemoveAccountOperationFilterEventImplCopyWith<$Res> {
+  factory _$$RemoveAccountOperationFilterEventImplCopyWith(
+          _$RemoveAccountOperationFilterEventImpl value,
+          $Res Function(_$RemoveAccountOperationFilterEventImpl) then) =
+      __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Account account});
 
@@ -808,13 +814,13 @@ abstract class _$$_RemoveAccountOperationFilterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>
+class __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_RemoveAccountOperationFilterEvent>
-    implements _$$_RemoveAccountOperationFilterEventCopyWith<$Res> {
-  __$$_RemoveAccountOperationFilterEventCopyWithImpl(
-      _$_RemoveAccountOperationFilterEvent _value,
-      $Res Function(_$_RemoveAccountOperationFilterEvent) _then)
+        _$RemoveAccountOperationFilterEventImpl>
+    implements _$$RemoveAccountOperationFilterEventImplCopyWith<$Res> {
+  __$$RemoveAccountOperationFilterEventImplCopyWithImpl(
+      _$RemoveAccountOperationFilterEventImpl _value,
+      $Res Function(_$RemoveAccountOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -822,7 +828,7 @@ class __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? account = null,
   }) {
-    return _then(_$_RemoveAccountOperationFilterEvent(
+    return _then(_$RemoveAccountOperationFilterEventImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -841,9 +847,9 @@ class __$$_RemoveAccountOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RemoveAccountOperationFilterEvent
+class _$RemoveAccountOperationFilterEventImpl
     implements _RemoveAccountOperationFilterEvent {
-  const _$_RemoveAccountOperationFilterEvent({required this.account});
+  const _$RemoveAccountOperationFilterEventImpl({required this.account});
 
   @override
   final Account account;
@@ -857,7 +863,7 @@ class _$_RemoveAccountOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RemoveAccountOperationFilterEvent &&
+            other is _$RemoveAccountOperationFilterEventImpl &&
             (identical(other.account, account) || other.account == account));
   }
 
@@ -867,10 +873,10 @@ class _$_RemoveAccountOperationFilterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RemoveAccountOperationFilterEventCopyWith<
-          _$_RemoveAccountOperationFilterEvent>
-      get copyWith => __$$_RemoveAccountOperationFilterEventCopyWithImpl<
-          _$_RemoveAccountOperationFilterEvent>(this, _$identity);
+  _$$RemoveAccountOperationFilterEventImplCopyWith<
+          _$RemoveAccountOperationFilterEventImpl>
+      get copyWith => __$$RemoveAccountOperationFilterEventImplCopyWithImpl<
+          _$RemoveAccountOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -973,21 +979,22 @@ class _$_RemoveAccountOperationFilterEvent
 abstract class _RemoveAccountOperationFilterEvent
     implements OperationFilterEvent {
   const factory _RemoveAccountOperationFilterEvent(
-      {required final Account account}) = _$_RemoveAccountOperationFilterEvent;
+          {required final Account account}) =
+      _$RemoveAccountOperationFilterEventImpl;
 
   Account get account;
   @JsonKey(ignore: true)
-  _$$_RemoveAccountOperationFilterEventCopyWith<
-          _$_RemoveAccountOperationFilterEvent>
+  _$$RemoveAccountOperationFilterEventImplCopyWith<
+          _$RemoveAccountOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AddCategoryOperationFilterEventCopyWith<$Res> {
-  factory _$$_AddCategoryOperationFilterEventCopyWith(
-          _$_AddCategoryOperationFilterEvent value,
-          $Res Function(_$_AddCategoryOperationFilterEvent) then) =
-      __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$AddCategoryOperationFilterEventImplCopyWith<$Res> {
+  factory _$$AddCategoryOperationFilterEventImplCopyWith(
+          _$AddCategoryOperationFilterEventImpl value,
+          $Res Function(_$AddCategoryOperationFilterEventImpl) then) =
+      __$$AddCategoryOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
 
@@ -995,13 +1002,13 @@ abstract class _$$_AddCategoryOperationFilterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>
+class __$$AddCategoryOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_AddCategoryOperationFilterEvent>
-    implements _$$_AddCategoryOperationFilterEventCopyWith<$Res> {
-  __$$_AddCategoryOperationFilterEventCopyWithImpl(
-      _$_AddCategoryOperationFilterEvent _value,
-      $Res Function(_$_AddCategoryOperationFilterEvent) _then)
+        _$AddCategoryOperationFilterEventImpl>
+    implements _$$AddCategoryOperationFilterEventImplCopyWith<$Res> {
+  __$$AddCategoryOperationFilterEventImplCopyWithImpl(
+      _$AddCategoryOperationFilterEventImpl _value,
+      $Res Function(_$AddCategoryOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1009,7 +1016,7 @@ class __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
   }) {
-    return _then(_$_AddCategoryOperationFilterEvent(
+    return _then(_$AddCategoryOperationFilterEventImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -1028,9 +1035,9 @@ class __$$_AddCategoryOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddCategoryOperationFilterEvent
+class _$AddCategoryOperationFilterEventImpl
     implements _AddCategoryOperationFilterEvent {
-  const _$_AddCategoryOperationFilterEvent({required this.category});
+  const _$AddCategoryOperationFilterEventImpl({required this.category});
 
   @override
   final Category category;
@@ -1044,7 +1051,7 @@ class _$_AddCategoryOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddCategoryOperationFilterEvent &&
+            other is _$AddCategoryOperationFilterEventImpl &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -1055,10 +1062,10 @@ class _$_AddCategoryOperationFilterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddCategoryOperationFilterEventCopyWith<
-          _$_AddCategoryOperationFilterEvent>
-      get copyWith => __$$_AddCategoryOperationFilterEventCopyWithImpl<
-          _$_AddCategoryOperationFilterEvent>(this, _$identity);
+  _$$AddCategoryOperationFilterEventImplCopyWith<
+          _$AddCategoryOperationFilterEventImpl>
+      get copyWith => __$$AddCategoryOperationFilterEventImplCopyWithImpl<
+          _$AddCategoryOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1161,21 +1168,22 @@ class _$_AddCategoryOperationFilterEvent
 abstract class _AddCategoryOperationFilterEvent
     implements OperationFilterEvent {
   const factory _AddCategoryOperationFilterEvent(
-      {required final Category category}) = _$_AddCategoryOperationFilterEvent;
+          {required final Category category}) =
+      _$AddCategoryOperationFilterEventImpl;
 
   Category get category;
   @JsonKey(ignore: true)
-  _$$_AddCategoryOperationFilterEventCopyWith<
-          _$_AddCategoryOperationFilterEvent>
+  _$$AddCategoryOperationFilterEventImplCopyWith<
+          _$AddCategoryOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_RemoveCategoryOperationFilterEventCopyWith<$Res> {
-  factory _$$_RemoveCategoryOperationFilterEventCopyWith(
-          _$_RemoveCategoryOperationFilterEvent value,
-          $Res Function(_$_RemoveCategoryOperationFilterEvent) then) =
-      __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>;
+abstract class _$$RemoveCategoryOperationFilterEventImplCopyWith<$Res> {
+  factory _$$RemoveCategoryOperationFilterEventImplCopyWith(
+          _$RemoveCategoryOperationFilterEventImpl value,
+          $Res Function(_$RemoveCategoryOperationFilterEventImpl) then) =
+      __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
 
@@ -1183,13 +1191,13 @@ abstract class _$$_RemoveCategoryOperationFilterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>
+class __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$_RemoveCategoryOperationFilterEvent>
-    implements _$$_RemoveCategoryOperationFilterEventCopyWith<$Res> {
-  __$$_RemoveCategoryOperationFilterEventCopyWithImpl(
-      _$_RemoveCategoryOperationFilterEvent _value,
-      $Res Function(_$_RemoveCategoryOperationFilterEvent) _then)
+        _$RemoveCategoryOperationFilterEventImpl>
+    implements _$$RemoveCategoryOperationFilterEventImplCopyWith<$Res> {
+  __$$RemoveCategoryOperationFilterEventImplCopyWithImpl(
+      _$RemoveCategoryOperationFilterEventImpl _value,
+      $Res Function(_$RemoveCategoryOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1197,7 +1205,7 @@ class __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
   }) {
-    return _then(_$_RemoveCategoryOperationFilterEvent(
+    return _then(_$RemoveCategoryOperationFilterEventImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -1216,9 +1224,9 @@ class __$$_RemoveCategoryOperationFilterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RemoveCategoryOperationFilterEvent
+class _$RemoveCategoryOperationFilterEventImpl
     implements _RemoveCategoryOperationFilterEvent {
-  const _$_RemoveCategoryOperationFilterEvent({required this.category});
+  const _$RemoveCategoryOperationFilterEventImpl({required this.category});
 
   @override
   final Category category;
@@ -1232,7 +1240,7 @@ class _$_RemoveCategoryOperationFilterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RemoveCategoryOperationFilterEvent &&
+            other is _$RemoveCategoryOperationFilterEventImpl &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -1243,10 +1251,10 @@ class _$_RemoveCategoryOperationFilterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RemoveCategoryOperationFilterEventCopyWith<
-          _$_RemoveCategoryOperationFilterEvent>
-      get copyWith => __$$_RemoveCategoryOperationFilterEventCopyWithImpl<
-          _$_RemoveCategoryOperationFilterEvent>(this, _$identity);
+  _$$RemoveCategoryOperationFilterEventImplCopyWith<
+          _$RemoveCategoryOperationFilterEventImpl>
+      get copyWith => __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<
+          _$RemoveCategoryOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1350,12 +1358,12 @@ abstract class _RemoveCategoryOperationFilterEvent
     implements OperationFilterEvent {
   const factory _RemoveCategoryOperationFilterEvent(
           {required final Category category}) =
-      _$_RemoveCategoryOperationFilterEvent;
+      _$RemoveCategoryOperationFilterEventImpl;
 
   Category get category;
   @JsonKey(ignore: true)
-  _$$_RemoveCategoryOperationFilterEventCopyWith<
-          _$_RemoveCategoryOperationFilterEvent>
+  _$$RemoveCategoryOperationFilterEventImplCopyWith<
+          _$RemoveCategoryOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1435,11 +1443,11 @@ class _$OperationFilterStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_OperationFilterStateCopyWith<$Res>
+abstract class _$$OperationFilterStateImplCopyWith<$Res>
     implements $OperationFilterStateCopyWith<$Res> {
-  factory _$$_OperationFilterStateCopyWith(_$_OperationFilterState value,
-          $Res Function(_$_OperationFilterState) then) =
-      __$$_OperationFilterStateCopyWithImpl<$Res>;
+  factory _$$OperationFilterStateImplCopyWith(_$OperationFilterStateImpl value,
+          $Res Function(_$OperationFilterStateImpl) then) =
+      __$$OperationFilterStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1453,11 +1461,11 @@ abstract class _$$_OperationFilterStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OperationFilterStateCopyWithImpl<$Res>
-    extends _$OperationFilterStateCopyWithImpl<$Res, _$_OperationFilterState>
-    implements _$$_OperationFilterStateCopyWith<$Res> {
-  __$$_OperationFilterStateCopyWithImpl(_$_OperationFilterState _value,
-      $Res Function(_$_OperationFilterState) _then)
+class __$$OperationFilterStateImplCopyWithImpl<$Res>
+    extends _$OperationFilterStateCopyWithImpl<$Res, _$OperationFilterStateImpl>
+    implements _$$OperationFilterStateImplCopyWith<$Res> {
+  __$$OperationFilterStateImplCopyWithImpl(_$OperationFilterStateImpl _value,
+      $Res Function(_$OperationFilterStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1468,7 +1476,7 @@ class __$$_OperationFilterStateCopyWithImpl<$Res>
     Object? inCategories = null,
     Object? outCategories = null,
   }) {
-    return _then(_$_OperationFilterState(
+    return _then(_$OperationFilterStateImpl(
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
@@ -1491,8 +1499,8 @@ class __$$_OperationFilterStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OperationFilterState implements _OperationFilterState {
-  const _$_OperationFilterState(
+class _$OperationFilterStateImpl implements _OperationFilterState {
+  const _$OperationFilterStateImpl(
       {required this.filter,
       required final List<Account> accounts,
       required final List<Category> inCategories,
@@ -1536,7 +1544,7 @@ class _$_OperationFilterState implements _OperationFilterState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OperationFilterState &&
+            other is _$OperationFilterStateImpl &&
             (identical(other.filter, filter) || other.filter == filter) &&
             const DeepCollectionEquality().equals(other._accounts, _accounts) &&
             const DeepCollectionEquality()
@@ -1556,17 +1564,19 @@ class _$_OperationFilterState implements _OperationFilterState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OperationFilterStateCopyWith<_$_OperationFilterState> get copyWith =>
-      __$$_OperationFilterStateCopyWithImpl<_$_OperationFilterState>(
-          this, _$identity);
+  _$$OperationFilterStateImplCopyWith<_$OperationFilterStateImpl>
+      get copyWith =>
+          __$$OperationFilterStateImplCopyWithImpl<_$OperationFilterStateImpl>(
+              this, _$identity);
 }
 
 abstract class _OperationFilterState implements OperationFilterState {
   const factory _OperationFilterState(
-      {required final OperationListFilter filter,
-      required final List<Account> accounts,
-      required final List<Category> inCategories,
-      required final List<Category> outCategories}) = _$_OperationFilterState;
+          {required final OperationListFilter filter,
+          required final List<Account> accounts,
+          required final List<Category> inCategories,
+          required final List<Category> outCategories}) =
+      _$OperationFilterStateImpl;
 
   @override
   OperationListFilter get filter;
@@ -1578,6 +1588,6 @@ abstract class _OperationFilterState implements OperationFilterState {
   List<Category> get outCategories;
   @override
   @JsonKey(ignore: true)
-  _$$_OperationFilterStateCopyWith<_$_OperationFilterState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$OperationFilterStateImplCopyWith<_$OperationFilterStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

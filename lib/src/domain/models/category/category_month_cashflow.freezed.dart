@@ -80,11 +80,12 @@ class _$CategoryMonthCashflowCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CategoryMonthCashflowCopyWith<$Res>
+abstract class _$$CategoryMonthCashflowImplCopyWith<$Res>
     implements $CategoryMonthCashflowCopyWith<$Res> {
-  factory _$$_CategoryMonthCashflowCopyWith(_$_CategoryMonthCashflow value,
-          $Res Function(_$_CategoryMonthCashflow) then) =
-      __$$_CategoryMonthCashflowCopyWithImpl<$Res>;
+  factory _$$CategoryMonthCashflowImplCopyWith(
+          _$CategoryMonthCashflowImpl value,
+          $Res Function(_$CategoryMonthCashflowImpl) then) =
+      __$$CategoryMonthCashflowImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Category category, int month, int cashflow});
@@ -94,11 +95,12 @@ abstract class _$$_CategoryMonthCashflowCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CategoryMonthCashflowCopyWithImpl<$Res>
-    extends _$CategoryMonthCashflowCopyWithImpl<$Res, _$_CategoryMonthCashflow>
-    implements _$$_CategoryMonthCashflowCopyWith<$Res> {
-  __$$_CategoryMonthCashflowCopyWithImpl(_$_CategoryMonthCashflow _value,
-      $Res Function(_$_CategoryMonthCashflow) _then)
+class __$$CategoryMonthCashflowImplCopyWithImpl<$Res>
+    extends _$CategoryMonthCashflowCopyWithImpl<$Res,
+        _$CategoryMonthCashflowImpl>
+    implements _$$CategoryMonthCashflowImplCopyWith<$Res> {
+  __$$CategoryMonthCashflowImplCopyWithImpl(_$CategoryMonthCashflowImpl _value,
+      $Res Function(_$CategoryMonthCashflowImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +110,7 @@ class __$$_CategoryMonthCashflowCopyWithImpl<$Res>
     Object? month = null,
     Object? cashflow = null,
   }) {
-    return _then(_$_CategoryMonthCashflow(
+    return _then(_$CategoryMonthCashflowImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -127,8 +129,8 @@ class __$$_CategoryMonthCashflowCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryMonthCashflow implements _CategoryMonthCashflow {
-  const _$_CategoryMonthCashflow(
+class _$CategoryMonthCashflowImpl implements _CategoryMonthCashflow {
+  const _$CategoryMonthCashflowImpl(
       {required this.category, required this.month, required this.cashflow});
 
   @override
@@ -147,7 +149,7 @@ class _$_CategoryMonthCashflow implements _CategoryMonthCashflow {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryMonthCashflow &&
+            other is _$CategoryMonthCashflowImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.month, month) || other.month == month) &&
@@ -161,16 +163,16 @@ class _$_CategoryMonthCashflow implements _CategoryMonthCashflow {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryMonthCashflowCopyWith<_$_CategoryMonthCashflow> get copyWith =>
-      __$$_CategoryMonthCashflowCopyWithImpl<_$_CategoryMonthCashflow>(
-          this, _$identity);
+  _$$CategoryMonthCashflowImplCopyWith<_$CategoryMonthCashflowImpl>
+      get copyWith => __$$CategoryMonthCashflowImplCopyWithImpl<
+          _$CategoryMonthCashflowImpl>(this, _$identity);
 }
 
 abstract class _CategoryMonthCashflow implements CategoryMonthCashflow {
   const factory _CategoryMonthCashflow(
       {required final Category category,
       required final int month,
-      required final int cashflow}) = _$_CategoryMonthCashflow;
+      required final int cashflow}) = _$CategoryMonthCashflowImpl;
 
   @override
   Category get category;
@@ -180,6 +182,6 @@ abstract class _CategoryMonthCashflow implements CategoryMonthCashflow {
   int get cashflow;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryMonthCashflowCopyWith<_$_CategoryMonthCashflow> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CategoryMonthCashflowImplCopyWith<_$CategoryMonthCashflowImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

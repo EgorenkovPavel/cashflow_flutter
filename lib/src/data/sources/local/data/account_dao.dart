@@ -8,7 +8,7 @@ part 'account_dao.g.dart';
 @DriftAccessor(tables: [Accounts, Balances])
 class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
   // Called by the AppDatabase class
-  AccountDao(Database db) : super(db);
+  AccountDao(super.db);
 
   Stream<List<AccountDB>> watchAllAccounts() =>
       (select(accounts)..orderBy([(t) => OrderingTerm(expression: t.title)]))
@@ -112,16 +112,16 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         .toList();
   }
 
-  Future<void> batchInsert(List<AccountDB> _accounts) async {
+  Future<void> batchInsert(List<AccountDB> accountList) async {
     await batch((batch) {
       batch.insertAll(
         accounts,
-        _accounts
+        accountList
             .map((a) => AccountsCompanion.insert(
                   id: Value(a.id),
                   cloudId: a.cloudId,
                   title: a.title,
-                  currency: a.currency,
+                  currency: Value(a.currency),
                   isDebt: Value(a.isDebt),
                 ))
             .toList(),

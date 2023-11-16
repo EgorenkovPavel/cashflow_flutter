@@ -85,21 +85,23 @@ class _$CategoryDetailEventCopyWithImpl<$Res, $Val extends CategoryDetailEvent>
 }
 
 /// @nodoc
-abstract class _$$_FetchCategoryDetailEventCopyWith<$Res> {
-  factory _$$_FetchCategoryDetailEventCopyWith(
-          _$_FetchCategoryDetailEvent value,
-          $Res Function(_$_FetchCategoryDetailEvent) then) =
-      __$$_FetchCategoryDetailEventCopyWithImpl<$Res>;
+abstract class _$$FetchCategoryDetailEventImplCopyWith<$Res> {
+  factory _$$FetchCategoryDetailEventImplCopyWith(
+          _$FetchCategoryDetailEventImpl value,
+          $Res Function(_$FetchCategoryDetailEventImpl) then) =
+      __$$FetchCategoryDetailEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int categoryId});
 }
 
 /// @nodoc
-class __$$_FetchCategoryDetailEventCopyWithImpl<$Res>
-    extends _$CategoryDetailEventCopyWithImpl<$Res, _$_FetchCategoryDetailEvent>
-    implements _$$_FetchCategoryDetailEventCopyWith<$Res> {
-  __$$_FetchCategoryDetailEventCopyWithImpl(_$_FetchCategoryDetailEvent _value,
-      $Res Function(_$_FetchCategoryDetailEvent) _then)
+class __$$FetchCategoryDetailEventImplCopyWithImpl<$Res>
+    extends _$CategoryDetailEventCopyWithImpl<$Res,
+        _$FetchCategoryDetailEventImpl>
+    implements _$$FetchCategoryDetailEventImplCopyWith<$Res> {
+  __$$FetchCategoryDetailEventImplCopyWithImpl(
+      _$FetchCategoryDetailEventImpl _value,
+      $Res Function(_$FetchCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +109,7 @@ class __$$_FetchCategoryDetailEventCopyWithImpl<$Res>
   $Res call({
     Object? categoryId = null,
   }) {
-    return _then(_$_FetchCategoryDetailEvent(
+    return _then(_$FetchCategoryDetailEventImpl(
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -118,8 +120,8 @@ class __$$_FetchCategoryDetailEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FetchCategoryDetailEvent implements _FetchCategoryDetailEvent {
-  const _$_FetchCategoryDetailEvent({required this.categoryId});
+class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
+  const _$FetchCategoryDetailEventImpl({required this.categoryId});
 
   @override
   final int categoryId;
@@ -133,7 +135,7 @@ class _$_FetchCategoryDetailEvent implements _FetchCategoryDetailEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FetchCategoryDetailEvent &&
+            other is _$FetchCategoryDetailEventImpl &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId));
   }
@@ -144,9 +146,9 @@ class _$_FetchCategoryDetailEvent implements _FetchCategoryDetailEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FetchCategoryDetailEventCopyWith<_$_FetchCategoryDetailEvent>
-      get copyWith => __$$_FetchCategoryDetailEventCopyWithImpl<
-          _$_FetchCategoryDetailEvent>(this, _$identity);
+  _$$FetchCategoryDetailEventImplCopyWith<_$FetchCategoryDetailEventImpl>
+      get copyWith => __$$FetchCategoryDetailEventImplCopyWithImpl<
+          _$FetchCategoryDetailEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -223,20 +225,20 @@ class _$_FetchCategoryDetailEvent implements _FetchCategoryDetailEvent {
 
 abstract class _FetchCategoryDetailEvent implements CategoryDetailEvent {
   const factory _FetchCategoryDetailEvent({required final int categoryId}) =
-      _$_FetchCategoryDetailEvent;
+      _$FetchCategoryDetailEventImpl;
 
   int get categoryId;
   @JsonKey(ignore: true)
-  _$$_FetchCategoryDetailEventCopyWith<_$_FetchCategoryDetailEvent>
+  _$$FetchCategoryDetailEventImplCopyWith<_$FetchCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeCategoryCategoryDetailEventCopyWith<$Res> {
-  factory _$$_ChangeCategoryCategoryDetailEventCopyWith(
-          _$_ChangeCategoryCategoryDetailEvent value,
-          $Res Function(_$_ChangeCategoryCategoryDetailEvent) then) =
-      __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>;
+abstract class _$$ChangeCategoryCategoryDetailEventImplCopyWith<$Res> {
+  factory _$$ChangeCategoryCategoryDetailEventImplCopyWith(
+          _$ChangeCategoryCategoryDetailEventImpl value,
+          $Res Function(_$ChangeCategoryCategoryDetailEventImpl) then) =
+      __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
 
@@ -244,13 +246,13 @@ abstract class _$$_ChangeCategoryCategoryDetailEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>
+class __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<$Res>
     extends _$CategoryDetailEventCopyWithImpl<$Res,
-        _$_ChangeCategoryCategoryDetailEvent>
-    implements _$$_ChangeCategoryCategoryDetailEventCopyWith<$Res> {
-  __$$_ChangeCategoryCategoryDetailEventCopyWithImpl(
-      _$_ChangeCategoryCategoryDetailEvent _value,
-      $Res Function(_$_ChangeCategoryCategoryDetailEvent) _then)
+        _$ChangeCategoryCategoryDetailEventImpl>
+    implements _$$ChangeCategoryCategoryDetailEventImplCopyWith<$Res> {
+  __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl(
+      _$ChangeCategoryCategoryDetailEventImpl _value,
+      $Res Function(_$ChangeCategoryCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -258,7 +260,7 @@ class __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
   }) {
-    return _then(_$_ChangeCategoryCategoryDetailEvent(
+    return _then(_$ChangeCategoryCategoryDetailEventImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -277,9 +279,9 @@ class __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeCategoryCategoryDetailEvent
+class _$ChangeCategoryCategoryDetailEventImpl
     implements _ChangeCategoryCategoryDetailEvent {
-  const _$_ChangeCategoryCategoryDetailEvent({required this.category});
+  const _$ChangeCategoryCategoryDetailEventImpl({required this.category});
 
   @override
   final Category category;
@@ -293,7 +295,7 @@ class _$_ChangeCategoryCategoryDetailEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeCategoryCategoryDetailEvent &&
+            other is _$ChangeCategoryCategoryDetailEventImpl &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -304,10 +306,10 @@ class _$_ChangeCategoryCategoryDetailEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeCategoryCategoryDetailEventCopyWith<
-          _$_ChangeCategoryCategoryDetailEvent>
-      get copyWith => __$$_ChangeCategoryCategoryDetailEventCopyWithImpl<
-          _$_ChangeCategoryCategoryDetailEvent>(this, _$identity);
+  _$$ChangeCategoryCategoryDetailEventImplCopyWith<
+          _$ChangeCategoryCategoryDetailEventImpl>
+      get copyWith => __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<
+          _$ChangeCategoryCategoryDetailEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -386,33 +388,33 @@ abstract class _ChangeCategoryCategoryDetailEvent
     implements CategoryDetailEvent {
   const factory _ChangeCategoryCategoryDetailEvent(
           {required final Category category}) =
-      _$_ChangeCategoryCategoryDetailEvent;
+      _$ChangeCategoryCategoryDetailEventImpl;
 
   Category get category;
   @JsonKey(ignore: true)
-  _$$_ChangeCategoryCategoryDetailEventCopyWith<
-          _$_ChangeCategoryCategoryDetailEvent>
+  _$$ChangeCategoryCategoryDetailEventImplCopyWith<
+          _$ChangeCategoryCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeOperationsCategoryDetailEventCopyWith<$Res> {
-  factory _$$_ChangeOperationsCategoryDetailEventCopyWith(
-          _$_ChangeOperationsCategoryDetailEvent value,
-          $Res Function(_$_ChangeOperationsCategoryDetailEvent) then) =
-      __$$_ChangeOperationsCategoryDetailEventCopyWithImpl<$Res>;
+abstract class _$$ChangeOperationsCategoryDetailEventImplCopyWith<$Res> {
+  factory _$$ChangeOperationsCategoryDetailEventImplCopyWith(
+          _$ChangeOperationsCategoryDetailEventImpl value,
+          $Res Function(_$ChangeOperationsCategoryDetailEventImpl) then) =
+      __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Operation> operations});
 }
 
 /// @nodoc
-class __$$_ChangeOperationsCategoryDetailEventCopyWithImpl<$Res>
+class __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>
     extends _$CategoryDetailEventCopyWithImpl<$Res,
-        _$_ChangeOperationsCategoryDetailEvent>
-    implements _$$_ChangeOperationsCategoryDetailEventCopyWith<$Res> {
-  __$$_ChangeOperationsCategoryDetailEventCopyWithImpl(
-      _$_ChangeOperationsCategoryDetailEvent _value,
-      $Res Function(_$_ChangeOperationsCategoryDetailEvent) _then)
+        _$ChangeOperationsCategoryDetailEventImpl>
+    implements _$$ChangeOperationsCategoryDetailEventImplCopyWith<$Res> {
+  __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl(
+      _$ChangeOperationsCategoryDetailEventImpl _value,
+      $Res Function(_$ChangeOperationsCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -420,7 +422,7 @@ class __$$_ChangeOperationsCategoryDetailEventCopyWithImpl<$Res>
   $Res call({
     Object? operations = null,
   }) {
-    return _then(_$_ChangeOperationsCategoryDetailEvent(
+    return _then(_$ChangeOperationsCategoryDetailEventImpl(
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
@@ -431,9 +433,9 @@ class __$$_ChangeOperationsCategoryDetailEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeOperationsCategoryDetailEvent
+class _$ChangeOperationsCategoryDetailEventImpl
     implements _ChangeOperationsCategoryDetailEvent {
-  const _$_ChangeOperationsCategoryDetailEvent(
+  const _$ChangeOperationsCategoryDetailEventImpl(
       {required final List<Operation> operations})
       : _operations = operations;
 
@@ -454,7 +456,7 @@ class _$_ChangeOperationsCategoryDetailEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeOperationsCategoryDetailEvent &&
+            other is _$ChangeOperationsCategoryDetailEventImpl &&
             const DeepCollectionEquality()
                 .equals(other._operations, _operations));
   }
@@ -466,10 +468,10 @@ class _$_ChangeOperationsCategoryDetailEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeOperationsCategoryDetailEventCopyWith<
-          _$_ChangeOperationsCategoryDetailEvent>
-      get copyWith => __$$_ChangeOperationsCategoryDetailEventCopyWithImpl<
-          _$_ChangeOperationsCategoryDetailEvent>(this, _$identity);
+  _$$ChangeOperationsCategoryDetailEventImplCopyWith<
+          _$ChangeOperationsCategoryDetailEventImpl>
+      get copyWith => __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<
+          _$ChangeOperationsCategoryDetailEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -548,12 +550,12 @@ abstract class _ChangeOperationsCategoryDetailEvent
     implements CategoryDetailEvent {
   const factory _ChangeOperationsCategoryDetailEvent(
           {required final List<Operation> operations}) =
-      _$_ChangeOperationsCategoryDetailEvent;
+      _$ChangeOperationsCategoryDetailEventImpl;
 
   List<Operation> get operations;
   @JsonKey(ignore: true)
-  _$$_ChangeOperationsCategoryDetailEventCopyWith<
-          _$_ChangeOperationsCategoryDetailEvent>
+  _$$ChangeOperationsCategoryDetailEventImplCopyWith<
+          _$ChangeOperationsCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -622,11 +624,11 @@ class _$CategoryDetailStateCopyWithImpl<$Res, $Val extends CategoryDetailState>
 }
 
 /// @nodoc
-abstract class _$$_CategoryDetailStateCopyWith<$Res>
+abstract class _$$CategoryDetailStateImplCopyWith<$Res>
     implements $CategoryDetailStateCopyWith<$Res> {
-  factory _$$_CategoryDetailStateCopyWith(_$_CategoryDetailState value,
-          $Res Function(_$_CategoryDetailState) then) =
-      __$$_CategoryDetailStateCopyWithImpl<$Res>;
+  factory _$$CategoryDetailStateImplCopyWith(_$CategoryDetailStateImpl value,
+          $Res Function(_$CategoryDetailStateImpl) then) =
+      __$$CategoryDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -637,11 +639,11 @@ abstract class _$$_CategoryDetailStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CategoryDetailStateCopyWithImpl<$Res>
-    extends _$CategoryDetailStateCopyWithImpl<$Res, _$_CategoryDetailState>
-    implements _$$_CategoryDetailStateCopyWith<$Res> {
-  __$$_CategoryDetailStateCopyWithImpl(_$_CategoryDetailState _value,
-      $Res Function(_$_CategoryDetailState) _then)
+class __$$CategoryDetailStateImplCopyWithImpl<$Res>
+    extends _$CategoryDetailStateCopyWithImpl<$Res, _$CategoryDetailStateImpl>
+    implements _$$CategoryDetailStateImplCopyWith<$Res> {
+  __$$CategoryDetailStateImplCopyWithImpl(_$CategoryDetailStateImpl _value,
+      $Res Function(_$CategoryDetailStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -652,7 +654,7 @@ class __$$_CategoryDetailStateCopyWithImpl<$Res>
     Object? budget = null,
     Object? operations = null,
   }) {
-    return _then(_$_CategoryDetailState(
+    return _then(_$CategoryDetailStateImpl(
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -675,8 +677,8 @@ class __$$_CategoryDetailStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryDetailState implements _CategoryDetailState {
-  const _$_CategoryDetailState(
+class _$CategoryDetailStateImpl implements _CategoryDetailState {
+  const _$CategoryDetailStateImpl(
       {required this.budgetType,
       required this.title,
       required this.budget,
@@ -706,7 +708,7 @@ class _$_CategoryDetailState implements _CategoryDetailState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryDetailState &&
+            other is _$CategoryDetailStateImpl &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.title, title) || other.title == title) &&
@@ -722,8 +724,8 @@ class _$_CategoryDetailState implements _CategoryDetailState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryDetailStateCopyWith<_$_CategoryDetailState> get copyWith =>
-      __$$_CategoryDetailStateCopyWithImpl<_$_CategoryDetailState>(
+  _$$CategoryDetailStateImplCopyWith<_$CategoryDetailStateImpl> get copyWith =>
+      __$$CategoryDetailStateImplCopyWithImpl<_$CategoryDetailStateImpl>(
           this, _$identity);
 }
 
@@ -732,7 +734,7 @@ abstract class _CategoryDetailState implements CategoryDetailState {
       {required final BudgetType budgetType,
       required final String title,
       required final int budget,
-      required final List<Operation> operations}) = _$_CategoryDetailState;
+      required final List<Operation> operations}) = _$CategoryDetailStateImpl;
 
   @override
   BudgetType get budgetType;
@@ -744,6 +746,6 @@ abstract class _CategoryDetailState implements CategoryDetailState {
   List<Operation> get operations;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryDetailStateCopyWith<_$_CategoryDetailState> get copyWith =>
+  _$$CategoryDetailStateImplCopyWith<_$CategoryDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

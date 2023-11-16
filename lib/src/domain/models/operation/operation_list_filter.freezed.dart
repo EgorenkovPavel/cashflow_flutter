@@ -70,11 +70,11 @@ class _$OperationListFilterCopyWithImpl<$Res, $Val extends OperationListFilter>
 }
 
 /// @nodoc
-abstract class _$$_OperationListFilterCopyWith<$Res>
+abstract class _$$OperationListFilterImplCopyWith<$Res>
     implements $OperationListFilterCopyWith<$Res> {
-  factory _$$_OperationListFilterCopyWith(_$_OperationListFilter value,
-          $Res Function(_$_OperationListFilter) then) =
-      __$$_OperationListFilterCopyWithImpl<$Res>;
+  factory _$$OperationListFilterImplCopyWith(_$OperationListFilterImpl value,
+          $Res Function(_$OperationListFilterImpl) then) =
+      __$$OperationListFilterImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -82,11 +82,11 @@ abstract class _$$_OperationListFilterCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OperationListFilterCopyWithImpl<$Res>
-    extends _$OperationListFilterCopyWithImpl<$Res, _$_OperationListFilter>
-    implements _$$_OperationListFilterCopyWith<$Res> {
-  __$$_OperationListFilterCopyWithImpl(_$_OperationListFilter _value,
-      $Res Function(_$_OperationListFilter) _then)
+class __$$OperationListFilterImplCopyWithImpl<$Res>
+    extends _$OperationListFilterCopyWithImpl<$Res, _$OperationListFilterImpl>
+    implements _$$OperationListFilterImplCopyWith<$Res> {
+  __$$OperationListFilterImplCopyWithImpl(_$OperationListFilterImpl _value,
+      $Res Function(_$OperationListFilterImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +96,7 @@ class __$$_OperationListFilterCopyWithImpl<$Res>
     Object? accounts = null,
     Object? categories = null,
   }) {
-    return _then(_$_OperationListFilter(
+    return _then(_$OperationListFilterImpl(
       period: freezed == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -115,8 +115,8 @@ class __$$_OperationListFilterCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OperationListFilter implements _OperationListFilter {
-  const _$_OperationListFilter(
+class _$OperationListFilterImpl implements _OperationListFilter {
+  const _$OperationListFilterImpl(
       {this.period,
       final Set<Account> accounts = const {},
       final Set<Category> categories = const {}})
@@ -152,7 +152,7 @@ class _$_OperationListFilter implements _OperationListFilter {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OperationListFilter &&
+            other is _$OperationListFilterImpl &&
             (identical(other.period, period) || other.period == period) &&
             const DeepCollectionEquality().equals(other._accounts, _accounts) &&
             const DeepCollectionEquality()
@@ -169,8 +169,8 @@ class _$_OperationListFilter implements _OperationListFilter {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OperationListFilterCopyWith<_$_OperationListFilter> get copyWith =>
-      __$$_OperationListFilterCopyWithImpl<_$_OperationListFilter>(
+  _$$OperationListFilterImplCopyWith<_$OperationListFilterImpl> get copyWith =>
+      __$$OperationListFilterImplCopyWithImpl<_$OperationListFilterImpl>(
           this, _$identity);
 }
 
@@ -178,7 +178,7 @@ abstract class _OperationListFilter implements OperationListFilter {
   const factory _OperationListFilter(
       {final DateTimeRange? period,
       final Set<Account> accounts,
-      final Set<Category> categories}) = _$_OperationListFilter;
+      final Set<Category> categories}) = _$OperationListFilterImpl;
 
   @override
   DateTimeRange? get period;
@@ -188,6 +188,6 @@ abstract class _OperationListFilter implements OperationListFilter {
   Set<Category> get categories;
   @override
   @JsonKey(ignore: true)
-  _$$_OperationListFilterCopyWith<_$_OperationListFilter> get copyWith =>
+  _$$OperationListFilterImplCopyWith<_$OperationListFilterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

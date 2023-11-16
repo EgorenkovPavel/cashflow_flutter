@@ -3,27 +3,41 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
+import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
+import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class OperationEditPage extends StatelessWidget {
-  final int id;
+  final int? id;
 
-  const OperationEditPage({Key? key, required this.id}) : super(key: key);
+  const OperationEditPage.input({super.key}) : id = null;
+
+  const OperationEditPage.edit(this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bloc = sl<OperationEditBloc>();
+    if (id != null) {
+      bloc.add(OperationEditEvent.fetch(operationId: id!));
+    }
+
     return BlocProvider(
-      create: (context) => sl<OperationEditBloc>()
-        ..add(OperationEditEvent.fetch(operationId: id)),
-      child: _OperationEditPage(),
+      create: (context) => bloc,
+      child: _OperationEditPage(
+        isNew: id == null,
+      ),
     );
   }
 }
 
 class _OperationEditPage extends StatefulWidget {
+  final bool isNew;
+
+  const _OperationEditPage({super.key, required this.isNew});
+
   @override
   _OperationEditPageState createState() => _OperationEditPageState();
 }
@@ -32,26 +46,24 @@ class _OperationEditPageState extends State<_OperationEditPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _sumController = TextEditingController();
+  final TextEditingController _recSumController = TextEditingController();
 
   @override
   void dispose() {
     _sumController.dispose();
+    _recSumController.dispose();
     super.dispose();
   }
 
   void _listenState(BuildContext context, OperationEditState state) {
-    if (state.isFetched) {
+    if (_sumController.text != state.sum.toString()) {
       _sumController.text = state.sum.toString();
-    } else if (state.isSaved) {
-      Navigator.of(context).pop();
     }
-  }
-
-  void _onChangeAccount(Account? newValue) {
-    if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(OperationEditEvent.changeAccount(account: newValue));
+    if (_recSumController.text != state.recSum.toString()) {
+      _recSumController.text = state.recSum.toString();
+    }
+    if (state.isSaved) {
+      Navigator.of(context).pop();
     }
   }
 
@@ -87,42 +99,29 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                 children: <Widget>[
                   const Title(text: 'Cloud ID'), // TODO
                   Text(context.select<OperationEditBloc, String>(
-                    (bloc) => bloc.state.operation.cloudId,
+                    (bloc) => bloc.state.operation?.cloudId ?? '',
                   )),
                   Title(text: context.loc.titleDate),
                   Row(
                     children: <Widget>[
                       DateButton(
                         icon: Icons.calendar_today,
-                        text: DateFormat.yMMMd(
-                          Localizations.localeOf(context).languageCode,
-                        ).format(context.select<OperationEditBloc, DateTime>(
-                          (bloc) => bloc.state.date,
-                        )),
-                        onPressed: () => _selectDate(context),
+                        text: context.date(),
+                        onPressed: () => context.selectDate(),
                       ),
                       const SizedBox(width: 16.0),
                       DateButton(
                         icon: Icons.access_time,
-                        text: context
-                            .select<OperationEditBloc, TimeOfDay>(
-                              (bloc) => bloc.state.time,
-                            )
-                            .format(context),
-                        onPressed: () => _selectTime(context),
+                        text: context.time(),
+                        onPressed: () => context.selectTime(),
                       ),
                     ],
                   ),
                   Title(text: context.loc.titleType),
                   TypeRadioButton<OperationType>(
-                    type: context.select<OperationEditBloc, OperationType>(
-                      (bloc) => bloc.state.operationType,
-                    ),
-                    onChange: (newValue) => context
-                        .read<OperationEditBloc>()
-                        .add(OperationEditEvent.changeOperationType(
-                          operationType: newValue,
-                        )),
+                    type: context.operationType(),
+                    onChange: (newValue) =>
+                        context.onChangeOperationType(newValue),
                     items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
@@ -131,18 +130,42 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   ),
                   Title(text: context.loc.titleAccount),
                   DropdownList<Account>(
-                    value: context.select<OperationEditBloc, Account>(
-                      (bloc) => bloc.state.account,
-                    ),
+                    value: context.account(),
                     hint: context.loc.hintAccount,
-                    items: context.select<OperationEditBloc, List<Account>>(
-                      (bloc) => bloc.state.accounts,
-                    ),
-                    onChange: _onChangeAccount,
+                    items: context.accounts(),
+                    onChange: (newValue) => context.onChangeAccount(newValue),
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
                   Title(text: context.loc.titleAnalytic),
-                  analyticMenu(),
+                  context.operationType().map(
+                        INPUT: () => DropdownList<Category>(
+                          value: context.category(),
+                          hint: context.loc.hintCategory,
+                          onChange: (newValue) =>
+                              context.onCategoryChange(newValue),
+                          items: context.inCategory(),
+                          getListItem: (item) =>
+                              ListTile(title: Text(item.title)),
+                        ),
+                        OUTPUT: () => DropdownList<Category>(
+                          value: context.category(),
+                          hint: context.loc.hintCategory,
+                          onChange: (newValue) =>
+                              context.onCategoryChange(newValue),
+                          items: context.outCategory(),
+                          getListItem: (item) =>
+                              ListTile(title: Text(item.title)),
+                        ),
+                        TRANSFER: () => DropdownList<Account>(
+                          value: context.recAccount(),
+                          hint: context.loc.hintAccount,
+                          onChange: (newValue) =>
+                              context.onRecAccountChange(newValue),
+                          items: context.accounts(),
+                          getListItem: (item) =>
+                              ListTile(title: Text(item.title)),
+                        ),
+                      ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: TextFormField(
@@ -150,16 +173,28 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       controller: _sumController,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        labelText: context.loc.titleSum,
+                        labelText:
+                            '${context.loc.titleSum}, ${context.account()?.currency.symbol ?? ''}',
                       ),
-                      onChanged: (value) => context
-                          .read<OperationEditBloc>()
-                          .add(OperationEditEvent.changeSum(
-                            sum: int.parse(value),
-                          )),
+                      onChanged: (value) => context.onChangeSum(value),
                       validator: _sumValidator,
                     ),
                   ),
+                  if (context.showRecSum())
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: _recSumController,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText:
+                              '${context.loc.titleSum}, ${context.recAccount()?.currency.symbol ?? ''}',
+                        ),
+                        onChanged: (value) => context.onChangeRecSum(value),
+                        validator: _sumValidator,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -178,92 +213,120 @@ class _OperationEditPageState extends State<_OperationEditPage> {
       ),
     );
   }
+}
 
-  void _onCategoryChange(Category? newValue) {
+extension BlocExt on BuildContext {
+  OperationEditBloc _bloc() => read<OperationEditBloc>();
+
+  OperationType operationType() => select<OperationEditBloc, OperationType>(
+        (bloc) => bloc.state.operationType,
+      );
+
+  String date() => DateFormat.yMMMd(
+        Localizations.localeOf(this).languageCode,
+      ).format(select<OperationEditBloc, DateTime>(
+        (bloc) => bloc.state.date,
+      ));
+
+  String time() => select<OperationEditBloc, TimeOfDay>(
+        (bloc) => bloc.state.time,
+      ).format(this);
+
+  Category? category() => select<OperationEditBloc, Category?>(
+        (bloc) => bloc.state.category,
+      );
+
+  Account? recAccount() => select<OperationEditBloc, Account?>(
+        (bloc) => bloc.state.recAccount,
+      );
+
+  Account? account() => select<OperationEditBloc, Account?>(
+        (bloc) => bloc.state.account,
+      );
+
+  bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
+      bloc.state.operationType == OperationType.TRANSFER &&
+      bloc.state.account != null &&
+      bloc.state.recAccount != null &&
+      bloc.state.account!.currency != bloc.state.recAccount!.currency);
+
+  List<Account> accounts() => select<AccountBalanceBloc, List<Account>>(
+        (bloc) => bloc.state.accounts.map((a) => a.account).toList(),
+      );
+
+  List<Category> outCategory() => select<CategoryCashflowBloc, List<Category>>(
+        (bloc) => bloc.state.categories
+            .map((a) => a.category)
+            .where((c) => c.operationType == OperationType.OUTPUT)
+            .toList(),
+      );
+
+  List<Category> inCategory() => select<CategoryCashflowBloc, List<Category>>(
+        (bloc) => bloc.state.categories
+            .map((a) => a.category)
+            .where((c) => c.operationType == OperationType.INPUT)
+            .toList(),
+      );
+
+  void onChangeOperationType(newValue) =>
+      read<OperationEditBloc>().add(OperationEditEvent.changeOperationType(
+        operationType: newValue,
+      ));
+
+  void onChangeAccount(Account? newValue) {
     if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(OperationEditEvent.changeCategory(category: newValue));
+      _bloc().add(OperationEditEvent.changeAccount(account: newValue));
     }
   }
 
-  void _onRecAccountChange(Account? newValue) {
+  void onChangeRecSum(String value) =>
+      _bloc().add(OperationEditEvent.changeRecSum(sum: int.parse(value)));
+
+  void onChangeSum(String value) =>
+      _bloc().add(OperationEditEvent.changeSum(sum: int.parse(value)));
+
+  void onRecAccountChange(Account? newValue) {
     if (newValue != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(OperationEditEvent.changeRecAccount(recAccount: newValue));
+      _bloc().add(OperationEditEvent.changeRecAccount(recAccount: newValue));
     }
   }
 
-  Widget analyticMenu() {
-    return BlocBuilder<OperationEditBloc, OperationEditState>(
-      builder: (context, state) {
-        switch (state.operationType) {
-          case OperationType.INPUT:
-            return DropdownList<Category>(
-              value: state.category,
-              hint: context.loc.hintCategory,
-              onChange: _onCategoryChange,
-              items: state.inCategories,
-              getListItem: (item) => ListTile(title: Text(item.title)),
-            );
-          case OperationType.OUTPUT:
-            return DropdownList<Category>(
-              value: state.category,
-              hint: context.loc.hintCategory,
-              onChange: _onCategoryChange,
-              items: state.outCategories,
-              getListItem: (item) => ListTile(title: Text(item.title)),
-            );
-          case OperationType.TRANSFER:
-            return DropdownList<Account>(
-              value: state.recAccount,
-              hint: context.loc.hintAccount,
-              onChange: _onRecAccountChange,
-              items: state.accounts,
-              getListItem: (item) => ListTile(title: Text(item.title)),
-            );
-          default:
-            return const SizedBox();
-        }
-      },
+  void onCategoryChange(Category? newValue) {
+    if (newValue != null) {
+      _bloc().add(OperationEditEvent.changeCategory(category: newValue));
+    }
+  }
+
+  void selectTime() async {
+    final picked = await showTimePicker(
+      context: this,
+      initialTime: _bloc().state.time,
     );
+    if (picked != null) {
+      _bloc().add(OperationEditEvent.changeTime(time: picked));
+    }
   }
 
-  void _selectDate(BuildContext context) async {
+  void selectDate() async {
     final picked = await showDatePicker(
-      context: context,
-      initialDate: context.read<OperationEditBloc>().state.date,
+      context: this,
+      initialDate: _bloc().state.date,
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(2101),
     );
     if (picked != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(OperationEditEvent.changeDate(date: picked));
-    }
-  }
-
-  void _selectTime(BuildContext context) async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: context.read<OperationEditBloc>().state.time,
-    );
-    if (picked != null) {
-      context
-          .read<OperationEditBloc>()
-          .add(OperationEditEvent.changeTime(time: picked));
+      _bloc().add(OperationEditEvent.changeDate(date: picked));
     }
   }
 }
 
 class DateButton extends StatelessWidget {
   const DateButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.text,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final String text;
@@ -286,9 +349,9 @@ class DateButton extends StatelessWidget {
 
 class Title extends StatelessWidget {
   const Title({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String text;
 

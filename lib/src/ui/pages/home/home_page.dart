@@ -1,48 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/pages/home/last_operations/last_operations.dart';
 import 'package:money_tracker/src/ui/pages/home/month_operations/month_operations.dart';
 import 'package:money_tracker/src/ui/pages/home/sync_button.dart';
-import 'package:money_tracker/src/ui/pages/home/top_header/top_header.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../domain/models/enum/currency.dart';
+
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Money tracker'),
-        elevation: 0.0,
         actions: [
           const SyncButton(),
           IconButton(
             onPressed: () => context.openReportsPage(),
-            icon: const Icon(Icons.analytics),
+            icon: const Icon(Icons.analytics, color: Colors.black),
           ),
           IconButton(
             onPressed: () => context.openSettingsPage(),
-            icon: const Icon(Icons.settings_sharp),
+            icon: const Icon(Icons.settings_sharp, color: Colors.black),
           ),
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const TopHeader(),
-            _AddButton(
-              title: context.loc.btnAddAccount,
-              onPressed: () => context.openAccountInputDialog(),
-            ),
-            const AccountsCard(),
-            const DebtsCard(),
-            const MonthOperations(),
-            const SizedBox(height: 8.0),
-            const LastOperations(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: TotalsCard(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: AccountsCard(
+                  title: 'Accounts',
+                  where: (account) => !account.isDebt,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: AccountsCard(
+                  title: 'Debts',
+                  where: (account) => account.isDebt,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: MonthOperations(operationType: OperationType.INPUT),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: MonthOperations(operationType: OperationType.OUTPUT),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: LastOperations(),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -53,31 +77,86 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class TotalsCard extends StatelessWidget {
+  const TotalsCard({super.key});
+
+  Map<Currency, int> _calcTotals(List<AccountBalance> list) {
+    final res = <Currency, int>{};
+    list.forEach((item) {
+      res[item.currency] = (res[item.currency] ?? 0) + item.balance;
+    });
+
+    return res;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: []
+            ..add(Text(
+              'Totals',
+              style: Theme.of(context).textTheme.titleLarge,
+            ))
+            ..add(Wrap(
+              children: _calcTotals(
+                context.watch<AccountBalanceBloc>().state.accounts,
+              )
+                  .entries
+                  .map((item) => Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Chip(
+                          label: Text(
+                            context.loc.numberFormat(item.value, item.key),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            )),
+        ),
+      ),
+    );
+  }
+}
+
 class AccountsCard extends StatefulWidget {
-  const AccountsCard({super.key});
+  final String title;
+  final bool Function(AccountBalance) where;
+
+  const AccountsCard({super.key, required this.where, required this.title});
 
   @override
   State<AccountsCard> createState() => _AccountsCardState();
 }
 
 class _AccountsCardState extends State<AccountsCard> {
-  bool _showAll = false;
+  bool _showAll = true;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: []
-          ..add(Text('Accounts'))
+          ..add(ListTile(
+            title: Text(
+              widget.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ))
           ..addAll(context
               .watch<AccountBalanceBloc>()
               .state
               .accounts
-              .where((account) => !account.isDebt)
+              .where(widget.where)
               .where((account) => !_showAll || account.balance != 0)
               .map((account) => ListTile(
                     title: Text(account.title),
-                    trailing: Text(account.balance.toString()),
+                    trailing: Text(context.loc
+                        .numberFormat(account.balance, account.currency)),
+                    onTap: () => context.openAccountPage(account.id),
                   ))
               .toList())
           ..add(ButtonBar(
@@ -91,74 +170,12 @@ class _AccountsCardState extends State<AccountsCard> {
                 },
                 child: Text(_showAll ? 'Show all' : 'Hide'),
               ),
-              _AddButton(
-                title: context.loc.btnAddAccount,
+              TextButton(
+                child: const Text('Add'),
                 onPressed: () => context.openAccountInputDialog(),
               ),
             ],
           )),
-      ),
-    );
-  }
-}
-
-class DebtsCard extends StatelessWidget {
-  const DebtsCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: []
-          ..add(Text('Debts'))
-          ..addAll(context
-              .watch<AccountBalanceBloc>()
-              .state
-              .accounts
-              .where((account) => account.isDebt)
-              .map((account) => ListTile(
-                    title: Text(account.title),
-                    trailing: Text(account.balance.toString()),
-                  ))
-              .toList())
-          ..add(ButtonBar(
-            children: [
-              _AddButton(
-                title: context.loc.btnAddAccount,
-                onPressed: () => context.openAccountInputDialog(),
-              ),
-            ],
-          )),
-      ),
-    );
-  }
-}
-
-class _AddButton extends StatelessWidget {
-  const _AddButton({
-    Key? key,
-    required this.onPressed,
-    required this.title,
-  }) : super(key: key);
-
-  final void Function() onPressed;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton.icon(
-        icon: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        onPressed: onPressed,
-        label: Text(
-          title.toUpperCase(),
-          style: const TextStyle()
-              .copyWith(color: Theme.of(context).colorScheme.secondary),
-        ),
       ),
     );
   }

@@ -8,8 +8,7 @@ class ListTileOperation extends StatelessWidget {
   final Operation _operation;
   final GestureTapCallback onTap;
 
-  const ListTileOperation(this._operation, {Key? key, required this.onTap})
-      : super(key: key);
+  const ListTileOperation(this._operation, {super.key, required this.onTap});
 
   void _onDuplicate(BuildContext context) {
     sl<DataRepository>().operations.duplicate(_operation);
@@ -74,7 +73,7 @@ class ListTileOperation extends StatelessWidget {
       ),
       title: Text(_operation.analyticTitle),
       trailing: Text(
-        context.loc.numberFormat(_operation.sum),
+        context.loc.numberFormat(_operation.sum, _operation.account.currency),
         style: Theme.of(context)
             .textTheme
             .headlineSmall!

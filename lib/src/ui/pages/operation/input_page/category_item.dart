@@ -4,9 +4,9 @@ import '../../../../domain/models/category/category.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
-    Key? key,
+    super.key,
     required this.category,
-  }) : super(key: key);
+  });
 
   final Category category;
 

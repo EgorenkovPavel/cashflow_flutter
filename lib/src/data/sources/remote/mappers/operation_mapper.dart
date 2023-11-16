@@ -12,6 +12,7 @@ class OperationMapper extends CloudConverter<CloudOperation> {
   static const String _KEY_CATEGORY = 'category';
   static const String _KEY_REC_ACCOUNT = 'rec_account';
   static const String _KEY_SUM = 'sum';
+  static const String _KEY_REC_SUM = 'rec_sum';
   static const String KEY_UPDATED = 'updated';
   static const String _KEY_DELETION_MARK = 'deleted';
 
@@ -28,6 +29,7 @@ class OperationMapper extends CloudConverter<CloudOperation> {
       _KEY_SUM: operation.sum,
       KEY_UPDATED: DateTime.now(),
       _KEY_DELETION_MARK: operation.deleted,
+      _KEY_REC_SUM: operation.recSum,
     };
   }
 
@@ -46,6 +48,7 @@ class OperationMapper extends CloudConverter<CloudOperation> {
       recAccount:
           doc.get(_KEY_REC_ACCOUNT) == '' ? null : doc.get(_KEY_REC_ACCOUNT),
       sum: data.getOrDefault(_KEY_SUM, 0),
+      recSum: data.getOrDefault(_KEY_REC_SUM, 0),
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
     );
   }

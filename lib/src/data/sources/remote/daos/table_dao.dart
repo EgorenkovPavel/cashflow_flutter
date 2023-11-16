@@ -65,14 +65,10 @@ abstract class TableDAO<T> {
 
 class AccountsDAO extends TableDAO<CloudAccount> {
   const AccountsDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudAccount> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
+    required CollectionReference<Map<String, dynamic>>? super.collection,
+    required CloudConverter<CloudAccount> super.mapper,
+    required String super.key_updated,
+  });
 
   @override
   String getId(CloudAccount entity) => entity.id;
@@ -80,14 +76,10 @@ class AccountsDAO extends TableDAO<CloudAccount> {
 
 class CategoriesDAO extends TableDAO<CloudCategory> {
   const CategoriesDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudCategory> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
+    required CollectionReference<Map<String, dynamic>>? super.collection,
+    required CloudConverter<CloudCategory> super.mapper,
+    required String super.key_updated,
+  });
 
   @override
   String getId(CloudCategory entity) => entity.id;
@@ -95,14 +87,10 @@ class CategoriesDAO extends TableDAO<CloudCategory> {
 
 class OperationDAO extends TableDAO<CloudOperation> {
   const OperationDAO({
-    required CollectionReference<Map<String, dynamic>>? collection,
-    required CloudConverter<CloudOperation> mapper,
-    required String key_updated,
-  }) : super(
-          collection: collection,
-          mapper: mapper,
-          key_updated: key_updated,
-        );
+    required CollectionReference<Map<String, dynamic>>? super.collection,
+    required CloudConverter<CloudOperation> super.mapper,
+    required String super.key_updated,
+  });
 
   @override
   String getId(CloudOperation entity) => entity.id;

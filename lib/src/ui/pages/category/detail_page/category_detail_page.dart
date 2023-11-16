@@ -13,7 +13,7 @@ import 'package:money_tracker/src/utils/extensions.dart';
 class CategoryDetailPage extends StatelessWidget {
   final int id;
 
-  const CategoryDetailPage({Key? key, required this.id}) : super(key: key);
+  const CategoryDetailPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {

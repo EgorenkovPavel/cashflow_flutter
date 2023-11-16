@@ -9,13 +9,11 @@ class ListDividerOperation extends StatelessWidget {
   final Operation operation2;
   final _TitleType _titleType;
 
-  const ListDividerOperation.day(this.operation1, this.operation2, {Key? key})
-      : _titleType = _TitleType.DAY,
-        super(key: key);
+  const ListDividerOperation.day(this.operation1, this.operation2, {super.key})
+      : _titleType = _TitleType.DAY;
 
-  const ListDividerOperation.month(this.operation1, this.operation2, {Key? key})
-      : _titleType = _TitleType.MONTH,
-        super(key: key);
+  const ListDividerOperation.month(this.operation1, this.operation2, {super.key})
+      : _titleType = _TitleType.MONTH;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +48,10 @@ class ListDividerOperation extends StatelessWidget {
 
 class _TitleDivider extends StatelessWidget {
   const _TitleDivider({
-    Key? key,
+    super.key,
     required this.date,
     required this.type,
-  }) : super(key: key);
+  });
 
   final DateTime date;
   final _TitleType type;
@@ -96,8 +94,8 @@ class _TitleDivider extends StatelessWidget {
 
 class _EmptyDivider extends StatelessWidget {
   const _EmptyDivider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,7 @@ class Accounts extends Table {
 
   TextColumn get title => text()();
 
-  TextColumn get currency => text().map(const CurrencyConverter())();
+  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
 
   BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
 
@@ -54,6 +54,8 @@ class Categories extends Table {
 
   IntColumn get budget => integer()();
 
+  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
 }
 
@@ -78,6 +80,8 @@ class Operations extends Table {
   IntColumn get recAccount => integer().nullable().references(Accounts, #id)();
 
   IntColumn get sum => integer()();
+
+  IntColumn get recSum => integer().withDefault(const Constant(0))();
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
 
@@ -138,10 +142,11 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 8;
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(
+  MigrationStrategy get migration =>
+      MigrationStrategy(
         onCreate: (Migrator m) {
           return m.createAll();
         },
@@ -165,9 +170,13 @@ class Database extends _$Database {
             await m.addColumn(operations, operations.deleted);
           }
 
-          if (from < 7){
+          if (from < 7) {
             await m.addColumn(accounts, accounts.currency);
-            // upgrade currency column to RUB
+          }
+
+          if (from < 8) {
+            await m.addColumn(categories, categories.currency);
+            await m.addColumn(operations, operations.recSum);
           }
         },
       );
@@ -191,23 +200,26 @@ class Database extends _$Database {
 
     data.putIfAbsent(
       'account',
-      () => accounts
-          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-          .toList(),
+          () =>
+          accounts
+              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+              .toList(),
     );
 
     data.putIfAbsent(
       'category',
-      () => categories
-          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-          .toList(),
+          () =>
+          categories
+              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+              .toList(),
     );
 
     data.putIfAbsent(
       'operation',
-      () => operations
-          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-          .toList(),
+          () =>
+          operations
+              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+              .toList(),
     );
 
     return data;
@@ -255,6 +267,7 @@ class Database extends _$Database {
                 budgetType: const BudgetTypeConverter().fromSql(
                   int.parse(d['category_budget_type']),
                 ),
+                currency: Currency.RUB,
                 synced: false,
               ));
             } else {
@@ -278,11 +291,12 @@ class Database extends _$Database {
                   int.parse(d['operation_date']),
                 ),
                 operationType:
-                    converter.fromSql(int.parse(d['operation_type'])),
+                converter.fromSql(int.parse(d['operation_type'])),
                 account: int.parse(d['operation_account_id']),
                 category: _getId(d['operation_category_id']),
                 recAccount: _getId(d['operation_recipient_account_id']),
                 sum: int.parse(d['operation_sum']),
+                recSum: 0,
                 synced: false,
                 deleted: false,
               ));
@@ -323,14 +337,12 @@ class _DefaultValueSerializer extends ValueSerializer {
       }
 
       return _budgetTypeConverter.fromSql(json as int) as T;
-
     } else if (T == Currency) {
       if (json == null) {
         return Currency.RUB as T;
       }
 
       return _currencyConverter.fromSql(json as String) as T;
-
     } else if (T == int && json == null) {
       return 0 as T;
     } else if (T == String && json == null) {

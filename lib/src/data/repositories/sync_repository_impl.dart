@@ -247,6 +247,7 @@ class SyncRepositoryImpl implements SyncRepository {
           account: await _getAccountByCloudOperation(cloudOperation),
           recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
+          recSum: cloudOperation.recSum,
         ),
       );
 
@@ -285,6 +286,7 @@ class SyncRepositoryImpl implements SyncRepository {
           account: await _getAccountByCloudOperation(cloudOperation),
           recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
+          recSum: cloudOperation.recSum,
         ),
       );
       await _localSource.operations.updateFromCloud(newOperation);

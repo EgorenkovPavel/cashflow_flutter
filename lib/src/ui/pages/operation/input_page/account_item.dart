@@ -5,9 +5,9 @@ import '../../../../domain/models.dart';
 
 class AccountItem extends StatelessWidget {
   const AccountItem({
-    Key? key,
+    super.key,
     required this.account,
-  }) : super(key: key);
+  });
 
   final AccountBalance account;
 
@@ -18,7 +18,7 @@ class AccountItem extends StatelessWidget {
       children: <Widget>[
         Text(account.title),
         Text(
-          context.loc.numberFormat(account.balance),
+          context.loc.numberFormat(account.balance, account.currency),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/models/enum/currency.dart';
 
 part 'category_input_bloc.freezed.dart';
 
@@ -24,63 +25,37 @@ class CategoryInputEvent with _$CategoryInputEvent {
     required BudgetType budgetType,
   }) = _ChangeBudgetTypeCategoryInputEvent;
 
+  const factory CategoryInputEvent.changeCurrency({
+    required Currency currency,
+  }) = _ChangeCurrencyCategoryInputEvent;
+
   const factory CategoryInputEvent.save() = _SaveCategoryInputEvent;
 }
 
 @freezed
 class CategoryInputState with _$CategoryInputState {
-  const CategoryInputState._();
-
-  const factory CategoryInputState.main({
+  const factory CategoryInputState({
     Category? category,
     required OperationType operationType,
     required BudgetType budgetType,
     required String title,
     required int budget,
-  }) = _MainCategoryInputState;
-
-  const factory CategoryInputState.fetched({
-    required Category fetchedCategory,
-    required OperationType operationType,
-    required BudgetType budgetType,
-    required String title,
-    required int budget,
-  }) = _FetchedCategoryInputState;
-
-  const factory CategoryInputState.saved({
-    required Category savedCategory,
-    required OperationType operationType,
-    required BudgetType budgetType,
-    required String title,
-    required int budget,
-  }) = _SavedCategoryInputState;
-
-  Category? get category => map(
-        main: (state) => state.category,
-        saved: (state) => state.savedCategory,
-        fetched: (state) => state.fetchedCategory,
-      );
-
-  bool get isSaved => maybeMap(
-        saved: (_) => true,
-        orElse: () => false,
-      );
-
-  bool get isFetched => maybeMap(
-        fetched: (_) => true,
-        orElse: () => false,
-      );
+    required Currency currency,
+    required bool isSaved,
+  }) = _CategoryInputState;
 }
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   final DataRepository _repository;
 
   CategoryInputBloc(this._repository)
-      : super(const CategoryInputState.main(
+      : super(const CategoryInputState(
           operationType: OperationType.INPUT,
           budgetType: BudgetType.MONTH,
           title: '',
           budget: 0,
+          currency: Currency.RUB,
+          isSaved: false,
         )) {
     on<CategoryInputEvent>((event, emitter) => event.map(
           initByType: (event) => _initByType(event, emitter),
@@ -88,6 +63,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
           changeTitle: (event) => _changeTitle(event, emitter),
           changeBudget: (event) => _changeBudget(event, emitter),
           changeBudgetType: (event) => _changeBudgetType(event, emitter),
+          changeCurrency: (event) => _changeCurrency(event, emitter),
           save: (event) => _save(event, emitter),
         ));
   }
@@ -96,12 +72,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _InitByTypeCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(CategoryInputState.main(
-      operationType: event.operationType,
-      budgetType: state.budgetType,
-      title: state.title,
-      budget: state.budget,
-    ));
+    emit(state.copyWith(operationType: event.operationType));
   }
 
   Future<void> _initById(
@@ -110,12 +81,14 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   ) async {
     var category = await _repository.categories.getById(event.categoryId);
 
-    emit(CategoryInputState.fetched(
-      fetchedCategory: category,
+    emit(CategoryInputState(
+      category: category,
       operationType: category.operationType,
       budgetType: category.budgetType,
       title: category.title,
       budget: category.budget,
+      currency: category.currency,
+      isSaved: false,
     ));
   }
 
@@ -123,39 +96,21 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _ChangeTitleCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(CategoryInputState.main(
-      category: state.category,
-      operationType: state.operationType,
-      budgetType: state.budgetType,
-      title: event.title,
-      budget: state.budget,
-    ));
+    emit(state.copyWith(title: event.title));
   }
 
   void _changeBudget(
     _ChangeBudgetCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(CategoryInputState.main(
-      category: state.category,
-      operationType: state.operationType,
-      budgetType: state.budgetType,
-      title: state.title,
-      budget: event.budget,
-    ));
+    emit(state.copyWith(budget: event.budget));
   }
 
   void _changeBudgetType(
     _ChangeBudgetTypeCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(CategoryInputState.main(
-      category: state.category,
-      operationType: state.operationType,
-      budgetType: event.budgetType,
-      title: state.title,
-      budget: state.budget,
-    ));
+    emit(state.copyWith(budgetType: event.budgetType));
   }
 
   Future<void> _save(
@@ -168,15 +123,13 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
         operationType: state.operationType,
         budgetType: state.budgetType,
         budget: state.budget,
+        currency: state.currency,
       );
 
       var id = await _repository.categories.insert(category);
-      emit(CategoryInputState.saved(
-        title: state.title,
-        budget: state.budget,
-        budgetType: state.budgetType,
-        operationType: state.operationType,
-        savedCategory: category.copyWith(id: id),
+      emit(state.copyWith(
+        isSaved: true,
+        category: category.copyWith(id: id),
       ));
     } else {
       var newCategory = state.category!.copyWith(
@@ -184,16 +137,21 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
         operationType: state.operationType,
         budgetType: state.budgetType,
         budget: state.budget,
+        currency: state.currency,
       );
 
       await _repository.categories.update(newCategory);
-      emit(CategoryInputState.saved(
-        title: state.title,
-        budget: state.budget,
-        budgetType: state.budgetType,
-        operationType: state.operationType,
-        savedCategory: newCategory,
+      emit(state.copyWith(
+        isSaved: true,
+        category: newCategory,
       ));
     }
+  }
+
+  _changeCurrency(
+    _ChangeCurrencyCategoryInputEvent event,
+    Emitter<CategoryInputState> emit,
+  ) {
+    emit(state.copyWith(currency: event.currency));
   }
 }

@@ -31,8 +31,16 @@ mixin _$Operation {
     required TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)
         output,
-    required TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)
+    required TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)
         transfer,
   }) =>
       throw _privateConstructorUsedError;
@@ -44,8 +52,16 @@ mixin _$Operation {
     TResult? Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult? Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult? Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
   }) =>
       throw _privateConstructorUsedError;
@@ -57,8 +73,16 @@ mixin _$Operation {
     TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
     required TResult orElse(),
   }) =>
@@ -171,11 +195,11 @@ class _$OperationCopyWithImpl<$Res, $Val extends Operation>
 }
 
 /// @nodoc
-abstract class _$$_InputOperationCopyWith<$Res>
+abstract class _$$InputOperationImplCopyWith<$Res>
     implements $OperationCopyWith<$Res> {
-  factory _$$_InputOperationCopyWith(
-          _$_InputOperation value, $Res Function(_$_InputOperation) then) =
-      __$$_InputOperationCopyWithImpl<$Res>;
+  factory _$$InputOperationImplCopyWith(_$InputOperationImpl value,
+          $Res Function(_$InputOperationImpl) then) =
+      __$$InputOperationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -194,11 +218,11 @@ abstract class _$$_InputOperationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InputOperationCopyWithImpl<$Res>
-    extends _$OperationCopyWithImpl<$Res, _$_InputOperation>
-    implements _$$_InputOperationCopyWith<$Res> {
-  __$$_InputOperationCopyWithImpl(
-      _$_InputOperation _value, $Res Function(_$_InputOperation) _then)
+class __$$InputOperationImplCopyWithImpl<$Res>
+    extends _$OperationCopyWithImpl<$Res, _$InputOperationImpl>
+    implements _$$InputOperationImplCopyWith<$Res> {
+  __$$InputOperationImplCopyWithImpl(
+      _$InputOperationImpl _value, $Res Function(_$InputOperationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -213,7 +237,7 @@ class __$$_InputOperationCopyWithImpl<$Res>
     Object? category = null,
     Object? sum = null,
   }) {
-    return _then(_$_InputOperation(
+    return _then(_$InputOperationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -260,8 +284,8 @@ class __$$_InputOperationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InputOperation extends _InputOperation {
-  const _$_InputOperation(
+class _$InputOperationImpl extends _InputOperation {
+  const _$InputOperationImpl(
       {this.id = 0,
       this.cloudId = '',
       this.synced = false,
@@ -302,7 +326,7 @@ class _$_InputOperation extends _InputOperation {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InputOperation &&
+            other is _$InputOperationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.synced, synced) || other.synced == synced) &&
@@ -321,8 +345,9 @@ class _$_InputOperation extends _InputOperation {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InputOperationCopyWith<_$_InputOperation> get copyWith =>
-      __$$_InputOperationCopyWithImpl<_$_InputOperation>(this, _$identity);
+  _$$InputOperationImplCopyWith<_$InputOperationImpl> get copyWith =>
+      __$$InputOperationImplCopyWithImpl<_$InputOperationImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -333,8 +358,16 @@ class _$_InputOperation extends _InputOperation {
     required TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)
         output,
-    required TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)
+    required TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)
         transfer,
   }) {
     return input(id, cloudId, synced, deleted, date, account, category, sum);
@@ -349,8 +382,16 @@ class _$_InputOperation extends _InputOperation {
     TResult? Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult? Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult? Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
   }) {
     return input?.call(
@@ -366,8 +407,16 @@ class _$_InputOperation extends _InputOperation {
     TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
     required TResult orElse(),
   }) {
@@ -421,7 +470,7 @@ abstract class _InputOperation extends Operation {
       required final DateTime date,
       required final Account account,
       required final Category category,
-      required final int sum}) = _$_InputOperation;
+      required final int sum}) = _$InputOperationImpl;
   const _InputOperation._() : super._();
 
   @override
@@ -441,16 +490,16 @@ abstract class _InputOperation extends Operation {
   int get sum;
   @override
   @JsonKey(ignore: true)
-  _$$_InputOperationCopyWith<_$_InputOperation> get copyWith =>
+  _$$InputOperationImplCopyWith<_$InputOperationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_OutputOperationCopyWith<$Res>
+abstract class _$$OutputOperationImplCopyWith<$Res>
     implements $OperationCopyWith<$Res> {
-  factory _$$_OutputOperationCopyWith(
-          _$_OutputOperation value, $Res Function(_$_OutputOperation) then) =
-      __$$_OutputOperationCopyWithImpl<$Res>;
+  factory _$$OutputOperationImplCopyWith(_$OutputOperationImpl value,
+          $Res Function(_$OutputOperationImpl) then) =
+      __$$OutputOperationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -469,11 +518,11 @@ abstract class _$$_OutputOperationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OutputOperationCopyWithImpl<$Res>
-    extends _$OperationCopyWithImpl<$Res, _$_OutputOperation>
-    implements _$$_OutputOperationCopyWith<$Res> {
-  __$$_OutputOperationCopyWithImpl(
-      _$_OutputOperation _value, $Res Function(_$_OutputOperation) _then)
+class __$$OutputOperationImplCopyWithImpl<$Res>
+    extends _$OperationCopyWithImpl<$Res, _$OutputOperationImpl>
+    implements _$$OutputOperationImplCopyWith<$Res> {
+  __$$OutputOperationImplCopyWithImpl(
+      _$OutputOperationImpl _value, $Res Function(_$OutputOperationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -488,7 +537,7 @@ class __$$_OutputOperationCopyWithImpl<$Res>
     Object? category = null,
     Object? sum = null,
   }) {
-    return _then(_$_OutputOperation(
+    return _then(_$OutputOperationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -535,8 +584,8 @@ class __$$_OutputOperationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OutputOperation extends _OutputOperation {
-  const _$_OutputOperation(
+class _$OutputOperationImpl extends _OutputOperation {
+  const _$OutputOperationImpl(
       {this.id = 0,
       this.cloudId = '',
       this.synced = false,
@@ -577,7 +626,7 @@ class _$_OutputOperation extends _OutputOperation {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OutputOperation &&
+            other is _$OutputOperationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.synced, synced) || other.synced == synced) &&
@@ -596,8 +645,9 @@ class _$_OutputOperation extends _OutputOperation {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OutputOperationCopyWith<_$_OutputOperation> get copyWith =>
-      __$$_OutputOperationCopyWithImpl<_$_OutputOperation>(this, _$identity);
+  _$$OutputOperationImplCopyWith<_$OutputOperationImpl> get copyWith =>
+      __$$OutputOperationImplCopyWithImpl<_$OutputOperationImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -608,8 +658,16 @@ class _$_OutputOperation extends _OutputOperation {
     required TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)
         output,
-    required TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)
+    required TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)
         transfer,
   }) {
     return output(id, cloudId, synced, deleted, date, account, category, sum);
@@ -624,8 +682,16 @@ class _$_OutputOperation extends _OutputOperation {
     TResult? Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult? Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult? Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
   }) {
     return output?.call(
@@ -641,8 +707,16 @@ class _$_OutputOperation extends _OutputOperation {
     TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
     required TResult orElse(),
   }) {
@@ -696,7 +770,7 @@ abstract class _OutputOperation extends Operation {
       required final DateTime date,
       required final Account account,
       required final Category category,
-      required final int sum}) = _$_OutputOperation;
+      required final int sum}) = _$OutputOperationImpl;
   const _OutputOperation._() : super._();
 
   @override
@@ -716,16 +790,16 @@ abstract class _OutputOperation extends Operation {
   int get sum;
   @override
   @JsonKey(ignore: true)
-  _$$_OutputOperationCopyWith<_$_OutputOperation> get copyWith =>
+  _$$OutputOperationImplCopyWith<_$OutputOperationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransferOperationCopyWith<$Res>
+abstract class _$$TransferOperationImplCopyWith<$Res>
     implements $OperationCopyWith<$Res> {
-  factory _$$_TransferOperationCopyWith(_$_TransferOperation value,
-          $Res Function(_$_TransferOperation) then) =
-      __$$_TransferOperationCopyWithImpl<$Res>;
+  factory _$$TransferOperationImplCopyWith(_$TransferOperationImpl value,
+          $Res Function(_$TransferOperationImpl) then) =
+      __$$TransferOperationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -736,7 +810,8 @@ abstract class _$$_TransferOperationCopyWith<$Res>
       DateTime date,
       Account account,
       Account recAccount,
-      int sum});
+      int sum,
+      int recSum});
 
   @override
   $AccountCopyWith<$Res> get account;
@@ -744,11 +819,11 @@ abstract class _$$_TransferOperationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferOperationCopyWithImpl<$Res>
-    extends _$OperationCopyWithImpl<$Res, _$_TransferOperation>
-    implements _$$_TransferOperationCopyWith<$Res> {
-  __$$_TransferOperationCopyWithImpl(
-      _$_TransferOperation _value, $Res Function(_$_TransferOperation) _then)
+class __$$TransferOperationImplCopyWithImpl<$Res>
+    extends _$OperationCopyWithImpl<$Res, _$TransferOperationImpl>
+    implements _$$TransferOperationImplCopyWith<$Res> {
+  __$$TransferOperationImplCopyWithImpl(_$TransferOperationImpl _value,
+      $Res Function(_$TransferOperationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -762,8 +837,9 @@ class __$$_TransferOperationCopyWithImpl<$Res>
     Object? account = null,
     Object? recAccount = null,
     Object? sum = null,
+    Object? recSum = null,
   }) {
-    return _then(_$_TransferOperation(
+    return _then(_$TransferOperationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -796,6 +872,10 @@ class __$$_TransferOperationCopyWithImpl<$Res>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
+      recSum: null == recSum
+          ? _value.recSum
+          : recSum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 
@@ -810,8 +890,8 @@ class __$$_TransferOperationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferOperation extends _TransferOperation {
-  const _$_TransferOperation(
+class _$TransferOperationImpl extends _TransferOperation {
+  const _$TransferOperationImpl(
       {this.id = 0,
       this.cloudId = '',
       this.synced = false,
@@ -819,7 +899,8 @@ class _$_TransferOperation extends _TransferOperation {
       required this.date,
       required this.account,
       required this.recAccount,
-      required this.sum})
+      required this.sum,
+      required this.recSum})
       : super._();
 
   @override
@@ -842,17 +923,19 @@ class _$_TransferOperation extends _TransferOperation {
   final Account recAccount;
   @override
   final int sum;
+  @override
+  final int recSum;
 
   @override
   String toString() {
-    return 'Operation.transfer(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
+    return 'Operation.transfer(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum, recSum: $recSum)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferOperation &&
+            other is _$TransferOperationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.synced, synced) || other.synced == synced) &&
@@ -861,18 +944,19 @@ class _$_TransferOperation extends _TransferOperation {
             (identical(other.account, account) || other.account == account) &&
             (identical(other.recAccount, recAccount) ||
                 other.recAccount == recAccount) &&
-            (identical(other.sum, sum) || other.sum == sum));
+            (identical(other.sum, sum) || other.sum == sum) &&
+            (identical(other.recSum, recSum) || other.recSum == recSum));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, cloudId, synced, deleted,
-      date, account, recAccount, sum);
+      date, account, recAccount, sum, recSum);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferOperationCopyWith<_$_TransferOperation> get copyWith =>
-      __$$_TransferOperationCopyWithImpl<_$_TransferOperation>(
+  _$$TransferOperationImplCopyWith<_$TransferOperationImpl> get copyWith =>
+      __$$TransferOperationImplCopyWithImpl<_$TransferOperationImpl>(
           this, _$identity);
 
   @override
@@ -884,12 +968,20 @@ class _$_TransferOperation extends _TransferOperation {
     required TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)
         output,
-    required TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)
+    required TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)
         transfer,
   }) {
     return transfer(
-        id, cloudId, synced, deleted, date, account, recAccount, sum);
+        id, cloudId, synced, deleted, date, account, recAccount, sum, recSum);
   }
 
   @override
@@ -901,12 +993,20 @@ class _$_TransferOperation extends _TransferOperation {
     TResult? Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult? Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult? Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
   }) {
     return transfer?.call(
-        id, cloudId, synced, deleted, date, account, recAccount, sum);
+        id, cloudId, synced, deleted, date, account, recAccount, sum, recSum);
   }
 
   @override
@@ -918,14 +1018,22 @@ class _$_TransferOperation extends _TransferOperation {
     TResult Function(int id, String cloudId, bool synced, bool deleted,
             DateTime date, Account account, Category category, int sum)?
         output,
-    TResult Function(int id, String cloudId, bool synced, bool deleted,
-            DateTime date, Account account, Account recAccount, int sum)?
+    TResult Function(
+            int id,
+            String cloudId,
+            bool synced,
+            bool deleted,
+            DateTime date,
+            Account account,
+            Account recAccount,
+            int sum,
+            int recSum)?
         transfer,
     required TResult orElse(),
   }) {
     if (transfer != null) {
       return transfer(
-          id, cloudId, synced, deleted, date, account, recAccount, sum);
+          id, cloudId, synced, deleted, date, account, recAccount, sum, recSum);
     }
     return orElse();
   }
@@ -974,7 +1082,8 @@ abstract class _TransferOperation extends Operation {
       required final DateTime date,
       required final Account account,
       required final Account recAccount,
-      required final int sum}) = _$_TransferOperation;
+      required final int sum,
+      required final int recSum}) = _$TransferOperationImpl;
   const _TransferOperation._() : super._();
 
   @override
@@ -992,8 +1101,9 @@ abstract class _TransferOperation extends Operation {
   Account get recAccount;
   @override
   int get sum;
+  int get recSum;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferOperationCopyWith<_$_TransferOperation> get copyWith =>
+  _$$TransferOperationImplCopyWith<_$TransferOperationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

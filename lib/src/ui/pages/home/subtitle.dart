@@ -7,11 +7,11 @@ class Subtitle extends StatelessWidget {
   final void Function()? onPress;
 
   const Subtitle({
-    Key? key,
+    super.key,
     this.leading,
     this.child,
     this.onPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

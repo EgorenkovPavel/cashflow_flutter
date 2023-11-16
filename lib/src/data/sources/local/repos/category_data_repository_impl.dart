@@ -57,6 +57,11 @@ class CategoryDataRepositoryImpl
       _mapCategoryList(await categoryDao.getAllCategoriesWithEmptyCloudId());
 
   @override
+  Stream<List<CategoryCashflow>> watchCashflow(DateTime date) => categoryDao
+      .watchAllCategoryCashflowBudget(date)
+      .map(_mapCategoryCashflowList);
+
+  @override
   Stream<List<CategoryCashflow>> watchCashflowByType(
     DateTime date,
     OperationType type,

@@ -63,22 +63,22 @@ class _$BalanceOnDateCopyWithImpl<$Res, $Val extends BalanceOnDate>
 }
 
 /// @nodoc
-abstract class _$$_BalanceOnDateCopyWith<$Res>
+abstract class _$$BalanceOnDateImplCopyWith<$Res>
     implements $BalanceOnDateCopyWith<$Res> {
-  factory _$$_BalanceOnDateCopyWith(
-          _$_BalanceOnDate value, $Res Function(_$_BalanceOnDate) then) =
-      __$$_BalanceOnDateCopyWithImpl<$Res>;
+  factory _$$BalanceOnDateImplCopyWith(
+          _$BalanceOnDateImpl value, $Res Function(_$BalanceOnDateImpl) then) =
+      __$$BalanceOnDateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime date, int sum});
 }
 
 /// @nodoc
-class __$$_BalanceOnDateCopyWithImpl<$Res>
-    extends _$BalanceOnDateCopyWithImpl<$Res, _$_BalanceOnDate>
-    implements _$$_BalanceOnDateCopyWith<$Res> {
-  __$$_BalanceOnDateCopyWithImpl(
-      _$_BalanceOnDate _value, $Res Function(_$_BalanceOnDate) _then)
+class __$$BalanceOnDateImplCopyWithImpl<$Res>
+    extends _$BalanceOnDateCopyWithImpl<$Res, _$BalanceOnDateImpl>
+    implements _$$BalanceOnDateImplCopyWith<$Res> {
+  __$$BalanceOnDateImplCopyWithImpl(
+      _$BalanceOnDateImpl _value, $Res Function(_$BalanceOnDateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_BalanceOnDateCopyWithImpl<$Res>
     Object? date = null,
     Object? sum = null,
   }) {
-    return _then(_$_BalanceOnDate(
+    return _then(_$BalanceOnDateImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_BalanceOnDateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BalanceOnDate implements _BalanceOnDate {
-  const _$_BalanceOnDate({required this.date, required this.sum});
+class _$BalanceOnDateImpl implements _BalanceOnDate {
+  const _$BalanceOnDateImpl({required this.date, required this.sum});
 
   @override
   final DateTime date;
@@ -119,7 +119,7 @@ class _$_BalanceOnDate implements _BalanceOnDate {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BalanceOnDate &&
+            other is _$BalanceOnDateImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.sum, sum) || other.sum == sum));
   }
@@ -130,14 +130,14 @@ class _$_BalanceOnDate implements _BalanceOnDate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BalanceOnDateCopyWith<_$_BalanceOnDate> get copyWith =>
-      __$$_BalanceOnDateCopyWithImpl<_$_BalanceOnDate>(this, _$identity);
+  _$$BalanceOnDateImplCopyWith<_$BalanceOnDateImpl> get copyWith =>
+      __$$BalanceOnDateImplCopyWithImpl<_$BalanceOnDateImpl>(this, _$identity);
 }
 
 abstract class _BalanceOnDate implements BalanceOnDate {
   const factory _BalanceOnDate(
       {required final DateTime date,
-      required final int sum}) = _$_BalanceOnDate;
+      required final int sum}) = _$BalanceOnDateImpl;
 
   @override
   DateTime get date;
@@ -145,6 +145,6 @@ abstract class _BalanceOnDate implements BalanceOnDate {
   int get sum;
   @override
   @JsonKey(ignore: true)
-  _$$_BalanceOnDateCopyWith<_$_BalanceOnDate> get copyWith =>
+  _$$BalanceOnDateImplCopyWith<_$BalanceOnDateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

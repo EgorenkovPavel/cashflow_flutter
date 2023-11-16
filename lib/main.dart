@@ -8,6 +8,7 @@ import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
+import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 
 import 'src/injection_container.dart';
 import 'src/utils/app_bloc_observer.dart';
@@ -31,6 +32,9 @@ Future<void> main() async {
               create: (_) => sl(),
             ),
             BlocProvider<AccountBalanceBloc>(
+              create: (_) => sl(),
+            ),
+            BlocProvider<CategoryCashflowBloc>(
               create: (_) => sl(),
             ),
           ],

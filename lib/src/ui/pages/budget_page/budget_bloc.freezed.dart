@@ -93,20 +93,20 @@ class _$BudgetEventCopyWithImpl<$Res, $Val extends BudgetEvent>
 }
 
 /// @nodoc
-abstract class _$$_FetchBudgetEventCopyWith<$Res> {
-  factory _$$_FetchBudgetEventCopyWith(
-          _$_FetchBudgetEvent value, $Res Function(_$_FetchBudgetEvent) then) =
-      __$$_FetchBudgetEventCopyWithImpl<$Res>;
+abstract class _$$FetchBudgetEventImplCopyWith<$Res> {
+  factory _$$FetchBudgetEventImplCopyWith(_$FetchBudgetEventImpl value,
+          $Res Function(_$FetchBudgetEventImpl) then) =
+      __$$FetchBudgetEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationType operationtype});
 }
 
 /// @nodoc
-class __$$_FetchBudgetEventCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$_FetchBudgetEvent>
-    implements _$$_FetchBudgetEventCopyWith<$Res> {
-  __$$_FetchBudgetEventCopyWithImpl(
-      _$_FetchBudgetEvent _value, $Res Function(_$_FetchBudgetEvent) _then)
+class __$$FetchBudgetEventImplCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$FetchBudgetEventImpl>
+    implements _$$FetchBudgetEventImplCopyWith<$Res> {
+  __$$FetchBudgetEventImplCopyWithImpl(_$FetchBudgetEventImpl _value,
+      $Res Function(_$FetchBudgetEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +114,7 @@ class __$$_FetchBudgetEventCopyWithImpl<$Res>
   $Res call({
     Object? operationtype = null,
   }) {
-    return _then(_$_FetchBudgetEvent(
+    return _then(_$FetchBudgetEventImpl(
       operationtype: null == operationtype
           ? _value.operationtype
           : operationtype // ignore: cast_nullable_to_non_nullable
@@ -125,8 +125,8 @@ class __$$_FetchBudgetEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FetchBudgetEvent implements _FetchBudgetEvent {
-  const _$_FetchBudgetEvent({required this.operationtype});
+class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
+  const _$FetchBudgetEventImpl({required this.operationtype});
 
   @override
   final OperationType operationtype;
@@ -140,7 +140,7 @@ class _$_FetchBudgetEvent implements _FetchBudgetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FetchBudgetEvent &&
+            other is _$FetchBudgetEventImpl &&
             (identical(other.operationtype, operationtype) ||
                 other.operationtype == operationtype));
   }
@@ -151,8 +151,9 @@ class _$_FetchBudgetEvent implements _FetchBudgetEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FetchBudgetEventCopyWith<_$_FetchBudgetEvent> get copyWith =>
-      __$$_FetchBudgetEventCopyWithImpl<_$_FetchBudgetEvent>(this, _$identity);
+  _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
+      __$$FetchBudgetEventImplCopyWithImpl<_$FetchBudgetEventImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -237,34 +238,36 @@ class _$_FetchBudgetEvent implements _FetchBudgetEvent {
 
 abstract class _FetchBudgetEvent implements BudgetEvent {
   const factory _FetchBudgetEvent(
-      {required final OperationType operationtype}) = _$_FetchBudgetEvent;
+      {required final OperationType operationtype}) = _$FetchBudgetEventImpl;
 
   OperationType get operationtype;
   @JsonKey(ignore: true)
-  _$$_FetchBudgetEventCopyWith<_$_FetchBudgetEvent> get copyWith =>
+  _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_PreviousYearBudgetEventCopyWith<$Res> {
-  factory _$$_PreviousYearBudgetEventCopyWith(_$_PreviousYearBudgetEvent value,
-          $Res Function(_$_PreviousYearBudgetEvent) then) =
-      __$$_PreviousYearBudgetEventCopyWithImpl<$Res>;
+abstract class _$$PreviousYearBudgetEventImplCopyWith<$Res> {
+  factory _$$PreviousYearBudgetEventImplCopyWith(
+          _$PreviousYearBudgetEventImpl value,
+          $Res Function(_$PreviousYearBudgetEventImpl) then) =
+      __$$PreviousYearBudgetEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_PreviousYearBudgetEventCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$_PreviousYearBudgetEvent>
-    implements _$$_PreviousYearBudgetEventCopyWith<$Res> {
-  __$$_PreviousYearBudgetEventCopyWithImpl(_$_PreviousYearBudgetEvent _value,
-      $Res Function(_$_PreviousYearBudgetEvent) _then)
+class __$$PreviousYearBudgetEventImplCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$PreviousYearBudgetEventImpl>
+    implements _$$PreviousYearBudgetEventImplCopyWith<$Res> {
+  __$$PreviousYearBudgetEventImplCopyWithImpl(
+      _$PreviousYearBudgetEventImpl _value,
+      $Res Function(_$PreviousYearBudgetEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_PreviousYearBudgetEvent implements _PreviousYearBudgetEvent {
-  const _$_PreviousYearBudgetEvent();
+class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
+  const _$PreviousYearBudgetEventImpl();
 
   @override
   String toString() {
@@ -275,7 +278,7 @@ class _$_PreviousYearBudgetEvent implements _PreviousYearBudgetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PreviousYearBudgetEvent);
+            other is _$PreviousYearBudgetEventImpl);
   }
 
   @override
@@ -363,29 +366,29 @@ class _$_PreviousYearBudgetEvent implements _PreviousYearBudgetEvent {
 }
 
 abstract class _PreviousYearBudgetEvent implements BudgetEvent {
-  const factory _PreviousYearBudgetEvent() = _$_PreviousYearBudgetEvent;
+  const factory _PreviousYearBudgetEvent() = _$PreviousYearBudgetEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_NextYearBudgetEventCopyWith<$Res> {
-  factory _$$_NextYearBudgetEventCopyWith(_$_NextYearBudgetEvent value,
-          $Res Function(_$_NextYearBudgetEvent) then) =
-      __$$_NextYearBudgetEventCopyWithImpl<$Res>;
+abstract class _$$NextYearBudgetEventImplCopyWith<$Res> {
+  factory _$$NextYearBudgetEventImplCopyWith(_$NextYearBudgetEventImpl value,
+          $Res Function(_$NextYearBudgetEventImpl) then) =
+      __$$NextYearBudgetEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NextYearBudgetEventCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$_NextYearBudgetEvent>
-    implements _$$_NextYearBudgetEventCopyWith<$Res> {
-  __$$_NextYearBudgetEventCopyWithImpl(_$_NextYearBudgetEvent _value,
-      $Res Function(_$_NextYearBudgetEvent) _then)
+class __$$NextYearBudgetEventImplCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$NextYearBudgetEventImpl>
+    implements _$$NextYearBudgetEventImplCopyWith<$Res> {
+  __$$NextYearBudgetEventImplCopyWithImpl(_$NextYearBudgetEventImpl _value,
+      $Res Function(_$NextYearBudgetEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NextYearBudgetEvent implements _NextYearBudgetEvent {
-  const _$_NextYearBudgetEvent();
+class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
+  const _$NextYearBudgetEventImpl();
 
   @override
   String toString() {
@@ -395,7 +398,8 @@ class _$_NextYearBudgetEvent implements _NextYearBudgetEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NextYearBudgetEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$NextYearBudgetEventImpl);
   }
 
   @override
@@ -483,24 +487,24 @@ class _$_NextYearBudgetEvent implements _NextYearBudgetEvent {
 }
 
 abstract class _NextYearBudgetEvent implements BudgetEvent {
-  const factory _NextYearBudgetEvent() = _$_NextYearBudgetEvent;
+  const factory _NextYearBudgetEvent() = _$NextYearBudgetEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_ShowAllBudgetEventCopyWith<$Res> {
-  factory _$$_ShowAllBudgetEventCopyWith(_$_ShowAllBudgetEvent value,
-          $Res Function(_$_ShowAllBudgetEvent) then) =
-      __$$_ShowAllBudgetEventCopyWithImpl<$Res>;
+abstract class _$$ShowAllBudgetEventImplCopyWith<$Res> {
+  factory _$$ShowAllBudgetEventImplCopyWith(_$ShowAllBudgetEventImpl value,
+          $Res Function(_$ShowAllBudgetEventImpl) then) =
+      __$$ShowAllBudgetEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BudgetType budgetType});
 }
 
 /// @nodoc
-class __$$_ShowAllBudgetEventCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$_ShowAllBudgetEvent>
-    implements _$$_ShowAllBudgetEventCopyWith<$Res> {
-  __$$_ShowAllBudgetEventCopyWithImpl(
-      _$_ShowAllBudgetEvent _value, $Res Function(_$_ShowAllBudgetEvent) _then)
+class __$$ShowAllBudgetEventImplCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$ShowAllBudgetEventImpl>
+    implements _$$ShowAllBudgetEventImplCopyWith<$Res> {
+  __$$ShowAllBudgetEventImplCopyWithImpl(_$ShowAllBudgetEventImpl _value,
+      $Res Function(_$ShowAllBudgetEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -508,7 +512,7 @@ class __$$_ShowAllBudgetEventCopyWithImpl<$Res>
   $Res call({
     Object? budgetType = null,
   }) {
-    return _then(_$_ShowAllBudgetEvent(
+    return _then(_$ShowAllBudgetEventImpl(
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -519,8 +523,8 @@ class __$$_ShowAllBudgetEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ShowAllBudgetEvent implements _ShowAllBudgetEvent {
-  const _$_ShowAllBudgetEvent({required this.budgetType});
+class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
+  const _$ShowAllBudgetEventImpl({required this.budgetType});
 
   @override
   final BudgetType budgetType;
@@ -534,7 +538,7 @@ class _$_ShowAllBudgetEvent implements _ShowAllBudgetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ShowAllBudgetEvent &&
+            other is _$ShowAllBudgetEventImpl &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType));
   }
@@ -545,8 +549,8 @@ class _$_ShowAllBudgetEvent implements _ShowAllBudgetEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ShowAllBudgetEventCopyWith<_$_ShowAllBudgetEvent> get copyWith =>
-      __$$_ShowAllBudgetEventCopyWithImpl<_$_ShowAllBudgetEvent>(
+  _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
+      __$$ShowAllBudgetEventImplCopyWithImpl<_$ShowAllBudgetEventImpl>(
           this, _$identity);
 
   @override
@@ -632,29 +636,31 @@ class _$_ShowAllBudgetEvent implements _ShowAllBudgetEvent {
 
 abstract class _ShowAllBudgetEvent implements BudgetEvent {
   const factory _ShowAllBudgetEvent({required final BudgetType budgetType}) =
-      _$_ShowAllBudgetEvent;
+      _$ShowAllBudgetEventImpl;
 
   BudgetType get budgetType;
   @JsonKey(ignore: true)
-  _$$_ShowAllBudgetEventCopyWith<_$_ShowAllBudgetEvent> get copyWith =>
+  _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeItemsBudgetEventCopyWith<$Res> {
-  factory _$$_ChangeItemsBudgetEventCopyWith(_$_ChangeItemsBudgetEvent value,
-          $Res Function(_$_ChangeItemsBudgetEvent) then) =
-      __$$_ChangeItemsBudgetEventCopyWithImpl<$Res>;
+abstract class _$$ChangeItemsBudgetEventImplCopyWith<$Res> {
+  factory _$$ChangeItemsBudgetEventImplCopyWith(
+          _$ChangeItemsBudgetEventImpl value,
+          $Res Function(_$ChangeItemsBudgetEventImpl) then) =
+      __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<CategoryCashflow> items});
 }
 
 /// @nodoc
-class __$$_ChangeItemsBudgetEventCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$_ChangeItemsBudgetEvent>
-    implements _$$_ChangeItemsBudgetEventCopyWith<$Res> {
-  __$$_ChangeItemsBudgetEventCopyWithImpl(_$_ChangeItemsBudgetEvent _value,
-      $Res Function(_$_ChangeItemsBudgetEvent) _then)
+class __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$ChangeItemsBudgetEventImpl>
+    implements _$$ChangeItemsBudgetEventImplCopyWith<$Res> {
+  __$$ChangeItemsBudgetEventImplCopyWithImpl(
+      _$ChangeItemsBudgetEventImpl _value,
+      $Res Function(_$ChangeItemsBudgetEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -662,7 +668,7 @@ class __$$_ChangeItemsBudgetEventCopyWithImpl<$Res>
   $Res call({
     Object? items = null,
   }) {
-    return _then(_$_ChangeItemsBudgetEvent(
+    return _then(_$ChangeItemsBudgetEventImpl(
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -673,8 +679,9 @@ class __$$_ChangeItemsBudgetEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeItemsBudgetEvent implements _ChangeItemsBudgetEvent {
-  const _$_ChangeItemsBudgetEvent({required final List<CategoryCashflow> items})
+class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
+  const _$ChangeItemsBudgetEventImpl(
+      {required final List<CategoryCashflow> items})
       : _items = items;
 
   final List<CategoryCashflow> _items;
@@ -694,7 +701,7 @@ class _$_ChangeItemsBudgetEvent implements _ChangeItemsBudgetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeItemsBudgetEvent &&
+            other is _$ChangeItemsBudgetEventImpl &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
@@ -705,9 +712,9 @@ class _$_ChangeItemsBudgetEvent implements _ChangeItemsBudgetEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeItemsBudgetEventCopyWith<_$_ChangeItemsBudgetEvent> get copyWith =>
-      __$$_ChangeItemsBudgetEventCopyWithImpl<_$_ChangeItemsBudgetEvent>(
-          this, _$identity);
+  _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
+      get copyWith => __$$ChangeItemsBudgetEventImplCopyWithImpl<
+          _$ChangeItemsBudgetEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -793,12 +800,12 @@ class _$_ChangeItemsBudgetEvent implements _ChangeItemsBudgetEvent {
 abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
   const factory _ChangeItemsBudgetEvent(
           {required final List<CategoryCashflow> items}) =
-      _$_ChangeItemsBudgetEvent;
+      _$ChangeItemsBudgetEventImpl;
 
   List<CategoryCashflow> get items;
   @JsonKey(ignore: true)
-  _$$_ChangeItemsBudgetEventCopyWith<_$_ChangeItemsBudgetEvent> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -889,11 +896,11 @@ class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
 }
 
 /// @nodoc
-abstract class _$$_BudgetStateCopyWith<$Res>
+abstract class _$$BudgetStateImplCopyWith<$Res>
     implements $BudgetStateCopyWith<$Res> {
-  factory _$$_BudgetStateCopyWith(
-          _$_BudgetState value, $Res Function(_$_BudgetState) then) =
-      __$$_BudgetStateCopyWithImpl<$Res>;
+  factory _$$BudgetStateImplCopyWith(
+          _$BudgetStateImpl value, $Res Function(_$BudgetStateImpl) then) =
+      __$$BudgetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -907,11 +914,11 @@ abstract class _$$_BudgetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BudgetStateCopyWithImpl<$Res>
-    extends _$BudgetStateCopyWithImpl<$Res, _$_BudgetState>
-    implements _$$_BudgetStateCopyWith<$Res> {
-  __$$_BudgetStateCopyWithImpl(
-      _$_BudgetState _value, $Res Function(_$_BudgetState) _then)
+class __$$BudgetStateImplCopyWithImpl<$Res>
+    extends _$BudgetStateCopyWithImpl<$Res, _$BudgetStateImpl>
+    implements _$$BudgetStateImplCopyWith<$Res> {
+  __$$BudgetStateImplCopyWithImpl(
+      _$BudgetStateImpl _value, $Res Function(_$BudgetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -925,7 +932,7 @@ class __$$_BudgetStateCopyWithImpl<$Res>
     Object? showAllMonthBudget = null,
     Object? showAllYearBudget = null,
   }) {
-    return _then(_$_BudgetState(
+    return _then(_$BudgetStateImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -960,8 +967,8 @@ class __$$_BudgetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BudgetState implements _BudgetState {
-  const _$_BudgetState(
+class _$BudgetStateImpl implements _BudgetState {
+  const _$BudgetStateImpl(
       {required this.date,
       required this.operationType,
       required final List<CategoryCashflow> itemsMonthBudget,
@@ -1016,7 +1023,7 @@ class _$_BudgetState implements _BudgetState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BudgetState &&
+            other is _$BudgetStateImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.operationType, operationType) ||
                 other.operationType == operationType) &&
@@ -1045,8 +1052,8 @@ class _$_BudgetState implements _BudgetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BudgetStateCopyWith<_$_BudgetState> get copyWith =>
-      __$$_BudgetStateCopyWithImpl<_$_BudgetState>(this, _$identity);
+  _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
+      __$$BudgetStateImplCopyWithImpl<_$BudgetStateImpl>(this, _$identity);
 }
 
 abstract class _BudgetState implements BudgetState {
@@ -1057,7 +1064,7 @@ abstract class _BudgetState implements BudgetState {
       required final List<CategoryCashflow> itemsYearBudget,
       required final List<CategoryCashflow> itemsAll,
       required final bool showAllMonthBudget,
-      required final bool showAllYearBudget}) = _$_BudgetState;
+      required final bool showAllYearBudget}) = _$BudgetStateImpl;
 
   @override
   DateTime get date;
@@ -1075,6 +1082,6 @@ abstract class _BudgetState implements BudgetState {
   bool get showAllYearBudget;
   @override
   @JsonKey(ignore: true)
-  _$$_BudgetStateCopyWith<_$_BudgetState> get copyWith =>
+  _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
