@@ -85,6 +85,7 @@ class _AccountPageState extends State<AccountPage> {
               controller: _controller,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
               onChanged: (value) => context

@@ -118,6 +118,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: titleController,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
               onChanged: (value) => context
@@ -130,6 +131,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: budgetController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: context.loc.budget,
               ),
               inputFormatters: <TextInputFormatter>[

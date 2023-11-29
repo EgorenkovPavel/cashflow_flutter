@@ -206,7 +206,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             ),
             ElevatedButton(
               onPressed: () => _onSavePressed(context),
-              child: Text(context.loc.save.toUpperCase()),
+              child: Text(context.loc.save.toUpperCase(), style: TextStyle().copyWith(color: Colors.white)),
             ),
           ],
         ),
@@ -338,9 +338,9 @@ class DateButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: <Widget>[
-          Icon(icon),
+          Icon(icon, color: Colors.white,),
           const SizedBox(width: 4.0),
-          Text(text),
+          Text(text, style: TextStyle().copyWith(color: Colors.white)),
         ],
       ),
     );
