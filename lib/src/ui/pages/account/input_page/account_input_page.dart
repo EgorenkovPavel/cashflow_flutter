@@ -66,9 +66,6 @@ class _AccountPageState extends State<AccountPage> {
     return null;
   }
 
-  _onSave(BuildContext context) =>
-      context.read<AccountInputBloc>().add(const AccountInputEvent.save());
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AccountInputBloc, AccountInputState>(
@@ -77,7 +74,7 @@ class _AccountPageState extends State<AccountPage> {
         title: widget.isNew
             ? context.loc.newAccountCardTitle
             : context.loc.accountCardTitle,
-        onSave: (context) => _onSave(context),
+        onSave: (context) => context.onSave(),
         child: Column(
           children: [
             TextFormField(
@@ -88,31 +85,22 @@ class _AccountPageState extends State<AccountPage> {
                 border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
-              onChanged: (value) => context
-                  .read<AccountInputBloc>()
-                  .add(AccountInputEvent.changeTitle(title: value)),
+              onChanged: (value) => context.onChangeTitle(value),
               validator: _titleValidator,
             ),
-            Row(
-              children: [
-                Checkbox(
-                  value: context.select<AccountInputBloc, bool>(
-                    (bloc) => bloc.state.isDebt,
+            if (widget.isNew)
+              Row(
+                children: [
+                  Checkbox(
+                    value: context.isDebt(),
+                    onChanged: (val) => context.onChangeIsDebt(val!),
                   ),
-                  onChanged: (val) => context
-                      .read<AccountInputBloc>()
-                      .add(AccountInputEvent.changeIsDebt(isDebt: val!)),
-                ),
-                const Text('Is debt'),
-              ],
-            ),
-            TypeRadioButton<Currency>(
-              onChange: (val) => context
-                  .read<AccountInputBloc>()
-                  .add(AccountInputEvent.changeCurrency(currency: val)),
-              type: context.select<AccountInputBloc, Currency>(
-                (bloc) => bloc.state.currency,
+                  const Text('Is debt'),
+                ],
               ),
+            TypeRadioButton<Currency>(
+              onChange: (val) => context.onChangeCurrency(val),
+              type: context.currency(),
               items: const [
                 Currency.RUB,
                 Currency.USD,
@@ -124,4 +112,30 @@ class _AccountPageState extends State<AccountPage> {
       ),
     );
   }
+}
+
+extension BlocExt on BuildContext {
+  onChangeCurrency(Currency currency) {
+    read<AccountInputBloc>()
+        .add(AccountInputEvent.changeCurrency(currency: currency));
+  }
+
+  onChangeIsDebt(bool isDebt) {
+    read<AccountInputBloc>()
+        .add(AccountInputEvent.changeIsDebt(isDebt: isDebt));
+  }
+
+  onChangeTitle(String title) {
+    read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
+  }
+
+  Currency currency() => select<AccountInputBloc, Currency>(
+        (bloc) => bloc.state.currency,
+      );
+
+  bool isDebt() => select<AccountInputBloc, bool>(
+        (bloc) => bloc.state.isDebt,
+      );
+
+  onSave() => read<AccountInputBloc>().add(const AccountInputEvent.save());
 }
