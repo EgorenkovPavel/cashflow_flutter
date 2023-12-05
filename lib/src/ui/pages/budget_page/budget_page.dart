@@ -8,8 +8,10 @@ import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../domain/models/enum/currency.dart';
+
 class BudgetPage extends StatefulWidget {
-  const BudgetPage({Key? key, required this.type}) : super(key: key);
+  const BudgetPage({super.key, required this.type});
 
   final OperationType type;
 
@@ -66,6 +68,7 @@ class _BudgetPageState extends State<BudgetPage> {
               SliverPersistentHeader(
                 pinned: true,
                 delegate: BudgetTypeHeaderDelegate(
+                  currency: Currency.RUB,
                   title: context.loc.budgetTypeTitle(BudgetType.MONTH),
                   cashflow: state.itemsMonthBudget.fold(
                     0,
@@ -87,6 +90,7 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
               SliverPersistentHeader(
                 delegate: BudgetTypeHeaderDelegate(
+                  currency: Currency.RUB,
                   title: context.loc.budgetTypeTitle(BudgetType.YEAR),
                   cashflow: state.itemsYearBudget.fold(
                     0,
@@ -120,10 +124,10 @@ class _BudgetPageState extends State<BudgetPage> {
 
 class AppBarTitle extends StatelessWidget {
   const AppBarTitle({
-    Key? key,
+    super.key,
     required this.operationType,
     required this.date,
-  }) : super(key: key);
+  });
 
   final OperationType operationType;
   final DateTime date;
@@ -143,6 +147,7 @@ class AppBarTitle extends StatelessWidget {
 class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String title;
   final int cashflow;
+  final Currency currency;
   final bool showAll;
   final void Function() onPressed;
 
@@ -151,6 +156,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.showAll,
     required this.onPressed,
     required this.title,
+    required this.currency,
   });
 
   @override
@@ -174,7 +180,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
               const Spacer(),
               Text(
-                context.loc.numberFormat(cashflow),
+                context.loc.numberFormat(cashflow, currency),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               showAll
@@ -271,7 +277,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             duration: _duration,
             builder: (context, cashflow, _) {
               return Text(
-                context.loc.numberFormat(cashflow),
+                context.loc.numberFormat(cashflow, Currency.RUB),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -298,11 +304,11 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
 
 class PieDiagram extends StatelessWidget {
   const PieDiagram({
-    Key? key,
+    super.key,
     required this.list,
     this.onBackPressed,
     this.onForwardPressed,
-  }) : super(key: key);
+  });
 
   final void Function()? onBackPressed;
   final void Function()? onForwardPressed;
@@ -345,7 +351,7 @@ class PieDiagram extends StatelessWidget {
 class _CategoryItem extends StatelessWidget {
   final CategoryCashflow category;
 
-  const _CategoryItem({Key? key, required this.category}) : super(key: key);
+  const _CategoryItem({super.key, required this.category});
 
   int _cashflow() {
     return category.category.budgetType == BudgetType.MONTH
@@ -371,9 +377,9 @@ class _CategoryItem extends StatelessWidget {
       onTap: () => context.openCategoryPage(category.category.id),
       title: Text(category.category.title),
       subtitle: Text(
-        context.loc.numberFormat(category.category.budget),
+        context.loc.numberFormat(category.category.budget, category.category.currency),
       ),
-      trailing: Text(context.loc.numberFormat(_cashflow())),
+      trailing: Text(context.loc.numberFormat(_cashflow(), category.category.currency)),
       leading: CircularProgressIndicator(
         value: _progress(),
       ),

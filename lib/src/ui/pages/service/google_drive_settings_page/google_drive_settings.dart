@@ -8,7 +8,7 @@ import 'google_drive_settings_bloc.dart';
 import 'restore_dialog.dart';
 
 class GoogleDriveSettingsPage extends StatelessWidget {
-  const GoogleDriveSettingsPage({Key? key}) : super(key: key);
+  const GoogleDriveSettingsPage({super.key});
 
   void _listenState(BuildContext context, DriveState state) {
     state.mapOrNull(

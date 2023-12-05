@@ -69,27 +69,28 @@ class _$DataControlEventCopyWithImpl<$Res, $Val extends DataControlEvent>
 }
 
 /// @nodoc
-abstract class _$$_DeleteAllDataControlEventCopyWith<$Res> {
-  factory _$$_DeleteAllDataControlEventCopyWith(
-          _$_DeleteAllDataControlEvent value,
-          $Res Function(_$_DeleteAllDataControlEvent) then) =
-      __$$_DeleteAllDataControlEventCopyWithImpl<$Res>;
+abstract class _$$DeleteAllDataControlEventImplCopyWith<$Res> {
+  factory _$$DeleteAllDataControlEventImplCopyWith(
+          _$DeleteAllDataControlEventImpl value,
+          $Res Function(_$DeleteAllDataControlEventImpl) then) =
+      __$$DeleteAllDataControlEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_DeleteAllDataControlEventCopyWithImpl<$Res>
-    extends _$DataControlEventCopyWithImpl<$Res, _$_DeleteAllDataControlEvent>
-    implements _$$_DeleteAllDataControlEventCopyWith<$Res> {
-  __$$_DeleteAllDataControlEventCopyWithImpl(
-      _$_DeleteAllDataControlEvent _value,
-      $Res Function(_$_DeleteAllDataControlEvent) _then)
+class __$$DeleteAllDataControlEventImplCopyWithImpl<$Res>
+    extends _$DataControlEventCopyWithImpl<$Res,
+        _$DeleteAllDataControlEventImpl>
+    implements _$$DeleteAllDataControlEventImplCopyWith<$Res> {
+  __$$DeleteAllDataControlEventImplCopyWithImpl(
+      _$DeleteAllDataControlEventImpl _value,
+      $Res Function(_$DeleteAllDataControlEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_DeleteAllDataControlEvent implements _DeleteAllDataControlEvent {
-  const _$_DeleteAllDataControlEvent();
+class _$DeleteAllDataControlEventImpl implements _DeleteAllDataControlEvent {
+  const _$DeleteAllDataControlEventImpl();
 
   @override
   String toString() {
@@ -100,7 +101,7 @@ class _$_DeleteAllDataControlEvent implements _DeleteAllDataControlEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DeleteAllDataControlEvent);
+            other is _$DeleteAllDataControlEventImpl);
   }
 
   @override
@@ -164,7 +165,7 @@ class _$_DeleteAllDataControlEvent implements _DeleteAllDataControlEvent {
 }
 
 abstract class _DeleteAllDataControlEvent implements DataControlEvent {
-  const factory _DeleteAllDataControlEvent() = _$_DeleteAllDataControlEvent;
+  const factory _DeleteAllDataControlEvent() = _$DeleteAllDataControlEventImpl;
 }
 
 /// @nodoc
@@ -234,25 +235,27 @@ class _$DataControlStateCopyWithImpl<$Res, $Val extends DataControlState>
 }
 
 /// @nodoc
-abstract class _$$_InitialDataControlStateCopyWith<$Res> {
-  factory _$$_InitialDataControlStateCopyWith(_$_InitialDataControlState value,
-          $Res Function(_$_InitialDataControlState) then) =
-      __$$_InitialDataControlStateCopyWithImpl<$Res>;
+abstract class _$$InitialDataControlStateImplCopyWith<$Res> {
+  factory _$$InitialDataControlStateImplCopyWith(
+          _$InitialDataControlStateImpl value,
+          $Res Function(_$InitialDataControlStateImpl) then) =
+      __$$InitialDataControlStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialDataControlStateCopyWithImpl<$Res>
-    extends _$DataControlStateCopyWithImpl<$Res, _$_InitialDataControlState>
-    implements _$$_InitialDataControlStateCopyWith<$Res> {
-  __$$_InitialDataControlStateCopyWithImpl(_$_InitialDataControlState _value,
-      $Res Function(_$_InitialDataControlState) _then)
+class __$$InitialDataControlStateImplCopyWithImpl<$Res>
+    extends _$DataControlStateCopyWithImpl<$Res, _$InitialDataControlStateImpl>
+    implements _$$InitialDataControlStateImplCopyWith<$Res> {
+  __$$InitialDataControlStateImplCopyWithImpl(
+      _$InitialDataControlStateImpl _value,
+      $Res Function(_$InitialDataControlStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InitialDataControlState extends _InitialDataControlState {
-  const _$_InitialDataControlState() : super._();
+class _$InitialDataControlStateImpl extends _InitialDataControlState {
+  const _$InitialDataControlStateImpl() : super._();
 
   @override
   String toString() {
@@ -263,7 +266,7 @@ class _$_InitialDataControlState extends _InitialDataControlState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InitialDataControlState);
+            other is _$InitialDataControlStateImpl);
   }
 
   @override
@@ -339,32 +342,33 @@ class _$_InitialDataControlState extends _InitialDataControlState {
 }
 
 abstract class _InitialDataControlState extends DataControlState {
-  const factory _InitialDataControlState() = _$_InitialDataControlState;
+  const factory _InitialDataControlState() = _$InitialDataControlStateImpl;
   const _InitialDataControlState._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_InProgressDataControlStateCopyWith<$Res> {
-  factory _$$_InProgressDataControlStateCopyWith(
-          _$_InProgressDataControlState value,
-          $Res Function(_$_InProgressDataControlState) then) =
-      __$$_InProgressDataControlStateCopyWithImpl<$Res>;
+abstract class _$$InProgressDataControlStateImplCopyWith<$Res> {
+  factory _$$InProgressDataControlStateImplCopyWith(
+          _$InProgressDataControlStateImpl value,
+          $Res Function(_$InProgressDataControlStateImpl) then) =
+      __$$InProgressDataControlStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InProgressDataControlStateCopyWithImpl<$Res>
-    extends _$DataControlStateCopyWithImpl<$Res, _$_InProgressDataControlState>
-    implements _$$_InProgressDataControlStateCopyWith<$Res> {
-  __$$_InProgressDataControlStateCopyWithImpl(
-      _$_InProgressDataControlState _value,
-      $Res Function(_$_InProgressDataControlState) _then)
+class __$$InProgressDataControlStateImplCopyWithImpl<$Res>
+    extends _$DataControlStateCopyWithImpl<$Res,
+        _$InProgressDataControlStateImpl>
+    implements _$$InProgressDataControlStateImplCopyWith<$Res> {
+  __$$InProgressDataControlStateImplCopyWithImpl(
+      _$InProgressDataControlStateImpl _value,
+      $Res Function(_$InProgressDataControlStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InProgressDataControlState extends _InProgressDataControlState {
-  const _$_InProgressDataControlState() : super._();
+class _$InProgressDataControlStateImpl extends _InProgressDataControlState {
+  const _$InProgressDataControlStateImpl() : super._();
 
   @override
   String toString() {
@@ -375,7 +379,7 @@ class _$_InProgressDataControlState extends _InProgressDataControlState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InProgressDataControlState);
+            other is _$InProgressDataControlStateImpl);
   }
 
   @override
@@ -451,30 +455,33 @@ class _$_InProgressDataControlState extends _InProgressDataControlState {
 }
 
 abstract class _InProgressDataControlState extends DataControlState {
-  const factory _InProgressDataControlState() = _$_InProgressDataControlState;
+  const factory _InProgressDataControlState() =
+      _$InProgressDataControlStateImpl;
   const _InProgressDataControlState._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SuccessDataControlStateCopyWith<$Res> {
-  factory _$$_SuccessDataControlStateCopyWith(_$_SuccessDataControlState value,
-          $Res Function(_$_SuccessDataControlState) then) =
-      __$$_SuccessDataControlStateCopyWithImpl<$Res>;
+abstract class _$$SuccessDataControlStateImplCopyWith<$Res> {
+  factory _$$SuccessDataControlStateImplCopyWith(
+          _$SuccessDataControlStateImpl value,
+          $Res Function(_$SuccessDataControlStateImpl) then) =
+      __$$SuccessDataControlStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SuccessDataControlStateCopyWithImpl<$Res>
-    extends _$DataControlStateCopyWithImpl<$Res, _$_SuccessDataControlState>
-    implements _$$_SuccessDataControlStateCopyWith<$Res> {
-  __$$_SuccessDataControlStateCopyWithImpl(_$_SuccessDataControlState _value,
-      $Res Function(_$_SuccessDataControlState) _then)
+class __$$SuccessDataControlStateImplCopyWithImpl<$Res>
+    extends _$DataControlStateCopyWithImpl<$Res, _$SuccessDataControlStateImpl>
+    implements _$$SuccessDataControlStateImplCopyWith<$Res> {
+  __$$SuccessDataControlStateImplCopyWithImpl(
+      _$SuccessDataControlStateImpl _value,
+      $Res Function(_$SuccessDataControlStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SuccessDataControlState extends _SuccessDataControlState {
-  const _$_SuccessDataControlState() : super._();
+class _$SuccessDataControlStateImpl extends _SuccessDataControlState {
+  const _$SuccessDataControlStateImpl() : super._();
 
   @override
   String toString() {
@@ -485,7 +492,7 @@ class _$_SuccessDataControlState extends _SuccessDataControlState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SuccessDataControlState);
+            other is _$SuccessDataControlStateImpl);
   }
 
   @override
@@ -561,6 +568,6 @@ class _$_SuccessDataControlState extends _SuccessDataControlState {
 }
 
 abstract class _SuccessDataControlState extends DataControlState {
-  const factory _SuccessDataControlState() = _$_SuccessDataControlState;
+  const factory _SuccessDataControlState() = _$SuccessDataControlStateImpl;
   const _SuccessDataControlState._() : super._();
 }

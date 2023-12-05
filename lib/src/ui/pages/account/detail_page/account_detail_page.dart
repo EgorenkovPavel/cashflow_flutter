@@ -8,7 +8,7 @@ import 'package:money_tracker/src/ui/pages/operation/operation_list.dart';
 class AccountDetailPage extends StatelessWidget {
   final int id;
 
-  const AccountDetailPage({Key? key, required this.id}) : super(key: key);
+  const AccountDetailPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AccountDetailPage extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                   onPressed: () => context.openAccountEditDialog(id),
-                  icon: const Icon(Icons.edit),
+                  icon: const Icon(Icons.edit, color: Colors.black,),
                 ),
               ],
             ),

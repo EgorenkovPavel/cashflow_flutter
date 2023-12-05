@@ -65,6 +65,7 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
         account: const AccountMapper().mapToDart(o.account),
         recAccount: const AccountMapper().mapToDart(o.recAccount!),
         sum: o.operationData.sum,
+        recSum: o.operationData.recSum,
       ),
     );
   }
@@ -80,6 +81,7 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
         category: o.category.id,
         recAccount: null,
         sum: o.sum,
+        recSum: 0,
         synced: false,
         deleted: o.deleted,
       ),
@@ -92,6 +94,7 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
         category: o.category.id,
         recAccount: null,
         sum: o.sum,
+        recSum: 0,
         synced: false,
         deleted: o.deleted,
       ),
@@ -104,6 +107,7 @@ class OperationMapper extends Mapper<Operation, OperationDbEntity> {
         category: null,
         recAccount: o.recAccount.id,
         sum: o.sum,
+        recSum: o.recSum,
         synced: false,
         deleted: o.deleted,
       ),

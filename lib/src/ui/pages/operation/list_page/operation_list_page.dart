@@ -8,13 +8,14 @@ import 'package:money_tracker/src/ui/pages/operation/operation_list.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class OperationListPage extends StatelessWidget {
-  const OperationListPage({Key? key}) : super(key: key);
+  const OperationListPage({super.key});
 
   Future<void> _onFilterPressed(BuildContext context) async {
     var newFilter = await context.openOperationFilterPage(
       context.read<OperationListBloc>().state.filter,
     );
     if (newFilter != null) {
+      if (!context.mounted) return;
       context.read<OperationListBloc>().add(Fetch(newFilter));
     }
   }

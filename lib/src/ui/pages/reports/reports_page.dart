@@ -14,7 +14,7 @@ const int YEAR = 2021;
 const double _CELL_HEIGHT = 32;
 
 class ReportsPage extends StatelessWidget {
-  const ReportsPage({Key? key}) : super(key: key);
+  const ReportsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class ReportsPage extends StatelessWidget {
 
 class ConsolidateReport extends StatelessWidget {
   const ConsolidateReport({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +98,11 @@ class Cell extends StatelessWidget {
   final bool bold;
 
   const Cell({
-    Key? key,
+    super.key,
     required this.text,
     this.alignment = Alignment.centerLeft,
     this.bold = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

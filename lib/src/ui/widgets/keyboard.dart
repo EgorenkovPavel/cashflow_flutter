@@ -5,10 +5,10 @@ class Keyboard extends StatelessWidget {
   final VoidCallback onBackPressed;
 
   const Keyboard({
-    Key? key,
+    super.key,
     required this.onDigitPressed,
     required this.onBackPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +92,11 @@ class Keyboard extends StatelessWidget {
 
 class _DigitButton extends StatelessWidget {
   const _DigitButton({
-    Key? key,
+    super.key,
     required this.onDigitPressed,
     required this.digit,
     required this.width,
-  }) : super(key: key);
+  });
 
   final ValueSetter<int> onDigitPressed;
   final int digit;
@@ -119,11 +119,11 @@ class _DigitButton extends StatelessWidget {
 
 class _Button extends StatelessWidget {
   const _Button({
-    Key? key,
+    super.key,
     required this.child,
     required this.onPressed,
     required this.width,
-  }) : super(key: key);
+  });
 
   final Widget? child;
   final void Function()? onPressed;

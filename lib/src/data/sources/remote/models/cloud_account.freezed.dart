@@ -82,11 +82,11 @@ class _$CloudAccountCopyWithImpl<$Res, $Val extends CloudAccount>
 }
 
 /// @nodoc
-abstract class _$$_CloudAccountCopyWith<$Res>
+abstract class _$$CloudAccountImplCopyWith<$Res>
     implements $CloudAccountCopyWith<$Res> {
-  factory _$$_CloudAccountCopyWith(
-          _$_CloudAccount value, $Res Function(_$_CloudAccount) then) =
-      __$$_CloudAccountCopyWithImpl<$Res>;
+  factory _$$CloudAccountImplCopyWith(
+          _$CloudAccountImpl value, $Res Function(_$CloudAccountImpl) then) =
+      __$$CloudAccountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_CloudAccountCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CloudAccountCopyWithImpl<$Res>
-    extends _$CloudAccountCopyWithImpl<$Res, _$_CloudAccount>
-    implements _$$_CloudAccountCopyWith<$Res> {
-  __$$_CloudAccountCopyWithImpl(
-      _$_CloudAccount _value, $Res Function(_$_CloudAccount) _then)
+class __$$CloudAccountImplCopyWithImpl<$Res>
+    extends _$CloudAccountCopyWithImpl<$Res, _$CloudAccountImpl>
+    implements _$$CloudAccountImplCopyWith<$Res> {
+  __$$CloudAccountImplCopyWithImpl(
+      _$CloudAccountImpl _value, $Res Function(_$CloudAccountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -110,7 +110,7 @@ class __$$_CloudAccountCopyWithImpl<$Res>
     Object? currency = null,
     Object? deleted = null,
   }) {
-    return _then(_$_CloudAccount(
+    return _then(_$CloudAccountImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,8 @@ class __$$_CloudAccountCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CloudAccount implements _CloudAccount {
-  const _$_CloudAccount(
+class _$CloudAccountImpl implements _CloudAccount {
+  const _$CloudAccountImpl(
       {required this.id,
       required this.title,
       required this.isDebt,
@@ -165,7 +165,7 @@ class _$_CloudAccount implements _CloudAccount {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CloudAccount &&
+            other is _$CloudAccountImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
@@ -181,8 +181,8 @@ class _$_CloudAccount implements _CloudAccount {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CloudAccountCopyWith<_$_CloudAccount> get copyWith =>
-      __$$_CloudAccountCopyWithImpl<_$_CloudAccount>(this, _$identity);
+  _$$CloudAccountImplCopyWith<_$CloudAccountImpl> get copyWith =>
+      __$$CloudAccountImplCopyWithImpl<_$CloudAccountImpl>(this, _$identity);
 }
 
 abstract class _CloudAccount implements CloudAccount {
@@ -191,7 +191,7 @@ abstract class _CloudAccount implements CloudAccount {
       required final String title,
       required final bool isDebt,
       required final String currency,
-      required final bool deleted}) = _$_CloudAccount;
+      required final bool deleted}) = _$CloudAccountImpl;
 
   @override
   String get id;
@@ -205,6 +205,6 @@ abstract class _CloudAccount implements CloudAccount {
   bool get deleted;
   @override
   @JsonKey(ignore: true)
-  _$$_CloudAccountCopyWith<_$_CloudAccount> get copyWith =>
+  _$$CloudAccountImplCopyWith<_$CloudAccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

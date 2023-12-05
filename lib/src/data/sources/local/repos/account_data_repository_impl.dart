@@ -67,6 +67,7 @@ class AccountDataRepositoryImpl
         cloudId: Value(account.cloudId),
         title: Value(account.title),
         isDebt: Value(account.isDebt),
+        currency: Value(account.currency),
       ));
 
   @override

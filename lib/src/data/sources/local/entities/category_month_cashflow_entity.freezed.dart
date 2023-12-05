@@ -72,25 +72,25 @@ class _$CategoryMonthCashflowEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CategoryMonthCashflowEntityCopyWith<$Res>
+abstract class _$$CategoryMonthCashflowEntityImplCopyWith<$Res>
     implements $CategoryMonthCashflowEntityCopyWith<$Res> {
-  factory _$$_CategoryMonthCashflowEntityCopyWith(
-          _$_CategoryMonthCashflowEntity value,
-          $Res Function(_$_CategoryMonthCashflowEntity) then) =
-      __$$_CategoryMonthCashflowEntityCopyWithImpl<$Res>;
+  factory _$$CategoryMonthCashflowEntityImplCopyWith(
+          _$CategoryMonthCashflowEntityImpl value,
+          $Res Function(_$CategoryMonthCashflowEntityImpl) then) =
+      __$$CategoryMonthCashflowEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDB category, int month, int cashflow});
 }
 
 /// @nodoc
-class __$$_CategoryMonthCashflowEntityCopyWithImpl<$Res>
+class __$$CategoryMonthCashflowEntityImplCopyWithImpl<$Res>
     extends _$CategoryMonthCashflowEntityCopyWithImpl<$Res,
-        _$_CategoryMonthCashflowEntity>
-    implements _$$_CategoryMonthCashflowEntityCopyWith<$Res> {
-  __$$_CategoryMonthCashflowEntityCopyWithImpl(
-      _$_CategoryMonthCashflowEntity _value,
-      $Res Function(_$_CategoryMonthCashflowEntity) _then)
+        _$CategoryMonthCashflowEntityImpl>
+    implements _$$CategoryMonthCashflowEntityImplCopyWith<$Res> {
+  __$$CategoryMonthCashflowEntityImplCopyWithImpl(
+      _$CategoryMonthCashflowEntityImpl _value,
+      $Res Function(_$CategoryMonthCashflowEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -100,7 +100,7 @@ class __$$_CategoryMonthCashflowEntityCopyWithImpl<$Res>
     Object? month = null,
     Object? cashflow = null,
   }) {
-    return _then(_$_CategoryMonthCashflowEntity(
+    return _then(_$CategoryMonthCashflowEntityImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -119,8 +119,9 @@ class __$$_CategoryMonthCashflowEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryMonthCashflowEntity implements _CategoryMonthCashflowEntity {
-  const _$_CategoryMonthCashflowEntity(
+class _$CategoryMonthCashflowEntityImpl
+    implements _CategoryMonthCashflowEntity {
+  const _$CategoryMonthCashflowEntityImpl(
       {required this.category, required this.month, required this.cashflow});
 
   @override
@@ -139,7 +140,7 @@ class _$_CategoryMonthCashflowEntity implements _CategoryMonthCashflowEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryMonthCashflowEntity &&
+            other is _$CategoryMonthCashflowEntityImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.month, month) || other.month == month) &&
@@ -153,9 +154,9 @@ class _$_CategoryMonthCashflowEntity implements _CategoryMonthCashflowEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryMonthCashflowEntityCopyWith<_$_CategoryMonthCashflowEntity>
-      get copyWith => __$$_CategoryMonthCashflowEntityCopyWithImpl<
-          _$_CategoryMonthCashflowEntity>(this, _$identity);
+  _$$CategoryMonthCashflowEntityImplCopyWith<_$CategoryMonthCashflowEntityImpl>
+      get copyWith => __$$CategoryMonthCashflowEntityImplCopyWithImpl<
+          _$CategoryMonthCashflowEntityImpl>(this, _$identity);
 }
 
 abstract class _CategoryMonthCashflowEntity
@@ -163,7 +164,7 @@ abstract class _CategoryMonthCashflowEntity
   const factory _CategoryMonthCashflowEntity(
       {required final CategoryDB category,
       required final int month,
-      required final int cashflow}) = _$_CategoryMonthCashflowEntity;
+      required final int cashflow}) = _$CategoryMonthCashflowEntityImpl;
 
   @override
   CategoryDB get category;
@@ -173,6 +174,6 @@ abstract class _CategoryMonthCashflowEntity
   int get cashflow;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryMonthCashflowEntityCopyWith<_$_CategoryMonthCashflowEntity>
+  _$$CategoryMonthCashflowEntityImplCopyWith<_$CategoryMonthCashflowEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

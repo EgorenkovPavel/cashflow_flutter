@@ -23,6 +23,7 @@ mixin _$CategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
@@ -33,6 +34,7 @@ mixin _$CategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +45,7 @@ mixin _$CategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -56,6 +59,8 @@ mixin _$CategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,6 +72,7 @@ mixin _$CategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +84,7 @@ mixin _$CategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -103,23 +110,23 @@ class _$CategoryInputEventCopyWithImpl<$Res, $Val extends CategoryInputEvent>
 }
 
 /// @nodoc
-abstract class _$$_InitByTypeCategoryInputEventCopyWith<$Res> {
-  factory _$$_InitByTypeCategoryInputEventCopyWith(
-          _$_InitByTypeCategoryInputEvent value,
-          $Res Function(_$_InitByTypeCategoryInputEvent) then) =
-      __$$_InitByTypeCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$InitByTypeCategoryInputEventImplCopyWith<$Res> {
+  factory _$$InitByTypeCategoryInputEventImplCopyWith(
+          _$InitByTypeCategoryInputEventImpl value,
+          $Res Function(_$InitByTypeCategoryInputEventImpl) then) =
+      __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationType operationType});
 }
 
 /// @nodoc
-class __$$_InitByTypeCategoryInputEventCopyWithImpl<$Res>
+class __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>
     extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$_InitByTypeCategoryInputEvent>
-    implements _$$_InitByTypeCategoryInputEventCopyWith<$Res> {
-  __$$_InitByTypeCategoryInputEventCopyWithImpl(
-      _$_InitByTypeCategoryInputEvent _value,
-      $Res Function(_$_InitByTypeCategoryInputEvent) _then)
+        _$InitByTypeCategoryInputEventImpl>
+    implements _$$InitByTypeCategoryInputEventImplCopyWith<$Res> {
+  __$$InitByTypeCategoryInputEventImplCopyWithImpl(
+      _$InitByTypeCategoryInputEventImpl _value,
+      $Res Function(_$InitByTypeCategoryInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +134,7 @@ class __$$_InitByTypeCategoryInputEventCopyWithImpl<$Res>
   $Res call({
     Object? operationType = null,
   }) {
-    return _then(_$_InitByTypeCategoryInputEvent(
+    return _then(_$InitByTypeCategoryInputEventImpl(
       operationType: null == operationType
           ? _value.operationType
           : operationType // ignore: cast_nullable_to_non_nullable
@@ -138,8 +145,9 @@ class __$$_InitByTypeCategoryInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
-  const _$_InitByTypeCategoryInputEvent({required this.operationType});
+class _$InitByTypeCategoryInputEventImpl
+    implements _InitByTypeCategoryInputEvent {
+  const _$InitByTypeCategoryInputEventImpl({required this.operationType});
 
   @override
   final OperationType operationType;
@@ -153,7 +161,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InitByTypeCategoryInputEvent &&
+            other is _$InitByTypeCategoryInputEventImpl &&
             (identical(other.operationType, operationType) ||
                 other.operationType == operationType));
   }
@@ -164,9 +172,10 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitByTypeCategoryInputEventCopyWith<_$_InitByTypeCategoryInputEvent>
-      get copyWith => __$$_InitByTypeCategoryInputEventCopyWithImpl<
-          _$_InitByTypeCategoryInputEvent>(this, _$identity);
+  _$$InitByTypeCategoryInputEventImplCopyWith<
+          _$InitByTypeCategoryInputEventImpl>
+      get copyWith => __$$InitByTypeCategoryInputEventImplCopyWithImpl<
+          _$InitByTypeCategoryInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -176,6 +185,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return initByType(operationType);
@@ -189,6 +199,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return initByType?.call(operationType);
@@ -202,6 +213,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -221,6 +233,8 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initByType(this);
@@ -235,6 +249,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initByType?.call(this);
@@ -249,6 +264,7 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -262,32 +278,33 @@ class _$_InitByTypeCategoryInputEvent implements _InitByTypeCategoryInputEvent {
 abstract class _InitByTypeCategoryInputEvent implements CategoryInputEvent {
   const factory _InitByTypeCategoryInputEvent(
           {required final OperationType operationType}) =
-      _$_InitByTypeCategoryInputEvent;
+      _$InitByTypeCategoryInputEventImpl;
 
   OperationType get operationType;
   @JsonKey(ignore: true)
-  _$$_InitByTypeCategoryInputEventCopyWith<_$_InitByTypeCategoryInputEvent>
+  _$$InitByTypeCategoryInputEventImplCopyWith<
+          _$InitByTypeCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_InitByIdCategoryInputEventCopyWith<$Res> {
-  factory _$$_InitByIdCategoryInputEventCopyWith(
-          _$_InitByIdCategoryInputEvent value,
-          $Res Function(_$_InitByIdCategoryInputEvent) then) =
-      __$$_InitByIdCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$InitByIdCategoryInputEventImplCopyWith<$Res> {
+  factory _$$InitByIdCategoryInputEventImplCopyWith(
+          _$InitByIdCategoryInputEventImpl value,
+          $Res Function(_$InitByIdCategoryInputEventImpl) then) =
+      __$$InitByIdCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int categoryId});
 }
 
 /// @nodoc
-class __$$_InitByIdCategoryInputEventCopyWithImpl<$Res>
+class __$$InitByIdCategoryInputEventImplCopyWithImpl<$Res>
     extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$_InitByIdCategoryInputEvent>
-    implements _$$_InitByIdCategoryInputEventCopyWith<$Res> {
-  __$$_InitByIdCategoryInputEventCopyWithImpl(
-      _$_InitByIdCategoryInputEvent _value,
-      $Res Function(_$_InitByIdCategoryInputEvent) _then)
+        _$InitByIdCategoryInputEventImpl>
+    implements _$$InitByIdCategoryInputEventImplCopyWith<$Res> {
+  __$$InitByIdCategoryInputEventImplCopyWithImpl(
+      _$InitByIdCategoryInputEventImpl _value,
+      $Res Function(_$InitByIdCategoryInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -295,7 +312,7 @@ class __$$_InitByIdCategoryInputEventCopyWithImpl<$Res>
   $Res call({
     Object? categoryId = null,
   }) {
-    return _then(_$_InitByIdCategoryInputEvent(
+    return _then(_$InitByIdCategoryInputEventImpl(
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -306,8 +323,8 @@ class __$$_InitByIdCategoryInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
-  const _$_InitByIdCategoryInputEvent({required this.categoryId});
+class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
+  const _$InitByIdCategoryInputEventImpl({required this.categoryId});
 
   @override
   final int categoryId;
@@ -321,7 +338,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InitByIdCategoryInputEvent &&
+            other is _$InitByIdCategoryInputEventImpl &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId));
   }
@@ -332,9 +349,9 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitByIdCategoryInputEventCopyWith<_$_InitByIdCategoryInputEvent>
-      get copyWith => __$$_InitByIdCategoryInputEventCopyWithImpl<
-          _$_InitByIdCategoryInputEvent>(this, _$identity);
+  _$$InitByIdCategoryInputEventImplCopyWith<_$InitByIdCategoryInputEventImpl>
+      get copyWith => __$$InitByIdCategoryInputEventImplCopyWithImpl<
+          _$InitByIdCategoryInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -344,6 +361,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return initById(categoryId);
@@ -357,6 +375,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return initById?.call(categoryId);
@@ -370,6 +389,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -389,6 +409,8 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initById(this);
@@ -403,6 +425,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initById?.call(this);
@@ -417,6 +440,7 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -429,32 +453,32 @@ class _$_InitByIdCategoryInputEvent implements _InitByIdCategoryInputEvent {
 
 abstract class _InitByIdCategoryInputEvent implements CategoryInputEvent {
   const factory _InitByIdCategoryInputEvent({required final int categoryId}) =
-      _$_InitByIdCategoryInputEvent;
+      _$InitByIdCategoryInputEventImpl;
 
   int get categoryId;
   @JsonKey(ignore: true)
-  _$$_InitByIdCategoryInputEventCopyWith<_$_InitByIdCategoryInputEvent>
+  _$$InitByIdCategoryInputEventImplCopyWith<_$InitByIdCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeTitleCategoryInputEventCopyWith<$Res> {
-  factory _$$_ChangeTitleCategoryInputEventCopyWith(
-          _$_ChangeTitleCategoryInputEvent value,
-          $Res Function(_$_ChangeTitleCategoryInputEvent) then) =
-      __$$_ChangeTitleCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeTitleCategoryInputEventImplCopyWith<$Res> {
+  factory _$$ChangeTitleCategoryInputEventImplCopyWith(
+          _$ChangeTitleCategoryInputEventImpl value,
+          $Res Function(_$ChangeTitleCategoryInputEventImpl) then) =
+      __$$ChangeTitleCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String title});
 }
 
 /// @nodoc
-class __$$_ChangeTitleCategoryInputEventCopyWithImpl<$Res>
+class __$$ChangeTitleCategoryInputEventImplCopyWithImpl<$Res>
     extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$_ChangeTitleCategoryInputEvent>
-    implements _$$_ChangeTitleCategoryInputEventCopyWith<$Res> {
-  __$$_ChangeTitleCategoryInputEventCopyWithImpl(
-      _$_ChangeTitleCategoryInputEvent _value,
-      $Res Function(_$_ChangeTitleCategoryInputEvent) _then)
+        _$ChangeTitleCategoryInputEventImpl>
+    implements _$$ChangeTitleCategoryInputEventImplCopyWith<$Res> {
+  __$$ChangeTitleCategoryInputEventImplCopyWithImpl(
+      _$ChangeTitleCategoryInputEventImpl _value,
+      $Res Function(_$ChangeTitleCategoryInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -462,7 +486,7 @@ class __$$_ChangeTitleCategoryInputEventCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
   }) {
-    return _then(_$_ChangeTitleCategoryInputEvent(
+    return _then(_$ChangeTitleCategoryInputEventImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -473,9 +497,9 @@ class __$$_ChangeTitleCategoryInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeTitleCategoryInputEvent
+class _$ChangeTitleCategoryInputEventImpl
     implements _ChangeTitleCategoryInputEvent {
-  const _$_ChangeTitleCategoryInputEvent({required this.title});
+  const _$ChangeTitleCategoryInputEventImpl({required this.title});
 
   @override
   final String title;
@@ -489,7 +513,7 @@ class _$_ChangeTitleCategoryInputEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeTitleCategoryInputEvent &&
+            other is _$ChangeTitleCategoryInputEventImpl &&
             (identical(other.title, title) || other.title == title));
   }
 
@@ -499,9 +523,10 @@ class _$_ChangeTitleCategoryInputEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeTitleCategoryInputEventCopyWith<_$_ChangeTitleCategoryInputEvent>
-      get copyWith => __$$_ChangeTitleCategoryInputEventCopyWithImpl<
-          _$_ChangeTitleCategoryInputEvent>(this, _$identity);
+  _$$ChangeTitleCategoryInputEventImplCopyWith<
+          _$ChangeTitleCategoryInputEventImpl>
+      get copyWith => __$$ChangeTitleCategoryInputEventImplCopyWithImpl<
+          _$ChangeTitleCategoryInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -511,6 +536,7 @@ class _$_ChangeTitleCategoryInputEvent
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeTitle(title);
@@ -524,6 +550,7 @@ class _$_ChangeTitleCategoryInputEvent
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeTitle?.call(title);
@@ -537,6 +564,7 @@ class _$_ChangeTitleCategoryInputEvent
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -556,6 +584,8 @@ class _$_ChangeTitleCategoryInputEvent
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeTitle(this);
@@ -570,6 +600,7 @@ class _$_ChangeTitleCategoryInputEvent
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeTitle?.call(this);
@@ -584,6 +615,7 @@ class _$_ChangeTitleCategoryInputEvent
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -596,32 +628,33 @@ class _$_ChangeTitleCategoryInputEvent
 
 abstract class _ChangeTitleCategoryInputEvent implements CategoryInputEvent {
   const factory _ChangeTitleCategoryInputEvent({required final String title}) =
-      _$_ChangeTitleCategoryInputEvent;
+      _$ChangeTitleCategoryInputEventImpl;
 
   String get title;
   @JsonKey(ignore: true)
-  _$$_ChangeTitleCategoryInputEventCopyWith<_$_ChangeTitleCategoryInputEvent>
+  _$$ChangeTitleCategoryInputEventImplCopyWith<
+          _$ChangeTitleCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeBudgetCategoryInputEventCopyWith<$Res> {
-  factory _$$_ChangeBudgetCategoryInputEventCopyWith(
-          _$_ChangeBudgetCategoryInputEvent value,
-          $Res Function(_$_ChangeBudgetCategoryInputEvent) then) =
-      __$$_ChangeBudgetCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeBudgetCategoryInputEventImplCopyWith<$Res> {
+  factory _$$ChangeBudgetCategoryInputEventImplCopyWith(
+          _$ChangeBudgetCategoryInputEventImpl value,
+          $Res Function(_$ChangeBudgetCategoryInputEventImpl) then) =
+      __$$ChangeBudgetCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int budget});
 }
 
 /// @nodoc
-class __$$_ChangeBudgetCategoryInputEventCopyWithImpl<$Res>
+class __$$ChangeBudgetCategoryInputEventImplCopyWithImpl<$Res>
     extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$_ChangeBudgetCategoryInputEvent>
-    implements _$$_ChangeBudgetCategoryInputEventCopyWith<$Res> {
-  __$$_ChangeBudgetCategoryInputEventCopyWithImpl(
-      _$_ChangeBudgetCategoryInputEvent _value,
-      $Res Function(_$_ChangeBudgetCategoryInputEvent) _then)
+        _$ChangeBudgetCategoryInputEventImpl>
+    implements _$$ChangeBudgetCategoryInputEventImplCopyWith<$Res> {
+  __$$ChangeBudgetCategoryInputEventImplCopyWithImpl(
+      _$ChangeBudgetCategoryInputEventImpl _value,
+      $Res Function(_$ChangeBudgetCategoryInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -629,7 +662,7 @@ class __$$_ChangeBudgetCategoryInputEventCopyWithImpl<$Res>
   $Res call({
     Object? budget = null,
   }) {
-    return _then(_$_ChangeBudgetCategoryInputEvent(
+    return _then(_$ChangeBudgetCategoryInputEventImpl(
       budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
@@ -640,9 +673,9 @@ class __$$_ChangeBudgetCategoryInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeBudgetCategoryInputEvent
+class _$ChangeBudgetCategoryInputEventImpl
     implements _ChangeBudgetCategoryInputEvent {
-  const _$_ChangeBudgetCategoryInputEvent({required this.budget});
+  const _$ChangeBudgetCategoryInputEventImpl({required this.budget});
 
   @override
   final int budget;
@@ -656,7 +689,7 @@ class _$_ChangeBudgetCategoryInputEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeBudgetCategoryInputEvent &&
+            other is _$ChangeBudgetCategoryInputEventImpl &&
             (identical(other.budget, budget) || other.budget == budget));
   }
 
@@ -666,9 +699,10 @@ class _$_ChangeBudgetCategoryInputEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeBudgetCategoryInputEventCopyWith<_$_ChangeBudgetCategoryInputEvent>
-      get copyWith => __$$_ChangeBudgetCategoryInputEventCopyWithImpl<
-          _$_ChangeBudgetCategoryInputEvent>(this, _$identity);
+  _$$ChangeBudgetCategoryInputEventImplCopyWith<
+          _$ChangeBudgetCategoryInputEventImpl>
+      get copyWith => __$$ChangeBudgetCategoryInputEventImplCopyWithImpl<
+          _$ChangeBudgetCategoryInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -678,6 +712,7 @@ class _$_ChangeBudgetCategoryInputEvent
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeBudget(budget);
@@ -691,6 +726,7 @@ class _$_ChangeBudgetCategoryInputEvent
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeBudget?.call(budget);
@@ -704,6 +740,7 @@ class _$_ChangeBudgetCategoryInputEvent
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -723,6 +760,8 @@ class _$_ChangeBudgetCategoryInputEvent
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudget(this);
@@ -737,6 +776,7 @@ class _$_ChangeBudgetCategoryInputEvent
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudget?.call(this);
@@ -751,6 +791,7 @@ class _$_ChangeBudgetCategoryInputEvent
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -763,32 +804,33 @@ class _$_ChangeBudgetCategoryInputEvent
 
 abstract class _ChangeBudgetCategoryInputEvent implements CategoryInputEvent {
   const factory _ChangeBudgetCategoryInputEvent({required final int budget}) =
-      _$_ChangeBudgetCategoryInputEvent;
+      _$ChangeBudgetCategoryInputEventImpl;
 
   int get budget;
   @JsonKey(ignore: true)
-  _$$_ChangeBudgetCategoryInputEventCopyWith<_$_ChangeBudgetCategoryInputEvent>
+  _$$ChangeBudgetCategoryInputEventImplCopyWith<
+          _$ChangeBudgetCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeBudgetTypeCategoryInputEventCopyWith<$Res> {
-  factory _$$_ChangeBudgetTypeCategoryInputEventCopyWith(
-          _$_ChangeBudgetTypeCategoryInputEvent value,
-          $Res Function(_$_ChangeBudgetTypeCategoryInputEvent) then) =
-      __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<$Res> {
+  factory _$$ChangeBudgetTypeCategoryInputEventImplCopyWith(
+          _$ChangeBudgetTypeCategoryInputEventImpl value,
+          $Res Function(_$ChangeBudgetTypeCategoryInputEventImpl) then) =
+      __$$ChangeBudgetTypeCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BudgetType budgetType});
 }
 
 /// @nodoc
-class __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl<$Res>
+class __$$ChangeBudgetTypeCategoryInputEventImplCopyWithImpl<$Res>
     extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$_ChangeBudgetTypeCategoryInputEvent>
-    implements _$$_ChangeBudgetTypeCategoryInputEventCopyWith<$Res> {
-  __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl(
-      _$_ChangeBudgetTypeCategoryInputEvent _value,
-      $Res Function(_$_ChangeBudgetTypeCategoryInputEvent) _then)
+        _$ChangeBudgetTypeCategoryInputEventImpl>
+    implements _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<$Res> {
+  __$$ChangeBudgetTypeCategoryInputEventImplCopyWithImpl(
+      _$ChangeBudgetTypeCategoryInputEventImpl _value,
+      $Res Function(_$ChangeBudgetTypeCategoryInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -796,7 +838,7 @@ class __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl<$Res>
   $Res call({
     Object? budgetType = null,
   }) {
-    return _then(_$_ChangeBudgetTypeCategoryInputEvent(
+    return _then(_$ChangeBudgetTypeCategoryInputEventImpl(
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -807,9 +849,9 @@ class __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeBudgetTypeCategoryInputEvent
+class _$ChangeBudgetTypeCategoryInputEventImpl
     implements _ChangeBudgetTypeCategoryInputEvent {
-  const _$_ChangeBudgetTypeCategoryInputEvent({required this.budgetType});
+  const _$ChangeBudgetTypeCategoryInputEventImpl({required this.budgetType});
 
   @override
   final BudgetType budgetType;
@@ -823,7 +865,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeBudgetTypeCategoryInputEvent &&
+            other is _$ChangeBudgetTypeCategoryInputEventImpl &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType));
   }
@@ -834,10 +876,10 @@ class _$_ChangeBudgetTypeCategoryInputEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeBudgetTypeCategoryInputEventCopyWith<
-          _$_ChangeBudgetTypeCategoryInputEvent>
-      get copyWith => __$$_ChangeBudgetTypeCategoryInputEventCopyWithImpl<
-          _$_ChangeBudgetTypeCategoryInputEvent>(this, _$identity);
+  _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<
+          _$ChangeBudgetTypeCategoryInputEventImpl>
+      get copyWith => __$$ChangeBudgetTypeCategoryInputEventImplCopyWithImpl<
+          _$ChangeBudgetTypeCategoryInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -847,6 +889,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeBudgetType(budgetType);
@@ -860,6 +903,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeBudgetType?.call(budgetType);
@@ -873,6 +917,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -892,6 +937,8 @@ class _$_ChangeBudgetTypeCategoryInputEvent
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudgetType(this);
@@ -906,6 +953,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudgetType?.call(this);
@@ -920,6 +968,7 @@ class _$_ChangeBudgetTypeCategoryInputEvent
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -934,35 +983,215 @@ abstract class _ChangeBudgetTypeCategoryInputEvent
     implements CategoryInputEvent {
   const factory _ChangeBudgetTypeCategoryInputEvent(
           {required final BudgetType budgetType}) =
-      _$_ChangeBudgetTypeCategoryInputEvent;
+      _$ChangeBudgetTypeCategoryInputEventImpl;
 
   BudgetType get budgetType;
   @JsonKey(ignore: true)
-  _$$_ChangeBudgetTypeCategoryInputEventCopyWith<
-          _$_ChangeBudgetTypeCategoryInputEvent>
+  _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<
+          _$ChangeBudgetTypeCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SaveCategoryInputEventCopyWith<$Res> {
-  factory _$$_SaveCategoryInputEventCopyWith(_$_SaveCategoryInputEvent value,
-          $Res Function(_$_SaveCategoryInputEvent) then) =
-      __$$_SaveCategoryInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeCurrencyCategoryInputEventImplCopyWith<$Res> {
+  factory _$$ChangeCurrencyCategoryInputEventImplCopyWith(
+          _$ChangeCurrencyCategoryInputEventImpl value,
+          $Res Function(_$ChangeCurrencyCategoryInputEventImpl) then) =
+      __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Currency currency});
 }
 
 /// @nodoc
-class __$$_SaveCategoryInputEventCopyWithImpl<$Res>
-    extends _$CategoryInputEventCopyWithImpl<$Res, _$_SaveCategoryInputEvent>
-    implements _$$_SaveCategoryInputEventCopyWith<$Res> {
-  __$$_SaveCategoryInputEventCopyWithImpl(_$_SaveCategoryInputEvent _value,
-      $Res Function(_$_SaveCategoryInputEvent) _then)
+class __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<$Res>
+    extends _$CategoryInputEventCopyWithImpl<$Res,
+        _$ChangeCurrencyCategoryInputEventImpl>
+    implements _$$ChangeCurrencyCategoryInputEventImplCopyWith<$Res> {
+  __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl(
+      _$ChangeCurrencyCategoryInputEventImpl _value,
+      $Res Function(_$ChangeCurrencyCategoryInputEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currency = null,
+  }) {
+    return _then(_$ChangeCurrencyCategoryInputEventImpl(
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeCurrencyCategoryInputEventImpl
+    implements _ChangeCurrencyCategoryInputEvent {
+  const _$ChangeCurrencyCategoryInputEventImpl({required this.currency});
+
+  @override
+  final Currency currency;
+
+  @override
+  String toString() {
+    return 'CategoryInputEvent.changeCurrency(currency: $currency)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeCurrencyCategoryInputEventImpl &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, currency);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeCurrencyCategoryInputEventImplCopyWith<
+          _$ChangeCurrencyCategoryInputEventImpl>
+      get copyWith => __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<
+          _$ChangeCurrencyCategoryInputEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(int categoryId) initById,
+    required TResult Function(String title) changeTitle,
+    required TResult Function(int budget) changeBudget,
+    required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function() save,
+  }) {
+    return changeCurrency(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(int categoryId)? initById,
+    TResult? Function(String title)? changeTitle,
+    TResult? Function(int budget)? changeBudget,
+    TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function()? save,
+  }) {
+    return changeCurrency?.call(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(OperationType operationType)? initByType,
+    TResult Function(int categoryId)? initById,
+    TResult Function(String title)? changeTitle,
+    TResult Function(int budget)? changeBudget,
+    TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function()? save,
+    required TResult orElse(),
+  }) {
+    if (changeCurrency != null) {
+      return changeCurrency(currency);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitByTypeCategoryInputEvent value) initByType,
+    required TResult Function(_InitByIdCategoryInputEvent value) initById,
+    required TResult Function(_ChangeTitleCategoryInputEvent value) changeTitle,
+    required TResult Function(_ChangeBudgetCategoryInputEvent value)
+        changeBudget,
+    required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
+        changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
+    required TResult Function(_SaveCategoryInputEvent value) save,
+  }) {
+    return changeCurrency(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitByTypeCategoryInputEvent value)? initByType,
+    TResult? Function(_InitByIdCategoryInputEvent value)? initById,
+    TResult? Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
+    TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
+    TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
+        changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
+    TResult? Function(_SaveCategoryInputEvent value)? save,
+  }) {
+    return changeCurrency?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitByTypeCategoryInputEvent value)? initByType,
+    TResult Function(_InitByIdCategoryInputEvent value)? initById,
+    TResult Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
+    TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
+    TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
+        changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
+    TResult Function(_SaveCategoryInputEvent value)? save,
+    required TResult orElse(),
+  }) {
+    if (changeCurrency != null) {
+      return changeCurrency(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeCurrencyCategoryInputEvent implements CategoryInputEvent {
+  const factory _ChangeCurrencyCategoryInputEvent(
+          {required final Currency currency}) =
+      _$ChangeCurrencyCategoryInputEventImpl;
+
+  Currency get currency;
+  @JsonKey(ignore: true)
+  _$$ChangeCurrencyCategoryInputEventImplCopyWith<
+          _$ChangeCurrencyCategoryInputEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SaveCategoryInputEventImplCopyWith<$Res> {
+  factory _$$SaveCategoryInputEventImplCopyWith(
+          _$SaveCategoryInputEventImpl value,
+          $Res Function(_$SaveCategoryInputEventImpl) then) =
+      __$$SaveCategoryInputEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SaveCategoryInputEventImplCopyWithImpl<$Res>
+    extends _$CategoryInputEventCopyWithImpl<$Res, _$SaveCategoryInputEventImpl>
+    implements _$$SaveCategoryInputEventImplCopyWith<$Res> {
+  __$$SaveCategoryInputEventImplCopyWithImpl(
+      _$SaveCategoryInputEventImpl _value,
+      $Res Function(_$SaveCategoryInputEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
-  const _$_SaveCategoryInputEvent();
+class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
+  const _$SaveCategoryInputEventImpl();
 
   @override
   String toString() {
@@ -973,7 +1202,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SaveCategoryInputEvent);
+            other is _$SaveCategoryInputEventImpl);
   }
 
   @override
@@ -987,6 +1216,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return save();
@@ -1000,6 +1230,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -1013,6 +1244,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1032,6 +1264,8 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
+        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return save(this);
@@ -1046,6 +1280,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return save?.call(this);
@@ -1060,6 +1295,7 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1071,85 +1307,18 @@ class _$_SaveCategoryInputEvent implements _SaveCategoryInputEvent {
 }
 
 abstract class _SaveCategoryInputEvent implements CategoryInputEvent {
-  const factory _SaveCategoryInputEvent() = _$_SaveCategoryInputEvent;
+  const factory _SaveCategoryInputEvent() = _$SaveCategoryInputEventImpl;
 }
 
 /// @nodoc
 mixin _$CategoryInputState {
+  Category? get category => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
   BudgetType get budgetType => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)
-        main,
-    required TResult Function(
-            Category fetchedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        fetched,
-    required TResult Function(
-            Category savedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        saved,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult? Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult? Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainCategoryInputState value) main,
-    required TResult Function(_FetchedCategoryInputState value) fetched,
-    required TResult Function(_SavedCategoryInputState value) saved,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainCategoryInputState value)? main,
-    TResult? Function(_FetchedCategoryInputState value)? fetched,
-    TResult? Function(_SavedCategoryInputState value)? saved,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainCategoryInputState value)? main,
-    TResult Function(_FetchedCategoryInputState value)? fetched,
-    TResult Function(_SavedCategoryInputState value)? saved,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
+  bool get isSaved => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryInputStateCopyWith<CategoryInputState> get copyWith =>
@@ -1163,10 +1332,15 @@ abstract class $CategoryInputStateCopyWith<$Res> {
       _$CategoryInputStateCopyWithImpl<$Res, CategoryInputState>;
   @useResult
   $Res call(
-      {OperationType operationType,
+      {Category? category,
+      OperationType operationType,
       BudgetType budgetType,
       String title,
-      int budget});
+      int budget,
+      Currency currency,
+      bool isSaved});
+
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -1182,68 +1356,15 @@ class _$CategoryInputStateCopyWithImpl<$Res, $Val extends CategoryInputState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? operationType = null,
-    Object? budgetType = null,
-    Object? title = null,
-    Object? budget = null,
-  }) {
-    return _then(_value.copyWith(
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      budgetType: null == budgetType
-          ? _value.budgetType
-          : budgetType // ignore: cast_nullable_to_non_nullable
-              as BudgetType,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      budget: null == budget
-          ? _value.budget
-          : budget // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_MainCategoryInputStateCopyWith<$Res>
-    implements $CategoryInputStateCopyWith<$Res> {
-  factory _$$_MainCategoryInputStateCopyWith(_$_MainCategoryInputState value,
-          $Res Function(_$_MainCategoryInputState) then) =
-      __$$_MainCategoryInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {Category? category,
-      OperationType operationType,
-      BudgetType budgetType,
-      String title,
-      int budget});
-
-  $CategoryCopyWith<$Res>? get category;
-}
-
-/// @nodoc
-class __$$_MainCategoryInputStateCopyWithImpl<$Res>
-    extends _$CategoryInputStateCopyWithImpl<$Res, _$_MainCategoryInputState>
-    implements _$$_MainCategoryInputStateCopyWith<$Res> {
-  __$$_MainCategoryInputStateCopyWithImpl(_$_MainCategoryInputState _value,
-      $Res Function(_$_MainCategoryInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
     Object? category = freezed,
     Object? operationType = null,
     Object? budgetType = null,
     Object? title = null,
     Object? budget = null,
+    Object? currency = null,
+    Object? isSaved = null,
   }) {
-    return _then(_$_MainCategoryInputState(
+    return _then(_value.copyWith(
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -1264,7 +1385,15 @@ class __$$_MainCategoryInputStateCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 
   @override
@@ -1275,21 +1404,95 @@ class __$$_MainCategoryInputStateCopyWithImpl<$Res>
     }
 
     return $CategoryCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value));
+      return _then(_value.copyWith(category: value) as $Val);
     });
   }
 }
 
 /// @nodoc
+abstract class _$$CategoryInputStateImplCopyWith<$Res>
+    implements $CategoryInputStateCopyWith<$Res> {
+  factory _$$CategoryInputStateImplCopyWith(_$CategoryInputStateImpl value,
+          $Res Function(_$CategoryInputStateImpl) then) =
+      __$$CategoryInputStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {Category? category,
+      OperationType operationType,
+      BudgetType budgetType,
+      String title,
+      int budget,
+      Currency currency,
+      bool isSaved});
 
-class _$_MainCategoryInputState extends _MainCategoryInputState {
-  const _$_MainCategoryInputState(
+  @override
+  $CategoryCopyWith<$Res>? get category;
+}
+
+/// @nodoc
+class __$$CategoryInputStateImplCopyWithImpl<$Res>
+    extends _$CategoryInputStateCopyWithImpl<$Res, _$CategoryInputStateImpl>
+    implements _$$CategoryInputStateImplCopyWith<$Res> {
+  __$$CategoryInputStateImplCopyWithImpl(_$CategoryInputStateImpl _value,
+      $Res Function(_$CategoryInputStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? category = freezed,
+    Object? operationType = null,
+    Object? budgetType = null,
+    Object? title = null,
+    Object? budget = null,
+    Object? currency = null,
+    Object? isSaved = null,
+  }) {
+    return _then(_$CategoryInputStateImpl(
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category?,
+      operationType: null == operationType
+          ? _value.operationType
+          : operationType // ignore: cast_nullable_to_non_nullable
+              as OperationType,
+      budgetType: null == budgetType
+          ? _value.budgetType
+          : budgetType // ignore: cast_nullable_to_non_nullable
+              as BudgetType,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as int,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CategoryInputStateImpl implements _CategoryInputState {
+  const _$CategoryInputStateImpl(
       {this.category,
       required this.operationType,
       required this.budgetType,
       required this.title,
-      required this.budget})
-      : super._();
+      required this.budget,
+      required this.currency,
+      required this.isSaved});
 
   @override
   final Category? category;
@@ -1301,17 +1504,21 @@ class _$_MainCategoryInputState extends _MainCategoryInputState {
   final String title;
   @override
   final int budget;
+  @override
+  final Currency currency;
+  @override
+  final bool isSaved;
 
   @override
   String toString() {
-    return 'CategoryInputState.main(category: $category, operationType: $operationType, budgetType: $budgetType, title: $title, budget: $budget)';
+    return 'CategoryInputState(category: $category, operationType: $operationType, budgetType: $budgetType, title: $title, budget: $budget, currency: $currency, isSaved: $isSaved)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MainCategoryInputState &&
+            other is _$CategoryInputStateImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.operationType, operationType) ||
@@ -1319,124 +1526,35 @@ class _$_MainCategoryInputState extends _MainCategoryInputState {
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.budget, budget) || other.budget == budget));
+            (identical(other.budget, budget) || other.budget == budget) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, category, operationType, budgetType, title, budget);
+  int get hashCode => Object.hash(runtimeType, category, operationType,
+      budgetType, title, budget, currency, isSaved);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MainCategoryInputStateCopyWith<_$_MainCategoryInputState> get copyWith =>
-      __$$_MainCategoryInputStateCopyWithImpl<_$_MainCategoryInputState>(
+  _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
+      __$$CategoryInputStateImplCopyWithImpl<_$CategoryInputStateImpl>(
           this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)
-        main,
-    required TResult Function(
-            Category fetchedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        fetched,
-    required TResult Function(
-            Category savedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        saved,
-  }) {
-    return main(category, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult? Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult? Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-  }) {
-    return main?.call(category, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-    required TResult orElse(),
-  }) {
-    if (main != null) {
-      return main(category, operationType, budgetType, title, budget);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainCategoryInputState value) main,
-    required TResult Function(_FetchedCategoryInputState value) fetched,
-    required TResult Function(_SavedCategoryInputState value) saved,
-  }) {
-    return main(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainCategoryInputState value)? main,
-    TResult? Function(_FetchedCategoryInputState value)? fetched,
-    TResult? Function(_SavedCategoryInputState value)? saved,
-  }) {
-    return main?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainCategoryInputState value)? main,
-    TResult Function(_FetchedCategoryInputState value)? fetched,
-    TResult Function(_SavedCategoryInputState value)? saved,
-    required TResult orElse(),
-  }) {
-    if (main != null) {
-      return main(this);
-    }
-    return orElse();
-  }
 }
 
-abstract class _MainCategoryInputState extends CategoryInputState {
-  const factory _MainCategoryInputState(
+abstract class _CategoryInputState implements CategoryInputState {
+  const factory _CategoryInputState(
       {final Category? category,
       required final OperationType operationType,
       required final BudgetType budgetType,
       required final String title,
-      required final int budget}) = _$_MainCategoryInputState;
-  const _MainCategoryInputState._() : super._();
+      required final int budget,
+      required final Currency currency,
+      required final bool isSaved}) = _$CategoryInputStateImpl;
 
+  @override
   Category? get category;
   @override
   OperationType get operationType;
@@ -1447,491 +1565,11 @@ abstract class _MainCategoryInputState extends CategoryInputState {
   @override
   int get budget;
   @override
+  Currency get currency;
+  @override
+  bool get isSaved;
+  @override
   @JsonKey(ignore: true)
-  _$$_MainCategoryInputStateCopyWith<_$_MainCategoryInputState> get copyWith =>
+  _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_FetchedCategoryInputStateCopyWith<$Res>
-    implements $CategoryInputStateCopyWith<$Res> {
-  factory _$$_FetchedCategoryInputStateCopyWith(
-          _$_FetchedCategoryInputState value,
-          $Res Function(_$_FetchedCategoryInputState) then) =
-      __$$_FetchedCategoryInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {Category fetchedCategory,
-      OperationType operationType,
-      BudgetType budgetType,
-      String title,
-      int budget});
-
-  $CategoryCopyWith<$Res> get fetchedCategory;
-}
-
-/// @nodoc
-class __$$_FetchedCategoryInputStateCopyWithImpl<$Res>
-    extends _$CategoryInputStateCopyWithImpl<$Res, _$_FetchedCategoryInputState>
-    implements _$$_FetchedCategoryInputStateCopyWith<$Res> {
-  __$$_FetchedCategoryInputStateCopyWithImpl(
-      _$_FetchedCategoryInputState _value,
-      $Res Function(_$_FetchedCategoryInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? fetchedCategory = null,
-    Object? operationType = null,
-    Object? budgetType = null,
-    Object? title = null,
-    Object? budget = null,
-  }) {
-    return _then(_$_FetchedCategoryInputState(
-      fetchedCategory: null == fetchedCategory
-          ? _value.fetchedCategory
-          : fetchedCategory // ignore: cast_nullable_to_non_nullable
-              as Category,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      budgetType: null == budgetType
-          ? _value.budgetType
-          : budgetType // ignore: cast_nullable_to_non_nullable
-              as BudgetType,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      budget: null == budget
-          ? _value.budget
-          : budget // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get fetchedCategory {
-    return $CategoryCopyWith<$Res>(_value.fetchedCategory, (value) {
-      return _then(_value.copyWith(fetchedCategory: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_FetchedCategoryInputState extends _FetchedCategoryInputState {
-  const _$_FetchedCategoryInputState(
-      {required this.fetchedCategory,
-      required this.operationType,
-      required this.budgetType,
-      required this.title,
-      required this.budget})
-      : super._();
-
-  @override
-  final Category fetchedCategory;
-  @override
-  final OperationType operationType;
-  @override
-  final BudgetType budgetType;
-  @override
-  final String title;
-  @override
-  final int budget;
-
-  @override
-  String toString() {
-    return 'CategoryInputState.fetched(fetchedCategory: $fetchedCategory, operationType: $operationType, budgetType: $budgetType, title: $title, budget: $budget)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_FetchedCategoryInputState &&
-            (identical(other.fetchedCategory, fetchedCategory) ||
-                other.fetchedCategory == fetchedCategory) &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType) &&
-            (identical(other.budgetType, budgetType) ||
-                other.budgetType == budgetType) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.budget, budget) || other.budget == budget));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, fetchedCategory, operationType, budgetType, title, budget);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_FetchedCategoryInputStateCopyWith<_$_FetchedCategoryInputState>
-      get copyWith => __$$_FetchedCategoryInputStateCopyWithImpl<
-          _$_FetchedCategoryInputState>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)
-        main,
-    required TResult Function(
-            Category fetchedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        fetched,
-    required TResult Function(
-            Category savedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        saved,
-  }) {
-    return fetched(fetchedCategory, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult? Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult? Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-  }) {
-    return fetched?.call(
-        fetchedCategory, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-    required TResult orElse(),
-  }) {
-    if (fetched != null) {
-      return fetched(fetchedCategory, operationType, budgetType, title, budget);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainCategoryInputState value) main,
-    required TResult Function(_FetchedCategoryInputState value) fetched,
-    required TResult Function(_SavedCategoryInputState value) saved,
-  }) {
-    return fetched(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainCategoryInputState value)? main,
-    TResult? Function(_FetchedCategoryInputState value)? fetched,
-    TResult? Function(_SavedCategoryInputState value)? saved,
-  }) {
-    return fetched?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainCategoryInputState value)? main,
-    TResult Function(_FetchedCategoryInputState value)? fetched,
-    TResult Function(_SavedCategoryInputState value)? saved,
-    required TResult orElse(),
-  }) {
-    if (fetched != null) {
-      return fetched(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FetchedCategoryInputState extends CategoryInputState {
-  const factory _FetchedCategoryInputState(
-      {required final Category fetchedCategory,
-      required final OperationType operationType,
-      required final BudgetType budgetType,
-      required final String title,
-      required final int budget}) = _$_FetchedCategoryInputState;
-  const _FetchedCategoryInputState._() : super._();
-
-  Category get fetchedCategory;
-  @override
-  OperationType get operationType;
-  @override
-  BudgetType get budgetType;
-  @override
-  String get title;
-  @override
-  int get budget;
-  @override
-  @JsonKey(ignore: true)
-  _$$_FetchedCategoryInputStateCopyWith<_$_FetchedCategoryInputState>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_SavedCategoryInputStateCopyWith<$Res>
-    implements $CategoryInputStateCopyWith<$Res> {
-  factory _$$_SavedCategoryInputStateCopyWith(_$_SavedCategoryInputState value,
-          $Res Function(_$_SavedCategoryInputState) then) =
-      __$$_SavedCategoryInputStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {Category savedCategory,
-      OperationType operationType,
-      BudgetType budgetType,
-      String title,
-      int budget});
-
-  $CategoryCopyWith<$Res> get savedCategory;
-}
-
-/// @nodoc
-class __$$_SavedCategoryInputStateCopyWithImpl<$Res>
-    extends _$CategoryInputStateCopyWithImpl<$Res, _$_SavedCategoryInputState>
-    implements _$$_SavedCategoryInputStateCopyWith<$Res> {
-  __$$_SavedCategoryInputStateCopyWithImpl(_$_SavedCategoryInputState _value,
-      $Res Function(_$_SavedCategoryInputState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? savedCategory = null,
-    Object? operationType = null,
-    Object? budgetType = null,
-    Object? title = null,
-    Object? budget = null,
-  }) {
-    return _then(_$_SavedCategoryInputState(
-      savedCategory: null == savedCategory
-          ? _value.savedCategory
-          : savedCategory // ignore: cast_nullable_to_non_nullable
-              as Category,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      budgetType: null == budgetType
-          ? _value.budgetType
-          : budgetType // ignore: cast_nullable_to_non_nullable
-              as BudgetType,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      budget: null == budget
-          ? _value.budget
-          : budget // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get savedCategory {
-    return $CategoryCopyWith<$Res>(_value.savedCategory, (value) {
-      return _then(_value.copyWith(savedCategory: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_SavedCategoryInputState extends _SavedCategoryInputState {
-  const _$_SavedCategoryInputState(
-      {required this.savedCategory,
-      required this.operationType,
-      required this.budgetType,
-      required this.title,
-      required this.budget})
-      : super._();
-
-  @override
-  final Category savedCategory;
-  @override
-  final OperationType operationType;
-  @override
-  final BudgetType budgetType;
-  @override
-  final String title;
-  @override
-  final int budget;
-
-  @override
-  String toString() {
-    return 'CategoryInputState.saved(savedCategory: $savedCategory, operationType: $operationType, budgetType: $budgetType, title: $title, budget: $budget)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_SavedCategoryInputState &&
-            (identical(other.savedCategory, savedCategory) ||
-                other.savedCategory == savedCategory) &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType) &&
-            (identical(other.budgetType, budgetType) ||
-                other.budgetType == budgetType) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.budget, budget) || other.budget == budget));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, savedCategory, operationType, budgetType, title, budget);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_SavedCategoryInputStateCopyWith<_$_SavedCategoryInputState>
-      get copyWith =>
-          __$$_SavedCategoryInputStateCopyWithImpl<_$_SavedCategoryInputState>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)
-        main,
-    required TResult Function(
-            Category fetchedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        fetched,
-    required TResult Function(
-            Category savedCategory,
-            OperationType operationType,
-            BudgetType budgetType,
-            String title,
-            int budget)
-        saved,
-  }) {
-    return saved(savedCategory, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult? Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult? Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-  }) {
-    return saved?.call(savedCategory, operationType, budgetType, title, budget);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Category? category, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        main,
-    TResult Function(Category fetchedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        fetched,
-    TResult Function(Category savedCategory, OperationType operationType,
-            BudgetType budgetType, String title, int budget)?
-        saved,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(savedCategory, operationType, budgetType, title, budget);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_MainCategoryInputState value) main,
-    required TResult Function(_FetchedCategoryInputState value) fetched,
-    required TResult Function(_SavedCategoryInputState value) saved,
-  }) {
-    return saved(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_MainCategoryInputState value)? main,
-    TResult? Function(_FetchedCategoryInputState value)? fetched,
-    TResult? Function(_SavedCategoryInputState value)? saved,
-  }) {
-    return saved?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_MainCategoryInputState value)? main,
-    TResult Function(_FetchedCategoryInputState value)? fetched,
-    TResult Function(_SavedCategoryInputState value)? saved,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SavedCategoryInputState extends CategoryInputState {
-  const factory _SavedCategoryInputState(
-      {required final Category savedCategory,
-      required final OperationType operationType,
-      required final BudgetType budgetType,
-      required final String title,
-      required final int budget}) = _$_SavedCategoryInputState;
-  const _SavedCategoryInputState._() : super._();
-
-  Category get savedCategory;
-  @override
-  OperationType get operationType;
-  @override
-  BudgetType get budgetType;
-  @override
-  String get title;
-  @override
-  int get budget;
-  @override
-  @JsonKey(ignore: true)
-  _$$_SavedCategoryInputStateCopyWith<_$_SavedCategoryInputState>
-      get copyWith => throw _privateConstructorUsedError;
 }

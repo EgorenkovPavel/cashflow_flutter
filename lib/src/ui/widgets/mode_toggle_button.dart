@@ -5,10 +5,10 @@ class ModeToggleButton extends StatelessWidget {
   final void Function(ThemeMode) onPressed;
 
   const ModeToggleButton({
-    Key? key,
+    super.key,
     required this.mode,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

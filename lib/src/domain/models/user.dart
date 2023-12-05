@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -9,17 +8,17 @@ class User with _$User {
     required String id,
     required String name,
     required String photo,
-}) = _User;
+  }) = _User;
 
-  static User fromJson(Map<String, dynamic> json)
-      =>User(id: json['id'],
+  static User fromJson(Map<String, dynamic> json) => User(
+        id: json['id'],
         name: json['name'],
-        photo: json['photo']);
+        photo: json['photo'],
+      );
 
   static Map<String, dynamic> toJson(User user) => {
-    'id': user.id,
-    'name': user.name,
-    'photo': user.photo,
-  };
-
+        'id': user.id,
+        'name': user.name,
+        'photo': user.photo,
+      };
 }

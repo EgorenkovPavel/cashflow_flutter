@@ -11,8 +11,8 @@ class MonthCashflowChart extends StatelessWidget {
     this.categoriesInput,
     this.categoriesOutput, {
     this.animate,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

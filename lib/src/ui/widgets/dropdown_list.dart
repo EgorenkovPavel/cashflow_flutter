@@ -10,13 +10,13 @@ class DropdownList<T> extends StatelessWidget {
   final WidgetByItem<T> getListItem;
 
   const DropdownList({
-    Key? key,
+    super.key,
     this.value,
     this.hint = '',
     this.onChange,
     required this.items,
     required this.getListItem,
-  }) : super(key: key);
+  });
 
   void _onChanged(T? newValue){
     if (onChange != null) {

@@ -9,13 +9,11 @@ import 'package:money_tracker/src/utils/extensions.dart';
 class DriveDialog extends StatefulWidget {
   final DialogMode mode;
 
-  const DriveDialog.chooseFile({Key? key})
-      : mode = DialogMode.CHOOSE_FILE,
-        super(key: key);
+  const DriveDialog.chooseFile({super.key})
+      : mode = DialogMode.CHOOSE_FILE;
 
-  const DriveDialog.chooseFolder({Key? key})
-      : mode = DialogMode.CHOOSE_FOLDER,
-        super(key: key);
+  const DriveDialog.chooseFolder({super.key})
+      : mode = DialogMode.CHOOSE_FOLDER;
 
   @override
   _DriveDialogState createState() => _DriveDialogState();
@@ -118,10 +116,10 @@ class _DriveDialogState extends State<DriveDialog> {
 
 class _DriveFileItem extends StatelessWidget {
   const _DriveFileItem({
-    Key? key,
+    super.key,
     required this.file,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final DriveFile file;
   final void Function() onTap;

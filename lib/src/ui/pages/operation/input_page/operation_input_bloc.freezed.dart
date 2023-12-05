@@ -18,13 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MasterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -39,13 +37,11 @@ mixin _$MasterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -60,13 +56,11 @@ mixin _$MasterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -82,15 +76,11 @@ mixin _$MasterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -110,14 +100,11 @@ mixin _$MasterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -133,14 +120,11 @@ mixin _$MasterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -176,770 +160,27 @@ class _$MasterEventCopyWithImpl<$Res, $Val extends MasterEvent>
 }
 
 /// @nodoc
-abstract class _$$_ChangeAccountsMasterEventCopyWith<$Res> {
-  factory _$$_ChangeAccountsMasterEventCopyWith(
-          _$_ChangeAccountsMasterEvent value,
-          $Res Function(_$_ChangeAccountsMasterEvent) then) =
-      __$$_ChangeAccountsMasterEventCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<AccountBalance> accounts});
+abstract class _$$BackPressedMasterEventImplCopyWith<$Res> {
+  factory _$$BackPressedMasterEventImplCopyWith(
+          _$BackPressedMasterEventImpl value,
+          $Res Function(_$BackPressedMasterEventImpl) then) =
+      __$$BackPressedMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ChangeAccountsMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeAccountsMasterEvent>
-    implements _$$_ChangeAccountsMasterEventCopyWith<$Res> {
-  __$$_ChangeAccountsMasterEventCopyWithImpl(
-      _$_ChangeAccountsMasterEvent _value,
-      $Res Function(_$_ChangeAccountsMasterEvent) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accounts = null,
-  }) {
-    return _then(_$_ChangeAccountsMasterEvent(
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ChangeAccountsMasterEvent implements _ChangeAccountsMasterEvent {
-  const _$_ChangeAccountsMasterEvent(
-      {required final List<AccountBalance> accounts})
-      : _accounts = accounts;
-
-  final List<AccountBalance> _accounts;
-  @override
-  List<AccountBalance> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
-  }
-
-  @override
-  String toString() {
-    return 'MasterEvent.changeAccounts(accounts: $accounts)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ChangeAccountsMasterEvent &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_accounts));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ChangeAccountsMasterEventCopyWith<_$_ChangeAccountsMasterEvent>
-      get copyWith => __$$_ChangeAccountsMasterEventCopyWithImpl<
-          _$_ChangeAccountsMasterEvent>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
-    required TResult Function() backPressed,
-    required TResult Function() start,
-    required TResult Function() addNewItem,
-    required TResult Function() sumTap,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(int digit) digitTap,
-    required TResult Function() backKeyTap,
-    required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
-    required TResult Function(Category category) changeInCategory,
-    required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
-    required TResult Function() cancelOperation,
-    required TResult Function() nextTap,
-  }) {
-    return changeAccounts(accounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
-    TResult? Function()? backPressed,
-    TResult? Function()? start,
-    TResult? Function()? addNewItem,
-    TResult? Function()? sumTap,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(int digit)? digitTap,
-    TResult? Function()? backKeyTap,
-    TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
-    TResult? Function(Category category)? changeInCategory,
-    TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
-    TResult? Function()? cancelOperation,
-    TResult? Function()? nextTap,
-  }) {
-    return changeAccounts?.call(accounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
-    TResult Function()? backPressed,
-    TResult Function()? start,
-    TResult Function()? addNewItem,
-    TResult Function()? sumTap,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(int digit)? digitTap,
-    TResult Function()? backKeyTap,
-    TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
-    TResult Function(Category category)? changeInCategory,
-    TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
-    TResult Function()? cancelOperation,
-    TResult Function()? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeAccounts != null) {
-      return changeAccounts(accounts);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
-    required TResult Function(_BackPressedMasterEvent value) backPressed,
-    required TResult Function(_StartMasterEvent value) start,
-    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
-    required TResult Function(_SumTapMasterEvent value) sumTap,
-    required TResult Function(_ChangeOperationTypeMasterEvent value)
-        changeOperationType,
-    required TResult Function(_DigitTapMasterEvent value) digitTap,
-    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
-    required TResult Function(_MoreTapMasterEvent value) moreTap,
-    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
-    required TResult Function(_ChangeInCategoryMasterEvent value)
-        changeInCategory,
-    required TResult Function(_ChangeOutCategoryMasterEvent value)
-        changeOutCategory,
-    required TResult Function(_ChangeRecAccountMasterEvent value)
-        changeRecAccount,
-    required TResult Function(_CancelOperationMasterEvent value)
-        cancelOperation,
-    required TResult Function(_NextTapMasterEvent value) nextTap,
-  }) {
-    return changeAccounts(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult? Function(_BackPressedMasterEvent value)? backPressed,
-    TResult? Function(_StartMasterEvent value)? start,
-    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult? Function(_SumTapMasterEvent value)? sumTap,
-    TResult? Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult? Function(_DigitTapMasterEvent value)? digitTap,
-    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult? Function(_MoreTapMasterEvent value)? moreTap,
-    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult? Function(_NextTapMasterEvent value)? nextTap,
-  }) {
-    return changeAccounts?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult Function(_BackPressedMasterEvent value)? backPressed,
-    TResult Function(_StartMasterEvent value)? start,
-    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult Function(_SumTapMasterEvent value)? sumTap,
-    TResult Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult Function(_DigitTapMasterEvent value)? digitTap,
-    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult Function(_MoreTapMasterEvent value)? moreTap,
-    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult Function(_NextTapMasterEvent value)? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeAccounts != null) {
-      return changeAccounts(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeAccountsMasterEvent implements MasterEvent {
-  const factory _ChangeAccountsMasterEvent(
-          {required final List<AccountBalance> accounts}) =
-      _$_ChangeAccountsMasterEvent;
-
-  List<AccountBalance> get accounts;
-  @JsonKey(ignore: true)
-  _$$_ChangeAccountsMasterEventCopyWith<_$_ChangeAccountsMasterEvent>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_ChangeInCategoriesMasterEventCopyWith<$Res> {
-  factory _$$_ChangeInCategoriesMasterEventCopyWith(
-          _$_ChangeInCategoriesMasterEvent value,
-          $Res Function(_$_ChangeInCategoriesMasterEvent) then) =
-      __$$_ChangeInCategoriesMasterEventCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<Category> categories});
-}
-
-/// @nodoc
-class __$$_ChangeInCategoriesMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeInCategoriesMasterEvent>
-    implements _$$_ChangeInCategoriesMasterEventCopyWith<$Res> {
-  __$$_ChangeInCategoriesMasterEventCopyWithImpl(
-      _$_ChangeInCategoriesMasterEvent _value,
-      $Res Function(_$_ChangeInCategoriesMasterEvent) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? categories = null,
-  }) {
-    return _then(_$_ChangeInCategoriesMasterEvent(
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ChangeInCategoriesMasterEvent
-    implements _ChangeInCategoriesMasterEvent {
-  const _$_ChangeInCategoriesMasterEvent(
-      {required final List<Category> categories})
-      : _categories = categories;
-
-  final List<Category> _categories;
-  @override
-  List<Category> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
-
-  @override
-  String toString() {
-    return 'MasterEvent.changeInCategories(categories: $categories)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ChangeInCategoriesMasterEvent &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ChangeInCategoriesMasterEventCopyWith<_$_ChangeInCategoriesMasterEvent>
-      get copyWith => __$$_ChangeInCategoriesMasterEventCopyWithImpl<
-          _$_ChangeInCategoriesMasterEvent>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
-    required TResult Function() backPressed,
-    required TResult Function() start,
-    required TResult Function() addNewItem,
-    required TResult Function() sumTap,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(int digit) digitTap,
-    required TResult Function() backKeyTap,
-    required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
-    required TResult Function(Category category) changeInCategory,
-    required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
-    required TResult Function() cancelOperation,
-    required TResult Function() nextTap,
-  }) {
-    return changeInCategories(categories);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
-    TResult? Function()? backPressed,
-    TResult? Function()? start,
-    TResult? Function()? addNewItem,
-    TResult? Function()? sumTap,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(int digit)? digitTap,
-    TResult? Function()? backKeyTap,
-    TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
-    TResult? Function(Category category)? changeInCategory,
-    TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
-    TResult? Function()? cancelOperation,
-    TResult? Function()? nextTap,
-  }) {
-    return changeInCategories?.call(categories);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
-    TResult Function()? backPressed,
-    TResult Function()? start,
-    TResult Function()? addNewItem,
-    TResult Function()? sumTap,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(int digit)? digitTap,
-    TResult Function()? backKeyTap,
-    TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
-    TResult Function(Category category)? changeInCategory,
-    TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
-    TResult Function()? cancelOperation,
-    TResult Function()? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeInCategories != null) {
-      return changeInCategories(categories);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
-    required TResult Function(_BackPressedMasterEvent value) backPressed,
-    required TResult Function(_StartMasterEvent value) start,
-    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
-    required TResult Function(_SumTapMasterEvent value) sumTap,
-    required TResult Function(_ChangeOperationTypeMasterEvent value)
-        changeOperationType,
-    required TResult Function(_DigitTapMasterEvent value) digitTap,
-    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
-    required TResult Function(_MoreTapMasterEvent value) moreTap,
-    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
-    required TResult Function(_ChangeInCategoryMasterEvent value)
-        changeInCategory,
-    required TResult Function(_ChangeOutCategoryMasterEvent value)
-        changeOutCategory,
-    required TResult Function(_ChangeRecAccountMasterEvent value)
-        changeRecAccount,
-    required TResult Function(_CancelOperationMasterEvent value)
-        cancelOperation,
-    required TResult Function(_NextTapMasterEvent value) nextTap,
-  }) {
-    return changeInCategories(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult? Function(_BackPressedMasterEvent value)? backPressed,
-    TResult? Function(_StartMasterEvent value)? start,
-    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult? Function(_SumTapMasterEvent value)? sumTap,
-    TResult? Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult? Function(_DigitTapMasterEvent value)? digitTap,
-    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult? Function(_MoreTapMasterEvent value)? moreTap,
-    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult? Function(_NextTapMasterEvent value)? nextTap,
-  }) {
-    return changeInCategories?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult Function(_BackPressedMasterEvent value)? backPressed,
-    TResult Function(_StartMasterEvent value)? start,
-    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult Function(_SumTapMasterEvent value)? sumTap,
-    TResult Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult Function(_DigitTapMasterEvent value)? digitTap,
-    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult Function(_MoreTapMasterEvent value)? moreTap,
-    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult Function(_NextTapMasterEvent value)? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeInCategories != null) {
-      return changeInCategories(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeInCategoriesMasterEvent implements MasterEvent {
-  const factory _ChangeInCategoriesMasterEvent(
-          {required final List<Category> categories}) =
-      _$_ChangeInCategoriesMasterEvent;
-
-  List<Category> get categories;
-  @JsonKey(ignore: true)
-  _$$_ChangeInCategoriesMasterEventCopyWith<_$_ChangeInCategoriesMasterEvent>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_ChangeOutCategoriesMasterEventCopyWith<$Res> {
-  factory _$$_ChangeOutCategoriesMasterEventCopyWith(
-          _$_ChangeOutCategoriesMasterEvent value,
-          $Res Function(_$_ChangeOutCategoriesMasterEvent) then) =
-      __$$_ChangeOutCategoriesMasterEventCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<Category> categories});
-}
-
-/// @nodoc
-class __$$_ChangeOutCategoriesMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeOutCategoriesMasterEvent>
-    implements _$$_ChangeOutCategoriesMasterEventCopyWith<$Res> {
-  __$$_ChangeOutCategoriesMasterEventCopyWithImpl(
-      _$_ChangeOutCategoriesMasterEvent _value,
-      $Res Function(_$_ChangeOutCategoriesMasterEvent) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? categories = null,
-  }) {
-    return _then(_$_ChangeOutCategoriesMasterEvent(
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ChangeOutCategoriesMasterEvent
-    implements _ChangeOutCategoriesMasterEvent {
-  const _$_ChangeOutCategoriesMasterEvent(
-      {required final List<Category> categories})
-      : _categories = categories;
-
-  final List<Category> _categories;
-  @override
-  List<Category> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
-
-  @override
-  String toString() {
-    return 'MasterEvent.changeOutCategories(categories: $categories)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ChangeOutCategoriesMasterEvent &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ChangeOutCategoriesMasterEventCopyWith<_$_ChangeOutCategoriesMasterEvent>
-      get copyWith => __$$_ChangeOutCategoriesMasterEventCopyWithImpl<
-          _$_ChangeOutCategoriesMasterEvent>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
-    required TResult Function() backPressed,
-    required TResult Function() start,
-    required TResult Function() addNewItem,
-    required TResult Function() sumTap,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(int digit) digitTap,
-    required TResult Function() backKeyTap,
-    required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
-    required TResult Function(Category category) changeInCategory,
-    required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
-    required TResult Function() cancelOperation,
-    required TResult Function() nextTap,
-  }) {
-    return changeOutCategories(categories);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
-    TResult? Function()? backPressed,
-    TResult? Function()? start,
-    TResult? Function()? addNewItem,
-    TResult? Function()? sumTap,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(int digit)? digitTap,
-    TResult? Function()? backKeyTap,
-    TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
-    TResult? Function(Category category)? changeInCategory,
-    TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
-    TResult? Function()? cancelOperation,
-    TResult? Function()? nextTap,
-  }) {
-    return changeOutCategories?.call(categories);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
-    TResult Function()? backPressed,
-    TResult Function()? start,
-    TResult Function()? addNewItem,
-    TResult Function()? sumTap,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(int digit)? digitTap,
-    TResult Function()? backKeyTap,
-    TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
-    TResult Function(Category category)? changeInCategory,
-    TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
-    TResult Function()? cancelOperation,
-    TResult Function()? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeOutCategories != null) {
-      return changeOutCategories(categories);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
-    required TResult Function(_BackPressedMasterEvent value) backPressed,
-    required TResult Function(_StartMasterEvent value) start,
-    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
-    required TResult Function(_SumTapMasterEvent value) sumTap,
-    required TResult Function(_ChangeOperationTypeMasterEvent value)
-        changeOperationType,
-    required TResult Function(_DigitTapMasterEvent value) digitTap,
-    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
-    required TResult Function(_MoreTapMasterEvent value) moreTap,
-    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
-    required TResult Function(_ChangeInCategoryMasterEvent value)
-        changeInCategory,
-    required TResult Function(_ChangeOutCategoryMasterEvent value)
-        changeOutCategory,
-    required TResult Function(_ChangeRecAccountMasterEvent value)
-        changeRecAccount,
-    required TResult Function(_CancelOperationMasterEvent value)
-        cancelOperation,
-    required TResult Function(_NextTapMasterEvent value) nextTap,
-  }) {
-    return changeOutCategories(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult? Function(_BackPressedMasterEvent value)? backPressed,
-    TResult? Function(_StartMasterEvent value)? start,
-    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult? Function(_SumTapMasterEvent value)? sumTap,
-    TResult? Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult? Function(_DigitTapMasterEvent value)? digitTap,
-    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult? Function(_MoreTapMasterEvent value)? moreTap,
-    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult? Function(_NextTapMasterEvent value)? nextTap,
-  }) {
-    return changeOutCategories?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
-    TResult Function(_BackPressedMasterEvent value)? backPressed,
-    TResult Function(_StartMasterEvent value)? start,
-    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
-    TResult Function(_SumTapMasterEvent value)? sumTap,
-    TResult Function(_ChangeOperationTypeMasterEvent value)?
-        changeOperationType,
-    TResult Function(_DigitTapMasterEvent value)? digitTap,
-    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
-    TResult Function(_MoreTapMasterEvent value)? moreTap,
-    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
-    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
-    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
-    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
-    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
-    TResult Function(_NextTapMasterEvent value)? nextTap,
-    required TResult orElse(),
-  }) {
-    if (changeOutCategories != null) {
-      return changeOutCategories(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeOutCategoriesMasterEvent implements MasterEvent {
-  const factory _ChangeOutCategoriesMasterEvent(
-          {required final List<Category> categories}) =
-      _$_ChangeOutCategoriesMasterEvent;
-
-  List<Category> get categories;
-  @JsonKey(ignore: true)
-  _$$_ChangeOutCategoriesMasterEventCopyWith<_$_ChangeOutCategoriesMasterEvent>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_BackPressedMasterEventCopyWith<$Res> {
-  factory _$$_BackPressedMasterEventCopyWith(_$_BackPressedMasterEvent value,
-          $Res Function(_$_BackPressedMasterEvent) then) =
-      __$$_BackPressedMasterEventCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_BackPressedMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_BackPressedMasterEvent>
-    implements _$$_BackPressedMasterEventCopyWith<$Res> {
-  __$$_BackPressedMasterEventCopyWithImpl(_$_BackPressedMasterEvent _value,
-      $Res Function(_$_BackPressedMasterEvent) _then)
+class __$$BackPressedMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$BackPressedMasterEventImpl>
+    implements _$$BackPressedMasterEventImplCopyWith<$Res> {
+  __$$BackPressedMasterEventImplCopyWithImpl(
+      _$BackPressedMasterEventImpl _value,
+      $Res Function(_$BackPressedMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
-  const _$_BackPressedMasterEvent();
+class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
+  const _$BackPressedMasterEventImpl();
 
   @override
   String toString() {
@@ -950,7 +191,7 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BackPressedMasterEvent);
+            other is _$BackPressedMasterEventImpl);
   }
 
   @override
@@ -959,13 +200,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -983,13 +222,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -1007,13 +244,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -1035,15 +270,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -1066,14 +297,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -1092,14 +320,11 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -1121,29 +346,29 @@ class _$_BackPressedMasterEvent implements _BackPressedMasterEvent {
 }
 
 abstract class _BackPressedMasterEvent implements MasterEvent {
-  const factory _BackPressedMasterEvent() = _$_BackPressedMasterEvent;
+  const factory _BackPressedMasterEvent() = _$BackPressedMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_StartMasterEventCopyWith<$Res> {
-  factory _$$_StartMasterEventCopyWith(
-          _$_StartMasterEvent value, $Res Function(_$_StartMasterEvent) then) =
-      __$$_StartMasterEventCopyWithImpl<$Res>;
+abstract class _$$StartMasterEventImplCopyWith<$Res> {
+  factory _$$StartMasterEventImplCopyWith(_$StartMasterEventImpl value,
+          $Res Function(_$StartMasterEventImpl) then) =
+      __$$StartMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_StartMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_StartMasterEvent>
-    implements _$$_StartMasterEventCopyWith<$Res> {
-  __$$_StartMasterEventCopyWithImpl(
-      _$_StartMasterEvent _value, $Res Function(_$_StartMasterEvent) _then)
+class __$$StartMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$StartMasterEventImpl>
+    implements _$$StartMasterEventImplCopyWith<$Res> {
+  __$$StartMasterEventImplCopyWithImpl(_$StartMasterEventImpl _value,
+      $Res Function(_$StartMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_StartMasterEvent implements _StartMasterEvent {
-  const _$_StartMasterEvent();
+class _$StartMasterEventImpl implements _StartMasterEvent {
+  const _$StartMasterEventImpl();
 
   @override
   String toString() {
@@ -1153,7 +378,7 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_StartMasterEvent);
+        (other.runtimeType == runtimeType && other is _$StartMasterEventImpl);
   }
 
   @override
@@ -1162,13 +387,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -1186,13 +409,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -1210,13 +431,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -1238,15 +457,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -1269,14 +484,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -1295,14 +507,11 @@ class _$_StartMasterEvent implements _StartMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -1324,29 +533,31 @@ class _$_StartMasterEvent implements _StartMasterEvent {
 }
 
 abstract class _StartMasterEvent implements MasterEvent {
-  const factory _StartMasterEvent() = _$_StartMasterEvent;
+  const factory _StartMasterEvent() = _$StartMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_AddNewItemMassterEventCopyWith<$Res> {
-  factory _$$_AddNewItemMassterEventCopyWith(_$_AddNewItemMassterEvent value,
-          $Res Function(_$_AddNewItemMassterEvent) then) =
-      __$$_AddNewItemMassterEventCopyWithImpl<$Res>;
+abstract class _$$AddNewItemMassterEventImplCopyWith<$Res> {
+  factory _$$AddNewItemMassterEventImplCopyWith(
+          _$AddNewItemMassterEventImpl value,
+          $Res Function(_$AddNewItemMassterEventImpl) then) =
+      __$$AddNewItemMassterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AddNewItemMassterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_AddNewItemMassterEvent>
-    implements _$$_AddNewItemMassterEventCopyWith<$Res> {
-  __$$_AddNewItemMassterEventCopyWithImpl(_$_AddNewItemMassterEvent _value,
-      $Res Function(_$_AddNewItemMassterEvent) _then)
+class __$$AddNewItemMassterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$AddNewItemMassterEventImpl>
+    implements _$$AddNewItemMassterEventImplCopyWith<$Res> {
+  __$$AddNewItemMassterEventImplCopyWithImpl(
+      _$AddNewItemMassterEventImpl _value,
+      $Res Function(_$AddNewItemMassterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
-  const _$_AddNewItemMassterEvent();
+class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
+  const _$AddNewItemMassterEventImpl();
 
   @override
   String toString() {
@@ -1357,7 +568,7 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddNewItemMassterEvent);
+            other is _$AddNewItemMassterEventImpl);
   }
 
   @override
@@ -1366,13 +577,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -1390,13 +599,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -1414,13 +621,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -1442,15 +647,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -1473,14 +674,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -1499,14 +697,11 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -1528,29 +723,29 @@ class _$_AddNewItemMassterEvent implements _AddNewItemMassterEvent {
 }
 
 abstract class _AddNewItemMassterEvent implements MasterEvent {
-  const factory _AddNewItemMassterEvent() = _$_AddNewItemMassterEvent;
+  const factory _AddNewItemMassterEvent() = _$AddNewItemMassterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_SumTapMasterEventCopyWith<$Res> {
-  factory _$$_SumTapMasterEventCopyWith(_$_SumTapMasterEvent value,
-          $Res Function(_$_SumTapMasterEvent) then) =
-      __$$_SumTapMasterEventCopyWithImpl<$Res>;
+abstract class _$$SumTapMasterEventImplCopyWith<$Res> {
+  factory _$$SumTapMasterEventImplCopyWith(_$SumTapMasterEventImpl value,
+          $Res Function(_$SumTapMasterEventImpl) then) =
+      __$$SumTapMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SumTapMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_SumTapMasterEvent>
-    implements _$$_SumTapMasterEventCopyWith<$Res> {
-  __$$_SumTapMasterEventCopyWithImpl(
-      _$_SumTapMasterEvent _value, $Res Function(_$_SumTapMasterEvent) _then)
+class __$$SumTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$SumTapMasterEventImpl>
+    implements _$$SumTapMasterEventImplCopyWith<$Res> {
+  __$$SumTapMasterEventImplCopyWithImpl(_$SumTapMasterEventImpl _value,
+      $Res Function(_$SumTapMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SumTapMasterEvent implements _SumTapMasterEvent {
-  const _$_SumTapMasterEvent();
+class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
+  const _$SumTapMasterEventImpl();
 
   @override
   String toString() {
@@ -1560,7 +755,7 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SumTapMasterEvent);
+        (other.runtimeType == runtimeType && other is _$SumTapMasterEventImpl);
   }
 
   @override
@@ -1569,13 +764,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -1593,13 +786,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -1617,13 +808,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -1645,15 +834,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -1676,14 +861,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -1702,14 +884,11 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -1731,26 +910,215 @@ class _$_SumTapMasterEvent implements _SumTapMasterEvent {
 }
 
 abstract class _SumTapMasterEvent implements MasterEvent {
-  const factory _SumTapMasterEvent() = _$_SumTapMasterEvent;
+  const factory _SumTapMasterEvent() = _$SumTapMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_ChangeOperationTypeMasterEventCopyWith<$Res> {
-  factory _$$_ChangeOperationTypeMasterEventCopyWith(
-          _$_ChangeOperationTypeMasterEvent value,
-          $Res Function(_$_ChangeOperationTypeMasterEvent) then) =
-      __$$_ChangeOperationTypeMasterEventCopyWithImpl<$Res>;
+abstract class _$$RecSumTapMasterEventImplCopyWith<$Res> {
+  factory _$$RecSumTapMasterEventImplCopyWith(_$RecSumTapMasterEventImpl value,
+          $Res Function(_$RecSumTapMasterEventImpl) then) =
+      __$$RecSumTapMasterEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RecSumTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$RecSumTapMasterEventImpl>
+    implements _$$RecSumTapMasterEventImplCopyWith<$Res> {
+  __$$RecSumTapMasterEventImplCopyWithImpl(_$RecSumTapMasterEventImpl _value,
+      $Res Function(_$RecSumTapMasterEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
+  const _$RecSumTapMasterEventImpl();
+
+  @override
+  String toString() {
+    return 'MasterEvent.recSumTap()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RecSumTapMasterEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() backPressed,
+    required TResult Function() start,
+    required TResult Function() addNewItem,
+    required TResult Function() sumTap,
+    required TResult Function() recSumTap,
+    required TResult Function(OperationType operationType) changeOperationType,
+    required TResult Function(int digit) digitTap,
+    required TResult Function() backKeyTap,
+    required TResult Function() moreTap,
+    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(Category category) changeInCategory,
+    required TResult Function(Category category) changeOutCategory,
+    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function() cancelOperation,
+    required TResult Function() nextTap,
+  }) {
+    return recSumTap();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? backPressed,
+    TResult? Function()? start,
+    TResult? Function()? addNewItem,
+    TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
+    TResult? Function(OperationType operationType)? changeOperationType,
+    TResult? Function(int digit)? digitTap,
+    TResult? Function()? backKeyTap,
+    TResult? Function()? moreTap,
+    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(Category category)? changeInCategory,
+    TResult? Function(Category category)? changeOutCategory,
+    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function()? cancelOperation,
+    TResult? Function()? nextTap,
+  }) {
+    return recSumTap?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? backPressed,
+    TResult Function()? start,
+    TResult Function()? addNewItem,
+    TResult Function()? sumTap,
+    TResult Function()? recSumTap,
+    TResult Function(OperationType operationType)? changeOperationType,
+    TResult Function(int digit)? digitTap,
+    TResult Function()? backKeyTap,
+    TResult Function()? moreTap,
+    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(Category category)? changeInCategory,
+    TResult Function(Category category)? changeOutCategory,
+    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function()? cancelOperation,
+    TResult Function()? nextTap,
+    required TResult orElse(),
+  }) {
+    if (recSumTap != null) {
+      return recSumTap();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BackPressedMasterEvent value) backPressed,
+    required TResult Function(_StartMasterEvent value) start,
+    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
+    required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
+    required TResult Function(_ChangeOperationTypeMasterEvent value)
+        changeOperationType,
+    required TResult Function(_DigitTapMasterEvent value) digitTap,
+    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
+    required TResult Function(_MoreTapMasterEvent value) moreTap,
+    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
+    required TResult Function(_ChangeInCategoryMasterEvent value)
+        changeInCategory,
+    required TResult Function(_ChangeOutCategoryMasterEvent value)
+        changeOutCategory,
+    required TResult Function(_ChangeRecAccountMasterEvent value)
+        changeRecAccount,
+    required TResult Function(_CancelOperationMasterEvent value)
+        cancelOperation,
+    required TResult Function(_NextTapMasterEvent value) nextTap,
+  }) {
+    return recSumTap(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BackPressedMasterEvent value)? backPressed,
+    TResult? Function(_StartMasterEvent value)? start,
+    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult? Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult? Function(_DigitTapMasterEvent value)? digitTap,
+    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult? Function(_MoreTapMasterEvent value)? moreTap,
+    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult? Function(_NextTapMasterEvent value)? nextTap,
+  }) {
+    return recSumTap?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BackPressedMasterEvent value)? backPressed,
+    TResult Function(_StartMasterEvent value)? start,
+    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult Function(_DigitTapMasterEvent value)? digitTap,
+    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult Function(_MoreTapMasterEvent value)? moreTap,
+    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult Function(_NextTapMasterEvent value)? nextTap,
+    required TResult orElse(),
+  }) {
+    if (recSumTap != null) {
+      return recSumTap(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RecSumTapMasterEvent implements MasterEvent {
+  const factory _RecSumTapMasterEvent() = _$RecSumTapMasterEventImpl;
+}
+
+/// @nodoc
+abstract class _$$ChangeOperationTypeMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeOperationTypeMasterEventImplCopyWith(
+          _$ChangeOperationTypeMasterEventImpl value,
+          $Res Function(_$ChangeOperationTypeMasterEventImpl) then) =
+      __$$ChangeOperationTypeMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationType operationType});
 }
 
 /// @nodoc
-class __$$_ChangeOperationTypeMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeOperationTypeMasterEvent>
-    implements _$$_ChangeOperationTypeMasterEventCopyWith<$Res> {
-  __$$_ChangeOperationTypeMasterEventCopyWithImpl(
-      _$_ChangeOperationTypeMasterEvent _value,
-      $Res Function(_$_ChangeOperationTypeMasterEvent) _then)
+class __$$ChangeOperationTypeMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res,
+        _$ChangeOperationTypeMasterEventImpl>
+    implements _$$ChangeOperationTypeMasterEventImplCopyWith<$Res> {
+  __$$ChangeOperationTypeMasterEventImplCopyWithImpl(
+      _$ChangeOperationTypeMasterEventImpl _value,
+      $Res Function(_$ChangeOperationTypeMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1758,7 +1126,7 @@ class __$$_ChangeOperationTypeMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? operationType = null,
   }) {
-    return _then(_$_ChangeOperationTypeMasterEvent(
+    return _then(_$ChangeOperationTypeMasterEventImpl(
       operationType: null == operationType
           ? _value.operationType
           : operationType // ignore: cast_nullable_to_non_nullable
@@ -1769,9 +1137,9 @@ class __$$_ChangeOperationTypeMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeOperationTypeMasterEvent
+class _$ChangeOperationTypeMasterEventImpl
     implements _ChangeOperationTypeMasterEvent {
-  const _$_ChangeOperationTypeMasterEvent({required this.operationType});
+  const _$ChangeOperationTypeMasterEventImpl({required this.operationType});
 
   @override
   final OperationType operationType;
@@ -1785,7 +1153,7 @@ class _$_ChangeOperationTypeMasterEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeOperationTypeMasterEvent &&
+            other is _$ChangeOperationTypeMasterEventImpl &&
             (identical(other.operationType, operationType) ||
                 other.operationType == operationType));
   }
@@ -1796,20 +1164,19 @@ class _$_ChangeOperationTypeMasterEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeOperationTypeMasterEventCopyWith<_$_ChangeOperationTypeMasterEvent>
-      get copyWith => __$$_ChangeOperationTypeMasterEventCopyWithImpl<
-          _$_ChangeOperationTypeMasterEvent>(this, _$identity);
+  _$$ChangeOperationTypeMasterEventImplCopyWith<
+          _$ChangeOperationTypeMasterEventImpl>
+      get copyWith => __$$ChangeOperationTypeMasterEventImplCopyWithImpl<
+          _$ChangeOperationTypeMasterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -1827,13 +1194,11 @@ class _$_ChangeOperationTypeMasterEvent
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -1851,13 +1216,11 @@ class _$_ChangeOperationTypeMasterEvent
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -1879,15 +1242,11 @@ class _$_ChangeOperationTypeMasterEvent
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -1910,14 +1269,11 @@ class _$_ChangeOperationTypeMasterEvent
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -1936,14 +1292,11 @@ class _$_ChangeOperationTypeMasterEvent
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -1967,29 +1320,30 @@ class _$_ChangeOperationTypeMasterEvent
 abstract class _ChangeOperationTypeMasterEvent implements MasterEvent {
   const factory _ChangeOperationTypeMasterEvent(
           {required final OperationType operationType}) =
-      _$_ChangeOperationTypeMasterEvent;
+      _$ChangeOperationTypeMasterEventImpl;
 
   OperationType get operationType;
   @JsonKey(ignore: true)
-  _$$_ChangeOperationTypeMasterEventCopyWith<_$_ChangeOperationTypeMasterEvent>
+  _$$ChangeOperationTypeMasterEventImplCopyWith<
+          _$ChangeOperationTypeMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_DigitTapMasterEventCopyWith<$Res> {
-  factory _$$_DigitTapMasterEventCopyWith(_$_DigitTapMasterEvent value,
-          $Res Function(_$_DigitTapMasterEvent) then) =
-      __$$_DigitTapMasterEventCopyWithImpl<$Res>;
+abstract class _$$DigitTapMasterEventImplCopyWith<$Res> {
+  factory _$$DigitTapMasterEventImplCopyWith(_$DigitTapMasterEventImpl value,
+          $Res Function(_$DigitTapMasterEventImpl) then) =
+      __$$DigitTapMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int digit});
 }
 
 /// @nodoc
-class __$$_DigitTapMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_DigitTapMasterEvent>
-    implements _$$_DigitTapMasterEventCopyWith<$Res> {
-  __$$_DigitTapMasterEventCopyWithImpl(_$_DigitTapMasterEvent _value,
-      $Res Function(_$_DigitTapMasterEvent) _then)
+class __$$DigitTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$DigitTapMasterEventImpl>
+    implements _$$DigitTapMasterEventImplCopyWith<$Res> {
+  __$$DigitTapMasterEventImplCopyWithImpl(_$DigitTapMasterEventImpl _value,
+      $Res Function(_$DigitTapMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1997,7 +1351,7 @@ class __$$_DigitTapMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? digit = null,
   }) {
-    return _then(_$_DigitTapMasterEvent(
+    return _then(_$DigitTapMasterEventImpl(
       digit: null == digit
           ? _value.digit
           : digit // ignore: cast_nullable_to_non_nullable
@@ -2008,8 +1362,8 @@ class __$$_DigitTapMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
-  const _$_DigitTapMasterEvent({required this.digit});
+class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
+  const _$DigitTapMasterEventImpl({required this.digit});
 
   @override
   final int digit;
@@ -2023,7 +1377,7 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DigitTapMasterEvent &&
+            other is _$DigitTapMasterEventImpl &&
             (identical(other.digit, digit) || other.digit == digit));
   }
 
@@ -2033,20 +1387,18 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DigitTapMasterEventCopyWith<_$_DigitTapMasterEvent> get copyWith =>
-      __$$_DigitTapMasterEventCopyWithImpl<_$_DigitTapMasterEvent>(
+  _$$DigitTapMasterEventImplCopyWith<_$DigitTapMasterEventImpl> get copyWith =>
+      __$$DigitTapMasterEventImplCopyWithImpl<_$DigitTapMasterEventImpl>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -2064,13 +1416,11 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -2088,13 +1438,11 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -2116,15 +1464,11 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -2147,14 +1491,11 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -2173,14 +1514,11 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -2203,34 +1541,35 @@ class _$_DigitTapMasterEvent implements _DigitTapMasterEvent {
 
 abstract class _DigitTapMasterEvent implements MasterEvent {
   const factory _DigitTapMasterEvent({required final int digit}) =
-      _$_DigitTapMasterEvent;
+      _$DigitTapMasterEventImpl;
 
   int get digit;
   @JsonKey(ignore: true)
-  _$$_DigitTapMasterEventCopyWith<_$_DigitTapMasterEvent> get copyWith =>
+  _$$DigitTapMasterEventImplCopyWith<_$DigitTapMasterEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_BackKeyTapMasterEventCopyWith<$Res> {
-  factory _$$_BackKeyTapMasterEventCopyWith(_$_BackKeyTapMasterEvent value,
-          $Res Function(_$_BackKeyTapMasterEvent) then) =
-      __$$_BackKeyTapMasterEventCopyWithImpl<$Res>;
+abstract class _$$BackKeyTapMasterEventImplCopyWith<$Res> {
+  factory _$$BackKeyTapMasterEventImplCopyWith(
+          _$BackKeyTapMasterEventImpl value,
+          $Res Function(_$BackKeyTapMasterEventImpl) then) =
+      __$$BackKeyTapMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_BackKeyTapMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_BackKeyTapMasterEvent>
-    implements _$$_BackKeyTapMasterEventCopyWith<$Res> {
-  __$$_BackKeyTapMasterEventCopyWithImpl(_$_BackKeyTapMasterEvent _value,
-      $Res Function(_$_BackKeyTapMasterEvent) _then)
+class __$$BackKeyTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$BackKeyTapMasterEventImpl>
+    implements _$$BackKeyTapMasterEventImplCopyWith<$Res> {
+  __$$BackKeyTapMasterEventImplCopyWithImpl(_$BackKeyTapMasterEventImpl _value,
+      $Res Function(_$BackKeyTapMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
-  const _$_BackKeyTapMasterEvent();
+class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
+  const _$BackKeyTapMasterEventImpl();
 
   @override
   String toString() {
@@ -2240,7 +1579,8 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_BackKeyTapMasterEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$BackKeyTapMasterEventImpl);
   }
 
   @override
@@ -2249,13 +1589,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -2273,13 +1611,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -2297,13 +1633,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -2325,15 +1659,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -2356,14 +1686,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -2382,14 +1709,11 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -2411,29 +1735,29 @@ class _$_BackKeyTapMasterEvent implements _BackKeyTapMasterEvent {
 }
 
 abstract class _BackKeyTapMasterEvent implements MasterEvent {
-  const factory _BackKeyTapMasterEvent() = _$_BackKeyTapMasterEvent;
+  const factory _BackKeyTapMasterEvent() = _$BackKeyTapMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_MoreTapMasterEventCopyWith<$Res> {
-  factory _$$_MoreTapMasterEventCopyWith(_$_MoreTapMasterEvent value,
-          $Res Function(_$_MoreTapMasterEvent) then) =
-      __$$_MoreTapMasterEventCopyWithImpl<$Res>;
+abstract class _$$MoreTapMasterEventImplCopyWith<$Res> {
+  factory _$$MoreTapMasterEventImplCopyWith(_$MoreTapMasterEventImpl value,
+          $Res Function(_$MoreTapMasterEventImpl) then) =
+      __$$MoreTapMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_MoreTapMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_MoreTapMasterEvent>
-    implements _$$_MoreTapMasterEventCopyWith<$Res> {
-  __$$_MoreTapMasterEventCopyWithImpl(
-      _$_MoreTapMasterEvent _value, $Res Function(_$_MoreTapMasterEvent) _then)
+class __$$MoreTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$MoreTapMasterEventImpl>
+    implements _$$MoreTapMasterEventImplCopyWith<$Res> {
+  __$$MoreTapMasterEventImplCopyWithImpl(_$MoreTapMasterEventImpl _value,
+      $Res Function(_$MoreTapMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
-  const _$_MoreTapMasterEvent();
+class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
+  const _$MoreTapMasterEventImpl();
 
   @override
   String toString() {
@@ -2443,7 +1767,7 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_MoreTapMasterEvent);
+        (other.runtimeType == runtimeType && other is _$MoreTapMasterEventImpl);
   }
 
   @override
@@ -2452,13 +1776,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -2476,13 +1798,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -2500,13 +1820,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -2528,15 +1846,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -2559,14 +1873,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -2585,14 +1896,11 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -2614,15 +1922,15 @@ class _$_MoreTapMasterEvent implements _MoreTapMasterEvent {
 }
 
 abstract class _MoreTapMasterEvent implements MasterEvent {
-  const factory _MoreTapMasterEvent() = _$_MoreTapMasterEvent;
+  const factory _MoreTapMasterEvent() = _$MoreTapMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_ChangeAccountMasterEventCopyWith<$Res> {
-  factory _$$_ChangeAccountMasterEventCopyWith(
-          _$_ChangeAccountMasterEvent value,
-          $Res Function(_$_ChangeAccountMasterEvent) then) =
-      __$$_ChangeAccountMasterEventCopyWithImpl<$Res>;
+abstract class _$$ChangeAccountMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeAccountMasterEventImplCopyWith(
+          _$ChangeAccountMasterEventImpl value,
+          $Res Function(_$ChangeAccountMasterEventImpl) then) =
+      __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountBalance account});
 
@@ -2630,11 +1938,12 @@ abstract class _$$_ChangeAccountMasterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChangeAccountMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeAccountMasterEvent>
-    implements _$$_ChangeAccountMasterEventCopyWith<$Res> {
-  __$$_ChangeAccountMasterEventCopyWithImpl(_$_ChangeAccountMasterEvent _value,
-      $Res Function(_$_ChangeAccountMasterEvent) _then)
+class __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$ChangeAccountMasterEventImpl>
+    implements _$$ChangeAccountMasterEventImplCopyWith<$Res> {
+  __$$ChangeAccountMasterEventImplCopyWithImpl(
+      _$ChangeAccountMasterEventImpl _value,
+      $Res Function(_$ChangeAccountMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2642,7 +1951,7 @@ class __$$_ChangeAccountMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? account = null,
   }) {
-    return _then(_$_ChangeAccountMasterEvent(
+    return _then(_$ChangeAccountMasterEventImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -2661,8 +1970,8 @@ class __$$_ChangeAccountMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
-  const _$_ChangeAccountMasterEvent({required this.account});
+class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
+  const _$ChangeAccountMasterEventImpl({required this.account});
 
   @override
   final AccountBalance account;
@@ -2676,7 +1985,7 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeAccountMasterEvent &&
+            other is _$ChangeAccountMasterEventImpl &&
             (identical(other.account, account) || other.account == account));
   }
 
@@ -2686,20 +1995,18 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeAccountMasterEventCopyWith<_$_ChangeAccountMasterEvent>
-      get copyWith => __$$_ChangeAccountMasterEventCopyWithImpl<
-          _$_ChangeAccountMasterEvent>(this, _$identity);
+  _$$ChangeAccountMasterEventImplCopyWith<_$ChangeAccountMasterEventImpl>
+      get copyWith => __$$ChangeAccountMasterEventImplCopyWithImpl<
+          _$ChangeAccountMasterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -2717,13 +2024,11 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -2741,13 +2046,11 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -2769,15 +2072,11 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -2800,14 +2099,11 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -2826,14 +2122,11 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -2856,20 +2149,20 @@ class _$_ChangeAccountMasterEvent implements _ChangeAccountMasterEvent {
 
 abstract class _ChangeAccountMasterEvent implements MasterEvent {
   const factory _ChangeAccountMasterEvent(
-      {required final AccountBalance account}) = _$_ChangeAccountMasterEvent;
+      {required final AccountBalance account}) = _$ChangeAccountMasterEventImpl;
 
   AccountBalance get account;
   @JsonKey(ignore: true)
-  _$$_ChangeAccountMasterEventCopyWith<_$_ChangeAccountMasterEvent>
+  _$$ChangeAccountMasterEventImplCopyWith<_$ChangeAccountMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeInCategoryMasterEventCopyWith<$Res> {
-  factory _$$_ChangeInCategoryMasterEventCopyWith(
-          _$_ChangeInCategoryMasterEvent value,
-          $Res Function(_$_ChangeInCategoryMasterEvent) then) =
-      __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>;
+abstract class _$$ChangeInCategoryMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeInCategoryMasterEventImplCopyWith(
+          _$ChangeInCategoryMasterEventImpl value,
+          $Res Function(_$ChangeInCategoryMasterEventImpl) then) =
+      __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
 
@@ -2877,12 +2170,12 @@ abstract class _$$_ChangeInCategoryMasterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeInCategoryMasterEvent>
-    implements _$$_ChangeInCategoryMasterEventCopyWith<$Res> {
-  __$$_ChangeInCategoryMasterEventCopyWithImpl(
-      _$_ChangeInCategoryMasterEvent _value,
-      $Res Function(_$_ChangeInCategoryMasterEvent) _then)
+class __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$ChangeInCategoryMasterEventImpl>
+    implements _$$ChangeInCategoryMasterEventImplCopyWith<$Res> {
+  __$$ChangeInCategoryMasterEventImplCopyWithImpl(
+      _$ChangeInCategoryMasterEventImpl _value,
+      $Res Function(_$ChangeInCategoryMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2890,7 +2183,7 @@ class __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
   }) {
-    return _then(_$_ChangeInCategoryMasterEvent(
+    return _then(_$ChangeInCategoryMasterEventImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -2909,8 +2202,9 @@ class __$$_ChangeInCategoryMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
-  const _$_ChangeInCategoryMasterEvent({required this.category});
+class _$ChangeInCategoryMasterEventImpl
+    implements _ChangeInCategoryMasterEvent {
+  const _$ChangeInCategoryMasterEventImpl({required this.category});
 
   @override
   final Category category;
@@ -2924,7 +2218,7 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeInCategoryMasterEvent &&
+            other is _$ChangeInCategoryMasterEventImpl &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -2935,20 +2229,18 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeInCategoryMasterEventCopyWith<_$_ChangeInCategoryMasterEvent>
-      get copyWith => __$$_ChangeInCategoryMasterEventCopyWithImpl<
-          _$_ChangeInCategoryMasterEvent>(this, _$identity);
+  _$$ChangeInCategoryMasterEventImplCopyWith<_$ChangeInCategoryMasterEventImpl>
+      get copyWith => __$$ChangeInCategoryMasterEventImplCopyWithImpl<
+          _$ChangeInCategoryMasterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -2966,13 +2258,11 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -2990,13 +2280,11 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -3018,15 +2306,11 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -3049,14 +2333,11 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -3075,14 +2356,11 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -3105,20 +2383,20 @@ class _$_ChangeInCategoryMasterEvent implements _ChangeInCategoryMasterEvent {
 
 abstract class _ChangeInCategoryMasterEvent implements MasterEvent {
   const factory _ChangeInCategoryMasterEvent(
-      {required final Category category}) = _$_ChangeInCategoryMasterEvent;
+      {required final Category category}) = _$ChangeInCategoryMasterEventImpl;
 
   Category get category;
   @JsonKey(ignore: true)
-  _$$_ChangeInCategoryMasterEventCopyWith<_$_ChangeInCategoryMasterEvent>
+  _$$ChangeInCategoryMasterEventImplCopyWith<_$ChangeInCategoryMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeOutCategoryMasterEventCopyWith<$Res> {
-  factory _$$_ChangeOutCategoryMasterEventCopyWith(
-          _$_ChangeOutCategoryMasterEvent value,
-          $Res Function(_$_ChangeOutCategoryMasterEvent) then) =
-      __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>;
+abstract class _$$ChangeOutCategoryMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeOutCategoryMasterEventImplCopyWith(
+          _$ChangeOutCategoryMasterEventImpl value,
+          $Res Function(_$ChangeOutCategoryMasterEventImpl) then) =
+      __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
 
@@ -3126,12 +2404,12 @@ abstract class _$$_ChangeOutCategoryMasterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeOutCategoryMasterEvent>
-    implements _$$_ChangeOutCategoryMasterEventCopyWith<$Res> {
-  __$$_ChangeOutCategoryMasterEventCopyWithImpl(
-      _$_ChangeOutCategoryMasterEvent _value,
-      $Res Function(_$_ChangeOutCategoryMasterEvent) _then)
+class __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$ChangeOutCategoryMasterEventImpl>
+    implements _$$ChangeOutCategoryMasterEventImplCopyWith<$Res> {
+  __$$ChangeOutCategoryMasterEventImplCopyWithImpl(
+      _$ChangeOutCategoryMasterEventImpl _value,
+      $Res Function(_$ChangeOutCategoryMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3139,7 +2417,7 @@ class __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
   }) {
-    return _then(_$_ChangeOutCategoryMasterEvent(
+    return _then(_$ChangeOutCategoryMasterEventImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -3158,8 +2436,9 @@ class __$$_ChangeOutCategoryMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
-  const _$_ChangeOutCategoryMasterEvent({required this.category});
+class _$ChangeOutCategoryMasterEventImpl
+    implements _ChangeOutCategoryMasterEvent {
+  const _$ChangeOutCategoryMasterEventImpl({required this.category});
 
   @override
   final Category category;
@@ -3173,7 +2452,7 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeOutCategoryMasterEvent &&
+            other is _$ChangeOutCategoryMasterEventImpl &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -3184,20 +2463,19 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeOutCategoryMasterEventCopyWith<_$_ChangeOutCategoryMasterEvent>
-      get copyWith => __$$_ChangeOutCategoryMasterEventCopyWithImpl<
-          _$_ChangeOutCategoryMasterEvent>(this, _$identity);
+  _$$ChangeOutCategoryMasterEventImplCopyWith<
+          _$ChangeOutCategoryMasterEventImpl>
+      get copyWith => __$$ChangeOutCategoryMasterEventImplCopyWithImpl<
+          _$ChangeOutCategoryMasterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -3215,13 +2493,11 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -3239,13 +2515,11 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -3267,15 +2541,11 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -3298,14 +2568,11 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -3324,14 +2591,11 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -3354,20 +2618,21 @@ class _$_ChangeOutCategoryMasterEvent implements _ChangeOutCategoryMasterEvent {
 
 abstract class _ChangeOutCategoryMasterEvent implements MasterEvent {
   const factory _ChangeOutCategoryMasterEvent(
-      {required final Category category}) = _$_ChangeOutCategoryMasterEvent;
+      {required final Category category}) = _$ChangeOutCategoryMasterEventImpl;
 
   Category get category;
   @JsonKey(ignore: true)
-  _$$_ChangeOutCategoryMasterEventCopyWith<_$_ChangeOutCategoryMasterEvent>
+  _$$ChangeOutCategoryMasterEventImplCopyWith<
+          _$ChangeOutCategoryMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeRecAccountMasterEventCopyWith<$Res> {
-  factory _$$_ChangeRecAccountMasterEventCopyWith(
-          _$_ChangeRecAccountMasterEvent value,
-          $Res Function(_$_ChangeRecAccountMasterEvent) then) =
-      __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>;
+abstract class _$$ChangeRecAccountMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeRecAccountMasterEventImplCopyWith(
+          _$ChangeRecAccountMasterEventImpl value,
+          $Res Function(_$ChangeRecAccountMasterEventImpl) then) =
+      __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountBalance account});
 
@@ -3375,12 +2640,12 @@ abstract class _$$_ChangeRecAccountMasterEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_ChangeRecAccountMasterEvent>
-    implements _$$_ChangeRecAccountMasterEventCopyWith<$Res> {
-  __$$_ChangeRecAccountMasterEventCopyWithImpl(
-      _$_ChangeRecAccountMasterEvent _value,
-      $Res Function(_$_ChangeRecAccountMasterEvent) _then)
+class __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$ChangeRecAccountMasterEventImpl>
+    implements _$$ChangeRecAccountMasterEventImplCopyWith<$Res> {
+  __$$ChangeRecAccountMasterEventImplCopyWithImpl(
+      _$ChangeRecAccountMasterEventImpl _value,
+      $Res Function(_$ChangeRecAccountMasterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3388,7 +2653,7 @@ class __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>
   $Res call({
     Object? account = null,
   }) {
-    return _then(_$_ChangeRecAccountMasterEvent(
+    return _then(_$ChangeRecAccountMasterEventImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -3407,8 +2672,9 @@ class __$$_ChangeRecAccountMasterEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
-  const _$_ChangeRecAccountMasterEvent({required this.account});
+class _$ChangeRecAccountMasterEventImpl
+    implements _ChangeRecAccountMasterEvent {
+  const _$ChangeRecAccountMasterEventImpl({required this.account});
 
   @override
   final AccountBalance account;
@@ -3422,7 +2688,7 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeRecAccountMasterEvent &&
+            other is _$ChangeRecAccountMasterEventImpl &&
             (identical(other.account, account) || other.account == account));
   }
 
@@ -3432,20 +2698,18 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeRecAccountMasterEventCopyWith<_$_ChangeRecAccountMasterEvent>
-      get copyWith => __$$_ChangeRecAccountMasterEventCopyWithImpl<
-          _$_ChangeRecAccountMasterEvent>(this, _$identity);
+  _$$ChangeRecAccountMasterEventImplCopyWith<_$ChangeRecAccountMasterEventImpl>
+      get copyWith => __$$ChangeRecAccountMasterEventImplCopyWithImpl<
+          _$ChangeRecAccountMasterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -3463,13 +2727,11 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -3487,13 +2749,11 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -3515,15 +2775,11 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -3546,14 +2802,11 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -3572,14 +2825,11 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -3602,36 +2852,37 @@ class _$_ChangeRecAccountMasterEvent implements _ChangeRecAccountMasterEvent {
 
 abstract class _ChangeRecAccountMasterEvent implements MasterEvent {
   const factory _ChangeRecAccountMasterEvent(
-      {required final AccountBalance account}) = _$_ChangeRecAccountMasterEvent;
+          {required final AccountBalance account}) =
+      _$ChangeRecAccountMasterEventImpl;
 
   AccountBalance get account;
   @JsonKey(ignore: true)
-  _$$_ChangeRecAccountMasterEventCopyWith<_$_ChangeRecAccountMasterEvent>
+  _$$ChangeRecAccountMasterEventImplCopyWith<_$ChangeRecAccountMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_CancelOperationMasterEventCopyWith<$Res> {
-  factory _$$_CancelOperationMasterEventCopyWith(
-          _$_CancelOperationMasterEvent value,
-          $Res Function(_$_CancelOperationMasterEvent) then) =
-      __$$_CancelOperationMasterEventCopyWithImpl<$Res>;
+abstract class _$$CancelOperationMasterEventImplCopyWith<$Res> {
+  factory _$$CancelOperationMasterEventImplCopyWith(
+          _$CancelOperationMasterEventImpl value,
+          $Res Function(_$CancelOperationMasterEventImpl) then) =
+      __$$CancelOperationMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_CancelOperationMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_CancelOperationMasterEvent>
-    implements _$$_CancelOperationMasterEventCopyWith<$Res> {
-  __$$_CancelOperationMasterEventCopyWithImpl(
-      _$_CancelOperationMasterEvent _value,
-      $Res Function(_$_CancelOperationMasterEvent) _then)
+class __$$CancelOperationMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$CancelOperationMasterEventImpl>
+    implements _$$CancelOperationMasterEventImplCopyWith<$Res> {
+  __$$CancelOperationMasterEventImplCopyWithImpl(
+      _$CancelOperationMasterEventImpl _value,
+      $Res Function(_$CancelOperationMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
-  const _$_CancelOperationMasterEvent();
+class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
+  const _$CancelOperationMasterEventImpl();
 
   @override
   String toString() {
@@ -3642,7 +2893,7 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CancelOperationMasterEvent);
+            other is _$CancelOperationMasterEventImpl);
   }
 
   @override
@@ -3651,13 +2902,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -3675,13 +2924,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -3699,13 +2946,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -3727,15 +2972,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -3758,14 +2999,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -3784,14 +3022,11 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -3813,29 +3048,30 @@ class _$_CancelOperationMasterEvent implements _CancelOperationMasterEvent {
 }
 
 abstract class _CancelOperationMasterEvent implements MasterEvent {
-  const factory _CancelOperationMasterEvent() = _$_CancelOperationMasterEvent;
+  const factory _CancelOperationMasterEvent() =
+      _$CancelOperationMasterEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_NextTapMasterEventCopyWith<$Res> {
-  factory _$$_NextTapMasterEventCopyWith(_$_NextTapMasterEvent value,
-          $Res Function(_$_NextTapMasterEvent) then) =
-      __$$_NextTapMasterEventCopyWithImpl<$Res>;
+abstract class _$$NextTapMasterEventImplCopyWith<$Res> {
+  factory _$$NextTapMasterEventImplCopyWith(_$NextTapMasterEventImpl value,
+          $Res Function(_$NextTapMasterEventImpl) then) =
+      __$$NextTapMasterEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NextTapMasterEventCopyWithImpl<$Res>
-    extends _$MasterEventCopyWithImpl<$Res, _$_NextTapMasterEvent>
-    implements _$$_NextTapMasterEventCopyWith<$Res> {
-  __$$_NextTapMasterEventCopyWithImpl(
-      _$_NextTapMasterEvent _value, $Res Function(_$_NextTapMasterEvent) _then)
+class __$$NextTapMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res, _$NextTapMasterEventImpl>
+    implements _$$NextTapMasterEventImplCopyWith<$Res> {
+  __$$NextTapMasterEventImplCopyWithImpl(_$NextTapMasterEventImpl _value,
+      $Res Function(_$NextTapMasterEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NextTapMasterEvent implements _NextTapMasterEvent {
-  const _$_NextTapMasterEvent();
+class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
+  const _$NextTapMasterEventImpl();
 
   @override
   String toString() {
@@ -3845,7 +3081,7 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NextTapMasterEvent);
+        (other.runtimeType == runtimeType && other is _$NextTapMasterEventImpl);
   }
 
   @override
@@ -3854,13 +3090,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeAccounts,
-    required TResult Function(List<Category> categories) changeInCategories,
-    required TResult Function(List<Category> categories) changeOutCategories,
     required TResult Function() backPressed,
     required TResult Function() start,
     required TResult Function() addNewItem,
     required TResult Function() sumTap,
+    required TResult Function() recSumTap,
     required TResult Function(OperationType operationType) changeOperationType,
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
@@ -3878,13 +3112,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult? Function(List<Category> categories)? changeInCategories,
-    TResult? Function(List<Category> categories)? changeOutCategories,
     TResult? Function()? backPressed,
     TResult? Function()? start,
     TResult? Function()? addNewItem,
     TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
     TResult? Function(OperationType operationType)? changeOperationType,
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
@@ -3902,13 +3134,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeAccounts,
-    TResult Function(List<Category> categories)? changeInCategories,
-    TResult Function(List<Category> categories)? changeOutCategories,
     TResult Function()? backPressed,
     TResult Function()? start,
     TResult Function()? addNewItem,
     TResult Function()? sumTap,
+    TResult Function()? recSumTap,
     TResult Function(OperationType operationType)? changeOperationType,
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
@@ -3930,15 +3160,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeAccountsMasterEvent value) changeAccounts,
-    required TResult Function(_ChangeInCategoriesMasterEvent value)
-        changeInCategories,
-    required TResult Function(_ChangeOutCategoriesMasterEvent value)
-        changeOutCategories,
     required TResult Function(_BackPressedMasterEvent value) backPressed,
     required TResult Function(_StartMasterEvent value) start,
     required TResult Function(_AddNewItemMassterEvent value) addNewItem,
     required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
     required TResult Function(_ChangeOperationTypeMasterEvent value)
         changeOperationType,
     required TResult Function(_DigitTapMasterEvent value) digitTap,
@@ -3961,14 +3187,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult? Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult? Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult? Function(_BackPressedMasterEvent value)? backPressed,
     TResult? Function(_StartMasterEvent value)? start,
     TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult? Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult? Function(_DigitTapMasterEvent value)? digitTap,
@@ -3987,14 +3210,11 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeAccountsMasterEvent value)? changeAccounts,
-    TResult Function(_ChangeInCategoriesMasterEvent value)? changeInCategories,
-    TResult Function(_ChangeOutCategoriesMasterEvent value)?
-        changeOutCategories,
     TResult Function(_BackPressedMasterEvent value)? backPressed,
     TResult Function(_StartMasterEvent value)? start,
     TResult Function(_AddNewItemMassterEvent value)? addNewItem,
     TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
     TResult Function(_ChangeOperationTypeMasterEvent value)?
         changeOperationType,
     TResult Function(_DigitTapMasterEvent value)? digitTap,
@@ -4016,7 +3236,7 @@ class _$_NextTapMasterEvent implements _NextTapMasterEvent {
 }
 
 abstract class _NextTapMasterEvent implements MasterEvent {
-  const factory _NextTapMasterEvent() = _$_NextTapMasterEvent;
+  const factory _NextTapMasterEvent() = _$NextTapMasterEventImpl;
 }
 
 /// @nodoc
@@ -4024,15 +3244,15 @@ mixin _$MasterState {
   MasterStateAction get action => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
+  int get recSum => throw _privateConstructorUsedError;
   bool get showKeyboard => throw _privateConstructorUsedError;
+  bool get highlightSum => throw _privateConstructorUsedError;
+  bool get highlightRecSum => throw _privateConstructorUsedError;
   AccountBalance? get account => throw _privateConstructorUsedError;
   Category? get categoryIn => throw _privateConstructorUsedError;
   Category? get categoryOut => throw _privateConstructorUsedError;
   AccountBalance? get recAccount => throw _privateConstructorUsedError;
   Operation? get operation => throw _privateConstructorUsedError;
-  List<AccountBalance> get accounts => throw _privateConstructorUsedError;
-  List<Category> get inCategories => throw _privateConstructorUsedError;
-  List<Category> get outCategories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MasterStateCopyWith<MasterState> get copyWith =>
@@ -4049,15 +3269,15 @@ abstract class $MasterStateCopyWith<$Res> {
       {MasterStateAction action,
       OperationType operationType,
       int sum,
+      int recSum,
       bool showKeyboard,
+      bool highlightSum,
+      bool highlightRecSum,
       AccountBalance? account,
       Category? categoryIn,
       Category? categoryOut,
       AccountBalance? recAccount,
-      Operation? operation,
-      List<AccountBalance> accounts,
-      List<Category> inCategories,
-      List<Category> outCategories});
+      Operation? operation});
 
   $AccountBalanceCopyWith<$Res>? get account;
   $CategoryCopyWith<$Res>? get categoryIn;
@@ -4082,15 +3302,15 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
     Object? action = null,
     Object? operationType = null,
     Object? sum = null,
+    Object? recSum = null,
     Object? showKeyboard = null,
+    Object? highlightSum = null,
+    Object? highlightRecSum = null,
     Object? account = freezed,
     Object? categoryIn = freezed,
     Object? categoryOut = freezed,
     Object? recAccount = freezed,
     Object? operation = freezed,
-    Object? accounts = null,
-    Object? inCategories = null,
-    Object? outCategories = null,
   }) {
     return _then(_value.copyWith(
       action: null == action
@@ -4105,9 +3325,21 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
+      recSum: null == recSum
+          ? _value.recSum
+          : recSum // ignore: cast_nullable_to_non_nullable
+              as int,
       showKeyboard: null == showKeyboard
           ? _value.showKeyboard
           : showKeyboard // ignore: cast_nullable_to_non_nullable
+              as bool,
+      highlightSum: null == highlightSum
+          ? _value.highlightSum
+          : highlightSum // ignore: cast_nullable_to_non_nullable
+              as bool,
+      highlightRecSum: null == highlightRecSum
+          ? _value.highlightRecSum
+          : highlightRecSum // ignore: cast_nullable_to_non_nullable
               as bool,
       account: freezed == account
           ? _value.account
@@ -4129,18 +3361,6 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
               as Operation?,
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
-      inCategories: null == inCategories
-          ? _value.inCategories
-          : inCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      outCategories: null == outCategories
-          ? _value.outCategories
-          : outCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
     ) as $Val);
   }
 
@@ -4206,26 +3426,26 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
 }
 
 /// @nodoc
-abstract class _$$_MasterStateCopyWith<$Res>
+abstract class _$$MasterStateImplCopyWith<$Res>
     implements $MasterStateCopyWith<$Res> {
-  factory _$$_MasterStateCopyWith(
-          _$_MasterState value, $Res Function(_$_MasterState) then) =
-      __$$_MasterStateCopyWithImpl<$Res>;
+  factory _$$MasterStateImplCopyWith(
+          _$MasterStateImpl value, $Res Function(_$MasterStateImpl) then) =
+      __$$MasterStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {MasterStateAction action,
       OperationType operationType,
       int sum,
+      int recSum,
       bool showKeyboard,
+      bool highlightSum,
+      bool highlightRecSum,
       AccountBalance? account,
       Category? categoryIn,
       Category? categoryOut,
       AccountBalance? recAccount,
-      Operation? operation,
-      List<AccountBalance> accounts,
-      List<Category> inCategories,
-      List<Category> outCategories});
+      Operation? operation});
 
   @override
   $AccountBalanceCopyWith<$Res>? get account;
@@ -4240,11 +3460,11 @@ abstract class _$$_MasterStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MasterStateCopyWithImpl<$Res>
-    extends _$MasterStateCopyWithImpl<$Res, _$_MasterState>
-    implements _$$_MasterStateCopyWith<$Res> {
-  __$$_MasterStateCopyWithImpl(
-      _$_MasterState _value, $Res Function(_$_MasterState) _then)
+class __$$MasterStateImplCopyWithImpl<$Res>
+    extends _$MasterStateCopyWithImpl<$Res, _$MasterStateImpl>
+    implements _$$MasterStateImplCopyWith<$Res> {
+  __$$MasterStateImplCopyWithImpl(
+      _$MasterStateImpl _value, $Res Function(_$MasterStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -4253,17 +3473,17 @@ class __$$_MasterStateCopyWithImpl<$Res>
     Object? action = null,
     Object? operationType = null,
     Object? sum = null,
+    Object? recSum = null,
     Object? showKeyboard = null,
+    Object? highlightSum = null,
+    Object? highlightRecSum = null,
     Object? account = freezed,
     Object? categoryIn = freezed,
     Object? categoryOut = freezed,
     Object? recAccount = freezed,
     Object? operation = freezed,
-    Object? accounts = null,
-    Object? inCategories = null,
-    Object? outCategories = null,
   }) {
-    return _then(_$_MasterState(
+    return _then(_$MasterStateImpl(
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -4276,9 +3496,21 @@ class __$$_MasterStateCopyWithImpl<$Res>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
+      recSum: null == recSum
+          ? _value.recSum
+          : recSum // ignore: cast_nullable_to_non_nullable
+              as int,
       showKeyboard: null == showKeyboard
           ? _value.showKeyboard
           : showKeyboard // ignore: cast_nullable_to_non_nullable
+              as bool,
+      highlightSum: null == highlightSum
+          ? _value.highlightSum
+          : highlightSum // ignore: cast_nullable_to_non_nullable
+              as bool,
+      highlightRecSum: null == highlightRecSum
+          ? _value.highlightRecSum
+          : highlightRecSum // ignore: cast_nullable_to_non_nullable
               as bool,
       account: freezed == account
           ? _value.account
@@ -4300,41 +3532,26 @@ class __$$_MasterStateCopyWithImpl<$Res>
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
               as Operation?,
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
-      inCategories: null == inCategories
-          ? _value._inCategories
-          : inCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      outCategories: null == outCategories
-          ? _value._outCategories
-          : outCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_MasterState implements _MasterState {
-  const _$_MasterState(
+class _$MasterStateImpl implements _MasterState {
+  const _$MasterStateImpl(
       {required this.action,
       required this.operationType,
       required this.sum,
+      required this.recSum,
       required this.showKeyboard,
+      required this.highlightSum,
+      required this.highlightRecSum,
       this.account,
       this.categoryIn,
       this.categoryOut,
       this.recAccount,
-      this.operation,
-      required final List<AccountBalance> accounts,
-      required final List<Category> inCategories,
-      required final List<Category> outCategories})
-      : _accounts = accounts,
-        _inCategories = inCategories,
-        _outCategories = outCategories;
+      this.operation});
 
   @override
   final MasterStateAction action;
@@ -4343,7 +3560,13 @@ class _$_MasterState implements _MasterState {
   @override
   final int sum;
   @override
+  final int recSum;
+  @override
   final bool showKeyboard;
+  @override
+  final bool highlightSum;
+  @override
+  final bool highlightRecSum;
   @override
   final AccountBalance? account;
   @override
@@ -4354,46 +3577,28 @@ class _$_MasterState implements _MasterState {
   final AccountBalance? recAccount;
   @override
   final Operation? operation;
-  final List<AccountBalance> _accounts;
-  @override
-  List<AccountBalance> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
-  }
-
-  final List<Category> _inCategories;
-  @override
-  List<Category> get inCategories {
-    if (_inCategories is EqualUnmodifiableListView) return _inCategories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_inCategories);
-  }
-
-  final List<Category> _outCategories;
-  @override
-  List<Category> get outCategories {
-    if (_outCategories is EqualUnmodifiableListView) return _outCategories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_outCategories);
-  }
 
   @override
   String toString() {
-    return 'MasterState(action: $action, operationType: $operationType, sum: $sum, showKeyboard: $showKeyboard, account: $account, categoryIn: $categoryIn, categoryOut: $categoryOut, recAccount: $recAccount, operation: $operation, accounts: $accounts, inCategories: $inCategories, outCategories: $outCategories)';
+    return 'MasterState(action: $action, operationType: $operationType, sum: $sum, recSum: $recSum, showKeyboard: $showKeyboard, highlightSum: $highlightSum, highlightRecSum: $highlightRecSum, account: $account, categoryIn: $categoryIn, categoryOut: $categoryOut, recAccount: $recAccount, operation: $operation)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MasterState &&
+            other is _$MasterStateImpl &&
             (identical(other.action, action) || other.action == action) &&
             (identical(other.operationType, operationType) ||
                 other.operationType == operationType) &&
             (identical(other.sum, sum) || other.sum == sum) &&
+            (identical(other.recSum, recSum) || other.recSum == recSum) &&
             (identical(other.showKeyboard, showKeyboard) ||
                 other.showKeyboard == showKeyboard) &&
+            (identical(other.highlightSum, highlightSum) ||
+                other.highlightSum == highlightSum) &&
+            (identical(other.highlightRecSum, highlightRecSum) ||
+                other.highlightRecSum == highlightRecSum) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.categoryIn, categoryIn) ||
                 other.categoryIn == categoryIn) &&
@@ -4402,12 +3607,7 @@ class _$_MasterState implements _MasterState {
             (identical(other.recAccount, recAccount) ||
                 other.recAccount == recAccount) &&
             (identical(other.operation, operation) ||
-                other.operation == operation) &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts) &&
-            const DeepCollectionEquality()
-                .equals(other._inCategories, _inCategories) &&
-            const DeepCollectionEquality()
-                .equals(other._outCategories, _outCategories));
+                other.operation == operation));
   }
 
   @override
@@ -4416,21 +3616,21 @@ class _$_MasterState implements _MasterState {
       action,
       operationType,
       sum,
+      recSum,
       showKeyboard,
+      highlightSum,
+      highlightRecSum,
       account,
       categoryIn,
       categoryOut,
       recAccount,
-      operation,
-      const DeepCollectionEquality().hash(_accounts),
-      const DeepCollectionEquality().hash(_inCategories),
-      const DeepCollectionEquality().hash(_outCategories));
+      operation);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MasterStateCopyWith<_$_MasterState> get copyWith =>
-      __$$_MasterStateCopyWithImpl<_$_MasterState>(this, _$identity);
+  _$$MasterStateImplCopyWith<_$MasterStateImpl> get copyWith =>
+      __$$MasterStateImplCopyWithImpl<_$MasterStateImpl>(this, _$identity);
 }
 
 abstract class _MasterState implements MasterState {
@@ -4438,15 +3638,15 @@ abstract class _MasterState implements MasterState {
       {required final MasterStateAction action,
       required final OperationType operationType,
       required final int sum,
+      required final int recSum,
       required final bool showKeyboard,
+      required final bool highlightSum,
+      required final bool highlightRecSum,
       final AccountBalance? account,
       final Category? categoryIn,
       final Category? categoryOut,
       final AccountBalance? recAccount,
-      final Operation? operation,
-      required final List<AccountBalance> accounts,
-      required final List<Category> inCategories,
-      required final List<Category> outCategories}) = _$_MasterState;
+      final Operation? operation}) = _$MasterStateImpl;
 
   @override
   MasterStateAction get action;
@@ -4455,7 +3655,13 @@ abstract class _MasterState implements MasterState {
   @override
   int get sum;
   @override
+  int get recSum;
+  @override
   bool get showKeyboard;
+  @override
+  bool get highlightSum;
+  @override
+  bool get highlightRecSum;
   @override
   AccountBalance? get account;
   @override
@@ -4467,13 +3673,7 @@ abstract class _MasterState implements MasterState {
   @override
   Operation? get operation;
   @override
-  List<AccountBalance> get accounts;
-  @override
-  List<Category> get inCategories;
-  @override
-  List<Category> get outCategories;
-  @override
   @JsonKey(ignore: true)
-  _$$_MasterStateCopyWith<_$_MasterState> get copyWith =>
+  _$$MasterStateImplCopyWith<_$MasterStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

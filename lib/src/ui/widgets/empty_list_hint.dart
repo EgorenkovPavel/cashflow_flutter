@@ -4,8 +4,7 @@ class EmptyListHint extends StatelessWidget {
   final String title;
   final String hint;
 
-  const EmptyListHint({Key? key, required this.title, required this.hint})
-      : super(key: key);
+  const EmptyListHint({super.key, required this.title, required this.hint});
 
   @override
   Widget build(BuildContext context) {

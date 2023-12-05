@@ -23,6 +23,7 @@ mixin _$CloudOperation {
   String? get category => throw _privateConstructorUsedError;
   String? get recAccount => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
+  int get recSum => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -44,6 +45,7 @@ abstract class $CloudOperationCopyWith<$Res> {
       String? category,
       String? recAccount,
       int sum,
+      int recSum,
       bool deleted});
 }
 
@@ -67,6 +69,7 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
     Object? category = freezed,
     Object? recAccount = freezed,
     Object? sum = null,
+    Object? recSum = null,
     Object? deleted = null,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +101,10 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
+      recSum: null == recSum
+          ? _value.recSum
+          : recSum // ignore: cast_nullable_to_non_nullable
+              as int,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -107,11 +114,11 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
 }
 
 /// @nodoc
-abstract class _$$_CloudOperationCopyWith<$Res>
+abstract class _$$CloudOperationImplCopyWith<$Res>
     implements $CloudOperationCopyWith<$Res> {
-  factory _$$_CloudOperationCopyWith(
-          _$_CloudOperation value, $Res Function(_$_CloudOperation) then) =
-      __$$_CloudOperationCopyWithImpl<$Res>;
+  factory _$$CloudOperationImplCopyWith(_$CloudOperationImpl value,
+          $Res Function(_$CloudOperationImpl) then) =
+      __$$CloudOperationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -122,15 +129,16 @@ abstract class _$$_CloudOperationCopyWith<$Res>
       String? category,
       String? recAccount,
       int sum,
+      int recSum,
       bool deleted});
 }
 
 /// @nodoc
-class __$$_CloudOperationCopyWithImpl<$Res>
-    extends _$CloudOperationCopyWithImpl<$Res, _$_CloudOperation>
-    implements _$$_CloudOperationCopyWith<$Res> {
-  __$$_CloudOperationCopyWithImpl(
-      _$_CloudOperation _value, $Res Function(_$_CloudOperation) _then)
+class __$$CloudOperationImplCopyWithImpl<$Res>
+    extends _$CloudOperationCopyWithImpl<$Res, _$CloudOperationImpl>
+    implements _$$CloudOperationImplCopyWith<$Res> {
+  __$$CloudOperationImplCopyWithImpl(
+      _$CloudOperationImpl _value, $Res Function(_$CloudOperationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -143,9 +151,10 @@ class __$$_CloudOperationCopyWithImpl<$Res>
     Object? category = freezed,
     Object? recAccount = freezed,
     Object? sum = null,
+    Object? recSum = null,
     Object? deleted = null,
   }) {
-    return _then(_$_CloudOperation(
+    return _then(_$CloudOperationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -174,6 +183,10 @@ class __$$_CloudOperationCopyWithImpl<$Res>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
+      recSum: null == recSum
+          ? _value.recSum
+          : recSum // ignore: cast_nullable_to_non_nullable
+              as int,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -184,8 +197,8 @@ class __$$_CloudOperationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CloudOperation implements _CloudOperation {
-  const _$_CloudOperation(
+class _$CloudOperationImpl implements _CloudOperation {
+  const _$CloudOperationImpl(
       {required this.id,
       required this.date,
       required this.operationType,
@@ -193,6 +206,7 @@ class _$_CloudOperation implements _CloudOperation {
       this.category,
       this.recAccount,
       required this.sum,
+      required this.recSum,
       required this.deleted});
 
   @override
@@ -210,18 +224,20 @@ class _$_CloudOperation implements _CloudOperation {
   @override
   final int sum;
   @override
+  final int recSum;
+  @override
   final bool deleted;
 
   @override
   String toString() {
-    return 'CloudOperation(id: $id, date: $date, operationType: $operationType, account: $account, category: $category, recAccount: $recAccount, sum: $sum, deleted: $deleted)';
+    return 'CloudOperation(id: $id, date: $date, operationType: $operationType, account: $account, category: $category, recAccount: $recAccount, sum: $sum, recSum: $recSum, deleted: $deleted)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CloudOperation &&
+            other is _$CloudOperationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.operationType, operationType) ||
@@ -232,18 +248,20 @@ class _$_CloudOperation implements _CloudOperation {
             (identical(other.recAccount, recAccount) ||
                 other.recAccount == recAccount) &&
             (identical(other.sum, sum) || other.sum == sum) &&
+            (identical(other.recSum, recSum) || other.recSum == recSum) &&
             (identical(other.deleted, deleted) || other.deleted == deleted));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, date, operationType, account,
-      category, recAccount, sum, deleted);
+      category, recAccount, sum, recSum, deleted);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CloudOperationCopyWith<_$_CloudOperation> get copyWith =>
-      __$$_CloudOperationCopyWithImpl<_$_CloudOperation>(this, _$identity);
+  _$$CloudOperationImplCopyWith<_$CloudOperationImpl> get copyWith =>
+      __$$CloudOperationImplCopyWithImpl<_$CloudOperationImpl>(
+          this, _$identity);
 }
 
 abstract class _CloudOperation implements CloudOperation {
@@ -255,7 +273,8 @@ abstract class _CloudOperation implements CloudOperation {
       final String? category,
       final String? recAccount,
       required final int sum,
-      required final bool deleted}) = _$_CloudOperation;
+      required final int recSum,
+      required final bool deleted}) = _$CloudOperationImpl;
 
   @override
   String get id;
@@ -272,9 +291,11 @@ abstract class _CloudOperation implements CloudOperation {
   @override
   int get sum;
   @override
+  int get recSum;
+  @override
   bool get deleted;
   @override
   @JsonKey(ignore: true)
-  _$$_CloudOperationCopyWith<_$_CloudOperation> get copyWith =>
+  _$$CloudOperationImplCopyWith<_$CloudOperationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -5,7 +5,7 @@ import 'package:money_tracker/src/ui/pages/service/data_control_page/data_contro
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class DataControlPage extends StatelessWidget {
-  const DataControlPage({Key? key}) : super(key: key);
+  const DataControlPage({super.key});
 
   void _listenState(BuildContext context, DataControlState state) {
     state.mapOrNull(success: (_) {

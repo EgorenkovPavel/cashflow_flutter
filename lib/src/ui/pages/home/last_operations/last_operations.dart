@@ -9,7 +9,7 @@ import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class LastOperations extends StatelessWidget {
-  const LastOperations({Key? key}) : super(key: key);
+  const LastOperations({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,23 +17,25 @@ class LastOperations extends StatelessWidget {
       create: (context) =>
           sl<LastOperationsBloc>()..add(const LastOperationsEvent.fetch()),
       child: Builder(builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              context.loc.titleLastOperations,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            BlocBuilder<LastOperationsBloc, LastOperationsState>(
-              builder: (context, state) {
-                if (state.operations.isEmpty) {
-                  return const _NoOperationsTitle();
-                } else {
-                  return _OperationsList(items: state.operations);
-                }
-              },
-            ),
-          ],
+        return Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                context.loc.titleLastOperations,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              BlocBuilder<LastOperationsBloc, LastOperationsState>(
+                builder: (context, state) {
+                  if (state.operations.isEmpty) {
+                    return const _NoOperationsTitle();
+                  } else {
+                    return _OperationsList(items: state.operations);
+                  }
+                },
+              ),
+            ],
+          ),
         );
       }),
     );
@@ -42,9 +44,9 @@ class LastOperations extends StatelessWidget {
 
 class _OperationsList extends StatelessWidget {
   const _OperationsList({
-    Key? key,
+    super.key,
     required this.items,
-  }) : super(key: key);
+  });
 
   final List<Operation> items;
 
@@ -70,8 +72,8 @@ class _OperationsList extends StatelessWidget {
 
 class _NoOperationsTitle extends StatelessWidget {
   const _NoOperationsTitle({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +86,8 @@ class _NoOperationsTitle extends StatelessWidget {
 
 class _ShowAllOperationsButton extends StatelessWidget {
   const _ShowAllOperationsButton({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   void _onPressed(BuildContext context) => context.openOperationListPage();
 

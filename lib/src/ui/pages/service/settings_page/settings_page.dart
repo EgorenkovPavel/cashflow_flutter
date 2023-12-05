@@ -6,7 +6,7 @@ import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,10 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Builder(
         builder: (BuildContext context) {
-          return SingleChildScrollView(
+          return const SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 AuthListTile(),
                 Divider(),
                 CloudDatabaseListTile(),
@@ -37,7 +37,7 @@ class SettingsPage extends StatelessWidget {
 }
 
 class AuthListTile extends StatelessWidget {
-  const AuthListTile({Key? key}) : super(key: key);
+  const AuthListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class AuthListTile extends StatelessWidget {
 }
 
 class CloudDatabaseListTile extends StatelessWidget {
-  const CloudDatabaseListTile({Key? key}) : super(key: key);
+  const CloudDatabaseListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class CloudDatabaseListTile extends StatelessWidget {
 }
 
 class GoogleDriveListTile extends StatelessWidget {
-  const GoogleDriveListTile({Key? key}) : super(key: key);
+  const GoogleDriveListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +123,8 @@ class GoogleDriveListTile extends StatelessWidget {
 
 class DataControlListTile extends StatelessWidget {
   const DataControlListTile({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

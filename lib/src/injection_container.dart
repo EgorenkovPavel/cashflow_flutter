@@ -10,6 +10,10 @@ import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/src/data/repositories/backup_repository_impl.dart';
 import 'package:money_tracker/src/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/backup_repository.dart';
+import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
+import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
+import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../src/common_blocs/auth/auth_bloc.dart';
@@ -44,17 +48,13 @@ import '../src/ui/pages/budget_page/budget_bloc.dart';
 import '../src/ui/pages/category/detail_page/category_detail_bloc.dart';
 import '../src/ui/pages/category/input_page/category_input_bloc.dart';
 import '../src/ui/pages/home/last_operations/last_operations_bloc.dart';
-import '../src/ui/pages/home/month_operations/month_operations_bloc.dart';
-import '../src/ui/pages/home/top_header/top_header_bloc.dart';
 import '../src/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import '../src/ui/pages/operation/filter_page/operation_filter_bloc.dart';
-import '../src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import '../src/ui/pages/operation/list_page/operation_list_bloc.dart';
 import '../src/ui/pages/reports/reports_bloc.dart';
 import '../src/ui/pages/service/data_control_page/data_control_bloc.dart';
 import '../src/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import '../src/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
-import 'package:money_tracker/src/domain/models.dart';
 
 final sl = GetIt.instance;
 
@@ -168,6 +168,10 @@ Future<void> init() async {
         syncRepo: sl<SyncRepository>(),
       ));
 
+  sl.registerLazySingleton<AccountBalanceBloc>(() => AccountBalanceBloc(sl()));
+
+  sl.registerLazySingleton<CategoryCashflowBloc>(() => CategoryCashflowBloc(dataRepository: sl()));
+
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
     (mode, _) => DriveDialogBloc(
       repository: sl<AuthRepository>(),
@@ -189,12 +193,10 @@ Future<void> init() async {
   sl.registerFactory(() => CategoryInputBloc(sl<DataRepository>()));
 
   sl.registerFactory(() => LastOperationsBloc(sl<DataRepository>()));
-  sl.registerFactory(() => MonthOperationsBloc(sl<DataRepository>()));
-  sl.registerFactory(() => TopHeaderBloc(sl<DataRepository>()));
 
   sl.registerFactory(() => OperationEditBloc(sl<DataRepository>()));
-  sl.registerFactory(() => OperationFilterBloc(sl<DataRepository>()));
   sl.registerFactory(() => MasterBloc(sl<DataRepository>()));
+  sl.registerFactory(() => OperationFilterBloc(sl<DataRepository>()));
   sl.registerFactory(() => OperationListBloc(sl<DataRepository>()));
   sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
   sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));

@@ -1,3 +1,11 @@
-enum Currency{
-    RUB,USD,EUR
+
+
+enum Currency {
+  RUB('₽'),
+  USD('\$'),
+  EUR('€');
+
+  final String symbol;
+
+  const Currency(this.symbol);
 }

@@ -13,7 +13,7 @@ import 'package:money_tracker/src/utils/extensions.dart';
 class CategoryDetailPage extends StatelessWidget {
   final int id;
 
-  const CategoryDetailPage({Key? key, required this.id}) : super(key: key);
+  const CategoryDetailPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CategoryDetailPage extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () => context.openCategoryEditDialog(id: id),
-                  icon: const Icon(Icons.edit),
+                  icon: const Icon(Icons.edit, color: Colors.black,),
                 ),
               ],
             ),
@@ -106,17 +106,18 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             '${context.loc.budget} $budget ${context.loc.inPeriod} ${context.loc.budgetTypeTitle(budgetType)}',
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 150,
-            child: CategoryCashflowDiagram(
-              id: id,
-              budget: budget,
-              budgetType: budgetType,
-            ),
-          ),
-        ),
+        Text('Here will be the chart'),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: SizedBox(
+        //     height: 150,
+        //     child: CategoryCashflowDiagram(
+        //       id: id,
+        //       budget: budget,
+        //       budgetType: budgetType,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

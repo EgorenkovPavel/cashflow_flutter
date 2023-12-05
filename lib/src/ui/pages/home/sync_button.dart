@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
 
 class SyncButton extends StatelessWidget {
-  const SyncButton({Key? key}) : super(key: key);
+  const SyncButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SyncButton extends StatelessWidget {
         failure: (_) => 'Failed',
       );
 
-  Icon _appBarIcon(SyncState state) => _iconBySyncState(state);
+  Icon _appBarIcon(SyncState state) => _iconBySyncState(state, color: Colors.black);
 
   Icon _dialogIcon(SyncState state) =>
       _iconBySyncState(state, color: Colors.black, size: 48);

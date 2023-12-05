@@ -15,7 +15,7 @@ part 'operation_dao.g.dart';
 ])
 class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
-  OperationDao(Database db) : super(db);
+  OperationDao(super.db);
 
   Future<List<OperationDbEntity>> getAllOperationItems() {
     final acc = alias(accounts, 'a');
@@ -752,6 +752,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
                   category: Value(p.category),
                   recAccount: Value(p.recAccount),
                   sum: p.sum,
+                  recSum: Value(p.recSum),
                   deleted: Value(p.deleted),
                 ))
             .toList(),
@@ -829,6 +830,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int accountId,
     int recAccountId,
     int sum,
+    int recSum,
   ) async {
     await into(balances).insert(BalanceDB(
       date: date,
@@ -840,7 +842,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
       date: date,
       operation: operationId,
       account: recAccountId,
-      sum: sum,
+      sum: recSum,
     ));
   }
 
@@ -876,6 +878,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             operation.account.value,
             operation.recAccount.value!,
             operation.sum.value,
+            operation.recSum.value != 0 ? operation.recSum.value : operation.sum.value,
           );
           break;
         }

@@ -6,7 +6,7 @@ import 'package:money_tracker/src/utils/extensions.dart';
 class RestoreDialog extends StatefulWidget {
   final void Function(String fileId) restore;
 
-  const RestoreDialog({Key? key, required this.restore}) : super(key: key);
+  const RestoreDialog({super.key, required this.restore});
 
   @override
   _RestoreDialogState createState() => _RestoreDialogState();

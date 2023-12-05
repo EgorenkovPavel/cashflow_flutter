@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/models/enum/currency.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class TypeRadioButton<T> extends StatelessWidget {
@@ -9,11 +10,11 @@ class TypeRadioButton<T> extends StatelessWidget {
   final List<T> items;
 
   const TypeRadioButton({
-    Key? key,
+    super.key,
     required this.onChange,
     required this.type,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +38,9 @@ class TypeRadioButton<T> extends StatelessWidget {
 
 class _TypeItem<T> extends StatelessWidget {
   const _TypeItem({
-    Key? key,
+    super.key,
     type,
-  })  : _type = type,
-        super(key: key);
+  })  : _type = type;
 
   final T _type;
 
@@ -49,6 +49,8 @@ class _TypeItem<T> extends StatelessWidget {
       return context.loc.operationTypeTitle(_type as OperationType);
     } else if (_type is BudgetType) {
       return context.loc.budgetTypeTitle(_type as BudgetType);
+    } else if (_type is Currency) {
+      return context.loc.currencyTitle(_type as Currency);
     } else {
       return _type.toString();
     }

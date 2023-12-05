@@ -131,27 +131,27 @@ class _$SyncEventCopyWithImpl<$Res, $Val extends SyncEvent>
 }
 
 /// @nodoc
-abstract class _$$_CreateCloudDatabaseSyncEventCopyWith<$Res> {
-  factory _$$_CreateCloudDatabaseSyncEventCopyWith(
-          _$_CreateCloudDatabaseSyncEvent value,
-          $Res Function(_$_CreateCloudDatabaseSyncEvent) then) =
-      __$$_CreateCloudDatabaseSyncEventCopyWithImpl<$Res>;
+abstract class _$$CreateCloudDatabaseSyncEventImplCopyWith<$Res> {
+  factory _$$CreateCloudDatabaseSyncEventImplCopyWith(
+          _$CreateCloudDatabaseSyncEventImpl value,
+          $Res Function(_$CreateCloudDatabaseSyncEventImpl) then) =
+      __$$CreateCloudDatabaseSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_CreateCloudDatabaseSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_CreateCloudDatabaseSyncEvent>
-    implements _$$_CreateCloudDatabaseSyncEventCopyWith<$Res> {
-  __$$_CreateCloudDatabaseSyncEventCopyWithImpl(
-      _$_CreateCloudDatabaseSyncEvent _value,
-      $Res Function(_$_CreateCloudDatabaseSyncEvent) _then)
+class __$$CreateCloudDatabaseSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$CreateCloudDatabaseSyncEventImpl>
+    implements _$$CreateCloudDatabaseSyncEventImplCopyWith<$Res> {
+  __$$CreateCloudDatabaseSyncEventImplCopyWithImpl(
+      _$CreateCloudDatabaseSyncEventImpl _value,
+      $Res Function(_$CreateCloudDatabaseSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_CreateCloudDatabaseSyncEvent extends _CreateCloudDatabaseSyncEvent {
-  const _$_CreateCloudDatabaseSyncEvent() : super._();
+class _$CreateCloudDatabaseSyncEventImpl extends _CreateCloudDatabaseSyncEvent {
+  const _$CreateCloudDatabaseSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -162,7 +162,7 @@ class _$_CreateCloudDatabaseSyncEvent extends _CreateCloudDatabaseSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CreateCloudDatabaseSyncEvent);
+            other is _$CreateCloudDatabaseSyncEventImpl);
   }
 
   @override
@@ -290,32 +290,32 @@ class _$_CreateCloudDatabaseSyncEvent extends _CreateCloudDatabaseSyncEvent {
 
 abstract class _CreateCloudDatabaseSyncEvent extends SyncEvent {
   const factory _CreateCloudDatabaseSyncEvent() =
-      _$_CreateCloudDatabaseSyncEvent;
+      _$CreateCloudDatabaseSyncEventImpl;
   const _CreateCloudDatabaseSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_RefreshConnectionSyncEventCopyWith<$Res> {
-  factory _$$_RefreshConnectionSyncEventCopyWith(
-          _$_RefreshConnectionSyncEvent value,
-          $Res Function(_$_RefreshConnectionSyncEvent) then) =
-      __$$_RefreshConnectionSyncEventCopyWithImpl<$Res>;
+abstract class _$$RefreshConnectionSyncEventImplCopyWith<$Res> {
+  factory _$$RefreshConnectionSyncEventImplCopyWith(
+          _$RefreshConnectionSyncEventImpl value,
+          $Res Function(_$RefreshConnectionSyncEventImpl) then) =
+      __$$RefreshConnectionSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RefreshConnectionSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_RefreshConnectionSyncEvent>
-    implements _$$_RefreshConnectionSyncEventCopyWith<$Res> {
-  __$$_RefreshConnectionSyncEventCopyWithImpl(
-      _$_RefreshConnectionSyncEvent _value,
-      $Res Function(_$_RefreshConnectionSyncEvent) _then)
+class __$$RefreshConnectionSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$RefreshConnectionSyncEventImpl>
+    implements _$$RefreshConnectionSyncEventImplCopyWith<$Res> {
+  __$$RefreshConnectionSyncEventImplCopyWithImpl(
+      _$RefreshConnectionSyncEventImpl _value,
+      $Res Function(_$RefreshConnectionSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RefreshConnectionSyncEvent extends _RefreshConnectionSyncEvent {
-  const _$_RefreshConnectionSyncEvent() : super._();
+class _$RefreshConnectionSyncEventImpl extends _RefreshConnectionSyncEvent {
+  const _$RefreshConnectionSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -326,7 +326,7 @@ class _$_RefreshConnectionSyncEvent extends _RefreshConnectionSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RefreshConnectionSyncEvent);
+            other is _$RefreshConnectionSyncEventImpl);
   }
 
   @override
@@ -453,30 +453,31 @@ class _$_RefreshConnectionSyncEvent extends _RefreshConnectionSyncEvent {
 }
 
 abstract class _RefreshConnectionSyncEvent extends SyncEvent {
-  const factory _RefreshConnectionSyncEvent() = _$_RefreshConnectionSyncEvent;
+  const factory _RefreshConnectionSyncEvent() =
+      _$RefreshConnectionSyncEventImpl;
   const _RefreshConnectionSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SyncNowSyncEventCopyWith<$Res> {
-  factory _$$_SyncNowSyncEventCopyWith(
-          _$_SyncNowSyncEvent value, $Res Function(_$_SyncNowSyncEvent) then) =
-      __$$_SyncNowSyncEventCopyWithImpl<$Res>;
+abstract class _$$SyncNowSyncEventImplCopyWith<$Res> {
+  factory _$$SyncNowSyncEventImplCopyWith(_$SyncNowSyncEventImpl value,
+          $Res Function(_$SyncNowSyncEventImpl) then) =
+      __$$SyncNowSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SyncNowSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_SyncNowSyncEvent>
-    implements _$$_SyncNowSyncEventCopyWith<$Res> {
-  __$$_SyncNowSyncEventCopyWithImpl(
-      _$_SyncNowSyncEvent _value, $Res Function(_$_SyncNowSyncEvent) _then)
+class __$$SyncNowSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$SyncNowSyncEventImpl>
+    implements _$$SyncNowSyncEventImplCopyWith<$Res> {
+  __$$SyncNowSyncEventImplCopyWithImpl(_$SyncNowSyncEventImpl _value,
+      $Res Function(_$SyncNowSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SyncNowSyncEvent extends _SyncNowSyncEvent {
-  const _$_SyncNowSyncEvent() : super._();
+class _$SyncNowSyncEventImpl extends _SyncNowSyncEvent {
+  const _$SyncNowSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -486,7 +487,7 @@ class _$_SyncNowSyncEvent extends _SyncNowSyncEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SyncNowSyncEvent);
+        (other.runtimeType == runtimeType && other is _$SyncNowSyncEventImpl);
   }
 
   @override
@@ -613,30 +614,30 @@ class _$_SyncNowSyncEvent extends _SyncNowSyncEvent {
 }
 
 abstract class _SyncNowSyncEvent extends SyncEvent {
-  const factory _SyncNowSyncEvent() = _$_SyncNowSyncEvent;
+  const factory _SyncNowSyncEvent() = _$SyncNowSyncEventImpl;
   const _SyncNowSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SyncLastDaySyncEventCopyWith<$Res> {
-  factory _$$_SyncLastDaySyncEventCopyWith(_$_SyncLastDaySyncEvent value,
-          $Res Function(_$_SyncLastDaySyncEvent) then) =
-      __$$_SyncLastDaySyncEventCopyWithImpl<$Res>;
+abstract class _$$SyncLastDaySyncEventImplCopyWith<$Res> {
+  factory _$$SyncLastDaySyncEventImplCopyWith(_$SyncLastDaySyncEventImpl value,
+          $Res Function(_$SyncLastDaySyncEventImpl) then) =
+      __$$SyncLastDaySyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SyncLastDaySyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_SyncLastDaySyncEvent>
-    implements _$$_SyncLastDaySyncEventCopyWith<$Res> {
-  __$$_SyncLastDaySyncEventCopyWithImpl(_$_SyncLastDaySyncEvent _value,
-      $Res Function(_$_SyncLastDaySyncEvent) _then)
+class __$$SyncLastDaySyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$SyncLastDaySyncEventImpl>
+    implements _$$SyncLastDaySyncEventImplCopyWith<$Res> {
+  __$$SyncLastDaySyncEventImplCopyWithImpl(_$SyncLastDaySyncEventImpl _value,
+      $Res Function(_$SyncLastDaySyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SyncLastDaySyncEvent extends _SyncLastDaySyncEvent {
-  const _$_SyncLastDaySyncEvent() : super._();
+class _$SyncLastDaySyncEventImpl extends _SyncLastDaySyncEvent {
+  const _$SyncLastDaySyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -646,7 +647,8 @@ class _$_SyncLastDaySyncEvent extends _SyncLastDaySyncEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SyncLastDaySyncEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$SyncLastDaySyncEventImpl);
   }
 
   @override
@@ -773,30 +775,32 @@ class _$_SyncLastDaySyncEvent extends _SyncLastDaySyncEvent {
 }
 
 abstract class _SyncLastDaySyncEvent extends SyncEvent {
-  const factory _SyncLastDaySyncEvent() = _$_SyncLastDaySyncEvent;
+  const factory _SyncLastDaySyncEvent() = _$SyncLastDaySyncEventImpl;
   const _SyncLastDaySyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SyncLastMonthSyncEventCopyWith<$Res> {
-  factory _$$_SyncLastMonthSyncEventCopyWith(_$_SyncLastMonthSyncEvent value,
-          $Res Function(_$_SyncLastMonthSyncEvent) then) =
-      __$$_SyncLastMonthSyncEventCopyWithImpl<$Res>;
+abstract class _$$SyncLastMonthSyncEventImplCopyWith<$Res> {
+  factory _$$SyncLastMonthSyncEventImplCopyWith(
+          _$SyncLastMonthSyncEventImpl value,
+          $Res Function(_$SyncLastMonthSyncEventImpl) then) =
+      __$$SyncLastMonthSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SyncLastMonthSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_SyncLastMonthSyncEvent>
-    implements _$$_SyncLastMonthSyncEventCopyWith<$Res> {
-  __$$_SyncLastMonthSyncEventCopyWithImpl(_$_SyncLastMonthSyncEvent _value,
-      $Res Function(_$_SyncLastMonthSyncEvent) _then)
+class __$$SyncLastMonthSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$SyncLastMonthSyncEventImpl>
+    implements _$$SyncLastMonthSyncEventImplCopyWith<$Res> {
+  __$$SyncLastMonthSyncEventImplCopyWithImpl(
+      _$SyncLastMonthSyncEventImpl _value,
+      $Res Function(_$SyncLastMonthSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SyncLastMonthSyncEvent extends _SyncLastMonthSyncEvent {
-  const _$_SyncLastMonthSyncEvent() : super._();
+class _$SyncLastMonthSyncEventImpl extends _SyncLastMonthSyncEvent {
+  const _$SyncLastMonthSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -807,7 +811,7 @@ class _$_SyncLastMonthSyncEvent extends _SyncLastMonthSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SyncLastMonthSyncEvent);
+            other is _$SyncLastMonthSyncEventImpl);
   }
 
   @override
@@ -934,30 +938,30 @@ class _$_SyncLastMonthSyncEvent extends _SyncLastMonthSyncEvent {
 }
 
 abstract class _SyncLastMonthSyncEvent extends SyncEvent {
-  const factory _SyncLastMonthSyncEvent() = _$_SyncLastMonthSyncEvent;
+  const factory _SyncLastMonthSyncEvent() = _$SyncLastMonthSyncEventImpl;
   const _SyncLastMonthSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SyncAllSyncEventCopyWith<$Res> {
-  factory _$$_SyncAllSyncEventCopyWith(
-          _$_SyncAllSyncEvent value, $Res Function(_$_SyncAllSyncEvent) then) =
-      __$$_SyncAllSyncEventCopyWithImpl<$Res>;
+abstract class _$$SyncAllSyncEventImplCopyWith<$Res> {
+  factory _$$SyncAllSyncEventImplCopyWith(_$SyncAllSyncEventImpl value,
+          $Res Function(_$SyncAllSyncEventImpl) then) =
+      __$$SyncAllSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SyncAllSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_SyncAllSyncEvent>
-    implements _$$_SyncAllSyncEventCopyWith<$Res> {
-  __$$_SyncAllSyncEventCopyWithImpl(
-      _$_SyncAllSyncEvent _value, $Res Function(_$_SyncAllSyncEvent) _then)
+class __$$SyncAllSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$SyncAllSyncEventImpl>
+    implements _$$SyncAllSyncEventImplCopyWith<$Res> {
+  __$$SyncAllSyncEventImplCopyWithImpl(_$SyncAllSyncEventImpl _value,
+      $Res Function(_$SyncAllSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SyncAllSyncEvent extends _SyncAllSyncEvent {
-  const _$_SyncAllSyncEvent() : super._();
+class _$SyncAllSyncEventImpl extends _SyncAllSyncEvent {
+  const _$SyncAllSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -967,7 +971,7 @@ class _$_SyncAllSyncEvent extends _SyncAllSyncEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SyncAllSyncEvent);
+        (other.runtimeType == runtimeType && other is _$SyncAllSyncEventImpl);
   }
 
   @override
@@ -1094,15 +1098,15 @@ class _$_SyncAllSyncEvent extends _SyncAllSyncEvent {
 }
 
 abstract class _SyncAllSyncEvent extends SyncEvent {
-  const factory _SyncAllSyncEvent() = _$_SyncAllSyncEvent;
+  const factory _SyncAllSyncEvent() = _$SyncAllSyncEventImpl;
   const _SyncAllSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AddUserSyncEventCopyWith<$Res> {
-  factory _$$_AddUserSyncEventCopyWith(
-          _$_AddUserSyncEvent value, $Res Function(_$_AddUserSyncEvent) then) =
-      __$$_AddUserSyncEventCopyWithImpl<$Res>;
+abstract class _$$AddUserSyncEventImplCopyWith<$Res> {
+  factory _$$AddUserSyncEventImplCopyWith(_$AddUserSyncEventImpl value,
+          $Res Function(_$AddUserSyncEventImpl) then) =
+      __$$AddUserSyncEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User user});
 
@@ -1110,11 +1114,11 @@ abstract class _$$_AddUserSyncEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AddUserSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_AddUserSyncEvent>
-    implements _$$_AddUserSyncEventCopyWith<$Res> {
-  __$$_AddUserSyncEventCopyWithImpl(
-      _$_AddUserSyncEvent _value, $Res Function(_$_AddUserSyncEvent) _then)
+class __$$AddUserSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$AddUserSyncEventImpl>
+    implements _$$AddUserSyncEventImplCopyWith<$Res> {
+  __$$AddUserSyncEventImplCopyWithImpl(_$AddUserSyncEventImpl _value,
+      $Res Function(_$AddUserSyncEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1122,7 +1126,7 @@ class __$$_AddUserSyncEventCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
   }) {
-    return _then(_$_AddUserSyncEvent(
+    return _then(_$AddUserSyncEventImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -1141,8 +1145,8 @@ class __$$_AddUserSyncEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddUserSyncEvent extends _AddUserSyncEvent {
-  const _$_AddUserSyncEvent({required this.user}) : super._();
+class _$AddUserSyncEventImpl extends _AddUserSyncEvent {
+  const _$AddUserSyncEventImpl({required this.user}) : super._();
 
   @override
   final User user;
@@ -1156,7 +1160,7 @@ class _$_AddUserSyncEvent extends _AddUserSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddUserSyncEvent &&
+            other is _$AddUserSyncEventImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -1166,8 +1170,9 @@ class _$_AddUserSyncEvent extends _AddUserSyncEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddUserSyncEventCopyWith<_$_AddUserSyncEvent> get copyWith =>
-      __$$_AddUserSyncEventCopyWithImpl<_$_AddUserSyncEvent>(this, _$identity);
+  _$$AddUserSyncEventImplCopyWith<_$AddUserSyncEventImpl> get copyWith =>
+      __$$AddUserSyncEventImplCopyWithImpl<_$AddUserSyncEventImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1291,35 +1296,36 @@ class _$_AddUserSyncEvent extends _AddUserSyncEvent {
 
 abstract class _AddUserSyncEvent extends SyncEvent {
   const factory _AddUserSyncEvent({required final User user}) =
-      _$_AddUserSyncEvent;
+      _$AddUserSyncEventImpl;
   const _AddUserSyncEvent._() : super._();
 
   User get user;
   @JsonKey(ignore: true)
-  _$$_AddUserSyncEventCopyWith<_$_AddUserSyncEvent> get copyWith =>
+  _$$AddUserSyncEventImplCopyWith<_$AddUserSyncEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AuthProgressSyncEventCopyWith<$Res> {
-  factory _$$_AuthProgressSyncEventCopyWith(_$_AuthProgressSyncEvent value,
-          $Res Function(_$_AuthProgressSyncEvent) then) =
-      __$$_AuthProgressSyncEventCopyWithImpl<$Res>;
+abstract class _$$AuthProgressSyncEventImplCopyWith<$Res> {
+  factory _$$AuthProgressSyncEventImplCopyWith(
+          _$AuthProgressSyncEventImpl value,
+          $Res Function(_$AuthProgressSyncEventImpl) then) =
+      __$$AuthProgressSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthProgressSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_AuthProgressSyncEvent>
-    implements _$$_AuthProgressSyncEventCopyWith<$Res> {
-  __$$_AuthProgressSyncEventCopyWithImpl(_$_AuthProgressSyncEvent _value,
-      $Res Function(_$_AuthProgressSyncEvent) _then)
+class __$$AuthProgressSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$AuthProgressSyncEventImpl>
+    implements _$$AuthProgressSyncEventImplCopyWith<$Res> {
+  __$$AuthProgressSyncEventImplCopyWithImpl(_$AuthProgressSyncEventImpl _value,
+      $Res Function(_$AuthProgressSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AuthProgressSyncEvent extends _AuthProgressSyncEvent {
-  const _$_AuthProgressSyncEvent() : super._();
+class _$AuthProgressSyncEventImpl extends _AuthProgressSyncEvent {
+  const _$AuthProgressSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -1329,7 +1335,8 @@ class _$_AuthProgressSyncEvent extends _AuthProgressSyncEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AuthProgressSyncEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthProgressSyncEventImpl);
   }
 
   @override
@@ -1456,16 +1463,16 @@ class _$_AuthProgressSyncEvent extends _AuthProgressSyncEvent {
 }
 
 abstract class _AuthProgressSyncEvent extends SyncEvent {
-  const factory _AuthProgressSyncEvent() = _$_AuthProgressSyncEvent;
+  const factory _AuthProgressSyncEvent() = _$AuthProgressSyncEventImpl;
   const _AuthProgressSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AuthAuthenticatedSyncEventCopyWith<$Res> {
-  factory _$$_AuthAuthenticatedSyncEventCopyWith(
-          _$_AuthAuthenticatedSyncEvent value,
-          $Res Function(_$_AuthAuthenticatedSyncEvent) then) =
-      __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>;
+abstract class _$$AuthAuthenticatedSyncEventImplCopyWith<$Res> {
+  factory _$$AuthAuthenticatedSyncEventImplCopyWith(
+          _$AuthAuthenticatedSyncEventImpl value,
+          $Res Function(_$AuthAuthenticatedSyncEventImpl) then) =
+      __$$AuthAuthenticatedSyncEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User user});
 
@@ -1473,12 +1480,12 @@ abstract class _$$_AuthAuthenticatedSyncEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_AuthAuthenticatedSyncEvent>
-    implements _$$_AuthAuthenticatedSyncEventCopyWith<$Res> {
-  __$$_AuthAuthenticatedSyncEventCopyWithImpl(
-      _$_AuthAuthenticatedSyncEvent _value,
-      $Res Function(_$_AuthAuthenticatedSyncEvent) _then)
+class __$$AuthAuthenticatedSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$AuthAuthenticatedSyncEventImpl>
+    implements _$$AuthAuthenticatedSyncEventImplCopyWith<$Res> {
+  __$$AuthAuthenticatedSyncEventImplCopyWithImpl(
+      _$AuthAuthenticatedSyncEventImpl _value,
+      $Res Function(_$AuthAuthenticatedSyncEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1486,7 +1493,7 @@ class __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
   }) {
-    return _then(_$_AuthAuthenticatedSyncEvent(
+    return _then(_$AuthAuthenticatedSyncEventImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -1505,8 +1512,8 @@ class __$$_AuthAuthenticatedSyncEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthAuthenticatedSyncEvent extends _AuthAuthenticatedSyncEvent {
-  const _$_AuthAuthenticatedSyncEvent({required this.user}) : super._();
+class _$AuthAuthenticatedSyncEventImpl extends _AuthAuthenticatedSyncEvent {
+  const _$AuthAuthenticatedSyncEventImpl({required this.user}) : super._();
 
   @override
   final User user;
@@ -1520,7 +1527,7 @@ class _$_AuthAuthenticatedSyncEvent extends _AuthAuthenticatedSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthAuthenticatedSyncEvent &&
+            other is _$AuthAuthenticatedSyncEventImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -1530,9 +1537,9 @@ class _$_AuthAuthenticatedSyncEvent extends _AuthAuthenticatedSyncEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthAuthenticatedSyncEventCopyWith<_$_AuthAuthenticatedSyncEvent>
-      get copyWith => __$$_AuthAuthenticatedSyncEventCopyWithImpl<
-          _$_AuthAuthenticatedSyncEvent>(this, _$identity);
+  _$$AuthAuthenticatedSyncEventImplCopyWith<_$AuthAuthenticatedSyncEventImpl>
+      get copyWith => __$$AuthAuthenticatedSyncEventImplCopyWithImpl<
+          _$AuthAuthenticatedSyncEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1656,35 +1663,35 @@ class _$_AuthAuthenticatedSyncEvent extends _AuthAuthenticatedSyncEvent {
 
 abstract class _AuthAuthenticatedSyncEvent extends SyncEvent {
   const factory _AuthAuthenticatedSyncEvent({required final User user}) =
-      _$_AuthAuthenticatedSyncEvent;
+      _$AuthAuthenticatedSyncEventImpl;
   const _AuthAuthenticatedSyncEvent._() : super._();
 
   User get user;
   @JsonKey(ignore: true)
-  _$$_AuthAuthenticatedSyncEventCopyWith<_$_AuthAuthenticatedSyncEvent>
+  _$$AuthAuthenticatedSyncEventImplCopyWith<_$AuthAuthenticatedSyncEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_NotAuthSyncEventCopyWith<$Res> {
-  factory _$$_NotAuthSyncEventCopyWith(
-          _$_NotAuthSyncEvent value, $Res Function(_$_NotAuthSyncEvent) then) =
-      __$$_NotAuthSyncEventCopyWithImpl<$Res>;
+abstract class _$$NotAuthSyncEventImplCopyWith<$Res> {
+  factory _$$NotAuthSyncEventImplCopyWith(_$NotAuthSyncEventImpl value,
+          $Res Function(_$NotAuthSyncEventImpl) then) =
+      __$$NotAuthSyncEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotAuthSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_NotAuthSyncEvent>
-    implements _$$_NotAuthSyncEventCopyWith<$Res> {
-  __$$_NotAuthSyncEventCopyWithImpl(
-      _$_NotAuthSyncEvent _value, $Res Function(_$_NotAuthSyncEvent) _then)
+class __$$NotAuthSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$NotAuthSyncEventImpl>
+    implements _$$NotAuthSyncEventImplCopyWith<$Res> {
+  __$$NotAuthSyncEventImplCopyWithImpl(_$NotAuthSyncEventImpl _value,
+      $Res Function(_$NotAuthSyncEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotAuthSyncEvent extends _NotAuthSyncEvent {
-  const _$_NotAuthSyncEvent() : super._();
+class _$NotAuthSyncEventImpl extends _NotAuthSyncEvent {
+  const _$NotAuthSyncEventImpl() : super._();
 
   @override
   String toString() {
@@ -1694,7 +1701,7 @@ class _$_NotAuthSyncEvent extends _NotAuthSyncEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotAuthSyncEvent);
+        (other.runtimeType == runtimeType && other is _$NotAuthSyncEventImpl);
   }
 
   @override
@@ -1821,25 +1828,25 @@ class _$_NotAuthSyncEvent extends _NotAuthSyncEvent {
 }
 
 abstract class _NotAuthSyncEvent extends SyncEvent {
-  const factory _NotAuthSyncEvent() = _$_NotAuthSyncEvent;
+  const factory _NotAuthSyncEvent() = _$NotAuthSyncEventImpl;
   const _NotAuthSyncEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_SyncDataSyncEventCopyWith<$Res> {
-  factory _$$_SyncDataSyncEventCopyWith(_$_SyncDataSyncEvent value,
-          $Res Function(_$_SyncDataSyncEvent) then) =
-      __$$_SyncDataSyncEventCopyWithImpl<$Res>;
+abstract class _$$SyncDataSyncEventImplCopyWith<$Res> {
+  factory _$$SyncDataSyncEventImplCopyWith(_$SyncDataSyncEventImpl value,
+          $Res Function(_$SyncDataSyncEventImpl) then) =
+      __$$SyncDataSyncEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DateTime syncDate});
 }
 
 /// @nodoc
-class __$$_SyncDataSyncEventCopyWithImpl<$Res>
-    extends _$SyncEventCopyWithImpl<$Res, _$_SyncDataSyncEvent>
-    implements _$$_SyncDataSyncEventCopyWith<$Res> {
-  __$$_SyncDataSyncEventCopyWithImpl(
-      _$_SyncDataSyncEvent _value, $Res Function(_$_SyncDataSyncEvent) _then)
+class __$$SyncDataSyncEventImplCopyWithImpl<$Res>
+    extends _$SyncEventCopyWithImpl<$Res, _$SyncDataSyncEventImpl>
+    implements _$$SyncDataSyncEventImplCopyWith<$Res> {
+  __$$SyncDataSyncEventImplCopyWithImpl(_$SyncDataSyncEventImpl _value,
+      $Res Function(_$SyncDataSyncEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1847,7 +1854,7 @@ class __$$_SyncDataSyncEventCopyWithImpl<$Res>
   $Res call({
     Object? syncDate = null,
   }) {
-    return _then(_$_SyncDataSyncEvent(
+    return _then(_$SyncDataSyncEventImpl(
       syncDate: null == syncDate
           ? _value.syncDate
           : syncDate // ignore: cast_nullable_to_non_nullable
@@ -1858,8 +1865,8 @@ class __$$_SyncDataSyncEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SyncDataSyncEvent extends _SyncDataSyncEvent {
-  const _$_SyncDataSyncEvent({required this.syncDate}) : super._();
+class _$SyncDataSyncEventImpl extends _SyncDataSyncEvent {
+  const _$SyncDataSyncEventImpl({required this.syncDate}) : super._();
 
   @override
   final DateTime syncDate;
@@ -1873,7 +1880,7 @@ class _$_SyncDataSyncEvent extends _SyncDataSyncEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SyncDataSyncEvent &&
+            other is _$SyncDataSyncEventImpl &&
             (identical(other.syncDate, syncDate) ||
                 other.syncDate == syncDate));
   }
@@ -1884,8 +1891,8 @@ class _$_SyncDataSyncEvent extends _SyncDataSyncEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SyncDataSyncEventCopyWith<_$_SyncDataSyncEvent> get copyWith =>
-      __$$_SyncDataSyncEventCopyWithImpl<_$_SyncDataSyncEvent>(
+  _$$SyncDataSyncEventImplCopyWith<_$SyncDataSyncEventImpl> get copyWith =>
+      __$$SyncDataSyncEventImplCopyWithImpl<_$SyncDataSyncEventImpl>(
           this, _$identity);
 
   @override
@@ -2010,12 +2017,12 @@ class _$_SyncDataSyncEvent extends _SyncDataSyncEvent {
 
 abstract class _SyncDataSyncEvent extends SyncEvent {
   const factory _SyncDataSyncEvent({required final DateTime syncDate}) =
-      _$_SyncDataSyncEvent;
+      _$SyncDataSyncEventImpl;
   const _SyncDataSyncEvent._() : super._();
 
   DateTime get syncDate;
   @JsonKey(ignore: true)
-  _$$_SyncDataSyncEventCopyWith<_$_SyncDataSyncEvent> get copyWith =>
+  _$$SyncDataSyncEventImplCopyWith<_$SyncDataSyncEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2118,25 +2125,25 @@ class _$SyncStateCopyWithImpl<$Res, $Val extends SyncState>
 }
 
 /// @nodoc
-abstract class _$$_InProgressSyncStateCopyWith<$Res> {
-  factory _$$_InProgressSyncStateCopyWith(_$_InProgressSyncState value,
-          $Res Function(_$_InProgressSyncState) then) =
-      __$$_InProgressSyncStateCopyWithImpl<$Res>;
+abstract class _$$InProgressSyncStateImplCopyWith<$Res> {
+  factory _$$InProgressSyncStateImplCopyWith(_$InProgressSyncStateImpl value,
+          $Res Function(_$InProgressSyncStateImpl) then) =
+      __$$InProgressSyncStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InProgressSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_InProgressSyncState>
-    implements _$$_InProgressSyncStateCopyWith<$Res> {
-  __$$_InProgressSyncStateCopyWithImpl(_$_InProgressSyncState _value,
-      $Res Function(_$_InProgressSyncState) _then)
+class __$$InProgressSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$InProgressSyncStateImpl>
+    implements _$$InProgressSyncStateImplCopyWith<$Res> {
+  __$$InProgressSyncStateImplCopyWithImpl(_$InProgressSyncStateImpl _value,
+      $Res Function(_$InProgressSyncStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InProgressSyncState extends _InProgressSyncState {
-  const _$_InProgressSyncState() : super._();
+class _$InProgressSyncStateImpl extends _InProgressSyncState {
+  const _$InProgressSyncStateImpl() : super._();
 
   @override
   String toString() {
@@ -2146,7 +2153,8 @@ class _$_InProgressSyncState extends _InProgressSyncState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InProgressSyncState);
+        (other.runtimeType == runtimeType &&
+            other is _$InProgressSyncStateImpl);
   }
 
   @override
@@ -2255,25 +2263,27 @@ class _$_InProgressSyncState extends _InProgressSyncState {
 }
 
 abstract class _InProgressSyncState extends SyncState {
-  const factory _InProgressSyncState() = _$_InProgressSyncState;
+  const factory _InProgressSyncState() = _$InProgressSyncStateImpl;
   const _InProgressSyncState._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_LoadingToCloudSyncStateCopyWith<$Res> {
-  factory _$$_LoadingToCloudSyncStateCopyWith(_$_LoadingToCloudSyncState value,
-          $Res Function(_$_LoadingToCloudSyncState) then) =
-      __$$_LoadingToCloudSyncStateCopyWithImpl<$Res>;
+abstract class _$$LoadingToCloudSyncStateImplCopyWith<$Res> {
+  factory _$$LoadingToCloudSyncStateImplCopyWith(
+          _$LoadingToCloudSyncStateImpl value,
+          $Res Function(_$LoadingToCloudSyncStateImpl) then) =
+      __$$LoadingToCloudSyncStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int accountCount, int categoryCount, int operationCount});
 }
 
 /// @nodoc
-class __$$_LoadingToCloudSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_LoadingToCloudSyncState>
-    implements _$$_LoadingToCloudSyncStateCopyWith<$Res> {
-  __$$_LoadingToCloudSyncStateCopyWithImpl(_$_LoadingToCloudSyncState _value,
-      $Res Function(_$_LoadingToCloudSyncState) _then)
+class __$$LoadingToCloudSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$LoadingToCloudSyncStateImpl>
+    implements _$$LoadingToCloudSyncStateImplCopyWith<$Res> {
+  __$$LoadingToCloudSyncStateImplCopyWithImpl(
+      _$LoadingToCloudSyncStateImpl _value,
+      $Res Function(_$LoadingToCloudSyncStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2283,7 +2293,7 @@ class __$$_LoadingToCloudSyncStateCopyWithImpl<$Res>
     Object? categoryCount = null,
     Object? operationCount = null,
   }) {
-    return _then(_$_LoadingToCloudSyncState(
+    return _then(_$LoadingToCloudSyncStateImpl(
       accountCount: null == accountCount
           ? _value.accountCount
           : accountCount // ignore: cast_nullable_to_non_nullable
@@ -2302,8 +2312,8 @@ class __$$_LoadingToCloudSyncStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
-  const _$_LoadingToCloudSyncState(
+class _$LoadingToCloudSyncStateImpl extends _LoadingToCloudSyncState {
+  const _$LoadingToCloudSyncStateImpl(
       {required this.accountCount,
       required this.categoryCount,
       required this.operationCount})
@@ -2325,7 +2335,7 @@ class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadingToCloudSyncState &&
+            other is _$LoadingToCloudSyncStateImpl &&
             (identical(other.accountCount, accountCount) ||
                 other.accountCount == accountCount) &&
             (identical(other.categoryCount, categoryCount) ||
@@ -2341,10 +2351,9 @@ class _$_LoadingToCloudSyncState extends _LoadingToCloudSyncState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadingToCloudSyncStateCopyWith<_$_LoadingToCloudSyncState>
-      get copyWith =>
-          __$$_LoadingToCloudSyncStateCopyWithImpl<_$_LoadingToCloudSyncState>(
-              this, _$identity);
+  _$$LoadingToCloudSyncStateImplCopyWith<_$LoadingToCloudSyncStateImpl>
+      get copyWith => __$$LoadingToCloudSyncStateImplCopyWithImpl<
+          _$LoadingToCloudSyncStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2452,34 +2461,34 @@ abstract class _LoadingToCloudSyncState extends SyncState {
   const factory _LoadingToCloudSyncState(
       {required final int accountCount,
       required final int categoryCount,
-      required final int operationCount}) = _$_LoadingToCloudSyncState;
+      required final int operationCount}) = _$LoadingToCloudSyncStateImpl;
   const _LoadingToCloudSyncState._() : super._();
 
   int get accountCount;
   int get categoryCount;
   int get operationCount;
   @JsonKey(ignore: true)
-  _$$_LoadingToCloudSyncStateCopyWith<_$_LoadingToCloudSyncState>
+  _$$LoadingToCloudSyncStateImplCopyWith<_$LoadingToCloudSyncStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_LoadingFromCloudSyncStateCopyWith<$Res> {
-  factory _$$_LoadingFromCloudSyncStateCopyWith(
-          _$_LoadingFromCloudSyncState value,
-          $Res Function(_$_LoadingFromCloudSyncState) then) =
-      __$$_LoadingFromCloudSyncStateCopyWithImpl<$Res>;
+abstract class _$$LoadingFromCloudSyncStateImplCopyWith<$Res> {
+  factory _$$LoadingFromCloudSyncStateImplCopyWith(
+          _$LoadingFromCloudSyncStateImpl value,
+          $Res Function(_$LoadingFromCloudSyncStateImpl) then) =
+      __$$LoadingFromCloudSyncStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int accountCount, int categoryCount, int operationCount});
 }
 
 /// @nodoc
-class __$$_LoadingFromCloudSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_LoadingFromCloudSyncState>
-    implements _$$_LoadingFromCloudSyncStateCopyWith<$Res> {
-  __$$_LoadingFromCloudSyncStateCopyWithImpl(
-      _$_LoadingFromCloudSyncState _value,
-      $Res Function(_$_LoadingFromCloudSyncState) _then)
+class __$$LoadingFromCloudSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$LoadingFromCloudSyncStateImpl>
+    implements _$$LoadingFromCloudSyncStateImplCopyWith<$Res> {
+  __$$LoadingFromCloudSyncStateImplCopyWithImpl(
+      _$LoadingFromCloudSyncStateImpl _value,
+      $Res Function(_$LoadingFromCloudSyncStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2489,7 +2498,7 @@ class __$$_LoadingFromCloudSyncStateCopyWithImpl<$Res>
     Object? categoryCount = null,
     Object? operationCount = null,
   }) {
-    return _then(_$_LoadingFromCloudSyncState(
+    return _then(_$LoadingFromCloudSyncStateImpl(
       accountCount: null == accountCount
           ? _value.accountCount
           : accountCount // ignore: cast_nullable_to_non_nullable
@@ -2508,8 +2517,8 @@ class __$$_LoadingFromCloudSyncStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
-  const _$_LoadingFromCloudSyncState(
+class _$LoadingFromCloudSyncStateImpl extends _LoadingFromCloudSyncState {
+  const _$LoadingFromCloudSyncStateImpl(
       {required this.accountCount,
       required this.categoryCount,
       required this.operationCount})
@@ -2531,7 +2540,7 @@ class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadingFromCloudSyncState &&
+            other is _$LoadingFromCloudSyncStateImpl &&
             (identical(other.accountCount, accountCount) ||
                 other.accountCount == accountCount) &&
             (identical(other.categoryCount, categoryCount) ||
@@ -2547,9 +2556,9 @@ class _$_LoadingFromCloudSyncState extends _LoadingFromCloudSyncState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadingFromCloudSyncStateCopyWith<_$_LoadingFromCloudSyncState>
-      get copyWith => __$$_LoadingFromCloudSyncStateCopyWithImpl<
-          _$_LoadingFromCloudSyncState>(this, _$identity);
+  _$$LoadingFromCloudSyncStateImplCopyWith<_$LoadingFromCloudSyncStateImpl>
+      get copyWith => __$$LoadingFromCloudSyncStateImplCopyWithImpl<
+          _$LoadingFromCloudSyncStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2657,32 +2666,32 @@ abstract class _LoadingFromCloudSyncState extends SyncState {
   const factory _LoadingFromCloudSyncState(
       {required final int accountCount,
       required final int categoryCount,
-      required final int operationCount}) = _$_LoadingFromCloudSyncState;
+      required final int operationCount}) = _$LoadingFromCloudSyncStateImpl;
   const _LoadingFromCloudSyncState._() : super._();
 
   int get accountCount;
   int get categoryCount;
   int get operationCount;
   @JsonKey(ignore: true)
-  _$$_LoadingFromCloudSyncStateCopyWith<_$_LoadingFromCloudSyncState>
+  _$$LoadingFromCloudSyncStateImplCopyWith<_$LoadingFromCloudSyncStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SyncedSyncStateCopyWith<$Res> {
-  factory _$$_SyncedSyncStateCopyWith(
-          _$_SyncedSyncState value, $Res Function(_$_SyncedSyncState) then) =
-      __$$_SyncedSyncStateCopyWithImpl<$Res>;
+abstract class _$$SyncedSyncStateImplCopyWith<$Res> {
+  factory _$$SyncedSyncStateImplCopyWith(_$SyncedSyncStateImpl value,
+          $Res Function(_$SyncedSyncStateImpl) then) =
+      __$$SyncedSyncStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DateTime syncDate, bool isAdmin});
 }
 
 /// @nodoc
-class __$$_SyncedSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_SyncedSyncState>
-    implements _$$_SyncedSyncStateCopyWith<$Res> {
-  __$$_SyncedSyncStateCopyWithImpl(
-      _$_SyncedSyncState _value, $Res Function(_$_SyncedSyncState) _then)
+class __$$SyncedSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$SyncedSyncStateImpl>
+    implements _$$SyncedSyncStateImplCopyWith<$Res> {
+  __$$SyncedSyncStateImplCopyWithImpl(
+      _$SyncedSyncStateImpl _value, $Res Function(_$SyncedSyncStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2691,7 +2700,7 @@ class __$$_SyncedSyncStateCopyWithImpl<$Res>
     Object? syncDate = null,
     Object? isAdmin = null,
   }) {
-    return _then(_$_SyncedSyncState(
+    return _then(_$SyncedSyncStateImpl(
       syncDate: null == syncDate
           ? _value.syncDate
           : syncDate // ignore: cast_nullable_to_non_nullable
@@ -2706,8 +2715,8 @@ class __$$_SyncedSyncStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SyncedSyncState extends _SyncedSyncState {
-  const _$_SyncedSyncState({required this.syncDate, required this.isAdmin})
+class _$SyncedSyncStateImpl extends _SyncedSyncState {
+  const _$SyncedSyncStateImpl({required this.syncDate, required this.isAdmin})
       : super._();
 
   @override
@@ -2724,7 +2733,7 @@ class _$_SyncedSyncState extends _SyncedSyncState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SyncedSyncState &&
+            other is _$SyncedSyncStateImpl &&
             (identical(other.syncDate, syncDate) ||
                 other.syncDate == syncDate) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
@@ -2736,8 +2745,9 @@ class _$_SyncedSyncState extends _SyncedSyncState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SyncedSyncStateCopyWith<_$_SyncedSyncState> get copyWith =>
-      __$$_SyncedSyncStateCopyWithImpl<_$_SyncedSyncState>(this, _$identity);
+  _$$SyncedSyncStateImplCopyWith<_$SyncedSyncStateImpl> get copyWith =>
+      __$$SyncedSyncStateImplCopyWithImpl<_$SyncedSyncStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2844,31 +2854,31 @@ class _$_SyncedSyncState extends _SyncedSyncState {
 abstract class _SyncedSyncState extends SyncState {
   const factory _SyncedSyncState(
       {required final DateTime syncDate,
-      required final bool isAdmin}) = _$_SyncedSyncState;
+      required final bool isAdmin}) = _$SyncedSyncStateImpl;
   const _SyncedSyncState._() : super._();
 
   DateTime get syncDate;
   bool get isAdmin;
   @JsonKey(ignore: true)
-  _$$_SyncedSyncStateCopyWith<_$_SyncedSyncState> get copyWith =>
+  _$$SyncedSyncStateImplCopyWith<_$SyncedSyncStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_NotSyncedSyncStateCopyWith<$Res> {
-  factory _$$_NotSyncedSyncStateCopyWith(_$_NotSyncedSyncState value,
-          $Res Function(_$_NotSyncedSyncState) then) =
-      __$$_NotSyncedSyncStateCopyWithImpl<$Res>;
+abstract class _$$NotSyncedSyncStateImplCopyWith<$Res> {
+  factory _$$NotSyncedSyncStateImplCopyWith(_$NotSyncedSyncStateImpl value,
+          $Res Function(_$NotSyncedSyncStateImpl) then) =
+      __$$NotSyncedSyncStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_NotSyncedSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_NotSyncedSyncState>
-    implements _$$_NotSyncedSyncStateCopyWith<$Res> {
-  __$$_NotSyncedSyncStateCopyWithImpl(
-      _$_NotSyncedSyncState _value, $Res Function(_$_NotSyncedSyncState) _then)
+class __$$NotSyncedSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$NotSyncedSyncStateImpl>
+    implements _$$NotSyncedSyncStateImplCopyWith<$Res> {
+  __$$NotSyncedSyncStateImplCopyWithImpl(_$NotSyncedSyncStateImpl _value,
+      $Res Function(_$NotSyncedSyncStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2876,7 +2886,7 @@ class __$$_NotSyncedSyncStateCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$_NotSyncedSyncState(
+    return _then(_$NotSyncedSyncStateImpl(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -2887,8 +2897,8 @@ class __$$_NotSyncedSyncStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NotSyncedSyncState extends _NotSyncedSyncState {
-  const _$_NotSyncedSyncState({required this.message}) : super._();
+class _$NotSyncedSyncStateImpl extends _NotSyncedSyncState {
+  const _$NotSyncedSyncStateImpl({required this.message}) : super._();
 
   @override
   final String message;
@@ -2902,7 +2912,7 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NotSyncedSyncState &&
+            other is _$NotSyncedSyncStateImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -2912,8 +2922,8 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NotSyncedSyncStateCopyWith<_$_NotSyncedSyncState> get copyWith =>
-      __$$_NotSyncedSyncStateCopyWithImpl<_$_NotSyncedSyncState>(
+  _$$NotSyncedSyncStateImplCopyWith<_$NotSyncedSyncStateImpl> get copyWith =>
+      __$$NotSyncedSyncStateImplCopyWithImpl<_$NotSyncedSyncStateImpl>(
           this, _$identity);
 
   @override
@@ -3020,35 +3030,35 @@ class _$_NotSyncedSyncState extends _NotSyncedSyncState {
 
 abstract class _NotSyncedSyncState extends SyncState {
   const factory _NotSyncedSyncState({required final String message}) =
-      _$_NotSyncedSyncState;
+      _$NotSyncedSyncStateImpl;
   const _NotSyncedSyncState._() : super._();
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_NotSyncedSyncStateCopyWith<_$_NotSyncedSyncState> get copyWith =>
+  _$$NotSyncedSyncStateImplCopyWith<_$NotSyncedSyncStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_FailureSyncStateCopyWith<$Res> {
-  factory _$$_FailureSyncStateCopyWith(
-          _$_FailureSyncState value, $Res Function(_$_FailureSyncState) then) =
-      __$$_FailureSyncStateCopyWithImpl<$Res>;
+abstract class _$$FailureSyncStateImplCopyWith<$Res> {
+  factory _$$FailureSyncStateImplCopyWith(_$FailureSyncStateImpl value,
+          $Res Function(_$FailureSyncStateImpl) then) =
+      __$$FailureSyncStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FailureSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_FailureSyncState>
-    implements _$$_FailureSyncStateCopyWith<$Res> {
-  __$$_FailureSyncStateCopyWithImpl(
-      _$_FailureSyncState _value, $Res Function(_$_FailureSyncState) _then)
+class __$$FailureSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$FailureSyncStateImpl>
+    implements _$$FailureSyncStateImplCopyWith<$Res> {
+  __$$FailureSyncStateImplCopyWithImpl(_$FailureSyncStateImpl _value,
+      $Res Function(_$FailureSyncStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FailureSyncState extends _FailureSyncState {
-  const _$_FailureSyncState() : super._();
+class _$FailureSyncStateImpl extends _FailureSyncState {
+  const _$FailureSyncStateImpl() : super._();
 
   @override
   String toString() {
@@ -3058,7 +3068,7 @@ class _$_FailureSyncState extends _FailureSyncState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_FailureSyncState);
+        (other.runtimeType == runtimeType && other is _$FailureSyncStateImpl);
   }
 
   @override
@@ -3167,30 +3177,30 @@ class _$_FailureSyncState extends _FailureSyncState {
 }
 
 abstract class _FailureSyncState extends SyncState {
-  const factory _FailureSyncState() = _$_FailureSyncState;
+  const factory _FailureSyncState() = _$FailureSyncStateImpl;
   const _FailureSyncState._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_NoDBSyncStateCopyWith<$Res> {
-  factory _$$_NoDBSyncStateCopyWith(
-          _$_NoDBSyncState value, $Res Function(_$_NoDBSyncState) then) =
-      __$$_NoDBSyncStateCopyWithImpl<$Res>;
+abstract class _$$NoDBSyncStateImplCopyWith<$Res> {
+  factory _$$NoDBSyncStateImplCopyWith(
+          _$NoDBSyncStateImpl value, $Res Function(_$NoDBSyncStateImpl) then) =
+      __$$NoDBSyncStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NoDBSyncStateCopyWithImpl<$Res>
-    extends _$SyncStateCopyWithImpl<$Res, _$_NoDBSyncState>
-    implements _$$_NoDBSyncStateCopyWith<$Res> {
-  __$$_NoDBSyncStateCopyWithImpl(
-      _$_NoDBSyncState _value, $Res Function(_$_NoDBSyncState) _then)
+class __$$NoDBSyncStateImplCopyWithImpl<$Res>
+    extends _$SyncStateCopyWithImpl<$Res, _$NoDBSyncStateImpl>
+    implements _$$NoDBSyncStateImplCopyWith<$Res> {
+  __$$NoDBSyncStateImplCopyWithImpl(
+      _$NoDBSyncStateImpl _value, $Res Function(_$NoDBSyncStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NoDBSyncState extends _NoDBSyncState {
-  const _$_NoDBSyncState() : super._();
+class _$NoDBSyncStateImpl extends _NoDBSyncState {
+  const _$NoDBSyncStateImpl() : super._();
 
   @override
   String toString() {
@@ -3200,7 +3210,7 @@ class _$_NoDBSyncState extends _NoDBSyncState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NoDBSyncState);
+        (other.runtimeType == runtimeType && other is _$NoDBSyncStateImpl);
   }
 
   @override
@@ -3309,6 +3319,6 @@ class _$_NoDBSyncState extends _NoDBSyncState {
 }
 
 abstract class _NoDBSyncState extends SyncState {
-  const factory _NoDBSyncState() = _$_NoDBSyncState;
+  const factory _NoDBSyncState() = _$NoDBSyncStateImpl;
   const _NoDBSyncState._() : super._();
 }

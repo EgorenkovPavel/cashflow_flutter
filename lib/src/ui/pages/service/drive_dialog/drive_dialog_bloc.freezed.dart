@@ -93,25 +93,25 @@ class _$DialogDriveEventCopyWithImpl<$Res, $Val extends DialogDriveEvent>
 }
 
 /// @nodoc
-abstract class _$$_InitDialogDriveEventCopyWith<$Res> {
-  factory _$$_InitDialogDriveEventCopyWith(_$_InitDialogDriveEvent value,
-          $Res Function(_$_InitDialogDriveEvent) then) =
-      __$$_InitDialogDriveEventCopyWithImpl<$Res>;
+abstract class _$$InitDialogDriveEventImplCopyWith<$Res> {
+  factory _$$InitDialogDriveEventImplCopyWith(_$InitDialogDriveEventImpl value,
+          $Res Function(_$InitDialogDriveEventImpl) then) =
+      __$$InitDialogDriveEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitDialogDriveEventCopyWithImpl<$Res>
-    extends _$DialogDriveEventCopyWithImpl<$Res, _$_InitDialogDriveEvent>
-    implements _$$_InitDialogDriveEventCopyWith<$Res> {
-  __$$_InitDialogDriveEventCopyWithImpl(_$_InitDialogDriveEvent _value,
-      $Res Function(_$_InitDialogDriveEvent) _then)
+class __$$InitDialogDriveEventImplCopyWithImpl<$Res>
+    extends _$DialogDriveEventCopyWithImpl<$Res, _$InitDialogDriveEventImpl>
+    implements _$$InitDialogDriveEventImplCopyWith<$Res> {
+  __$$InitDialogDriveEventImplCopyWithImpl(_$InitDialogDriveEventImpl _value,
+      $Res Function(_$InitDialogDriveEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InitDialogDriveEvent implements _InitDialogDriveEvent {
-  const _$_InitDialogDriveEvent();
+class _$InitDialogDriveEventImpl implements _InitDialogDriveEvent {
+  const _$InitDialogDriveEventImpl();
 
   @override
   String toString() {
@@ -121,7 +121,8 @@ class _$_InitDialogDriveEvent implements _InitDialogDriveEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InitDialogDriveEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$InitDialogDriveEventImpl);
   }
 
   @override
@@ -209,31 +210,33 @@ class _$_InitDialogDriveEvent implements _InitDialogDriveEvent {
 }
 
 abstract class _InitDialogDriveEvent implements DialogDriveEvent {
-  const factory _InitDialogDriveEvent() = _$_InitDialogDriveEvent;
+  const factory _InitDialogDriveEvent() = _$InitDialogDriveEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadFoldersDialogDriveEventCopyWith<$Res> {
-  factory _$$_LoadFoldersDialogDriveEventCopyWith(
-          _$_LoadFoldersDialogDriveEvent value,
-          $Res Function(_$_LoadFoldersDialogDriveEvent) then) =
-      __$$_LoadFoldersDialogDriveEventCopyWithImpl<$Res>;
+abstract class _$$LoadFoldersDialogDriveEventImplCopyWith<$Res> {
+  factory _$$LoadFoldersDialogDriveEventImplCopyWith(
+          _$LoadFoldersDialogDriveEventImpl value,
+          $Res Function(_$LoadFoldersDialogDriveEventImpl) then) =
+      __$$LoadFoldersDialogDriveEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadFoldersDialogDriveEventCopyWithImpl<$Res>
-    extends _$DialogDriveEventCopyWithImpl<$Res, _$_LoadFoldersDialogDriveEvent>
-    implements _$$_LoadFoldersDialogDriveEventCopyWith<$Res> {
-  __$$_LoadFoldersDialogDriveEventCopyWithImpl(
-      _$_LoadFoldersDialogDriveEvent _value,
-      $Res Function(_$_LoadFoldersDialogDriveEvent) _then)
+class __$$LoadFoldersDialogDriveEventImplCopyWithImpl<$Res>
+    extends _$DialogDriveEventCopyWithImpl<$Res,
+        _$LoadFoldersDialogDriveEventImpl>
+    implements _$$LoadFoldersDialogDriveEventImplCopyWith<$Res> {
+  __$$LoadFoldersDialogDriveEventImplCopyWithImpl(
+      _$LoadFoldersDialogDriveEventImpl _value,
+      $Res Function(_$LoadFoldersDialogDriveEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoadFoldersDialogDriveEvent implements _LoadFoldersDialogDriveEvent {
-  const _$_LoadFoldersDialogDriveEvent();
+class _$LoadFoldersDialogDriveEventImpl
+    implements _LoadFoldersDialogDriveEvent {
+  const _$LoadFoldersDialogDriveEventImpl();
 
   @override
   String toString() {
@@ -244,7 +247,7 @@ class _$_LoadFoldersDialogDriveEvent implements _LoadFoldersDialogDriveEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadFoldersDialogDriveEvent);
+            other is _$LoadFoldersDialogDriveEventImpl);
   }
 
   @override
@@ -332,15 +335,16 @@ class _$_LoadFoldersDialogDriveEvent implements _LoadFoldersDialogDriveEvent {
 }
 
 abstract class _LoadFoldersDialogDriveEvent implements DialogDriveEvent {
-  const factory _LoadFoldersDialogDriveEvent() = _$_LoadFoldersDialogDriveEvent;
+  const factory _LoadFoldersDialogDriveEvent() =
+      _$LoadFoldersDialogDriveEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_OnFileTapDialogDriveEventCopyWith<$Res> {
-  factory _$$_OnFileTapDialogDriveEventCopyWith(
-          _$_OnFileTapDialogDriveEvent value,
-          $Res Function(_$_OnFileTapDialogDriveEvent) then) =
-      __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>;
+abstract class _$$OnFileTapDialogDriveEventImplCopyWith<$Res> {
+  factory _$$OnFileTapDialogDriveEventImplCopyWith(
+          _$OnFileTapDialogDriveEventImpl value,
+          $Res Function(_$OnFileTapDialogDriveEventImpl) then) =
+      __$$OnFileTapDialogDriveEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DriveFile file});
 
@@ -348,12 +352,13 @@ abstract class _$$_OnFileTapDialogDriveEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>
-    extends _$DialogDriveEventCopyWithImpl<$Res, _$_OnFileTapDialogDriveEvent>
-    implements _$$_OnFileTapDialogDriveEventCopyWith<$Res> {
-  __$$_OnFileTapDialogDriveEventCopyWithImpl(
-      _$_OnFileTapDialogDriveEvent _value,
-      $Res Function(_$_OnFileTapDialogDriveEvent) _then)
+class __$$OnFileTapDialogDriveEventImplCopyWithImpl<$Res>
+    extends _$DialogDriveEventCopyWithImpl<$Res,
+        _$OnFileTapDialogDriveEventImpl>
+    implements _$$OnFileTapDialogDriveEventImplCopyWith<$Res> {
+  __$$OnFileTapDialogDriveEventImplCopyWithImpl(
+      _$OnFileTapDialogDriveEventImpl _value,
+      $Res Function(_$OnFileTapDialogDriveEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -361,7 +366,7 @@ class __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>
   $Res call({
     Object? file = null,
   }) {
-    return _then(_$_OnFileTapDialogDriveEvent(
+    return _then(_$OnFileTapDialogDriveEventImpl(
       file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -380,8 +385,8 @@ class __$$_OnFileTapDialogDriveEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OnFileTapDialogDriveEvent implements _OnFileTapDialogDriveEvent {
-  const _$_OnFileTapDialogDriveEvent({required this.file});
+class _$OnFileTapDialogDriveEventImpl implements _OnFileTapDialogDriveEvent {
+  const _$OnFileTapDialogDriveEventImpl({required this.file});
 
   @override
   final DriveFile file;
@@ -395,7 +400,7 @@ class _$_OnFileTapDialogDriveEvent implements _OnFileTapDialogDriveEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OnFileTapDialogDriveEvent &&
+            other is _$OnFileTapDialogDriveEventImpl &&
             (identical(other.file, file) || other.file == file));
   }
 
@@ -405,9 +410,9 @@ class _$_OnFileTapDialogDriveEvent implements _OnFileTapDialogDriveEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OnFileTapDialogDriveEventCopyWith<_$_OnFileTapDialogDriveEvent>
-      get copyWith => __$$_OnFileTapDialogDriveEventCopyWithImpl<
-          _$_OnFileTapDialogDriveEvent>(this, _$identity);
+  _$$OnFileTapDialogDriveEventImplCopyWith<_$OnFileTapDialogDriveEventImpl>
+      get copyWith => __$$OnFileTapDialogDriveEventImplCopyWithImpl<
+          _$OnFileTapDialogDriveEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -492,36 +497,38 @@ class _$_OnFileTapDialogDriveEvent implements _OnFileTapDialogDriveEvent {
 
 abstract class _OnFileTapDialogDriveEvent implements DialogDriveEvent {
   const factory _OnFileTapDialogDriveEvent({required final DriveFile file}) =
-      _$_OnFileTapDialogDriveEvent;
+      _$OnFileTapDialogDriveEventImpl;
 
   DriveFile get file;
   @JsonKey(ignore: true)
-  _$$_OnFileTapDialogDriveEventCopyWith<_$_OnFileTapDialogDriveEvent>
+  _$$OnFileTapDialogDriveEventImplCopyWith<_$OnFileTapDialogDriveEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_BackPressedDialogDriveEventCopyWith<$Res> {
-  factory _$$_BackPressedDialogDriveEventCopyWith(
-          _$_BackPressedDialogDriveEvent value,
-          $Res Function(_$_BackPressedDialogDriveEvent) then) =
-      __$$_BackPressedDialogDriveEventCopyWithImpl<$Res>;
+abstract class _$$BackPressedDialogDriveEventImplCopyWith<$Res> {
+  factory _$$BackPressedDialogDriveEventImplCopyWith(
+          _$BackPressedDialogDriveEventImpl value,
+          $Res Function(_$BackPressedDialogDriveEventImpl) then) =
+      __$$BackPressedDialogDriveEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_BackPressedDialogDriveEventCopyWithImpl<$Res>
-    extends _$DialogDriveEventCopyWithImpl<$Res, _$_BackPressedDialogDriveEvent>
-    implements _$$_BackPressedDialogDriveEventCopyWith<$Res> {
-  __$$_BackPressedDialogDriveEventCopyWithImpl(
-      _$_BackPressedDialogDriveEvent _value,
-      $Res Function(_$_BackPressedDialogDriveEvent) _then)
+class __$$BackPressedDialogDriveEventImplCopyWithImpl<$Res>
+    extends _$DialogDriveEventCopyWithImpl<$Res,
+        _$BackPressedDialogDriveEventImpl>
+    implements _$$BackPressedDialogDriveEventImplCopyWith<$Res> {
+  __$$BackPressedDialogDriveEventImplCopyWithImpl(
+      _$BackPressedDialogDriveEventImpl _value,
+      $Res Function(_$BackPressedDialogDriveEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_BackPressedDialogDriveEvent implements _BackPressedDialogDriveEvent {
-  const _$_BackPressedDialogDriveEvent();
+class _$BackPressedDialogDriveEventImpl
+    implements _BackPressedDialogDriveEvent {
+  const _$BackPressedDialogDriveEventImpl();
 
   @override
   String toString() {
@@ -532,7 +539,7 @@ class _$_BackPressedDialogDriveEvent implements _BackPressedDialogDriveEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BackPressedDialogDriveEvent);
+            other is _$BackPressedDialogDriveEventImpl);
   }
 
   @override
@@ -620,29 +627,32 @@ class _$_BackPressedDialogDriveEvent implements _BackPressedDialogDriveEvent {
 }
 
 abstract class _BackPressedDialogDriveEvent implements DialogDriveEvent {
-  const factory _BackPressedDialogDriveEvent() = _$_BackPressedDialogDriveEvent;
+  const factory _BackPressedDialogDriveEvent() =
+      _$BackPressedDialogDriveEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_ChooseDialogDriveEventCopyWith<$Res> {
-  factory _$$_ChooseDialogDriveEventCopyWith(_$_ChooseDialogDriveEvent value,
-          $Res Function(_$_ChooseDialogDriveEvent) then) =
-      __$$_ChooseDialogDriveEventCopyWithImpl<$Res>;
+abstract class _$$ChooseDialogDriveEventImplCopyWith<$Res> {
+  factory _$$ChooseDialogDriveEventImplCopyWith(
+          _$ChooseDialogDriveEventImpl value,
+          $Res Function(_$ChooseDialogDriveEventImpl) then) =
+      __$$ChooseDialogDriveEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ChooseDialogDriveEventCopyWithImpl<$Res>
-    extends _$DialogDriveEventCopyWithImpl<$Res, _$_ChooseDialogDriveEvent>
-    implements _$$_ChooseDialogDriveEventCopyWith<$Res> {
-  __$$_ChooseDialogDriveEventCopyWithImpl(_$_ChooseDialogDriveEvent _value,
-      $Res Function(_$_ChooseDialogDriveEvent) _then)
+class __$$ChooseDialogDriveEventImplCopyWithImpl<$Res>
+    extends _$DialogDriveEventCopyWithImpl<$Res, _$ChooseDialogDriveEventImpl>
+    implements _$$ChooseDialogDriveEventImplCopyWith<$Res> {
+  __$$ChooseDialogDriveEventImplCopyWithImpl(
+      _$ChooseDialogDriveEventImpl _value,
+      $Res Function(_$ChooseDialogDriveEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ChooseDialogDriveEvent implements _ChooseDialogDriveEvent {
-  const _$_ChooseDialogDriveEvent();
+class _$ChooseDialogDriveEventImpl implements _ChooseDialogDriveEvent {
+  const _$ChooseDialogDriveEventImpl();
 
   @override
   String toString() {
@@ -653,7 +663,7 @@ class _$_ChooseDialogDriveEvent implements _ChooseDialogDriveEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChooseDialogDriveEvent);
+            other is _$ChooseDialogDriveEventImpl);
   }
 
   @override
@@ -741,7 +751,7 @@ class _$_ChooseDialogDriveEvent implements _ChooseDialogDriveEvent {
 }
 
 abstract class _ChooseDialogDriveEvent implements DialogDriveEvent {
-  const factory _ChooseDialogDriveEvent() = _$_ChooseDialogDriveEvent;
+  const factory _ChooseDialogDriveEvent() = _$ChooseDialogDriveEventImpl;
 }
 
 /// @nodoc
@@ -817,10 +827,11 @@ class _$DialogDriveStateCopyWithImpl<$Res, $Val extends DialogDriveState>
 }
 
 /// @nodoc
-abstract class _$$_SuccessDialogDriveStateCopyWith<$Res> {
-  factory _$$_SuccessDialogDriveStateCopyWith(_$_SuccessDialogDriveState value,
-          $Res Function(_$_SuccessDialogDriveState) then) =
-      __$$_SuccessDialogDriveStateCopyWithImpl<$Res>;
+abstract class _$$SuccessDialogDriveStateImplCopyWith<$Res> {
+  factory _$$SuccessDialogDriveStateImplCopyWith(
+          _$SuccessDialogDriveStateImpl value,
+          $Res Function(_$SuccessDialogDriveStateImpl) then) =
+      __$$SuccessDialogDriveStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {DriveFile? result,
@@ -831,11 +842,12 @@ abstract class _$$_SuccessDialogDriveStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SuccessDialogDriveStateCopyWithImpl<$Res>
-    extends _$DialogDriveStateCopyWithImpl<$Res, _$_SuccessDialogDriveState>
-    implements _$$_SuccessDialogDriveStateCopyWith<$Res> {
-  __$$_SuccessDialogDriveStateCopyWithImpl(_$_SuccessDialogDriveState _value,
-      $Res Function(_$_SuccessDialogDriveState) _then)
+class __$$SuccessDialogDriveStateImplCopyWithImpl<$Res>
+    extends _$DialogDriveStateCopyWithImpl<$Res, _$SuccessDialogDriveStateImpl>
+    implements _$$SuccessDialogDriveStateImplCopyWith<$Res> {
+  __$$SuccessDialogDriveStateImplCopyWithImpl(
+      _$SuccessDialogDriveStateImpl _value,
+      $Res Function(_$SuccessDialogDriveStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -845,7 +857,7 @@ class __$$_SuccessDialogDriveStateCopyWithImpl<$Res>
     Object? action = null,
     Object? folderList = null,
   }) {
-    return _then(_$_SuccessDialogDriveState(
+    return _then(_$SuccessDialogDriveStateImpl(
       result: freezed == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -876,8 +888,8 @@ class __$$_SuccessDialogDriveStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SuccessDialogDriveState implements _SuccessDialogDriveState {
-  const _$_SuccessDialogDriveState(
+class _$SuccessDialogDriveStateImpl implements _SuccessDialogDriveState {
+  const _$SuccessDialogDriveStateImpl(
       {this.result,
       required this.action,
       required final List<DriveFile> folderList})
@@ -904,7 +916,7 @@ class _$_SuccessDialogDriveState implements _SuccessDialogDriveState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SuccessDialogDriveState &&
+            other is _$SuccessDialogDriveStateImpl &&
             (identical(other.result, result) || other.result == result) &&
             (identical(other.action, action) || other.action == action) &&
             const DeepCollectionEquality()
@@ -918,10 +930,9 @@ class _$_SuccessDialogDriveState implements _SuccessDialogDriveState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SuccessDialogDriveStateCopyWith<_$_SuccessDialogDriveState>
-      get copyWith =>
-          __$$_SuccessDialogDriveStateCopyWithImpl<_$_SuccessDialogDriveState>(
-              this, _$identity);
+  _$$SuccessDialogDriveStateImplCopyWith<_$SuccessDialogDriveStateImpl>
+      get copyWith => __$$SuccessDialogDriveStateImplCopyWithImpl<
+          _$SuccessDialogDriveStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1000,38 +1011,41 @@ class _$_SuccessDialogDriveState implements _SuccessDialogDriveState {
 
 abstract class _SuccessDialogDriveState implements DialogDriveState {
   const factory _SuccessDialogDriveState(
-      {final DriveFile? result,
-      required final DialogDriveAction action,
-      required final List<DriveFile> folderList}) = _$_SuccessDialogDriveState;
+          {final DriveFile? result,
+          required final DialogDriveAction action,
+          required final List<DriveFile> folderList}) =
+      _$SuccessDialogDriveStateImpl;
 
   DriveFile? get result;
   DialogDriveAction get action;
   List<DriveFile> get folderList;
   @JsonKey(ignore: true)
-  _$$_SuccessDialogDriveStateCopyWith<_$_SuccessDialogDriveState>
+  _$$SuccessDialogDriveStateImplCopyWith<_$SuccessDialogDriveStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_FailureDialogDriveStateCopyWith<$Res> {
-  factory _$$_FailureDialogDriveStateCopyWith(_$_FailureDialogDriveState value,
-          $Res Function(_$_FailureDialogDriveState) then) =
-      __$$_FailureDialogDriveStateCopyWithImpl<$Res>;
+abstract class _$$FailureDialogDriveStateImplCopyWith<$Res> {
+  factory _$$FailureDialogDriveStateImplCopyWith(
+          _$FailureDialogDriveStateImpl value,
+          $Res Function(_$FailureDialogDriveStateImpl) then) =
+      __$$FailureDialogDriveStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FailureDialogDriveStateCopyWithImpl<$Res>
-    extends _$DialogDriveStateCopyWithImpl<$Res, _$_FailureDialogDriveState>
-    implements _$$_FailureDialogDriveStateCopyWith<$Res> {
-  __$$_FailureDialogDriveStateCopyWithImpl(_$_FailureDialogDriveState _value,
-      $Res Function(_$_FailureDialogDriveState) _then)
+class __$$FailureDialogDriveStateImplCopyWithImpl<$Res>
+    extends _$DialogDriveStateCopyWithImpl<$Res, _$FailureDialogDriveStateImpl>
+    implements _$$FailureDialogDriveStateImplCopyWith<$Res> {
+  __$$FailureDialogDriveStateImplCopyWithImpl(
+      _$FailureDialogDriveStateImpl _value,
+      $Res Function(_$FailureDialogDriveStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FailureDialogDriveState implements _FailureDialogDriveState {
-  const _$_FailureDialogDriveState();
+class _$FailureDialogDriveStateImpl implements _FailureDialogDriveState {
+  const _$FailureDialogDriveStateImpl();
 
   @override
   String toString() {
@@ -1042,7 +1056,7 @@ class _$_FailureDialogDriveState implements _FailureDialogDriveState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FailureDialogDriveState);
+            other is _$FailureDialogDriveStateImpl);
   }
 
   @override
@@ -1124,31 +1138,32 @@ class _$_FailureDialogDriveState implements _FailureDialogDriveState {
 }
 
 abstract class _FailureDialogDriveState implements DialogDriveState {
-  const factory _FailureDialogDriveState() = _$_FailureDialogDriveState;
+  const factory _FailureDialogDriveState() = _$FailureDialogDriveStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_InProgressDialogDriveStateCopyWith<$Res> {
-  factory _$$_InProgressDialogDriveStateCopyWith(
-          _$_InProgressDialogDriveState value,
-          $Res Function(_$_InProgressDialogDriveState) then) =
-      __$$_InProgressDialogDriveStateCopyWithImpl<$Res>;
+abstract class _$$InProgressDialogDriveStateImplCopyWith<$Res> {
+  factory _$$InProgressDialogDriveStateImplCopyWith(
+          _$InProgressDialogDriveStateImpl value,
+          $Res Function(_$InProgressDialogDriveStateImpl) then) =
+      __$$InProgressDialogDriveStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InProgressDialogDriveStateCopyWithImpl<$Res>
-    extends _$DialogDriveStateCopyWithImpl<$Res, _$_InProgressDialogDriveState>
-    implements _$$_InProgressDialogDriveStateCopyWith<$Res> {
-  __$$_InProgressDialogDriveStateCopyWithImpl(
-      _$_InProgressDialogDriveState _value,
-      $Res Function(_$_InProgressDialogDriveState) _then)
+class __$$InProgressDialogDriveStateImplCopyWithImpl<$Res>
+    extends _$DialogDriveStateCopyWithImpl<$Res,
+        _$InProgressDialogDriveStateImpl>
+    implements _$$InProgressDialogDriveStateImplCopyWith<$Res> {
+  __$$InProgressDialogDriveStateImplCopyWithImpl(
+      _$InProgressDialogDriveStateImpl _value,
+      $Res Function(_$InProgressDialogDriveStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InProgressDialogDriveState implements _InProgressDialogDriveState {
-  const _$_InProgressDialogDriveState();
+class _$InProgressDialogDriveStateImpl implements _InProgressDialogDriveState {
+  const _$InProgressDialogDriveStateImpl();
 
   @override
   String toString() {
@@ -1159,7 +1174,7 @@ class _$_InProgressDialogDriveState implements _InProgressDialogDriveState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InProgressDialogDriveState);
+            other is _$InProgressDialogDriveStateImpl);
   }
 
   @override
@@ -1241,5 +1256,6 @@ class _$_InProgressDialogDriveState implements _InProgressDialogDriveState {
 }
 
 abstract class _InProgressDialogDriveState implements DialogDriveState {
-  const factory _InProgressDialogDriveState() = _$_InProgressDialogDriveState;
+  const factory _InProgressDialogDriveState() =
+      _$InProgressDialogDriveStateImpl;
 }

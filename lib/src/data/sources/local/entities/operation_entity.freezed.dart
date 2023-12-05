@@ -79,11 +79,11 @@ class _$OperationDbEntityCopyWithImpl<$Res, $Val extends OperationDbEntity>
 }
 
 /// @nodoc
-abstract class _$$_OperationDbEntityCopyWith<$Res>
+abstract class _$$OperationDbEntityImplCopyWith<$Res>
     implements $OperationDbEntityCopyWith<$Res> {
-  factory _$$_OperationDbEntityCopyWith(_$_OperationDbEntity value,
-          $Res Function(_$_OperationDbEntity) then) =
-      __$$_OperationDbEntityCopyWithImpl<$Res>;
+  factory _$$OperationDbEntityImplCopyWith(_$OperationDbEntityImpl value,
+          $Res Function(_$OperationDbEntityImpl) then) =
+      __$$OperationDbEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_OperationDbEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OperationDbEntityCopyWithImpl<$Res>
-    extends _$OperationDbEntityCopyWithImpl<$Res, _$_OperationDbEntity>
-    implements _$$_OperationDbEntityCopyWith<$Res> {
-  __$$_OperationDbEntityCopyWithImpl(
-      _$_OperationDbEntity _value, $Res Function(_$_OperationDbEntity) _then)
+class __$$OperationDbEntityImplCopyWithImpl<$Res>
+    extends _$OperationDbEntityCopyWithImpl<$Res, _$OperationDbEntityImpl>
+    implements _$$OperationDbEntityImplCopyWith<$Res> {
+  __$$OperationDbEntityImplCopyWithImpl(_$OperationDbEntityImpl _value,
+      $Res Function(_$OperationDbEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_OperationDbEntityCopyWithImpl<$Res>
     Object? category = freezed,
     Object? recAccount = freezed,
   }) {
-    return _then(_$_OperationDbEntity(
+    return _then(_$OperationDbEntityImpl(
       operation: null == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
@@ -132,8 +132,8 @@ class __$$_OperationDbEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OperationDbEntity extends _OperationDbEntity {
-  const _$_OperationDbEntity(
+class _$OperationDbEntityImpl extends _OperationDbEntity {
+  const _$OperationDbEntityImpl(
       {required this.operation,
       required this.account,
       this.category,
@@ -158,7 +158,7 @@ class _$_OperationDbEntity extends _OperationDbEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OperationDbEntity &&
+            other is _$OperationDbEntityImpl &&
             (identical(other.operation, operation) ||
                 other.operation == operation) &&
             (identical(other.account, account) || other.account == account) &&
@@ -175,8 +175,8 @@ class _$_OperationDbEntity extends _OperationDbEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OperationDbEntityCopyWith<_$_OperationDbEntity> get copyWith =>
-      __$$_OperationDbEntityCopyWithImpl<_$_OperationDbEntity>(
+  _$$OperationDbEntityImplCopyWith<_$OperationDbEntityImpl> get copyWith =>
+      __$$OperationDbEntityImplCopyWithImpl<_$OperationDbEntityImpl>(
           this, _$identity);
 }
 
@@ -185,7 +185,7 @@ abstract class _OperationDbEntity extends OperationDbEntity {
       {required final OperationDB operation,
       required final AccountDB account,
       final CategoryDB? category,
-      final AccountDB? recAccount}) = _$_OperationDbEntity;
+      final AccountDB? recAccount}) = _$OperationDbEntityImpl;
   const _OperationDbEntity._() : super._();
 
   @override
@@ -198,6 +198,6 @@ abstract class _OperationDbEntity extends OperationDbEntity {
   AccountDB? get recAccount;
   @override
   @JsonKey(ignore: true)
-  _$$_OperationDbEntityCopyWith<_$_OperationDbEntity> get copyWith =>
+  _$$OperationDbEntityImplCopyWith<_$OperationDbEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

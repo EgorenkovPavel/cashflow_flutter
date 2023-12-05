@@ -85,10 +85,11 @@ class _$DriveFileCopyWithImpl<$Res, $Val extends DriveFile>
 }
 
 /// @nodoc
-abstract class _$$_DriveFileCopyWith<$Res> implements $DriveFileCopyWith<$Res> {
-  factory _$$_DriveFileCopyWith(
-          _$_DriveFile value, $Res Function(_$_DriveFile) then) =
-      __$$_DriveFileCopyWithImpl<$Res>;
+abstract class _$$DriveFileImplCopyWith<$Res>
+    implements $DriveFileCopyWith<$Res> {
+  factory _$$DriveFileImplCopyWith(
+          _$DriveFileImpl value, $Res Function(_$DriveFileImpl) then) =
+      __$$DriveFileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -100,11 +101,11 @@ abstract class _$$_DriveFileCopyWith<$Res> implements $DriveFileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DriveFileCopyWithImpl<$Res>
-    extends _$DriveFileCopyWithImpl<$Res, _$_DriveFile>
-    implements _$$_DriveFileCopyWith<$Res> {
-  __$$_DriveFileCopyWithImpl(
-      _$_DriveFile _value, $Res Function(_$_DriveFile) _then)
+class __$$DriveFileImplCopyWithImpl<$Res>
+    extends _$DriveFileCopyWithImpl<$Res, _$DriveFileImpl>
+    implements _$$DriveFileImplCopyWith<$Res> {
+  __$$DriveFileImplCopyWithImpl(
+      _$DriveFileImpl _value, $Res Function(_$DriveFileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +117,7 @@ class __$$_DriveFileCopyWithImpl<$Res>
     Object? lastChanges = null,
     Object? enabled = null,
   }) {
-    return _then(_$_DriveFile(
+    return _then(_$DriveFileImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -143,8 +144,8 @@ class __$$_DriveFileCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DriveFile implements _DriveFile {
-  const _$_DriveFile(
+class _$DriveFileImpl implements _DriveFile {
+  const _$DriveFileImpl(
       {required this.title,
       required this.id,
       required this.isFolder,
@@ -171,7 +172,7 @@ class _$_DriveFile implements _DriveFile {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DriveFile &&
+            other is _$DriveFileImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.isFolder, isFolder) ||
@@ -188,8 +189,8 @@ class _$_DriveFile implements _DriveFile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DriveFileCopyWith<_$_DriveFile> get copyWith =>
-      __$$_DriveFileCopyWithImpl<_$_DriveFile>(this, _$identity);
+  _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
+      __$$DriveFileImplCopyWithImpl<_$DriveFileImpl>(this, _$identity);
 }
 
 abstract class _DriveFile implements DriveFile {
@@ -198,7 +199,7 @@ abstract class _DriveFile implements DriveFile {
       required final String id,
       required final bool isFolder,
       required final DateTime lastChanges,
-      required final bool enabled}) = _$_DriveFile;
+      required final bool enabled}) = _$DriveFileImpl;
 
   @override
   String get title;
@@ -212,6 +213,6 @@ abstract class _DriveFile implements DriveFile {
   bool get enabled;
   @override
   @JsonKey(ignore: true)
-  _$$_DriveFileCopyWith<_$_DriveFile> get copyWith =>
+  _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

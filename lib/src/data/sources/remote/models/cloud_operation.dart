@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cloud_operation.freezed.dart';
@@ -13,6 +12,7 @@ class CloudOperation with _$CloudOperation {
     String? category,
     String? recAccount,
     required int sum,
+    required int recSum,
     required bool deleted,
-}) = _CloudOperation;
-  }
+  }) = _CloudOperation;
+}

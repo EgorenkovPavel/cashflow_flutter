@@ -22,6 +22,7 @@ mixin _$Category {
   OperationType get operationType => throw _privateConstructorUsedError;
   BudgetType get budgetType => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryCopyWith<Category> get copyWith =>
@@ -39,7 +40,8 @@ abstract class $CategoryCopyWith<$Res> {
       String title,
       OperationType operationType,
       BudgetType budgetType,
-      int budget});
+      int budget,
+      Currency currency});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
+    Object? currency = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,15 +90,20 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
-  factory _$$_CategoryCopyWith(
-          _$_Category value, $Res Function(_$_Category) then) =
-      __$$_CategoryCopyWithImpl<$Res>;
+abstract class _$$CategoryImplCopyWith<$Res>
+    implements $CategoryCopyWith<$Res> {
+  factory _$$CategoryImplCopyWith(
+          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
+      __$$CategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -104,15 +112,16 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
       String title,
       OperationType operationType,
       BudgetType budgetType,
-      int budget});
+      int budget,
+      Currency currency});
 }
 
 /// @nodoc
-class __$$_CategoryCopyWithImpl<$Res>
-    extends _$CategoryCopyWithImpl<$Res, _$_Category>
-    implements _$$_CategoryCopyWith<$Res> {
-  __$$_CategoryCopyWithImpl(
-      _$_Category _value, $Res Function(_$_Category) _then)
+class __$$CategoryImplCopyWithImpl<$Res>
+    extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
+    implements _$$CategoryImplCopyWith<$Res> {
+  __$$CategoryImplCopyWithImpl(
+      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -124,8 +133,9 @@ class __$$_CategoryCopyWithImpl<$Res>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
+    Object? currency = null,
   }) {
-    return _then(_$_Category(
+    return _then(_$CategoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -150,20 +160,25 @@ class __$$_CategoryCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Category implements _Category {
-  const _$_Category(
+class _$CategoryImpl implements _Category {
+  const _$CategoryImpl(
       {this.id = 0,
       this.cloudId = '',
       required this.title,
       required this.operationType,
       required this.budgetType,
-      required this.budget});
+      required this.budget,
+      required this.currency});
 
   @override
   @JsonKey()
@@ -179,17 +194,19 @@ class _$_Category implements _Category {
   final BudgetType budgetType;
   @override
   final int budget;
+  @override
+  final Currency currency;
 
   @override
   String toString() {
-    return 'Category(id: $id, cloudId: $cloudId, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget)';
+    return 'Category(id: $id, cloudId: $cloudId, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget, currency: $currency)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Category &&
+            other is _$CategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cloudId, cloudId) || other.cloudId == cloudId) &&
             (identical(other.title, title) || other.title == title) &&
@@ -197,18 +214,20 @@ class _$_Category implements _Category {
                 other.operationType == operationType) &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
-            (identical(other.budget, budget) || other.budget == budget));
+            (identical(other.budget, budget) || other.budget == budget) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, cloudId, title, operationType, budgetType, budget);
+  int get hashCode => Object.hash(runtimeType, id, cloudId, title,
+      operationType, budgetType, budget, currency);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
-      __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
+      __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
 }
 
 abstract class _Category implements Category {
@@ -218,7 +237,8 @@ abstract class _Category implements Category {
       required final String title,
       required final OperationType operationType,
       required final BudgetType budgetType,
-      required final int budget}) = _$_Category;
+      required final int budget,
+      required final Currency currency}) = _$CategoryImpl;
 
   @override
   int get id;
@@ -233,7 +253,9 @@ abstract class _Category implements Category {
   @override
   int get budget;
   @override
+  Currency get currency;
+  @override
   @JsonKey(ignore: true)
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

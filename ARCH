@@ -1,0 +1,42 @@
+UI
+home
+    accounts_card
+    debts_card
+    
+
+account_list (view, choose)
+account_page (input, edit)
+category_list (view, choose)
+category_page (input, edit)
+operation_list (view)
+operation_page (input, edit)
+
+MODELS
+account
+    id
+    title
+    currency (lock after creation)
+
+category
+    id
+    title
+    type (in, out)
+    budget
+    currency (lock after creation)
+
+operation
+    id
+    account
+    category/account
+    sumIn, sumOut
+    currencyIn, currencyOut (from account)
+
+balance
+    operation
+    account
+    sum (currency from account)
+
+cashflow
+    operation
+    category
+    sum (currency from category)

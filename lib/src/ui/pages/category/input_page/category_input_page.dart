@@ -8,17 +8,15 @@ import 'package:money_tracker/src/ui/pages/item_card.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../domain/models/enum/currency.dart';
+
 class CategoryInputPage extends StatelessWidget {
   final OperationType? type;
   final int? id;
 
-  const CategoryInputPage.byType({Key? key, required this.type})
-      : id = null,
-        super(key: key);
+  const CategoryInputPage.byType({super.key, required this.type}) : id = null;
 
-  const CategoryInputPage.edit({Key? key, required this.id})
-      : type = null,
-        super(key: key);
+  const CategoryInputPage.edit({super.key, required this.id}) : type = null;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class CategoryInputPage extends StatelessWidget {
 class CategoryPage extends StatefulWidget {
   final bool isNew;
 
-  const CategoryPage({Key? key, required this.isNew}) : super(key: key);
+  const CategoryPage({super.key, required this.isNew});
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -62,9 +60,13 @@ class _CategoryPageState extends State<CategoryPage> {
   void _listenState(BuildContext context, CategoryInputState state) {
     if (state.isSaved) {
       Navigator.of(context).pop(state.category);
-    } else if (state.isFetched) {
-      titleController.text = state.title;
-      budgetController.text = state.budget.toString();
+    } else {
+      if (titleController.text != state.title) {
+        titleController.text = state.title;
+      }
+      if (budgetController.text != state.budget.toString()) {
+        budgetController.text = state.budget.toString();
+      }
     }
   }
 
@@ -116,6 +118,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: titleController,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
               onChanged: (value) => context
@@ -128,6 +131,7 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: budgetController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: context.loc.budget,
               ),
               inputFormatters: <TextInputFormatter>[
@@ -153,6 +157,19 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                   items: const [BudgetType.MONTH, BudgetType.YEAR],
                 ),
+              ],
+            ),
+            TypeRadioButton<Currency>(
+              onChange: (val) => context
+                  .read<CategoryInputBloc>()
+                  .add(CategoryInputEvent.changeCurrency(currency: val)),
+              type: context.select<CategoryInputBloc, Currency>(
+                (bloc) => bloc.state.currency,
+              ),
+              items: const [
+                Currency.RUB,
+                Currency.USD,
+                Currency.EUR,
               ],
             ),
           ],

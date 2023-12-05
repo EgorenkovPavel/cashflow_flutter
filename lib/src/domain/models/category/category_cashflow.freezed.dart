@@ -79,11 +79,11 @@ class _$CategoryCashflowCopyWithImpl<$Res, $Val extends CategoryCashflow>
 }
 
 /// @nodoc
-abstract class _$$_CategoryCashflowCopyWith<$Res>
+abstract class _$$CategoryCashflowImplCopyWith<$Res>
     implements $CategoryCashflowCopyWith<$Res> {
-  factory _$$_CategoryCashflowCopyWith(
-          _$_CategoryCashflow value, $Res Function(_$_CategoryCashflow) then) =
-      __$$_CategoryCashflowCopyWithImpl<$Res>;
+  factory _$$CategoryCashflowImplCopyWith(_$CategoryCashflowImpl value,
+          $Res Function(_$CategoryCashflowImpl) then) =
+      __$$CategoryCashflowImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Category category, int monthCashflow, int yearCashflow});
@@ -93,11 +93,11 @@ abstract class _$$_CategoryCashflowCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CategoryCashflowCopyWithImpl<$Res>
-    extends _$CategoryCashflowCopyWithImpl<$Res, _$_CategoryCashflow>
-    implements _$$_CategoryCashflowCopyWith<$Res> {
-  __$$_CategoryCashflowCopyWithImpl(
-      _$_CategoryCashflow _value, $Res Function(_$_CategoryCashflow) _then)
+class __$$CategoryCashflowImplCopyWithImpl<$Res>
+    extends _$CategoryCashflowCopyWithImpl<$Res, _$CategoryCashflowImpl>
+    implements _$$CategoryCashflowImplCopyWith<$Res> {
+  __$$CategoryCashflowImplCopyWithImpl(_$CategoryCashflowImpl _value,
+      $Res Function(_$CategoryCashflowImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +107,7 @@ class __$$_CategoryCashflowCopyWithImpl<$Res>
     Object? monthCashflow = null,
     Object? yearCashflow = null,
   }) {
-    return _then(_$_CategoryCashflow(
+    return _then(_$CategoryCashflowImpl(
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -126,8 +126,8 @@ class __$$_CategoryCashflowCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryCashflow implements _CategoryCashflow {
-  const _$_CategoryCashflow(
+class _$CategoryCashflowImpl implements _CategoryCashflow {
+  const _$CategoryCashflowImpl(
       {required this.category,
       required this.monthCashflow,
       required this.yearCashflow});
@@ -148,7 +148,7 @@ class _$_CategoryCashflow implements _CategoryCashflow {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryCashflow &&
+            other is _$CategoryCashflowImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.monthCashflow, monthCashflow) ||
@@ -164,15 +164,16 @@ class _$_CategoryCashflow implements _CategoryCashflow {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryCashflowCopyWith<_$_CategoryCashflow> get copyWith =>
-      __$$_CategoryCashflowCopyWithImpl<_$_CategoryCashflow>(this, _$identity);
+  _$$CategoryCashflowImplCopyWith<_$CategoryCashflowImpl> get copyWith =>
+      __$$CategoryCashflowImplCopyWithImpl<_$CategoryCashflowImpl>(
+          this, _$identity);
 }
 
 abstract class _CategoryCashflow implements CategoryCashflow {
   const factory _CategoryCashflow(
       {required final Category category,
       required final int monthCashflow,
-      required final int yearCashflow}) = _$_CategoryCashflow;
+      required final int yearCashflow}) = _$CategoryCashflowImpl;
 
   @override
   Category get category;
@@ -182,6 +183,6 @@ abstract class _CategoryCashflow implements CategoryCashflow {
   int get yearCashflow;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryCashflowCopyWith<_$_CategoryCashflow> get copyWith =>
+  _$$CategoryCashflowImplCopyWith<_$CategoryCashflowImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

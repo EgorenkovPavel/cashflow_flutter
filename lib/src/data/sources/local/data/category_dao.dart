@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
+import 'package:money_tracker/src/data/sources/local/db_converters/currency_converter.dart';
 
 import '../../../../domain/models/enum/operation_type.dart';
 import '../../../../domain/models/sum_on_date.dart';
@@ -14,7 +15,7 @@ part 'category_dao.g.dart';
 @DriftAccessor(tables: [Categories, Cashflows])
 class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
-  CategoryDao(Database db) : super(db);
+  CategoryDao(super.db);
 
   Stream<List<CategoryDB>> watchAllCategories() => (select(categories)
         ..orderBy(
@@ -131,6 +132,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     operationType: const OperationTypeConverter()
         .fromSql(row.read<int>('operation_type')),
     budget: row.read<int>('budget'),
+    currency: const CurrencyConverter().fromSql(row.read<String>('currency')),
     budgetType: const BudgetTypeConverter()
         .fromSql(row.read('budget_type')),
     synced: row.read<bool>('synced'),
@@ -344,12 +346,12 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         );
   }
 
-  Future<void> batchInsert(List<CategoryDB> _categories) {
+  Future<void> batchInsert(List<CategoryDB> categoryList) {
     return batch(
       (batch) {
         batch.insertAll(
           categories,
-          _categories
+          categoryList
               .map(
                 (p) => CategoriesCompanion.insert(
                   id: Value(p.id),
@@ -358,6 +360,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                   operationType: p.operationType,
                   budgetType: p.budgetType,
                   budget: p.budget,
+                  currency: Value(p.currency),
                 ),
               )
               .toList(),
@@ -365,4 +368,5 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       },
     );
   }
+
 }

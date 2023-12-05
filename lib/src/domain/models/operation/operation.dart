@@ -41,6 +41,7 @@ class Operation with _$Operation {
     required Account account,
     required Account recAccount,
     required int sum,
+    required int recSum,
   }) = _TransferOperation;
 
   String get analyticTitle => map(
@@ -66,4 +67,10 @@ class Operation with _$Operation {
         output: (operation) => null,
         transfer: (operation) => operation.recAccount,
       );
+
+  int get recSum => map(
+    input: (operation) => 0,
+    output: (operation) => 0,
+    transfer: (operation) => operation.recSum,
+  );
 }

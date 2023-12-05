@@ -9,11 +9,11 @@ class ItemCard<T> extends StatelessWidget {
   final void Function(BuildContext context) onSave;
 
   ItemCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.child,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   void _onSavePressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
@@ -46,7 +46,10 @@ class ItemCard<T> extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () => _onSavePressed(context),
-                  child: Text(context.loc.save.toUpperCase()),
+                  child: Text(
+                    context.loc.save.toUpperCase(),
+                    style: const TextStyle().copyWith(color: Colors.white),
+                  ),
                 ),
               ]),
             ],

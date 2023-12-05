@@ -10,7 +10,7 @@ class CarouselList<T> extends StatelessWidget {
   final Function(BuildContext, T) _itemBuilder;
 
   const CarouselList({
-    Key? key,
+    super.key,
     required List<T> items,
     required String emptyListMessage,
     required bool Function(T) initialItemFinder,
@@ -20,8 +20,7 @@ class CarouselList<T> extends StatelessWidget {
         _items = items,
         _initialItemFinder = initialItemFinder,
         _onItemChanged = onItemChanged,
-        _itemBuilder = itemBuilder,
-        super(key: key);
+        _itemBuilder = itemBuilder;
 
   @override
   Widget build(BuildContext context) {

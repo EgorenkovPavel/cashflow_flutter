@@ -3,17 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../domain/models/enum/currency.dart';
+import '../../../blocs/category_cashflow_bloc.dart';
 import '../../../widgets/keyboard.dart';
 import 'account_item.dart';
 import 'category_item.dart';
+import 'widgets/sum_field.dart';
 
 class OperationInputPage extends StatefulWidget {
-  const OperationInputPage({Key? key}) : super(key: key);
+  const OperationInputPage({super.key});
 
   @override
   _OperationInputPageState createState() => _OperationInputPageState();
@@ -45,57 +49,71 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 
   void _stateListener(BuildContext context, MasterState state) {
-    if (state.action == MasterStateAction.CLOSE) {
-      Navigator.of(context).pop();
-    } else if (state.action == MasterStateAction.SHOW_KEYBOARD) {
-      _animationController.forward();
-    } else if (state.action == MasterStateAction.HIDE_KEYBOARD) {
-      _animationController.reverse();
-    } else if (state.action == MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.emptyAccountError),
-        ),
-      );
-    } else if (state.action == MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.emptyCategoryError),
-        ),
-      );
-    } else if (state.action ==
-        MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.emptyRecAccountError),
-        ),
-      );
-    } else if (state.action == MasterStateAction.SHOW_EMPTY_SUM_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.emptySumError),
-        ),
-      );
-    } else if (state.action ==
-        MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.mesOperationCreated),
-          action: SnackBarAction(
-            label: context.loc.cancel,
-            onPressed: () => context
-                .read<MasterBloc>()
-                .add(const MasterEvent.cancelOperation()),
-          ),
-        ),
-      );
-    } else if (state.action ==
-        MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.mesOperationCanceled),
-        ),
-      );
+    switch (state.action) {
+      case MasterStateAction.CLOSE:
+        {
+          Navigator.of(context).pop();
+        }
+      case MasterStateAction.SHOW_KEYBOARD:
+        {
+          _animationController.forward();
+        }
+      case MasterStateAction.HIDE_KEYBOARD:
+        {
+          _animationController.reverse();
+        }
+      case MasterStateAction.SHOW_EMPTY_ACCOUNT_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.loc.emptyAccountError)),
+          );
+        }
+      case MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.loc.emptyCategoryError)),
+          );
+        }
+      case MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.loc.emptyRecAccountError)),
+          );
+        }
+      case MasterStateAction.SHOW_EMPTY_SUM_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.loc.emptySumError)),
+          );
+        }
+      case MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(context.loc.mesOperationCreated),
+              action: SnackBarAction(
+                label: context.loc.cancel,
+                onPressed: () => context.cancelOperation(),
+              ),
+            ),
+          );
+        }
+      case MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE:
+        {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.loc.mesOperationCanceled)),
+          );
+        }
+      case MasterStateAction.DATA:
+        {}
+      case MasterStateAction.SET_ACCOUNT:
+        {}
+      case MasterStateAction.SET_IN_CATEGORY:
+        {}
+      case MasterStateAction.SET_OUT_CATEGORY:
+        {}
+      case MasterStateAction.SET_REC_ACCOUNT:
+        {}
     }
   }
 
@@ -103,12 +121,6 @@ class _OperationInputPageState extends State<OperationInputPage>
     context.read<MasterBloc>().add(const MasterEvent.backPressed());
 
     return Future.value(false);
-  }
-
-  void _onChangeOperationType(BuildContext context, OperationType newValue) {
-    context.read<MasterBloc>().add(
-          MasterEvent.changeOperationType(operationType: newValue),
-        );
   }
 
   @override
@@ -121,9 +133,7 @@ class _OperationInputPageState extends State<OperationInputPage>
           child: WillPopScope(
             onWillPop: () => _onBackPressed(context),
             child: Scaffold(
-              appBar: AppBar(
-                title: Text(context.loc.titleMaster),
-              ),
+              appBar: AppBar(title: Text(context.loc.titleMaster)),
               body: Column(
                 children: <Widget>[
                   Padding(
@@ -131,28 +141,23 @@ class _OperationInputPageState extends State<OperationInputPage>
                       horizontal: 8.0,
                       vertical: 8.0,
                     ),
-                    child: TypeRadioButton<OperationType>(
-                      type: context.select<MasterBloc, OperationType>(
-                        (bloc) => bloc.state.operationType,
-                      ),
-                      items: const [
-                        OperationType.INPUT,
-                        OperationType.OUTPUT,
-                        OperationType.TRANSFER,
-                      ],
-                      onChange: (operationType) =>
-                          _onChangeOperationType(context, operationType),
-                    ),
+                    child: Builder(builder: (context) {
+                      return TypeRadioButton<OperationType>(
+                        type: context.operationType(),
+                        items: const [
+                          OperationType.INPUT,
+                          OperationType.OUTPUT,
+                          OperationType.TRANSFER,
+                        ],
+                        onChange: (type) => context.changeOperationType(type),
+                      );
+                    }),
                   ),
                   Expanded(
                     child: Row(
                       children: <Widget>[
                         const AccountList(),
-                        context
-                            .select<MasterBloc, OperationType>(
-                              (bloc) => bloc.state.operationType,
-                            )
-                            .map(
+                        context.operationType().map(
                               INPUT: () => const CategoryInList(),
                               OUTPUT: () => const CategoryOutList(),
                               TRANSFER: () => const AccountRecList(),
@@ -186,9 +191,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               BarButton(
-                                onPressed: () => context
-                                    .read<MasterBloc>()
-                                    .add(const MasterEvent.moreTap()),
+                                onPressed: () => context.moreTap(),
                                 title: context.loc.more,
                               ),
                               Expanded(
@@ -196,46 +199,40 @@ class _OperationInputPageState extends State<OperationInputPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(
-                                        onTap: () => context
-                                            .read<MasterBloc>()
-                                            .add(const MasterEvent.sumTap()),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .bottomAppBarColor,
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            border: Border.all(
-                                              color: context
-                                                      .select<MasterBloc, bool>(
-                                                (bloc) =>
-                                                    bloc.state.showKeyboard,
-                                              )
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                              width: 2.0,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            flex: 1,
+                                            child: SumField(
+                                              highlight: context.highlightSum(),
+                                              sum: context.sum(),
+                                              currency:
+                                                  context.account()?.currency ??
+                                                      Currency.RUB,
+                                              onTap: () => context.sumTap(),
                                             ),
                                           ),
-                                          width: double.infinity,
-                                          height: 48.0,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            context.loc.numberFormat(
-                                              context.select<MasterBloc, int>(
-                                                (bloc) => bloc.state.sum,
+                                          if (context.showRecSum())
+                                            const SizedBox(width: 8),
+                                          if (context.showRecSum())
+                                            Flexible(
+                                              flex: 1,
+                                              child: SumField(
+                                                highlight:
+                                                    context.highlightRecSum(),
+                                                sum: context.recSum(),
+                                                currency: context
+                                                        .recAccount()
+                                                        ?.currency ??
+                                                    Currency.RUB,
+                                                onTap: () =>
+                                                    context.recSumTap(),
                                               ),
                                             ),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium,
-                                          ),
-                                        ),
+                                        ],
                                       ),
                                     ),
                                     SizeTransition(
@@ -243,25 +240,16 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       sizeFactor: _animation,
                                       child: Keyboard(
                                         onDigitPressed: (int digit) =>
-                                            context.read<MasterBloc>().add(
-                                                  MasterEvent.digitTap(
-                                                    digit: digit,
-                                                  ),
-                                                ),
-                                        onBackPressed: () => context
-                                            .read<MasterBloc>()
-                                            .add(
-                                              const MasterEvent.backKeyTap(),
-                                            ),
+                                            context.digitTap(digit),
+                                        onBackPressed: () =>
+                                            context.backKeyTap(),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               BarButton(
-                                onPressed: () => context
-                                    .read<MasterBloc>()
-                                    .add(const MasterEvent.nextTap()),
+                                onPressed: () => context.nextTap(),
                                 title: context.loc.create,
                               ),
                             ],
@@ -280,15 +268,125 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 }
 
+extension MasterExt on BuildContext {
+  MasterBloc _bloc() => read<MasterBloc>();
+
+  void nextTap() => _bloc().add(const MasterEvent.nextTap());
+
+  void moreTap() => _bloc().add(const MasterEvent.moreTap());
+
+  void backKeyTap() => _bloc().add(const MasterEvent.backKeyTap());
+
+  void digitTap(int digit) => _bloc().add(MasterEvent.digitTap(digit: digit));
+
+  void sumTap() => _bloc().add(const MasterEvent.sumTap());
+
+  void recSumTap() => _bloc().add(const MasterEvent.recSumTap());
+
+  void cancelOperation() => _bloc().add(const MasterEvent.cancelOperation());
+
+  void changeOperationType(OperationType type) =>
+      _bloc().add(MasterEvent.changeOperationType(operationType: type));
+
+  void changeAccount(AccountBalance accountBalance) =>
+      _bloc().add(MasterEvent.changeAccount(account: accountBalance));
+
+  bool showRecSum() => select<MasterBloc, bool>((bloc) =>
+      bloc.state.operationType == OperationType.TRANSFER &&
+      bloc.state.account != null &&
+      bloc.state.recAccount != null &&
+      bloc.state.account?.currency != bloc.state.recAccount?.currency);
+
+  Future<void> addNewAccount() async {
+    addNewItem();
+    var account = await openAccountInputDialog();
+    if (account != null) {
+      var accountBalance = AccountBalance(
+        id: account.id,
+        cloudId: account.cloudId,
+        title: account.title,
+        currency: account.currency,
+        balance: 0,
+      );
+      changeAccount(accountBalance);
+    }
+  }
+
+  Future<void> addNewInCategory() async {
+    addNewItem();
+    var category = await openCategoryInputDialog(
+      type: OperationType.INPUT,
+    );
+    if (category != null) {
+      changeInCategory(category);
+    }
+  }
+
+  Future<void> addNewOutCategory() async {
+    addNewItem();
+    var category = await openCategoryInputDialog(
+      type: OperationType.OUTPUT,
+    );
+    if (category != null) {
+      changeOutCategory(category);
+    }
+  }
+
+  Future<void> addNewRecAccount() async {
+    addNewItem();
+    var account = await openAccountInputDialog();
+    if (account != null) {
+      var accountBalance = AccountBalance(
+        id: account.id,
+        cloudId: account.cloudId,
+        title: account.title,
+        currency: account.currency,
+        balance: 0,
+      );
+      changeRecAccount(accountBalance);
+    }
+  }
+
+  void addNewItem() => _bloc().add(const MasterEvent.addNewItem());
+
+  void changeRecAccount(AccountBalance accountBalance) =>
+      _bloc().add(MasterEvent.changeRecAccount(account: accountBalance));
+
+  void changeInCategory(Category category) =>
+      _bloc().add(MasterEvent.changeInCategory(category: category));
+
+  void changeOutCategory(Category category) =>
+      _bloc().add(MasterEvent.changeOutCategory(category: category));
+
+  int recSum() => select<MasterBloc, int>((bloc) => bloc.state.recSum);
+
+  bool highlightRecSum() =>
+      select<MasterBloc, bool>((bloc) => bloc.state.highlightRecSum);
+
+  int sum() => select<MasterBloc, int>((bloc) => bloc.state.sum);
+
+  bool highlightSum() =>
+      select<MasterBloc, bool>((bloc) => bloc.state.highlightSum);
+
+  OperationType operationType() =>
+      select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
+
+  AccountBalance? account() =>
+      select<MasterBloc, AccountBalance?>((bloc) => bloc.state.account);
+
+  AccountBalance? recAccount() =>
+      select<MasterBloc, AccountBalance?>((bloc) => bloc.state.recAccount);
+}
+
 class BarButton extends StatelessWidget {
   final void Function() onPressed;
   final String title;
 
   const BarButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -296,42 +394,19 @@ class BarButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         title.toUpperCase(),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        style: TextStyle(color: Theme.of(context).colorScheme.primary),
       ),
     );
   }
 }
 
 class AccountList extends StatelessWidget {
-  const AccountList({Key? key}) : super(key: key);
-
-  Future<void> _addNewAccount(BuildContext context) async {
-    var account = await context.openAccountInputDialog();
-    if (account != null) {
-      var accountBalance = AccountBalance(
-        id: account.id,
-        cloudId: account.cloudId,
-        title: account.title,
-        currency: account.currency,
-        balance: 0,
-      );
-      context
-          .read<MasterBloc>()
-          .add(MasterEvent.changeAccount(account: accountBalance));
-    }
-  }
-
-  void _onChangeAccount(BuildContext context, AccountBalance account) {
-    context.read<MasterBloc>().add(MasterEvent.changeAccount(account: account));
-  }
+  const AccountList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final operationType = context
-        .select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
-    final accounts = context.select<MasterBloc, List<AccountBalance>>(
+    final operationType = context.operationType();
+    final accounts = context.select<AccountBalanceBloc, List<AccountBalance>>(
       (bloc) => bloc.state.accounts,
     );
 
@@ -339,122 +414,72 @@ class AccountList extends StatelessWidget {
       title: operationType == OperationType.TRANSFER
           ? context.loc.source
           : context.loc.accounts,
-      onAdd: () => _addNewAccount(context),
+      onAdd: () => context.addNewAccount(),
       list: AccountPageView(
         accounts: operationType == OperationType.TRANSFER
             ? accounts
             : accounts.where((element) => !element.isDebt).toList(),
-        onItemChanged: (account) => _onChangeAccount(context, account),
+        onItemChanged: (account) => context.changeAccount(account),
       ),
     );
   }
 }
 
 class CategoryInList extends StatelessWidget {
-  const CategoryInList({Key? key}) : super(key: key);
-
-  Future<void> _addNewInCategory(BuildContext context) async {
-    var category = await context.openCategoryInputDialog(
-      type: OperationType.INPUT,
-    );
-    if (category != null) {
-      context
-          .read<MasterBloc>()
-          .add(MasterEvent.changeInCategory(category: category));
-    }
-  }
-
-  void _onChangeInCategory(BuildContext context, Category category) {
-    context
-        .read<MasterBloc>()
-        .add(MasterEvent.changeInCategory(category: category));
-  }
+  const CategoryInList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ItemsList(
       title: context.loc.categories,
-      onAdd: () => _addNewInCategory(context),
+      onAdd: () => context.addNewInCategory(),
       list: CategoryPageView(
-        categories: context.select<MasterBloc, List<Category>>(
-          (bloc) => bloc.state.inCategories,
+        categories: context.select<CategoryCashflowBloc, List<Category>>(
+          (bloc) => bloc.state.categories
+              .map((c) => c.category)
+              .where((c) => c.operationType == OperationType.INPUT)
+              .toList(),
         ),
-        onItemChanged: (category) => _onChangeInCategory(context, category),
+        onItemChanged: (category) => context.changeInCategory(category),
       ),
     );
   }
 }
 
 class CategoryOutList extends StatelessWidget {
-  const CategoryOutList({Key? key}) : super(key: key);
-
-  Future<void> _addNewOutCategory(BuildContext context) async {
-    var category = await context.openCategoryInputDialog(
-      type: OperationType.OUTPUT,
-    );
-    if (category != null) {
-      context
-          .read<MasterBloc>()
-          .add(MasterEvent.changeOutCategory(category: category));
-    }
-  }
-
-  void _onChangeOutCategory(BuildContext context, Category category) {
-    context
-        .read<MasterBloc>()
-        .add(MasterEvent.changeOutCategory(category: category));
-  }
+  const CategoryOutList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ItemsList(
       title: context.loc.categories,
-      onAdd: () => _addNewOutCategory(context),
+      onAdd: () => context.addNewOutCategory(),
       list: CategoryPageView(
-        categories: context.select<MasterBloc, List<Category>>(
-          (bloc) => bloc.state.outCategories,
+        categories: context.select<CategoryCashflowBloc, List<Category>>(
+          (bloc) => bloc.state.categories
+              .map((c) => c.category)
+              .where((c) => c.operationType == OperationType.OUTPUT)
+              .toList(),
         ),
-        onItemChanged: (category) => _onChangeOutCategory(context, category),
+        onItemChanged: (category) => context.changeOutCategory(category),
       ),
     );
   }
 }
 
 class AccountRecList extends StatelessWidget {
-  const AccountRecList({Key? key}) : super(key: key);
-
-  Future<void> _addNewRecAccount(BuildContext context) async {
-    var account = await context.openAccountInputDialog();
-    if (account != null) {
-      var accountBalance = AccountBalance(
-        id: account.id,
-        cloudId: account.cloudId,
-        title: account.title,
-        currency: account.currency,
-        balance: 0,
-      );
-      context
-          .read<MasterBloc>()
-          .add(MasterEvent.changeRecAccount(account: accountBalance));
-    }
-  }
-
-  void _onChangeRecAccount(BuildContext context, AccountBalance account) {
-    context
-        .read<MasterBloc>()
-        .add(MasterEvent.changeRecAccount(account: account));
-  }
+  const AccountRecList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ItemsList(
       title: context.loc.receiver,
-      onAdd: () => _addNewRecAccount(context),
+      onAdd: () => context.addNewRecAccount(),
       list: AccountPageView(
-        accounts: context.select<MasterBloc, List<AccountBalance>>(
+        accounts: context.select<AccountBalanceBloc, List<AccountBalance>>(
           (bloc) => bloc.state.accounts,
         ),
-        onItemChanged: (account) => _onChangeRecAccount(context, account),
+        onItemChanged: (account) => context.changeRecAccount(account),
       ),
     );
   }
@@ -466,11 +491,11 @@ class ItemsList extends StatelessWidget {
   final Widget list;
 
   const ItemsList({
-    Key? key,
+    super.key,
     required this.title,
     required this.onAdd,
     required this.list,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -488,24 +513,14 @@ class ItemsList extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                    //color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {
-                    context
-                        .read<MasterBloc>()
-                        .add(const MasterEvent.addNewItem());
-                    onAdd();
-                  },
+                  icon: const Icon(Icons.add),
+                  onPressed: onAdd,
                 ),
               ],
             ),
             const Divider(),
             Flexible(
-              child: Container(
-                child: list,
-              ),
+              child: Container(child: list),
             ),
           ],
         ),
@@ -519,10 +534,10 @@ class AccountPageView extends StatelessWidget {
   final void Function(AccountBalance) onItemChanged;
 
   const AccountPageView({
-    Key? key,
+    super.key,
     required this.accounts,
     required this.onItemChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -545,10 +560,10 @@ class CategoryPageView extends StatelessWidget {
   final void Function(Category) onItemChanged;
 
   const CategoryPageView({
-    Key? key,
+    super.key,
     required this.categories,
     required this.onItemChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

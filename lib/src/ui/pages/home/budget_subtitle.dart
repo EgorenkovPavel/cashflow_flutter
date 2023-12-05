@@ -11,9 +11,9 @@ class BudgetSubtitle extends StatelessWidget {
   final OperationType type;
 
   const BudgetSubtitle({
-    Key? key,
+    super.key,
     required this.type,
-  }) : super(key: key);
+  });
 
   int _calcCashflow(List<CategoryCashflow> list) {
     return list.fold(

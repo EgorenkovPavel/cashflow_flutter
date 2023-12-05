@@ -64,22 +64,22 @@ class _$AccountBalanceEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AccountBalanceEntityCopyWith<$Res>
+abstract class _$$AccountBalanceEntityImplCopyWith<$Res>
     implements $AccountBalanceEntityCopyWith<$Res> {
-  factory _$$_AccountBalanceEntityCopyWith(_$_AccountBalanceEntity value,
-          $Res Function(_$_AccountBalanceEntity) then) =
-      __$$_AccountBalanceEntityCopyWithImpl<$Res>;
+  factory _$$AccountBalanceEntityImplCopyWith(_$AccountBalanceEntityImpl value,
+          $Res Function(_$AccountBalanceEntityImpl) then) =
+      __$$AccountBalanceEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AccountDB account, int sum});
 }
 
 /// @nodoc
-class __$$_AccountBalanceEntityCopyWithImpl<$Res>
-    extends _$AccountBalanceEntityCopyWithImpl<$Res, _$_AccountBalanceEntity>
-    implements _$$_AccountBalanceEntityCopyWith<$Res> {
-  __$$_AccountBalanceEntityCopyWithImpl(_$_AccountBalanceEntity _value,
-      $Res Function(_$_AccountBalanceEntity) _then)
+class __$$AccountBalanceEntityImplCopyWithImpl<$Res>
+    extends _$AccountBalanceEntityCopyWithImpl<$Res, _$AccountBalanceEntityImpl>
+    implements _$$AccountBalanceEntityImplCopyWith<$Res> {
+  __$$AccountBalanceEntityImplCopyWithImpl(_$AccountBalanceEntityImpl _value,
+      $Res Function(_$AccountBalanceEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +88,7 @@ class __$$_AccountBalanceEntityCopyWithImpl<$Res>
     Object? account = null,
     Object? sum = null,
   }) {
-    return _then(_$_AccountBalanceEntity(
+    return _then(_$AccountBalanceEntityImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -103,8 +103,8 @@ class __$$_AccountBalanceEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AccountBalanceEntity implements _AccountBalanceEntity {
-  const _$_AccountBalanceEntity({required this.account, required this.sum});
+class _$AccountBalanceEntityImpl implements _AccountBalanceEntity {
+  const _$AccountBalanceEntityImpl({required this.account, required this.sum});
 
   @override
   final AccountDB account;
@@ -120,7 +120,7 @@ class _$_AccountBalanceEntity implements _AccountBalanceEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountBalanceEntity &&
+            other is _$AccountBalanceEntityImpl &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.sum, sum) || other.sum == sum));
   }
@@ -131,15 +131,16 @@ class _$_AccountBalanceEntity implements _AccountBalanceEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountBalanceEntityCopyWith<_$_AccountBalanceEntity> get copyWith =>
-      __$$_AccountBalanceEntityCopyWithImpl<_$_AccountBalanceEntity>(
-          this, _$identity);
+  _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
+      get copyWith =>
+          __$$AccountBalanceEntityImplCopyWithImpl<_$AccountBalanceEntityImpl>(
+              this, _$identity);
 }
 
 abstract class _AccountBalanceEntity implements AccountBalanceEntity {
   const factory _AccountBalanceEntity(
       {required final AccountDB account,
-      required final int sum}) = _$_AccountBalanceEntity;
+      required final int sum}) = _$AccountBalanceEntityImpl;
 
   @override
   AccountDB get account;
@@ -147,6 +148,6 @@ abstract class _AccountBalanceEntity implements AccountBalanceEntity {
   int get sum;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountBalanceEntityCopyWith<_$_AccountBalanceEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

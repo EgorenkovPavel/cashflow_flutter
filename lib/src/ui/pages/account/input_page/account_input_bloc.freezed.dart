@@ -95,20 +95,22 @@ class _$AccountInputEventCopyWithImpl<$Res, $Val extends AccountInputEvent>
 }
 
 /// @nodoc
-abstract class _$$_FetchAccountInputEventCopyWith<$Res> {
-  factory _$$_FetchAccountInputEventCopyWith(_$_FetchAccountInputEvent value,
-          $Res Function(_$_FetchAccountInputEvent) then) =
-      __$$_FetchAccountInputEventCopyWithImpl<$Res>;
+abstract class _$$FetchAccountInputEventImplCopyWith<$Res> {
+  factory _$$FetchAccountInputEventImplCopyWith(
+          _$FetchAccountInputEventImpl value,
+          $Res Function(_$FetchAccountInputEventImpl) then) =
+      __$$FetchAccountInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int accountId});
 }
 
 /// @nodoc
-class __$$_FetchAccountInputEventCopyWithImpl<$Res>
-    extends _$AccountInputEventCopyWithImpl<$Res, _$_FetchAccountInputEvent>
-    implements _$$_FetchAccountInputEventCopyWith<$Res> {
-  __$$_FetchAccountInputEventCopyWithImpl(_$_FetchAccountInputEvent _value,
-      $Res Function(_$_FetchAccountInputEvent) _then)
+class __$$FetchAccountInputEventImplCopyWithImpl<$Res>
+    extends _$AccountInputEventCopyWithImpl<$Res, _$FetchAccountInputEventImpl>
+    implements _$$FetchAccountInputEventImplCopyWith<$Res> {
+  __$$FetchAccountInputEventImplCopyWithImpl(
+      _$FetchAccountInputEventImpl _value,
+      $Res Function(_$FetchAccountInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +118,7 @@ class __$$_FetchAccountInputEventCopyWithImpl<$Res>
   $Res call({
     Object? accountId = null,
   }) {
-    return _then(_$_FetchAccountInputEvent(
+    return _then(_$FetchAccountInputEventImpl(
       accountId: null == accountId
           ? _value.accountId
           : accountId // ignore: cast_nullable_to_non_nullable
@@ -127,8 +129,8 @@ class __$$_FetchAccountInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FetchAccountInputEvent implements _FetchAccountInputEvent {
-  const _$_FetchAccountInputEvent({required this.accountId});
+class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
+  const _$FetchAccountInputEventImpl({required this.accountId});
 
   @override
   final int accountId;
@@ -142,7 +144,7 @@ class _$_FetchAccountInputEvent implements _FetchAccountInputEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FetchAccountInputEvent &&
+            other is _$FetchAccountInputEventImpl &&
             (identical(other.accountId, accountId) ||
                 other.accountId == accountId));
   }
@@ -153,9 +155,9 @@ class _$_FetchAccountInputEvent implements _FetchAccountInputEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FetchAccountInputEventCopyWith<_$_FetchAccountInputEvent> get copyWith =>
-      __$$_FetchAccountInputEventCopyWithImpl<_$_FetchAccountInputEvent>(
-          this, _$identity);
+  _$$FetchAccountInputEventImplCopyWith<_$FetchAccountInputEventImpl>
+      get copyWith => __$$FetchAccountInputEventImplCopyWithImpl<
+          _$FetchAccountInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -242,32 +244,32 @@ class _$_FetchAccountInputEvent implements _FetchAccountInputEvent {
 
 abstract class _FetchAccountInputEvent implements AccountInputEvent {
   const factory _FetchAccountInputEvent({required final int accountId}) =
-      _$_FetchAccountInputEvent;
+      _$FetchAccountInputEventImpl;
 
   int get accountId;
   @JsonKey(ignore: true)
-  _$$_FetchAccountInputEventCopyWith<_$_FetchAccountInputEvent> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FetchAccountInputEventImplCopyWith<_$FetchAccountInputEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeTitleAccountInputEventCopyWith<$Res> {
-  factory _$$_ChangeTitleAccountInputEventCopyWith(
-          _$_ChangeTitleAccountInputEvent value,
-          $Res Function(_$_ChangeTitleAccountInputEvent) then) =
-      __$$_ChangeTitleAccountInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeTitleAccountInputEventImplCopyWith<$Res> {
+  factory _$$ChangeTitleAccountInputEventImplCopyWith(
+          _$ChangeTitleAccountInputEventImpl value,
+          $Res Function(_$ChangeTitleAccountInputEventImpl) then) =
+      __$$ChangeTitleAccountInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String title});
 }
 
 /// @nodoc
-class __$$_ChangeTitleAccountInputEventCopyWithImpl<$Res>
+class __$$ChangeTitleAccountInputEventImplCopyWithImpl<$Res>
     extends _$AccountInputEventCopyWithImpl<$Res,
-        _$_ChangeTitleAccountInputEvent>
-    implements _$$_ChangeTitleAccountInputEventCopyWith<$Res> {
-  __$$_ChangeTitleAccountInputEventCopyWithImpl(
-      _$_ChangeTitleAccountInputEvent _value,
-      $Res Function(_$_ChangeTitleAccountInputEvent) _then)
+        _$ChangeTitleAccountInputEventImpl>
+    implements _$$ChangeTitleAccountInputEventImplCopyWith<$Res> {
+  __$$ChangeTitleAccountInputEventImplCopyWithImpl(
+      _$ChangeTitleAccountInputEventImpl _value,
+      $Res Function(_$ChangeTitleAccountInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -275,7 +277,7 @@ class __$$_ChangeTitleAccountInputEventCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
   }) {
-    return _then(_$_ChangeTitleAccountInputEvent(
+    return _then(_$ChangeTitleAccountInputEventImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -286,8 +288,9 @@ class __$$_ChangeTitleAccountInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeTitleAccountInputEvent implements _ChangeTitleAccountInputEvent {
-  const _$_ChangeTitleAccountInputEvent({required this.title});
+class _$ChangeTitleAccountInputEventImpl
+    implements _ChangeTitleAccountInputEvent {
+  const _$ChangeTitleAccountInputEventImpl({required this.title});
 
   @override
   final String title;
@@ -301,7 +304,7 @@ class _$_ChangeTitleAccountInputEvent implements _ChangeTitleAccountInputEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeTitleAccountInputEvent &&
+            other is _$ChangeTitleAccountInputEventImpl &&
             (identical(other.title, title) || other.title == title));
   }
 
@@ -311,9 +314,10 @@ class _$_ChangeTitleAccountInputEvent implements _ChangeTitleAccountInputEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeTitleAccountInputEventCopyWith<_$_ChangeTitleAccountInputEvent>
-      get copyWith => __$$_ChangeTitleAccountInputEventCopyWithImpl<
-          _$_ChangeTitleAccountInputEvent>(this, _$identity);
+  _$$ChangeTitleAccountInputEventImplCopyWith<
+          _$ChangeTitleAccountInputEventImpl>
+      get copyWith => __$$ChangeTitleAccountInputEventImplCopyWithImpl<
+          _$ChangeTitleAccountInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -400,32 +404,33 @@ class _$_ChangeTitleAccountInputEvent implements _ChangeTitleAccountInputEvent {
 
 abstract class _ChangeTitleAccountInputEvent implements AccountInputEvent {
   const factory _ChangeTitleAccountInputEvent({required final String title}) =
-      _$_ChangeTitleAccountInputEvent;
+      _$ChangeTitleAccountInputEventImpl;
 
   String get title;
   @JsonKey(ignore: true)
-  _$$_ChangeTitleAccountInputEventCopyWith<_$_ChangeTitleAccountInputEvent>
+  _$$ChangeTitleAccountInputEventImplCopyWith<
+          _$ChangeTitleAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeIsDebtAccountInputEventCopyWith<$Res> {
-  factory _$$_ChangeIsDebtAccountInputEventCopyWith(
-          _$_ChangeIsDebtAccountInputEvent value,
-          $Res Function(_$_ChangeIsDebtAccountInputEvent) then) =
-      __$$_ChangeIsDebtAccountInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeIsDebtAccountInputEventImplCopyWith<$Res> {
+  factory _$$ChangeIsDebtAccountInputEventImplCopyWith(
+          _$ChangeIsDebtAccountInputEventImpl value,
+          $Res Function(_$ChangeIsDebtAccountInputEventImpl) then) =
+      __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool isDebt});
 }
 
 /// @nodoc
-class __$$_ChangeIsDebtAccountInputEventCopyWithImpl<$Res>
+class __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>
     extends _$AccountInputEventCopyWithImpl<$Res,
-        _$_ChangeIsDebtAccountInputEvent>
-    implements _$$_ChangeIsDebtAccountInputEventCopyWith<$Res> {
-  __$$_ChangeIsDebtAccountInputEventCopyWithImpl(
-      _$_ChangeIsDebtAccountInputEvent _value,
-      $Res Function(_$_ChangeIsDebtAccountInputEvent) _then)
+        _$ChangeIsDebtAccountInputEventImpl>
+    implements _$$ChangeIsDebtAccountInputEventImplCopyWith<$Res> {
+  __$$ChangeIsDebtAccountInputEventImplCopyWithImpl(
+      _$ChangeIsDebtAccountInputEventImpl _value,
+      $Res Function(_$ChangeIsDebtAccountInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -433,7 +438,7 @@ class __$$_ChangeIsDebtAccountInputEventCopyWithImpl<$Res>
   $Res call({
     Object? isDebt = null,
   }) {
-    return _then(_$_ChangeIsDebtAccountInputEvent(
+    return _then(_$ChangeIsDebtAccountInputEventImpl(
       isDebt: null == isDebt
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
@@ -444,9 +449,9 @@ class __$$_ChangeIsDebtAccountInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeIsDebtAccountInputEvent
+class _$ChangeIsDebtAccountInputEventImpl
     implements _ChangeIsDebtAccountInputEvent {
-  const _$_ChangeIsDebtAccountInputEvent({required this.isDebt});
+  const _$ChangeIsDebtAccountInputEventImpl({required this.isDebt});
 
   @override
   final bool isDebt;
@@ -460,7 +465,7 @@ class _$_ChangeIsDebtAccountInputEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeIsDebtAccountInputEvent &&
+            other is _$ChangeIsDebtAccountInputEventImpl &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt));
   }
 
@@ -470,9 +475,10 @@ class _$_ChangeIsDebtAccountInputEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeIsDebtAccountInputEventCopyWith<_$_ChangeIsDebtAccountInputEvent>
-      get copyWith => __$$_ChangeIsDebtAccountInputEventCopyWithImpl<
-          _$_ChangeIsDebtAccountInputEvent>(this, _$identity);
+  _$$ChangeIsDebtAccountInputEventImplCopyWith<
+          _$ChangeIsDebtAccountInputEventImpl>
+      get copyWith => __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<
+          _$ChangeIsDebtAccountInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -559,32 +565,33 @@ class _$_ChangeIsDebtAccountInputEvent
 
 abstract class _ChangeIsDebtAccountInputEvent implements AccountInputEvent {
   const factory _ChangeIsDebtAccountInputEvent({required final bool isDebt}) =
-      _$_ChangeIsDebtAccountInputEvent;
+      _$ChangeIsDebtAccountInputEventImpl;
 
   bool get isDebt;
   @JsonKey(ignore: true)
-  _$$_ChangeIsDebtAccountInputEventCopyWith<_$_ChangeIsDebtAccountInputEvent>
+  _$$ChangeIsDebtAccountInputEventImplCopyWith<
+          _$ChangeIsDebtAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeCurrencyAccoutnInputEventCopyWith<$Res> {
-  factory _$$_ChangeCurrencyAccoutnInputEventCopyWith(
-          _$_ChangeCurrencyAccoutnInputEvent value,
-          $Res Function(_$_ChangeCurrencyAccoutnInputEvent) then) =
-      __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl<$Res>;
+abstract class _$$ChangeCurrencyAccoutnInputEventImplCopyWith<$Res> {
+  factory _$$ChangeCurrencyAccoutnInputEventImplCopyWith(
+          _$ChangeCurrencyAccoutnInputEventImpl value,
+          $Res Function(_$ChangeCurrencyAccoutnInputEventImpl) then) =
+      __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Currency currency});
 }
 
 /// @nodoc
-class __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl<$Res>
+class __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<$Res>
     extends _$AccountInputEventCopyWithImpl<$Res,
-        _$_ChangeCurrencyAccoutnInputEvent>
-    implements _$$_ChangeCurrencyAccoutnInputEventCopyWith<$Res> {
-  __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl(
-      _$_ChangeCurrencyAccoutnInputEvent _value,
-      $Res Function(_$_ChangeCurrencyAccoutnInputEvent) _then)
+        _$ChangeCurrencyAccoutnInputEventImpl>
+    implements _$$ChangeCurrencyAccoutnInputEventImplCopyWith<$Res> {
+  __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl(
+      _$ChangeCurrencyAccoutnInputEventImpl _value,
+      $Res Function(_$ChangeCurrencyAccoutnInputEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -592,7 +599,7 @@ class __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl<$Res>
   $Res call({
     Object? currency = null,
   }) {
-    return _then(_$_ChangeCurrencyAccoutnInputEvent(
+    return _then(_$ChangeCurrencyAccoutnInputEventImpl(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -603,9 +610,9 @@ class __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeCurrencyAccoutnInputEvent
+class _$ChangeCurrencyAccoutnInputEventImpl
     implements _ChangeCurrencyAccoutnInputEvent {
-  const _$_ChangeCurrencyAccoutnInputEvent({required this.currency});
+  const _$ChangeCurrencyAccoutnInputEventImpl({required this.currency});
 
   @override
   final Currency currency;
@@ -619,7 +626,7 @@ class _$_ChangeCurrencyAccoutnInputEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeCurrencyAccoutnInputEvent &&
+            other is _$ChangeCurrencyAccoutnInputEventImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency));
   }
@@ -630,10 +637,10 @@ class _$_ChangeCurrencyAccoutnInputEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeCurrencyAccoutnInputEventCopyWith<
-          _$_ChangeCurrencyAccoutnInputEvent>
-      get copyWith => __$$_ChangeCurrencyAccoutnInputEventCopyWithImpl<
-          _$_ChangeCurrencyAccoutnInputEvent>(this, _$identity);
+  _$$ChangeCurrencyAccoutnInputEventImplCopyWith<
+          _$ChangeCurrencyAccoutnInputEventImpl>
+      get copyWith => __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<
+          _$ChangeCurrencyAccoutnInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -720,35 +727,37 @@ class _$_ChangeCurrencyAccoutnInputEvent
 
 abstract class _ChangeCurrencyAccoutnInputEvent implements AccountInputEvent {
   const factory _ChangeCurrencyAccoutnInputEvent(
-      {required final Currency currency}) = _$_ChangeCurrencyAccoutnInputEvent;
+          {required final Currency currency}) =
+      _$ChangeCurrencyAccoutnInputEventImpl;
 
   Currency get currency;
   @JsonKey(ignore: true)
-  _$$_ChangeCurrencyAccoutnInputEventCopyWith<
-          _$_ChangeCurrencyAccoutnInputEvent>
+  _$$ChangeCurrencyAccoutnInputEventImplCopyWith<
+          _$ChangeCurrencyAccoutnInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SaveAccountInputEventCopyWith<$Res> {
-  factory _$$_SaveAccountInputEventCopyWith(_$_SaveAccountInputEvent value,
-          $Res Function(_$_SaveAccountInputEvent) then) =
-      __$$_SaveAccountInputEventCopyWithImpl<$Res>;
+abstract class _$$SaveAccountInputEventImplCopyWith<$Res> {
+  factory _$$SaveAccountInputEventImplCopyWith(
+          _$SaveAccountInputEventImpl value,
+          $Res Function(_$SaveAccountInputEventImpl) then) =
+      __$$SaveAccountInputEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SaveAccountInputEventCopyWithImpl<$Res>
-    extends _$AccountInputEventCopyWithImpl<$Res, _$_SaveAccountInputEvent>
-    implements _$$_SaveAccountInputEventCopyWith<$Res> {
-  __$$_SaveAccountInputEventCopyWithImpl(_$_SaveAccountInputEvent _value,
-      $Res Function(_$_SaveAccountInputEvent) _then)
+class __$$SaveAccountInputEventImplCopyWithImpl<$Res>
+    extends _$AccountInputEventCopyWithImpl<$Res, _$SaveAccountInputEventImpl>
+    implements _$$SaveAccountInputEventImplCopyWith<$Res> {
+  __$$SaveAccountInputEventImplCopyWithImpl(_$SaveAccountInputEventImpl _value,
+      $Res Function(_$SaveAccountInputEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SaveAccountInputEvent implements _SaveAccountInputEvent {
-  const _$_SaveAccountInputEvent();
+class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
+  const _$SaveAccountInputEventImpl();
 
   @override
   String toString() {
@@ -758,7 +767,8 @@ class _$_SaveAccountInputEvent implements _SaveAccountInputEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SaveAccountInputEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$SaveAccountInputEventImpl);
   }
 
   @override
@@ -848,7 +858,7 @@ class _$_SaveAccountInputEvent implements _SaveAccountInputEvent {
 }
 
 abstract class _SaveAccountInputEvent implements AccountInputEvent {
-  const factory _SaveAccountInputEvent() = _$_SaveAccountInputEvent;
+  const factory _SaveAccountInputEvent() = _$SaveAccountInputEventImpl;
 }
 
 /// @nodoc
@@ -937,11 +947,11 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
 }
 
 /// @nodoc
-abstract class _$$_AccountInputStateCopyWith<$Res>
+abstract class _$$AccountInputStateImplCopyWith<$Res>
     implements $AccountInputStateCopyWith<$Res> {
-  factory _$$_AccountInputStateCopyWith(_$_AccountInputState value,
-          $Res Function(_$_AccountInputState) then) =
-      __$$_AccountInputStateCopyWithImpl<$Res>;
+  factory _$$AccountInputStateImplCopyWith(_$AccountInputStateImpl value,
+          $Res Function(_$AccountInputStateImpl) then) =
+      __$$AccountInputStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -956,11 +966,11 @@ abstract class _$$_AccountInputStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AccountInputStateCopyWithImpl<$Res>
-    extends _$AccountInputStateCopyWithImpl<$Res, _$_AccountInputState>
-    implements _$$_AccountInputStateCopyWith<$Res> {
-  __$$_AccountInputStateCopyWithImpl(
-      _$_AccountInputState _value, $Res Function(_$_AccountInputState) _then)
+class __$$AccountInputStateImplCopyWithImpl<$Res>
+    extends _$AccountInputStateCopyWithImpl<$Res, _$AccountInputStateImpl>
+    implements _$$AccountInputStateImplCopyWith<$Res> {
+  __$$AccountInputStateImplCopyWithImpl(_$AccountInputStateImpl _value,
+      $Res Function(_$AccountInputStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -972,7 +982,7 @@ class __$$_AccountInputStateCopyWithImpl<$Res>
     Object? account = freezed,
     Object? isSaved = null,
   }) {
-    return _then(_$_AccountInputState(
+    return _then(_$AccountInputStateImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -999,8 +1009,8 @@ class __$$_AccountInputStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AccountInputState implements _AccountInputState {
-  const _$_AccountInputState(
+class _$AccountInputStateImpl implements _AccountInputState {
+  const _$AccountInputStateImpl(
       {required this.title,
       required this.isDebt,
       required this.currency,
@@ -1027,7 +1037,7 @@ class _$_AccountInputState implements _AccountInputState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountInputState &&
+            other is _$AccountInputStateImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
             (identical(other.currency, currency) ||
@@ -1043,8 +1053,8 @@ class _$_AccountInputState implements _AccountInputState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountInputStateCopyWith<_$_AccountInputState> get copyWith =>
-      __$$_AccountInputStateCopyWithImpl<_$_AccountInputState>(
+  _$$AccountInputStateImplCopyWith<_$AccountInputStateImpl> get copyWith =>
+      __$$AccountInputStateImplCopyWithImpl<_$AccountInputStateImpl>(
           this, _$identity);
 }
 
@@ -1054,7 +1064,7 @@ abstract class _AccountInputState implements AccountInputState {
       required final bool isDebt,
       required final Currency currency,
       final Account? account,
-      required final bool isSaved}) = _$_AccountInputState;
+      required final bool isSaved}) = _$AccountInputStateImpl;
 
   @override
   String get title;
@@ -1068,6 +1078,6 @@ abstract class _AccountInputState implements AccountInputState {
   bool get isSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountInputStateCopyWith<_$_AccountInputState> get copyWith =>
+  _$$AccountInputStateImplCopyWith<_$AccountInputStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

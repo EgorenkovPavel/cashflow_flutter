@@ -7,7 +7,7 @@ import 'package:money_tracker/src/ui/pages/operation/filter_page/operation_filte
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class OperationFilterPage extends StatelessWidget {
-  const OperationFilterPage({Key? key, this.filter}) : super(key: key);
+  const OperationFilterPage({super.key, this.filter});
 
   final OperationListFilter? filter;
 
@@ -62,6 +62,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
+      if (!context.mounted) return;
       context
           .read<OperationFilterBloc>()
           .add(OperationFilterEvent.addAccount(account: result));
@@ -85,6 +86,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
+      if (!context.mounted) return;
       context
           .read<OperationFilterBloc>()
           .add(OperationFilterEvent.addCategory(category: result));
@@ -106,6 +108,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
           .toList(),
     );
     if (result != null) {
+      if (!context.mounted) return;
       context
           .read<OperationFilterBloc>()
           .add(OperationFilterEvent.addCategory(category: result));
@@ -258,11 +261,11 @@ class PeriodButton extends StatelessWidget {
   final void Function(DateTimeRange) onPressed;
 
   const PeriodButton({
-    Key? key,
+    super.key,
     this.date,
     required this.onDelete,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   Future<void> _onChoosePeriod(BuildContext context) async {
     var date = await showDateRangePicker(

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/budget_type.dart';
+import '../enum/currency.dart';
 import '../enum/operation_type.dart';
 
 part 'category.freezed.dart';
@@ -14,5 +15,6 @@ class Category with _$Category {
     required OperationType operationType,
     required BudgetType budgetType,
     required int budget,
+    required Currency currency,
   }) = _Category;
 }

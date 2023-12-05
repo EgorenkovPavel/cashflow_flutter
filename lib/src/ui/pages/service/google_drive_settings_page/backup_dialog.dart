@@ -8,7 +8,7 @@ import 'package:money_tracker/src/utils/extensions.dart';
 class BackupDialog extends StatefulWidget {
   final void Function(String folderId, String title) onBackup;
 
-  const BackupDialog({Key? key, required this.onBackup}) : super(key: key);
+  const BackupDialog({super.key, required this.onBackup});
 
   @override
   _BackupDialogState createState() => _BackupDialogState();
@@ -39,6 +39,7 @@ class _BackupDialogState extends State<BackupDialog> {
     widget.onBackup(_folder.id, _controller.text);
     await sl<SettingsSource>().setGoogleDriveFileName(_controller.text);
 
+    if (!context.mounted) return;
     Navigator.of(context).pop();
   }
 
