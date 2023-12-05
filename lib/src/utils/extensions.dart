@@ -40,36 +40,20 @@ extension AppLocalizationExtended on AppLocalizations {
     ).format(number);
   }
 
-  String operationTypeTitle(OperationType type) {
-    switch (type) {
-      case OperationType.INPUT:
-        return typeInput;
-      case OperationType.OUTPUT:
-        return typeOutput;
-      case OperationType.TRANSFER:
-        return typeTransfer;
-      default:
-        return '';
-    }
-  }
+  String operationTypeTitle(OperationType type) => switch (type) {
+        OperationType.INPUT => typeInput,
+        OperationType.OUTPUT => typeOutput,
+        OperationType.TRANSFER => typeTransfer,
+      };
 
-  String budgetTypeTitle(BudgetType type) {
-    switch (type) {
-      case BudgetType.MONTH:
-        return budgetTypeMonth;
-      case BudgetType.YEAR:
-        return budgetTypeYear;
-    }
-  }
+  String budgetTypeTitle(BudgetType type) => switch (type) {
+        BudgetType.MONTH => budgetTypeMonth,
+        BudgetType.YEAR => budgetTypeYear,
+      };
 
-  String currencyTitle(Currency type) {
-    switch (type) {
-      case Currency.RUB:
-        return 'RUB';
-      case Currency.USD:
-        return 'USD';
-      case Currency.EUR:
-        return 'EUR';
-    }
-  }
+  String currencyTitle(Currency type) => switch (type) {
+        Currency.RUB => 'RUB',
+        Currency.USD => 'USD',
+        Currency.EUR => 'EUR',
+      };
 }
