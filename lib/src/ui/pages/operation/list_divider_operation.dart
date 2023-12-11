@@ -99,7 +99,7 @@ class _EmptyDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider();
+    return SizedBox();//const Divider();
   }
 }
 
