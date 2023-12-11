@@ -21,6 +21,7 @@ class AccountMapper extends CloudConverter<CloudAccount> {
         _KEY_IS_DEBT: value.isDebt,
         KEY_UPDATED: DateTime.now(),
         _KEY_DELETION_MARK: value.deleted,
+        _KEY_CURRENCY: value.currency,
       };
 
   @override
