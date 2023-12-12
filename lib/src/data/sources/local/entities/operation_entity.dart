@@ -39,4 +39,6 @@ class OperationDbEntity with _$OperationDbEntity{
 
   int get sum => operation.sum;
 
+  int get recSum => operation.recSum;
+
  }
