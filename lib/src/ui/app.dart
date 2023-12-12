@@ -117,38 +117,38 @@ final _router = GoRouter(
 );
 
 extension PageNavigator on BuildContext {
-  void openAccountPage(int accountId) => go(namedLocation(
+  void openAccountPage(int accountId) => push(namedLocation(
         'account',
         pathParameters: <String, String>{'fid': accountId.toString()},
       ));
 
-  void openCategoryPage(int categoryId) => go(namedLocation(
+  void openCategoryPage(int categoryId) => push(namedLocation(
         'category',
     pathParameters: <String, String>{'fid': categoryId.toString()},
       ));
 
-  void openOperationListPage() => go(namedLocation('operation'));
+  void openOperationListPage() => push(namedLocation('operation'));
 
-  void openOperationEditPage(int operationId) => go(namedLocation(
+  void openOperationEditPage(int operationId) => push(namedLocation(
         'operationId',
     pathParameters: <String, String>{'fid': operationId.toString()},
       ));
 
-  void openOperationInputPage() => go(namedLocation('operationNew'));
+  void openOperationInputPage() => push(namedLocation('operationNew'));
 
-  void openSettingsPage() => go(namedLocation('settings'));
+  void openSettingsPage() => push(namedLocation('settings'));
 
-  void openDataControlPage() => go(namedLocation('dataControl'));
+  void openDataControlPage() => push(namedLocation('dataControl'));
 
   void openGoogleDriveSettingsPage() =>
-      go(namedLocation('googleDriveSettings'));
+      push(namedLocation('googleDriveSettings'));
 
   void openCloudDatabaseSettingsPage() =>
-      go(namedLocation('cloudDatabaseSettings'));
+      push(namedLocation('cloudDatabaseSettings'));
 
-  void openReportsPage() => go(namedLocation('reports'));
+  void openReportsPage() => push(namedLocation('reports'));
 
-  void openBudgetPage(OperationType operationType) => go(namedLocation(
+  void openBudgetPage(OperationType operationType) => push(namedLocation(
         'budget',
     pathParameters: <String, String>{'fid': operationType.toString()},
       ));

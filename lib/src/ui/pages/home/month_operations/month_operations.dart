@@ -29,7 +29,7 @@ class MonthOperations extends StatelessWidget {
                 children: [
                   TextSpan(
                     text:
-                        '${operationType == OperationType.INPUT ? context.loc.earning : context.loc.spending} in ',
+                        '${operationType == OperationType.INPUT ? context.loc.earningIn : context.loc.spendingIn} ',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   TextSpan(
@@ -44,9 +44,22 @@ class MonthOperations extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: _MonthOperation(operationType: operationType),
+          Column(
+            children: context
+                .select<CategoryCashflowBloc,
+                        Map<Currency, ({int cashflow, int budget})>>(
+                    (bloc) => bloc.state.progress[operationType] ?? {})
+                .entries
+                .where((entry) => entry.value.cashflow > 0)
+                .map((entry) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: _MonthOperationDiagram(
+                        currency: entry.key,
+                        cashflow: entry.value.cashflow,
+                        budget: entry.value.budget,
+                      ),
+                    ))
+                .toList(),
           ),
           ButtonBar(
             children: [
@@ -62,10 +75,17 @@ class MonthOperations extends StatelessWidget {
   }
 }
 
-class _MonthOperation extends StatelessWidget {
-  final OperationType operationType;
+class _MonthOperationDiagram extends StatelessWidget {
+  final Currency currency;
+  final int cashflow;
+  final int budget;
 
-  const _MonthOperation({super.key, required this.operationType});
+  const _MonthOperationDiagram({
+    super.key,
+    required this.currency,
+    required this.cashflow,
+    required this.budget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -87,22 +107,8 @@ class _MonthOperation extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   value: context.select<CategoryCashflowBloc, double>(
                     (bloc) => _progress(
-                      bloc.state.categories
-                          .where((category) =>
-                              category.category.operationType == operationType)
-                          .map((category) => category.monthCashflow)
-                          .fold(
-                            0,
-                            (previousValue, element) => previousValue + element,
-                          ),
-                      bloc.state.categories
-                          .where((category) =>
-                              category.category.operationType == operationType)
-                          .map((category) => category.category.budget)
-                          .fold(
-                            0,
-                            (previousValue, element) => previousValue + element,
-                          ),
+                      cashflow,
+                      budget,
                     ),
                   ),
                 ),
@@ -121,52 +127,12 @@ class _MonthOperation extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(context.loc.numberFormat(
-              // context.select<CategoryCashflowBloc, int>(
-              //   (bloc) => bloc.state.categories
-              //       .where((category) =>
-              //           category.category.operationType == operationType)
-              //       .map((category) => category.monthCashflow)
-              //       .fold(
-              //         0,
-              //         (previousValue, element) => previousValue + element,
-              //       ),
-              // ),
-              0,
-              Currency.RUB,
-            )),
-            Text(context.loc.numberFormat(
-              // _calcBudget(
-              //   context.select<CategoryCashflowBloc, List<CategoryCashflow>>(
-              //       (bloc) => bloc.state.categories
-              //           .where((category) =>
-              //               category.category.operationType == operationType)
-              //           .toList()),
-              // ),
-              0,
-              Currency.RUB,
-            )),
+            Text(context.loc.numberFormat(cashflow, currency)),
+            Text(context.loc.numberFormat(budget, currency)),
           ],
         ),
       ],
     );
-  }
-
-  int _calcBudget(List<CategoryCashflow> list) {
-    return list
-            .where((element) => element.category.budgetType == BudgetType.MONTH)
-            .fold<int>(
-              0,
-              (previousValue, element) =>
-                  previousValue + element.category.budget,
-            ) +
-        list
-            .where((element) => element.category.budgetType == BudgetType.YEAR)
-            .fold<int>(
-              0,
-              (previousValue, element) =>
-                  previousValue + (element.category.budget / 12).floor(),
-            );
   }
 
   double _progress(int cashflow, int budget) {

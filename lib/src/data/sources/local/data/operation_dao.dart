@@ -620,6 +620,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             category: Value(operation.category?.id),
             recAccount: Value(operation.recAccount?.id),
             sum: Value(operation.sum),
+            recSum: Value(operation.recSum),
             deleted: Value(operation.operation.deleted),
           );
           await _deleteAnalyticByOperationId(operationId);
@@ -646,6 +647,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         category: Value(entity.category),
         recAccount: Value(entity.recAccount),
         sum: Value(entity.sum),
+        recSum: Value(entity.recSum),
         deleted: Value(entity.deleted),
       ),
     );
@@ -732,7 +734,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               date: operation.date,
               operation: operation.id,
               account: operation.recAccount!,
-              sum: operation.sum,
+              sum: operation.recSum != 0 ? operation.recSum : operation.sum,
             ));
             break;
           }
@@ -878,7 +880,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             operation.account.value,
             operation.recAccount.value!,
             operation.sum.value,
-            operation.recSum.value != 0 ? operation.recSum.value : operation.sum.value,
+            (operation.recSum.value ?? 0) != 0 ? (operation.recSum.value ?? 0) : operation.sum.value,
           );
           break;
         }

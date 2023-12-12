@@ -239,6 +239,8 @@ abstract class _ChangeCategoryCashflowEvent implements CategoryCashflowEvent {
 /// @nodoc
 mixin _$CategoryCashflowState {
   List<CategoryCashflow> get categories => throw _privateConstructorUsedError;
+  Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
+      get progress => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryCashflowStateCopyWith<CategoryCashflowState> get copyWith =>
@@ -251,7 +253,10 @@ abstract class $CategoryCashflowStateCopyWith<$Res> {
           $Res Function(CategoryCashflowState) then) =
       _$CategoryCashflowStateCopyWithImpl<$Res, CategoryCashflowState>;
   @useResult
-  $Res call({List<CategoryCashflow> categories});
+  $Res call(
+      {List<CategoryCashflow> categories,
+      Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
+          progress});
 }
 
 /// @nodoc
@@ -269,12 +274,18 @@ class _$CategoryCashflowStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? categories = null,
+    Object? progress = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryCashflow>,
+      progress: null == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Map<OperationType,
+                  Map<Currency, ({int budget, int cashflow})>>,
     ) as $Val);
   }
 }
@@ -288,7 +299,10 @@ abstract class _$$CategoryCashflowStateImplCopyWith<$Res>
       __$$CategoryCashflowStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CategoryCashflow> categories});
+  $Res call(
+      {List<CategoryCashflow> categories,
+      Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
+          progress});
 }
 
 /// @nodoc
@@ -304,12 +318,18 @@ class __$$CategoryCashflowStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
+    Object? progress = null,
   }) {
     return _then(_$CategoryCashflowStateImpl(
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryCashflow>,
+      progress: null == progress
+          ? _value._progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Map<OperationType,
+                  Map<Currency, ({int budget, int cashflow})>>,
     ));
   }
 }
@@ -318,8 +338,12 @@ class __$$CategoryCashflowStateImplCopyWithImpl<$Res>
 
 class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
   const _$CategoryCashflowStateImpl(
-      {required final List<CategoryCashflow> categories})
-      : _categories = categories;
+      {required final List<CategoryCashflow> categories,
+      required final Map<OperationType,
+              Map<Currency, ({int budget, int cashflow})>>
+          progress})
+      : _categories = categories,
+        _progress = progress;
 
   final List<CategoryCashflow> _categories;
   @override
@@ -329,9 +353,18 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
     return EqualUnmodifiableListView(_categories);
   }
 
+  final Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
+      _progress;
+  @override
+  Map<OperationType, Map<Currency, ({int budget, int cashflow})>> get progress {
+    if (_progress is EqualUnmodifiableMapView) return _progress;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_progress);
+  }
+
   @override
   String toString() {
-    return 'CategoryCashflowState(categories: $categories)';
+    return 'CategoryCashflowState(categories: $categories, progress: $progress)';
   }
 
   @override
@@ -340,12 +373,15 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
         (other.runtimeType == runtimeType &&
             other is _$CategoryCashflowStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._progress, _progress));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_progress));
 
   @JsonKey(ignore: true)
   @override
@@ -357,11 +393,15 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
 
 abstract class _CategoryCashflowState implements CategoryCashflowState {
   const factory _CategoryCashflowState(
-          {required final List<CategoryCashflow> categories}) =
-      _$CategoryCashflowStateImpl;
+      {required final List<CategoryCashflow> categories,
+      required final Map<OperationType,
+              Map<Currency, ({int budget, int cashflow})>>
+          progress}) = _$CategoryCashflowStateImpl;
 
   @override
   List<CategoryCashflow> get categories;
+  @override
+  Map<OperationType, Map<Currency, ({int budget, int cashflow})>> get progress;
   @override
   @JsonKey(ignore: true)
   _$$CategoryCashflowStateImplCopyWith<_$CategoryCashflowStateImpl>
