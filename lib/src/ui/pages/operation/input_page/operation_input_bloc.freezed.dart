@@ -188,7 +188,7 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BackPressedMasterEventImpl);
@@ -376,7 +376,7 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$StartMasterEventImpl);
   }
@@ -565,7 +565,7 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddNewItemMassterEventImpl);
@@ -753,7 +753,7 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SumTapMasterEventImpl);
   }
@@ -940,7 +940,7 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecSumTapMasterEventImpl);
@@ -1150,7 +1150,7 @@ class _$ChangeOperationTypeMasterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOperationTypeMasterEventImpl &&
@@ -1374,7 +1374,7 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DigitTapMasterEventImpl &&
@@ -1577,7 +1577,7 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BackKeyTapMasterEventImpl);
@@ -1765,7 +1765,7 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$MoreTapMasterEventImpl);
   }
@@ -1982,7 +1982,7 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeAccountMasterEventImpl &&
@@ -2215,7 +2215,7 @@ class _$ChangeInCategoryMasterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeInCategoryMasterEventImpl &&
@@ -2449,7 +2449,7 @@ class _$ChangeOutCategoryMasterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOutCategoryMasterEventImpl &&
@@ -2685,7 +2685,7 @@ class _$ChangeRecAccountMasterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeRecAccountMasterEventImpl &&
@@ -2890,7 +2890,7 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CancelOperationMasterEventImpl);
@@ -3079,7 +3079,7 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$NextTapMasterEventImpl);
   }
@@ -3584,7 +3584,7 @@ class _$MasterStateImpl implements _MasterState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MasterStateImpl &&

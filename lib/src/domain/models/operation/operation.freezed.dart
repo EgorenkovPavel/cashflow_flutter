@@ -323,7 +323,7 @@ class _$InputOperationImpl extends _InputOperation {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InputOperationImpl &&
@@ -623,7 +623,7 @@ class _$OutputOperationImpl extends _OutputOperation {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OutputOperationImpl &&
@@ -932,7 +932,7 @@ class _$TransferOperationImpl extends _TransferOperation {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferOperationImpl &&

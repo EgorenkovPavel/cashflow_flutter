@@ -179,7 +179,7 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchOperationEditEventImpl &&
@@ -376,7 +376,7 @@ class _$ChangeDateOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeDateOperationEditEventImpl &&
@@ -574,7 +574,7 @@ class _$ChangeTimeOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeTimeOperationEditEventImpl &&
@@ -773,7 +773,7 @@ class _$ChangeOperationTypeOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOperationTypeOperationEditEventImpl &&
@@ -984,7 +984,7 @@ class _$ChangeAccountOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeAccountOperationEditEventImpl &&
@@ -1192,7 +1192,7 @@ class _$ChangeCategoryOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCategoryOperationEditEventImpl &&
@@ -1402,7 +1402,7 @@ class _$ChangeRecAccountOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeRecAccountOperationEditEventImpl &&
@@ -1603,7 +1603,7 @@ class _$ChangeSumOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeSumOperationEditEventImpl &&
@@ -1799,7 +1799,7 @@ class _$ChangeRecSumOperationEditEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeRecSumOperationEditEventImpl &&
@@ -1977,7 +1977,7 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaveOperationEditEventImpl);
@@ -2409,7 +2409,7 @@ class _$OperationEditStateImpl extends _OperationEditState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OperationEditStateImpl &&

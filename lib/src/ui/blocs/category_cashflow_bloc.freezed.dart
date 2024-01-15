@@ -147,7 +147,7 @@ class _$ChangeCategoryCashflowEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCategoryCashflowEventImpl &&
@@ -368,7 +368,7 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryCashflowStateImpl &&

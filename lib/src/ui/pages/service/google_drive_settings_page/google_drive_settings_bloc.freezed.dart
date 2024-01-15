@@ -127,7 +127,7 @@ class _$BackupDriveEventImpl implements _BackupDriveEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BackupDriveEventImpl &&
@@ -267,7 +267,7 @@ class _$RestoreDriveEventImpl implements _RestoreDriveEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RestoreDriveEventImpl &&
@@ -462,7 +462,7 @@ class _$InitialDriveStateImpl extends _InitialDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$InitialDriveStateImpl);
   }
@@ -583,7 +583,7 @@ class _$InProgressDriveStateImpl extends _InProgressDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InProgressDriveStateImpl);
@@ -705,7 +705,7 @@ class _$FailureDriveStateImpl extends _FailureDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$FailureDriveStateImpl);
   }
@@ -828,7 +828,7 @@ class _$SuccessBackupDriveStateImpl extends _SuccessBackupDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessBackupDriveStateImpl);
@@ -952,7 +952,7 @@ class _$SuccessRestoreDriveStateImpl extends SuccessRestoreDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessRestoreDriveStateImpl);

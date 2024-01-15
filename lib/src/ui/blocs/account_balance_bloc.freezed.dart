@@ -147,7 +147,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeBalanceAccountBalanceEventImpl &&
@@ -242,6 +242,7 @@ abstract class _ChangeBalanceAccountBalanceEvent
 /// @nodoc
 mixin _$AccountBalanceState {
   List<AccountBalance> get accounts => throw _privateConstructorUsedError;
+  Map<Currency, int> get totals => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AccountBalanceStateCopyWith<AccountBalanceState> get copyWith =>
@@ -254,7 +255,7 @@ abstract class $AccountBalanceStateCopyWith<$Res> {
           AccountBalanceState value, $Res Function(AccountBalanceState) then) =
       _$AccountBalanceStateCopyWithImpl<$Res, AccountBalanceState>;
   @useResult
-  $Res call({List<AccountBalance> accounts});
+  $Res call({List<AccountBalance> accounts, Map<Currency, int> totals});
 }
 
 /// @nodoc
@@ -271,12 +272,17 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
   @override
   $Res call({
     Object? accounts = null,
+    Object? totals = null,
   }) {
     return _then(_value.copyWith(
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<AccountBalance>,
+      totals: null == totals
+          ? _value.totals
+          : totals // ignore: cast_nullable_to_non_nullable
+              as Map<Currency, int>,
     ) as $Val);
   }
 }
@@ -289,7 +295,7 @@ abstract class _$$AccountBalanceStateImplCopyWith<$Res>
       __$$AccountBalanceStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AccountBalance> accounts});
+  $Res call({List<AccountBalance> accounts, Map<Currency, int> totals});
 }
 
 /// @nodoc
@@ -304,12 +310,17 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? accounts = null,
+    Object? totals = null,
   }) {
     return _then(_$AccountBalanceStateImpl(
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<AccountBalance>,
+      totals: null == totals
+          ? _value._totals
+          : totals // ignore: cast_nullable_to_non_nullable
+              as Map<Currency, int>,
     ));
   }
 }
@@ -318,8 +329,10 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
 
 class _$AccountBalanceStateImpl implements _AccountBalanceState {
   const _$AccountBalanceStateImpl(
-      {required final List<AccountBalance> accounts})
-      : _accounts = accounts;
+      {required final List<AccountBalance> accounts,
+      required final Map<Currency, int> totals})
+      : _accounts = accounts,
+        _totals = totals;
 
   final List<AccountBalance> _accounts;
   @override
@@ -329,22 +342,33 @@ class _$AccountBalanceStateImpl implements _AccountBalanceState {
     return EqualUnmodifiableListView(_accounts);
   }
 
+  final Map<Currency, int> _totals;
   @override
-  String toString() {
-    return 'AccountBalanceState(accounts: $accounts)';
+  Map<Currency, int> get totals {
+    if (_totals is EqualUnmodifiableMapView) return _totals;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_totals);
   }
 
   @override
-  bool operator ==(dynamic other) {
+  String toString() {
+    return 'AccountBalanceState(accounts: $accounts, totals: $totals)';
+  }
+
+  @override
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceStateImpl &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
+            const DeepCollectionEquality().equals(other._accounts, _accounts) &&
+            const DeepCollectionEquality().equals(other._totals, _totals));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_accounts));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_accounts),
+      const DeepCollectionEquality().hash(_totals));
 
   @JsonKey(ignore: true)
   @override
@@ -356,11 +380,13 @@ class _$AccountBalanceStateImpl implements _AccountBalanceState {
 
 abstract class _AccountBalanceState implements AccountBalanceState {
   const factory _AccountBalanceState(
-          {required final List<AccountBalance> accounts}) =
-      _$AccountBalanceStateImpl;
+      {required final List<AccountBalance> accounts,
+      required final Map<Currency, int> totals}) = _$AccountBalanceStateImpl;
 
   @override
   List<AccountBalance> get accounts;
+  @override
+  Map<Currency, int> get totals;
   @override
   @JsonKey(ignore: true)
   _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>

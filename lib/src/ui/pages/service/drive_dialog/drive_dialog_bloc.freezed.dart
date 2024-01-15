@@ -119,7 +119,7 @@ class _$InitDialogDriveEventImpl implements _InitDialogDriveEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitDialogDriveEventImpl);
@@ -244,7 +244,7 @@ class _$LoadFoldersDialogDriveEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadFoldersDialogDriveEventImpl);
@@ -397,7 +397,7 @@ class _$OnFileTapDialogDriveEventImpl implements _OnFileTapDialogDriveEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnFileTapDialogDriveEventImpl &&
@@ -536,7 +536,7 @@ class _$BackPressedDialogDriveEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BackPressedDialogDriveEventImpl);
@@ -660,7 +660,7 @@ class _$ChooseDialogDriveEventImpl implements _ChooseDialogDriveEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChooseDialogDriveEventImpl);
@@ -913,7 +913,7 @@ class _$SuccessDialogDriveStateImpl implements _SuccessDialogDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessDialogDriveStateImpl &&
@@ -1053,7 +1053,7 @@ class _$FailureDialogDriveStateImpl implements _FailureDialogDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FailureDialogDriveStateImpl);
@@ -1171,7 +1171,7 @@ class _$InProgressDialogDriveStateImpl implements _InProgressDialogDriveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InProgressDialogDriveStateImpl);

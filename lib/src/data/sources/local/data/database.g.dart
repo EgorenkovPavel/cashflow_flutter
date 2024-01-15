@@ -148,8 +148,8 @@ class AccountDB extends DataClass implements Insertable<AccountDB> {
     map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
     {
-      final converter = $AccountsTable.$convertercurrency;
-      map['currency'] = Variable<String>(converter.toSql(currency));
+      map['currency'] =
+          Variable<String>($AccountsTable.$convertercurrency.toSql(currency));
     }
     map['is_debt'] = Variable<bool>(isDebt);
     map['synced'] = Variable<bool>(synced);
@@ -306,9 +306,8 @@ class AccountsCompanion extends UpdateCompanion<AccountDB> {
       map['title'] = Variable<String>(title.value);
     }
     if (currency.present) {
-      final converter = $AccountsTable.$convertercurrency;
-
-      map['currency'] = Variable<String>(converter.toSql(currency.value));
+      map['currency'] = Variable<String>(
+          $AccountsTable.$convertercurrency.toSql(currency.value));
     }
     if (isDebt.present) {
       map['is_debt'] = Variable<bool>(isDebt.value);
@@ -507,17 +506,17 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     map['cloud_id'] = Variable<String>(cloudId);
     map['title'] = Variable<String>(title);
     {
-      final converter = $CategoriesTable.$converteroperationType;
-      map['operation_type'] = Variable<int>(converter.toSql(operationType));
+      map['operation_type'] = Variable<int>(
+          $CategoriesTable.$converteroperationType.toSql(operationType));
     }
     {
-      final converter = $CategoriesTable.$converterbudgetType;
-      map['budget_type'] = Variable<int>(converter.toSql(budgetType));
+      map['budget_type'] = Variable<int>(
+          $CategoriesTable.$converterbudgetType.toSql(budgetType));
     }
     map['budget'] = Variable<int>(budget);
     {
-      final converter = $CategoriesTable.$convertercurrency;
-      map['currency'] = Variable<String>(converter.toSql(currency));
+      map['currency'] =
+          Variable<String>($CategoriesTable.$convertercurrency.toSql(currency));
     }
     map['synced'] = Variable<bool>(synced);
     return map;
@@ -705,23 +704,19 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       map['title'] = Variable<String>(title.value);
     }
     if (operationType.present) {
-      final converter = $CategoriesTable.$converteroperationType;
-
-      map['operation_type'] =
-          Variable<int>(converter.toSql(operationType.value));
+      map['operation_type'] = Variable<int>(
+          $CategoriesTable.$converteroperationType.toSql(operationType.value));
     }
     if (budgetType.present) {
-      final converter = $CategoriesTable.$converterbudgetType;
-
-      map['budget_type'] = Variable<int>(converter.toSql(budgetType.value));
+      map['budget_type'] = Variable<int>(
+          $CategoriesTable.$converterbudgetType.toSql(budgetType.value));
     }
     if (budget.present) {
       map['budget'] = Variable<int>(budget.value);
     }
     if (currency.present) {
-      final converter = $CategoriesTable.$convertercurrency;
-
-      map['currency'] = Variable<String>(converter.toSql(currency.value));
+      map['currency'] = Variable<String>(
+          $CategoriesTable.$convertercurrency.toSql(currency.value));
     }
     if (synced.present) {
       map['synced'] = Variable<bool>(synced.value);
@@ -986,8 +981,8 @@ class OperationDB extends DataClass implements Insertable<OperationDB> {
     map['cloud_id'] = Variable<String>(cloudId);
     map['date'] = Variable<DateTime>(date);
     {
-      final converter = $OperationsTable.$converteroperationType;
-      map['operation_type'] = Variable<int>(converter.toSql(operationType));
+      map['operation_type'] = Variable<int>(
+          $OperationsTable.$converteroperationType.toSql(operationType));
     }
     map['account'] = Variable<int>(account);
     if (!nullToAbsent || category != null) {
@@ -1231,10 +1226,8 @@ class OperationsCompanion extends UpdateCompanion<OperationDB> {
       map['date'] = Variable<DateTime>(date.value);
     }
     if (operationType.present) {
-      final converter = $OperationsTable.$converteroperationType;
-
-      map['operation_type'] =
-          Variable<int>(converter.toSql(operationType.value));
+      map['operation_type'] = Variable<int>(
+          $OperationsTable.$converteroperationType.toSql(operationType.value));
     }
     if (account.present) {
       map['account'] = Variable<int>(account.value);

@@ -79,7 +79,7 @@ class _NoOperationsTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(context.loc.noOperations),
+      child: Center(child: Text(context.loc.noOperations)),
     );
   }
 }

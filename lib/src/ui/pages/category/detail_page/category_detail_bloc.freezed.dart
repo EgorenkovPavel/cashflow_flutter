@@ -132,7 +132,7 @@ class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchCategoryDetailEventImpl &&
@@ -292,7 +292,7 @@ class _$ChangeCategoryCategoryDetailEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCategoryCategoryDetailEventImpl &&
@@ -453,7 +453,7 @@ class _$ChangeOperationsCategoryDetailEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOperationsCategoryDetailEventImpl &&
@@ -705,7 +705,7 @@ class _$CategoryDetailStateImpl implements _CategoryDetailState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryDetailStateImpl &&
