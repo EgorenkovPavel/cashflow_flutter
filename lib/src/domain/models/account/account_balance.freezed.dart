@@ -188,7 +188,7 @@ class _$AccountBalanceImpl extends _AccountBalance {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceImpl &&

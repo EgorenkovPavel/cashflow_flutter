@@ -144,7 +144,7 @@ class _$ChangeAuthAuthEventImpl implements _ChangeAuthAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeAuthAuthEventImpl &&
@@ -275,7 +275,7 @@ class _$SignInSilentlyAuthEventImpl implements _SignInSilentlyAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignInSilentlyAuthEventImpl);
@@ -390,7 +390,7 @@ class _$SignInAuthEventImpl implements _SignInAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SignInAuthEventImpl);
   }
@@ -504,7 +504,7 @@ class _$SignOutAuthEventImpl implements _SignOutAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SignOutAuthEventImpl);
   }
@@ -708,7 +708,7 @@ class _$AuthenticatedAuthStateImpl extends _AuthenticatedAuthState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticatedAuthStateImpl &&
@@ -829,7 +829,7 @@ class _$NotAuthenticatedAuthStateImpl extends _NotAuthenticatedAuthState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotAuthenticatedAuthStateImpl);

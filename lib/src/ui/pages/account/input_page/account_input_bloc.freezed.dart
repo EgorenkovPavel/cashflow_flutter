@@ -141,7 +141,7 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchAccountInputEventImpl &&
@@ -301,7 +301,7 @@ class _$ChangeTitleAccountInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeTitleAccountInputEventImpl &&
@@ -462,7 +462,7 @@ class _$ChangeIsDebtAccountInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeIsDebtAccountInputEventImpl &&
@@ -623,7 +623,7 @@ class _$ChangeCurrencyAccoutnInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCurrencyAccoutnInputEventImpl &&
@@ -765,7 +765,7 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaveAccountInputEventImpl);
@@ -1034,7 +1034,7 @@ class _$AccountInputStateImpl implements _AccountInputState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountInputStateImpl &&

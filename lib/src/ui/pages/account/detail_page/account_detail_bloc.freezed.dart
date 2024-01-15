@@ -132,7 +132,7 @@ class _$FetchAccountDetailEventImpl implements _FetchAccountDetailEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchAccountDetailEventImpl &&
@@ -282,7 +282,7 @@ class _$TitleChangedAccountDetailEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TitleChangedAccountDetailEventImpl &&
@@ -440,7 +440,7 @@ class _$OperationsChangedAccountDetailEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OperationsChangedAccountDetailEventImpl &&
@@ -655,7 +655,7 @@ class _$AccountDetailStateImpl implements _AccountDetailState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountDetailStateImpl &&

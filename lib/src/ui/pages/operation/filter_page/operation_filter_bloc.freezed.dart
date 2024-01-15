@@ -168,7 +168,7 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitOperationFilterEventImpl &&
@@ -325,7 +325,7 @@ class _$ResetPeriodOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResetPeriodOperationFilterEventImpl);
@@ -487,7 +487,7 @@ class _$SetPeriodOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SetPeriodOperationFilterEventImpl &&
@@ -674,7 +674,7 @@ class _$AddAccountOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddAccountOperationFilterEventImpl &&
@@ -860,7 +860,7 @@ class _$RemoveAccountOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoveAccountOperationFilterEventImpl &&
@@ -1048,7 +1048,7 @@ class _$AddCategoryOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddCategoryOperationFilterEventImpl &&
@@ -1237,7 +1237,7 @@ class _$RemoveCategoryOperationFilterEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoveCategoryOperationFilterEventImpl &&
@@ -1541,7 +1541,7 @@ class _$OperationFilterStateImpl implements _OperationFilterState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OperationFilterStateImpl &&

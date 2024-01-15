@@ -98,7 +98,7 @@ class _$DeleteAllDataControlEventImpl implements _DeleteAllDataControlEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeleteAllDataControlEventImpl);
@@ -263,7 +263,7 @@ class _$InitialDataControlStateImpl extends _InitialDataControlState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitialDataControlStateImpl);
@@ -376,7 +376,7 @@ class _$InProgressDataControlStateImpl extends _InProgressDataControlState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InProgressDataControlStateImpl);
@@ -489,7 +489,7 @@ class _$SuccessDataControlStateImpl extends _SuccessDataControlState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessDataControlStateImpl);

@@ -107,7 +107,7 @@ class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchLastOperationsEventImpl);
@@ -242,7 +242,7 @@ class _$ChangeOperationsLastOperationsEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOperationsLastOperationsEventImpl &&
@@ -436,7 +436,7 @@ class _$LastOperationsStateImpl implements _LastOperationsState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LastOperationsStateImpl &&
