@@ -100,7 +100,9 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   MasterBloc(
     this._insertOperationInputUseCase,
     this._insertOperationOutputUseCase,
-    this._insertOperationTransferUseCase, this._getLastOperationUseCase, this._deleteOperationUseCase,
+    this._insertOperationTransferUseCase,
+    this._getLastOperationUseCase,
+    this._deleteOperationUseCase,
   ) : super(const MasterState(
           action: MasterStateAction.DATA,
           operationType: OperationType.INPUT,
@@ -402,7 +404,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         {
           return _insertOperationInputUseCase(
             date: DateTime.now(),
-            account: toAccount(state.account!),
+            account: state.account!.account,
             category: state.categoryIn!,
             sum: state.sum,
           );
@@ -411,7 +413,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         {
           return _insertOperationOutputUseCase(
             date: DateTime.now(),
-            account: toAccount(state.account!),
+            account: state.account!.account,
             category: state.categoryOut!,
             sum: state.sum,
           );
@@ -420,8 +422,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         {
           return _insertOperationTransferUseCase(
             date: DateTime.now(),
-            account: toAccount(state.account!),
-            recAccount: toAccount(state.recAccount!),
+            account: state.account!.account,
+            recAccount: state.recAccount!.account,
             sum: state.sum,
             recSum: state.recSum,
           );
@@ -432,12 +434,4 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         }
     }
   }
-
-  Account toAccount(AccountBalance accountBalance) => Account(
-        id: accountBalance.id,
-        cloudId: accountBalance.cloudId,
-        title: accountBalance.title,
-        isDebt: accountBalance.isDebt,
-        currency: accountBalance.currency,
-      );
 }
