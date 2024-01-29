@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/ui/widgets/carousel.dart';
+import 'package:money_tracker/src/ui/pages/operation/input_page/widgets/carousel.dart';
 
 class CarouselList<T> extends StatelessWidget {
 

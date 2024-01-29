@@ -43,24 +43,14 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
                   title: 'Accounts',
-                  accounts: context
-                      .watch<AccountBalanceBloc>()
-                      .state
-                      .accounts
-                      .where((account) => !account.isDebt)
-                      .toList(),
+                  accounts: context.accounts(),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
                   title: 'Debts',
-                  accounts: context
-                      .watch<AccountBalanceBloc>()
-                      .state
-                      .accounts
-                      .where((account) => account.isDebt)
-                      .toList(),
+                  accounts: context.debts(),
                 ),
               ),
               const Padding(
@@ -85,6 +75,22 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+extension BlocExt on BuildContext{
+  List<AccountBalance> accounts() =>
+      watch<AccountBalanceBloc>()
+      .state
+      .balances
+      .where((account) => !account.isDebt)
+      .toList();
+
+  List<AccountBalance> debts() =>
+      watch<AccountBalanceBloc>()
+      .state
+      .balances
+      .where((account) => account.isDebt)
+      .toList();
 }
 
 

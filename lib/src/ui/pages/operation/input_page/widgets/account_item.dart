@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models.dart';
+import '../../../../../domain/models.dart';
 
 class AccountItem extends StatelessWidget {
   const AccountItem({

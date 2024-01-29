@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
+import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+
+import '../../../blocs/account_balance_bloc.dart';
 
 class OperationFilterPage extends StatelessWidget {
   const OperationFilterPage({super.key, this.filter});
@@ -47,14 +50,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
     return position;
   }
 
-  void _onAccountChipPressed() async {
+  void _onAccountChipPressed(BuildContext context) async {
     final result = await showMenu<Account>(
       context: context,
       position: buttonMenuPosition(_accountKey.currentContext!),
       items: context
-          .read<OperationFilterBloc>()
-          .state
-          .accounts
+          .allAccounts()
           .map((a) => PopupMenuItem<Account>(
                 value: a,
                 child: Text(a.title),
@@ -63,20 +64,16 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
     );
     if (result != null) {
       if (!context.mounted) return;
-      context
-          .read<OperationFilterBloc>()
-          .add(OperationFilterEvent.addAccount(account: result));
+      context.onAddAccount(result);
     }
   }
 
-  void _onCategoryInPressed() async {
+  void _onCategoryInPressed(BuildContext context) async {
     final result = await showMenu<Category>(
       context: context,
       position: buttonMenuPosition(_categoryInKey.currentContext!),
       items: context
-          .read<OperationFilterBloc>()
-          .state
-          .inCategories
+          .allInCategories()
           .map(
             (c) => PopupMenuItem<Category>(
               value: c,
@@ -87,20 +84,16 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
     );
     if (result != null) {
       if (!context.mounted) return;
-      context
-          .read<OperationFilterBloc>()
-          .add(OperationFilterEvent.addCategory(category: result));
+      context.onAddCategory(result);
     }
   }
 
-  void _onCategoryOutPressed() async {
+  void _onCategoryOutPressed(BuildContext context) async {
     final result = await showMenu<Category>(
       context: context,
       position: buttonMenuPosition(_categoryOutKey.currentContext!),
       items: context
-          .read<OperationFilterBloc>()
-          .state
-          .outCategories
+          .allOutCategories()
           .map((c) => PopupMenuItem<Category>(
                 value: c,
                 child: Text(c.title),
@@ -109,18 +102,14 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
     );
     if (result != null) {
       if (!context.mounted) return;
-      context
-          .read<OperationFilterBloc>()
-          .add(OperationFilterEvent.addCategory(category: result));
+      context.onAddCategory(result);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.loc.titleFilters),
-      ),
+      appBar: AppBar(title: Text(context.loc.titleFilters)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -130,102 +119,50 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
               const SizedBox(height: 8.0),
               Text(context.loc.period),
               PeriodButton(
-                date: context.select<OperationFilterBloc, DateTimeRange?>(
-                  (bloc) => bloc.state.filter.period,
-                ),
-                onPressed: (date) => context
-                    .read<OperationFilterBloc>()
-                    .add(OperationFilterEvent.setPeriod(period: date)),
-                onDelete: () => context
-                    .read<OperationFilterBloc>()
-                    .add(const OperationFilterEvent.resetPeriod()),
+                date: context.dateRange(),
+                onPressed: context.onSetPeriod,
+                onDelete: context.onDeletePeriod,
               ),
               const SizedBox(height: 8.0),
               Text(context.loc.accounts),
               InputChip(
                 key: _accountKey,
-                avatar: const Icon(Icons.mode_edit),
+                avatar: const Icon(Icons.add),
                 label: Text(context.loc.chooseAccount),
-                onPressed: _onAccountChipPressed,
+                onPressed: () => _onAccountChipPressed(context),
               ),
               Wrap(
                 children: context
-                    .select<OperationFilterBloc, Set<Account>>(
-                      (bloc) => bloc.state.filter.accounts,
-                    )
-                    .map(
-                      (account) => InputChip(
-                        label: Text(account.title),
-                        deleteIcon: const Icon(Icons.cancel),
-                        onDeleted: () => context
-                            .read<OperationFilterBloc>()
-                            .add(OperationFilterEvent.removeAccount(
-                              account: account,
-                            )),
-                      ),
-                    )
+                    .accounts()
+                    .map((account) => AccountChip(account: account))
                     .toList(),
               ),
               const SizedBox(height: 8.0),
               Text(context.loc.inputCategory),
               InputChip(
                 key: _categoryInKey,
-                avatar: const Icon(Icons.mode_edit),
+                avatar: const Icon(Icons.add),
                 label: Text(context.loc.chooseCategory),
-                onPressed: _onCategoryInPressed,
+                onPressed: () => _onCategoryInPressed(context),
               ),
               Wrap(
                 children: context
-                    .select<OperationFilterBloc, Set<Category>>(
-                      (bloc) => bloc.state.filter.categories
-                          .where(
-                            (cat) => cat.operationType == OperationType.INPUT,
-                          )
-                          .toSet(),
-                    )
-                    .map(
-                      (category) => InputChip(
-                        label: Text(category.title),
-                        deleteIcon: const Icon(Icons.cancel),
-                        onDeleted: () => context
-                            .read<OperationFilterBloc>()
-                            .add(OperationFilterEvent.removeCategory(
-                              category: category,
-                            )),
-                      ),
-                    )
+                    .inCategories()
+                    .map((category) => CategoryChip(category: category))
                     .toList(),
               ),
-              const SizedBox(
-                height: 8.0,
-              ),
+              const SizedBox(height: 8.0),
               Text(context.loc.outputCategory),
               InputChip(
                 key: _categoryOutKey,
-                avatar: const Icon(Icons.mode_edit),
+                avatar: const Icon(Icons.add),
                 label: Text(context.loc.chooseCategory),
-                onPressed: _onCategoryOutPressed,
+                onPressed: () => _onCategoryOutPressed(context),
               ),
               Wrap(
                 children: context
-                    .select<OperationFilterBloc, Set<Category>>(
-                      (bloc) => bloc.state.filter.categories
-                          .where(
-                            (cat) => cat.operationType == OperationType.OUTPUT,
-                          )
-                          .toSet(),
-                    )
-                    .map(
-                      (category) => InputChip(
-                        label: Text(category.title),
-                        deleteIcon: const Icon(Icons.cancel),
-                        onDeleted: () => context
-                            .read<OperationFilterBloc>()
-                            .add(OperationFilterEvent.removeCategory(
-                              category: category,
-                            )),
-                      ),
-                    )
+                    .outCategories()
+                    .map((category) => CategoryChip(category: category))
                     .toList(),
               ),
             ],
@@ -293,10 +230,92 @@ class PeriodButton extends StatelessWidget {
       );
     } else {
       return InputChip(
-        avatar: const Icon(Icons.mode_edit),
+        avatar: const Icon(Icons.add),
         label: Text(context.loc.choosePeriod),
         onPressed: () => _onChoosePeriod(context),
       );
     }
   }
+}
+
+class AccountChip extends StatelessWidget {
+  final Account account;
+
+  const AccountChip({super.key, required this.account});
+
+  @override
+  Widget build(BuildContext context) {
+    return InputChip(
+      label: Text(account.title),
+      deleteIcon: const Icon(Icons.cancel),
+      onDeleted: () => context.onDeleteAccount(account),
+    );
+  }
+}
+
+class CategoryChip extends StatelessWidget {
+  final Category category;
+
+  const CategoryChip({super.key, required this.category});
+
+  @override
+  Widget build(BuildContext context) {
+    return InputChip(
+      label: Text(category.title),
+      deleteIcon: const Icon(Icons.cancel),
+      onDeleted: () => context.onDeleteCategory(category),
+    );
+  }
+}
+
+extension BlocExt on BuildContext {
+  DateTimeRange? dateRange() => select<OperationFilterBloc, DateTimeRange?>(
+        (bloc) => bloc.state.filter.period,
+      );
+
+  List<Account> allAccounts() => read<AccountBalanceBloc>().state.accounts;
+
+  List<Category> allInCategories() =>
+      read<CategoryCashflowBloc>().state.inCategories;
+
+  List<Category> allOutCategories() =>
+      read<CategoryCashflowBloc>().state.outCategories;
+
+  Set<Account> accounts() => select<OperationFilterBloc, Set<Account>>(
+        (bloc) => bloc.state.filter.accounts,
+      );
+
+  Set<Category> inCategories() => select<OperationFilterBloc, Set<Category>>(
+        (bloc) => bloc.state.filter.categories
+            .where((cat) => cat.operationType == OperationType.INPUT)
+            .toSet(),
+      );
+
+  Set<Category> outCategories() => select<OperationFilterBloc, Set<Category>>(
+        (bloc) => bloc.state.filter.categories
+            .where((cat) => cat.operationType == OperationType.OUTPUT)
+            .toSet(),
+      );
+
+  onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
+      .add(OperationFilterEvent.setPeriod(period: date));
+
+  onDeletePeriod() =>
+      read<OperationFilterBloc>().add(const OperationFilterEvent.resetPeriod());
+
+  void onAddAccount(Account account) => read<OperationFilterBloc>()
+      .add(OperationFilterEvent.addAccount(account: account));
+
+  void onAddCategory(Category category) => read<OperationFilterBloc>()
+      .add(OperationFilterEvent.addCategory(category: category));
+
+  onDeleteAccount(Account account) =>
+      read<OperationFilterBloc>().add(OperationFilterEvent.removeAccount(
+        account: account,
+      ));
+
+  onDeleteCategory(Category category) =>
+      read<OperationFilterBloc>().add(OperationFilterEvent.removeCategory(
+        category: category,
+      ));
 }

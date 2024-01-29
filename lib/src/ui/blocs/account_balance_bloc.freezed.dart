@@ -241,7 +241,7 @@ abstract class _ChangeBalanceAccountBalanceEvent
 
 /// @nodoc
 mixin _$AccountBalanceState {
-  List<AccountBalance> get accounts => throw _privateConstructorUsedError;
+  List<AccountBalance> get balances => throw _privateConstructorUsedError;
   Map<Currency, int> get totals => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -255,7 +255,7 @@ abstract class $AccountBalanceStateCopyWith<$Res> {
           AccountBalanceState value, $Res Function(AccountBalanceState) then) =
       _$AccountBalanceStateCopyWithImpl<$Res, AccountBalanceState>;
   @useResult
-  $Res call({List<AccountBalance> accounts, Map<Currency, int> totals});
+  $Res call({List<AccountBalance> balances, Map<Currency, int> totals});
 }
 
 /// @nodoc
@@ -271,13 +271,13 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accounts = null,
+    Object? balances = null,
     Object? totals = null,
   }) {
     return _then(_value.copyWith(
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
+      balances: null == balances
+          ? _value.balances
+          : balances // ignore: cast_nullable_to_non_nullable
               as List<AccountBalance>,
       totals: null == totals
           ? _value.totals
@@ -295,7 +295,7 @@ abstract class _$$AccountBalanceStateImplCopyWith<$Res>
       __$$AccountBalanceStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AccountBalance> accounts, Map<Currency, int> totals});
+  $Res call({List<AccountBalance> balances, Map<Currency, int> totals});
 }
 
 /// @nodoc
@@ -309,13 +309,13 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accounts = null,
+    Object? balances = null,
     Object? totals = null,
   }) {
     return _then(_$AccountBalanceStateImpl(
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
+      balances: null == balances
+          ? _value._balances
+          : balances // ignore: cast_nullable_to_non_nullable
               as List<AccountBalance>,
       totals: null == totals
           ? _value._totals
@@ -327,19 +327,20 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AccountBalanceStateImpl implements _AccountBalanceState {
+class _$AccountBalanceStateImpl extends _AccountBalanceState {
   const _$AccountBalanceStateImpl(
-      {required final List<AccountBalance> accounts,
+      {required final List<AccountBalance> balances,
       required final Map<Currency, int> totals})
-      : _accounts = accounts,
-        _totals = totals;
+      : _balances = balances,
+        _totals = totals,
+        super._();
 
-  final List<AccountBalance> _accounts;
+  final List<AccountBalance> _balances;
   @override
-  List<AccountBalance> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
+  List<AccountBalance> get balances {
+    if (_balances is EqualUnmodifiableListView) return _balances;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
+    return EqualUnmodifiableListView(_balances);
   }
 
   final Map<Currency, int> _totals;
@@ -352,7 +353,7 @@ class _$AccountBalanceStateImpl implements _AccountBalanceState {
 
   @override
   String toString() {
-    return 'AccountBalanceState(accounts: $accounts, totals: $totals)';
+    return 'AccountBalanceState(balances: $balances, totals: $totals)';
   }
 
   @override
@@ -360,14 +361,14 @@ class _$AccountBalanceStateImpl implements _AccountBalanceState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceStateImpl &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts) &&
+            const DeepCollectionEquality().equals(other._balances, _balances) &&
             const DeepCollectionEquality().equals(other._totals, _totals));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_accounts),
+      const DeepCollectionEquality().hash(_balances),
       const DeepCollectionEquality().hash(_totals));
 
   @JsonKey(ignore: true)
@@ -378,13 +379,14 @@ class _$AccountBalanceStateImpl implements _AccountBalanceState {
           this, _$identity);
 }
 
-abstract class _AccountBalanceState implements AccountBalanceState {
+abstract class _AccountBalanceState extends AccountBalanceState {
   const factory _AccountBalanceState(
-      {required final List<AccountBalance> accounts,
+      {required final List<AccountBalance> balances,
       required final Map<Currency, int> totals}) = _$AccountBalanceStateImpl;
+  const _AccountBalanceState._() : super._();
 
   @override
-  List<AccountBalance> get accounts;
+  List<AccountBalance> get balances;
   @override
   Map<Currency, int> get totals;
   @override
