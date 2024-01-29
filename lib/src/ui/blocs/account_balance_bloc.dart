@@ -18,10 +18,14 @@ class AccountBalanceEvent with _$AccountBalanceEvent {
 
 @freezed
 class AccountBalanceState with _$AccountBalanceState {
+  const AccountBalanceState._();
+
   const factory AccountBalanceState({
-    required List<AccountBalance> accounts,
+    required List<AccountBalance> balances,
     required Map<Currency, int> totals,
   }) = _AccountBalanceState;
+
+  List<Account> get accounts => balances.map((balance) => balance.account).toList();
 }
 
 class AccountBalanceBloc
@@ -31,7 +35,7 @@ class AccountBalanceBloc
 
   AccountBalanceBloc(this._watchBalancesUseCase)
       : super(const AccountBalanceState(
-          accounts: [],
+          balances: [],
           totals: {},
         )) {
     on<AccountBalanceEvent>((event, emitter) => event.map(
@@ -48,7 +52,7 @@ class AccountBalanceBloc
     Emitter<AccountBalanceState> emit,
   ) {
     emit(AccountBalanceState(
-      accounts: event.accounts,
+      balances: event.accounts,
       totals: _calcTotals(event.accounts),
     ));
   }

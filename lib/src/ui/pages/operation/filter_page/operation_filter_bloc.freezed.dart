@@ -52,7 +52,7 @@ mixin _$OperationFilterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -67,7 +67,7 @@ mixin _$OperationFilterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -79,7 +79,7 @@ mixin _$OperationFilterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -111,11 +111,11 @@ class _$OperationFilterEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$InitOperationFilterEventImplCopyWith<$Res> {
-  factory _$$InitOperationFilterEventImplCopyWith(
-          _$InitOperationFilterEventImpl value,
-          $Res Function(_$InitOperationFilterEventImpl) then) =
-      __$$InitOperationFilterEventImplCopyWithImpl<$Res>;
+abstract class _$$InitPeriodOperationFilterEventImplCopyWith<$Res> {
+  factory _$$InitPeriodOperationFilterEventImplCopyWith(
+          _$InitPeriodOperationFilterEventImpl value,
+          $Res Function(_$InitPeriodOperationFilterEventImpl) then) =
+      __$$InitPeriodOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationListFilter filter});
 
@@ -123,13 +123,13 @@ abstract class _$$InitOperationFilterEventImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$InitOperationFilterEventImplCopyWithImpl<$Res>
+class __$$InitPeriodOperationFilterEventImplCopyWithImpl<$Res>
     extends _$OperationFilterEventCopyWithImpl<$Res,
-        _$InitOperationFilterEventImpl>
-    implements _$$InitOperationFilterEventImplCopyWith<$Res> {
-  __$$InitOperationFilterEventImplCopyWithImpl(
-      _$InitOperationFilterEventImpl _value,
-      $Res Function(_$InitOperationFilterEventImpl) _then)
+        _$InitPeriodOperationFilterEventImpl>
+    implements _$$InitPeriodOperationFilterEventImplCopyWith<$Res> {
+  __$$InitPeriodOperationFilterEventImplCopyWithImpl(
+      _$InitPeriodOperationFilterEventImpl _value,
+      $Res Function(_$InitPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +137,7 @@ class __$$InitOperationFilterEventImplCopyWithImpl<$Res>
   $Res call({
     Object? filter = null,
   }) {
-    return _then(_$InitOperationFilterEventImpl(
+    return _then(_$InitPeriodOperationFilterEventImpl(
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
@@ -156,8 +156,9 @@ class __$$InitOperationFilterEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
-  const _$InitOperationFilterEventImpl({required this.filter});
+class _$InitPeriodOperationFilterEventImpl
+    implements _InitPeriodOperationFilterEvent {
+  const _$InitPeriodOperationFilterEventImpl({required this.filter});
 
   @override
   final OperationListFilter filter;
@@ -171,7 +172,7 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitOperationFilterEventImpl &&
+            other is _$InitPeriodOperationFilterEventImpl &&
             (identical(other.filter, filter) || other.filter == filter));
   }
 
@@ -181,9 +182,10 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitOperationFilterEventImplCopyWith<_$InitOperationFilterEventImpl>
-      get copyWith => __$$InitOperationFilterEventImplCopyWithImpl<
-          _$InitOperationFilterEventImpl>(this, _$identity);
+  _$$InitPeriodOperationFilterEventImplCopyWith<
+          _$InitPeriodOperationFilterEventImpl>
+      get copyWith => __$$InitPeriodOperationFilterEventImplCopyWithImpl<
+          _$InitPeriodOperationFilterEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -234,7 +236,7 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -252,7 +254,7 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -267,7 +269,7 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -283,14 +285,15 @@ class _$InitOperationFilterEventImpl implements _InitOperationFilterEvent {
   }
 }
 
-abstract class _InitOperationFilterEvent implements OperationFilterEvent {
-  const factory _InitOperationFilterEvent(
+abstract class _InitPeriodOperationFilterEvent implements OperationFilterEvent {
+  const factory _InitPeriodOperationFilterEvent(
           {required final OperationListFilter filter}) =
-      _$InitOperationFilterEventImpl;
+      _$InitPeriodOperationFilterEventImpl;
 
   OperationListFilter get filter;
   @JsonKey(ignore: true)
-  _$$InitOperationFilterEventImplCopyWith<_$InitOperationFilterEventImpl>
+  _$$InitPeriodOperationFilterEventImplCopyWith<
+          _$InitPeriodOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -383,7 +386,7 @@ class _$ResetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -401,7 +404,7 @@ class _$ResetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -416,7 +419,7 @@ class _$ResetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -554,7 +557,7 @@ class _$SetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -572,7 +575,7 @@ class _$SetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -587,7 +590,7 @@ class _$SetPeriodOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -741,7 +744,7 @@ class _$AddAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -759,7 +762,7 @@ class _$AddAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -774,7 +777,7 @@ class _$AddAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -927,7 +930,7 @@ class _$RemoveAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -945,7 +948,7 @@ class _$RemoveAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -960,7 +963,7 @@ class _$RemoveAccountOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -1116,7 +1119,7 @@ class _$AddCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -1134,7 +1137,7 @@ class _$AddCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -1149,7 +1152,7 @@ class _$AddCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -1305,7 +1308,7 @@ class _$RemoveCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InitOperationFilterEvent value) init,
+    required TResult Function(_InitPeriodOperationFilterEvent value) init,
     required TResult Function(_ResetPeriodOperationFilterEvent value)
         resetPeriod,
     required TResult Function(_SetPeriodOperationFilterEvent value) setPeriod,
@@ -1323,7 +1326,7 @@ class _$RemoveCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitOperationFilterEvent value)? init,
+    TResult? Function(_InitPeriodOperationFilterEvent value)? init,
     TResult? Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult? Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult? Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -1338,7 +1341,7 @@ class _$RemoveCategoryOperationFilterEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitOperationFilterEvent value)? init,
+    TResult Function(_InitPeriodOperationFilterEvent value)? init,
     TResult Function(_ResetPeriodOperationFilterEvent value)? resetPeriod,
     TResult Function(_SetPeriodOperationFilterEvent value)? setPeriod,
     TResult Function(_AddAccountOperationFilterEvent value)? addAccount,
@@ -1369,10 +1372,9 @@ abstract class _RemoveCategoryOperationFilterEvent
 
 /// @nodoc
 mixin _$OperationFilterState {
-  OperationListFilter get filter => throw _privateConstructorUsedError;
-  List<Account> get accounts => throw _privateConstructorUsedError;
-  List<Category> get inCategories => throw _privateConstructorUsedError;
-  List<Category> get outCategories => throw _privateConstructorUsedError;
+  DateTimeRange? get period => throw _privateConstructorUsedError;
+  Set<Account> get accounts => throw _privateConstructorUsedError;
+  Set<Category> get categories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OperationFilterStateCopyWith<OperationFilterState> get copyWith =>
@@ -1386,12 +1388,7 @@ abstract class $OperationFilterStateCopyWith<$Res> {
       _$OperationFilterStateCopyWithImpl<$Res, OperationFilterState>;
   @useResult
   $Res call(
-      {OperationListFilter filter,
-      List<Account> accounts,
-      List<Category> inCategories,
-      List<Category> outCategories});
-
-  $OperationListFilterCopyWith<$Res> get filter;
+      {DateTimeRange? period, Set<Account> accounts, Set<Category> categories});
 }
 
 /// @nodoc
@@ -1408,37 +1405,24 @@ class _$OperationFilterStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filter = null,
+    Object? period = freezed,
     Object? accounts = null,
-    Object? inCategories = null,
-    Object? outCategories = null,
+    Object? categories = null,
   }) {
     return _then(_value.copyWith(
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as OperationListFilter,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as DateTimeRange?,
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<Account>,
-      inCategories: null == inCategories
-          ? _value.inCategories
-          : inCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      outCategories: null == outCategories
-          ? _value.outCategories
-          : outCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
+              as Set<Account>,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as Set<Category>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $OperationListFilterCopyWith<$Res> get filter {
-    return $OperationListFilterCopyWith<$Res>(_value.filter, (value) {
-      return _then(_value.copyWith(filter: value) as $Val);
-    });
   }
 }
 
@@ -1451,13 +1435,7 @@ abstract class _$$OperationFilterStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {OperationListFilter filter,
-      List<Account> accounts,
-      List<Category> inCategories,
-      List<Category> outCategories});
-
-  @override
-  $OperationListFilterCopyWith<$Res> get filter;
+      {DateTimeRange? period, Set<Account> accounts, Set<Category> categories});
 }
 
 /// @nodoc
@@ -1471,73 +1449,61 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filter = null,
+    Object? period = freezed,
     Object? accounts = null,
-    Object? inCategories = null,
-    Object? outCategories = null,
+    Object? categories = null,
   }) {
     return _then(_$OperationFilterStateImpl(
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as OperationListFilter,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as DateTimeRange?,
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<Account>,
-      inCategories: null == inCategories
-          ? _value._inCategories
-          : inCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      outCategories: null == outCategories
-          ? _value._outCategories
-          : outCategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
+              as Set<Account>,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as Set<Category>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$OperationFilterStateImpl implements _OperationFilterState {
+class _$OperationFilterStateImpl extends _OperationFilterState {
   const _$OperationFilterStateImpl(
-      {required this.filter,
-      required final List<Account> accounts,
-      required final List<Category> inCategories,
-      required final List<Category> outCategories})
+      {this.period,
+      final Set<Account> accounts = const {},
+      final Set<Category> categories = const {}})
       : _accounts = accounts,
-        _inCategories = inCategories,
-        _outCategories = outCategories;
+        _categories = categories,
+        super._();
 
   @override
-  final OperationListFilter filter;
-  final List<Account> _accounts;
+  final DateTimeRange? period;
+  final Set<Account> _accounts;
   @override
-  List<Account> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
+  @JsonKey()
+  Set<Account> get accounts {
+    if (_accounts is EqualUnmodifiableSetView) return _accounts;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
+    return EqualUnmodifiableSetView(_accounts);
   }
 
-  final List<Category> _inCategories;
+  final Set<Category> _categories;
   @override
-  List<Category> get inCategories {
-    if (_inCategories is EqualUnmodifiableListView) return _inCategories;
+  @JsonKey()
+  Set<Category> get categories {
+    if (_categories is EqualUnmodifiableSetView) return _categories;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_inCategories);
-  }
-
-  final List<Category> _outCategories;
-  @override
-  List<Category> get outCategories {
-    if (_outCategories is EqualUnmodifiableListView) return _outCategories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_outCategories);
+    return EqualUnmodifiableSetView(_categories);
   }
 
   @override
   String toString() {
-    return 'OperationFilterState(filter: $filter, accounts: $accounts, inCategories: $inCategories, outCategories: $outCategories)';
+    return 'OperationFilterState(period: $period, accounts: $accounts, categories: $categories)';
   }
 
   @override
@@ -1545,21 +1511,18 @@ class _$OperationFilterStateImpl implements _OperationFilterState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OperationFilterStateImpl &&
-            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.period, period) || other.period == period) &&
             const DeepCollectionEquality().equals(other._accounts, _accounts) &&
             const DeepCollectionEquality()
-                .equals(other._inCategories, _inCategories) &&
-            const DeepCollectionEquality()
-                .equals(other._outCategories, _outCategories));
+                .equals(other._categories, _categories));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      filter,
+      period,
       const DeepCollectionEquality().hash(_accounts),
-      const DeepCollectionEquality().hash(_inCategories),
-      const DeepCollectionEquality().hash(_outCategories));
+      const DeepCollectionEquality().hash(_categories));
 
   @JsonKey(ignore: true)
   @override
@@ -1570,22 +1533,19 @@ class _$OperationFilterStateImpl implements _OperationFilterState {
               this, _$identity);
 }
 
-abstract class _OperationFilterState implements OperationFilterState {
+abstract class _OperationFilterState extends OperationFilterState {
   const factory _OperationFilterState(
-          {required final OperationListFilter filter,
-          required final List<Account> accounts,
-          required final List<Category> inCategories,
-          required final List<Category> outCategories}) =
-      _$OperationFilterStateImpl;
+      {final DateTimeRange? period,
+      final Set<Account> accounts,
+      final Set<Category> categories}) = _$OperationFilterStateImpl;
+  const _OperationFilterState._() : super._();
 
   @override
-  OperationListFilter get filter;
+  DateTimeRange? get period;
   @override
-  List<Account> get accounts;
+  Set<Account> get accounts;
   @override
-  List<Category> get inCategories;
-  @override
-  List<Category> get outCategories;
+  Set<Category> get categories;
   @override
   @JsonKey(ignore: true)
   _$$OperationFilterStateImplCopyWith<_$OperationFilterStateImpl>

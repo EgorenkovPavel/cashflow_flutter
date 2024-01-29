@@ -32,7 +32,7 @@ class OperationListPage extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () => _onFilterPressed(context),
-                icon: const Icon(Icons.filter_list),
+                icon: const Icon(Icons.filter_list, color: Colors.black,),
               ),
             ],
           ),

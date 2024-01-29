@@ -249,21 +249,15 @@ extension BlocExt on BuildContext {
       bloc.state.account!.currency != bloc.state.recAccount!.currency);
 
   List<Account> accounts() => select<AccountBalanceBloc, List<Account>>(
-        (bloc) => bloc.state.accounts.map((a) => a.account).toList(),
+        (bloc) => bloc.state.balances.map((a) => a.account).toList(),
       );
 
   List<Category> outCategories() => select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.categories
-            .map((a) => a.category)
-            .where((c) => c.operationType == OperationType.OUTPUT)
-            .toList(),
+        (bloc) => bloc.state.outCategories,
       );
 
   List<Category> inCategories() => select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.categories
-            .map((a) => a.category)
-            .where((c) => c.operationType == OperationType.INPUT)
-            .toList(),
+        (bloc) => bloc.state.inCategories,
       );
 
   void onChangeOperationType(newValue) =>

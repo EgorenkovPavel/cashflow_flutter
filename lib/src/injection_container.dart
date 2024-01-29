@@ -269,7 +269,7 @@ Future<void> init() async {
   sl.registerFactory(
       () => OperationEditBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => MasterBloc(sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => OperationFilterBloc(sl<DataRepository>()));
+  sl.registerFactory(() => OperationFilterBloc());
   sl.registerFactory(() => OperationListBloc(sl<DataRepository>()));
   sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
   sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));

@@ -4,7 +4,6 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
-import 'package:money_tracker/src/ui/pages/operation/input_page/carousel_list.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
@@ -12,8 +11,9 @@ import 'package:money_tracker/src/utils/extensions.dart';
 import '../../../../domain/models/enum/currency.dart';
 import '../../../blocs/category_cashflow_bloc.dart';
 import '../../../widgets/keyboard.dart';
-import 'account_item.dart';
-import 'category_item.dart';
+import 'widgets/account_item.dart';
+import 'widgets/carousel_list.dart';
+import 'widgets/category_item.dart';
 import 'widgets/sum_field.dart';
 
 class OperationInputPage extends StatefulWidget {
@@ -407,7 +407,7 @@ class AccountList extends StatelessWidget {
   Widget build(BuildContext context) {
     final operationType = context.operationType();
     final accounts = context.select<AccountBalanceBloc, List<AccountBalance>>(
-      (bloc) => bloc.state.accounts,
+      (bloc) => bloc.state.balances,
     );
 
     return ItemsList(
@@ -435,10 +435,7 @@ class CategoryInList extends StatelessWidget {
       onAdd: () => context.addNewInCategory(),
       list: CategoryPageView(
         categories: context.select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.categories
-              .map((c) => c.category)
-              .where((c) => c.operationType == OperationType.INPUT)
-              .toList(),
+          (bloc) => bloc.state.inCategories,
         ),
         onItemChanged: (category) => context.changeInCategory(category),
       ),
@@ -456,10 +453,7 @@ class CategoryOutList extends StatelessWidget {
       onAdd: () => context.addNewOutCategory(),
       list: CategoryPageView(
         categories: context.select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.categories
-              .map((c) => c.category)
-              .where((c) => c.operationType == OperationType.OUTPUT)
-              .toList(),
+          (bloc) => bloc.state.outCategories,
         ),
         onItemChanged: (category) => context.changeOutCategory(category),
       ),
@@ -477,7 +471,7 @@ class AccountRecList extends StatelessWidget {
       onAdd: () => context.addNewRecAccount(),
       list: AccountPageView(
         accounts: context.select<AccountBalanceBloc, List<AccountBalance>>(
-          (bloc) => bloc.state.accounts,
+          (bloc) => bloc.state.balances,
         ),
         onItemChanged: (account) => context.changeRecAccount(account),
       ),
