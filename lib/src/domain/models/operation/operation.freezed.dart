@@ -89,23 +89,23 @@ mixin _$Operation {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InputOperation value) input,
-    required TResult Function(_OutputOperation value) output,
-    required TResult Function(_TransferOperation value) transfer,
+    required TResult Function(InputOperation value) input,
+    required TResult Function(OutputOperation value) output,
+    required TResult Function(TransferOperation value) transfer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InputOperation value)? input,
-    TResult? Function(_OutputOperation value)? output,
-    TResult? Function(_TransferOperation value)? transfer,
+    TResult? Function(InputOperation value)? input,
+    TResult? Function(OutputOperation value)? output,
+    TResult? Function(TransferOperation value)? transfer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InputOperation value)? input,
-    TResult Function(_OutputOperation value)? output,
-    TResult Function(_TransferOperation value)? transfer,
+    TResult Function(InputOperation value)? input,
+    TResult Function(OutputOperation value)? output,
+    TResult Function(TransferOperation value)? transfer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -284,7 +284,7 @@ class __$$InputOperationImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InputOperationImpl extends _InputOperation {
+class _$InputOperationImpl extends InputOperation {
   const _$InputOperationImpl(
       {this.id = 0,
       this.cloudId = '',
@@ -429,9 +429,9 @@ class _$InputOperationImpl extends _InputOperation {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InputOperation value) input,
-    required TResult Function(_OutputOperation value) output,
-    required TResult Function(_TransferOperation value) transfer,
+    required TResult Function(InputOperation value) input,
+    required TResult Function(OutputOperation value) output,
+    required TResult Function(TransferOperation value) transfer,
   }) {
     return input(this);
   }
@@ -439,9 +439,9 @@ class _$InputOperationImpl extends _InputOperation {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InputOperation value)? input,
-    TResult? Function(_OutputOperation value)? output,
-    TResult? Function(_TransferOperation value)? transfer,
+    TResult? Function(InputOperation value)? input,
+    TResult? Function(OutputOperation value)? output,
+    TResult? Function(TransferOperation value)? transfer,
   }) {
     return input?.call(this);
   }
@@ -449,9 +449,9 @@ class _$InputOperationImpl extends _InputOperation {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InputOperation value)? input,
-    TResult Function(_OutputOperation value)? output,
-    TResult Function(_TransferOperation value)? transfer,
+    TResult Function(InputOperation value)? input,
+    TResult Function(OutputOperation value)? output,
+    TResult Function(TransferOperation value)? transfer,
     required TResult orElse(),
   }) {
     if (input != null) {
@@ -461,8 +461,8 @@ class _$InputOperationImpl extends _InputOperation {
   }
 }
 
-abstract class _InputOperation extends Operation {
-  const factory _InputOperation(
+abstract class InputOperation extends Operation {
+  const factory InputOperation(
       {final int id,
       final String cloudId,
       final bool synced,
@@ -471,7 +471,7 @@ abstract class _InputOperation extends Operation {
       required final Account account,
       required final Category category,
       required final int sum}) = _$InputOperationImpl;
-  const _InputOperation._() : super._();
+  const InputOperation._() : super._();
 
   @override
   int get id;
@@ -584,7 +584,7 @@ class __$$OutputOperationImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OutputOperationImpl extends _OutputOperation {
+class _$OutputOperationImpl extends OutputOperation {
   const _$OutputOperationImpl(
       {this.id = 0,
       this.cloudId = '',
@@ -729,9 +729,9 @@ class _$OutputOperationImpl extends _OutputOperation {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InputOperation value) input,
-    required TResult Function(_OutputOperation value) output,
-    required TResult Function(_TransferOperation value) transfer,
+    required TResult Function(InputOperation value) input,
+    required TResult Function(OutputOperation value) output,
+    required TResult Function(TransferOperation value) transfer,
   }) {
     return output(this);
   }
@@ -739,9 +739,9 @@ class _$OutputOperationImpl extends _OutputOperation {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InputOperation value)? input,
-    TResult? Function(_OutputOperation value)? output,
-    TResult? Function(_TransferOperation value)? transfer,
+    TResult? Function(InputOperation value)? input,
+    TResult? Function(OutputOperation value)? output,
+    TResult? Function(TransferOperation value)? transfer,
   }) {
     return output?.call(this);
   }
@@ -749,9 +749,9 @@ class _$OutputOperationImpl extends _OutputOperation {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InputOperation value)? input,
-    TResult Function(_OutputOperation value)? output,
-    TResult Function(_TransferOperation value)? transfer,
+    TResult Function(InputOperation value)? input,
+    TResult Function(OutputOperation value)? output,
+    TResult Function(TransferOperation value)? transfer,
     required TResult orElse(),
   }) {
     if (output != null) {
@@ -761,8 +761,8 @@ class _$OutputOperationImpl extends _OutputOperation {
   }
 }
 
-abstract class _OutputOperation extends Operation {
-  const factory _OutputOperation(
+abstract class OutputOperation extends Operation {
+  const factory OutputOperation(
       {final int id,
       final String cloudId,
       final bool synced,
@@ -771,7 +771,7 @@ abstract class _OutputOperation extends Operation {
       required final Account account,
       required final Category category,
       required final int sum}) = _$OutputOperationImpl;
-  const _OutputOperation._() : super._();
+  const OutputOperation._() : super._();
 
   @override
   int get id;
@@ -890,7 +890,7 @@ class __$$TransferOperationImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TransferOperationImpl extends _TransferOperation {
+class _$TransferOperationImpl extends TransferOperation {
   const _$TransferOperationImpl(
       {this.id = 0,
       this.cloudId = '',
@@ -1041,9 +1041,9 @@ class _$TransferOperationImpl extends _TransferOperation {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InputOperation value) input,
-    required TResult Function(_OutputOperation value) output,
-    required TResult Function(_TransferOperation value) transfer,
+    required TResult Function(InputOperation value) input,
+    required TResult Function(OutputOperation value) output,
+    required TResult Function(TransferOperation value) transfer,
   }) {
     return transfer(this);
   }
@@ -1051,9 +1051,9 @@ class _$TransferOperationImpl extends _TransferOperation {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InputOperation value)? input,
-    TResult? Function(_OutputOperation value)? output,
-    TResult? Function(_TransferOperation value)? transfer,
+    TResult? Function(InputOperation value)? input,
+    TResult? Function(OutputOperation value)? output,
+    TResult? Function(TransferOperation value)? transfer,
   }) {
     return transfer?.call(this);
   }
@@ -1061,9 +1061,9 @@ class _$TransferOperationImpl extends _TransferOperation {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InputOperation value)? input,
-    TResult Function(_OutputOperation value)? output,
-    TResult Function(_TransferOperation value)? transfer,
+    TResult Function(InputOperation value)? input,
+    TResult Function(OutputOperation value)? output,
+    TResult Function(TransferOperation value)? transfer,
     required TResult orElse(),
   }) {
     if (transfer != null) {
@@ -1073,8 +1073,8 @@ class _$TransferOperationImpl extends _TransferOperation {
   }
 }
 
-abstract class _TransferOperation extends Operation {
-  const factory _TransferOperation(
+abstract class TransferOperation extends Operation {
+  const factory TransferOperation(
       {final int id,
       final String cloudId,
       final bool synced,
@@ -1084,7 +1084,7 @@ abstract class _TransferOperation extends Operation {
       required final Account recAccount,
       required final int sum,
       required final int recSum}) = _$TransferOperationImpl;
-  const _TransferOperation._() : super._();
+  const TransferOperation._() : super._();
 
   @override
   int get id;

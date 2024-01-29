@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_operations_by_category_use_case.dart';
+
+import '../../../../domain/use_cases/watch_category_by_id_use_case.dart';
 
 part 'category_detail_bloc.freezed.dart';
 
@@ -33,13 +35,16 @@ class CategoryDetailState with _$CategoryDetailState {
 
 class CategoryDetailBloc
     extends Bloc<CategoryDetailEvent, CategoryDetailState> {
-  final DataRepository _repository;
+  final WatchOperationsByCategoryUseCase _watchOperationsByCategoryUseCase;
+  final WatchCategoryByIdUseCase _watchCategoryByIdUseCase;
 
   StreamSubscription<Category>? _subCategory;
   StreamSubscription? _subOperations;
 
-  CategoryDetailBloc(this._repository)
-      : super(const CategoryDetailState(
+  CategoryDetailBloc(
+    this._watchOperationsByCategoryUseCase,
+    this._watchCategoryByIdUseCase,
+  ) : super(const CategoryDetailState(
           budgetType: BudgetType.MONTH,
           title: '',
           operations: [],
@@ -56,13 +61,13 @@ class CategoryDetailBloc
     _FetchCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    _subCategory =
-        _repository.categories.watchById(event.categoryId).listen((category) {
+    _subCategory = _watchCategoryByIdUseCase(categoryId: event.categoryId)
+        .listen((category) {
       add(CategoryDetailEvent.changeCategory(category: category));
     });
-    _subOperations = _repository.operations
-        .watchAllByCategory(event.categoryId)
-        .listen((items) {
+    _subOperations =
+        _watchOperationsByCategoryUseCase(categoryId: event.categoryId)
+            .listen((items) {
       add(CategoryDetailEvent.changeOperations(operations: items));
     });
   }

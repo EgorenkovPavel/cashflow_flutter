@@ -351,7 +351,7 @@ class PieDiagram extends StatelessWidget {
 class _CategoryItem extends StatelessWidget {
   final CategoryCashflow category;
 
-  const _CategoryItem({super.key, required this.category});
+  const _CategoryItem({required this.category});
 
   int _cashflow() {
     return category.category.budgetType == BudgetType.MONTH

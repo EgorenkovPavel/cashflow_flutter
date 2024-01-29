@@ -92,7 +92,6 @@ class Keyboard extends StatelessWidget {
 
 class _DigitButton extends StatelessWidget {
   const _DigitButton({
-    super.key,
     required this.onDigitPressed,
     required this.digit,
     required this.width,
@@ -119,7 +118,6 @@ class _DigitButton extends StatelessWidget {
 
 class _Button extends StatelessWidget {
   const _Button({
-    super.key,
     required this.child,
     required this.onPressed,
     required this.width,
