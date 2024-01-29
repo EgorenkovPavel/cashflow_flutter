@@ -26,7 +26,7 @@ class ListTileOperation extends StatelessWidget {
   }
 
   void _onLongPress(BuildContext context) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => Wrap(
@@ -76,8 +76,8 @@ class ListTileOperation extends StatelessWidget {
         context.loc.numberFormat(_operation.sum, _operation.account.currency),
         style: Theme.of(context)
             .textTheme
-            .headlineSmall!
-            .copyWith(color: _operation.type.color),
+            .headlineSmall
+            ?.copyWith(color: _operation.type.color),
       ),
       onTap: onTap,
       onLongPress: () => _onLongPress(context),

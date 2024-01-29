@@ -4,8 +4,13 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_operation_output_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_operation_transfer_use_case.dart';
+
+import '../../../../domain/use_cases/delete_operation_use_case.dart';
+import '../../../../domain/use_cases/get_last_operation_use_case.dart';
 
 part 'operation_input_bloc.freezed.dart';
 
@@ -86,10 +91,17 @@ class MasterState with _$MasterState {
 }
 
 class MasterBloc extends Bloc<MasterEvent, MasterState> {
-  final DataRepository _repository;
+  final InsertOperationInputUseCase _insertOperationInputUseCase;
+  final InsertOperationOutputUseCase _insertOperationOutputUseCase;
+  final InsertOperationTransferUseCase _insertOperationTransferUseCase;
+  final GetLastOperationUseCase _getLastOperationUseCase;
+  final DeleteOperationUseCase _deleteOperationUseCase;
 
-  MasterBloc(this._repository)
-      : super(const MasterState(
+  MasterBloc(
+    this._insertOperationInputUseCase,
+    this._insertOperationOutputUseCase,
+    this._insertOperationTransferUseCase, this._getLastOperationUseCase, this._deleteOperationUseCase,
+  ) : super(const MasterState(
           action: MasterStateAction.DATA,
           operationType: OperationType.INPUT,
           sum: 0,
@@ -125,7 +137,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _StartMasterEvent event,
     Emitter<MasterState> emit,
   ) async {
-    var op = await _repository.operations.getLast();
+    var op = await _getLastOperationUseCase();
 
     if (op == null) {
       return;
@@ -316,7 +328,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _CancelOperationMasterEvent event,
     Emitter<MasterState> emit,
   ) async {
-    await _repository.operations.delete(state.operation!);
+    await _deleteOperationUseCase(state.operation!);
     emit(state.copyWith(
       operation: null,
       action: MasterStateAction.SHOW_OPERATION_CANCELED_MESSAGE,
@@ -388,37 +400,31 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     switch (state.operationType) {
       case OperationType.INPUT:
         {
-          var operation = Operation.input(
+          return _insertOperationInputUseCase(
             date: DateTime.now(),
             account: toAccount(state.account!),
             category: state.categoryIn!,
             sum: state.sum,
           );
-
-          return _repository.operations.insert(operation);
         }
       case OperationType.OUTPUT:
         {
-          var operation = Operation.output(
+          return _insertOperationOutputUseCase(
             date: DateTime.now(),
             account: toAccount(state.account!),
             category: state.categoryOut!,
             sum: state.sum,
           );
-
-          return _repository.operations.insert(operation);
         }
       case OperationType.TRANSFER:
         {
-          var operation = Operation.transfer(
+          return _insertOperationTransferUseCase(
             date: DateTime.now(),
             account: toAccount(state.account!),
             recAccount: toAccount(state.recAccount!),
             sum: state.sum,
             recSum: state.recSum,
           );
-
-          return _repository.operations.insert(operation);
         }
       default:
         {

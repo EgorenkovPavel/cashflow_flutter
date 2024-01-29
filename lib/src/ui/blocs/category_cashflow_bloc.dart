@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
 
 import '../../domain/models.dart';
 import '../../domain/models/enum/currency.dart';
@@ -27,13 +28,12 @@ class CategoryCashflowState with _$CategoryCashflowState {
 
 class CategoryCashflowBloc
     extends Bloc<CategoryCashflowEvent, CategoryCashflowState> {
-  final DataRepository _dataRepository;
+  final WatchCashflowUseCase _watchCashflowUseCase;
   StreamSubscription? _subCashflow;
   StreamSubscription? _sub;
 
-  CategoryCashflowBloc({required DataRepository dataRepository})
-      : _dataRepository = dataRepository,
-        super(CategoryCashflowState(
+  CategoryCashflowBloc(this._watchCashflowUseCase)
+      :         super(const CategoryCashflowState(
           categories: [],
           progress: {},
         )) {
@@ -41,7 +41,7 @@ class CategoryCashflowBloc
       (event, emit) => event.map(change: (event) => _onChange(event, emit)),
     );
 
-    _sub = _dataRepository.categories.watchCashflow(DateTime.now()).listen((list) {
+    _sub = _watchCashflowUseCase().listen((list) {
       add(CategoryCashflowEvent.change(
         categories: list
             // .map((e) => CategoryCashflow(

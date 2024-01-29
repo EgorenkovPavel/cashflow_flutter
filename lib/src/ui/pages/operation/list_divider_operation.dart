@@ -48,7 +48,6 @@ class ListDividerOperation extends StatelessWidget {
 
 class _TitleDivider extends StatelessWidget {
   const _TitleDivider({
-    super.key,
     required this.date,
     required this.type,
   });
@@ -93,13 +92,11 @@ class _TitleDivider extends StatelessWidget {
 }
 
 class _EmptyDivider extends StatelessWidget {
-  const _EmptyDivider({
-    super.key,
-  });
+  const _EmptyDivider();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();//const Divider();
+    return const SizedBox();//const Divider();
   }
 }
 

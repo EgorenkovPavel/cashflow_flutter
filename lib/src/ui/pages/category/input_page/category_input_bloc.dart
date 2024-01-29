@@ -3,6 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/domain/models/enum/currency.dart';
+import 'package:money_tracker/src/domain/use_cases/get_category_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_category_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/update_category_use_case.dart';
 
 part 'category_input_bloc.freezed.dart';
 
@@ -46,10 +49,15 @@ class CategoryInputState with _$CategoryInputState {
 }
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
-  final DataRepository _repository;
+  final GetCategoryByIdUseCase _getCategoryByIdUseCase;
+  final InsertCategoryUseCase _insertCategoryUseCase;
+  final UpdateCategoryUseCase _updateCategoryUseCase;
 
-  CategoryInputBloc(this._repository)
-      : super(const CategoryInputState(
+  CategoryInputBloc(
+    this._getCategoryByIdUseCase,
+    this._insertCategoryUseCase,
+    this._updateCategoryUseCase,
+  ) : super(const CategoryInputState(
           operationType: OperationType.INPUT,
           budgetType: BudgetType.MONTH,
           title: '',
@@ -79,7 +87,8 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _InitByIdCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) async {
-    var category = await _repository.categories.getById(event.categoryId);
+    final category =
+        await _getCategoryByIdUseCase(categoryId: event.categoryId);
 
     emit(CategoryInputState(
       category: category,
@@ -118,32 +127,27 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     Emitter<CategoryInputState> emit,
   ) async {
     if (state.category == null) {
-      var category = Category(
-        title: state.title,
-        operationType: state.operationType,
-        budgetType: state.budgetType,
-        budget: state.budget,
-        currency: state.currency,
-      );
-
-      var id = await _repository.categories.insert(category);
       emit(state.copyWith(
         isSaved: true,
-        category: category.copyWith(id: id),
+        category: await _insertCategoryUseCase(
+          title: state.title,
+          operationType: state.operationType,
+          budgetType: state.budgetType,
+          budget: state.budget,
+          currency: state.currency,
+        ),
       ));
     } else {
-      var newCategory = state.category!.copyWith(
-        title: state.title,
-        operationType: state.operationType,
-        budgetType: state.budgetType,
-        budget: state.budget,
-        currency: state.currency,
-      );
-
-      await _repository.categories.update(newCategory);
       emit(state.copyWith(
         isSaved: true,
-        category: newCategory,
+        category: await _updateCategoryUseCase(
+          category: state.category!,
+          title: state.title,
+          operationType: state.operationType,
+          budgetType: state.budgetType,
+          budget: state.budget,
+          currency: state.currency,
+        ),
       ));
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_last_operations_use_case.dart';
 
 part 'last_operations_bloc.freezed.dart';
 
@@ -24,13 +25,15 @@ class LastOperationsState with _$LastOperationsState {
 
 class LastOperationsBloc
     extends Bloc<LastOperationsEvent, LastOperationsState> {
-  final DataRepository _repository;
+  final WatchLastOperationsUseCase _watchLastOperationsUseCase;
+
   StreamSubscription? _sub;
 
   static const int _operationCount = 5;
 
-  LastOperationsBloc(this._repository)
+  LastOperationsBloc(this._watchLastOperationsUseCase)
       : super(const LastOperationsState(operations: [])) {
+
     on<LastOperationsEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
           changeOperations: (event) => _changeOperations(event, emitter),
@@ -41,7 +44,7 @@ class LastOperationsBloc
     _FetchLastOperationsEvent event,
     Emitter<LastOperationsState> emit,
   ) {
-    _sub = _repository.operations.watchLast(_operationCount).listen((items) {
+    _sub = _watchLastOperationsUseCase(_operationCount).listen((items) {
       add(LastOperationsEvent.changeOperations(operations: items));
     });
   }

@@ -124,14 +124,14 @@ extension PageNavigator on BuildContext {
 
   void openCategoryPage(int categoryId) => push(namedLocation(
         'category',
-    pathParameters: <String, String>{'fid': categoryId.toString()},
+        pathParameters: <String, String>{'fid': categoryId.toString()},
       ));
 
   void openOperationListPage() => push(namedLocation('operation'));
 
   void openOperationEditPage(int operationId) => push(namedLocation(
         'operationId',
-    pathParameters: <String, String>{'fid': operationId.toString()},
+        pathParameters: <String, String>{'fid': operationId.toString()},
       ));
 
   void openOperationInputPage() => push(namedLocation('operationNew'));
@@ -150,7 +150,7 @@ extension PageNavigator on BuildContext {
 
   void openBudgetPage(OperationType operationType) => push(namedLocation(
         'budget',
-    pathParameters: <String, String>{'fid': operationType.toString()},
+        pathParameters: <String, String>{'fid': operationType.toString()},
       ));
 
   Future<Account?> openAccountInputDialog() =>

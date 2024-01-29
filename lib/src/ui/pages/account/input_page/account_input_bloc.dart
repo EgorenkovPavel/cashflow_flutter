@@ -1,8 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/domain/models/enum/currency.dart';
+
+import '../../../../domain/use_cases/get_account_by_id_use_case.dart';
+import '../../../../domain/use_cases/insert_account_use_case.dart';
+import '../../../../domain/use_cases/update_account_use_case.dart';
 
 part 'account_input_bloc.freezed.dart';
 
@@ -36,24 +39,41 @@ class AccountInputState with _$AccountInputState {
     Account? account,
     required bool isSaved,
   }) = _AccountInputState;
+
+  static AccountInputState init() => const AccountInputState(
+        title: '',
+        isDebt: false,
+        currency: Currency.RUB,
+        account: null,
+        isSaved: false,
+      );
+
+  static AccountInputState byAccount(Account account) => AccountInputState(
+        account: account,
+        title: account.title,
+        isDebt: account.isDebt,
+        currency: account.currency,
+        isSaved: false,
+      );
 }
 
 class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
-  final DataRepository _repository;
+  final GetAccountByIdUseCase _getAccountByIdUseCase;
+  final InsertAccountUseCase _insertAccountUseCase;
+  final UpdateAccountUseCase _updateAccountUseCase;
 
-  AccountInputBloc(this._repository)
-      : super(const AccountInputState(
-          title: '',
-          isDebt: false,
-          currency: Currency.RUB,
-          account: null,
-          isSaved: false,
-        )) {
+  AccountInputBloc(
+    this._getAccountByIdUseCase,
+    this._insertAccountUseCase,
+    this._updateAccountUseCase,
+  ) : super(AccountInputState.init()) {
     on<AccountInputEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
-          changeTitle: (event) => _changeTitle(event, emitter),
-          changeIsDebt: (event) => _changeIsDebt(event, emitter),
-          changeCurrency: (event) => _changeCurrency(event, emitter),
+          changeTitle: (event) => emitter(state.copyWith(title: event.title)),
+          changeIsDebt: (event) =>
+              emitter(state.copyWith(isDebt: event.isDebt)),
+          changeCurrency: (event) =>
+              emitter(state.copyWith(currency: event.currency)),
           save: (event) => _save(event, emitter),
         ));
   }
@@ -62,38 +82,9 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _FetchAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
-    final account = await _repository.accounts.getById(event.accountId);
-    var title = account.title;
-    var isDebt = account.isDebt;
-    var currency = account.currency;
+    final account = await _getAccountByIdUseCase(accountId: event.accountId);
 
-    emit(state.copyWith(
-      account: account,
-      title: title,
-      isDebt: isDebt,
-      currency: currency,
-    ));
-  }
-
-  void _changeTitle(
-    _ChangeTitleAccountInputEvent event,
-    Emitter<AccountInputState> emit,
-  ) {
-    emit(state.copyWith(title: event.title));
-  }
-
-  void _changeIsDebt(
-    _ChangeIsDebtAccountInputEvent event,
-    Emitter<AccountInputState> emit,
-  ) {
-    emit(state.copyWith(isDebt: event.isDebt));
-  }
-
-  _changeCurrency(
-    _ChangeCurrencyAccoutnInputEvent event,
-    Emitter<AccountInputState> emit,
-  ) {
-    emit(state.copyWith(currency: event.currency));
+    emit(AccountInputState.byAccount(account));
   }
 
   Future<void> _save(
@@ -102,36 +93,23 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   ) async {
     if (state.account == null) {
       emit(state.copyWith(
-        account: await _insertAccount(),
+        account: await _insertAccountUseCase(
+          title: state.title,
+          isDebt: state.isDebt,
+          currency: state.currency,
+        ),
         isSaved: true,
       ));
     } else {
       emit(state.copyWith(
-        account: await _updateAccount(),
+        account: await _updateAccountUseCase(
+          account: state.account!,
+          title: state.title,
+          isDebt: state.isDebt,
+          currency: state.currency,
+        ),
         isSaved: true,
       ));
     }
-  }
-
-  Future<Account> _insertAccount() async {
-    var account = Account(
-      title: state.title,
-      isDebt: state.isDebt,
-      currency: state.currency,
-    );
-    var id = await _repository.accounts.insert(account);
-
-    return account.copyWith(id: id);
-  }
-
-  Future<Account> _updateAccount() async {
-    var newAccount = state.account!.copyWith(
-      title: state.title,
-      isDebt: state.isDebt,
-      currency: state.currency,
-    );
-    await _repository.accounts.update(newAccount);
-
-    return newAccount;
   }
 }
