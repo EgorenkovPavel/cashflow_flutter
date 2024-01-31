@@ -50,9 +50,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) : super(const AuthState.notAuthenticated()) {
     on<AuthEvent>((event, emitter) => event.map(
           changeAuth: (event) => _changeAuth(event, emitter),
-          signInSilently: (event) => _signInSilently(event, emitter),
-          signIn: (event) => _signIn(event, emitter),
-          signOut: (event) => _signOut(event, emitter),
+          signInSilently: (event) => _authRepository.signInSilently(),
+          signIn: (event) => _authRepository.signIn(),
+          signOut: (event) => _authRepository.signOut(),
         ));
 
     _sub = _authRepository.userChanges().listen((user) {
@@ -87,22 +87,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthState.notAuthenticated());
     }
   }
-
-  FutureOr<void> _signInSilently(
-    _SignInSilentlyAuthEvent event,
-    Emitter<AuthState> emit,
-  ) =>
-      _authRepository.signInSilently();
-
-  FutureOr<void> _signIn(
-    _SignInAuthEvent event,
-    Emitter<AuthState> emit,
-  ) =>
-      _authRepository.signIn();
-
-  FutureOr<void> _signOut(
-    _SignOutAuthEvent event,
-    Emitter<AuthState> emit,
-  ) =>
-      _authRepository.signOut();
 }
