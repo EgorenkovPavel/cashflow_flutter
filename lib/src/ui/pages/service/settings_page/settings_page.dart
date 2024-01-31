@@ -52,7 +52,7 @@ class AuthListTile extends StatelessWidget {
                 trailing: ElevatedButton(
                   onPressed: () =>
                       context.read<AuthBloc>().add(const AuthEvent.signOut()),
-                  child: const Text('SING OUT'),
+                  child: Text('SING OUT', style: TextStyle().copyWith(color: Colors.white)),
                 ),
               )
             : ListTile(
@@ -61,7 +61,7 @@ class AuthListTile extends StatelessWidget {
                 trailing: ElevatedButton(
                   onPressed: () =>
                       context.read<AuthBloc>().add(const AuthEvent.signIn()),
-                  child: const Text('SIGN IN'),
+                  child: Text('SIGN IN', style: TextStyle().copyWith(color: Colors.white)),
                 ),
               );
       },
