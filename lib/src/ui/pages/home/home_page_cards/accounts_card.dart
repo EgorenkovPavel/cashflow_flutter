@@ -73,8 +73,10 @@ class _AccountListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(_account.title),
-      trailing:
-      Text(context.loc.numberFormat(_account.balance, _account.currency)),
+      trailing: Text(
+        context.loc.numberFormat(_account.balance, _account.currency),
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
       onTap: () => context.openAccountPage(_account.id),
     );
   }
