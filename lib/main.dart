@@ -31,12 +31,8 @@ Future<void> main() async {
               lazy: false,
               create: (_) => sl(),
             ),
-            BlocProvider<AccountBalanceBloc>(
-              create: (_) => sl(),
-            ),
-            BlocProvider<CategoryCashflowBloc>(
-              create: (_) => sl(),
-            ),
+            BlocProvider<AccountBalanceBloc>(create: (_) => sl()),
+            BlocProvider<CategoryCashflowBloc>(create: (_) => sl()),
           ],
           child: const MyApp(),
         ),
