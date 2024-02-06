@@ -79,16 +79,35 @@ class OperationDataRepositoryImpl
 
   @override
   Future<Operation> insert(Operation entity) async {
-    final id = await operationDao.insertOperation(OperationsCompanion(
-      cloudId: Value(entity.cloudId),
-      date: Value(entity.date),
-      operationType: Value(entity.type),
-      account: Value(entity.account.id),
-      category: Value(entity.category?.id),
-      recAccount: Value(entity.recAccount?.id),
-      sum: Value(entity.sum),
-      recSum: Value(entity.recSum),
-    ));
+    final id = await operationDao.insertOperation(
+      entity.map(
+        input: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+        ),
+        output: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+        ),
+        transfer: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          recAccount: Value(o.recAccount.id),
+          sum: Value(o.sum),
+          recSum: Value(o.recSum),
+        ),
+      ),
+    );
 
     return entity.copyWith(id: id);
   }
@@ -141,35 +160,79 @@ class OperationDataRepositoryImpl
 
   @override
   Future insertFromCloud(Operation operation) {
-    return operationDao.insertOperation(OperationsCompanion(
-      cloudId: Value(operation.cloudId),
-      date: Value(operation.date),
-      operationType: Value(operation.type),
-      account: Value(operation.account.id),
-      category: Value(operation.category?.id),
-      recAccount: Value(operation.recAccount?.id),
-      sum: Value(operation.sum),
-      recSum: Value(operation.recSum),
-      synced: const Value(true),
-      deleted: Value(operation.deleted),
-    ));
+    return operationDao.insertOperation(
+      operation.map(
+        input: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
+        output: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
+        transfer: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          recAccount: Value(o.recAccount.id),
+          sum: Value(o.sum),
+          recSum: Value(o.recSum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
+      ),
+    );
   }
 
   @override
   Future updateFromCloud(Operation operation) {
     return operationDao.updateFields(
       operation.id,
-      OperationsCompanion(
-        cloudId: Value(operation.cloudId),
-        date: Value(operation.date),
-        operationType: Value(operation.type),
-        account: Value(operation.account.id),
-        category: Value(operation.category?.id),
-        recAccount: Value(operation.recAccount?.id),
-        sum: Value(operation.sum),
-        recSum: Value(operation.recSum),
-        synced: const Value(true),
-        deleted: Value(operation.deleted),
+      operation.map(
+        input: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
+        output: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          category: Value(o.category.id),
+          sum: Value(o.sum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
+        transfer: (o) => OperationsCompanion(
+          cloudId: Value(o.cloudId),
+          date: Value(o.date),
+          operationType: Value(o.type),
+          account: Value(o.account.id),
+          recAccount: Value(o.recAccount.id),
+          sum: Value(o.sum),
+          recSum: Value(o.recSum),
+          synced: const Value(true),
+          deleted: Value(operation.deleted),
+        ),
       ),
     );
   }

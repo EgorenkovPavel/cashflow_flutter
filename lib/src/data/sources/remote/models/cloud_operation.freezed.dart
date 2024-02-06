@@ -23,7 +23,7 @@ mixin _$CloudOperation {
   String? get category => throw _privateConstructorUsedError;
   String? get recAccount => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
-  int get recSum => throw _privateConstructorUsedError;
+  int? get recSum => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $CloudOperationCopyWith<$Res> {
       String? category,
       String? recAccount,
       int sum,
-      int recSum,
+      int? recSum,
       bool deleted});
 }
 
@@ -69,7 +69,7 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
     Object? category = freezed,
     Object? recAccount = freezed,
     Object? sum = null,
-    Object? recSum = null,
+    Object? recSum = freezed,
     Object? deleted = null,
   }) {
     return _then(_value.copyWith(
@@ -101,10 +101,10 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
-      recSum: null == recSum
+      recSum: freezed == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -129,7 +129,7 @@ abstract class _$$CloudOperationImplCopyWith<$Res>
       String? category,
       String? recAccount,
       int sum,
-      int recSum,
+      int? recSum,
       bool deleted});
 }
 
@@ -151,7 +151,7 @@ class __$$CloudOperationImplCopyWithImpl<$Res>
     Object? category = freezed,
     Object? recAccount = freezed,
     Object? sum = null,
-    Object? recSum = null,
+    Object? recSum = freezed,
     Object? deleted = null,
   }) {
     return _then(_$CloudOperationImpl(
@@ -183,10 +183,10 @@ class __$$CloudOperationImplCopyWithImpl<$Res>
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
-      recSum: null == recSum
+      recSum: freezed == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ class _$CloudOperationImpl implements _CloudOperation {
       this.category,
       this.recAccount,
       required this.sum,
-      required this.recSum,
+      this.recSum,
       required this.deleted});
 
   @override
@@ -224,7 +224,7 @@ class _$CloudOperationImpl implements _CloudOperation {
   @override
   final int sum;
   @override
-  final int recSum;
+  final int? recSum;
   @override
   final bool deleted;
 
@@ -273,7 +273,7 @@ abstract class _CloudOperation implements CloudOperation {
       final String? category,
       final String? recAccount,
       required final int sum,
-      required final int recSum,
+      final int? recSum,
       required final bool deleted}) = _$CloudOperationImpl;
 
   @override
@@ -291,7 +291,7 @@ abstract class _CloudOperation implements CloudOperation {
   @override
   int get sum;
   @override
-  int get recSum;
+  int? get recSum;
   @override
   bool get deleted;
   @override
