@@ -56,23 +56,6 @@ class Operation with _$Operation {
         transfer: (_) => OperationType.TRANSFER,
       );
 
-  Category? get category => map(
-        input: (operation) => operation.category,
-        output: (operation) => operation.category,
-        transfer: (operation) => null,
-      );
-
-  Account? get recAccount => map(
-        input: (operation) => null,
-        output: (operation) => null,
-        transfer: (operation) => operation.recAccount,
-      );
-
-  int get recSum => map(
-    input: (operation) => 0,
-    output: (operation) => 0,
-    transfer: (operation) => operation.recSum,
-  );
 }
 
 // sealed class Operation {

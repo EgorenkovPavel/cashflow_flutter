@@ -27,19 +27,34 @@ extension CloudCategoryMapper on Category {
 }
 
 extension CloudOperationMapper on Operation {
-  CloudOperation toCloudOperation() => CloudOperation(
-        id: cloudId,
-        date: date,
-        operationType: const OperationTypeConverter().toSql(type),
-        account: account.cloudId,
-        category: category?.cloudId,
-        recAccount: recAccount?.cloudId,
-        sum: sum,
-        recSum: map(
-          input: (operation) => 0,
-          output: (operation) => 0,
-          transfer: (operation) => operation.recSum,
+  CloudOperation toCloudOperation() => map(
+        input: (o) => CloudOperation(
+          id: o.cloudId,
+          date: o.date,
+          operationType: const OperationTypeConverter().toSql(o.type),
+          account: o.account.cloudId,
+          category: o.category.cloudId,
+          sum: o.sum,
+          deleted: o.deleted,
         ),
-        deleted: deleted,
+        output: (o) => CloudOperation(
+          id: o.cloudId,
+          date: o.date,
+          operationType: const OperationTypeConverter().toSql(o.type),
+          account: o.account.cloudId,
+          category: o.category.cloudId,
+          sum: o.sum,
+          deleted: o.deleted,
+        ),
+        transfer: (o) => CloudOperation(
+          id: o.cloudId,
+          date: o.date,
+          operationType: const OperationTypeConverter().toSql(o.type),
+          account: o.account.cloudId,
+          recAccount: o.recAccount.cloudId,
+          sum: o.sum,
+          recSum: o.recSum,
+          deleted: o.deleted,
+        ),
       );
 }

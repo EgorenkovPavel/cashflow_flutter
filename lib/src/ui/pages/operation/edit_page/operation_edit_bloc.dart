@@ -67,16 +67,35 @@ class OperationEditState with _$OperationEditState {
     required bool isSaved,
   }) = _OperationEditState;
 
-  OperationEditState fromOperation(Operation operation) => copyWith(
-        operation: operation,
-        operationType: operation.type,
-        date: operation.date,
-        account: operation.account,
-        category: operation.category,
-        recAccount: operation.recAccount,
-        sum: operation.sum,
-        recSum: operation.recSum,
-        time: TimeOfDay.fromDateTime(operation.date),
+  OperationEditState fromOperation(Operation operation) => operation.map(
+        input: (o) => copyWith(
+          operation: o,
+          operationType: o.type,
+          date: o.date,
+          account: o.account,
+          category: o.category,
+          sum: o.sum,
+          time: TimeOfDay.fromDateTime(operation.date),
+        ),
+        output: (o) => copyWith(
+          operation: o,
+          operationType: o.type,
+          date: o.date,
+          account: o.account,
+          category: o.category,
+          sum: o.sum,
+          time: TimeOfDay.fromDateTime(operation.date),
+        ),
+        transfer: (o) => copyWith(
+          operation: o,
+          operationType: o.type,
+          date: o.date,
+          account: o.account,
+          recAccount: o.recAccount,
+          sum: o.sum,
+          recSum: o.recSum,
+          time: TimeOfDay.fromDateTime(operation.date),
+        ),
       );
 }
 
@@ -204,13 +223,12 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     return state.operationType!.map(
       TRANSFER: () {
         return _updateOperationTransferUseCase(
-          operation: state.operation!,
+            operation: state.operation!,
             date: date,
             account: state.account!,
             recAccount: state.recAccount!,
             sum: state.sum,
-            recSum: state.recSum
-        );
+            recSum: state.recSum);
       },
       INPUT: () {
         return _updateOperationInputUseCase(
