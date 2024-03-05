@@ -10,6 +10,8 @@ part 'operation.freezed.dart';
 class Operation with _$Operation {
   const Operation._();
 
+  //TODO использовать только операция по категории и операция перевода. Сокращаем с трех операций до двух
+
   const factory Operation.input({
     @Default(0) int id,
     @Default('') String cloudId,
