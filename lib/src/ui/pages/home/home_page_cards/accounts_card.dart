@@ -39,22 +39,22 @@ class _AccountsCardState extends State<AccountsCard> {
     return Card(
       child: Column(children: [
         CardTitle(title: widget.title),
-        if (widget.accounts.isEmpty) const Text('No items'),
+        if (widget.accounts.isEmpty) Text(context.loc.noItems),
         ...(_visibleAccounts()
             .map((account) => _AccountListTile(account))
             .toList()),
         ButtonBar(
-          alignment: MainAxisAlignment.spaceBetween,
+          //alignment: MainAxisAlignment.spaceBetween,
           children: [
             if (widget.accounts
                 .where((account) => account.balance != 0)
                 .isNotEmpty)
               TextButton(
                 onPressed: _onHide,
-                child: Text(_showAll ? 'Show all' : 'Hide'),
+                child: Text(_showAll ? context.loc.btnShowAll : context.loc.btnHide),
               ),
             TextButton(
-              child: const Text('Add'),
+              child: Text(context.loc.btnAdd),
               onPressed: () => context.openAccountInputDialog(),
             ),
           ],

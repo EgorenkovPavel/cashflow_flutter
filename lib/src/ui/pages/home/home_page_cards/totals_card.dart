@@ -16,7 +16,7 @@ class TotalsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Totals',
+              context.loc.titleTotalBalance,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Wrap(

@@ -25,7 +25,15 @@ class AccountBalanceState with _$AccountBalanceState {
     required Map<Currency, int> totals,
   }) = _AccountBalanceState;
 
-  List<Account> get accounts => balances.map((balance) => balance.account).toList();
+  List<Account> get allAccounts => balances.map((balance) => balance.account).toList();
+
+  List<AccountBalance> get accountBalances => balances
+      .where((account) => !account.isDebt)
+      .toList();
+
+  List<AccountBalance> get debtBalances => balances
+      .where((account) => account.isDebt)
+      .toList();
 }
 
 class AccountBalanceBloc

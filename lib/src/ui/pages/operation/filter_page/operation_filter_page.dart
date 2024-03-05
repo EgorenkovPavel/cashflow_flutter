@@ -273,7 +273,7 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.filter.period,
       );
 
-  List<Account> allAccounts() => read<AccountBalanceBloc>().state.accounts;
+  List<Account> allAccounts() => read<AccountBalanceBloc>().state.allAccounts;
 
   List<Category> allInCategories() =>
       read<CategoryCashflowBloc>().state.inCategories;
