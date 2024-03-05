@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
+import 'package:money_tracker/src/utils/extensions.dart';
 import 'sync_button.dart';
 
 import 'home_page_cards/accounts_card.dart';
@@ -42,14 +43,14 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
-                  title: 'Accounts',
+                  title: context.loc.accounts,
                   accounts: context.accounts(),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
-                  title: 'Debts',
+                  title: context.loc.debts,
                   accounts: context.debts(),
                 ),
               ),
@@ -81,16 +82,12 @@ extension BlocExt on BuildContext{
   List<AccountBalance> accounts() =>
       watch<AccountBalanceBloc>()
       .state
-      .balances
-      .where((account) => !account.isDebt)
-      .toList();
+      .accountBalances;
 
   List<AccountBalance> debts() =>
       watch<AccountBalanceBloc>()
       .state
-      .balances
-      .where((account) => account.isDebt)
-      .toList();
+      .debtBalances;
 }
 
 
