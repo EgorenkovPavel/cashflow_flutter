@@ -40,3 +40,66 @@ cashflow
     operation
     category
     sum (currency from category)
+
+
+// CHATGPT
+User:
+- userId (Primary Key)
+- username
+- password
+- baseCurrencyId (Foreign Key to Currency)
+
+Account:
+- accountId (Primary Key)
+- userId (Foreign Key to User)
+- name
+- currencyId (Foreign Key to Currency)
+
+Category:
+- categoryId (Primary Key)
+- name
+
+Budget:
+- budgetId (Primary Key)
+- categoryId (Foreign Key to Category)
+- budgetInBaseCurrency
+
+Transaction:
+- transactionId (Primary Key)
+- userId (Foreign Key to User)
+- fromAccountId (Foreign Key to Account)
+- toAccountId (Foreign Key to Account)
+- categoryId (Foreign Key to Category)
+- amountSent
+- currencySentId (Foreign Key to Currency)
+- amountReceived
+- currencyReceivedId (Foreign Key to Currency)
+- description
+- date
+- transactionType
+
+BalanceRecord:
+- userId (Composite Foreign Key to User)
+- accountId (Composite Foreign Key to Account)
+- transactionId (Composite Foreign Key to Transaction)
+- balance
+- date
+
+Cashflow:
+- userId (Composite Foreign Key to User)
+- categoryId (Foreign Key to Category)
+- accountId (Composite Foreign Key to Account)
+- transactionId (Composite Foreign Key to Transaction)
+- amount
+- date
+
+ExchangeRate:
+- rateId (Primary Key)
+- sourceCurrencyId (Foreign Key to Currency)
+- targetCurrencyId (Foreign Key to Currency)
+- rate
+
+Currency:
+- currencyId (Primary Key)
+- name
+- code
