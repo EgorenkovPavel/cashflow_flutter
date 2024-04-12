@@ -1,0 +1,14 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+abstract class CloudConverter<T>{
+  const CloudConverter();
+
+  T mapToDart(String id, Map<String, dynamic> data);
+
+  Map<String, dynamic> mapToCloud(T value);
+
+  Map<String, dynamic> deletionMark();
+
+  String get keyUpdated;
+}
