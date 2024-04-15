@@ -1,0 +1,25 @@
+name: cloud_db
+description: "A new Flutter package project."
+version: 0.0.1
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  firebase_core: ^2.15.1
+  cloud_firestore: ^4.9.1
+  result:
+    path: ../result
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+flutter:
+
+
