@@ -36,7 +36,7 @@ class OperationEditPage extends StatelessWidget {
 class _OperationEditPage extends StatefulWidget {
   final bool isNew;
 
-  const _OperationEditPage({super.key, required this.isNew});
+  const _OperationEditPage({required this.isNew});
 
   @override
   _OperationEditPageState createState() => _OperationEditPageState();
@@ -97,31 +97,27 @@ class _OperationEditPageState extends State<_OperationEditPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Title(text: 'Cloud ID'), // TODO
-                  Text(context.select<OperationEditBloc, String>(
-                    (bloc) => bloc.state.operation?.cloudId ?? '',
-                  )),
+                  Title(text: 'Cloud ID ${context.cloudId()}'),
                   Title(text: context.loc.titleDate),
                   Row(
                     children: <Widget>[
                       DateButton(
                         icon: Icons.calendar_today,
                         text: context.date(),
-                        onPressed: () => context.selectDate(),
+                        onPressed: context.selectDate,
                       ),
                       const SizedBox(width: 16.0),
                       DateButton(
                         icon: Icons.access_time,
                         text: context.time(),
-                        onPressed: () => context.selectTime(),
+                        onPressed: context.selectTime,
                       ),
                     ],
                   ),
                   Title(text: context.loc.titleType),
                   TypeRadioButton<OperationType>(
                     type: context.operationType(),
-                    onChange: (newValue) =>
-                        context.onChangeOperationType(newValue),
+                    onChange: context.onChangeOperationType,
                     items: const [
                       OperationType.INPUT,
                       OperationType.OUTPUT,
@@ -133,7 +129,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     value: context.account(),
                     hint: context.loc.hintAccount,
                     items: context.accounts(),
-                    onChange: (newValue) => context.onChangeAccount(newValue),
+                    onChange: context.onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
                   Title(text: context.loc.titleAnalytic),
@@ -141,26 +137,23 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                         INPUT: () => DropdownList<Category>(
                           value: context.category(),
                           hint: context.loc.hintCategory,
-                          onChange: (newValue) =>
-                              context.onCategoryChange(newValue),
-                          items: context.inCategory(),
+                          onChange: context.onCategoryChange,
+                          items: context.inCategories(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
                         OUTPUT: () => DropdownList<Category>(
                           value: context.category(),
                           hint: context.loc.hintCategory,
-                          onChange: (newValue) =>
-                              context.onCategoryChange(newValue),
-                          items: context.outCategory(),
+                          onChange: context.onCategoryChange,
+                          items: context.outCategories(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
                         TRANSFER: () => DropdownList<Account>(
                           value: context.recAccount(),
                           hint: context.loc.hintAccount,
-                          onChange: (newValue) =>
-                              context.onRecAccountChange(newValue),
+                          onChange: context.onRecAccountChange,
                           items: context.accounts(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
@@ -176,7 +169,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                         labelText:
                             '${context.loc.titleSum}, ${context.account()?.currency.symbol ?? ''}',
                       ),
-                      onChanged: (value) => context.onChangeSum(value),
+                      onChanged: context.onChangeSum,
                       validator: _sumValidator,
                     ),
                   ),
@@ -191,7 +184,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                           labelText:
                               '${context.loc.titleSum}, ${context.recAccount()?.currency.symbol ?? ''}',
                         ),
-                        onChanged: (value) => context.onChangeRecSum(value),
+                        onChanged: context.onChangeRecSum,
                         validator: _sumValidator,
                       ),
                     ),
@@ -206,7 +199,8 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             ),
             ElevatedButton(
               onPressed: () => _onSavePressed(context),
-              child: Text(context.loc.save.toUpperCase(), style: TextStyle().copyWith(color: Colors.white)),
+              child: Text(context.loc.save.toUpperCase(),
+                  style: const TextStyle().copyWith(color: Colors.white)),
             ),
           ],
         ),
@@ -244,6 +238,10 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.account,
       );
 
+  String cloudId() => select<OperationEditBloc, String>(
+        (bloc) => bloc.state.operation?.cloudId ?? '',
+      );
+
   bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
       bloc.state.operationType == OperationType.TRANSFER &&
       bloc.state.account != null &&
@@ -251,21 +249,15 @@ extension BlocExt on BuildContext {
       bloc.state.account!.currency != bloc.state.recAccount!.currency);
 
   List<Account> accounts() => select<AccountBalanceBloc, List<Account>>(
-        (bloc) => bloc.state.accounts.map((a) => a.account).toList(),
+        (bloc) => bloc.state.balances.map((a) => a.account).toList(),
       );
 
-  List<Category> outCategory() => select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.categories
-            .map((a) => a.category)
-            .where((c) => c.operationType == OperationType.OUTPUT)
-            .toList(),
+  List<Category> outCategories() => select<CategoryCashflowBloc, List<Category>>(
+        (bloc) => bloc.state.outCategories,
       );
 
-  List<Category> inCategory() => select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.categories
-            .map((a) => a.category)
-            .where((c) => c.operationType == OperationType.INPUT)
-            .toList(),
+  List<Category> inCategories() => select<CategoryCashflowBloc, List<Category>>(
+        (bloc) => bloc.state.inCategories,
       );
 
   void onChangeOperationType(newValue) =>
@@ -338,9 +330,12 @@ class DateButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: <Widget>[
-          Icon(icon, color: Colors.white,),
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
           const SizedBox(width: 4.0),
-          Text(text, style: TextStyle().copyWith(color: Colors.white)),
+          Text(text, style: const TextStyle().copyWith(color: Colors.white)),
         ],
       ),
     );

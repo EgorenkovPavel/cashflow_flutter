@@ -137,7 +137,7 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchBudgetEventImpl &&
@@ -275,7 +275,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PreviousYearBudgetEventImpl);
@@ -396,7 +396,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NextYearBudgetEventImpl);
@@ -535,7 +535,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShowAllBudgetEventImpl &&
@@ -698,7 +698,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeItemsBudgetEventImpl &&
@@ -1020,7 +1020,7 @@ class _$BudgetStateImpl implements _BudgetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BudgetStateImpl &&

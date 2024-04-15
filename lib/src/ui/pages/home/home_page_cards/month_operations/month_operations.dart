@@ -7,7 +7,7 @@ import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/utils/date_util.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models/enum/currency.dart';
+import '../../../../../domain/models/enum/currency.dart';
 
 class MonthOperations extends StatelessWidget {
   final OperationType operationType;
@@ -21,10 +21,10 @@ class MonthOperations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RichText(
+          ListTile(
+            title: RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
@@ -47,8 +47,9 @@ class MonthOperations extends StatelessWidget {
           Column(
             children: context
                 .select<CategoryCashflowBloc,
-                        Map<Currency, ({int cashflow, int budget})>>(
-                    (bloc) => bloc.state.progress[operationType] ?? {})
+                    Map<Currency, ({int cashflow, int budget})>>(
+                  (bloc) => bloc.state.progress[operationType] ?? {},
+                )
                 .entries
                 .where((entry) => entry.value.cashflow > 0)
                 .map((entry) => Padding(
@@ -81,7 +82,6 @@ class _MonthOperationDiagram extends StatelessWidget {
   final int budget;
 
   const _MonthOperationDiagram({
-    super.key,
     required this.currency,
     required this.cashflow,
     required this.budget,

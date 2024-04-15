@@ -12,7 +12,7 @@ class CloudOperation with _$CloudOperation {
     String? category,
     String? recAccount,
     required int sum,
-    required int recSum,
+    int? recSum,
     required bool deleted,
   }) = _CloudOperation;
 }

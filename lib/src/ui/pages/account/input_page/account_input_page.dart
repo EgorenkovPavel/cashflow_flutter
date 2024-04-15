@@ -85,7 +85,7 @@ class _AccountPageState extends State<AccountPage> {
                 border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
-              onChanged: (value) => context.onChangeTitle(value),
+              onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
             if (widget.isNew)
@@ -99,7 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                 ],
               ),
             TypeRadioButton<Currency>(
-              onChange: (val) => context.onChangeCurrency(val),
+              onChange: context.onChangeCurrency,
               type: context.currency(),
               items: const [
                 Currency.RUB,
@@ -115,19 +115,14 @@ class _AccountPageState extends State<AccountPage> {
 }
 
 extension BlocExt on BuildContext {
-  onChangeCurrency(Currency currency) {
-    read<AccountInputBloc>()
-        .add(AccountInputEvent.changeCurrency(currency: currency));
-  }
+  onChangeCurrency(Currency currency) => read<AccountInputBloc>()
+      .add(AccountInputEvent.changeCurrency(currency: currency));
 
-  onChangeIsDebt(bool isDebt) {
-    read<AccountInputBloc>()
-        .add(AccountInputEvent.changeIsDebt(isDebt: isDebt));
-  }
+  onChangeIsDebt(bool isDebt) => read<AccountInputBloc>()
+      .add(AccountInputEvent.changeIsDebt(isDebt: isDebt));
 
-  onChangeTitle(String title) {
-    read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
-  }
+  onChangeTitle(String title) =>
+      read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
 
   Currency currency() => select<AccountInputBloc, Currency>(
         (bloc) => bloc.state.currency,

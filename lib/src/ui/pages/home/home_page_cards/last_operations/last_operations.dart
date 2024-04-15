@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
-import 'package:money_tracker/src/ui/pages/home/last_operations/last_operations_bloc.dart';
+import 'package:money_tracker/src/ui/pages/home/home_page_cards/card_title.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+
+import 'last_operations_bloc.dart';
 
 class LastOperations extends StatelessWidget {
   const LastOperations({super.key});
@@ -21,19 +23,9 @@ class LastOperations extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                context.loc.titleLastOperations,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              BlocBuilder<LastOperationsBloc, LastOperationsState>(
-                builder: (context, state) {
-                  if (state.operations.isEmpty) {
-                    return const _NoOperationsTitle();
-                  } else {
-                    return _OperationsList(items: state.operations);
-                  }
-                },
-              ),
+              CardTitle(title: context.loc.titleLastOperations),
+              _OperationsList(
+                  items: context.watch<LastOperationsBloc>().state.operations),
             ],
           ),
         );
@@ -43,51 +35,39 @@ class LastOperations extends StatelessWidget {
 }
 
 class _OperationsList extends StatelessWidget {
-  const _OperationsList({
-    super.key,
-    required this.items,
-  });
+  const _OperationsList({required this.items});
 
   final List<Operation> items;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: items
-          .expand((e) => [
-                if (items.indexOf(e) == 0)
-                  ListDividerOperation.day(null, e)
-                else
-                  ListDividerOperation.day(items[items.indexOf(e) - 1], e),
-                ListTileOperation(
-                  e,
-                  onTap: () => context.openOperationEditPage(e.id),
-                ),
-              ])
-          .toList()
-        ..add(const _ShowAllOperationsButton()),
-    );
-  }
-}
-
-class _NoOperationsTitle extends StatelessWidget {
-  const _NoOperationsTitle({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(context.loc.noOperations),
-    );
+    if (items.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(child: Text(context.loc.noOperations)),
+      );
+    } else {
+      return Column(
+        children: items
+            .expand((e) => [
+                  if (items.indexOf(e) == 0)
+                    ListDividerOperation.day(null, e)
+                  else
+                    ListDividerOperation.day(items[items.indexOf(e) - 1], e),
+                  ListTileOperation(
+                    e,
+                    onTap: () => context.openOperationEditPage(e.id),
+                  ),
+                ])
+            .toList()
+          ..add(const _ShowAllOperationsButton()),
+      );
+    }
   }
 }
 
 class _ShowAllOperationsButton extends StatelessWidget {
-  const _ShowAllOperationsButton({
-    super.key,
-  });
+  const _ShowAllOperationsButton();
 
   void _onPressed(BuildContext context) => context.openOperationListPage();
 

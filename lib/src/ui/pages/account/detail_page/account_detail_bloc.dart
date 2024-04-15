@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/models/enum/currency.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_account_title_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_operations_by_account_use_case.dart';
 
 part 'account_detail_bloc.freezed.dart';
 
@@ -30,12 +30,16 @@ class AccountDetailState with _$AccountDetailState {
 }
 
 class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
-  final DataRepository _repository;
+  final WatchAccountTitleUseCase _watchAccountTitleUseCase;
+  final WatchOperationsByAccountUseCase _watchOperationsByAccountUseCase;
+
   StreamSubscription? _subTitle;
   StreamSubscription? _subOperations;
 
-  AccountDetailBloc(this._repository)
-      : super(const AccountDetailState(title: '', operations: [])) {
+  AccountDetailBloc(
+    this._watchAccountTitleUseCase,
+    this._watchOperationsByAccountUseCase,
+  ) : super(const AccountDetailState(title: '', operations: [])) {
     on<AccountDetailEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
           titleChanged: (event) => _titleChanged(event, emitter),
@@ -47,23 +51,14 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
     _FetchAccountDetailEvent event,
     Emitter<AccountDetailState> emit,
   ) async {
-    _subTitle = _repository.accounts.watchById(event.accountId).listen((event) {
-      add(AccountDetailEvent.titleChanged(title: event.title));
+    _subTitle =
+        _watchAccountTitleUseCase(accountId: event.accountId).listen((title) {
+      add(AccountDetailEvent.titleChanged(title: title));
     });
 
-    _subOperations = _repository.operations
-        .watchAllByFilter(OperationListFilter(
-      accounts: {
-        Account(
-          id: event.accountId,
-          title: '',
-          isDebt: false,
-          currency: Currency.RUB,
-        ),
-      },
-      categories: const {},
-    ))
-        .listen((event) {
+    _subOperations =
+        _watchOperationsByAccountUseCase(accountId: event.accountId)
+            .listen((event) {
       add(AccountDetailEvent.operationsChanged(operations: event));
     });
   }

@@ -159,7 +159,7 @@ class _$CreateCloudDatabaseSyncEventImpl extends _CreateCloudDatabaseSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateCloudDatabaseSyncEventImpl);
@@ -323,7 +323,7 @@ class _$RefreshConnectionSyncEventImpl extends _RefreshConnectionSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RefreshConnectionSyncEventImpl);
@@ -485,7 +485,7 @@ class _$SyncNowSyncEventImpl extends _SyncNowSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SyncNowSyncEventImpl);
   }
@@ -645,7 +645,7 @@ class _$SyncLastDaySyncEventImpl extends _SyncLastDaySyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SyncLastDaySyncEventImpl);
@@ -808,7 +808,7 @@ class _$SyncLastMonthSyncEventImpl extends _SyncLastMonthSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SyncLastMonthSyncEventImpl);
@@ -969,7 +969,7 @@ class _$SyncAllSyncEventImpl extends _SyncAllSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SyncAllSyncEventImpl);
   }
@@ -1157,7 +1157,7 @@ class _$AddUserSyncEventImpl extends _AddUserSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddUserSyncEventImpl &&
@@ -1333,7 +1333,7 @@ class _$AuthProgressSyncEventImpl extends _AuthProgressSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthProgressSyncEventImpl);
@@ -1524,7 +1524,7 @@ class _$AuthAuthenticatedSyncEventImpl extends _AuthAuthenticatedSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthAuthenticatedSyncEventImpl &&
@@ -1699,7 +1699,7 @@ class _$NotAuthSyncEventImpl extends _NotAuthSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$NotAuthSyncEventImpl);
   }
@@ -1877,7 +1877,7 @@ class _$SyncDataSyncEventImpl extends _SyncDataSyncEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SyncDataSyncEventImpl &&
@@ -2151,7 +2151,7 @@ class _$InProgressSyncStateImpl extends _InProgressSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InProgressSyncStateImpl);
@@ -2332,7 +2332,7 @@ class _$LoadingToCloudSyncStateImpl extends _LoadingToCloudSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadingToCloudSyncStateImpl &&
@@ -2537,7 +2537,7 @@ class _$LoadingFromCloudSyncStateImpl extends _LoadingFromCloudSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadingFromCloudSyncStateImpl &&
@@ -2730,7 +2730,7 @@ class _$SyncedSyncStateImpl extends _SyncedSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SyncedSyncStateImpl &&
@@ -2909,7 +2909,7 @@ class _$NotSyncedSyncStateImpl extends _NotSyncedSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotSyncedSyncStateImpl &&
@@ -3066,7 +3066,7 @@ class _$FailureSyncStateImpl extends _FailureSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$FailureSyncStateImpl);
   }
@@ -3208,7 +3208,7 @@ class _$NoDBSyncStateImpl extends _NoDBSyncState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$NoDBSyncStateImpl);
   }

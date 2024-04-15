@@ -116,7 +116,6 @@ class _DriveDialogState extends State<DriveDialog> {
 
 class _DriveFileItem extends StatelessWidget {
   const _DriveFileItem({
-    super.key,
     required this.file,
     required this.onTap,
   });

@@ -134,11 +134,11 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var start = operationType == OperationType.INPUT
+    final start = operationType == OperationType.INPUT
         ? context.loc.earningIn
         : context.loc.spendingIn;
 
-    var formatDate = DateFormat.yMMMM().format(date);
+    final formatDate = DateFormat.yMMMM().format(date);
 
     return Text('$start $formatDate');
   }
@@ -351,7 +351,7 @@ class PieDiagram extends StatelessWidget {
 class _CategoryItem extends StatelessWidget {
   final CategoryCashflow category;
 
-  const _CategoryItem({super.key, required this.category});
+  const _CategoryItem({required this.category});
 
   int _cashflow() {
     return category.category.budgetType == BudgetType.MONTH

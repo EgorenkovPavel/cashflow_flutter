@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
 
 import '../../domain/models.dart';
 import '../../domain/models/enum/currency.dart';
@@ -18,38 +19,49 @@ class CategoryCashflowEvent with _$CategoryCashflowEvent {
 
 @freezed
 class CategoryCashflowState with _$CategoryCashflowState {
+  const CategoryCashflowState._();
+
   const factory CategoryCashflowState({
-    required List<CategoryCashflow> categories,
+    required List<CategoryCashflow> cashflows,
     required Map<OperationType, Map<Currency, ({int cashflow, int budget})>>
-        progress,
+    progress,
   }) = _CategoryCashflowState;
+
+  List<Category> get inCategories =>
+      cashflows
+          .map((a) => a.category)
+          .where((c) => c.operationType == OperationType.INPUT).toList();
+
+  List<Category> get outCategories =>
+      cashflows
+          .map((a) => a.category)
+          .where((c) => c.operationType == OperationType.OUTPUT).toList();
 }
 
 class CategoryCashflowBloc
     extends Bloc<CategoryCashflowEvent, CategoryCashflowState> {
-  final DataRepository _dataRepository;
+  final WatchCashflowUseCase _watchCashflowUseCase;
   StreamSubscription? _subCashflow;
   StreamSubscription? _sub;
 
-  CategoryCashflowBloc({required DataRepository dataRepository})
-      : _dataRepository = dataRepository,
-        super(CategoryCashflowState(
-          categories: [],
-          progress: {},
-        )) {
+  CategoryCashflowBloc(this._watchCashflowUseCase)
+      : super(const CategoryCashflowState(
+    cashflows: [],
+    progress: {},
+  )) {
     on<CategoryCashflowEvent>(
-      (event, emit) => event.map(change: (event) => _onChange(event, emit)),
+          (event, emit) => event.map(change: (event) => _onChange(event, emit)),
     );
 
-    _sub = _dataRepository.categories.watchCashflow(DateTime.now()).listen((list) {
+    _sub = _watchCashflowUseCase().listen((list) {
       add(CategoryCashflowEvent.change(
-        categories: list
-            // .map((e) => CategoryCashflow(
-            //       category: e,
-            //       monthCashflow: 0,
-            //       yearCashflow: 0,
-            //     ))
-            // .toList(),
+          categories: list
+        // .map((e) => CategoryCashflow(
+        //       category: e,
+        //       monthCashflow: 0,
+        //       yearCashflow: 0,
+        //     ))
+        // .toList(),
       ));
     });
 
@@ -67,12 +79,10 @@ class CategoryCashflowBloc
     return super.close();
   }
 
-  _onChange(
-    _ChangeCategoryCashflowEvent event,
-    Emitter<CategoryCashflowState> emit,
-  ) {
+  _onChange(_ChangeCategoryCashflowEvent event,
+      Emitter<CategoryCashflowState> emit,) {
     emit(state.copyWith(
-      categories: event.categories,
+      cashflows: event.categories,
       progress: _progress(event.categories),
     ));
   }
@@ -82,65 +92,63 @@ class CategoryCashflowBloc
     return Map.fromEntries(const [
       OperationType.INPUT,
       OperationType.OUTPUT,
-    ].map((type) => MapEntry(
+    ].map((type) =>
+        MapEntry(
           type,
           Map.fromEntries(
-            Currency.values.map((currency) => MapEntry(currency, (
-                  cashflow: _cashflow(
-                    items,
-                    type,
-                    currency,
-                  ),
-                  budget: _budget(
-                    items,
-                    type,
-                    currency,
-                  )
+            Currency.values.map((currency) =>
+                MapEntry(currency, (
+                cashflow: _cashflow(
+                  items,
+                  type,
+                  currency,
+                ),
+                budget: _budget(
+                  items,
+                  type,
+                  currency,
+                )
                 ))),
           ),
         )));
   }
 
-  int _cashflow(
-    List<CategoryCashflow> items,
-    OperationType operationType,
-    Currency currency,
-  ) {
+  int _cashflow(List<CategoryCashflow> items,
+      OperationType operationType,
+      Currency currency,) {
     return items
         .where((item) =>
-            item.category.operationType == operationType &&
-            item.category.currency == currency)
+    item.category.operationType == operationType &&
+        item.category.currency == currency)
         .map((item) => item.monthCashflow)
         .fold(
-          0,
+      0,
           (previousValue, element) => previousValue + element,
-        );
+    );
   }
 
-  int _budget(
-    List<CategoryCashflow> items,
-    OperationType operationType,
-    Currency currency,
-  ) {
+  int _budget(List<CategoryCashflow> items,
+      OperationType operationType,
+      Currency currency,) {
     return items
-            .where((item) =>
-                item.category.budgetType == BudgetType.MONTH &&
-                item.category.operationType == operationType &&
-                item.category.currency == currency)
-            .fold<int>(
-              0,
-              (previousValue, element) =>
-                  previousValue + element.category.budget,
-            ) +
+        .where((item) =>
+    item.category.budgetType == BudgetType.MONTH &&
+        item.category.operationType == operationType &&
+        item.category.currency == currency)
+        .fold<int>(
+      0,
+          (previousValue, element) =>
+      previousValue + element.category.budget,
+    ) +
         items
             .where((item) =>
-                item.category.budgetType == BudgetType.YEAR &&
-                item.category.operationType == operationType &&
-                item.category.currency == currency)
+        item.category.budgetType == BudgetType.YEAR &&
+            item.category.operationType == operationType &&
+            item.category.currency == currency)
             .fold<int>(
-              0,
+          0,
               (previousValue, element) =>
-                  previousValue + (element.category.budget / 12).floor(),
-            );
+          previousValue + (element.category.budget / 12).floor(),
+        );
   }
 }

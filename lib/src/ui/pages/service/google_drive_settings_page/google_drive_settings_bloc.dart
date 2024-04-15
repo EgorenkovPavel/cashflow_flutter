@@ -109,13 +109,9 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
     emit(const DriveState.inProgress());
     try {
       var data = await _driveRepository!.restore(event.fileId);
-      if (data == null) {
-        emit(const DriveState.failure());
-      } else {
-        await _backupRepository.importData(data);
-        emit(const DriveState.successRestore());
-      }
-    } catch (e) {
+      await _backupRepository.importData(data);
+      emit(const DriveState.successRestore());
+        } catch (e) {
       emit(const DriveState.failure());
     }
   }

@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 part 'operation_filter_bloc.freezed.dart';
@@ -12,7 +9,7 @@ part 'operation_filter_bloc.freezed.dart';
 class OperationFilterEvent with _$OperationFilterEvent {
   const factory OperationFilterEvent.init({
     required OperationListFilter filter,
-  }) = _InitOperationFilterEvent;
+  }) = _InitPeriodOperationFilterEvent;
 
   const factory OperationFilterEvent.resetPeriod() =
       _ResetPeriodOperationFilterEvent;
@@ -37,167 +34,58 @@ class OperationFilterEvent with _$OperationFilterEvent {
 
 @freezed
 class OperationFilterState with _$OperationFilterState {
+  const OperationFilterState._();
+
   const factory OperationFilterState({
-    required OperationListFilter filter,
-    required List<Account> accounts,
-    required List<Category> inCategories,
-    required List<Category> outCategories,
+    DateTimeRange? period,
+    @Default({}) Set<Account> accounts,
+    @Default({}) Set<Category> categories,
   }) = _OperationFilterState;
 
-  factory OperationFilterState.initial() => const OperationFilterState(
-        filter: OperationListFilter(),
-        accounts: [],
-        inCategories: [],
-        outCategories: [],
+  OperationListFilter get filter => OperationListFilter(
+        period: period,
+        accounts: accounts,
+        categories: categories,
       );
 
-  factory OperationFilterState.resetPeriod(OperationFilterState state) =>
-      OperationFilterState(
-        filter: state.filter.copyWith(period: null),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
+  static byFilter(OperationListFilter cfilter) => OperationFilterState(
+        period: cfilter.period,
+        accounts: cfilter.accounts,
+        categories: cfilter.categories,
       );
 
-  factory OperationFilterState.period(
-    OperationFilterState state,
-    DateTimeRange period,
-  ) =>
-      OperationFilterState(
-        filter: state.filter.copyWith(period: period),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
+  OperationFilterState resetPeriod() => copyWith(period: null);
+
+  OperationFilterState addAccount(Account account) => copyWith(
+        accounts: accounts.toSet()..add(account),
       );
 
-  factory OperationFilterState.addAccount(
-    OperationFilterState state,
-    Account account,
-  ) =>
-      OperationFilterState(
-        filter: state.filter
-            .copyWith(accounts: state.filter.accounts.toSet()..add(account)),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
+  OperationFilterState removeAccount(Account account) => copyWith(
+        accounts: accounts.toSet()..removeWhere((a) => a.id == account.id),
       );
 
-  factory OperationFilterState.removeAccount(
-    OperationFilterState state,
-    Account account,
-  ) =>
-      OperationFilterState(
-        filter: state.filter.copyWith(
-          accounts: state.filter.accounts.toSet()
-            ..removeWhere((a) => a.id == account.id),
-        ),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
+  OperationFilterState addCategory(Category category) => copyWith(
+        categories: categories.toSet()..add(category),
       );
 
-  factory OperationFilterState.addCategory(
-    OperationFilterState state,
-    Category category,
-  ) =>
-      OperationFilterState(
-        filter: state.filter.copyWith(
-          categories: state.filter.categories.toSet()..add(category),
-        ),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
+  OperationFilterState removeCategory(Category category) => copyWith(
+        categories: categories.toSet()..removeWhere((c) => c.id == category.id),
       );
 
-  factory OperationFilterState.removeCategory(
-    OperationFilterState state,
-    Category category,
-  ) =>
-      OperationFilterState(
-        filter: state.filter.copyWith(
-          categories: state.filter.categories.toSet()
-            ..removeWhere((c) => c.id == category.id),
-        ),
-        accounts: state.accounts,
-        inCategories: state.inCategories,
-        outCategories: state.outCategories,
-      );
 }
 
 class OperationFilterBloc
     extends Bloc<OperationFilterEvent, OperationFilterState> {
-  final DataRepository _repository;
-
-  OperationFilterBloc(this._repository)
-      : super(OperationFilterState.initial()) {
+  OperationFilterBloc() : super(const OperationFilterState()) {
     on<OperationFilterEvent>((event, emitter) => event.map(
-          init: (event) => _init(event, emitter),
-          resetPeriod: (event) => _resetPeriod(event, emitter),
-          setPeriod: (event) => _setPeriod(event, emitter),
-          addAccount: (event) => _addAccount(event, emitter),
-          removeAccount: (event) => _removeAccount(event, emitter),
-          addCategory: (event) => _addCategory(event, emitter),
-          removeCategory: (event) => _removeCategory(event, emitter),
+          init: (event) => emitter(OperationFilterState.byFilter(event.filter)),
+          resetPeriod: (event) => emitter(state.resetPeriod()),
+          setPeriod: (event) => emitter(state.copyWith(period: event.period)),
+          addAccount: (event) => emitter(state.addAccount(event.account)),
+          removeAccount: (event) => emitter(state.removeAccount(event.account)),
+          addCategory: (event) => emitter(state.addCategory(event.category)),
+          removeCategory: (event) =>
+              emitter(state.removeCategory(event.category)),
         ));
-  }
-
-  FutureOr<void> _init(
-    _InitOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) async {
-    final accounts = await _repository.accounts.getAll();
-    final inCategories =
-        await _repository.categories.getAllByType(OperationType.INPUT);
-    final outCategories =
-        await _repository.categories.getAllByType(OperationType.OUTPUT);
-
-    emit(OperationFilterState(
-      filter: event.filter,
-      accounts: accounts,
-      inCategories: inCategories,
-      outCategories: outCategories,
-    ));
-  }
-
-  FutureOr<void> _resetPeriod(
-    _ResetPeriodOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.resetPeriod(state));
-  }
-
-  FutureOr<void> _setPeriod(
-    _SetPeriodOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.period(state, event.period));
-  }
-
-  FutureOr<void> _addAccount(
-    _AddAccountOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.addAccount(state, event.account));
-  }
-
-  FutureOr<void> _removeAccount(
-    _RemoveAccountOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.removeAccount(state, event.account));
-  }
-
-  FutureOr<void> _addCategory(
-    _AddCategoryOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.addCategory(state, event.category));
-  }
-
-  FutureOr<void> _removeCategory(
-    _RemoveCategoryOperationFilterEvent event,
-    Emitter<OperationFilterState> emit,
-  ) {
-    emit(OperationFilterState.removeCategory(state, event.category));
   }
 }

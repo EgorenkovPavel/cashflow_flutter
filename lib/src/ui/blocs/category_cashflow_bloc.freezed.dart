@@ -147,7 +147,7 @@ class _$ChangeCategoryCashflowEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCategoryCashflowEventImpl &&
@@ -238,7 +238,7 @@ abstract class _ChangeCategoryCashflowEvent implements CategoryCashflowEvent {
 
 /// @nodoc
 mixin _$CategoryCashflowState {
-  List<CategoryCashflow> get categories => throw _privateConstructorUsedError;
+  List<CategoryCashflow> get cashflows => throw _privateConstructorUsedError;
   Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
       get progress => throw _privateConstructorUsedError;
 
@@ -254,7 +254,7 @@ abstract class $CategoryCashflowStateCopyWith<$Res> {
       _$CategoryCashflowStateCopyWithImpl<$Res, CategoryCashflowState>;
   @useResult
   $Res call(
-      {List<CategoryCashflow> categories,
+      {List<CategoryCashflow> cashflows,
       Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
           progress});
 }
@@ -273,13 +273,13 @@ class _$CategoryCashflowStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = null,
+    Object? cashflows = null,
     Object? progress = null,
   }) {
     return _then(_value.copyWith(
-      categories: null == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      cashflows: null == cashflows
+          ? _value.cashflows
+          : cashflows // ignore: cast_nullable_to_non_nullable
               as List<CategoryCashflow>,
       progress: null == progress
           ? _value.progress
@@ -300,7 +300,7 @@ abstract class _$$CategoryCashflowStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<CategoryCashflow> categories,
+      {List<CategoryCashflow> cashflows,
       Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
           progress});
 }
@@ -317,13 +317,13 @@ class __$$CategoryCashflowStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = null,
+    Object? cashflows = null,
     Object? progress = null,
   }) {
     return _then(_$CategoryCashflowStateImpl(
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      cashflows: null == cashflows
+          ? _value._cashflows
+          : cashflows // ignore: cast_nullable_to_non_nullable
               as List<CategoryCashflow>,
       progress: null == progress
           ? _value._progress
@@ -336,21 +336,22 @@ class __$$CategoryCashflowStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
+class _$CategoryCashflowStateImpl extends _CategoryCashflowState {
   const _$CategoryCashflowStateImpl(
-      {required final List<CategoryCashflow> categories,
+      {required final List<CategoryCashflow> cashflows,
       required final Map<OperationType,
               Map<Currency, ({int budget, int cashflow})>>
           progress})
-      : _categories = categories,
-        _progress = progress;
+      : _cashflows = cashflows,
+        _progress = progress,
+        super._();
 
-  final List<CategoryCashflow> _categories;
+  final List<CategoryCashflow> _cashflows;
   @override
-  List<CategoryCashflow> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
+  List<CategoryCashflow> get cashflows {
+    if (_cashflows is EqualUnmodifiableListView) return _cashflows;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
+    return EqualUnmodifiableListView(_cashflows);
   }
 
   final Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
@@ -364,23 +365,23 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
 
   @override
   String toString() {
-    return 'CategoryCashflowState(categories: $categories, progress: $progress)';
+    return 'CategoryCashflowState(cashflows: $cashflows, progress: $progress)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryCashflowStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories) &&
+                .equals(other._cashflows, _cashflows) &&
             const DeepCollectionEquality().equals(other._progress, _progress));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_cashflows),
       const DeepCollectionEquality().hash(_progress));
 
   @JsonKey(ignore: true)
@@ -391,15 +392,16 @@ class _$CategoryCashflowStateImpl implements _CategoryCashflowState {
           _$CategoryCashflowStateImpl>(this, _$identity);
 }
 
-abstract class _CategoryCashflowState implements CategoryCashflowState {
+abstract class _CategoryCashflowState extends CategoryCashflowState {
   const factory _CategoryCashflowState(
-      {required final List<CategoryCashflow> categories,
+      {required final List<CategoryCashflow> cashflows,
       required final Map<OperationType,
               Map<Currency, ({int budget, int cashflow})>>
           progress}) = _$CategoryCashflowStateImpl;
+  const _CategoryCashflowState._() : super._();
 
   @override
-  List<CategoryCashflow> get categories;
+  List<CategoryCashflow> get cashflows;
   @override
   Map<OperationType, Map<Currency, ({int budget, int cashflow})>> get progress;
   @override

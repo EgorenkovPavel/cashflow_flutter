@@ -25,4 +25,12 @@ class AccountBalance with _$AccountBalance {
         cloudId: cloudId,
         currency: currency,
       );
+
+  static AccountBalance fromAccount(Account account) => AccountBalance(
+    id: account.id,
+    cloudId: account.cloudId,
+    title: account.title,
+    currency: account.currency,
+    balance: 0,
+  );
 }

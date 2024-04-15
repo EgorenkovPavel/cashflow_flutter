@@ -158,7 +158,7 @@ class _$InitByTypeCategoryInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitByTypeCategoryInputEventImpl &&
@@ -335,7 +335,7 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitByIdCategoryInputEventImpl &&
@@ -510,7 +510,7 @@ class _$ChangeTitleCategoryInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeTitleCategoryInputEventImpl &&
@@ -686,7 +686,7 @@ class _$ChangeBudgetCategoryInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeBudgetCategoryInputEventImpl &&
@@ -862,7 +862,7 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeBudgetTypeCategoryInputEventImpl &&
@@ -1041,7 +1041,7 @@ class _$ChangeCurrencyCategoryInputEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeCurrencyCategoryInputEventImpl &&
@@ -1199,7 +1199,7 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaveCategoryInputEventImpl);
@@ -1515,7 +1515,7 @@ class _$CategoryInputStateImpl implements _CategoryInputState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryInputStateImpl &&

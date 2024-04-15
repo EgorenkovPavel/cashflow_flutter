@@ -54,6 +54,8 @@
   "mesCategoryArchived": "Категория добавлена в архив",
   "mesAreYouSure": "Вы уверены?",
   "accounts": "Счета",
+  "debts": "Долги",
+  "noItems": "Нет элементов",
   "noAccounts": "Нет счетов",
   "categories": "Категории",
   "noCategories": "Нет категорий",
@@ -96,8 +98,10 @@
   "apply": "Применить",
   "reset": "Сбросить",
   "inPeriod": "за",
+  "btnAdd": "Добавить",
   "btnAddAccount": "Добавить счет",
   "btnShowAll": "Показать все",
+  "btnHide": "Скрыть",
   "btnShowReports": "Показать отчеты",
   "btnDeleteAll": "Удалить все"
 }

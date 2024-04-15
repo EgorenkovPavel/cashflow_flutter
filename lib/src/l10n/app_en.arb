@@ -57,6 +57,8 @@
   "mesCategoryArchived": "Category archived",
   "mesAreYouSure": "Are you sure?",
   "accounts": "Accounts",
+  "debts": "Debts",
+  "noItems": "No items",
   "noAccounts": "No accounts",
   "categories": "Categories",
   "noCategories": "No categories",
@@ -99,8 +101,10 @@
   "apply": "Apply",
   "reset": "Reset",
   "inPeriod": "in",
+  "btnAdd": "Add",
   "btnAddAccount": "Add account",
   "btnShowAll": "Show all",
+  "btnHide": "Hide",
   "btnShowReports": "Show reports",
   "btnDeleteAll": "Delete all"
 }

@@ -4,7 +4,6 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
 
-import 'package:money_tracker/src/ui/pages/category/detail_page/category_cashflow_diagram.dart';
 import 'package:money_tracker/src/ui/pages/category/detail_page/category_detail_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
@@ -106,7 +105,7 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             '${context.loc.budget} $budget ${context.loc.inPeriod} ${context.loc.budgetTypeTitle(budgetType)}',
           ),
         ),
-        Text('Here will be the chart'),
+        const Text('Here will be the chart'),
         // Padding(
         //   padding: const EdgeInsets.all(8.0),
         //   child: SizedBox(

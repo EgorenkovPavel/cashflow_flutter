@@ -86,31 +86,24 @@ class _CategoryPageState extends State<CategoryPage> {
         title: widget.isNew
             ? context.loc.newCategoryCardTitle
             : context.loc.categoryCardTitle,
-        onSave: (context) => context
-            .read<CategoryInputBloc>()
-            .add(const CategoryInputEvent.save()),
+        onSave: (context) => context.onSave(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    context.loc.titleType,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(
-                    width: 8.0,
-                  ),
-                  Text(context.loc.operationTypeTitle(
-                    context.select<CategoryInputBloc, OperationType>(
-                      (bloc) => bloc.state.operationType,
-                    ),
-                  )),
-                ],
-              ),
+            Row(
+              children: <Widget>[
+                Text(
+                  context.loc.titleType,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(
+                  width: 8.0,
+                ),
+                Text(context.loc.operationTypeTitle(
+                  context.operationType(),
+                )),
+              ],
             ),
             const SizedBox(height: 8.0),
             TextFormField(
@@ -121,9 +114,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 border: const OutlineInputBorder(),
                 labelText: context.loc.title,
               ),
-              onChanged: (value) => context
-                  .read<CategoryInputBloc>()
-                  .add(CategoryInputEvent.changeTitle(title: value)),
+              onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
             const SizedBox(height: 8.0),
@@ -137,11 +128,7 @@ class _CategoryPageState extends State<CategoryPage> {
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              onChanged: (value) => context.read<CategoryInputBloc>().add(
-                    CategoryInputEvent.changeBudget(
-                      budget: int.parse(value.isEmpty ? "0" : value),
-                    ),
-                  ),
+              onChanged: context.onChangeBudget,
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -149,23 +136,16 @@ class _CategoryPageState extends State<CategoryPage> {
                 Text(context.loc.budgetType),
                 const SizedBox(width: 16.0),
                 TypeRadioButton<BudgetType>(
-                  onChange: (type) => context.read<CategoryInputBloc>().add(
-                        CategoryInputEvent.changeBudgetType(budgetType: type),
-                      ),
-                  type: context.select<CategoryInputBloc, BudgetType>(
-                    (bloc) => bloc.state.budgetType,
-                  ),
+                  onChange: context.onChangeBudgetType,
+                  type: context.budgetType(),
                   items: const [BudgetType.MONTH, BudgetType.YEAR],
                 ),
               ],
             ),
+            const SizedBox(height: 8.0),
             TypeRadioButton<Currency>(
-              onChange: (val) => context
-                  .read<CategoryInputBloc>()
-                  .add(CategoryInputEvent.changeCurrency(currency: val)),
-              type: context.select<CategoryInputBloc, Currency>(
-                (bloc) => bloc.state.currency,
-              ),
+              onChange: context.onChangeCurrency,
+              type: context.currency(),
               items: const [
                 Currency.RUB,
                 Currency.USD,
@@ -177,4 +157,37 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
+}
+
+extension BlocExt on BuildContext{
+  onChangeCurrency(Currency val) => read<CategoryInputBloc>()
+      .add(CategoryInputEvent.changeCurrency(currency: val));
+
+  onChangeBudgetType(BudgetType type) => read<CategoryInputBloc>().add(
+    CategoryInputEvent.changeBudgetType(budgetType: type),
+  );
+
+  onChangeBudget(String value) => read<CategoryInputBloc>().add(
+    CategoryInputEvent.changeBudget(
+      budget: int.parse(value.isEmpty ? "0" : value),
+    ),
+  );
+
+  onChangeTitle(String value) => read<CategoryInputBloc>()
+      .add(CategoryInputEvent.changeTitle(title: value));
+
+  onSave() => read<CategoryInputBloc>()
+      .add(const CategoryInputEvent.save());
+
+  Currency currency() => select<CategoryInputBloc, Currency>(
+        (bloc) => bloc.state.currency,
+  );
+
+  BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
+        (bloc) => bloc.state.budgetType,
+  );
+
+  OperationType operationType() => select<CategoryInputBloc, OperationType>(
+        (bloc) => bloc.state.operationType,
+  );
 }

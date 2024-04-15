@@ -202,7 +202,7 @@ class _$CloudCategoryImpl implements _CloudCategory {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CloudCategoryImpl &&

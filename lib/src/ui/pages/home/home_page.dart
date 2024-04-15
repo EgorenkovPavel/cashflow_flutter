@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
-import 'package:money_tracker/src/ui/pages/home/last_operations/last_operations.dart';
-import 'package:money_tracker/src/ui/pages/home/month_operations/month_operations.dart';
-import 'package:money_tracker/src/ui/pages/home/sync_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+import 'sync_button.dart';
 
-import '../../../domain/models/enum/currency.dart';
+import 'home_page_cards/accounts_card.dart';
+import 'home_page_cards/last_operations/last_operations.dart';
+import 'home_page_cards/month_operations/month_operations.dart';
+import 'home_page_cards/totals_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -42,15 +43,15 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
-                  title: 'Accounts',
-                  where: (account) => !account.isDebt,
+                  title: context.loc.accounts,
+                  accounts: context.accounts(),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: AccountsCard(
-                  title: 'Debts',
-                  where: (account) => account.isDebt,
+                  title: context.loc.debts,
+                  accounts: context.debts(),
                 ),
               ),
               const Padding(
@@ -77,106 +78,16 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class TotalsCard extends StatelessWidget {
-  const TotalsCard({super.key});
+extension BlocExt on BuildContext{
+  List<AccountBalance> accounts() =>
+      watch<AccountBalanceBloc>()
+      .state
+      .accountBalances;
 
-  Map<Currency, int> _calcTotals(List<AccountBalance> list) {
-    final res = <Currency, int>{};
-    list.forEach((item) {
-      res[item.currency] = (res[item.currency] ?? 0) + item.balance;
-    });
-
-    return res;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: []
-            ..add(Text(
-              'Totals',
-              style: Theme.of(context).textTheme.titleLarge,
-            ))
-            ..add(Wrap(
-              children: _calcTotals(
-                context.watch<AccountBalanceBloc>().state.accounts,
-              )
-                  .entries
-                  .map((item) => Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Chip(
-                          label: Text(
-                            context.loc.numberFormat(item.value, item.key),
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            )),
-        ),
-      ),
-    );
-  }
+  List<AccountBalance> debts() =>
+      watch<AccountBalanceBloc>()
+      .state
+      .debtBalances;
 }
 
-class AccountsCard extends StatefulWidget {
-  final String title;
-  final bool Function(AccountBalance) where;
 
-  const AccountsCard({super.key, required this.where, required this.title});
-
-  @override
-  State<AccountsCard> createState() => _AccountsCardState();
-}
-
-class _AccountsCardState extends State<AccountsCard> {
-  bool _showAll = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: []
-          ..add(ListTile(
-            title: Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ))
-          ..addAll(context
-              .watch<AccountBalanceBloc>()
-              .state
-              .accounts
-              .where(widget.where)
-              .where((account) => !_showAll || account.balance != 0)
-              .map((account) => ListTile(
-                    title: Text(account.title),
-                    trailing: Text(context.loc
-                        .numberFormat(account.balance, account.currency)),
-                    onTap: () => context.openAccountPage(account.id),
-                  ))
-              .toList())
-          ..add(ButtonBar(
-            alignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _showAll = !_showAll;
-                  });
-                },
-                child: Text(_showAll ? 'Show all' : 'Hide'),
-              ),
-              TextButton(
-                child: const Text('Add'),
-                onPressed: () => context.openAccountInputDialog(),
-              ),
-            ],
-          )),
-      ),
-    );
-  }
-}

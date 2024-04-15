@@ -11,6 +11,24 @@ import 'package:money_tracker/src/data/repositories/backup_repository_impl.dart'
 import 'package:money_tracker/src/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/backup_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/use_cases/delete_operation_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/get_account_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/get_category_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/get_last_operation_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/get_operation_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_account_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_category_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/update_account_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/update_category_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/update_operation_input_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_account_title_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_balances_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_category_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_last_operations_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_operations_by_account_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_operations_by_category_use_case.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
@@ -47,7 +65,6 @@ import '../src/ui/pages/account/input_page/account_input_bloc.dart';
 import '../src/ui/pages/budget_page/budget_bloc.dart';
 import '../src/ui/pages/category/detail_page/category_detail_bloc.dart';
 import '../src/ui/pages/category/input_page/category_input_bloc.dart';
-import '../src/ui/pages/home/last_operations/last_operations_bloc.dart';
 import '../src/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import '../src/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import '../src/ui/pages/operation/list_page/operation_list_bloc.dart';
@@ -55,6 +72,11 @@ import '../src/ui/pages/reports/reports_bloc.dart';
 import '../src/ui/pages/service/data_control_page/data_control_bloc.dart';
 import '../src/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import '../src/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
+import 'domain/use_cases/insert_operation_output_use_case.dart';
+import 'domain/use_cases/insert_operation_transfer_use_case.dart';
+import 'domain/use_cases/update_operation_output_use_case.dart';
+import 'domain/use_cases/update_operation_transfer_use_case.dart';
+import 'ui/pages/home/home_page_cards/last_operations/last_operations_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -158,6 +180,40 @@ Future<void> init() async {
     () => BackupRepositoryImpl(sl<Database>()),
   );
 
+  //USE CASES
+
+  sl.registerFactory(() => WatchAccountTitleUseCase(sl()));
+  sl.registerFactory(() => WatchCategoryByIdUseCase(sl()));
+
+  sl.registerFactory(() => WatchOperationsByAccountUseCase(sl()));
+  sl.registerFactory(() => WatchOperationsByCategoryUseCase(sl()));
+
+  sl.registerFactory(() => WatchBalancesUseCase(sl()));
+  sl.registerFactory(() => WatchCashflowUseCase(sl()));
+
+  sl.registerFactory(() => GetAccountByIdUseCase(sl()));
+  sl.registerFactory(() => GetCategoryByIdUseCase(sl()));
+  sl.registerFactory(() => GetOperationByIdUseCase(sl()));
+
+  sl.registerFactory(() => GetLastOperationUseCase(sl()));
+  sl.registerFactory(() => WatchLastOperationsUseCase(sl()));
+
+  sl.registerFactory(() => InsertAccountUseCase(sl()));
+  sl.registerFactory(() => InsertCategoryUseCase(sl()));
+
+  sl.registerFactory(() => InsertOperationInputUseCase(sl()));
+  sl.registerFactory(() => InsertOperationOutputUseCase(sl()));
+  sl.registerFactory(() => InsertOperationTransferUseCase(sl()));
+
+  sl.registerFactory(() => UpdateAccountUseCase(sl()));
+  sl.registerFactory(() => UpdateCategoryUseCase(sl()));
+
+  sl.registerFactory(() => UpdateOperationInputUseCase(sl()));
+  sl.registerFactory(() => UpdateOperationOutputUseCase(sl()));
+  sl.registerFactory(() => UpdateOperationTransferUseCase(sl()));
+
+  sl.registerFactory(() => DeleteOperationUseCase(sl()));
+
   // BLOCs
 
   sl.registerLazySingleton(() => AuthBloc(sl<AuthRepository>()));
@@ -168,9 +224,9 @@ Future<void> init() async {
         syncRepo: sl<SyncRepository>(),
       ));
 
-  sl.registerLazySingleton<AccountBalanceBloc>(() => AccountBalanceBloc(sl()));
+  sl.registerLazySingleton(() => AccountBalanceBloc(sl()));
 
-  sl.registerLazySingleton<CategoryCashflowBloc>(() => CategoryCashflowBloc(dataRepository: sl()));
+  sl.registerLazySingleton(() => CategoryCashflowBloc(sl()));
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
     (mode, _) => DriveDialogBloc(
@@ -185,18 +241,35 @@ Future<void> init() async {
         authRepository: sl<AuthRepository>(),
       ));
 
-  sl.registerFactory(() => AccountDetailBloc(sl<DataRepository>()));
-  sl.registerFactory(() => AccountInputBloc(sl<DataRepository>()));
+  sl.registerFactory(() => AccountDetailBloc(
+        sl<WatchAccountTitleUseCase>(),
+        sl<WatchOperationsByAccountUseCase>(),
+      ));
+  sl.registerFactory(() => AccountInputBloc(
+        sl<GetAccountByIdUseCase>(),
+        sl<InsertAccountUseCase>(),
+        sl<UpdateAccountUseCase>(),
+      ));
 
   sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));
-  sl.registerFactory(() => CategoryDetailBloc(sl<DataRepository>()));
-  sl.registerFactory(() => CategoryInputBloc(sl<DataRepository>()));
 
-  sl.registerFactory(() => LastOperationsBloc(sl<DataRepository>()));
+  sl.registerFactory(() => CategoryDetailBloc(
+        sl<WatchOperationsByCategoryUseCase>(),
+        sl<WatchCategoryByIdUseCase>(),
+      ));
+  sl.registerFactory(() => CategoryInputBloc(
+        sl<GetCategoryByIdUseCase>(),
+        sl<InsertCategoryUseCase>(),
+        sl<UpdateCategoryUseCase>(),
+      ));
 
-  sl.registerFactory(() => OperationEditBloc(sl<DataRepository>()));
-  sl.registerFactory(() => MasterBloc(sl<DataRepository>()));
-  sl.registerFactory(() => OperationFilterBloc(sl<DataRepository>()));
+  sl.registerFactory(
+      () => LastOperationsBloc(sl<WatchLastOperationsUseCase>()));
+
+  sl.registerFactory(
+      () => OperationEditBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => MasterBloc(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => OperationFilterBloc());
   sl.registerFactory(() => OperationListBloc(sl<DataRepository>()));
   sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
   sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));
