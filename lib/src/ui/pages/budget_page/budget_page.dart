@@ -134,13 +134,11 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final start = operationType == OperationType.INPUT
-        ? context.loc.earningIn
-        : context.loc.spendingIn;
-
-    final formatDate = DateFormat.yMMMM().format(date);
-
-    return Text('$start $formatDate');
+    return switch (operationType){
+      OperationType.INPUT => Text(context.loc.earningIn(date)),
+      OperationType.OUTPUT => Text(context.loc.spendingIn(date)),
+      _ => const Text(''),
+    };
   }
 }
 

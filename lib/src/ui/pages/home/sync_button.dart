@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
+import 'package:money_tracker/src/utils/extensions.dart';
 
 class SyncButton extends StatelessWidget {
   const SyncButton({super.key});
@@ -15,14 +16,14 @@ class SyncButton extends StatelessWidget {
     });
   }
 
-  String _getTitle(SyncState state) => state.map(
-        inProgress: (_) => 'In progress',
-        synced: (_) => 'Synced',
-        loadingToCloud: (_) => 'Loading to remote',
-        loadingFromCloud: (_) => 'Loading from remote',
-        noDB: (_) => 'No local',
-        notSynced: (_) => 'Not synced',
-        failure: (_) => 'Failed',
+  String _getTitle(BuildContext context, SyncState state) => state.map(
+        inProgress: (_) => context.loc.syncStateInProgress,
+        synced: (_) => context.loc.syncStateSynced,
+        loadingToCloud: (_) => context.loc.syncStateLoadingToCloud,
+        loadingFromCloud: (_) => context.loc.syncStateLoadingFromCloud,
+        noDB: (_) => context.loc.syncStateNoDB,
+        notSynced: (_) => context.loc.syncStateNotSynced,
+        failure: (_) => context.loc.syncStateFailure,
       );
 
   Icon _appBarIcon(SyncState state) => _iconBySyncState(state, color: Colors.black);
@@ -49,7 +50,7 @@ class SyncButton extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: BlocBuilder<SyncBloc, SyncState>(
-          builder: (context, state) => Text(_getTitle(state)),
+          builder: (context, state) => Text(_getTitle(context, state)),
         ),
         content: BlocBuilder<SyncBloc, SyncState>(builder: (context, state) {
           return state.map(
@@ -57,18 +58,18 @@ class SyncButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _dialogIcon(state),
-                Text('Accounts ${state.accountCount}'),
-                Text('Categories ${state.categoryCount}'),
-                Text('Operations ${state.operationCount}'),
+                Text('${context.loc.accounts} ${state.accountCount}'),
+                Text('${context.loc.categories} ${state.categoryCount}'),
+                Text('${context.loc.operations} ${state.operationCount}'),
               ],
             ),
             loadingFromCloud: (state) => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 _dialogIcon(state),
-                Text('Accounts ${state.accountCount}'),
-                Text('Categories ${state.categoryCount}'),
-                Text('Operations ${state.operationCount}'),
+                Text('${context.loc.accounts} ${state.accountCount}'),
+                Text('${context.loc.categories} ${state.categoryCount}'),
+                Text('${context.loc.operations} ${state.operationCount}'),
               ],
             ),
             synced: (state) => _dialogIcon(state),
@@ -87,11 +88,11 @@ class SyncButton extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => context.read<SyncBloc>().add(const SyncEvent.syncNow()),
-            child: Text('Sync'.toUpperCase()),
+            child: Text(context.loc.btnSync.toUpperCase()),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Close'.toUpperCase()),
+            child: Text(context.materialLoc.closeButtonLabel.toUpperCase()),
           ),
         ],
       ),

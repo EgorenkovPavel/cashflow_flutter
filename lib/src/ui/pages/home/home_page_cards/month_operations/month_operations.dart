@@ -24,25 +24,26 @@ class MonthOperations extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text:
-                        '${operationType == OperationType.INPUT ? context.loc.earningIn : context.loc.spendingIn} ',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  TextSpan(
-                    text: DateFormat.MMMM(
-                      Localizations.localeOf(context).toString(),
-                    ).format(DateTime.now()),
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                ],
-              ),
-            ),
+            title: Text(operationType == OperationType.INPUT ? context.loc.earningIn(DateTime.now()) : context.loc.spendingIn(DateTime.now()) ,style: Theme.of(context).textTheme.titleLarge,),
+            // title: RichText(
+            //   text: TextSpan(
+            //     children: [
+            //       TextSpan(
+            //         text:
+            //             '${operationType == OperationType.INPUT ? context.loc.earningIn : context.loc.spendingIn} ',
+            //         style: Theme.of(context).textTheme.titleLarge,
+            //       ),
+            //       TextSpan(
+            //         text: DateFormat.MMMM(
+            //           Localizations.localeOf(context).toString(),
+            //         ).format(DateTime.now()),
+            //         style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            //               color: Theme.of(context).colorScheme.primary,
+            //             ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ),
           Column(
             children: context
@@ -66,7 +67,7 @@ class MonthOperations extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => context.openBudgetPage(operationType),
-                child: const Text('Details'),
+                child: Text(context.loc.details),
               ),
             ],
           ),

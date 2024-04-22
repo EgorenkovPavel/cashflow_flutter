@@ -53,6 +53,8 @@
   "mesAccountArchived": "Счет добавлен в архив",
   "mesCategoryArchived": "Категория добавлена в архив",
   "mesAreYouSure": "Вы уверены?",
+
+  "details": "Подробнее",
   "accounts": "Счета",
   "debts": "Долги",
   "noItems": "Нет элементов",
@@ -75,8 +77,26 @@
   "outputCategory": "Категория расхода",
   "earning": "Получено",
   "spending": "Потрачено",
-  "earningIn": "Получено за",
-  "spendingIn": "Потрачено за",
+
+  "earningIn": "Получено за {date}",
+  "@earningIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+    }
+  },
+  "spendingIn": "Потрачено за {date}",
+  "@spendingIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+     }
+  },
+
   "budgetType": "Тип бюджета",
   "source": "Источник",
   "receiver": "Приемник",
@@ -103,5 +123,15 @@
   "btnShowAll": "Показать все",
   "btnHide": "Скрыть",
   "btnShowReports": "Показать отчеты",
-  "btnDeleteAll": "Удалить все"
+  "btnDeleteAll": "Удалить все",
+  "btnSync": "Синхр",
+
+  "syncStateInProgress": "В процессе",
+  "syncStateSynced": "Синхронизировано",
+  "syncStateLoadingToCloud": "Загрузка в облако",
+  "syncStateLoadingFromCloud": "Загрузка из облака",
+  "syncStateNoDB": "Нет локальной базы",
+  "syncStateNotSynced": "Не синхронизировано",
+  "syncStateFailure": "Ошибка"
+
 }

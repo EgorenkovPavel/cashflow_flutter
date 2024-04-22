@@ -56,6 +56,8 @@
   "mesAccountArchived": "Account archived",
   "mesCategoryArchived": "Category archived",
   "mesAreYouSure": "Are you sure?",
+
+  "details": "Details",
   "accounts": "Accounts",
   "debts": "Debts",
   "noItems": "No items",
@@ -78,8 +80,26 @@
   "outputCategory": "Output category",
   "earning": "Earning",
   "spending": "Spending",
-  "earningIn": "Earning in",
-  "spendingIn": "Spending in",
+
+  "earningIn": "Earning in {date}",
+  "@earningIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+    }
+  },
+  "spendingIn": "Spending in {date}",
+  "@spendingIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+     }
+  },
+
   "budgetType": "Budget type",
   "source": "Source",
   "receiver": "Receiver",
@@ -106,5 +126,14 @@
   "btnShowAll": "Show all",
   "btnHide": "Hide",
   "btnShowReports": "Show reports",
-  "btnDeleteAll": "Delete all"
+  "btnDeleteAll": "Delete all",
+  "btnSync": "Sync",
+
+  "syncStateInProgress": "In progress",
+  "syncStateSynced": "Synced",
+  "syncStateLoadingToCloud": "Loading to remote",
+  "syncStateLoadingFromCloud": "Loading from remote",
+  "syncStateNoDB": "No local",
+  "syncStateNotSynced": "Not synced",
+  "syncStateFailure": "Failed"
 }
