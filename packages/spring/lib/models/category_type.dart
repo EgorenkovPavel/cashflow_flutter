@@ -1,0 +1,3 @@
+enum CategoryType{
+  input, output
+}
