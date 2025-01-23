@@ -1,79 +1,108 @@
-import 'package:spring/services/category_service.dart';
+import 'category_service.dart';
 
 import '../models/models.dart';
 import 'network_client.dart';
 
-class CategoryServiceImpl implements CategoryService{
+class CategoryServiceImpl implements CategoryService {
   final NetworkClient _connector;
-  final _path = 'categories';
 
   CategoryServiceImpl(this._connector);
 
-  @override
-  Future<List<Category>> getAll() => _connector.get<List<Category>>(_path);
+  String get _path => 'user-groups/${_connector.user!.userGroup}/categories';
 
   @override
-  Future<Category> createCategory(
-      String name, CategoryType type, int budget, CategoryId? parent) =>
-      _postCategory(
-          name: name,
-          type: type,
-          budget: budget,
-          isGroup: false,
-          parent: parent,
-          userGroup: _connector.user!.userGroup);
+  Future<Category> getById(CategoryId id) => _connector.get<Category>(
+        '$_path/$id',
+        (e) => Category.fromJson(e),
+      );
 
   @override
-  Future<Category> createGroup(String name, CategoryType type) =>
-      _postCategory(
-          name: name,
-          type: type,
-          budget: 0,
-          isGroup: true,
-          parent: null,
-          userGroup: _connector.user!.userGroup);
+  Future<List<Category>> getAll() => _connector.get<List<Category>>(
+        _path,
+        (data) => data.map<Category>((e) => Category.fromJson(e)).toList(),
+      );
 
   @override
-  Future<Category> updateCategory(
-      CategoryId categoryId, String name, int budget, CategoryId? parent) =>
-      _connector.update('$_path/$categoryId', {
-        'name': name,
-        'budget': budget,
-        'parent': parent,
-      });
-
-  @override
-  Future<Category> updateGroup(CategoryId categoryId, String name) =>
-      _connector.update('$_path/$categoryId', {
-        'name': name,
-      });
-
-  Future<Category> _postCategory(
-      {CategoryId? id,
-        required String name,
-        required CategoryType type,
-        required int budget,
-        required bool isGroup,
-        required CategoryId? parent,
-        required UserGroupId userGroup}) async {
-    Category category = Category(
-      id: id,
+  Future<InputCategoryItem> createInputCategoryItem(
+    String name,
+    int budget,
+    CategoryId? parent,
+  ) async {
+    InputCategoryItem category = InputCategoryItem(
       name: name,
-      type: type,
       budget: budget,
-      isGroup: isGroup,
       parent: parent,
-      userGroup: userGroup,
     );
-    Map<String, dynamic> data = await _connector.post(_path, category);
-    return Category(
-      id: data['id'],
-      name: category.name,
-      type: category.type,
-      budget: category.budget,
-      isGroup: category.isGroup,
-      parent: category.parent,
-      userGroup: category.userGroup,
+    final id = await _postCategory(category);
+    return category.copyWithId(id);
+  }
+
+  @override
+  Future<OutputCategoryItem> createOutputCategoryItem(
+    String name,
+    int budget,
+    CategoryId? parent,
+  ) async {
+    OutputCategoryItem category = OutputCategoryItem(
+      name: name,
+      budget: budget,
+      parent: parent,
     );
+    final id = await _postCategory(category);
+    return category.copyWithId(id);
+  }
+
+  @override
+  Future<InputCategoryGroup> createInputCategoryGroup(String name) async {
+    InputCategoryGroup category = InputCategoryGroup(
+      name: name,
+    );
+    final id = await _postCategory(category);
+    return category.copyWithId(id);
+  }
+
+  @override
+  Future<OutputCategoryGroup> createOutputCategoryGroup(String name) async {
+    OutputCategoryGroup category = OutputCategoryGroup(
+      name: name,
+    );
+    final id = await _postCategory(category);
+    return category.copyWithId(id);
+  }
+
+  @override
+  Future<CategoryItem> updateCategoryItem(
+    CategoryItem category,
+    String name,
+    int budget,
+    CategoryId? parent,
+  ) =>
+      _connector.update(
+        path: '$_path/${category.id}',
+        body: {
+          'name': name,
+          'budget': budget,
+          'parent': parent,
+        },
+        mapper: (e) => Category.fromJson(e) as CategoryItem,
+      );
+
+  @override
+  Future<CategoryGroup> updateCategoryGroup(
+    CategoryGroup category,
+    String name,
+  ) =>
+      _connector.update(
+        path: '$_path/${category.id}',
+        body: {
+          'name': name,
+          'budget': 0,
+          'parent': null,
+        },
+        mapper: (e) => Category.fromJson(e) as CategoryGroup,
+      );
+
+  Future<CategoryId> _postCategory(Category category) async {
+    return await _connector.post(_path, category.toJson());
   }
 }

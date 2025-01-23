@@ -1,138 +1,165 @@
-import 'package:spring/services/operation_service.dart';
+import 'operation_service.dart';
 
 import '../models/models.dart';
 import 'network_client.dart';
 
 class OperationServiceImpl implements OperationService {
   final NetworkClient _connector;
-  final _path = 'operations';
 
   OperationServiceImpl(this._connector);
 
-  @override
-  Future<List<Operation>> getAll() => _connector.get<List<Operation>>(_path);
+  String get _path => 'user-groups/${_connector.user!.userGroup}/operations';
 
   @override
-  Future<Operation> createInputOperation(
-          DateTime date, Account account, Category category, int sum) =>
-      _postOperation(
-          date: date,
-          type: OperationType.input,
-          account: account.id!,
-          analytic: category.id!,
-          sumSent: sum,
-          sumReceived: sum,
-          currencySent: account.currency,
-          currencyReceived: account.currency,
-          user: _connector.user!.id);
+  Future<Operation> getById(OperationId id) => _connector.get<Operation>(
+        '$_path/$id',
+        (e) => Operation.fromJson(e),
+      );
 
   @override
-  Future<Operation> createOutputOperation(
-          DateTime date, Account account, Category category, int sum) =>
-      _postOperation(
-          date: date,
-          type: OperationType.output,
-          account: account.id!,
-          analytic: category.id!,
-          sumSent: sum,
-          sumReceived: sum,
-          currencySent: account.currency,
-          currencyReceived: account.currency,
-          user: _connector.user!.id);
+  Future<List<Operation>> getAll() => _connector.get<List<Operation>>(
+        _path,
+        (data) => data.map<Operation>((e) => Operation.fromJson(e)).toList(),
+      );
 
   @override
-  Future<Operation> createTransferOperation(DateTime date, Account account,
-          Account accountRec, int sum, int sumRec) =>
-      _postOperation(
-          date: date,
-          type: OperationType.transfer,
-          account: account.id!,
-          analytic: accountRec.id!,
-          sumSent: sum,
-          sumReceived: sumRec,
-          currencySent: account.currency,
-          currencyReceived: accountRec.currency,
-          user: _connector.user!.id);
-
-
-  @override
-  Future<void> deleteOperation(OperationId id) => _connector.delete(_path, id);
-
-  Future<Operation> _postOperation(
-      {OperationId? id,
-      required DateTime date,
-      required OperationType type,
-      required AccountId account,
-      required AnalyticId analytic,
-      required int sumSent,
-      required int sumReceived,
-      required Currency currencySent,
-      required Currency currencyReceived,
-      required UserId user}) async {
-    Operation operation = Operation(
-        id: id,
-        date: date,
-        type: type,
-        account: account,
-        analytic: analytic,
-        sumSent: sumSent,
-        sumReceived: sumReceived,
-        currencySent: currencySent,
-        currencyReceived: currencyReceived,
-        user: user);
-    Map<String, dynamic> data = await _connector.post(_path, operation);
-    return Operation(
-        id: data['id'],
-        date: operation.date,
-        type: operation.type,
-        account: operation.account,
-        analytic: operation.analytic,
-        sumSent: operation.sumSent,
-        sumReceived: operation.sumReceived,
-        currencySent: operation.currencySent,
-        currencyReceived: operation.currencyReceived,
-        user: operation.user);
+  Future<InputOperation> createInputOperation(
+    DateTime date,
+    Account account,
+    InputCategoryItem category,
+    int sum,
+  ) async {
+    InputOperation operation = InputOperation(
+      date: date,
+      account: account.id!,
+      analytic: category.id!,
+      sum: sum,
+      currency: account.currency,
+      user: _connector.user!.id,
+    );
+    final id = await _postOperation(operation);
+    return operation.copyWithId(id);
   }
 
   @override
-  Future<Operation> swapToInputOperation(OperationId operationId, DateTime date,
-          Account account, Category category, int sum) =>
-      _connector.update('$_path/$operationId', {
-        'date': date,
-        'type': OperationType.input,
-        'account': account.id,
-        'analytic': category.id,
-        'sumSent': sum,
-        'sumReceived': sum,
-        'currencySent': account.currency,
-        'currencyReceived': account.currency,
-      });
+  Future<OutputOperation> createOutputOperation(
+    DateTime date,
+    Account account,
+    OutputCategoryItem category,
+    int sum,
+  ) async {
+    OutputOperation operation = OutputOperation(
+      date: date,
+      account: account.id!,
+      analytic: category.id!,
+      sum: sum,
+      currency: account.currency,
+      user: _connector.user!.id,
+    );
+    final id = await _postOperation(operation);
+    return operation.copyWithId(id);
+  }
 
   @override
-  Future<Operation> swapToOutputOperation(OperationId operationId, DateTime date,
-      Account account, Category category, int sum)=>
-      _connector.update('$_path/$operationId', {
-        'date': date,
-        'type': OperationType.output,
-        'account': account.id,
-        'analytic': category.id,
-        'sumSent': sum,
-        'sumReceived': sum,
-        'currencySent': account.currency,
-        'currencyReceived': account.currency,
-      });
+  Future<TransferOperation> createTransferOperation(
+    DateTime date,
+    BaseAccount account,
+    BaseAccount accountRec,
+    int sumSent,
+    int sumReceived,
+  ) async {
+    TransferOperation operation = TransferOperation(
+      date: date,
+      account: account.id!,
+      analytic: accountRec.id!,
+      sumSent: sumSent,
+      sumReceived: sumReceived,
+      currencySent: account.currency,
+      currencyReceived: accountRec.currency,
+      user: _connector.user!.id,
+    );
+    final id = await _postOperation(operation);
+    return operation.copyWithId(id);
+  }
 
   @override
-  Future<Operation> swapToTransferOperation(OperationId operationId, DateTime date,
-      Account account, Account accountRec, int sum, int sumRec) =>
-      _connector.update('$_path/$operationId', {
-        'date': date,
-        'type': OperationType.transfer,
-        'account': account.id,
-        'analytic': accountRec.id,
-        'sumSent': sum,
-        'sumReceived': sumRec,
-        'currencySent': account.currency,
-        'currencyReceived': accountRec.currency,
-      });
+  Future<void> deleteOperation(OperationId id) =>
+      _connector.delete('$_path/$id');
+
+  Future<OperationId> _postOperation(Operation operation) =>
+      _connector.post(_path, operation.toJson());
+
+  @override
+  Future<InputOperation> swapToInputOperation(
+    Operation operation,
+    DateTime date,
+    Account account,
+    InputCategoryItem category,
+    int sum,
+  ) async {
+    InputOperation newOperation = InputOperation(
+      id: operation.id,
+      date: date,
+      account: account.id!,
+      analytic: category.id!,
+      sum: sum,
+      currency: account.currency,
+      user: _connector.user!.id,
+    );
+    return await _connector.update(
+      path: '$_path/${operation.id}',
+      body: newOperation.toJson(),
+      mapper: (e) => Operation.fromJson(e) as InputOperation,
+    );
+  }
+
+  @override
+  Future<OutputOperation> swapToOutputOperation(
+    Operation operation,
+    DateTime date,
+    Account account,
+    OutputCategoryItem category,
+    int sum,
+  ) async {
+    OutputOperation newOperation = OutputOperation(
+      id: operation.id,
+      date: date,
+      account: account.id!,
+      analytic: category.id!,
+      sum: sum,
+      currency: account.currency,
+      user: _connector.user!.id,
+    );
+    return await _connector.update(
+      path: '$_path/${operation.id}',
+      body: newOperation.toJson(),
+      mapper: (e) => Operation.fromJson(e) as OutputOperation,
+    );
+  }
+
+  @override
+  Future<TransferOperation> swapToTransferOperation(
+      Operation operation,
+      DateTime date,
+      BaseAccount account,
+      BaseAccount accountRec,
+      int sumSent,
+      int sumReceived) async {
+    TransferOperation newOperation = TransferOperation(
+      id: operation.id,
+      date: date,
+      account: account.id!,
+      analytic: accountRec.id!,
+      sumSent: sumSent,
+      sumReceived: sumReceived,
+      currencySent: account.currency,
+      currencyReceived: accountRec.currency,
+      user: _connector.user!.id,
+    );
+    return await _connector.update(
+      path: '$_path/${operation.id}',
+      body: newOperation.toJson(),
+      mapper: (e) => Operation.fromJson(e) as TransferOperation,
+    );
+  }
 }

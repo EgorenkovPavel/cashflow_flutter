@@ -1,51 +1,54 @@
 import '../models/models.dart';
 
 abstract interface class OperationService {
+
+  Future<Operation> getById(OperationId id);
+
   Future<List<Operation>> getAll();
 
-  Future<Operation> createInputOperation(
+  Future<InputOperation> createInputOperation(
     DateTime date,
     Account account,
-    Category category,
+    InputCategoryItem category,
     int sum,
   );
 
-  Future<Operation> createOutputOperation(
+  Future<OutputOperation> createOutputOperation(
     DateTime date,
     Account account,
-    Category category,
+    OutputCategoryItem category,
     int sum,
   );
 
-  Future<Operation> createTransferOperation(
+  Future<TransferOperation> createTransferOperation(
     DateTime date,
-    Account account,
-    Account accountRec,
+    BaseAccount account,
+    BaseAccount accountRec,
     int sum,
     int sumRec,
   );
 
-  Future<Operation> swapToInputOperation(
-    OperationId operationId,
+  Future<InputOperation> swapToInputOperation(
+    Operation operation,
     DateTime date,
     Account account,
-    Category category,
+    InputCategoryItem category,
     int sum,
   );
 
-  Future<Operation> swapToOutputOperation(
-    OperationId operationId,
+  Future<OutputOperation> swapToOutputOperation(
+    Operation operation,
     DateTime date,
     Account account,
-    Category category,
+    OutputCategoryItem category,
     int sum,
   );
 
-  Future<Operation> swapToTransferOperation(
-    OperationId operationId,
+  Future<TransferOperation> swapToTransferOperation(
+    Operation operation,
     DateTime date,
-    Account account,
-    Account accountRec,
+    BaseAccount account,
+    BaseAccount accountRec,
     int sum,
     int sumRec,
   );

@@ -1,23 +1,36 @@
 import '../models/models.dart';
 
 abstract interface class CategoryService {
+
+  Future<Category> getById(CategoryId id);
+
   Future<List<Category>> getAll();
 
-  Future<Category> createCategory(
-    String name,
-    CategoryType type,
-    int budget,
-    CategoryId? parent,
-  );
-
-  Future<Category> updateCategory(
-    CategoryId categoryId,
+  Future<InputCategoryItem> createInputCategoryItem(
     String name,
     int budget,
     CategoryId? parent,
   );
 
-  Future<Category> createGroup(String name, CategoryType type);
+  Future<OutputCategoryItem> createOutputCategoryItem(
+    String name,
+    int budget,
+    CategoryId? parent,
+  );
 
-  Future<Category> updateGroup(CategoryId categoryId, String name);
+  Future<CategoryItem> updateCategoryItem(
+    CategoryItem category,
+    String name,
+    int budget,
+    CategoryId? parent,
+  );
+
+  Future<InputCategoryGroup> createInputCategoryGroup(String name);
+
+  Future<OutputCategoryGroup> createOutputCategoryGroup(String name);
+
+  Future<CategoryGroup> updateCategoryGroup(
+    CategoryGroup category,
+    String name,
+  );
 }
