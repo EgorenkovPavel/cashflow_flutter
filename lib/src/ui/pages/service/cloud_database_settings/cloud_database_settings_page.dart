@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
@@ -213,25 +213,25 @@ class AdminSettings extends StatelessWidget {
   }
 
   Future<void> _scanQrCode(BuildContext context) async {
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.QR,
-      );
-    } on PlatformException {
-      return;
-    }
-    if (barcodeScanRes == '') {
-      return;
-    }
-
-    var userData = jsonDecode(barcodeScanRes);
-
-    if (!context.mounted) return;
-    context.read<SyncBloc>().add(SyncEvent.addUser(user: User.fromJson(userData)));
+    // String barcodeScanRes;
+    // try {
+    //   barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+    //     '#ff6666',
+    //     'Cancel',
+    //     true,
+    //     ScanMode.QR,
+    //   );
+    // } on PlatformException {
+    //   return;
+    // }
+    // if (barcodeScanRes == '') {
+    //   return;
+    // }
+    //
+    // var userData = jsonDecode(barcodeScanRes);
+    //
+    // if (!context.mounted) return;
+    // context.read<SyncBloc>().add(SyncEvent.addUser(user: User.fromJson(userData)));
   }
 }
 
