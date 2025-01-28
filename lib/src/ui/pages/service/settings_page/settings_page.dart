@@ -21,12 +21,13 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 AuthListTile(),
-                Divider(),
+                Divider(thickness: 0.2,),
                 CloudDatabaseListTile(),
-                Divider(),
+                Divider(thickness: 0.2,),
                 GoogleDriveListTile(),
-                Divider(),
+                Divider(thickness: 0.2,),
                 DataControlListTile(),
+                Divider(thickness: 0.2,),
               ],
             ),
           );
@@ -52,7 +53,7 @@ class AuthListTile extends StatelessWidget {
                 trailing: ElevatedButton(
                   onPressed: () =>
                       context.read<AuthBloc>().add(const AuthEvent.signOut()),
-                  child: Text('SING OUT', style: TextStyle().copyWith(color: Colors.white)),
+                  child: const Text('SING OUT'),
                 ),
               )
             : ListTile(
@@ -61,7 +62,7 @@ class AuthListTile extends StatelessWidget {
                 trailing: ElevatedButton(
                   onPressed: () =>
                       context.read<AuthBloc>().add(const AuthEvent.signIn()),
-                  child: Text('SIGN IN', style: TextStyle().copyWith(color: Colors.white)),
+                  child: const Text('SIGN IN'),
                 ),
               );
       },

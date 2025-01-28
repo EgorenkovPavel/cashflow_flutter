@@ -9,9 +9,11 @@ const Color _accentColor = Color(0xFFF15931);
 
 ThemeData theme() {
   return ThemeData(
-    colorScheme: const ColorScheme.light(
-      primary: _primaryColor,
-      secondary: _accentColor,
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _primaryColor,
+      brightness: Brightness.light,
+      //brightness: _accentColor,
     ),
     appBarTheme: const AppBarTheme(
       //brightness: Brightness.dark,
@@ -21,10 +23,11 @@ ThemeData theme() {
       backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(_primaryColor),
-      ),
-    ),
+    // elevatedButtonTheme: ElevatedButtonThemeData(
+    //   style: ButtonStyle(
+    //     backgroundColor: MaterialStateProperty.all(_primaryColor),
+    //     textStyle: WidgetStateTextStyle.resolveWith((states) => const TextStyle().copyWith(color: Colors.white)),
+    //   ),
+    // ),
   );
 }

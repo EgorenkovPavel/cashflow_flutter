@@ -39,7 +39,8 @@ class ItemCard<T> extends StatelessWidget {
                 ),
               ),
               child,
-              ButtonBar(
+              OverflowBar(
+                alignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(null),
@@ -47,10 +48,7 @@ class ItemCard<T> extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () => _onSavePressed(context),
-                    child: Text(
-                      context.loc.save.toUpperCase(),
-                      style: const TextStyle().copyWith(color: Colors.white),
-                    ),
+                    child: Text(context.loc.save.toUpperCase()),
                   ),
                 ],
               ),
