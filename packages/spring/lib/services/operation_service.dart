@@ -1,7 +1,6 @@
 import '../models/models.dart';
 
 abstract interface class OperationService {
-
   Future<Operation> getById(OperationId id);
 
   Future<List<Operation>> getAll();
@@ -11,6 +10,7 @@ abstract interface class OperationService {
     Account account,
     InputCategoryItem category,
     int sum,
+    Currency currency,
   );
 
   Future<OutputOperation> createOutputOperation(
@@ -18,14 +18,17 @@ abstract interface class OperationService {
     Account account,
     OutputCategoryItem category,
     int sum,
+    Currency currency,
   );
 
   Future<TransferOperation> createTransferOperation(
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sum,
-    int sumRec,
+    int sumSent,
+    int sumReceived,
+    Currency currencySent,
+    Currency currencyReceived,
   );
 
   Future<InputOperation> swapToInputOperation(
@@ -34,6 +37,7 @@ abstract interface class OperationService {
     Account account,
     InputCategoryItem category,
     int sum,
+    Currency currency,
   );
 
   Future<OutputOperation> swapToOutputOperation(
@@ -42,6 +46,7 @@ abstract interface class OperationService {
     Account account,
     OutputCategoryItem category,
     int sum,
+    Currency currency,
   );
 
   Future<TransferOperation> swapToTransferOperation(
@@ -49,8 +54,10 @@ abstract interface class OperationService {
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sum,
-    int sumRec,
+    int sumSent,
+    int sumReceived,
+    Currency currencySent,
+    Currency currencyReceived,
   );
 
   Future<void> deleteOperation(OperationId id);

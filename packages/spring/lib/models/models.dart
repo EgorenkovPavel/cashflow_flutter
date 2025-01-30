@@ -1,4 +1,5 @@
 export 'account.dart';
+export 'balance.dart';
 export 'category_type.dart';
 export 'category.dart';
 export 'currency.dart';

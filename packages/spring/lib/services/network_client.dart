@@ -31,14 +31,19 @@ class NetworkClient {
       print('GET request: ${_url(path)}');
     }
 
-    final response = await http.get(
-      _url(path),
-      headers: _headers,
-    );
-    if (kDebugMode) {
-      print('GET response ${response.statusCode}: ${response.body}');
+    try {
+      final response = await http.get(
+        _url(path),
+        headers: _headers,
+      );
+      if (kDebugMode) {
+        print('GET response ${response.statusCode}: ${response.body}');
+      }
+      return mapper(jsonDecode(response.body));
+    }catch (e){
+      print(e.toString());
+      rethrow;
     }
-    return mapper(jsonDecode(response.body));
   }
 
   Future<T> post<T>(String path, dynamic body) async {

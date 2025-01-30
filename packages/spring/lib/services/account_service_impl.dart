@@ -24,24 +24,20 @@ class AccountServiceImpl implements AccountService {
       );
 
   @override
-  Future<Account> createAccount(String name, Currency currency) async {
+  Future<Account> createAccount(String name) async {
     final Account account = Account(
       name: name,
-      currency: currency,
       user: _connector.user!.id,
-      balance: 0,
     );
     final id = await _postAccount(account);
     return account.copyWith(id: id);
   }
 
   @override
-  Future<Debt> createDebt(String name, Currency currency) async {
+  Future<Debt> createDebt(String name) async {
     final Debt account = Debt(
       name: name,
-      currency: currency,
       user: _connector.user!.id,
-      balance: 0,
     );
     final id = await _postAccount(account);
     return account.copyWith(id: id);
@@ -57,4 +53,23 @@ class AccountServiceImpl implements AccountService {
 
   Future<AccountId> _postAccount(BaseAccount account) =>
       _connector.post<AccountId>(_path, account.toJson());
+
+  @override
+  Future<List<Balance>> getAccountBalance(AccountId id) =>
+      _connector.get<List<Balance>>(
+        '$_path/$id/balance',
+        (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
+      );
+
+  @override
+  Future<List<Balance>> getTotalBalance() => _connector.get<List<Balance>>(
+        'user-groups/${_connector.user!.userGroup}/balance',
+        (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
+      );
+
+  @override
+  Future<int> getTotalBalanceInBaseCurrency() => _connector.get<int>(
+        'user-groups/${_connector.user!.userGroup}/balanceInBaseCurrency',
+        (data) => data,
+      );
 }

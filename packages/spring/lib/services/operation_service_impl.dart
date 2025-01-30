@@ -28,13 +28,14 @@ class OperationServiceImpl implements OperationService {
     Account account,
     InputCategoryItem category,
     int sum,
+    Currency currency,
   ) async {
     InputOperation operation = InputOperation(
       date: date,
       account: account.id!,
       analytic: category.id!,
       sum: sum,
-      currency: account.currency,
+      currency: currency,
       user: _connector.user!.id,
     );
     final id = await _postOperation(operation);
@@ -47,13 +48,14 @@ class OperationServiceImpl implements OperationService {
     Account account,
     OutputCategoryItem category,
     int sum,
+    Currency currency,
   ) async {
     OutputOperation operation = OutputOperation(
       date: date,
       account: account.id!,
       analytic: category.id!,
       sum: sum,
-      currency: account.currency,
+      currency: currency,
       user: _connector.user!.id,
     );
     final id = await _postOperation(operation);
@@ -67,6 +69,8 @@ class OperationServiceImpl implements OperationService {
     BaseAccount accountRec,
     int sumSent,
     int sumReceived,
+    Currency currencySent,
+    Currency currencyReceived,
   ) async {
     TransferOperation operation = TransferOperation(
       date: date,
@@ -74,8 +78,8 @@ class OperationServiceImpl implements OperationService {
       analytic: accountRec.id!,
       sumSent: sumSent,
       sumReceived: sumReceived,
-      currencySent: account.currency,
-      currencyReceived: accountRec.currency,
+      currencySent: currencySent,
+      currencyReceived: currencyReceived,
       user: _connector.user!.id,
     );
     final id = await _postOperation(operation);
@@ -96,6 +100,7 @@ class OperationServiceImpl implements OperationService {
     Account account,
     InputCategoryItem category,
     int sum,
+    Currency currency,
   ) async {
     InputOperation newOperation = InputOperation(
       id: operation.id,
@@ -103,7 +108,7 @@ class OperationServiceImpl implements OperationService {
       account: account.id!,
       analytic: category.id!,
       sum: sum,
-      currency: account.currency,
+      currency: currency,
       user: _connector.user!.id,
     );
     return await _connector.update(
@@ -120,6 +125,7 @@ class OperationServiceImpl implements OperationService {
     Account account,
     OutputCategoryItem category,
     int sum,
+    Currency currency,
   ) async {
     OutputOperation newOperation = OutputOperation(
       id: operation.id,
@@ -127,7 +133,7 @@ class OperationServiceImpl implements OperationService {
       account: account.id!,
       analytic: category.id!,
       sum: sum,
-      currency: account.currency,
+      currency: currency,
       user: _connector.user!.id,
     );
     return await _connector.update(
@@ -139,12 +145,15 @@ class OperationServiceImpl implements OperationService {
 
   @override
   Future<TransferOperation> swapToTransferOperation(
-      Operation operation,
-      DateTime date,
-      BaseAccount account,
-      BaseAccount accountRec,
-      int sumSent,
-      int sumReceived) async {
+    Operation operation,
+    DateTime date,
+    BaseAccount account,
+    BaseAccount accountRec,
+    int sumSent,
+    int sumReceived,
+    Currency currencySent,
+    Currency currencyReceived,
+  ) async {
     TransferOperation newOperation = TransferOperation(
       id: operation.id,
       date: date,
@@ -152,8 +161,8 @@ class OperationServiceImpl implements OperationService {
       analytic: accountRec.id!,
       sumSent: sumSent,
       sumReceived: sumReceived,
-      currencySent: account.currency,
-      currencyReceived: accountRec.currency,
+      currencySent: currencySent,
+      currencyReceived: currencyReceived,
       user: _connector.user!.id,
     );
     return await _connector.update(
