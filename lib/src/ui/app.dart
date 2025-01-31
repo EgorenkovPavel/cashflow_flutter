@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
+import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
 
 import '../domain/models.dart';
 import 'pages/account/detail_page/account_detail_page.dart';
@@ -104,6 +105,11 @@ final _router = GoRouter(
               path: 'cloudDatabaseSettings',
               builder: (context, state) => const CloudDatabaseSettingsPage(),
             ),
+            GoRoute(
+              name: 'spring',
+              path: 'spring',
+              builder: (context, state) => const SpringPage(),
+            ),
           ],
         ),
         GoRoute(
@@ -140,6 +146,8 @@ extension PageNavigator on BuildContext {
 
   void openDataControlPage() => push(namedLocation('dataControl'));
 
+  void openSpringPage() => push(namedLocation('spring'));
+
   void openGoogleDriveSettingsPage() =>
       push(namedLocation('googleDriveSettings'));
 
@@ -159,19 +167,14 @@ extension PageNavigator on BuildContext {
   Future<Account?> openAccountEditDialog(int id) =>
       const _Card<Account>().open(this, AccountInputPage.edit(id));
 
-  Future<Category?> openCategoryInputDialog({
-    required OperationType type,
-  }) =>
+  Future<Category?> openCategoryInputDialog({required OperationType type}) =>
       const _Card<Category>().open(this, CategoryInputPage.byType(type: type));
 
-  Future<Category?> openCategoryEditDialog({
-    required int id,
-  }) =>
+  Future<Category?> openCategoryEditDialog({required int id}) =>
       const _Card<Category>().open(this, CategoryInputPage.edit(id: id));
 
   Future<OperationListFilter?> openOperationFilterPage(
-    OperationListFilter filter,
-  ) =>
+          OperationListFilter filter) =>
       const _Card<OperationListFilter>().open(
         this,
         OperationFilterPage(

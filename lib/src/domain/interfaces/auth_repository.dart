@@ -8,7 +8,7 @@ abstract class AuthRepository{
   Future<void> signInSilently();
   Future<void> signIn();
   Future<void> signOut();
-  User? getUser();
+  Future<User?> getUser();
   Stream<User?> userChanges();
   Future<AuthClient?> getClient();
   Stream<bool> isConnectedToInternet();

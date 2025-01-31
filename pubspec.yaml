@@ -52,13 +52,16 @@ dependencies:
   freezed_annotation: ^2.4.1
   file: ^6.1.4
 
+  spring1:
+    path: packages/spring
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   drift_dev: ^2.13.1
   build_runner:
   flutter_lints: ^3.0.1
-  dart_code_metrics: ^5.7.6
+#  dart_code_metrics: ^5.7.6
   freezed: ^2.4.5
 #  test: ^1.19.3
   mockito: ^5.4.2

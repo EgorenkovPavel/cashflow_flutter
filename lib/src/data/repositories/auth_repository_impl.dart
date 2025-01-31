@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:googleapis_auth/src/auth_client.dart';
 import 'package:money_tracker/src/data/interfaces/auth_source.dart';
 import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
@@ -20,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthClient?> getClient() => _authSource.getClient();
 
   @override
-  model.User? getUser() => _mapUser(_authSource.getUser());
+  Future<model.User?> getUser() => _mapUser(_authSource.getUser());
 
   @override
   Future<bool> isAuthenticated() => _authSource.isAuthenticated();
@@ -36,17 +37,29 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<model.User?> userChanges() =>
-      _authSource.userChanges().map((user) => _mapUser(user));
+      _authSource.userChanges().asyncMap((user) => _mapUser(user));
 
-  model.User? _mapUser(User? user) {
+  Future<model.User?> _mapUser(User? user) async {
     if (user == null) {
       return null;
+    }
+
+    var idToken = '';
+    try{
+      idToken = await user.getIdToken(true) ?? '';
+    }catch (e){
+
+    }
+
+    if (kDebugMode){
+      print('IDTOKEN: $idToken');
     }
 
     return model.User(
       id: user.uid,
       name: user.displayName ?? '',
       photo: user.photoURL ?? '',
+      idToken: idToken,
     );
   }
 

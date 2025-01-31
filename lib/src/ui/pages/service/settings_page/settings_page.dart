@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Builder(
         builder: (BuildContext context) {
-          return const SingleChildScrollView(
+          return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -27,6 +27,11 @@ class SettingsPage extends StatelessWidget {
                 GoogleDriveListTile(),
                 Divider(thickness: 0.2,),
                 DataControlListTile(),
+                Divider(thickness: 0.2,),
+                ListTile(
+                  title: Text('Spring'),
+                  onTap: () => context.openSpringPage(),
+                ),
                 Divider(thickness: 0.2,),
               ],
             ),

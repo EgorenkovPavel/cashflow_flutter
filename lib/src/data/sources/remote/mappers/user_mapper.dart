@@ -25,6 +25,7 @@ class UserMapper extends CloudConverter<User>{
       id: doc.id,
       name: doc.get(_KEY_NAME),
       photo: doc.get(_KEY_PHOTO),
+      idToken: '',
     );
   }
 

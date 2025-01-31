@@ -12,13 +12,14 @@ part of 'user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
+  String get idToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
@@ -29,7 +30,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String name, String photo});
+  $Res call({String id, String name, String photo, String idToken});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? name = null,
     Object? photo = null,
+    Object? idToken = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -62,6 +64,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      idToken: null == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -73,7 +79,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String photo});
+  $Res call({String id, String name, String photo, String idToken});
 }
 
 /// @nodoc
@@ -89,6 +95,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? photo = null,
+    Object? idToken = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -103,6 +110,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      idToken: null == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -110,7 +121,11 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UserImpl implements _User {
-  const _$UserImpl({required this.id, required this.name, required this.photo});
+  const _$UserImpl(
+      {required this.id,
+      required this.name,
+      required this.photo,
+      required this.idToken});
 
   @override
   final String id;
@@ -118,10 +133,12 @@ class _$UserImpl implements _User {
   final String name;
   @override
   final String photo;
+  @override
+  final String idToken;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, photo: $photo)';
+    return 'User(id: $id, name: $name, photo: $photo, idToken: $idToken)';
   }
 
   @override
@@ -131,11 +148,12 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.idToken, idToken) || other.idToken == idToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, photo);
+  int get hashCode => Object.hash(runtimeType, id, name, photo, idToken);
 
   @JsonKey(ignore: true)
   @override
@@ -148,7 +166,8 @@ abstract class _User implements User {
   const factory _User(
       {required final String id,
       required final String name,
-      required final String photo}) = _$UserImpl;
+      required final String photo,
+      required final String idToken}) = _$UserImpl;
 
   @override
   String get id;
@@ -156,6 +175,8 @@ abstract class _User implements User {
   String get name;
   @override
   String get photo;
+  @override
+  String get idToken;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
