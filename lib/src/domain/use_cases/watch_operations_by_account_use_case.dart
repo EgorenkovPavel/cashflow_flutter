@@ -1,6 +1,6 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+
 import '../models.dart';
-import '../models/enum/currency.dart';
 
 class WatchOperationsByAccountUseCase {
   final DataRepository _dataRepository;
@@ -9,13 +9,12 @@ class WatchOperationsByAccountUseCase {
 
   //TODO refactoring
   Stream<List<Operation>> call({required int accountId}) =>
-      _dataRepository.operations.watchAllByFilter(OperationListFilter(
+      _dataRepository.watchAllOperationsByFilter(OperationListFilter(
         accounts: {
           Account(
             id: accountId,
             title: '',
-            isDebt: false,
-            currency: Currency.RUB,
+            user: const User(photo: '', name: '', googleId: ''),
           ),
         },
         categories: const {},

@@ -6,9 +6,12 @@ import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/edit_page/operation_edit_bloc.dart';
+import 'package:money_tracker/src/ui/widgets/currency_menu.dart';
 import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+
+import '../../../../domain/models/enum/currency.dart';
 
 class OperationEditPage extends StatelessWidget {
   final int? id;
@@ -125,7 +128,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     ],
                   ),
                   Title(text: context.loc.titleAccount),
-                  DropdownList<Account>(
+                  DropdownList<BaseAccount>(
                     value: context.account(),
                     hint: context.loc.hintAccount,
                     items: context.accounts(),
@@ -150,7 +153,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
-                        TRANSFER: () => DropdownList<Account>(
+                        TRANSFER: () => DropdownList<BaseAccount>(
                           value: context.recAccount(),
                           hint: context.loc.hintAccount,
                           onChange: context.onRecAccountChange,
@@ -161,31 +164,45 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: _sumController,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText:
-                            '${context.loc.titleSum}, ${context.account()?.currency.symbol ?? ''}',
-                      ),
-                      onChanged: context.onChangeSum,
-                      validator: _sumValidator,
+                    child: Row(
+                      children: [
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: _sumController,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText:
+                                '${context.loc.titleSum}, ${context.currencySent().symbol}',
+                          ),
+                          onChanged: context.onChangeSum,
+                          validator: _sumValidator,
+                        ),
+                        CurrencyMenu(
+                            currency: context.currencySent(),
+                            onChange: context.onChangeCurrency),
+                      ],
                     ),
                   ),
                   if (context.showRecSum())
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _recSumController,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText:
-                              '${context.loc.titleSum}, ${context.recAccount()?.currency.symbol ?? ''}',
-                        ),
-                        onChanged: context.onChangeRecSum,
-                        validator: _sumValidator,
+                      child: Row(
+                        children: [
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: _recSumController,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText:
+                                  '${context.loc.titleSum}, ${context.currencyReceived().symbol}',
+                            ),
+                            onChanged: context.onChangeRecSum,
+                            validator: _sumValidator,
+                          ),
+                          CurrencyMenu(
+                              currency: context.currencySent(),
+                              onChange: context.onChangeRecCurrency),
+                        ],
                       ),
                     ),
                 ],
@@ -199,8 +216,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
             ),
             ElevatedButton(
               onPressed: () => _onSavePressed(context),
-              child: Text(context.loc.save.toUpperCase(),
-                  style: const TextStyle().copyWith(color: Colors.white)),
+              child: Text(context.loc.save.toUpperCase()),
             ),
           ],
         ),
@@ -230,12 +246,20 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.category,
       );
 
-  Account? recAccount() => select<OperationEditBloc, Account?>(
+  BaseAccount? recAccount() => select<OperationEditBloc, BaseAccount?>(
         (bloc) => bloc.state.recAccount,
       );
 
-  Account? account() => select<OperationEditBloc, Account?>(
+  BaseAccount? account() => select<OperationEditBloc, BaseAccount?>(
         (bloc) => bloc.state.account,
+      );
+
+  Currency currencySent() => select<OperationEditBloc, Currency>(
+        (bloc) => bloc.state.sum.currency,
+      );
+
+  Currency currencyReceived() => select<OperationEditBloc, Currency>(
+        (bloc) => bloc.state.recSum.currency,
       );
 
   String cloudId() => select<OperationEditBloc, String>(
@@ -245,14 +269,14 @@ extension BlocExt on BuildContext {
   bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
       bloc.state.operationType == OperationType.TRANSFER &&
       bloc.state.account != null &&
-      bloc.state.recAccount != null &&
-      bloc.state.account!.currency != bloc.state.recAccount!.currency);
+      bloc.state.recAccount != null);
 
-  List<Account> accounts() => select<AccountBalanceBloc, List<Account>>(
+  List<BaseAccount> accounts() => select<AccountBalanceBloc, List<BaseAccount>>(
         (bloc) => bloc.state.balances.map((a) => a.account).toList(),
       );
 
-  List<Category> outCategories() => select<CategoryCashflowBloc, List<Category>>(
+  List<Category> outCategories() =>
+      select<CategoryCashflowBloc, List<Category>>(
         (bloc) => bloc.state.outCategories,
       );
 
@@ -265,7 +289,7 @@ extension BlocExt on BuildContext {
         operationType: newValue,
       ));
 
-  void onChangeAccount(Account? newValue) {
+  void onChangeAccount(BaseAccount? newValue) {
     if (newValue != null) {
       _bloc().add(OperationEditEvent.changeAccount(account: newValue));
     }
@@ -277,7 +301,14 @@ extension BlocExt on BuildContext {
   void onChangeSum(String value) =>
       _bloc().add(OperationEditEvent.changeSum(sum: int.parse(value)));
 
-  void onRecAccountChange(Account? newValue) {
+  void onChangeCurrency(Currency currency) =>
+      _bloc().add(OperationEditEvent.changeCurrency(currency: currency));
+
+  void onChangeRecCurrency(Currency currency) =>
+      _bloc().add(OperationEditEvent.changeRecCurrency(currency: currency));
+
+
+  void onRecAccountChange(BaseAccount? newValue) {
     if (newValue != null) {
       _bloc().add(OperationEditEvent.changeRecAccount(recAccount: newValue));
     }
@@ -330,12 +361,9 @@ class DateButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: <Widget>[
-          Icon(
-            icon,
-            color: Colors.white,
-          ),
+          Icon(icon),
           const SizedBox(width: 4.0),
-          Text(text, style: const TextStyle().copyWith(color: Colors.white)),
+          Text(text),
         ],
       ),
     );

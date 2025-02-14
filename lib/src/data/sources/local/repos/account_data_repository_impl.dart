@@ -1,92 +1,52 @@
 import 'package:drift/drift.dart';
-import '../../../../domain/interfaces/data/account_data_repository.dart';
+import 'package:money_tracker/src/data/sources/local/data/user_dao.dart';
+
+import '../../../../domain/models.dart';
+import '../../../interfaces/local_sync_source.dart';
 import '../data/account_dao.dart';
 import '../data/database.dart';
-import '../entities/account_balance_entity.dart';
-import '../../../interfaces/local_sync_source.dart';
-import '../mappers/account_balance_mapper.dart';
-import '../mappers/account_mapper.dart';
-import '../../../../domain/models.dart';
+import '../mapper_db.dart';
 
 class AccountDataRepositoryImpl
-    implements LocalSyncTable<Account>, AccountDataRepository {
+    implements LocalSyncTable<Account> {
   final AccountDao accountDao;
+  final UserDao userDao;
 
-  AccountDataRepositoryImpl(this.accountDao);
-
-  List<Account> _mapAccountList(List<AccountDB> list) =>
-      const AccountMapper().mapListToDart(list);
-
-  Account _mapAccount(AccountDB item) => const AccountMapper().mapToDart(item);
-
-  AccountDB _mapAccountDB(Account item) => const AccountMapper().mapToSql(item);
-
-  List<AccountBalance> _mapAccountBalanceList(
-    List<AccountBalanceEntity> list,
-  ) =>
-      const AccountBalanceMapper().mapListToDart(list);
+  AccountDataRepositoryImpl(this.accountDao, this.userDao);
 
   @override
-  Stream<List<Account>> watchAll() =>
-      accountDao.watchAllAccounts().map(_mapAccountList);
-
-  @override
-  Future<List<Account>> getAll() async =>
-      _mapAccountList(await accountDao.getAllAccounts());
-
-  @override
-  Future<List<Account>> getAllWithEmptyCloudId() async =>
-      _mapAccountList(await accountDao.getAllAccountsWithEmptyCloudId());
-
-  @override
-  Stream<List<AccountBalance>> watchAllBalance() =>
-      accountDao.watchAllAccountsWithBalance().map(_mapAccountBalanceList);
-
-  @override
-  Future<List<AccountBalance>> getAllBalance() async =>
-      _mapAccountBalanceList(await accountDao.getAllAccountsBalance());
-
-  @override
-  Stream<Account> watchById(int id) =>
-      accountDao.watchAccountById(id).map(_mapAccount);
-
-  @override
-  Future<Account> getById(int id) async =>
-      _mapAccount(await accountDao.getAccountById(id));
-
-  @override
-  Future<Account?> getByCloudId(String cloudId) async {
-    var account = await accountDao.getAccountByCloudId(cloudId);
-
-    return account == null ? null : _mapAccount(account);
+  Future<List<Account>> getAllWithEmptyCloudId() async {
+    final accounts = await accountDao.getAllAccountsWithEmptyCloudId();
+    final users = await userDao.getAllUsers();
+    return MapperDB.combineUsers(accounts, users);
   }
 
   @override
-  Future<int> insert(Account account) =>
-      accountDao.insertAccount(AccountsCompanion(
-        cloudId: Value(account.cloudId),
-        title: Value(account.title),
-        isDebt: Value(account.isDebt),
-        currency: Value(account.currency),
-      ));
+  Future<Account?> getByCloudId(String cloudId) async {
+    final account = await accountDao.getAccountByCloudId(cloudId);
 
-  @override
-  Future update(Account account) =>
-      accountDao.updateAccount(_mapAccountDB(account));
+    if (account == null){
+      return null;
+    }
+    final userId = account.user;
+    if (userId == null){
+      return MapperDB.createAccount(account, null);
+    }else{
+      final user = await userDao.getById(userId);
+      return MapperDB.createAccount(account, user);
+    }
+  }
 
   @override
   Future<List<Account>> getAllNotSynced() async {
-    return _mapAccountList(await accountDao.getAllAccountsNotSynced());
+    final accounts = await accountDao.getAllAccountsNotSynced();
+    final users = await userDao.getAllUsers();
+    return MapperDB.combineUsers(accounts, users);
   }
 
   @override
   Future markAsSynced(int accountId, String cloudId) {
     return accountDao.markAsSynced(accountId, cloudId);
-  }
-
-  @override
-  Stream<Account> watchNotSynced() {
-    return accountDao.watchNotSynced().map((event) => _mapAccount(event));
   }
 
   @override

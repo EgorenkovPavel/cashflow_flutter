@@ -22,11 +22,13 @@ mixin _$OperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,11 +38,13 @@ mixin _$OperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -50,11 +54,13 @@ mixin _$OperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -75,6 +81,10 @@ mixin _$OperationEditEvent {
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
@@ -91,6 +101,9 @@ mixin _$OperationEditEvent {
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -107,6 +120,9 @@ mixin _$OperationEditEvent {
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -129,6 +145,9 @@ class _$OperationEditEventCopyWithImpl<$Res, $Val extends OperationEditEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -151,6 +170,8 @@ class __$$FetchOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$FetchOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,7 +211,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
   @override
   int get hashCode => Object.hash(runtimeType, operationId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchOperationEditEventImplCopyWith<_$FetchOperationEditEventImpl>
@@ -204,11 +227,13 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return fetch(operationId);
@@ -221,11 +246,13 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return fetch?.call(operationId);
@@ -238,11 +265,13 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -269,6 +298,10 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return fetch(this);
@@ -288,6 +321,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return fetch?.call(this);
@@ -307,6 +343,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -322,7 +361,10 @@ abstract class _FetchOperationEditEvent implements OperationEditEvent {
       _$FetchOperationEditEventImpl;
 
   int get operationId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchOperationEditEventImplCopyWith<_$FetchOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -347,6 +389,8 @@ class __$$ChangeDateOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeDateOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -386,7 +430,9 @@ class _$ChangeDateOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, date);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeDateOperationEditEventImplCopyWith<
@@ -401,11 +447,13 @@ class _$ChangeDateOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeDate(date);
@@ -418,11 +466,13 @@ class _$ChangeDateOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeDate?.call(date);
@@ -435,11 +485,13 @@ class _$ChangeDateOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -466,6 +518,10 @@ class _$ChangeDateOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeDate(this);
@@ -485,6 +541,9 @@ class _$ChangeDateOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeDate?.call(this);
@@ -504,6 +563,9 @@ class _$ChangeDateOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -519,7 +581,10 @@ abstract class _ChangeDateOperationEditEvent implements OperationEditEvent {
       _$ChangeDateOperationEditEventImpl;
 
   DateTime get date;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeDateOperationEditEventImplCopyWith<
           _$ChangeDateOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -545,6 +610,8 @@ class __$$ChangeTimeOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeTimeOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -584,7 +651,9 @@ class _$ChangeTimeOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, time);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeTimeOperationEditEventImplCopyWith<
@@ -599,11 +668,13 @@ class _$ChangeTimeOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeTime(time);
@@ -616,11 +687,13 @@ class _$ChangeTimeOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeTime?.call(time);
@@ -633,11 +706,13 @@ class _$ChangeTimeOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -664,6 +739,10 @@ class _$ChangeTimeOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeTime(this);
@@ -683,6 +762,9 @@ class _$ChangeTimeOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeTime?.call(this);
@@ -702,6 +784,9 @@ class _$ChangeTimeOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -717,7 +802,10 @@ abstract class _ChangeTimeOperationEditEvent implements OperationEditEvent {
       _$ChangeTimeOperationEditEventImpl;
 
   TimeOfDay get time;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeTimeOperationEditEventImplCopyWith<
           _$ChangeTimeOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -743,6 +831,8 @@ class __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeOperationTypeOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -784,7 +874,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, operationType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeOperationTypeOperationEditEventImplCopyWith<
@@ -799,11 +891,13 @@ class _$ChangeOperationTypeOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeOperationType(operationType);
@@ -816,11 +910,13 @@ class _$ChangeOperationTypeOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeOperationType?.call(operationType);
@@ -833,11 +929,13 @@ class _$ChangeOperationTypeOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -864,6 +962,10 @@ class _$ChangeOperationTypeOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeOperationType(this);
@@ -883,6 +985,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeOperationType?.call(this);
@@ -902,6 +1007,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -919,7 +1027,10 @@ abstract class _ChangeOperationTypeOperationEditEvent
       _$ChangeOperationTypeOperationEditEventImpl;
 
   OperationType get operationType;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeOperationTypeOperationEditEventImplCopyWith<
           _$ChangeOperationTypeOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -932,9 +1043,7 @@ abstract class _$$ChangeAccountOperationEditEventImplCopyWith<$Res> {
           $Res Function(_$ChangeAccountOperationEditEventImpl) then) =
       __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Account account});
-
-  $AccountCopyWith<$Res> get account;
+  $Res call({BaseAccount account});
 }
 
 /// @nodoc
@@ -947,6 +1056,8 @@ class __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeAccountOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -956,16 +1067,8 @@ class __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as BaseAccount,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get account {
-    return $AccountCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -976,7 +1079,7 @@ class _$ChangeAccountOperationEditEventImpl
   const _$ChangeAccountOperationEditEventImpl({required this.account});
 
   @override
-  final Account account;
+  final BaseAccount account;
 
   @override
   String toString() {
@@ -994,7 +1097,9 @@ class _$ChangeAccountOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, account);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeAccountOperationEditEventImplCopyWith<
@@ -1009,11 +1114,13 @@ class _$ChangeAccountOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeAccount(account);
@@ -1026,11 +1133,13 @@ class _$ChangeAccountOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeAccount?.call(account);
@@ -1043,11 +1152,13 @@ class _$ChangeAccountOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1074,6 +1185,10 @@ class _$ChangeAccountOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeAccount(this);
@@ -1093,6 +1208,9 @@ class _$ChangeAccountOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeAccount?.call(this);
@@ -1112,6 +1230,9 @@ class _$ChangeAccountOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1124,10 +1245,14 @@ class _$ChangeAccountOperationEditEventImpl
 
 abstract class _ChangeAccountOperationEditEvent implements OperationEditEvent {
   const factory _ChangeAccountOperationEditEvent(
-      {required final Account account}) = _$ChangeAccountOperationEditEventImpl;
+          {required final BaseAccount account}) =
+      _$ChangeAccountOperationEditEventImpl;
 
-  Account get account;
-  @JsonKey(ignore: true)
+  BaseAccount get account;
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeAccountOperationEditEventImplCopyWith<
           _$ChangeAccountOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1141,8 +1266,6 @@ abstract class _$$ChangeCategoryOperationEditEventImplCopyWith<$Res> {
       __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -1155,6 +1278,8 @@ class __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeCategoryOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1166,14 +1291,6 @@ class __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -1203,7 +1320,9 @@ class _$ChangeCategoryOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeCategoryOperationEditEventImplCopyWith<
@@ -1218,11 +1337,13 @@ class _$ChangeCategoryOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeCategory(category);
@@ -1235,11 +1356,13 @@ class _$ChangeCategoryOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeCategory?.call(category);
@@ -1252,11 +1375,13 @@ class _$ChangeCategoryOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1283,6 +1408,10 @@ class _$ChangeCategoryOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeCategory(this);
@@ -1302,6 +1431,9 @@ class _$ChangeCategoryOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeCategory?.call(this);
@@ -1321,6 +1453,9 @@ class _$ChangeCategoryOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1337,7 +1472,10 @@ abstract class _ChangeCategoryOperationEditEvent implements OperationEditEvent {
       _$ChangeCategoryOperationEditEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeCategoryOperationEditEventImplCopyWith<
           _$ChangeCategoryOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1350,9 +1488,7 @@ abstract class _$$ChangeRecAccountOperationEditEventImplCopyWith<$Res> {
           $Res Function(_$ChangeRecAccountOperationEditEventImpl) then) =
       __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Account recAccount});
-
-  $AccountCopyWith<$Res> get recAccount;
+  $Res call({BaseAccount recAccount});
 }
 
 /// @nodoc
@@ -1365,6 +1501,8 @@ class __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeRecAccountOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1374,16 +1512,8 @@ class __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>
       recAccount: null == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as BaseAccount,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get recAccount {
-    return $AccountCopyWith<$Res>(_value.recAccount, (value) {
-      return _then(_value.copyWith(recAccount: value));
-    });
   }
 }
 
@@ -1394,7 +1524,7 @@ class _$ChangeRecAccountOperationEditEventImpl
   const _$ChangeRecAccountOperationEditEventImpl({required this.recAccount});
 
   @override
-  final Account recAccount;
+  final BaseAccount recAccount;
 
   @override
   String toString() {
@@ -1413,7 +1543,9 @@ class _$ChangeRecAccountOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, recAccount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeRecAccountOperationEditEventImplCopyWith<
@@ -1428,11 +1560,13 @@ class _$ChangeRecAccountOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeRecAccount(recAccount);
@@ -1445,11 +1579,13 @@ class _$ChangeRecAccountOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeRecAccount?.call(recAccount);
@@ -1462,11 +1598,13 @@ class _$ChangeRecAccountOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1493,6 +1631,10 @@ class _$ChangeRecAccountOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeRecAccount(this);
@@ -1512,6 +1654,9 @@ class _$ChangeRecAccountOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeRecAccount?.call(this);
@@ -1531,6 +1676,9 @@ class _$ChangeRecAccountOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1544,11 +1692,14 @@ class _$ChangeRecAccountOperationEditEventImpl
 abstract class _ChangeRecAccountOperationEditEvent
     implements OperationEditEvent {
   const factory _ChangeRecAccountOperationEditEvent(
-          {required final Account recAccount}) =
+          {required final BaseAccount recAccount}) =
       _$ChangeRecAccountOperationEditEventImpl;
 
-  Account get recAccount;
-  @JsonKey(ignore: true)
+  BaseAccount get recAccount;
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeRecAccountOperationEditEventImplCopyWith<
           _$ChangeRecAccountOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1574,6 +1725,8 @@ class __$$ChangeSumOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeSumOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1613,7 +1766,9 @@ class _$ChangeSumOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, sum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeSumOperationEditEventImplCopyWith<_$ChangeSumOperationEditEventImpl>
@@ -1627,11 +1782,13 @@ class _$ChangeSumOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeSum(sum);
@@ -1644,11 +1801,13 @@ class _$ChangeSumOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeSum?.call(sum);
@@ -1661,11 +1820,13 @@ class _$ChangeSumOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1692,6 +1853,10 @@ class _$ChangeSumOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeSum(this);
@@ -1711,6 +1876,9 @@ class _$ChangeSumOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeSum?.call(this);
@@ -1730,6 +1898,9 @@ class _$ChangeSumOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1745,7 +1916,10 @@ abstract class _ChangeSumOperationEditEvent implements OperationEditEvent {
       _$ChangeSumOperationEditEventImpl;
 
   int get sum;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeSumOperationEditEventImplCopyWith<_$ChangeSumOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1770,6 +1944,8 @@ class __$$ChangeRecSumOperationEditEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeRecSumOperationEditEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1809,7 +1985,9 @@ class _$ChangeRecSumOperationEditEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, sum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeRecSumOperationEditEventImplCopyWith<
@@ -1824,11 +2002,13 @@ class _$ChangeRecSumOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return changeRecSum(sum);
@@ -1841,11 +2021,13 @@ class _$ChangeRecSumOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return changeRecSum?.call(sum);
@@ -1858,11 +2040,13 @@ class _$ChangeRecSumOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1889,6 +2073,10 @@ class _$ChangeRecSumOperationEditEventImpl
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return changeRecSum(this);
@@ -1908,6 +2096,9 @@ class _$ChangeRecSumOperationEditEventImpl
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return changeRecSum?.call(this);
@@ -1927,6 +2118,9 @@ class _$ChangeRecSumOperationEditEventImpl
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1942,9 +2136,459 @@ abstract class _ChangeRecSumOperationEditEvent implements OperationEditEvent {
       _$ChangeRecSumOperationEditEventImpl;
 
   int get sum;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeRecSumOperationEditEventImplCopyWith<
           _$ChangeRecSumOperationEditEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ChangeCurrencyOperationEditEventImplCopyWith<$Res> {
+  factory _$$ChangeCurrencyOperationEditEventImplCopyWith(
+          _$ChangeCurrencyOperationEditEventImpl value,
+          $Res Function(_$ChangeCurrencyOperationEditEventImpl) then) =
+      __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Currency currency});
+}
+
+/// @nodoc
+class __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>
+    extends _$OperationEditEventCopyWithImpl<$Res,
+        _$ChangeCurrencyOperationEditEventImpl>
+    implements _$$ChangeCurrencyOperationEditEventImplCopyWith<$Res> {
+  __$$ChangeCurrencyOperationEditEventImplCopyWithImpl(
+      _$ChangeCurrencyOperationEditEventImpl _value,
+      $Res Function(_$ChangeCurrencyOperationEditEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currency = null,
+  }) {
+    return _then(_$ChangeCurrencyOperationEditEventImpl(
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeCurrencyOperationEditEventImpl
+    implements _ChangeCurrencyOperationEditEvent {
+  const _$ChangeCurrencyOperationEditEventImpl({required this.currency});
+
+  @override
+  final Currency currency;
+
+  @override
+  String toString() {
+    return 'OperationEditEvent.changeCurrency(currency: $currency)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeCurrencyOperationEditEventImpl &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, currency);
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeCurrencyOperationEditEventImplCopyWith<
+          _$ChangeCurrencyOperationEditEventImpl>
+      get copyWith => __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<
+          _$ChangeCurrencyOperationEditEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int operationId) fetch,
+    required TResult Function(DateTime date) changeDate,
+    required TResult Function(TimeOfDay time) changeTime,
+    required TResult Function(OperationType operationType) changeOperationType,
+    required TResult Function(BaseAccount account) changeAccount,
+    required TResult Function(Category category) changeCategory,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
+    required TResult Function(int sum) changeSum,
+    required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
+    required TResult Function() save,
+  }) {
+    return changeCurrency(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int operationId)? fetch,
+    TResult? Function(DateTime date)? changeDate,
+    TResult? Function(TimeOfDay time)? changeTime,
+    TResult? Function(OperationType operationType)? changeOperationType,
+    TResult? Function(BaseAccount account)? changeAccount,
+    TResult? Function(Category category)? changeCategory,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
+    TResult? Function(int sum)? changeSum,
+    TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
+    TResult? Function()? save,
+  }) {
+    return changeCurrency?.call(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int operationId)? fetch,
+    TResult Function(DateTime date)? changeDate,
+    TResult Function(TimeOfDay time)? changeTime,
+    TResult Function(OperationType operationType)? changeOperationType,
+    TResult Function(BaseAccount account)? changeAccount,
+    TResult Function(Category category)? changeCategory,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
+    TResult Function(int sum)? changeSum,
+    TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
+    TResult Function()? save,
+    required TResult orElse(),
+  }) {
+    if (changeCurrency != null) {
+      return changeCurrency(currency);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchOperationEditEvent value) fetch,
+    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
+    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
+    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
+        changeOperationType,
+    required TResult Function(_ChangeAccountOperationEditEvent value)
+        changeAccount,
+    required TResult Function(_ChangeCategoryOperationEditEvent value)
+        changeCategory,
+    required TResult Function(_ChangeRecAccountOperationEditEvent value)
+        changeRecAccount,
+    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
+    required TResult Function(_ChangeRecSumOperationEditEvent value)
+        changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
+    required TResult Function(_SaveOperationEditEvent value) save,
+  }) {
+    return changeCurrency(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchOperationEditEvent value)? fetch,
+    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
+    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
+    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
+        changeOperationType,
+    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
+    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
+    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
+        changeRecAccount,
+    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
+    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
+    TResult? Function(_SaveOperationEditEvent value)? save,
+  }) {
+    return changeCurrency?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchOperationEditEvent value)? fetch,
+    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
+    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
+    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
+        changeOperationType,
+    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
+    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
+    TResult Function(_ChangeRecAccountOperationEditEvent value)?
+        changeRecAccount,
+    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
+    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
+    TResult Function(_SaveOperationEditEvent value)? save,
+    required TResult orElse(),
+  }) {
+    if (changeCurrency != null) {
+      return changeCurrency(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeCurrencyOperationEditEvent implements OperationEditEvent {
+  const factory _ChangeCurrencyOperationEditEvent(
+          {required final Currency currency}) =
+      _$ChangeCurrencyOperationEditEventImpl;
+
+  Currency get currency;
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeCurrencyOperationEditEventImplCopyWith<
+          _$ChangeCurrencyOperationEditEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ChangeRecCurrencyOperationEditEventImplCopyWith<$Res> {
+  factory _$$ChangeRecCurrencyOperationEditEventImplCopyWith(
+          _$ChangeRecCurrencyOperationEditEventImpl value,
+          $Res Function(_$ChangeRecCurrencyOperationEditEventImpl) then) =
+      __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Currency currency});
+}
+
+/// @nodoc
+class __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>
+    extends _$OperationEditEventCopyWithImpl<$Res,
+        _$ChangeRecCurrencyOperationEditEventImpl>
+    implements _$$ChangeRecCurrencyOperationEditEventImplCopyWith<$Res> {
+  __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl(
+      _$ChangeRecCurrencyOperationEditEventImpl _value,
+      $Res Function(_$ChangeRecCurrencyOperationEditEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currency = null,
+  }) {
+    return _then(_$ChangeRecCurrencyOperationEditEventImpl(
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeRecCurrencyOperationEditEventImpl
+    implements _ChangeRecCurrencyOperationEditEvent {
+  const _$ChangeRecCurrencyOperationEditEventImpl({required this.currency});
+
+  @override
+  final Currency currency;
+
+  @override
+  String toString() {
+    return 'OperationEditEvent.changeRecCurrency(currency: $currency)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeRecCurrencyOperationEditEventImpl &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, currency);
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeRecCurrencyOperationEditEventImplCopyWith<
+          _$ChangeRecCurrencyOperationEditEventImpl>
+      get copyWith => __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<
+          _$ChangeRecCurrencyOperationEditEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int operationId) fetch,
+    required TResult Function(DateTime date) changeDate,
+    required TResult Function(TimeOfDay time) changeTime,
+    required TResult Function(OperationType operationType) changeOperationType,
+    required TResult Function(BaseAccount account) changeAccount,
+    required TResult Function(Category category) changeCategory,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
+    required TResult Function(int sum) changeSum,
+    required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
+    required TResult Function() save,
+  }) {
+    return changeRecCurrency(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int operationId)? fetch,
+    TResult? Function(DateTime date)? changeDate,
+    TResult? Function(TimeOfDay time)? changeTime,
+    TResult? Function(OperationType operationType)? changeOperationType,
+    TResult? Function(BaseAccount account)? changeAccount,
+    TResult? Function(Category category)? changeCategory,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
+    TResult? Function(int sum)? changeSum,
+    TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
+    TResult? Function()? save,
+  }) {
+    return changeRecCurrency?.call(currency);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int operationId)? fetch,
+    TResult Function(DateTime date)? changeDate,
+    TResult Function(TimeOfDay time)? changeTime,
+    TResult Function(OperationType operationType)? changeOperationType,
+    TResult Function(BaseAccount account)? changeAccount,
+    TResult Function(Category category)? changeCategory,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
+    TResult Function(int sum)? changeSum,
+    TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
+    TResult Function()? save,
+    required TResult orElse(),
+  }) {
+    if (changeRecCurrency != null) {
+      return changeRecCurrency(currency);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchOperationEditEvent value) fetch,
+    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
+    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
+    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
+        changeOperationType,
+    required TResult Function(_ChangeAccountOperationEditEvent value)
+        changeAccount,
+    required TResult Function(_ChangeCategoryOperationEditEvent value)
+        changeCategory,
+    required TResult Function(_ChangeRecAccountOperationEditEvent value)
+        changeRecAccount,
+    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
+    required TResult Function(_ChangeRecSumOperationEditEvent value)
+        changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
+    required TResult Function(_SaveOperationEditEvent value) save,
+  }) {
+    return changeRecCurrency(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchOperationEditEvent value)? fetch,
+    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
+    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
+    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
+        changeOperationType,
+    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
+    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
+    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
+        changeRecAccount,
+    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
+    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
+    TResult? Function(_SaveOperationEditEvent value)? save,
+  }) {
+    return changeRecCurrency?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchOperationEditEvent value)? fetch,
+    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
+    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
+    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
+        changeOperationType,
+    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
+    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
+    TResult Function(_ChangeRecAccountOperationEditEvent value)?
+        changeRecAccount,
+    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
+    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
+    TResult Function(_SaveOperationEditEvent value)? save,
+    required TResult orElse(),
+  }) {
+    if (changeRecCurrency != null) {
+      return changeRecCurrency(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeRecCurrencyOperationEditEvent
+    implements OperationEditEvent {
+  const factory _ChangeRecCurrencyOperationEditEvent(
+          {required final Currency currency}) =
+      _$ChangeRecCurrencyOperationEditEventImpl;
+
+  Currency get currency;
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeRecCurrencyOperationEditEventImplCopyWith<
+          _$ChangeRecCurrencyOperationEditEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1964,6 +2608,9 @@ class __$$SaveOperationEditEventImplCopyWithImpl<$Res>
       _$SaveOperationEditEventImpl _value,
       $Res Function(_$SaveOperationEditEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of OperationEditEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1993,11 +2640,13 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(Account account) changeAccount,
+    required TResult Function(BaseAccount account) changeAccount,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(Account recAccount) changeRecAccount,
+    required TResult Function(BaseAccount recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
+    required TResult Function(Currency currency) changeCurrency,
+    required TResult Function(Currency currency) changeRecCurrency,
     required TResult Function() save,
   }) {
     return save();
@@ -2010,11 +2659,13 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(Account account)? changeAccount,
+    TResult? Function(BaseAccount account)? changeAccount,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(Account recAccount)? changeRecAccount,
+    TResult? Function(BaseAccount recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
+    TResult? Function(Currency currency)? changeCurrency,
+    TResult? Function(Currency currency)? changeRecCurrency,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -2027,11 +2678,13 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(Account account)? changeAccount,
+    TResult Function(BaseAccount account)? changeAccount,
     TResult Function(Category category)? changeCategory,
-    TResult Function(Account recAccount)? changeRecAccount,
+    TResult Function(BaseAccount recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
+    TResult Function(Currency currency)? changeCurrency,
+    TResult Function(Currency currency)? changeRecCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -2058,6 +2711,10 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
     required TResult Function(_ChangeRecSumOperationEditEvent value)
         changeRecSum,
+    required TResult Function(_ChangeCurrencyOperationEditEvent value)
+        changeCurrency,
+    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
+        changeRecCurrency,
     required TResult Function(_SaveOperationEditEvent value) save,
   }) {
     return save(this);
@@ -2077,6 +2734,9 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
         changeRecAccount,
     TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult? Function(_SaveOperationEditEvent value)? save,
   }) {
     return save?.call(this);
@@ -2096,6 +2756,9 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
         changeRecAccount,
     TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
     TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
+    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
+    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
+        changeRecCurrency,
     TResult Function(_SaveOperationEditEvent value)? save,
     required TResult orElse(),
   }) {
@@ -2116,14 +2779,16 @@ mixin _$OperationEditState {
   DateTime get date => throw _privateConstructorUsedError;
   TimeOfDay get time => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
-  Account? get account => throw _privateConstructorUsedError;
+  BaseAccount? get account => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
-  Account? get recAccount => throw _privateConstructorUsedError;
-  int get sum => throw _privateConstructorUsedError;
-  int get recSum => throw _privateConstructorUsedError;
+  BaseAccount? get recAccount => throw _privateConstructorUsedError;
+  Sum get sum => throw _privateConstructorUsedError;
+  Sum get recSum => throw _privateConstructorUsedError;
   bool get isSaved => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OperationEditStateCopyWith<OperationEditState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2139,17 +2804,12 @@ abstract class $OperationEditStateCopyWith<$Res> {
       DateTime date,
       TimeOfDay time,
       OperationType operationType,
-      Account? account,
+      BaseAccount? account,
       Category? category,
-      Account? recAccount,
-      int sum,
-      int recSum,
+      BaseAccount? recAccount,
+      Sum sum,
+      Sum recSum,
       bool isSaved});
-
-  $OperationCopyWith<$Res>? get operation;
-  $AccountCopyWith<$Res>? get account;
-  $CategoryCopyWith<$Res>? get category;
-  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc
@@ -2162,6 +2822,8 @@ class _$OperationEditStateCopyWithImpl<$Res, $Val extends OperationEditState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OperationEditState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2196,7 +2858,7 @@ class _$OperationEditStateCopyWithImpl<$Res, $Val extends OperationEditState>
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -2204,68 +2866,20 @@ class _$OperationEditStateCopyWithImpl<$Res, $Val extends OperationEditState>
       recAccount: freezed == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       recSum: null == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $OperationCopyWith<$Res>? get operation {
-    if (_value.operation == null) {
-      return null;
-    }
-
-    return $OperationCopyWith<$Res>(_value.operation!, (value) {
-      return _then(_value.copyWith(operation: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res>? get account {
-    if (_value.account == null) {
-      return null;
-    }
-
-    return $AccountCopyWith<$Res>(_value.account!, (value) {
-      return _then(_value.copyWith(account: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get category {
-    if (_value.category == null) {
-      return null;
-    }
-
-    return $CategoryCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res>? get recAccount {
-    if (_value.recAccount == null) {
-      return null;
-    }
-
-    return $AccountCopyWith<$Res>(_value.recAccount!, (value) {
-      return _then(_value.copyWith(recAccount: value) as $Val);
-    });
   }
 }
 
@@ -2282,21 +2896,12 @@ abstract class _$$OperationEditStateImplCopyWith<$Res>
       DateTime date,
       TimeOfDay time,
       OperationType operationType,
-      Account? account,
+      BaseAccount? account,
       Category? category,
-      Account? recAccount,
-      int sum,
-      int recSum,
+      BaseAccount? recAccount,
+      Sum sum,
+      Sum recSum,
       bool isSaved});
-
-  @override
-  $OperationCopyWith<$Res>? get operation;
-  @override
-  $AccountCopyWith<$Res>? get account;
-  @override
-  $CategoryCopyWith<$Res>? get category;
-  @override
-  $AccountCopyWith<$Res>? get recAccount;
 }
 
 /// @nodoc
@@ -2307,6 +2912,8 @@ class __$$OperationEditStateImplCopyWithImpl<$Res>
       $Res Function(_$OperationEditStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationEditState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2341,7 +2948,7 @@ class __$$OperationEditStateImplCopyWithImpl<$Res>
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -2349,15 +2956,15 @@ class __$$OperationEditStateImplCopyWithImpl<$Res>
       recAccount: freezed == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       recSum: null == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
@@ -2391,15 +2998,15 @@ class _$OperationEditStateImpl extends _OperationEditState {
   @override
   final OperationType operationType;
   @override
-  final Account? account;
+  final BaseAccount? account;
   @override
   final Category? category;
   @override
-  final Account? recAccount;
+  final BaseAccount? recAccount;
   @override
-  final int sum;
+  final Sum sum;
   @override
-  final int recSum;
+  final Sum recSum;
   @override
   final bool isSaved;
 
@@ -2433,7 +3040,9 @@ class _$OperationEditStateImpl extends _OperationEditState {
   int get hashCode => Object.hash(runtimeType, operation, date, time,
       operationType, account, category, recAccount, sum, recSum, isSaved);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OperationEditStateImplCopyWith<_$OperationEditStateImpl> get copyWith =>
@@ -2447,11 +3056,11 @@ abstract class _OperationEditState extends OperationEditState {
       required final DateTime date,
       required final TimeOfDay time,
       required final OperationType operationType,
-      final Account? account,
+      final BaseAccount? account,
       final Category? category,
-      final Account? recAccount,
-      required final int sum,
-      required final int recSum,
+      final BaseAccount? recAccount,
+      required final Sum sum,
+      required final Sum recSum,
       required final bool isSaved}) = _$OperationEditStateImpl;
   const _OperationEditState._() : super._();
 
@@ -2464,19 +3073,22 @@ abstract class _OperationEditState extends OperationEditState {
   @override
   OperationType get operationType;
   @override
-  Account? get account;
+  BaseAccount? get account;
   @override
   Category? get category;
   @override
-  Account? get recAccount;
+  BaseAccount? get recAccount;
   @override
-  int get sum;
+  Sum get sum;
   @override
-  int get recSum;
+  Sum get recSum;
   @override
   bool get isSaved;
+
+  /// Create a copy of OperationEditState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OperationEditStateImplCopyWith<_$OperationEditStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

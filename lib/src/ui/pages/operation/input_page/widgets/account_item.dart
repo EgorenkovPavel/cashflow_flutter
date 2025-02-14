@@ -9,17 +9,20 @@ class AccountItem extends StatelessWidget {
     required this.account,
   });
 
-  final AccountBalance account;
+  final BaseAccountBalance account;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(account.title),
-        Text(
-          context.loc.numberFormat(account.balance, account.currency),
-          style: Theme.of(context).textTheme.bodySmall,
+        Text(account.account.title),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: account.balance.sums.map((e)=> Text(
+            context.loc.sumFormat(e),
+            style: Theme.of(context).textTheme.bodySmall,
+          )).toList(),
         ),
       ],
     );

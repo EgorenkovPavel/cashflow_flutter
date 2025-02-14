@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../domain/models/enum/budget_type.dart';
 import '../domain/models/enum/currency.dart';
 import '../domain/models/enum/operation_type.dart';
+import 'sum.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -38,6 +39,8 @@ extension AppLocalizationExtended on AppLocalizations {
       decimalDigits: 0,
     ).format(number);
   }
+
+  String sumFormat(Sum sum) => numberFormat(sum.sum, sum.currency);
 
   String operationTypeTitle(OperationType type) => switch (type) {
         OperationType.INPUT => typeInput,

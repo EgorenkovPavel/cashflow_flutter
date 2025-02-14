@@ -76,11 +76,29 @@ class CategoryDetailBloc
     _ChangeCategoryCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    emit(state.copyWith(
-      budget: event.category.budget,
-      title: event.category.title,
-      budgetType: event.category.budgetType,
-    ));
+    final category = event.category;
+    switch(category){
+      case InputCategoryItem():
+        emit(state.copyWith(
+          title: category.title,
+          budget: category.budget,
+          budgetType: category.budgetType,
+        ));
+      case OutputCategoryItem():
+        emit(state.copyWith(
+          title: category.title,
+          budget: category.budget,
+          budgetType: category.budgetType,
+        ));
+      case InputCategoryGroup():
+        emit(state.copyWith(
+          title: category.title,
+        ));
+      case OutputCategoryGroup():
+        emit(state.copyWith(
+          title: category.title,
+        ));
+    }
   }
 
   void _changeOperations(

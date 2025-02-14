@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) changeAuth,
+    required TResult Function(User? user, String idToken) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -26,7 +26,7 @@ mixin _$AuthEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? changeAuth,
+    TResult? Function(User? user, String idToken)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -34,7 +34,7 @@ mixin _$AuthEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? changeAuth,
+    TResult Function(User? user, String idToken)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -83,6 +83,9 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -91,7 +94,7 @@ abstract class _$$ChangeAuthAuthEventImplCopyWith<$Res> {
           $Res Function(_$ChangeAuthAuthEventImpl) then) =
       __$$ChangeAuthAuthEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User? user});
+  $Res call({User? user, String idToken});
 
   $UserCopyWith<$Res>? get user;
 }
@@ -104,19 +107,28 @@ class __$$ChangeAuthAuthEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeAuthAuthEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = freezed,
+    Object? idToken = null,
   }) {
     return _then(_$ChangeAuthAuthEventImpl(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      idToken: null == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get user {
@@ -133,14 +145,16 @@ class __$$ChangeAuthAuthEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChangeAuthAuthEventImpl implements _ChangeAuthAuthEvent {
-  const _$ChangeAuthAuthEventImpl({required this.user});
+  const _$ChangeAuthAuthEventImpl({required this.user, required this.idToken});
 
   @override
   final User? user;
+  @override
+  final String idToken;
 
   @override
   String toString() {
-    return 'AuthEvent.changeAuth(user: $user)';
+    return 'AuthEvent.changeAuth(user: $user, idToken: $idToken)';
   }
 
   @override
@@ -148,13 +162,16 @@ class _$ChangeAuthAuthEventImpl implements _ChangeAuthAuthEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeAuthAuthEventImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.idToken, idToken) || other.idToken == idToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, idToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeAuthAuthEventImplCopyWith<_$ChangeAuthAuthEventImpl> get copyWith =>
@@ -164,36 +181,36 @@ class _$ChangeAuthAuthEventImpl implements _ChangeAuthAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) changeAuth,
+    required TResult Function(User? user, String idToken) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
   }) {
-    return changeAuth(user);
+    return changeAuth(user, idToken);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? changeAuth,
+    TResult? Function(User? user, String idToken)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
   }) {
-    return changeAuth?.call(user);
+    return changeAuth?.call(user, idToken);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? changeAuth,
+    TResult Function(User? user, String idToken)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
     required TResult orElse(),
   }) {
     if (changeAuth != null) {
-      return changeAuth(user);
+      return changeAuth(user, idToken);
     }
     return orElse();
   }
@@ -237,11 +254,16 @@ class _$ChangeAuthAuthEventImpl implements _ChangeAuthAuthEvent {
 }
 
 abstract class _ChangeAuthAuthEvent implements AuthEvent {
-  const factory _ChangeAuthAuthEvent({required final User? user}) =
-      _$ChangeAuthAuthEventImpl;
+  const factory _ChangeAuthAuthEvent(
+      {required final User? user,
+      required final String idToken}) = _$ChangeAuthAuthEventImpl;
 
   User? get user;
-  @JsonKey(ignore: true)
+  String get idToken;
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeAuthAuthEventImplCopyWith<_$ChangeAuthAuthEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -262,6 +284,9 @@ class __$$SignInSilentlyAuthEventImplCopyWithImpl<$Res>
       _$SignInSilentlyAuthEventImpl _value,
       $Res Function(_$SignInSilentlyAuthEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -287,7 +312,7 @@ class _$SignInSilentlyAuthEventImpl implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) changeAuth,
+    required TResult Function(User? user, String idToken) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -298,7 +323,7 @@ class _$SignInSilentlyAuthEventImpl implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? changeAuth,
+    TResult? Function(User? user, String idToken)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -309,7 +334,7 @@ class _$SignInSilentlyAuthEventImpl implements _SignInSilentlyAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? changeAuth,
+    TResult Function(User? user, String idToken)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -377,6 +402,9 @@ class __$$SignInAuthEventImplCopyWithImpl<$Res>
   __$$SignInAuthEventImplCopyWithImpl(
       _$SignInAuthEventImpl _value, $Res Function(_$SignInAuthEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -401,7 +429,7 @@ class _$SignInAuthEventImpl implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) changeAuth,
+    required TResult Function(User? user, String idToken) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -412,7 +440,7 @@ class _$SignInAuthEventImpl implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? changeAuth,
+    TResult? Function(User? user, String idToken)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -423,7 +451,7 @@ class _$SignInAuthEventImpl implements _SignInAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? changeAuth,
+    TResult Function(User? user, String idToken)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -491,6 +519,9 @@ class __$$SignOutAuthEventImplCopyWithImpl<$Res>
   __$$SignOutAuthEventImplCopyWithImpl(_$SignOutAuthEventImpl _value,
       $Res Function(_$SignOutAuthEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -515,7 +546,7 @@ class _$SignOutAuthEventImpl implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) changeAuth,
+    required TResult Function(User? user, String idToken) changeAuth,
     required TResult Function() signInSilently,
     required TResult Function() signIn,
     required TResult Function() signOut,
@@ -526,7 +557,7 @@ class _$SignOutAuthEventImpl implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? changeAuth,
+    TResult? Function(User? user, String idToken)? changeAuth,
     TResult? Function()? signInSilently,
     TResult? Function()? signIn,
     TResult? Function()? signOut,
@@ -537,7 +568,7 @@ class _$SignOutAuthEventImpl implements _SignOutAuthEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? changeAuth,
+    TResult Function(User? user, String idToken)? changeAuth,
     TResult Function()? signInSilently,
     TResult Function()? signIn,
     TResult Function()? signOut,
@@ -595,19 +626,19 @@ abstract class _SignOutAuthEvent implements AuthEvent {
 mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) authenticated,
+    required TResult Function(User user, String idToken) authenticated,
     required TResult Function() notAuthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? authenticated,
+    TResult? Function(User user, String idToken)? authenticated,
     TResult? Function()? notAuthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? authenticated,
+    TResult Function(User user, String idToken)? authenticated,
     TResult Function()? notAuthenticated,
     required TResult orElse(),
   }) =>
@@ -649,6 +680,9 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -658,7 +692,7 @@ abstract class _$$AuthenticatedAuthStateImplCopyWith<$Res> {
           $Res Function(_$AuthenticatedAuthStateImpl) then) =
       __$$AuthenticatedAuthStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User user});
+  $Res call({User user, String idToken});
 
   $UserCopyWith<$Res> get user;
 }
@@ -672,19 +706,28 @@ class __$$AuthenticatedAuthStateImplCopyWithImpl<$Res>
       $Res Function(_$AuthenticatedAuthStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = null,
+    Object? idToken = null,
   }) {
     return _then(_$AuthenticatedAuthStateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      idToken: null == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -697,14 +740,18 @@ class __$$AuthenticatedAuthStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthenticatedAuthStateImpl extends _AuthenticatedAuthState {
-  const _$AuthenticatedAuthStateImpl({required this.user}) : super._();
+  const _$AuthenticatedAuthStateImpl(
+      {required this.user, required this.idToken})
+      : super._();
 
   @override
   final User user;
+  @override
+  final String idToken;
 
   @override
   String toString() {
-    return 'AuthState.authenticated(user: $user)';
+    return 'AuthState.authenticated(user: $user, idToken: $idToken)';
   }
 
   @override
@@ -712,13 +759,16 @@ class _$AuthenticatedAuthStateImpl extends _AuthenticatedAuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticatedAuthStateImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.idToken, idToken) || other.idToken == idToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, idToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AuthenticatedAuthStateImplCopyWith<_$AuthenticatedAuthStateImpl>
@@ -728,30 +778,30 @@ class _$AuthenticatedAuthStateImpl extends _AuthenticatedAuthState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) authenticated,
+    required TResult Function(User user, String idToken) authenticated,
     required TResult Function() notAuthenticated,
   }) {
-    return authenticated(user);
+    return authenticated(user, idToken);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? authenticated,
+    TResult? Function(User user, String idToken)? authenticated,
     TResult? Function()? notAuthenticated,
   }) {
-    return authenticated?.call(user);
+    return authenticated?.call(user, idToken);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? authenticated,
+    TResult Function(User user, String idToken)? authenticated,
     TResult Function()? notAuthenticated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated(user);
+      return authenticated(user, idToken);
     }
     return orElse();
   }
@@ -790,12 +840,17 @@ class _$AuthenticatedAuthStateImpl extends _AuthenticatedAuthState {
 }
 
 abstract class _AuthenticatedAuthState extends AuthState {
-  const factory _AuthenticatedAuthState({required final User user}) =
-      _$AuthenticatedAuthStateImpl;
+  const factory _AuthenticatedAuthState(
+      {required final User user,
+      required final String idToken}) = _$AuthenticatedAuthStateImpl;
   const _AuthenticatedAuthState._() : super._();
 
   User get user;
-  @JsonKey(ignore: true)
+  String get idToken;
+
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthenticatedAuthStateImplCopyWith<_$AuthenticatedAuthStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -816,6 +871,9 @@ class __$$NotAuthenticatedAuthStateImplCopyWithImpl<$Res>
       _$NotAuthenticatedAuthStateImpl _value,
       $Res Function(_$NotAuthenticatedAuthStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -841,7 +899,7 @@ class _$NotAuthenticatedAuthStateImpl extends _NotAuthenticatedAuthState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) authenticated,
+    required TResult Function(User user, String idToken) authenticated,
     required TResult Function() notAuthenticated,
   }) {
     return notAuthenticated();
@@ -850,7 +908,7 @@ class _$NotAuthenticatedAuthStateImpl extends _NotAuthenticatedAuthState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? authenticated,
+    TResult? Function(User user, String idToken)? authenticated,
     TResult? Function()? notAuthenticated,
   }) {
     return notAuthenticated?.call();
@@ -859,7 +917,7 @@ class _$NotAuthenticatedAuthStateImpl extends _NotAuthenticatedAuthState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? authenticated,
+    TResult Function(User user, String idToken)? authenticated,
     TResult Function()? notAuthenticated,
     required TResult orElse(),
   }) {

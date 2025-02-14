@@ -19,7 +19,9 @@ mixin _$BalanceOnDate {
   DateTime get date => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BalanceOnDate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BalanceOnDateCopyWith<BalanceOnDate> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$BalanceOnDateCopyWithImpl<$Res, $Val extends BalanceOnDate>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BalanceOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$BalanceOnDateImplCopyWithImpl<$Res>
       _$BalanceOnDateImpl _value, $Res Function(_$BalanceOnDateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BalanceOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,7 +133,9 @@ class _$BalanceOnDateImpl implements _BalanceOnDate {
   @override
   int get hashCode => Object.hash(runtimeType, date, sum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BalanceOnDate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BalanceOnDateImplCopyWith<_$BalanceOnDateImpl> get copyWith =>
@@ -143,8 +151,11 @@ abstract class _BalanceOnDate implements BalanceOnDate {
   DateTime get date;
   @override
   int get sum;
+
+  /// Create a copy of BalanceOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BalanceOnDateImplCopyWith<_$BalanceOnDateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

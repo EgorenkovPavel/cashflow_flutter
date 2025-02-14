@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 import '../models.dart';
 
@@ -7,5 +7,5 @@ class WatchLastOperationsUseCase{
 
   WatchLastOperationsUseCase(this._dataRepository);
 
-  Stream<List<Operation>> call(int count) => _dataRepository.operations.watchLast(count);
+  Stream<List<Operation>> call(int count) => _dataRepository.watchLastOperations(count);
 }

@@ -7,7 +7,7 @@ import 'card_title.dart';
 
 class AccountsCard extends StatefulWidget {
   final String title;
-  final List<AccountBalance> accounts;
+  final List<BaseAccountBalance> accounts;
 
   const AccountsCard({super.key, required this.title, required this.accounts});
 
@@ -18,12 +18,12 @@ class AccountsCard extends StatefulWidget {
 class _AccountsCardState extends State<AccountsCard> {
   bool _showAll = true;
 
-  List<AccountBalance> _visibleAccounts() {
-    if (widget.accounts.where((account) => account.balance != 0).isEmpty) {
+  List<BaseAccountBalance> _visibleAccounts() {
+    if (widget.accounts.where((account) => !account.balance.isEmpty).isEmpty) {
       return widget.accounts;
     } else {
       return widget.accounts
-          .where((account) => !_showAll || account.balance != 0)
+          .where((account) => !_showAll || !account.balance.isEmpty)
           .toList();
     }
   }
@@ -37,21 +37,29 @@ class _AccountsCardState extends State<AccountsCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(children: [
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
         CardTitle(title: widget.title),
         if (widget.accounts.isEmpty) Text(context.loc.noItems),
-        ...(_visibleAccounts()
-            .map((account) => _AccountListTile(account))
-            .toList()),
-        ButtonBar(
-          //alignment: MainAxisAlignment.spaceBetween,
+        GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 2,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: _visibleAccounts().map((e) => _AccountListTile(e)).toList(),
+        ),
+        OverflowBar(
+          alignment: MainAxisAlignment.end,
           children: [
             if (widget.accounts
-                .where((account) => account.balance != 0)
+                .where((account) => !account.balance.isEmpty)
                 .isNotEmpty)
               TextButton(
                 onPressed: _onHide,
-                child: Text(_showAll ? context.loc.btnShowAll : context.loc.btnHide),
+                child: Text(
+                    _showAll ? context.loc.btnShowAll : context.loc.btnHide),
               ),
             TextButton(
               child: Text(context.loc.btnAdd),
@@ -65,19 +73,51 @@ class _AccountsCardState extends State<AccountsCard> {
 }
 
 class _AccountListTile extends StatelessWidget {
-  final AccountBalance _account;
+  final BaseAccountBalance _account;
 
-  const _AccountListTile(AccountBalance account) : _account = account;
+  const _AccountListTile(BaseAccountBalance account) : _account = account;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(_account.title),
-      trailing: Text(
-        context.loc.numberFormat(_account.balance, _account.currency),
-        style: Theme.of(context).textTheme.titleMedium,
+    return InkWell(
+      onTap: () => context.openAccountPage(_account.account.id),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Theme.of(context).primaryColor),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Text(
+                _account.account.title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: _account.balance.sums
+                    .map((e) => Text(
+                          context.loc.sumFormat(e),
+                        ))
+                    .toList(),
+              ),
+            ),
+            const Positioned(
+              bottom: 10,
+              left: 10,
+              child: CircleAvatar(
+                child: Icon(Icons.account_circle),
+              ),
+            ),
+          ],
+        ),
       ),
-      onTap: () => context.openAccountPage(_account.id),
     );
   }
 }

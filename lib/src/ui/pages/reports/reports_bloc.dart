@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 abstract class ReportsState {}
 

@@ -52,7 +52,7 @@ class RemoteSourceImpl extends RemoteDataSource {
 
   @override
   Future<void> connect(User user) async {
-    _cloudDb = await CloudDb.findByUserId(_firestore, user.id);
+    _cloudDb = await CloudDb.findByUserId(_firestore, user.googleId);
   }
 
   @override

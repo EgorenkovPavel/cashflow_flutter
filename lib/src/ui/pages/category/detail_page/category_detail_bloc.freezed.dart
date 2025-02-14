@@ -82,6 +82,9 @@ class _$CategoryDetailEventCopyWithImpl<$Res, $Val extends CategoryDetailEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -104,6 +107,8 @@ class __$$FetchCategoryDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$FetchCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,7 +148,9 @@ class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
   @override
   int get hashCode => Object.hash(runtimeType, categoryId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchCategoryDetailEventImplCopyWith<_$FetchCategoryDetailEventImpl>
@@ -228,7 +235,10 @@ abstract class _FetchCategoryDetailEvent implements CategoryDetailEvent {
       _$FetchCategoryDetailEventImpl;
 
   int get categoryId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchCategoryDetailEventImplCopyWith<_$FetchCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -241,8 +251,6 @@ abstract class _$$ChangeCategoryCategoryDetailEventImplCopyWith<$Res> {
       __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -255,6 +263,8 @@ class __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeCategoryCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -266,14 +276,6 @@ class __$$ChangeCategoryCategoryDetailEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -303,7 +305,9 @@ class _$ChangeCategoryCategoryDetailEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeCategoryCategoryDetailEventImplCopyWith<
@@ -391,7 +395,10 @@ abstract class _ChangeCategoryCategoryDetailEvent
       _$ChangeCategoryCategoryDetailEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeCategoryCategoryDetailEventImplCopyWith<
           _$ChangeCategoryCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -417,6 +424,8 @@ class __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeOperationsCategoryDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -465,7 +474,9 @@ class _$ChangeOperationsCategoryDetailEventImpl
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeOperationsCategoryDetailEventImplCopyWith<
@@ -553,7 +564,10 @@ abstract class _ChangeOperationsCategoryDetailEvent
       _$ChangeOperationsCategoryDetailEventImpl;
 
   List<Operation> get operations;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeOperationsCategoryDetailEventImplCopyWith<
           _$ChangeOperationsCategoryDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -566,7 +580,9 @@ mixin _$CategoryDetailState {
   int get budget => throw _privateConstructorUsedError;
   List<Operation> get operations => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryDetailStateCopyWith<CategoryDetailState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -594,6 +610,8 @@ class _$CategoryDetailStateCopyWithImpl<$Res, $Val extends CategoryDetailState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -646,6 +664,8 @@ class __$$CategoryDetailStateImplCopyWithImpl<$Res>
       $Res Function(_$CategoryDetailStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -721,7 +741,9 @@ class _$CategoryDetailStateImpl implements _CategoryDetailState {
   int get hashCode => Object.hash(runtimeType, budgetType, title, budget,
       const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryDetailStateImplCopyWith<_$CategoryDetailStateImpl> get copyWith =>
@@ -744,8 +766,11 @@ abstract class _CategoryDetailState implements CategoryDetailState {
   int get budget;
   @override
   List<Operation> get operations;
+
+  /// Create a copy of CategoryDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryDetailStateImplCopyWith<_$CategoryDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

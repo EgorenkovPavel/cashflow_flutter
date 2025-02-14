@@ -1,5 +1,4 @@
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
-import 'package:money_tracker/src/data/sources/local/db_converters/currency_converter.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/src/data/sources/remote/models/cloud_models.dart';
 import 'package:money_tracker/src/domain/models.dart';
@@ -10,7 +9,7 @@ extension CloudAccountMapper on Account {
         title: title,
         isDebt: isDebt,
         deleted: false,
-        currency: const CurrencyConverter().toSql(currency),
+        user: user?.googleId ?? '',
       );
 }
 
@@ -21,7 +20,6 @@ extension CloudCategoryMapper on Category {
         operationType: const OperationTypeConverter().toSql(operationType),
         budgetType: const BudgetTypeConverter().toSql(budgetType),
         budget: budget,
-        currency: const CurrencyConverter().toSql(currency),
         deleted: false,
       );
 }
@@ -36,6 +34,8 @@ extension CloudOperationMapper on Operation {
           category: o.category.cloudId,
           sum: o.sum,
           deleted: o.deleted,
+          currencySent: o.currency.toString(),
+          currencyReceived: o.currency.toString(),
         ),
         output: (o) => CloudOperation(
           id: o.cloudId,
@@ -45,6 +45,8 @@ extension CloudOperationMapper on Operation {
           category: o.category.cloudId,
           sum: o.sum,
           deleted: o.deleted,
+          currencySent: o.currency.toString(),
+          currencyReceived: o.currency.toString(),
         ),
         transfer: (o) => CloudOperation(
           id: o.cloudId,
@@ -55,6 +57,8 @@ extension CloudOperationMapper on Operation {
           sum: o.sum,
           recSum: o.recSum,
           deleted: o.deleted,
+          currencySent: o.currencySent.toString(),
+          currencyReceived: o.currencyReceived.toString(),
         ),
       );
 }

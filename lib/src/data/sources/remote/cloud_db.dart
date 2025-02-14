@@ -46,12 +46,12 @@ class CloudDb {
     User user,
   ) async {
     final db = await firestore.collection(_DATABASES).add({
-      _DATABASES_ADMIN: user.id,
-      _DATABASES_USERS: [user.id],
+      _DATABASES_ADMIN: user.googleId,
+      _DATABASES_USERS: [user.googleId],
     });
     await db
         .collection(_USERS)
-        .doc(user.id)
+        .doc(user.googleId)
         .set(const UserMapper().mapToCloud(user));
 
     return CloudDb(db, true);
@@ -77,7 +77,7 @@ class CloudDb {
   static Future<bool> databaseExists(FirebaseFirestore firestore, User user) async {
     QuerySnapshot querySnapshot = await firestore
         .collection(_DATABASES)
-        .where(_DATABASES_USERS, arrayContains: user.id)
+        .where(_DATABASES_USERS, arrayContains: user.googleId)
         .get();
 
     return querySnapshot.docs.isNotEmpty;
@@ -108,12 +108,12 @@ class CloudDb {
   Future<void> addUserToDatabase(User user) async {
     var doc = await _db.get();
     var data = doc.data();
-    data?[_DATABASES_USERS].add(user.id);
+    data?[_DATABASES_USERS].add(user.googleId);
     await _db.set(data);
 
     await _db
         .collection(_USERS)
-        .doc(user.id)
+        .doc(user.googleId)
         .set(const UserMapper().mapToCloud(user));
   }
 

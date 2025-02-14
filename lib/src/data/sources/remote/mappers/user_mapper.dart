@@ -22,10 +22,9 @@ class UserMapper extends CloudConverter<User>{
   @override
   User mapToDart(QueryDocumentSnapshot<Object?> doc) {
     return User(
-      id: doc.id,
+      googleId: doc.id,
       name: doc.get(_KEY_NAME),
       photo: doc.get(_KEY_PHOTO),
-      idToken: '',
     );
   }
 

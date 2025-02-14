@@ -1,13 +1,17 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
+
 import '../category/category.dart';
 
-part 'category_cashflow.freezed.dart';
+class CategoryCashflow extends Equatable {
+  final CategoryItem category;
+  final int monthCashflow;
+  final int yearCashflow;
 
-@freezed
-class CategoryCashflow with _$CategoryCashflow {
-  const factory CategoryCashflow({
-    required Category category,
-    required int monthCashflow,
-    required int yearCashflow,
-  }) = _CategoryCashflow;
+  const CategoryCashflow(
+      {required this.category,
+      required this.monthCashflow,
+      required this.yearCashflow});
+
+  @override
+  List<Object?> get props => [category, monthCashflow, yearCashflow];
 }

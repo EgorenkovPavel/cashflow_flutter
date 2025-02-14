@@ -1,20 +1,21 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
+import '../../utils/sum.dart';
 import '../models.dart';
 
-class InsertOperationTransferUseCase{
+class InsertOperationTransferUseCase {
   final DataRepository _dataRepository;
 
   InsertOperationTransferUseCase(this._dataRepository);
 
   Future<Operation> call({
     required DateTime date,
-    required Account account,
-    required Account recAccount,
-    required int sum,
-    required int recSum,
-}){
-    final newOperation = Operation.transfer(
+    required BaseAccount account,
+    required BaseAccount recAccount,
+    required Sum sum,
+    required Sum recSum,
+  }) {
+    final newOperation = TransferOperation(
       date: date,
       account: account,
       recAccount: recAccount,
@@ -22,6 +23,6 @@ class InsertOperationTransferUseCase{
       recSum: recSum,
     );
 
-    return _dataRepository.operations.insert(newOperation);
+    return _dataRepository.insertOperation(newOperation);
   }
 }

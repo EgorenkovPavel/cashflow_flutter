@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/utils/sum.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_operation_output_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_operation_transfer_use_case.dart';
@@ -37,7 +38,7 @@ class MasterEvent with _$MasterEvent {
 
   const factory MasterEvent.moreTap() = _MoreTapMasterEvent;
 
-  const factory MasterEvent.changeAccount({required AccountBalance account}) =
+  const factory MasterEvent.changeAccount({required BaseAccountBalance account}) =
       _ChangeAccountMasterEvent;
 
   const factory MasterEvent.changeInCategory({required Category category}) =
@@ -47,7 +48,7 @@ class MasterEvent with _$MasterEvent {
       _ChangeOutCategoryMasterEvent;
 
   const factory MasterEvent.changeRecAccount({
-    required AccountBalance account,
+    required BaseAccountBalance account,
   }) = _ChangeRecAccountMasterEvent;
 
   const factory MasterEvent.cancelOperation() = _CancelOperationMasterEvent;
@@ -77,15 +78,15 @@ class MasterState with _$MasterState {
   const factory MasterState({
     required MasterStateAction action,
     required OperationType operationType,
-    required int sum,
-    required int recSum,
+    required Sum sum,
+    required Sum recSum,
     required bool showKeyboard,
     required bool highlightSum,
     required bool highlightRecSum,
-    AccountBalance? account,
+    BaseAccountBalance? account,
     Category? categoryIn,
     Category? categoryOut,
-    AccountBalance? recAccount,
+    BaseAccountBalance? recAccount,
     Operation? operation,
   }) = _MasterState;
 }
@@ -103,11 +104,11 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     this._insertOperationTransferUseCase,
     this._getLastOperationUseCase,
     this._deleteOperationUseCase,
-  ) : super(const MasterState(
+  ) : super(MasterState(
           action: MasterStateAction.DATA,
           operationType: OperationType.INPUT,
-          sum: 0,
-          recSum: 0,
+          sum: Sum(0, Currency.RUB),
+          recSum: Sum(0, Currency.RUB),
           showKeyboard: false,
           highlightSum: false,
           highlightRecSum: false,
@@ -145,14 +146,19 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       return;
     }
 
+    final account = op.account;
+
     emit(state.copyWith(
-      account: AccountBalance(
-        id: op.account.id,
-        cloudId: op.cloudId,
-        title: op.account.title,
-        currency: op.account.currency,
-        balance: 0,
-      ),
+      account: switch(account){
+        Account() => AccountBalance(
+          account: account,
+          balance: const Balance(),
+        ),
+        Debt() => DebtBalance(
+          account: account,
+          balance: const Balance(),
+        ),
+      },
       action: MasterStateAction.SET_ACCOUNT,
     ));
 
@@ -160,26 +166,33 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       operationType: op.type,
       action: MasterStateAction.DATA,
     ));
-    op.map(
-      input: (operation) => emit(state.copyWith(
-        categoryIn: operation.category,
-        action: MasterStateAction.SET_IN_CATEGORY,
-      )),
-      output: (operation) => emit(state.copyWith(
-        categoryOut: operation.category,
-        action: MasterStateAction.SET_OUT_CATEGORY,
-      )),
-      transfer: (operation) => emit(state.copyWith(
-        recAccount: AccountBalance(
-          id: operation.recAccount.id,
-          cloudId: operation.recAccount.cloudId,
-          title: operation.recAccount.title,
-          currency: operation.recAccount.currency,
-          balance: 0,
-        ),
-        action: MasterStateAction.SET_REC_ACCOUNT,
-      )),
-    );
+    switch(op){
+      case InputOperation():
+        emit(state.copyWith(
+          categoryIn: op.category,
+          action: MasterStateAction.SET_IN_CATEGORY,
+        ));
+      case OutputOperation():
+        emit(state.copyWith(
+          categoryOut: op.category,
+          action: MasterStateAction.SET_OUT_CATEGORY,
+        ));
+      case TransferOperation():
+        final recAccount = op.recAccount;
+        emit(state.copyWith(
+          recAccount: switch(recAccount){
+            Account() => AccountBalance(
+              account: recAccount,
+              balance: const Balance(),
+            ),
+            Debt() => DebtBalance(
+              account: recAccount,
+              balance: const Balance(),
+            ),
+          },
+          action: MasterStateAction.SET_REC_ACCOUNT,
+        ));
+    }
   }
 
   FutureOr<void> _backPressed(
@@ -268,12 +281,12 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   ) {
     if (state.highlightSum) {
       emit(state.copyWith(
-        sum: (state.sum / 10).floor(),
+        sum: state.sum / 10,
         action: MasterStateAction.DATA,
       ));
     } else if (state.highlightRecSum) {
       emit(state.copyWith(
-        recSum: (state.recSum / 10).floor(),
+        recSum: state.recSum / 10,
         action: MasterStateAction.DATA,
       ));
     }
@@ -378,7 +391,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       return;
     }
 
-    if (state.sum == 0) {
+    if (state.sum.sum == 0) {
       emit(state.copyWith(action: MasterStateAction.SHOW_EMPTY_SUM_MESSAGE));
 
       return;
@@ -392,8 +405,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
 
     emit(state.copyWith(
       action: MasterStateAction.HIDE_KEYBOARD,
-      sum: 0,
-      recSum: 0,
+      sum: state.sum.copyWith(sum: 0),
+      recSum: state.recSum.copyWith(sum: 0),
       showKeyboard: false,
     ));
   }
@@ -404,8 +417,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         {
           return _insertOperationInputUseCase(
             date: DateTime.now(),
-            account: state.account!.account,
-            category: state.categoryIn!,
+            account: state.account!.account as Account,
+            category: state.categoryIn! as InputCategoryItem,
             sum: state.sum,
           );
         }
@@ -413,8 +426,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
         {
           return _insertOperationOutputUseCase(
             date: DateTime.now(),
-            account: state.account!.account,
-            category: state.categoryOut!,
+            account: state.account!.account as Account,
+            category: state.categoryOut! as OutputCategoryItem,
             sum: state.sum,
           );
         }
@@ -427,10 +440,6 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
             sum: state.sum,
             recSum: state.recSum,
           );
-        }
-      default:
-        {
-          throw 'Unknown value';
         }
     }
   }

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 abstract class OperationListEvent {}
@@ -47,7 +47,7 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
     );
     _sub?.cancel();
     _sub =
-        _repository.operations.watchAllByFilter(event.filter).listen((items) {
+        _repository.watchAllOperationsByFilter(event.filter).listen((items) {
       add(ChangeOperations(items));
     });
   }

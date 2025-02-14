@@ -66,6 +66,9 @@ class _$DataControlEventCopyWithImpl<$Res, $Val extends DataControlEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DataControlEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -85,6 +88,9 @@ class __$$DeleteAllDataControlEventImplCopyWithImpl<$Res>
       _$DeleteAllDataControlEventImpl _value,
       $Res Function(_$DeleteAllDataControlEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DataControlEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -232,6 +238,9 @@ class _$DataControlStateCopyWithImpl<$Res, $Val extends DataControlState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DataControlState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -250,6 +259,9 @@ class __$$InitialDataControlStateImplCopyWithImpl<$Res>
       _$InitialDataControlStateImpl _value,
       $Res Function(_$InitialDataControlStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DataControlState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -363,6 +375,9 @@ class __$$InProgressDataControlStateImplCopyWithImpl<$Res>
       _$InProgressDataControlStateImpl _value,
       $Res Function(_$InProgressDataControlStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DataControlState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -476,6 +491,9 @@ class __$$SuccessDataControlStateImplCopyWithImpl<$Res>
       _$SuccessDataControlStateImpl _value,
       $Res Function(_$SuccessDataControlStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DataControlState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

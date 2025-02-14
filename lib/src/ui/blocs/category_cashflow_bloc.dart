@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
 
 import '../../domain/models.dart';
-import '../../domain/models/enum/currency.dart';
 
 part 'category_cashflow_bloc.freezed.dart';
 
@@ -30,12 +28,12 @@ class CategoryCashflowState with _$CategoryCashflowState {
   List<Category> get inCategories =>
       cashflows
           .map((a) => a.category)
-          .where((c) => c.operationType == OperationType.INPUT).toList();
+          .whereType<InputCategoryItem>().toList();
 
   List<Category> get outCategories =>
       cashflows
           .map((a) => a.category)
-          .where((c) => c.operationType == OperationType.OUTPUT).toList();
+          .whereType<OutputCategoryItem>().toList();
 }
 
 class CategoryCashflowBloc
@@ -118,8 +116,8 @@ class CategoryCashflowBloc
       Currency currency,) {
     return items
         .where((item) =>
-    item.category.operationType == operationType &&
-        item.category.currency == currency)
+    item.category.type == operationType
+    )
         .map((item) => item.monthCashflow)
         .fold(
       0,
@@ -133,8 +131,10 @@ class CategoryCashflowBloc
     return items
         .where((item) =>
     item.category.budgetType == BudgetType.MONTH &&
-        item.category.operationType == operationType &&
-        item.category.currency == currency)
+        item.category.type == operationType
+        // &&
+        // item.category.currency == currency
+    )
         .fold<int>(
       0,
           (previousValue, element) =>
@@ -143,8 +143,10 @@ class CategoryCashflowBloc
         items
             .where((item) =>
         item.category.budgetType == BudgetType.YEAR &&
-            item.category.operationType == operationType &&
-            item.category.currency == currency)
+            item.category.type == operationType
+            // &&
+            // item.category.currency == currency
+        )
             .fold<int>(
           0,
               (previousValue, element) =>

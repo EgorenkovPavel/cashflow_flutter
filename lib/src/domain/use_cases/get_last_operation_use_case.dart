@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import '../models.dart';
 
 class GetLastOperationUseCase{
@@ -6,5 +6,5 @@ class GetLastOperationUseCase{
 
   GetLastOperationUseCase(this._dataRepository);
 
-  Future<Operation?> call() => _dataRepository.operations.getLast();
+  Future<Operation?> call() => _dataRepository.getLastOperation();
 }

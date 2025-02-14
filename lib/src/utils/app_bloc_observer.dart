@@ -44,7 +44,7 @@ class AppBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    debugPrint('onError -- ${bloc.runtimeType}, $error');
+    debugPrint('onError -- ${bloc.runtimeType}, $error, $stackTrace');
     if (!kDebugMode) {
       FirebaseCrashlytics.instance.recordError(
           error,

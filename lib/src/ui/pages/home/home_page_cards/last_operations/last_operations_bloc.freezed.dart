@@ -75,6 +75,9 @@ class _$LastOperationsEventCopyWithImpl<$Res, $Val extends LastOperationsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of LastOperationsEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$FetchLastOperationsEventImplCopyWithImpl<$Res>
       _$FetchLastOperationsEventImpl _value,
       $Res Function(_$FetchLastOperationsEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LastOperationsEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -206,6 +212,8 @@ class __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeOperationsLastOperationsEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LastOperationsEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -254,7 +262,9 @@ class _$ChangeOperationsLastOperationsEventImpl
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LastOperationsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeOperationsLastOperationsEventImplCopyWith<
@@ -335,7 +345,10 @@ abstract class _ChangeOperationsLastOperationsEvent
       _$ChangeOperationsLastOperationsEventImpl;
 
   List<Operation> get operations;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of LastOperationsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeOperationsLastOperationsEventImplCopyWith<
           _$ChangeOperationsLastOperationsEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -345,7 +358,9 @@ abstract class _ChangeOperationsLastOperationsEvent
 mixin _$LastOperationsState {
   List<Operation> get operations => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LastOperationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LastOperationsStateCopyWith<LastOperationsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -369,6 +384,8 @@ class _$LastOperationsStateCopyWithImpl<$Res, $Val extends LastOperationsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LastOperationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -402,6 +419,8 @@ class __$$LastOperationsStateImplCopyWithImpl<$Res>
       $Res Function(_$LastOperationsStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LastOperationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -448,7 +467,9 @@ class _$LastOperationsStateImpl implements _LastOperationsState {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LastOperationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
@@ -462,8 +483,11 @@ abstract class _LastOperationsState implements LastOperationsState {
 
   @override
   List<Operation> get operations;
+
+  /// Create a copy of LastOperationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

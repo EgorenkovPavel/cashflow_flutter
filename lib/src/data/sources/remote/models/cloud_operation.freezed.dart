@@ -25,8 +25,12 @@ mixin _$CloudOperation {
   int get sum => throw _privateConstructorUsedError;
   int? get recSum => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
+  String get currencySent => throw _privateConstructorUsedError;
+  String get currencyReceived => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CloudOperationCopyWith<CloudOperation> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,7 +50,9 @@ abstract class $CloudOperationCopyWith<$Res> {
       String? recAccount,
       int sum,
       int? recSum,
-      bool deleted});
+      bool deleted,
+      String currencySent,
+      String currencyReceived});
 }
 
 /// @nodoc
@@ -59,6 +65,8 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CloudOperation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -71,6 +79,8 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
     Object? sum = null,
     Object? recSum = freezed,
     Object? deleted = null,
+    Object? currencySent = null,
+    Object? currencyReceived = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -109,6 +119,14 @@ class _$CloudOperationCopyWithImpl<$Res, $Val extends CloudOperation>
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      currencySent: null == currencySent
+          ? _value.currencySent
+          : currencySent // ignore: cast_nullable_to_non_nullable
+              as String,
+      currencyReceived: null == currencyReceived
+          ? _value.currencyReceived
+          : currencyReceived // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -130,7 +148,9 @@ abstract class _$$CloudOperationImplCopyWith<$Res>
       String? recAccount,
       int sum,
       int? recSum,
-      bool deleted});
+      bool deleted,
+      String currencySent,
+      String currencyReceived});
 }
 
 /// @nodoc
@@ -141,6 +161,8 @@ class __$$CloudOperationImplCopyWithImpl<$Res>
       _$CloudOperationImpl _value, $Res Function(_$CloudOperationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CloudOperation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,6 +175,8 @@ class __$$CloudOperationImplCopyWithImpl<$Res>
     Object? sum = null,
     Object? recSum = freezed,
     Object? deleted = null,
+    Object? currencySent = null,
+    Object? currencyReceived = null,
   }) {
     return _then(_$CloudOperationImpl(
       id: null == id
@@ -191,6 +215,14 @@ class __$$CloudOperationImplCopyWithImpl<$Res>
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      currencySent: null == currencySent
+          ? _value.currencySent
+          : currencySent // ignore: cast_nullable_to_non_nullable
+              as String,
+      currencyReceived: null == currencyReceived
+          ? _value.currencyReceived
+          : currencyReceived // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -207,7 +239,9 @@ class _$CloudOperationImpl implements _CloudOperation {
       this.recAccount,
       required this.sum,
       this.recSum,
-      required this.deleted});
+      required this.deleted,
+      required this.currencySent,
+      required this.currencyReceived});
 
   @override
   final String id;
@@ -227,10 +261,14 @@ class _$CloudOperationImpl implements _CloudOperation {
   final int? recSum;
   @override
   final bool deleted;
+  @override
+  final String currencySent;
+  @override
+  final String currencyReceived;
 
   @override
   String toString() {
-    return 'CloudOperation(id: $id, date: $date, operationType: $operationType, account: $account, category: $category, recAccount: $recAccount, sum: $sum, recSum: $recSum, deleted: $deleted)';
+    return 'CloudOperation(id: $id, date: $date, operationType: $operationType, account: $account, category: $category, recAccount: $recAccount, sum: $sum, recSum: $recSum, deleted: $deleted, currencySent: $currencySent, currencyReceived: $currencyReceived)';
   }
 
   @override
@@ -249,14 +287,31 @@ class _$CloudOperationImpl implements _CloudOperation {
                 other.recAccount == recAccount) &&
             (identical(other.sum, sum) || other.sum == sum) &&
             (identical(other.recSum, recSum) || other.recSum == recSum) &&
-            (identical(other.deleted, deleted) || other.deleted == deleted));
+            (identical(other.deleted, deleted) || other.deleted == deleted) &&
+            (identical(other.currencySent, currencySent) ||
+                other.currencySent == currencySent) &&
+            (identical(other.currencyReceived, currencyReceived) ||
+                other.currencyReceived == currencyReceived));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, date, operationType, account,
-      category, recAccount, sum, recSum, deleted);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      date,
+      operationType,
+      account,
+      category,
+      recAccount,
+      sum,
+      recSum,
+      deleted,
+      currencySent,
+      currencyReceived);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CloudOperationImplCopyWith<_$CloudOperationImpl> get copyWith =>
@@ -274,7 +329,9 @@ abstract class _CloudOperation implements CloudOperation {
       final String? recAccount,
       required final int sum,
       final int? recSum,
-      required final bool deleted}) = _$CloudOperationImpl;
+      required final bool deleted,
+      required final String currencySent,
+      required final String currencyReceived}) = _$CloudOperationImpl;
 
   @override
   String get id;
@@ -295,7 +352,14 @@ abstract class _CloudOperation implements CloudOperation {
   @override
   bool get deleted;
   @override
-  @JsonKey(ignore: true)
+  String get currencySent;
+  @override
+  String get currencyReceived;
+
+  /// Create a copy of CloudOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CloudOperationImplCopyWith<_$CloudOperationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

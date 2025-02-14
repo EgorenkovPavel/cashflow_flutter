@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
-import 'package:money_tracker/src/data/sources/local/db_converters/currency_converter.dart';
 
 import '../../../../domain/models/enum/operation_type.dart';
 import '../../../../domain/models/sum_on_date.dart';
@@ -127,17 +126,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   CategoryDB _categoryDBFromRow(QueryRow row) => CategoryDB(
-    id: row.read<int>('id'),
-    title: row.read<String>('title'),
-    operationType: const OperationTypeConverter()
-        .fromSql(row.read<int>('operation_type')),
-    budget: row.read<int>('budget'),
-    currency: const CurrencyConverter().fromSql(row.read<String>('currency')),
-    budgetType: const BudgetTypeConverter()
-        .fromSql(row.read('budget_type')),
-    synced: row.read<bool>('synced'),
-    cloudId: row.read<String>('cloud_id'),
-  );
+        id: row.read<int>('id'),
+        title: row.read<String>('title'),
+        operationType: const OperationTypeConverter()
+            .fromSql(row.read<int>('operation_type')),
+        budget: row.read<int>('budget'),
+        budgetType:
+            const BudgetTypeConverter().fromSql(row.read('budget_type')),
+        synced: row.read<bool>('synced'),
+        cloudId: row.read<String>('cloud_id'),
+      );
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
     DateTime date,
@@ -360,7 +358,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                   operationType: p.operationType,
                   budgetType: p.budgetType,
                   budget: p.budget,
-                  currency: Value(p.currency),
                 ),
               )
               .toList(),
@@ -368,5 +365,4 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       },
     );
   }
-
 }

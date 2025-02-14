@@ -23,7 +23,6 @@ mixin _$CategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,7 +33,6 @@ mixin _$CategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -45,7 +43,6 @@ mixin _$CategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -59,8 +56,6 @@ mixin _$CategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
@@ -72,7 +67,6 @@ mixin _$CategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -84,7 +78,6 @@ mixin _$CategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -107,6 +100,9 @@ class _$CategoryInputEventCopyWithImpl<$Res, $Val extends CategoryInputEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -129,6 +125,8 @@ class __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>
       $Res Function(_$InitByTypeCategoryInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -169,7 +167,9 @@ class _$InitByTypeCategoryInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, operationType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InitByTypeCategoryInputEventImplCopyWith<
@@ -185,7 +185,6 @@ class _$InitByTypeCategoryInputEventImpl
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return initByType(operationType);
@@ -199,7 +198,6 @@ class _$InitByTypeCategoryInputEventImpl
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return initByType?.call(operationType);
@@ -213,7 +211,6 @@ class _$InitByTypeCategoryInputEventImpl
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -233,8 +230,6 @@ class _$InitByTypeCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initByType(this);
@@ -249,7 +244,6 @@ class _$InitByTypeCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initByType?.call(this);
@@ -264,7 +258,6 @@ class _$InitByTypeCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -281,7 +274,10 @@ abstract class _InitByTypeCategoryInputEvent implements CategoryInputEvent {
       _$InitByTypeCategoryInputEventImpl;
 
   OperationType get operationType;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitByTypeCategoryInputEventImplCopyWith<
           _$InitByTypeCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -307,6 +303,8 @@ class __$$InitByIdCategoryInputEventImplCopyWithImpl<$Res>
       $Res Function(_$InitByIdCategoryInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -346,7 +344,9 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
   @override
   int get hashCode => Object.hash(runtimeType, categoryId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InitByIdCategoryInputEventImplCopyWith<_$InitByIdCategoryInputEventImpl>
@@ -361,7 +361,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return initById(categoryId);
@@ -375,7 +374,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return initById?.call(categoryId);
@@ -389,7 +387,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -409,8 +406,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initById(this);
@@ -425,7 +420,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initById?.call(this);
@@ -440,7 +434,6 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -456,7 +449,10 @@ abstract class _InitByIdCategoryInputEvent implements CategoryInputEvent {
       _$InitByIdCategoryInputEventImpl;
 
   int get categoryId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitByIdCategoryInputEventImplCopyWith<_$InitByIdCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -481,6 +477,8 @@ class __$$ChangeTitleCategoryInputEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeTitleCategoryInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -520,7 +518,9 @@ class _$ChangeTitleCategoryInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, title);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeTitleCategoryInputEventImplCopyWith<
@@ -536,7 +536,6 @@ class _$ChangeTitleCategoryInputEventImpl
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeTitle(title);
@@ -550,7 +549,6 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeTitle?.call(title);
@@ -564,7 +562,6 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -584,8 +581,6 @@ class _$ChangeTitleCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeTitle(this);
@@ -600,7 +595,6 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeTitle?.call(this);
@@ -615,7 +609,6 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -631,7 +624,10 @@ abstract class _ChangeTitleCategoryInputEvent implements CategoryInputEvent {
       _$ChangeTitleCategoryInputEventImpl;
 
   String get title;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeTitleCategoryInputEventImplCopyWith<
           _$ChangeTitleCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -657,6 +653,8 @@ class __$$ChangeBudgetCategoryInputEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeBudgetCategoryInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -696,7 +694,9 @@ class _$ChangeBudgetCategoryInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, budget);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeBudgetCategoryInputEventImplCopyWith<
@@ -712,7 +712,6 @@ class _$ChangeBudgetCategoryInputEventImpl
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeBudget(budget);
@@ -726,7 +725,6 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeBudget?.call(budget);
@@ -740,7 +738,6 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -760,8 +757,6 @@ class _$ChangeBudgetCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudget(this);
@@ -776,7 +771,6 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudget?.call(this);
@@ -791,7 +785,6 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -807,7 +800,10 @@ abstract class _ChangeBudgetCategoryInputEvent implements CategoryInputEvent {
       _$ChangeBudgetCategoryInputEventImpl;
 
   int get budget;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeBudgetCategoryInputEventImplCopyWith<
           _$ChangeBudgetCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -833,6 +829,8 @@ class __$$ChangeBudgetTypeCategoryInputEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeBudgetTypeCategoryInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -873,7 +871,9 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, budgetType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<
@@ -889,7 +889,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeBudgetType(budgetType);
@@ -903,7 +902,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeBudgetType?.call(budgetType);
@@ -917,7 +915,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -937,8 +934,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudgetType(this);
@@ -953,7 +948,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudgetType?.call(this);
@@ -968,7 +962,6 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -986,187 +979,12 @@ abstract class _ChangeBudgetTypeCategoryInputEvent
       _$ChangeBudgetTypeCategoryInputEventImpl;
 
   BudgetType get budgetType;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<
           _$ChangeBudgetTypeCategoryInputEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ChangeCurrencyCategoryInputEventImplCopyWith<$Res> {
-  factory _$$ChangeCurrencyCategoryInputEventImplCopyWith(
-          _$ChangeCurrencyCategoryInputEventImpl value,
-          $Res Function(_$ChangeCurrencyCategoryInputEventImpl) then) =
-      __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Currency currency});
-}
-
-/// @nodoc
-class __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<$Res>
-    extends _$CategoryInputEventCopyWithImpl<$Res,
-        _$ChangeCurrencyCategoryInputEventImpl>
-    implements _$$ChangeCurrencyCategoryInputEventImplCopyWith<$Res> {
-  __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl(
-      _$ChangeCurrencyCategoryInputEventImpl _value,
-      $Res Function(_$ChangeCurrencyCategoryInputEventImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currency = null,
-  }) {
-    return _then(_$ChangeCurrencyCategoryInputEventImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ChangeCurrencyCategoryInputEventImpl
-    implements _ChangeCurrencyCategoryInputEvent {
-  const _$ChangeCurrencyCategoryInputEventImpl({required this.currency});
-
-  @override
-  final Currency currency;
-
-  @override
-  String toString() {
-    return 'CategoryInputEvent.changeCurrency(currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeCurrencyCategoryInputEventImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, currency);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeCurrencyCategoryInputEventImplCopyWith<
-          _$ChangeCurrencyCategoryInputEventImpl>
-      get copyWith => __$$ChangeCurrencyCategoryInputEventImplCopyWithImpl<
-          _$ChangeCurrencyCategoryInputEventImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
-    required TResult Function(int categoryId) initById,
-    required TResult Function(String title) changeTitle,
-    required TResult Function(int budget) changeBudget,
-    required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function() save,
-  }) {
-    return changeCurrency(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
-    TResult? Function(int categoryId)? initById,
-    TResult? Function(String title)? changeTitle,
-    TResult? Function(int budget)? changeBudget,
-    TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeCurrency?.call(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
-    TResult Function(int categoryId)? initById,
-    TResult Function(String title)? changeTitle,
-    TResult Function(int budget)? changeBudget,
-    TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(currency);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitByTypeCategoryInputEvent value) initByType,
-    required TResult Function(_InitByIdCategoryInputEvent value) initById,
-    required TResult Function(_ChangeTitleCategoryInputEvent value) changeTitle,
-    required TResult Function(_ChangeBudgetCategoryInputEvent value)
-        changeBudget,
-    required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
-        changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
-    required TResult Function(_SaveCategoryInputEvent value) save,
-  }) {
-    return changeCurrency(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitByTypeCategoryInputEvent value)? initByType,
-    TResult? Function(_InitByIdCategoryInputEvent value)? initById,
-    TResult? Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
-    TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
-    TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
-        changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
-    TResult? Function(_SaveCategoryInputEvent value)? save,
-  }) {
-    return changeCurrency?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitByTypeCategoryInputEvent value)? initByType,
-    TResult Function(_InitByIdCategoryInputEvent value)? initById,
-    TResult Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
-    TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
-    TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
-        changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
-    TResult Function(_SaveCategoryInputEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeCurrencyCategoryInputEvent implements CategoryInputEvent {
-  const factory _ChangeCurrencyCategoryInputEvent(
-          {required final Currency currency}) =
-      _$ChangeCurrencyCategoryInputEventImpl;
-
-  Currency get currency;
-  @JsonKey(ignore: true)
-  _$$ChangeCurrencyCategoryInputEventImplCopyWith<
-          _$ChangeCurrencyCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1186,6 +1004,9 @@ class __$$SaveCategoryInputEventImplCopyWithImpl<$Res>
       _$SaveCategoryInputEventImpl _value,
       $Res Function(_$SaveCategoryInputEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1216,7 +1037,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return save();
@@ -1230,7 +1050,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -1244,7 +1063,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1264,8 +1082,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
-    required TResult Function(_ChangeCurrencyCategoryInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return save(this);
@@ -1280,7 +1096,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult? Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return save?.call(this);
@@ -1295,7 +1110,6 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
-    TResult Function(_ChangeCurrencyCategoryInputEvent value)? changeCurrency,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1314,13 +1128,16 @@ abstract class _SaveCategoryInputEvent implements CategoryInputEvent {
 mixin _$CategoryInputState {
   Category? get category => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
+  bool get isGroup => throw _privateConstructorUsedError;
   BudgetType get budgetType => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
-  Currency get currency => throw _privateConstructorUsedError;
   bool get isSaved => throw _privateConstructorUsedError;
+  CategoryGroup? get parent => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryInputStateCopyWith<CategoryInputState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1334,13 +1151,12 @@ abstract class $CategoryInputStateCopyWith<$Res> {
   $Res call(
       {Category? category,
       OperationType operationType,
+      bool isGroup,
       BudgetType budgetType,
       String title,
       int budget,
-      Currency currency,
-      bool isSaved});
-
-  $CategoryCopyWith<$Res>? get category;
+      bool isSaved,
+      CategoryGroup? parent});
 }
 
 /// @nodoc
@@ -1353,16 +1169,19 @@ class _$CategoryInputStateCopyWithImpl<$Res, $Val extends CategoryInputState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? category = freezed,
     Object? operationType = null,
+    Object? isGroup = null,
     Object? budgetType = null,
     Object? title = null,
     Object? budget = null,
-    Object? currency = null,
     Object? isSaved = null,
+    Object? parent = freezed,
   }) {
     return _then(_value.copyWith(
       category: freezed == category
@@ -1373,6 +1192,10 @@ class _$CategoryInputStateCopyWithImpl<$Res, $Val extends CategoryInputState>
           ? _value.operationType
           : operationType // ignore: cast_nullable_to_non_nullable
               as OperationType,
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -1385,27 +1208,15 @@ class _$CategoryInputStateCopyWithImpl<$Res, $Val extends CategoryInputState>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as CategoryGroup?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get category {
-    if (_value.category == null) {
-      return null;
-    }
-
-    return $CategoryCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
-    });
   }
 }
 
@@ -1420,14 +1231,12 @@ abstract class _$$CategoryInputStateImplCopyWith<$Res>
   $Res call(
       {Category? category,
       OperationType operationType,
+      bool isGroup,
       BudgetType budgetType,
       String title,
       int budget,
-      Currency currency,
-      bool isSaved});
-
-  @override
-  $CategoryCopyWith<$Res>? get category;
+      bool isSaved,
+      CategoryGroup? parent});
 }
 
 /// @nodoc
@@ -1438,16 +1247,19 @@ class __$$CategoryInputStateImplCopyWithImpl<$Res>
       $Res Function(_$CategoryInputStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? category = freezed,
     Object? operationType = null,
+    Object? isGroup = null,
     Object? budgetType = null,
     Object? title = null,
     Object? budget = null,
-    Object? currency = null,
     Object? isSaved = null,
+    Object? parent = freezed,
   }) {
     return _then(_$CategoryInputStateImpl(
       category: freezed == category
@@ -1458,6 +1270,10 @@ class __$$CategoryInputStateImplCopyWithImpl<$Res>
           ? _value.operationType
           : operationType // ignore: cast_nullable_to_non_nullable
               as OperationType,
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -1470,14 +1286,14 @@ class __$$CategoryInputStateImplCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as CategoryGroup?,
     ));
   }
 }
@@ -1488,16 +1304,19 @@ class _$CategoryInputStateImpl implements _CategoryInputState {
   const _$CategoryInputStateImpl(
       {this.category,
       required this.operationType,
+      required this.isGroup,
       required this.budgetType,
       required this.title,
       required this.budget,
-      required this.currency,
-      required this.isSaved});
+      required this.isSaved,
+      required this.parent});
 
   @override
   final Category? category;
   @override
   final OperationType operationType;
+  @override
+  final bool isGroup;
   @override
   final BudgetType budgetType;
   @override
@@ -1505,13 +1324,13 @@ class _$CategoryInputStateImpl implements _CategoryInputState {
   @override
   final int budget;
   @override
-  final Currency currency;
-  @override
   final bool isSaved;
+  @override
+  final CategoryGroup? parent;
 
   @override
   String toString() {
-    return 'CategoryInputState(category: $category, operationType: $operationType, budgetType: $budgetType, title: $title, budget: $budget, currency: $currency, isSaved: $isSaved)';
+    return 'CategoryInputState(category: $category, operationType: $operationType, isGroup: $isGroup, budgetType: $budgetType, title: $title, budget: $budget, isSaved: $isSaved, parent: $parent)';
   }
 
   @override
@@ -1523,20 +1342,22 @@ class _$CategoryInputStateImpl implements _CategoryInputState {
                 other.category == category) &&
             (identical(other.operationType, operationType) ||
                 other.operationType == operationType) &&
+            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.budget, budget) || other.budget == budget) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
+            (identical(other.parent, parent) || other.parent == parent));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, category, operationType,
-      budgetType, title, budget, currency, isSaved);
+  int get hashCode => Object.hash(runtimeType, category, operationType, isGroup,
+      budgetType, title, budget, isSaved, parent);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
@@ -1548,16 +1369,19 @@ abstract class _CategoryInputState implements CategoryInputState {
   const factory _CategoryInputState(
       {final Category? category,
       required final OperationType operationType,
+      required final bool isGroup,
       required final BudgetType budgetType,
       required final String title,
       required final int budget,
-      required final Currency currency,
-      required final bool isSaved}) = _$CategoryInputStateImpl;
+      required final bool isSaved,
+      required final CategoryGroup? parent}) = _$CategoryInputStateImpl;
 
   @override
   Category? get category;
   @override
   OperationType get operationType;
+  @override
+  bool get isGroup;
   @override
   BudgetType get budgetType;
   @override
@@ -1565,11 +1389,14 @@ abstract class _CategoryInputState implements CategoryInputState {
   @override
   int get budget;
   @override
-  Currency get currency;
-  @override
   bool get isSaved;
   @override
-  @JsonKey(ignore: true)
+  CategoryGroup? get parent;
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

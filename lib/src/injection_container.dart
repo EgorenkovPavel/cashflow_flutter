@@ -17,10 +17,8 @@ import 'package:money_tracker/src/domain/use_cases/get_category_by_id_use_case.d
 import 'package:money_tracker/src/domain/use_cases/get_last_operation_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/get_operation_by_id_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_account_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/insert_category_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/update_account_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/update_category_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/update_operation_input_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_account_title_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_balances_use_case.dart';
@@ -55,10 +53,6 @@ import '../src/data/sources/network_info_impl.dart';
 import '../src/data/sources/remote/remote_source_impl.dart';
 import '../src/data/sources/settings_source_impl.dart';
 import '../src/domain/interfaces/auth_repository.dart';
-import '../src/domain/interfaces/data/account_data_repository.dart';
-import '../src/domain/interfaces/data/category_data_repository.dart';
-import '../src/domain/interfaces/data/data_repository.dart';
-import '../src/domain/interfaces/data/operation_data_repository.dart';
 import '../src/domain/interfaces/sync_repository.dart';
 import '../src/ui/pages/account/detail_page/account_detail_bloc.dart';
 import '../src/ui/pages/account/input_page/account_input_bloc.dart';
@@ -72,6 +66,9 @@ import '../src/ui/pages/reports/reports_bloc.dart';
 import '../src/ui/pages/service/data_control_page/data_control_bloc.dart';
 import '../src/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import '../src/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
+import 'data/sources/local/data/user_dao.dart';
+import 'domain/interactors/category_interactor.dart';
+import 'domain/interfaces/data_repository.dart';
 import 'domain/use_cases/insert_operation_output_use_case.dart';
 import 'domain/use_cases/insert_operation_transfer_use_case.dart';
 import 'domain/use_cases/update_operation_output_use_case.dart';
@@ -86,31 +83,34 @@ Future<void> init() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  sl.registerLazySingleton<AccountDataRepositoryImpl>(
-    () => AccountDataRepositoryImpl(AccountDao(sl<Database>())),
-  );
-  sl.registerLazySingleton<CategoryDataRepositoryImpl>(
-    () => CategoryDataRepositoryImpl(CategoryDao(sl<Database>())),
-  );
-  sl.registerLazySingleton<OperationDataRepositoryImpl>(
-    () => OperationDataRepositoryImpl(OperationDao(sl<Database>())),
-  );
+  sl.registerLazySingleton<Database>(() => Database());
+  sl.registerLazySingleton<AccountDao>(() => AccountDao(sl<Database>()));
+  sl.registerLazySingleton<CategoryDao>(() => CategoryDao(sl<Database>()));
+  sl.registerLazySingleton<OperationDao>(() => OperationDao(sl<Database>()));
+  sl.registerLazySingleton<UserDao>(() => UserDao(sl<Database>()));
 
   sl.registerLazySingleton<LocalSyncTable<Account>>(
-    () => sl<AccountDataRepositoryImpl>(),
+    () => AccountDataRepositoryImpl(sl<AccountDao>(), sl<UserDao>()),
   );
   sl.registerLazySingleton<LocalSyncTable<Category>>(
-    () => sl<CategoryDataRepositoryImpl>(),
+    () => CategoryDataRepositoryImpl(sl<CategoryDao>()),
   );
   sl.registerLazySingleton<LocalSyncTable<Operation>>(
-    () => sl<OperationDataRepositoryImpl>(),
+    () => OperationDataRepositoryImpl(sl<OperationDao>(), sl<UserDao>()),
   );
 
-  sl.registerLazySingleton<Database>(() => Database());
+  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
+        accountDao: sl<AccountDao>(),
+        categoryDao: sl<CategoryDao>(),
+        operationDao: sl<OperationDao>(),
+        userDao: sl<UserDao>(),
+      ));
+
   sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(
         accountRepo: sl<LocalSyncTable<Account>>(),
         categoryRepo: sl<LocalSyncTable<Category>>(),
         operationRepo: sl<LocalSyncTable<Operation>>(),
+        dataRepository: sl<DataRepository>(),
       ));
 
   sl.registerLazySingleton<FirebaseFirestore>(() {
@@ -154,26 +154,11 @@ Future<void> init() async {
     () => SettingsSourceImpl(sl<SharedPreferences>()),
   );
 
-  sl.registerLazySingleton<AccountDataRepository>(
-    () => sl<AccountDataRepositoryImpl>(),
-  );
-  sl.registerLazySingleton<CategoryDataRepository>(
-    () => sl<CategoryDataRepositoryImpl>(),
-  );
-  sl.registerLazySingleton<OperationDataRepository>(
-    () => sl<OperationDataRepositoryImpl>(),
-  );
-
-  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
-        accountRepo: sl<AccountDataRepository>(),
-        categoryRepo: sl<CategoryDataRepository>(),
-        operationRepo: sl<OperationDataRepository>(),
-      ));
-
   sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
         localSource: sl<LocalSyncSource>(),
         remoteSource: sl<RemoteDataSource>(),
         networkInfo: sl<NetworkInfo>(),
+        dataRepository: sl<DataRepository>(),
       ));
 
   sl.registerLazySingleton<BackupRepository>(
@@ -198,21 +183,21 @@ Future<void> init() async {
   sl.registerFactory(() => GetLastOperationUseCase(sl()));
   sl.registerFactory(() => WatchLastOperationsUseCase(sl()));
 
-  sl.registerFactory(() => InsertAccountUseCase(sl()));
-  sl.registerFactory(() => InsertCategoryUseCase(sl()));
+  sl.registerFactory(() => InsertAccountUseCase(sl(), sl()));
 
   sl.registerFactory(() => InsertOperationInputUseCase(sl()));
   sl.registerFactory(() => InsertOperationOutputUseCase(sl()));
   sl.registerFactory(() => InsertOperationTransferUseCase(sl()));
 
   sl.registerFactory(() => UpdateAccountUseCase(sl()));
-  sl.registerFactory(() => UpdateCategoryUseCase(sl()));
 
   sl.registerFactory(() => UpdateOperationInputUseCase(sl()));
   sl.registerFactory(() => UpdateOperationOutputUseCase(sl()));
   sl.registerFactory(() => UpdateOperationTransferUseCase(sl()));
 
   sl.registerFactory(() => DeleteOperationUseCase(sl()));
+
+  sl.registerFactory(() => CategoryInteractor(sl()));
 
   // BLOCs
 
@@ -258,9 +243,7 @@ Future<void> init() async {
         sl<WatchCategoryByIdUseCase>(),
       ));
   sl.registerFactory(() => CategoryInputBloc(
-        sl<GetCategoryByIdUseCase>(),
-        sl<InsertCategoryUseCase>(),
-        sl<UpdateCategoryUseCase>(),
+        sl<CategoryInteractor>(),
       ));
 
   sl.registerFactory(

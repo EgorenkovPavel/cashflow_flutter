@@ -21,7 +21,9 @@ mixin _$OperationDbEntity {
   CategoryDB? get category => throw _privateConstructorUsedError;
   AccountDB? get recAccount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationDbEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OperationDbEntityCopyWith<OperationDbEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +51,8 @@ class _$OperationDbEntityCopyWithImpl<$Res, $Val extends OperationDbEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OperationDbEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +105,8 @@ class __$$OperationDbEntityImplCopyWithImpl<$Res>
       $Res Function(_$OperationDbEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationDbEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -172,7 +178,9 @@ class _$OperationDbEntityImpl extends _OperationDbEntity {
   int get hashCode =>
       Object.hash(runtimeType, operation, account, category, recAccount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationDbEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OperationDbEntityImplCopyWith<_$OperationDbEntityImpl> get copyWith =>
@@ -196,8 +204,11 @@ abstract class _OperationDbEntity extends OperationDbEntity {
   CategoryDB? get category;
   @override
   AccountDB? get recAccount;
+
+  /// Create a copy of OperationDbEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OperationDbEntityImplCopyWith<_$OperationDbEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

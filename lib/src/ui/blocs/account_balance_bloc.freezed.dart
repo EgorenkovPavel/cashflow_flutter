@@ -16,20 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AccountBalanceEvent {
-  List<AccountBalance> get accounts => throw _privateConstructorUsedError;
+  List<BaseAccountBalance> get accounts => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeBalance,
+    required TResult Function(List<BaseAccountBalance> accounts) changeBalance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeBalance,
+    TResult? Function(List<BaseAccountBalance> accounts)? changeBalance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeBalance,
+    TResult Function(List<BaseAccountBalance> accounts)? changeBalance,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,7 +51,9 @@ mixin _$AccountBalanceEvent {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AccountBalanceEventCopyWith<AccountBalanceEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,7 +64,7 @@ abstract class $AccountBalanceEventCopyWith<$Res> {
           AccountBalanceEvent value, $Res Function(AccountBalanceEvent) then) =
       _$AccountBalanceEventCopyWithImpl<$Res, AccountBalanceEvent>;
   @useResult
-  $Res call({List<AccountBalance> accounts});
+  $Res call({List<BaseAccountBalance> accounts});
 }
 
 /// @nodoc
@@ -75,6 +77,8 @@ class _$AccountBalanceEventCopyWithImpl<$Res, $Val extends AccountBalanceEvent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AccountBalanceEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,7 +88,7 @@ class _$AccountBalanceEventCopyWithImpl<$Res, $Val extends AccountBalanceEvent>
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
+              as List<BaseAccountBalance>,
     ) as $Val);
   }
 }
@@ -98,7 +102,7 @@ abstract class _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res>
       __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AccountBalance> accounts});
+  $Res call({List<BaseAccountBalance> accounts});
 }
 
 /// @nodoc
@@ -111,6 +115,8 @@ class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeBalanceAccountBalanceEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountBalanceEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -120,7 +126,7 @@ class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
+              as List<BaseAccountBalance>,
     ));
   }
 }
@@ -130,12 +136,12 @@ class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
 class _$ChangeBalanceAccountBalanceEventImpl
     implements _ChangeBalanceAccountBalanceEvent {
   const _$ChangeBalanceAccountBalanceEventImpl(
-      {required final List<AccountBalance> accounts})
+      {required final List<BaseAccountBalance> accounts})
       : _accounts = accounts;
 
-  final List<AccountBalance> _accounts;
+  final List<BaseAccountBalance> _accounts;
   @override
-  List<AccountBalance> get accounts {
+  List<BaseAccountBalance> get accounts {
     if (_accounts is EqualUnmodifiableListView) return _accounts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_accounts);
@@ -158,7 +164,9 @@ class _$ChangeBalanceAccountBalanceEventImpl
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_accounts));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeBalanceAccountBalanceEventImplCopyWith<
@@ -169,7 +177,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalance> accounts) changeBalance,
+    required TResult Function(List<BaseAccountBalance> accounts) changeBalance,
   }) {
     return changeBalance(accounts);
   }
@@ -177,7 +185,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalance> accounts)? changeBalance,
+    TResult? Function(List<BaseAccountBalance> accounts)? changeBalance,
   }) {
     return changeBalance?.call(accounts);
   }
@@ -185,7 +193,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalance> accounts)? changeBalance,
+    TResult Function(List<BaseAccountBalance> accounts)? changeBalance,
     required TResult orElse(),
   }) {
     if (changeBalance != null) {
@@ -227,13 +235,16 @@ class _$ChangeBalanceAccountBalanceEventImpl
 abstract class _ChangeBalanceAccountBalanceEvent
     implements AccountBalanceEvent {
   const factory _ChangeBalanceAccountBalanceEvent(
-          {required final List<AccountBalance> accounts}) =
+          {required final List<BaseAccountBalance> accounts}) =
       _$ChangeBalanceAccountBalanceEventImpl;
 
   @override
-  List<AccountBalance> get accounts;
+  List<BaseAccountBalance> get accounts;
+
+  /// Create a copy of AccountBalanceEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeBalanceAccountBalanceEventImplCopyWith<
           _$ChangeBalanceAccountBalanceEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -241,10 +252,12 @@ abstract class _ChangeBalanceAccountBalanceEvent
 
 /// @nodoc
 mixin _$AccountBalanceState {
-  List<AccountBalance> get balances => throw _privateConstructorUsedError;
-  Map<Currency, int> get totals => throw _privateConstructorUsedError;
+  List<BaseAccountBalance> get balances => throw _privateConstructorUsedError;
+  Balance get totals => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AccountBalanceStateCopyWith<AccountBalanceState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -255,7 +268,7 @@ abstract class $AccountBalanceStateCopyWith<$Res> {
           AccountBalanceState value, $Res Function(AccountBalanceState) then) =
       _$AccountBalanceStateCopyWithImpl<$Res, AccountBalanceState>;
   @useResult
-  $Res call({List<AccountBalance> balances, Map<Currency, int> totals});
+  $Res call({List<BaseAccountBalance> balances, Balance totals});
 }
 
 /// @nodoc
@@ -268,6 +281,8 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AccountBalanceState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -278,11 +293,11 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
       balances: null == balances
           ? _value.balances
           : balances // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
+              as List<BaseAccountBalance>,
       totals: null == totals
           ? _value.totals
           : totals // ignore: cast_nullable_to_non_nullable
-              as Map<Currency, int>,
+              as Balance,
     ) as $Val);
   }
 }
@@ -295,7 +310,7 @@ abstract class _$$AccountBalanceStateImplCopyWith<$Res>
       __$$AccountBalanceStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AccountBalance> balances, Map<Currency, int> totals});
+  $Res call({List<BaseAccountBalance> balances, Balance totals});
 }
 
 /// @nodoc
@@ -306,6 +321,8 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
       $Res Function(_$AccountBalanceStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountBalanceState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -316,11 +333,11 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
       balances: null == balances
           ? _value._balances
           : balances // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalance>,
+              as List<BaseAccountBalance>,
       totals: null == totals
-          ? _value._totals
+          ? _value.totals
           : totals // ignore: cast_nullable_to_non_nullable
-              as Map<Currency, int>,
+              as Balance,
     ));
   }
 }
@@ -329,27 +346,20 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
 
 class _$AccountBalanceStateImpl extends _AccountBalanceState {
   const _$AccountBalanceStateImpl(
-      {required final List<AccountBalance> balances,
-      required final Map<Currency, int> totals})
+      {required final List<BaseAccountBalance> balances, required this.totals})
       : _balances = balances,
-        _totals = totals,
         super._();
 
-  final List<AccountBalance> _balances;
+  final List<BaseAccountBalance> _balances;
   @override
-  List<AccountBalance> get balances {
+  List<BaseAccountBalance> get balances {
     if (_balances is EqualUnmodifiableListView) return _balances;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_balances);
   }
 
-  final Map<Currency, int> _totals;
   @override
-  Map<Currency, int> get totals {
-    if (_totals is EqualUnmodifiableMapView) return _totals;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_totals);
-  }
+  final Balance totals;
 
   @override
   String toString() {
@@ -362,16 +372,16 @@ class _$AccountBalanceStateImpl extends _AccountBalanceState {
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceStateImpl &&
             const DeepCollectionEquality().equals(other._balances, _balances) &&
-            const DeepCollectionEquality().equals(other._totals, _totals));
+            (identical(other.totals, totals) || other.totals == totals));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_balances),
-      const DeepCollectionEquality().hash(_totals));
+      runtimeType, const DeepCollectionEquality().hash(_balances), totals);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
@@ -381,16 +391,19 @@ class _$AccountBalanceStateImpl extends _AccountBalanceState {
 
 abstract class _AccountBalanceState extends AccountBalanceState {
   const factory _AccountBalanceState(
-      {required final List<AccountBalance> balances,
-      required final Map<Currency, int> totals}) = _$AccountBalanceStateImpl;
+      {required final List<BaseAccountBalance> balances,
+      required final Balance totals}) = _$AccountBalanceStateImpl;
   const _AccountBalanceState._() : super._();
 
   @override
-  List<AccountBalance> get balances;
+  List<BaseAccountBalance> get balances;
   @override
-  Map<Currency, int> get totals;
+  Balance get totals;
+
+  /// Create a copy of AccountBalanceState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

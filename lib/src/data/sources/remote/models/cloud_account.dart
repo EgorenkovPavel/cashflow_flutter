@@ -8,7 +8,7 @@ class CloudAccount with _$CloudAccount {
     required String id,
     required String title,
     required bool isDebt,
-    required String currency,
     required bool deleted,
+    required String user,
   }) = _CloudAccount;
 }

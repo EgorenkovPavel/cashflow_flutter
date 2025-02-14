@@ -10,7 +10,6 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
   static const String _KEY_OPERATION_TYPE = 'operation_type';
   static const String _KEY_BUDGET_TYPE = 'budget_type';
   static const String _KEY_BUDGET = 'budget';
-  static const String _KEY_CURRENCY = 'currency';
   static const String KEY_UPDATED = 'updated';
   static const String _KEY_DELETION_MARK = 'deleted';
 
@@ -23,7 +22,6 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
       _KEY_OPERATION_TYPE: category.operationType,
       _KEY_BUDGET_TYPE: category.budgetType,
       _KEY_BUDGET: category.budget,
-      _KEY_CURRENCY: category.currency,
       KEY_UPDATED: DateTime.now(),
       _KEY_DELETION_MARK: category.deleted,
     };
@@ -37,7 +35,6 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
       id: doc.id,
       budgetType: data.getOrDefault(_KEY_BUDGET_TYPE, 1),
       budget: data.getOrDefault(_KEY_BUDGET, 0),
-      currency: data.getOrDefault(_KEY_CURRENCY, 'RUB'),
       title: data.getOrDefault(_KEY_TITLE, ''),
       operationType: data.getOrDefault(_KEY_OPERATION_TYPE, 1),
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),

@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
+import '../../domain/models/enum/currency.dart';
 import '../../utils/exceptions.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
@@ -20,14 +22,17 @@ class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
+  final DataRepository _dataRepository;
 
   SyncRepositoryImpl({
     required RemoteDataSource remoteSource,
     required LocalSyncSource localSource,
     required NetworkInfo networkInfo,
+    required DataRepository dataRepository,
   })  : _remoteSource = remoteSource,
         _localSource = localSource,
-        _networkInfo = networkInfo;
+        _networkInfo = networkInfo,
+        _dataRepository = dataRepository;
 
   @override
   Future<void> addToDatabase(User user) =>
@@ -63,6 +68,14 @@ class SyncRepositoryImpl implements SyncRepository {
         categoryTable == null ||
         operationsTable == null) {
       return;
+    }
+
+    final cloudUsers = await _remoteSource.getAllUsers();
+    for (final cloudUser in cloudUsers){
+      final localUser = await _dataRepository.getUserByGoogleId(cloudUser.googleId);
+      if (localUser == null){
+        await _dataRepository.insertUser(cloudUser);
+      }
     }
 
     Iterable<CloudAccount> accounts;
@@ -130,14 +143,15 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _downloadAccountFromCloud(CloudAccount cloudAccount) async {
-    var account = await _localSource.accounts.getByCloudId(cloudAccount.id);
+    final account = await _localSource.accounts.getByCloudId(cloudAccount.id);
+    final user = await _localSource.getUserByGoogleId(cloudAccount.user);
     if (account == null) {
       await _localSource.accounts.insertFromCloud(
-        const AccountModelMapper().insertModel(cloudAccount),
+        AccountModelMapper(user).insertModel(cloudAccount),
       );
     } else {
       await _localSource.accounts.updateFromCloud(
-        const AccountModelMapper().updateModel(account, cloudAccount),
+        AccountModelMapper(user).updateModel(account, cloudAccount),
       );
     }
   }
@@ -222,14 +236,14 @@ class SyncRepositoryImpl implements SyncRepository {
 
       final newOperation = await type.map(
         INPUT: () async => Operation.input(
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          category: await _getCategoryByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-        ),
+            cloudId: cloudOperation.id,
+            synced: true,
+            deleted: cloudOperation.deleted,
+            date: cloudOperation.date,
+            account: await _getAccountByCloudOperation(cloudOperation),
+            category: await _getCategoryByCloudOperation(cloudOperation),
+            sum: cloudOperation.sum,
+            currency: Currency.byName(cloudOperation.currencySent)),
         OUTPUT: () async => Operation.output(
           cloudId: cloudOperation.id,
           synced: true,
@@ -238,6 +252,7 @@ class SyncRepositoryImpl implements SyncRepository {
           account: await _getAccountByCloudOperation(cloudOperation),
           category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
+          currency: Currency.byName(cloudOperation.currencySent),
         ),
         TRANSFER: () async => Operation.transfer(
           cloudId: cloudOperation.id,
@@ -248,6 +263,8 @@ class SyncRepositoryImpl implements SyncRepository {
           recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
           recSum: cloudOperation.recSum ?? 0,
+          currencySent: Currency.byName(cloudOperation.currencySent),
+          currencyReceived: Currency.byName(cloudOperation.currencyReceived),
         ),
       );
 
@@ -266,6 +283,7 @@ class SyncRepositoryImpl implements SyncRepository {
           account: await _getAccountByCloudOperation(cloudOperation),
           category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
+          currency: Currency.byName(cloudOperation.currencySent),
         ),
         OUTPUT: () async => Operation.output(
           id: operation.id,
@@ -276,6 +294,7 @@ class SyncRepositoryImpl implements SyncRepository {
           account: await _getAccountByCloudOperation(cloudOperation),
           category: await _getCategoryByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
+          currency: Currency.byName(cloudOperation.currencySent),
         ),
         TRANSFER: () async => Operation.transfer(
           id: operation.id,
@@ -287,6 +306,8 @@ class SyncRepositoryImpl implements SyncRepository {
           recAccount: await _getRecAccountByCloudOperation(cloudOperation),
           sum: cloudOperation.sum,
           recSum: cloudOperation.recSum ?? 0,
+          currencySent: Currency.byName(cloudOperation.currencySent),
+          currencyReceived: Currency.byName(cloudOperation.currencyReceived),
         ),
       );
       await _localSource.operations.updateFromCloud(newOperation);

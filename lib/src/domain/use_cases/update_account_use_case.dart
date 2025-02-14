@@ -1,5 +1,5 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
-import 'package:money_tracker/src/domain/models/enum/currency.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+
 import '../models.dart';
 
 class UpdateAccountUseCase {
@@ -7,19 +7,25 @@ class UpdateAccountUseCase {
 
   UpdateAccountUseCase(this._dataRepository);
 
-  Future<Account> call({
-    required Account account,
+  Future<BaseAccount> call({
+    required BaseAccount account,
     required String title,
-    required bool isDebt,
-    required Currency currency,
   }) async {
-    final newAccount = account.copyWith(
-      title: title,
-      isDebt: isDebt,
-      currency: currency,
-    );
-    await _dataRepository.accounts.update(newAccount);
+    switch (account) {
+      case Account():
+        final newAccount = account.copyWith(
+          title: title,
+        );
+        await _dataRepository.updateAccount(newAccount);
 
-    return newAccount;
+        return newAccount;
+      case Debt():
+        final newAccount = account.copyWith(
+          title: title,
+        );
+        await _dataRepository.updateAccount(newAccount);
+
+        return newAccount;
+    }
   }
 }

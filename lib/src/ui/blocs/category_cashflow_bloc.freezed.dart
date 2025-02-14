@@ -50,7 +50,9 @@ mixin _$CategoryCashflowEvent {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryCashflowEventCopyWith<CategoryCashflowEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -75,6 +77,8 @@ class _$CategoryCashflowEventCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryCashflowEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -111,6 +115,8 @@ class __$$ChangeCategoryCashflowEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeCategoryCashflowEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryCashflowEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,7 +165,9 @@ class _$ChangeCategoryCashflowEventImpl
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_categories));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeCategoryCashflowEventImplCopyWith<_$ChangeCategoryCashflowEventImpl>
@@ -230,8 +238,11 @@ abstract class _ChangeCategoryCashflowEvent implements CategoryCashflowEvent {
 
   @override
   List<CategoryCashflow> get categories;
+
+  /// Create a copy of CategoryCashflowEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeCategoryCashflowEventImplCopyWith<_$ChangeCategoryCashflowEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -242,7 +253,9 @@ mixin _$CategoryCashflowState {
   Map<OperationType, Map<Currency, ({int budget, int cashflow})>>
       get progress => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryCashflowStateCopyWith<CategoryCashflowState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -270,6 +283,8 @@ class _$CategoryCashflowStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryCashflowState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -314,6 +329,8 @@ class __$$CategoryCashflowStateImplCopyWithImpl<$Res>
       $Res Function(_$CategoryCashflowStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryCashflowState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -384,7 +401,9 @@ class _$CategoryCashflowStateImpl extends _CategoryCashflowState {
       const DeepCollectionEquality().hash(_cashflows),
       const DeepCollectionEquality().hash(_progress));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryCashflowStateImplCopyWith<_$CategoryCashflowStateImpl>
@@ -404,8 +423,11 @@ abstract class _CategoryCashflowState extends CategoryCashflowState {
   List<CategoryCashflow> get cashflows;
   @override
   Map<OperationType, Map<Currency, ({int budget, int cashflow})>> get progress;
+
+  /// Create a copy of CategoryCashflowState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryCashflowStateImplCopyWith<_$CategoryCashflowStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

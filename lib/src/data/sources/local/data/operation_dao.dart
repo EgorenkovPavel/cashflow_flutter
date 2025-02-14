@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../../../../domain/models/enum/currency.dart';
 import '../../../../domain/models/enum/operation_type.dart';
 import '../entities/operation_entity.dart';
 import 'database.dart';
@@ -697,12 +698,14 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               operation: operation.id,
               account: operation.account,
               sum: operation.sum,
+              currency: operation.currencySent,
             ));
             cashflowData.add(CashflowDB(
               date: operation.date,
               operation: operation.id,
               category: operation.category!,
               sum: operation.sum,
+              currency: operation.currencySent,
             ));
             break;
           }
@@ -713,12 +716,14 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               operation: operation.id,
               account: operation.account,
               sum: -1 * operation.sum,
+              currency: operation.currencySent,
             ));
             cashflowData.add(CashflowDB(
               date: operation.date,
               operation: operation.id,
               category: operation.category!,
               sum: operation.sum,
+              currency: operation.currencySent,
             ));
             break;
           }
@@ -729,12 +734,14 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
               operation: operation.id,
               account: operation.account,
               sum: -1 * operation.sum,
+              currency: operation.currencySent,
             ));
             balanceData.add(BalanceDB(
               date: operation.date,
               operation: operation.id,
               account: operation.recAccount!,
               sum: operation.recSum != 0 ? operation.recSum : operation.sum,
+              currency: operation.currencyReceived,
             ));
             break;
           }
@@ -790,18 +797,21 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int accountId,
     int categoryId,
     int sum,
+    Currency currency,
   ) async {
     await into(balances).insert(BalanceDB(
       date: date,
       operation: operationId,
       account: accountId,
       sum: sum,
+      currency: currency,
     ));
     await into(cashflows).insert(CashflowDB(
       date: date,
       operation: operationId,
       category: categoryId,
       sum: sum,
+      currency: currency,
     ));
   }
 
@@ -811,18 +821,21 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int accountId,
     int categoryId,
     int sum,
+    Currency currency,
   ) async {
     await into(balances).insert(BalanceDB(
       date: date,
       operation: operationId,
       account: accountId,
       sum: -1 * sum,
+      currency: currency,
     ));
     await into(cashflows).insert(CashflowDB(
       date: date,
       operation: operationId,
       category: categoryId,
       sum: sum,
+      currency: currency,
     ));
   }
 
@@ -833,18 +846,22 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     int recAccountId,
     int sum,
     int recSum,
+    Currency currencySent,
+    Currency currencyReceived,
   ) async {
     await into(balances).insert(BalanceDB(
       date: date,
       operation: operationId,
       account: accountId,
       sum: -1 * sum,
+      currency: currencySent,
     ));
     await into(balances).insert(BalanceDB(
       date: date,
       operation: operationId,
       account: recAccountId,
       sum: recSum,
+      currency: currencyReceived,
     ));
   }
 
@@ -858,6 +875,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             operation.account.value,
             operation.category.value!,
             operation.sum.value,
+            operation.currencySent.value,
           );
           break;
         }
@@ -869,6 +887,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             operation.account.value,
             operation.category.value!,
             operation.sum.value,
+            operation.currencySent.value,
           );
           break;
         }
@@ -880,7 +899,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             operation.account.value,
             operation.recAccount.value!,
             operation.sum.value,
-            (operation.recSum.value ?? 0) != 0 ? (operation.recSum.value ?? 0) : operation.sum.value,
+            (operation.recSum.value ?? 0) != 0
+                ? (operation.recSum.value ?? 0)
+                : operation.sum.value,
+            operation.currencySent.value,
+            operation.currencyReceived.value,
           );
           break;
         }

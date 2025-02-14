@@ -20,19 +20,24 @@ class SettingsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                AuthListTile(),
-                Divider(thickness: 0.2,),
-                CloudDatabaseListTile(),
-                Divider(thickness: 0.2,),
-                GoogleDriveListTile(),
-                Divider(thickness: 0.2,),
-                DataControlListTile(),
-                Divider(thickness: 0.2,),
+                const AuthListTile(),
+                const Divider(thickness: 0.2,),
+                const CloudDatabaseListTile(),
+                const Divider(thickness: 0.2,),
+                const GoogleDriveListTile(),
+                const Divider(thickness: 0.2,),
+                const DataControlListTile(),
+                const Divider(thickness: 0.2,),
                 ListTile(
-                  title: Text('Spring'),
+                  title: const Text('Spring'),
                   onTap: () => context.openSpringPage(),
                 ),
-                Divider(thickness: 0.2,),
+                const Divider(thickness: 0.2,),
+                ListTile(
+                  title: const Text('Users'), //TODO
+                  onTap: () => context.openUsersPage(),
+                ),
+                const Divider(thickness: 0.2,),
               ],
             ),
           );

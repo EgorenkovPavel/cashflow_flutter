@@ -9,8 +9,10 @@ part 'auth_bloc.freezed.dart';
 
 @freezed
 class AuthEvent with _$AuthEvent {
-  const factory AuthEvent.changeAuth({required User? user}) =
-      _ChangeAuthAuthEvent;
+  const factory AuthEvent.changeAuth({
+    required User? user,
+    required String idToken,
+  }) = _ChangeAuthAuthEvent;
 
   const factory AuthEvent.signInSilently() = _SignInSilentlyAuthEvent;
 
@@ -23,8 +25,10 @@ class AuthEvent with _$AuthEvent {
 class AuthState with _$AuthState {
   const AuthState._();
 
-  const factory AuthState.authenticated({required User user}) =
-      _AuthenticatedAuthState;
+  const factory AuthState.authenticated({
+    required User user,
+    required String idToken,
+  }) = _AuthenticatedAuthState;
 
   const factory AuthState.notAuthenticated() = _NotAuthenticatedAuthState;
 
@@ -37,6 +41,11 @@ class AuthState with _$AuthState {
         authenticated: (state) => true,
         notAuthenticated: (state) => false,
       );
+
+  String get idToken => map(
+    authenticated: (state) => state.idToken,
+    notAuthenticated: (_) => '',
+  );
 }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -55,15 +64,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           signOut: (event) => _authRepository.signOut(),
         ));
 
-    _sub = _authRepository.userChanges().listen((user) {
-      add(AuthEvent.changeAuth(user: user));
+    _sub = _authRepository.userChanges().listen((e) {
+      add(AuthEvent.changeAuth(user: e.user, idToken: e.idToken));
     });
 
     _subInternet = _authRepository.isConnectedToInternet().listen((connected) {
       if (connected) {
         add(const AuthEvent.signInSilently());
       } else {
-        add(const AuthEvent.changeAuth(user: null));
+        add(const AuthEvent.changeAuth(user: null, idToken: ''));
       }
     });
   }
@@ -82,7 +91,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final user = event.user;
     if (user != null) {
-      emit(AuthState.authenticated(user: user));
+      emit(AuthState.authenticated(user: user, idToken: event.idToken));
     } else {
       emit(const AuthState.notAuthenticated());
     }

@@ -1,5 +1,6 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
+import '../../utils/sum.dart';
 import '../models.dart';
 
 class UpdateOperationTransferUseCase {
@@ -10,12 +11,12 @@ class UpdateOperationTransferUseCase {
   Future<Operation> call({
     required Operation operation,
     required DateTime date,
-    required Account account,
-    required Account recAccount,
-    required int sum,
-    required int recSum,
+    required BaseAccount account,
+    required BaseAccount recAccount,
+    required Sum sum,
+    required Sum recSum,
   }) async {
-    var newOperation = Operation.transfer(
+    var newOperation = TransferOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,
@@ -26,7 +27,7 @@ class UpdateOperationTransferUseCase {
       recSum: recSum,
     );
 
-    await _dataRepository.operations.update(newOperation);
+    await _dataRepository.updateOperation(newOperation);
 
     return newOperation;
   }

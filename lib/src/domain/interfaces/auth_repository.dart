@@ -9,7 +9,7 @@ abstract class AuthRepository{
   Future<void> signIn();
   Future<void> signOut();
   Future<User?> getUser();
-  Stream<User?> userChanges();
+  Stream<({User? user, String idToken})> userChanges();
   Future<AuthClient?> getClient();
   Stream<bool> isConnectedToInternet();
 

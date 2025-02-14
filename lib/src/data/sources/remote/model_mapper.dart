@@ -1,5 +1,3 @@
-import 'package:money_tracker/src/data/sources/local/db_converters/currency_converter.dart';
-
 import '../../../domain/models.dart';
 import '../local/db_converters/budget_type_converter.dart';
 import '../local/db_converters/operation_type_converter.dart';
@@ -15,14 +13,15 @@ abstract class ModelMapper<C, M> {
 }
 
 class AccountModelMapper extends ModelMapper<CloudAccount, Account> {
-  const AccountModelMapper();
+  final User? user;
+  const AccountModelMapper(this.user);
 
   @override
   Account insertModel(CloudAccount cloudAccount) => Account(
         cloudId: cloudAccount.id,
         title: cloudAccount.title,
         isDebt: cloudAccount.isDebt,
-        currency: const CurrencyConverter().fromSql(cloudAccount.currency),
+        user: user,
       );
 
   @override
@@ -45,7 +44,6 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         budgetType:
             const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
         budget: cloudCategory.budget,
-        currency: const CurrencyConverter().fromSql(cloudCategory.currency),
       );
 
   @override

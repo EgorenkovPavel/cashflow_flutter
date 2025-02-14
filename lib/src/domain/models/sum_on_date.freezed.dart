@@ -19,7 +19,9 @@ mixin _$SumOnDate {
   DateTime get date => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SumOnDate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SumOnDateCopyWith<SumOnDate> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -42,6 +44,8 @@ class _$SumOnDateCopyWithImpl<$Res, $Val extends SumOnDate>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SumOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +84,8 @@ class __$$SumOnDateImplCopyWithImpl<$Res>
       _$SumOnDateImpl _value, $Res Function(_$SumOnDateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SumOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -126,7 +132,9 @@ class _$SumOnDateImpl implements _SumOnDate {
   @override
   int get hashCode => Object.hash(runtimeType, date, sum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SumOnDate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
@@ -141,8 +149,11 @@ abstract class _SumOnDate implements SumOnDate {
   DateTime get date;
   @override
   int get sum;
+
+  /// Create a copy of SumOnDate
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

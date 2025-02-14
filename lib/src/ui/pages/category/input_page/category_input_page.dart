@@ -8,8 +8,6 @@ import 'package:money_tracker/src/ui/pages/item_card.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models/enum/currency.dart';
-
 class CategoryInputPage extends StatelessWidget {
   final OperationType? type;
   final int? id;
@@ -142,16 +140,6 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 8.0),
-            TypeRadioButton<Currency>(
-              onChange: context.onChangeCurrency,
-              type: context.currency(),
-              items: const [
-                Currency.RUB,
-                Currency.USD,
-                Currency.EUR,
-              ],
-            ),
           ],
         ),
       ),
@@ -160,8 +148,6 @@ class _CategoryPageState extends State<CategoryPage> {
 }
 
 extension BlocExt on BuildContext{
-  onChangeCurrency(Currency val) => read<CategoryInputBloc>()
-      .add(CategoryInputEvent.changeCurrency(currency: val));
 
   onChangeBudgetType(BudgetType type) => read<CategoryInputBloc>().add(
     CategoryInputEvent.changeBudgetType(budgetType: type),
@@ -178,10 +164,6 @@ extension BlocExt on BuildContext{
 
   onSave() => read<CategoryInputBloc>()
       .add(const CategoryInputEvent.save());
-
-  Currency currency() => select<CategoryInputBloc, Currency>(
-        (bloc) => bloc.state.currency,
-  );
 
   BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
         (bloc) => bloc.state.budgetType,

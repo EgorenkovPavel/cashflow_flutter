@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:money_tracker/src/data/sources/remote/mappers/cloud_converter.dart';
 import 'package:money_tracker/src/data/sources/remote/models/cloud_operation.dart';
+import 'package:money_tracker/src/domain/models/enum/currency.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class OperationMapper extends CloudConverter<CloudOperation> {
@@ -15,6 +16,8 @@ class OperationMapper extends CloudConverter<CloudOperation> {
   static const String _KEY_REC_SUM = 'rec_sum';
   static const String KEY_UPDATED = 'updated';
   static const String _KEY_DELETION_MARK = 'deleted';
+  static const String _KEY_CURRENCY_SENT = 'currency_sent';
+  static const String _KEY_CURRENCY_RECEIVED = 'currency_received';
 
   const OperationMapper();
 
@@ -30,6 +33,8 @@ class OperationMapper extends CloudConverter<CloudOperation> {
       KEY_UPDATED: DateTime.now(),
       _KEY_DELETION_MARK: operation.deleted,
       _KEY_REC_SUM: operation.recSum,
+      _KEY_CURRENCY_SENT: operation.currencySent.toString(),
+      _KEY_CURRENCY_RECEIVED: operation.currencyReceived.toString(),
     };
   }
 
@@ -50,6 +55,8 @@ class OperationMapper extends CloudConverter<CloudOperation> {
       sum: data.getOrDefault(_KEY_SUM, 0),
       recSum: data.getOrDefault(_KEY_REC_SUM, 0),
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
+      currencySent: data.getOrDefault(_KEY_CURRENCY_SENT, Currency.RUB),
+      currencyReceived: data.getOrDefault(_KEY_CURRENCY_RECEIVED, Currency.RUB),
     );
   }
 

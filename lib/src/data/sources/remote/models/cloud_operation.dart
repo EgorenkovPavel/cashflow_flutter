@@ -14,5 +14,7 @@ class CloudOperation with _$CloudOperation {
     required int sum,
     int? recSum,
     required bool deleted,
+    required String currencySent,
+    required String currencyReceived,
   }) = _CloudOperation;
 }

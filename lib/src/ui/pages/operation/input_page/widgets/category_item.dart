@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../domain/models/category/category.dart';
 
-class CategoryItem extends StatelessWidget {
-  const CategoryItem({
+class CategoryListItem extends StatelessWidget {
+  const CategoryListItem({
     super.key,
     required this.category,
   });

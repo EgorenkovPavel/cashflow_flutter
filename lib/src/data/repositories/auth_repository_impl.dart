@@ -21,7 +21,10 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthClient?> getClient() => _authSource.getClient();
 
   @override
-  Future<model.User?> getUser() => _mapUser(_authSource.getUser());
+  Future<model.User?> getUser() async {
+    final res = await _mapUser(_authSource.getUser());
+    return res.user;
+  }
 
   @override
   Future<bool> isAuthenticated() => _authSource.isAuthenticated();
@@ -36,31 +39,34 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() => _authSource.signOut();
 
   @override
-  Stream<model.User?> userChanges() =>
+  Stream<({model.User? user, String idToken})> userChanges() =>
       _authSource.userChanges().asyncMap((user) => _mapUser(user));
 
-  Future<model.User?> _mapUser(User? user) async {
+  Future<({model.User? user, String idToken})> _mapUser(User? user) async {
     if (user == null) {
-      return null;
+      return (user: null, idToken: '');
     }
 
+    return (
+      user: model.User(
+        googleId: user.uid,
+        name: user.displayName ?? '',
+        photo: user.photoURL ?? '',
+      ),
+      idToken: await _getIdToken(user)
+    );
+  }
+
+  Future<String> _getIdToken(User user) async {
     var idToken = '';
-    try{
+    try {
       idToken = await user.getIdToken(true) ?? '';
-    }catch (e){
+    } catch (e) {}
 
-    }
-
-    if (kDebugMode){
+    if (kDebugMode) {
       print('IDTOKEN: $idToken');
     }
-
-    return model.User(
-      id: user.uid,
-      name: user.displayName ?? '',
-      photo: user.photoURL ?? '',
-      idToken: idToken,
-    );
+    return idToken;
   }
 
   @override

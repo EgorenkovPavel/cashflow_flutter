@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 part 'budget_bloc.freezed.dart';
@@ -103,7 +103,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   Future<void> _watchCashflow(DateTime date, OperationType type) async {
     await _subscription?.cancel();
     _subscription =
-        repo.categories.watchCashflowByType(date, type).listen((items) {
+        repo.watchCashflowByType(date, type).listen((items) {
       items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow);
 
       add(BudgetEvent.changeItems(items: items));

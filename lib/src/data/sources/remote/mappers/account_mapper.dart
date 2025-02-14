@@ -11,7 +11,7 @@ class AccountMapper extends CloudConverter<CloudAccount> {
   static const String _KEY_IS_DEBT = 'is_debt';
   static const String KEY_UPDATED = 'updated';
   static const String _KEY_DELETION_MARK = 'deleted';
-  static const String _KEY_CURRENCY = 'currency';
+  static const String _KEY_USER = 'user';
 
   const AccountMapper();
 
@@ -21,7 +21,7 @@ class AccountMapper extends CloudConverter<CloudAccount> {
         _KEY_IS_DEBT: value.isDebt,
         KEY_UPDATED: DateTime.now(),
         _KEY_DELETION_MARK: value.deleted,
-        _KEY_CURRENCY: value.currency,
+        _KEY_USER: value.user,
       };
 
   @override
@@ -33,7 +33,7 @@ class AccountMapper extends CloudConverter<CloudAccount> {
       title: data.getOrDefault(_KEY_TITLE, ''),
       isDebt: data.getOrDefault(_KEY_IS_DEBT, false),
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
-      currency: data.getOrDefault(_KEY_CURRENCY, 'RUB'),
+      user: data.getOrDefault(_KEY_USER, ''),
     );
   }
 

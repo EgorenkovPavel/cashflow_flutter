@@ -5,22 +5,22 @@ part 'user.freezed.dart';
 @freezed
 class User with _$User {
   const factory User({
-    required String id,
+    @Default(0) int id,
+    required String googleId,
     required String name,
     required String photo,
-    required String idToken,
   }) = _User;
 
   static User fromJson(Map<String, dynamic> json) => User(
-        id: json['id'],
+        googleId: json['id'],
         name: json['name'],
         photo: json['photo'],
-        idToken: '',
       );
 
   static Map<String, dynamic> toJson(User user) => {
-        'id': user.id,
+        'id': user.googleId,
         'name': user.name,
         'photo': user.photo,
       };
+
 }

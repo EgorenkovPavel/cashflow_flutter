@@ -16,10 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AccountBalanceEntity {
-  AccountDB get account => throw _privateConstructorUsedError;
+  int get accountId => throw _privateConstructorUsedError;
+  Currency get currency => throw _privateConstructorUsedError;
   int get sum => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AccountBalanceEntityCopyWith<AccountBalanceEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -30,7 +33,7 @@ abstract class $AccountBalanceEntityCopyWith<$Res> {
           $Res Function(AccountBalanceEntity) then) =
       _$AccountBalanceEntityCopyWithImpl<$Res, AccountBalanceEntity>;
   @useResult
-  $Res call({AccountDB account, int sum});
+  $Res call({int accountId, Currency currency, int sum});
 }
 
 /// @nodoc
@@ -44,17 +47,24 @@ class _$AccountBalanceEntityCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AccountBalanceEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = null,
+    Object? accountId = null,
+    Object? currency = null,
     Object? sum = null,
   }) {
     return _then(_value.copyWith(
-      account: null == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as AccountDB,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as int,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
@@ -71,7 +81,7 @@ abstract class _$$AccountBalanceEntityImplCopyWith<$Res>
       __$$AccountBalanceEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AccountDB account, int sum});
+  $Res call({int accountId, Currency currency, int sum});
 }
 
 /// @nodoc
@@ -82,17 +92,24 @@ class __$$AccountBalanceEntityImplCopyWithImpl<$Res>
       $Res Function(_$AccountBalanceEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountBalanceEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = null,
+    Object? accountId = null,
+    Object? currency = null,
     Object? sum = null,
   }) {
     return _then(_$AccountBalanceEntityImpl(
-      account: null == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as AccountDB,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as int,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
@@ -104,16 +121,19 @@ class __$$AccountBalanceEntityImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AccountBalanceEntityImpl implements _AccountBalanceEntity {
-  const _$AccountBalanceEntityImpl({required this.account, required this.sum});
+  const _$AccountBalanceEntityImpl(
+      {required this.accountId, required this.currency, required this.sum});
 
   @override
-  final AccountDB account;
+  final int accountId;
+  @override
+  final Currency currency;
   @override
   final int sum;
 
   @override
   String toString() {
-    return 'AccountBalanceEntity(account: $account, sum: $sum)';
+    return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
   }
 
   @override
@@ -121,14 +141,19 @@ class _$AccountBalanceEntityImpl implements _AccountBalanceEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceEntityImpl &&
-            (identical(other.account, account) || other.account == account) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
             (identical(other.sum, sum) || other.sum == sum));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, account, sum);
+  int get hashCode => Object.hash(runtimeType, accountId, currency, sum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountBalanceEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
@@ -139,15 +164,21 @@ class _$AccountBalanceEntityImpl implements _AccountBalanceEntity {
 
 abstract class _AccountBalanceEntity implements AccountBalanceEntity {
   const factory _AccountBalanceEntity(
-      {required final AccountDB account,
+      {required final int accountId,
+      required final Currency currency,
       required final int sum}) = _$AccountBalanceEntityImpl;
 
   @override
-  AccountDB get account;
+  int get accountId;
+  @override
+  Currency get currency;
   @override
   int get sum;
+
+  /// Create a copy of AccountBalanceEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

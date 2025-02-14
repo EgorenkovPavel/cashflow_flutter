@@ -6,6 +6,7 @@ abstract class LocalSyncSource{
   LocalSyncTable<Category> get categories;
   LocalSyncTable<Operation> get operations;
 
+  Future<User?> getUserByGoogleId(String googleId);
 }
 
 abstract class LocalSyncTable<T>{
@@ -13,7 +14,6 @@ abstract class LocalSyncTable<T>{
   Future<List<T>> getAllWithEmptyCloudId();
 
   Future<T?> getByCloudId(String cloudId);
-  Stream<T> watchNotSynced();
   Future<List<T>> getAllNotSynced();
   Future<void> markAsSynced(int entityId, String cloudId);
 

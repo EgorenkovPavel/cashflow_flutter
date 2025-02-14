@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 import '../models.dart';
 
@@ -8,5 +8,5 @@ class WatchOperationsByCategoryUseCase {
   WatchOperationsByCategoryUseCase(this._dataRepository);
 
   Stream<List<Operation>> call({required int categoryId}) =>
-      _dataRepository.operations.watchAllByCategory(categoryId);
+      _dataRepository.watchAllOperationsByCategory(categoryId);
 }

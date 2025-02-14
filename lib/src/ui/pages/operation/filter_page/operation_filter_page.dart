@@ -51,12 +51,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   }
 
   void _onAccountChipPressed(BuildContext context) async {
-    final result = await showMenu<Account>(
+    final result = await showMenu<BaseAccount>(
       context: context,
       position: buttonMenuPosition(_accountKey.currentContext!),
       items: context
           .allAccounts()
-          .map((a) => PopupMenuItem<Account>(
+          .map((a) => PopupMenuItem<BaseAccount>(
                 value: a,
                 child: Text(a.title),
               ))
@@ -239,7 +239,7 @@ class PeriodButton extends StatelessWidget {
 }
 
 class AccountChip extends StatelessWidget {
-  final Account account;
+  final BaseAccount account;
 
   const AccountChip({super.key, required this.account});
 
@@ -273,7 +273,7 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.filter.period,
       );
 
-  List<Account> allAccounts() => read<AccountBalanceBloc>().state.allAccounts;
+  List<BaseAccount> allAccounts() => read<AccountBalanceBloc>().state.allAccounts;
 
   List<Category> allInCategories() =>
       read<CategoryCashflowBloc>().state.inCategories;
@@ -281,19 +281,19 @@ extension BlocExt on BuildContext {
   List<Category> allOutCategories() =>
       read<CategoryCashflowBloc>().state.outCategories;
 
-  Set<Account> accounts() => select<OperationFilterBloc, Set<Account>>(
+  Set<BaseAccount> accounts() => select<OperationFilterBloc, Set<BaseAccount>>(
         (bloc) => bloc.state.filter.accounts,
       );
 
-  Set<Category> inCategories() => select<OperationFilterBloc, Set<Category>>(
+  Set<InputCategoryItem> inCategories() => select<OperationFilterBloc, Set<InputCategoryItem>>(
         (bloc) => bloc.state.filter.categories
-            .where((cat) => cat.operationType == OperationType.INPUT)
+            .whereType<InputCategoryItem>()
             .toSet(),
       );
 
-  Set<Category> outCategories() => select<OperationFilterBloc, Set<Category>>(
+  Set<OutputCategoryItem> outCategories() => select<OperationFilterBloc, Set<OutputCategoryItem>>(
         (bloc) => bloc.state.filter.categories
-            .where((cat) => cat.operationType == OperationType.OUTPUT)
+            .whereType<OutputCategoryItem>()
             .toSet(),
       );
 
@@ -303,13 +303,13 @@ extension BlocExt on BuildContext {
   onDeletePeriod() =>
       read<OperationFilterBloc>().add(const OperationFilterEvent.resetPeriod());
 
-  void onAddAccount(Account account) => read<OperationFilterBloc>()
+  void onAddAccount(BaseAccount account) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addAccount(account: account));
 
   void onAddCategory(Category category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addCategory(category: category));
 
-  onDeleteAccount(Account account) =>
+  onDeleteAccount(BaseAccount account) =>
       read<OperationFilterBloc>().add(OperationFilterEvent.removeAccount(
         account: account,
       ));

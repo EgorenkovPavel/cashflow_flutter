@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
+import 'package:money_tracker/src/ui/pages/service/users/users_page.dart';
 
 import '../domain/models.dart';
 import 'pages/account/detail_page/account_detail_page.dart';
@@ -110,6 +111,11 @@ final _router = GoRouter(
               path: 'spring',
               builder: (context, state) => const SpringPage(),
             ),
+            GoRoute(
+              name: 'users',
+              path: 'users',
+              builder: (context, state) => const UsersPage(),
+            ),
           ],
         ),
         GoRoute(
@@ -148,6 +154,8 @@ extension PageNavigator on BuildContext {
 
   void openSpringPage() => push(namedLocation('spring'));
 
+  void openUsersPage() => push(namedLocation('users'));
+
   void openGoogleDriveSettingsPage() =>
       push(namedLocation('googleDriveSettings'));
 
@@ -161,8 +169,8 @@ extension PageNavigator on BuildContext {
         pathParameters: <String, String>{'fid': operationType.toString()},
       ));
 
-  Future<Account?> openAccountInputDialog() =>
-      const _Card<Account>().open(this, const AccountInputPage.input());
+  Future<BaseAccount?> openAccountInputDialog() =>
+      const _Card<BaseAccount>().open(this, const AccountInputPage.input());
 
   Future<Account?> openAccountEditDialog(int id) =>
       const _Card<Account>().open(this, AccountInputPage.edit(id));

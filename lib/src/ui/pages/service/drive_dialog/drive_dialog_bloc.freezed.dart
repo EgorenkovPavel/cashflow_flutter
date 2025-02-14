@@ -90,6 +90,9 @@ class _$DialogDriveEventCopyWithImpl<$Res, $Val extends DialogDriveEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -106,6 +109,9 @@ class __$$InitDialogDriveEventImplCopyWithImpl<$Res>
   __$$InitDialogDriveEventImplCopyWithImpl(_$InitDialogDriveEventImpl _value,
       $Res Function(_$InitDialogDriveEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -230,6 +236,9 @@ class __$$LoadFoldersDialogDriveEventImplCopyWithImpl<$Res>
       _$LoadFoldersDialogDriveEventImpl _value,
       $Res Function(_$LoadFoldersDialogDriveEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -361,6 +370,8 @@ class __$$OnFileTapDialogDriveEventImplCopyWithImpl<$Res>
       $Res Function(_$OnFileTapDialogDriveEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -374,6 +385,8 @@ class __$$OnFileTapDialogDriveEventImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DriveFileCopyWith<$Res> get file {
@@ -407,7 +420,9 @@ class _$OnFileTapDialogDriveEventImpl implements _OnFileTapDialogDriveEvent {
   @override
   int get hashCode => Object.hash(runtimeType, file);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OnFileTapDialogDriveEventImplCopyWith<_$OnFileTapDialogDriveEventImpl>
@@ -500,7 +515,10 @@ abstract class _OnFileTapDialogDriveEvent implements DialogDriveEvent {
       _$OnFileTapDialogDriveEventImpl;
 
   DriveFile get file;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OnFileTapDialogDriveEventImplCopyWith<_$OnFileTapDialogDriveEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -522,6 +540,9 @@ class __$$BackPressedDialogDriveEventImplCopyWithImpl<$Res>
       _$BackPressedDialogDriveEventImpl _value,
       $Res Function(_$BackPressedDialogDriveEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -647,6 +668,9 @@ class __$$ChooseDialogDriveEventImplCopyWithImpl<$Res>
       _$ChooseDialogDriveEventImpl _value,
       $Res Function(_$ChooseDialogDriveEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -824,6 +848,9 @@ class _$DialogDriveStateCopyWithImpl<$Res, $Val extends DialogDriveState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -850,6 +877,8 @@ class __$$SuccessDialogDriveStateImplCopyWithImpl<$Res>
       $Res Function(_$SuccessDialogDriveStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -873,6 +902,8 @@ class __$$SuccessDialogDriveStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DriveFileCopyWith<$Res>? get result {
@@ -927,7 +958,9 @@ class _$SuccessDialogDriveStateImpl implements _SuccessDialogDriveState {
   int get hashCode => Object.hash(runtimeType, result, action,
       const DeepCollectionEquality().hash(_folderList));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SuccessDialogDriveStateImplCopyWith<_$SuccessDialogDriveStateImpl>
@@ -1019,7 +1052,10 @@ abstract class _SuccessDialogDriveState implements DialogDriveState {
   DriveFile? get result;
   DialogDriveAction get action;
   List<DriveFile> get folderList;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessDialogDriveStateImplCopyWith<_$SuccessDialogDriveStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1040,6 +1076,9 @@ class __$$FailureDialogDriveStateImplCopyWithImpl<$Res>
       _$FailureDialogDriveStateImpl _value,
       $Res Function(_$FailureDialogDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1158,6 +1197,9 @@ class __$$InProgressDialogDriveStateImplCopyWithImpl<$Res>
       _$InProgressDialogDriveStateImpl _value,
       $Res Function(_$InProgressDialogDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogDriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

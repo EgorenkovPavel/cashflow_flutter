@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../../domain/models/enum/currency.dart';
 import '../db_converters/currency_converter.dart';
+import 'user_dao.dart';
 
 part 'database.g.dart';
 
@@ -28,11 +29,11 @@ class Accounts extends Table {
 
   TextColumn get title => text()();
 
-  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
-
   BoolColumn get isDebt => boolean().withDefault(const Constant(false))();
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
+
+  IntColumn get user => integer().nullable().references(Users, #id)();
 }
 
 @DataClassName('CategoryDB')
@@ -54,7 +55,7 @@ class Categories extends Table {
 
   IntColumn get budget => integer()();
 
-  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+  // TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
 }
@@ -86,6 +87,10 @@ class Operations extends Table {
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
 
   BoolColumn get deleted => boolean().withDefault(const Constant(false))();
+
+  TextColumn get currencySent => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+
+  TextColumn get currencyReceived => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
 }
 
 @DataClassName('BalanceDB')
@@ -100,6 +105,8 @@ class Balances extends Table {
   IntColumn get account => integer().references(Accounts, #id)();
 
   IntColumn get sum => integer()();
+
+  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
 
   @override
   Set<Column> get primaryKey => {operation, account};
@@ -118,8 +125,25 @@ class Cashflows extends Table {
 
   IntColumn get sum => integer()();
 
+  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+
   @override
   Set<Column> get primaryKey => {operation, category};
+}
+
+@DataClassName('UserDB')
+class Users extends Table {
+  @override
+  String get tableName => 'users';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get googleId => text().unique()();
+
+  TextColumn get name => text()();
+
+  TextColumn get photo => text()();
+
 }
 
 LazyDatabase _openConnection() {
@@ -135,14 +159,14 @@ LazyDatabase _openConnection() {
 }
 
 @DriftDatabase(
-  tables: [Accounts, Categories, Operations, Balances, Cashflows],
-  daos: [AccountDao, CategoryDao, OperationDao],
+  tables: [Accounts, Categories, Operations, Balances, Cashflows, Users],
+  daos: [AccountDao, CategoryDao, OperationDao, UserDao],
 )
 class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration =>
@@ -170,13 +194,28 @@ class Database extends _$Database {
             await m.addColumn(operations, operations.deleted);
           }
 
-          if (from < 7) {
-            await m.addColumn(accounts, accounts.currency);
-          }
+          // if (from < 7) {
+          //   await m.addColumn(accounts, accounts.currency);
+          // }
 
           if (from < 8) {
-            await m.addColumn(categories, categories.currency);
+            // await m.addColumn(categories, categories.currency);
             await m.addColumn(operations, operations.recSum);
+          }
+
+          if (from < 9){
+            await m.addColumn(operations, operations.currencySent);
+            await m.addColumn(operations, operations.currencyReceived);
+            await m.addColumn(balances, balances.currency);
+            await m.addColumn(cashflows, cashflows.currency);
+          }
+
+          if (from < 10){
+            await m.createTable(users);
+          }
+
+          if (from < 11) {
+            await m.addColumn(accounts, accounts.user);
           }
         },
       );
@@ -239,8 +278,8 @@ class Database extends _$Database {
                 cloudId: '',
                 title: d['account_title'],
                 isDebt: false,
-                currency: Currency.RUB,
                 synced: false,
+                user: 1, //TODO
               ));
             } else {
               accounts.add(AccountDB.fromJson(
@@ -267,7 +306,6 @@ class Database extends _$Database {
                 budgetType: const BudgetTypeConverter().fromSql(
                   int.parse(d['category_budget_type']),
                 ),
-                currency: Currency.RUB,
                 synced: false,
               ));
             } else {
@@ -299,6 +337,8 @@ class Database extends _$Database {
                 recSum: 0,
                 synced: false,
                 deleted: false,
+                currencySent: Currency.RUB,
+                currencyReceived: Currency.RUB,
               ));
             } else {
               operations.add(OperationDB.fromJson(

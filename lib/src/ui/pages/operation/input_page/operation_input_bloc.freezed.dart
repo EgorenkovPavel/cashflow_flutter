@@ -27,10 +27,10 @@ mixin _$MasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) =>
@@ -46,10 +46,10 @@ mixin _$MasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) =>
@@ -65,10 +65,10 @@ mixin _$MasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -157,6 +157,9 @@ class _$MasterEventCopyWithImpl<$Res, $Val extends MasterEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -175,6 +178,9 @@ class __$$BackPressedMasterEventImplCopyWithImpl<$Res>
       _$BackPressedMasterEventImpl _value,
       $Res Function(_$BackPressedMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -209,10 +215,10 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -231,10 +237,10 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -253,10 +259,10 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -363,6 +369,9 @@ class __$$StartMasterEventImplCopyWithImpl<$Res>
   __$$StartMasterEventImplCopyWithImpl(_$StartMasterEventImpl _value,
       $Res Function(_$StartMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -396,10 +405,10 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -418,10 +427,10 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -440,10 +449,10 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -552,6 +561,9 @@ class __$$AddNewItemMassterEventImplCopyWithImpl<$Res>
       _$AddNewItemMassterEventImpl _value,
       $Res Function(_$AddNewItemMassterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -586,10 +598,10 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -608,10 +620,10 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -630,10 +642,10 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -740,6 +752,9 @@ class __$$SumTapMasterEventImplCopyWithImpl<$Res>
   __$$SumTapMasterEventImplCopyWithImpl(_$SumTapMasterEventImpl _value,
       $Res Function(_$SumTapMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -773,10 +788,10 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -795,10 +810,10 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -817,10 +832,10 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -927,6 +942,9 @@ class __$$RecSumTapMasterEventImplCopyWithImpl<$Res>
   __$$RecSumTapMasterEventImplCopyWithImpl(_$RecSumTapMasterEventImpl _value,
       $Res Function(_$RecSumTapMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -961,10 +979,10 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -983,10 +1001,10 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -1005,10 +1023,10 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -1121,6 +1139,8 @@ class __$$ChangeOperationTypeMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeOperationTypeMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1161,7 +1181,9 @@ class _$ChangeOperationTypeMasterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, operationType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeOperationTypeMasterEventImplCopyWith<
@@ -1181,10 +1203,10 @@ class _$ChangeOperationTypeMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -1203,10 +1225,10 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -1225,10 +1247,10 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -1323,7 +1345,10 @@ abstract class _ChangeOperationTypeMasterEvent implements MasterEvent {
       _$ChangeOperationTypeMasterEventImpl;
 
   OperationType get operationType;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeOperationTypeMasterEventImplCopyWith<
           _$ChangeOperationTypeMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1346,6 +1371,8 @@ class __$$DigitTapMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$DigitTapMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1384,7 +1411,9 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
   @override
   int get hashCode => Object.hash(runtimeType, digit);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DigitTapMasterEventImplCopyWith<_$DigitTapMasterEventImpl> get copyWith =>
@@ -1403,10 +1432,10 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -1425,10 +1454,10 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -1447,10 +1476,10 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -1544,7 +1573,10 @@ abstract class _DigitTapMasterEvent implements MasterEvent {
       _$DigitTapMasterEventImpl;
 
   int get digit;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DigitTapMasterEventImplCopyWith<_$DigitTapMasterEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1564,6 +1596,9 @@ class __$$BackKeyTapMasterEventImplCopyWithImpl<$Res>
   __$$BackKeyTapMasterEventImplCopyWithImpl(_$BackKeyTapMasterEventImpl _value,
       $Res Function(_$BackKeyTapMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1598,10 +1633,10 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -1620,10 +1655,10 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -1642,10 +1677,10 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -1752,6 +1787,9 @@ class __$$MoreTapMasterEventImplCopyWithImpl<$Res>
   __$$MoreTapMasterEventImplCopyWithImpl(_$MoreTapMasterEventImpl _value,
       $Res Function(_$MoreTapMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1785,10 +1823,10 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -1807,10 +1845,10 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -1829,10 +1867,10 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -1932,9 +1970,7 @@ abstract class _$$ChangeAccountMasterEventImplCopyWith<$Res> {
           $Res Function(_$ChangeAccountMasterEventImpl) then) =
       __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({AccountBalance account});
-
-  $AccountBalanceCopyWith<$Res> get account;
+  $Res call({BaseAccountBalance account});
 }
 
 /// @nodoc
@@ -1946,6 +1982,8 @@ class __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeAccountMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1955,16 +1993,8 @@ class __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
+              as BaseAccountBalance,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res> get account {
-    return $AccountBalanceCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -1974,7 +2004,7 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
   const _$ChangeAccountMasterEventImpl({required this.account});
 
   @override
-  final AccountBalance account;
+  final BaseAccountBalance account;
 
   @override
   String toString() {
@@ -1992,7 +2022,9 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
   @override
   int get hashCode => Object.hash(runtimeType, account);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeAccountMasterEventImplCopyWith<_$ChangeAccountMasterEventImpl>
@@ -2011,10 +2043,10 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -2033,10 +2065,10 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -2055,10 +2087,10 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -2149,10 +2181,14 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
 
 abstract class _ChangeAccountMasterEvent implements MasterEvent {
   const factory _ChangeAccountMasterEvent(
-      {required final AccountBalance account}) = _$ChangeAccountMasterEventImpl;
+          {required final BaseAccountBalance account}) =
+      _$ChangeAccountMasterEventImpl;
 
-  AccountBalance get account;
-  @JsonKey(ignore: true)
+  BaseAccountBalance get account;
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeAccountMasterEventImplCopyWith<_$ChangeAccountMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2165,8 +2201,6 @@ abstract class _$$ChangeInCategoryMasterEventImplCopyWith<$Res> {
       __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -2178,6 +2212,8 @@ class __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeInCategoryMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2189,14 +2225,6 @@ class __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -2226,7 +2254,9 @@ class _$ChangeInCategoryMasterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeInCategoryMasterEventImplCopyWith<_$ChangeInCategoryMasterEventImpl>
@@ -2245,10 +2275,10 @@ class _$ChangeInCategoryMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -2267,10 +2297,10 @@ class _$ChangeInCategoryMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -2289,10 +2319,10 @@ class _$ChangeInCategoryMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -2386,7 +2416,10 @@ abstract class _ChangeInCategoryMasterEvent implements MasterEvent {
       {required final Category category}) = _$ChangeInCategoryMasterEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeInCategoryMasterEventImplCopyWith<_$ChangeInCategoryMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2399,8 +2432,6 @@ abstract class _$$ChangeOutCategoryMasterEventImplCopyWith<$Res> {
       __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -2412,6 +2443,8 @@ class __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeOutCategoryMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2423,14 +2456,6 @@ class __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -2460,7 +2485,9 @@ class _$ChangeOutCategoryMasterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeOutCategoryMasterEventImplCopyWith<
@@ -2480,10 +2507,10 @@ class _$ChangeOutCategoryMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -2502,10 +2529,10 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -2524,10 +2551,10 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -2621,7 +2648,10 @@ abstract class _ChangeOutCategoryMasterEvent implements MasterEvent {
       {required final Category category}) = _$ChangeOutCategoryMasterEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeOutCategoryMasterEventImplCopyWith<
           _$ChangeOutCategoryMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -2634,9 +2664,7 @@ abstract class _$$ChangeRecAccountMasterEventImplCopyWith<$Res> {
           $Res Function(_$ChangeRecAccountMasterEventImpl) then) =
       __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({AccountBalance account});
-
-  $AccountBalanceCopyWith<$Res> get account;
+  $Res call({BaseAccountBalance account});
 }
 
 /// @nodoc
@@ -2648,6 +2676,8 @@ class __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeRecAccountMasterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2657,16 +2687,8 @@ class __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
+              as BaseAccountBalance,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res> get account {
-    return $AccountBalanceCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -2677,7 +2699,7 @@ class _$ChangeRecAccountMasterEventImpl
   const _$ChangeRecAccountMasterEventImpl({required this.account});
 
   @override
-  final AccountBalance account;
+  final BaseAccountBalance account;
 
   @override
   String toString() {
@@ -2695,7 +2717,9 @@ class _$ChangeRecAccountMasterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, account);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeRecAccountMasterEventImplCopyWith<_$ChangeRecAccountMasterEventImpl>
@@ -2714,10 +2738,10 @@ class _$ChangeRecAccountMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -2736,10 +2760,10 @@ class _$ChangeRecAccountMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -2758,10 +2782,10 @@ class _$ChangeRecAccountMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -2852,11 +2876,14 @@ class _$ChangeRecAccountMasterEventImpl
 
 abstract class _ChangeRecAccountMasterEvent implements MasterEvent {
   const factory _ChangeRecAccountMasterEvent(
-          {required final AccountBalance account}) =
+          {required final BaseAccountBalance account}) =
       _$ChangeRecAccountMasterEventImpl;
 
-  AccountBalance get account;
-  @JsonKey(ignore: true)
+  BaseAccountBalance get account;
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeRecAccountMasterEventImplCopyWith<_$ChangeRecAccountMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2877,6 +2904,9 @@ class __$$CancelOperationMasterEventImplCopyWithImpl<$Res>
       _$CancelOperationMasterEventImpl _value,
       $Res Function(_$CancelOperationMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2911,10 +2941,10 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -2933,10 +2963,10 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -2955,10 +2985,10 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -3066,6 +3096,9 @@ class __$$NextTapMasterEventImplCopyWithImpl<$Res>
   __$$NextTapMasterEventImplCopyWithImpl(_$NextTapMasterEventImpl _value,
       $Res Function(_$NextTapMasterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -3099,10 +3132,10 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(AccountBalance account) changeAccount,
+    required TResult Function(BaseAccountBalance account) changeAccount,
     required TResult Function(Category category) changeInCategory,
     required TResult Function(Category category) changeOutCategory,
-    required TResult Function(AccountBalance account) changeRecAccount,
+    required TResult Function(BaseAccountBalance account) changeRecAccount,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
@@ -3121,10 +3154,10 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(AccountBalance account)? changeAccount,
+    TResult? Function(BaseAccountBalance account)? changeAccount,
     TResult? Function(Category category)? changeInCategory,
     TResult? Function(Category category)? changeOutCategory,
-    TResult? Function(AccountBalance account)? changeRecAccount,
+    TResult? Function(BaseAccountBalance account)? changeRecAccount,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
@@ -3143,10 +3176,10 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(AccountBalance account)? changeAccount,
+    TResult Function(BaseAccountBalance account)? changeAccount,
     TResult Function(Category category)? changeInCategory,
     TResult Function(Category category)? changeOutCategory,
-    TResult Function(AccountBalance account)? changeRecAccount,
+    TResult Function(BaseAccountBalance account)? changeRecAccount,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
@@ -3243,18 +3276,20 @@ abstract class _NextTapMasterEvent implements MasterEvent {
 mixin _$MasterState {
   MasterStateAction get action => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
-  int get sum => throw _privateConstructorUsedError;
-  int get recSum => throw _privateConstructorUsedError;
+  Sum get sum => throw _privateConstructorUsedError;
+  Sum get recSum => throw _privateConstructorUsedError;
   bool get showKeyboard => throw _privateConstructorUsedError;
   bool get highlightSum => throw _privateConstructorUsedError;
   bool get highlightRecSum => throw _privateConstructorUsedError;
-  AccountBalance? get account => throw _privateConstructorUsedError;
+  BaseAccountBalance? get account => throw _privateConstructorUsedError;
   Category? get categoryIn => throw _privateConstructorUsedError;
   Category? get categoryOut => throw _privateConstructorUsedError;
-  AccountBalance? get recAccount => throw _privateConstructorUsedError;
+  BaseAccountBalance? get recAccount => throw _privateConstructorUsedError;
   Operation? get operation => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MasterStateCopyWith<MasterState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3268,22 +3303,16 @@ abstract class $MasterStateCopyWith<$Res> {
   $Res call(
       {MasterStateAction action,
       OperationType operationType,
-      int sum,
-      int recSum,
+      Sum sum,
+      Sum recSum,
       bool showKeyboard,
       bool highlightSum,
       bool highlightRecSum,
-      AccountBalance? account,
+      BaseAccountBalance? account,
       Category? categoryIn,
       Category? categoryOut,
-      AccountBalance? recAccount,
+      BaseAccountBalance? recAccount,
       Operation? operation});
-
-  $AccountBalanceCopyWith<$Res>? get account;
-  $CategoryCopyWith<$Res>? get categoryIn;
-  $CategoryCopyWith<$Res>? get categoryOut;
-  $AccountBalanceCopyWith<$Res>? get recAccount;
-  $OperationCopyWith<$Res>? get operation;
 }
 
 /// @nodoc
@@ -3296,6 +3325,8 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MasterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3324,11 +3355,11 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       recSum: null == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       showKeyboard: null == showKeyboard
           ? _value.showKeyboard
           : showKeyboard // ignore: cast_nullable_to_non_nullable
@@ -3344,7 +3375,7 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBalance?,
+              as BaseAccountBalance?,
       categoryIn: freezed == categoryIn
           ? _value.categoryIn
           : categoryIn // ignore: cast_nullable_to_non_nullable
@@ -3356,72 +3387,12 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
       recAccount: freezed == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as AccountBalance?,
+              as BaseAccountBalance?,
       operation: freezed == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
               as Operation?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res>? get account {
-    if (_value.account == null) {
-      return null;
-    }
-
-    return $AccountBalanceCopyWith<$Res>(_value.account!, (value) {
-      return _then(_value.copyWith(account: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get categoryIn {
-    if (_value.categoryIn == null) {
-      return null;
-    }
-
-    return $CategoryCopyWith<$Res>(_value.categoryIn!, (value) {
-      return _then(_value.copyWith(categoryIn: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get categoryOut {
-    if (_value.categoryOut == null) {
-      return null;
-    }
-
-    return $CategoryCopyWith<$Res>(_value.categoryOut!, (value) {
-      return _then(_value.copyWith(categoryOut: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res>? get recAccount {
-    if (_value.recAccount == null) {
-      return null;
-    }
-
-    return $AccountBalanceCopyWith<$Res>(_value.recAccount!, (value) {
-      return _then(_value.copyWith(recAccount: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $OperationCopyWith<$Res>? get operation {
-    if (_value.operation == null) {
-      return null;
-    }
-
-    return $OperationCopyWith<$Res>(_value.operation!, (value) {
-      return _then(_value.copyWith(operation: value) as $Val);
-    });
   }
 }
 
@@ -3436,27 +3407,16 @@ abstract class _$$MasterStateImplCopyWith<$Res>
   $Res call(
       {MasterStateAction action,
       OperationType operationType,
-      int sum,
-      int recSum,
+      Sum sum,
+      Sum recSum,
       bool showKeyboard,
       bool highlightSum,
       bool highlightRecSum,
-      AccountBalance? account,
+      BaseAccountBalance? account,
       Category? categoryIn,
       Category? categoryOut,
-      AccountBalance? recAccount,
+      BaseAccountBalance? recAccount,
       Operation? operation});
-
-  @override
-  $AccountBalanceCopyWith<$Res>? get account;
-  @override
-  $CategoryCopyWith<$Res>? get categoryIn;
-  @override
-  $CategoryCopyWith<$Res>? get categoryOut;
-  @override
-  $AccountBalanceCopyWith<$Res>? get recAccount;
-  @override
-  $OperationCopyWith<$Res>? get operation;
 }
 
 /// @nodoc
@@ -3467,6 +3427,8 @@ class __$$MasterStateImplCopyWithImpl<$Res>
       _$MasterStateImpl _value, $Res Function(_$MasterStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MasterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3495,11 +3457,11 @@ class __$$MasterStateImplCopyWithImpl<$Res>
       sum: null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       recSum: null == recSum
           ? _value.recSum
           : recSum // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Sum,
       showKeyboard: null == showKeyboard
           ? _value.showKeyboard
           : showKeyboard // ignore: cast_nullable_to_non_nullable
@@ -3515,7 +3477,7 @@ class __$$MasterStateImplCopyWithImpl<$Res>
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBalance?,
+              as BaseAccountBalance?,
       categoryIn: freezed == categoryIn
           ? _value.categoryIn
           : categoryIn // ignore: cast_nullable_to_non_nullable
@@ -3527,7 +3489,7 @@ class __$$MasterStateImplCopyWithImpl<$Res>
       recAccount: freezed == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as AccountBalance?,
+              as BaseAccountBalance?,
       operation: freezed == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
@@ -3558,9 +3520,9 @@ class _$MasterStateImpl implements _MasterState {
   @override
   final OperationType operationType;
   @override
-  final int sum;
+  final Sum sum;
   @override
-  final int recSum;
+  final Sum recSum;
   @override
   final bool showKeyboard;
   @override
@@ -3568,13 +3530,13 @@ class _$MasterStateImpl implements _MasterState {
   @override
   final bool highlightRecSum;
   @override
-  final AccountBalance? account;
+  final BaseAccountBalance? account;
   @override
   final Category? categoryIn;
   @override
   final Category? categoryOut;
   @override
-  final AccountBalance? recAccount;
+  final BaseAccountBalance? recAccount;
   @override
   final Operation? operation;
 
@@ -3626,7 +3588,9 @@ class _$MasterStateImpl implements _MasterState {
       recAccount,
       operation);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MasterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MasterStateImplCopyWith<_$MasterStateImpl> get copyWith =>
@@ -3637,15 +3601,15 @@ abstract class _MasterState implements MasterState {
   const factory _MasterState(
       {required final MasterStateAction action,
       required final OperationType operationType,
-      required final int sum,
-      required final int recSum,
+      required final Sum sum,
+      required final Sum recSum,
       required final bool showKeyboard,
       required final bool highlightSum,
       required final bool highlightRecSum,
-      final AccountBalance? account,
+      final BaseAccountBalance? account,
       final Category? categoryIn,
       final Category? categoryOut,
-      final AccountBalance? recAccount,
+      final BaseAccountBalance? recAccount,
       final Operation? operation}) = _$MasterStateImpl;
 
   @override
@@ -3653,9 +3617,9 @@ abstract class _MasterState implements MasterState {
   @override
   OperationType get operationType;
   @override
-  int get sum;
+  Sum get sum;
   @override
-  int get recSum;
+  Sum get recSum;
   @override
   bool get showKeyboard;
   @override
@@ -3663,17 +3627,20 @@ abstract class _MasterState implements MasterState {
   @override
   bool get highlightRecSum;
   @override
-  AccountBalance? get account;
+  BaseAccountBalance? get account;
   @override
   Category? get categoryIn;
   @override
   Category? get categoryOut;
   @override
-  AccountBalance? get recAccount;
+  BaseAccountBalance? get recAccount;
   @override
   Operation? get operation;
+
+  /// Create a copy of MasterState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MasterStateImplCopyWith<_$MasterStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

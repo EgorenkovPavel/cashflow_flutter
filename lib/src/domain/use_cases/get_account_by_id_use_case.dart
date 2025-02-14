@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import '../interfaces/data_repository.dart';
 import '../models.dart';
 
 class GetAccountByIdUseCase{
@@ -6,5 +6,5 @@ class GetAccountByIdUseCase{
 
   GetAccountByIdUseCase(this._dataRepository);
 
-  Future<Account> call({required int accountId}) => _dataRepository.accounts.getById(accountId);
+  Future<BaseAccount> call({required int accountId}) => _dataRepository.getAccountById(accountId);
 }

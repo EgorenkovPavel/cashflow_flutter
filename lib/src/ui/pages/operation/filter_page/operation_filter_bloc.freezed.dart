@@ -21,8 +21,8 @@ mixin _$OperationFilterEvent {
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) =>
@@ -32,8 +32,8 @@ mixin _$OperationFilterEvent {
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) =>
@@ -43,8 +43,8 @@ mixin _$OperationFilterEvent {
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -108,6 +108,9 @@ class _$OperationFilterEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -118,8 +121,6 @@ abstract class _$$InitPeriodOperationFilterEventImplCopyWith<$Res> {
       __$$InitPeriodOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({OperationListFilter filter});
-
-  $OperationListFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -132,6 +133,8 @@ class __$$InitPeriodOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$InitPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,14 +146,6 @@ class __$$InitPeriodOperationFilterEventImplCopyWithImpl<$Res>
           : filter // ignore: cast_nullable_to_non_nullable
               as OperationListFilter,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $OperationListFilterCopyWith<$Res> get filter {
-    return $OperationListFilterCopyWith<$Res>(_value.filter, (value) {
-      return _then(_value.copyWith(filter: value));
-    });
   }
 }
 
@@ -179,7 +174,9 @@ class _$InitPeriodOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, filter);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InitPeriodOperationFilterEventImplCopyWith<
@@ -193,8 +190,8 @@ class _$InitPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -207,8 +204,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -221,8 +218,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -291,7 +288,10 @@ abstract class _InitPeriodOperationFilterEvent implements OperationFilterEvent {
       _$InitPeriodOperationFilterEventImpl;
 
   OperationListFilter get filter;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitPeriodOperationFilterEventImplCopyWith<
           _$InitPeriodOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -314,6 +314,9 @@ class __$$ResetPeriodOperationFilterEventImplCopyWithImpl<$Res>
       _$ResetPeriodOperationFilterEventImpl _value,
       $Res Function(_$ResetPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -343,8 +346,8 @@ class _$ResetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -357,8 +360,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -371,8 +374,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -461,6 +464,8 @@ class __$$SetPeriodOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$SetPeriodOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -500,7 +505,9 @@ class _$SetPeriodOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, period);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SetPeriodOperationFilterEventImplCopyWith<
@@ -514,8 +521,8 @@ class _$SetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -528,8 +535,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -542,8 +549,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -612,7 +619,10 @@ abstract class _SetPeriodOperationFilterEvent implements OperationFilterEvent {
       _$SetPeriodOperationFilterEventImpl;
 
   DateTimeRange get period;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetPeriodOperationFilterEventImplCopyWith<
           _$SetPeriodOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -625,9 +635,7 @@ abstract class _$$AddAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$AddAccountOperationFilterEventImpl) then) =
       __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Account account});
-
-  $AccountCopyWith<$Res> get account;
+  $Res call({BaseAccount account});
 }
 
 /// @nodoc
@@ -640,6 +648,8 @@ class __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$AddAccountOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -649,16 +659,8 @@ class __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as BaseAccount,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get account {
-    return $AccountCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -669,7 +671,7 @@ class _$AddAccountOperationFilterEventImpl
   const _$AddAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final Account account;
+  final BaseAccount account;
 
   @override
   String toString() {
@@ -687,7 +689,9 @@ class _$AddAccountOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, account);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddAccountOperationFilterEventImplCopyWith<
@@ -701,8 +705,8 @@ class _$AddAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -715,8 +719,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -729,8 +733,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -795,10 +799,14 @@ class _$AddAccountOperationFilterEventImpl
 
 abstract class _AddAccountOperationFilterEvent implements OperationFilterEvent {
   const factory _AddAccountOperationFilterEvent(
-      {required final Account account}) = _$AddAccountOperationFilterEventImpl;
+          {required final BaseAccount account}) =
+      _$AddAccountOperationFilterEventImpl;
 
-  Account get account;
-  @JsonKey(ignore: true)
+  BaseAccount get account;
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddAccountOperationFilterEventImplCopyWith<
           _$AddAccountOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -811,9 +819,7 @@ abstract class _$$RemoveAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$RemoveAccountOperationFilterEventImpl) then) =
       __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Account account});
-
-  $AccountCopyWith<$Res> get account;
+  $Res call({BaseAccount account});
 }
 
 /// @nodoc
@@ -826,6 +832,8 @@ class __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$RemoveAccountOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -835,16 +843,8 @@ class __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as BaseAccount,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get account {
-    return $AccountCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -855,7 +855,7 @@ class _$RemoveAccountOperationFilterEventImpl
   const _$RemoveAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final Account account;
+  final BaseAccount account;
 
   @override
   String toString() {
@@ -873,7 +873,9 @@ class _$RemoveAccountOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, account);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RemoveAccountOperationFilterEventImplCopyWith<
@@ -887,8 +889,8 @@ class _$RemoveAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -901,8 +903,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -915,8 +917,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -982,11 +984,14 @@ class _$RemoveAccountOperationFilterEventImpl
 abstract class _RemoveAccountOperationFilterEvent
     implements OperationFilterEvent {
   const factory _RemoveAccountOperationFilterEvent(
-          {required final Account account}) =
+          {required final BaseAccount account}) =
       _$RemoveAccountOperationFilterEventImpl;
 
-  Account get account;
-  @JsonKey(ignore: true)
+  BaseAccount get account;
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RemoveAccountOperationFilterEventImplCopyWith<
           _$RemoveAccountOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1000,8 +1005,6 @@ abstract class _$$AddCategoryOperationFilterEventImplCopyWith<$Res> {
       __$$AddCategoryOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -1014,6 +1017,8 @@ class __$$AddCategoryOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$AddCategoryOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1025,14 +1030,6 @@ class __$$AddCategoryOperationFilterEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -1062,7 +1059,9 @@ class _$AddCategoryOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddCategoryOperationFilterEventImplCopyWith<
@@ -1076,8 +1075,8 @@ class _$AddCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -1090,8 +1089,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -1104,8 +1103,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -1175,7 +1174,10 @@ abstract class _AddCategoryOperationFilterEvent
       _$AddCategoryOperationFilterEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddCategoryOperationFilterEventImplCopyWith<
           _$AddCategoryOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1189,8 +1191,6 @@ abstract class _$$RemoveCategoryOperationFilterEventImplCopyWith<$Res> {
       __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Category category});
-
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -1203,6 +1203,8 @@ class __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<$Res>
       $Res Function(_$RemoveCategoryOperationFilterEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1214,14 +1216,6 @@ class __$$RemoveCategoryOperationFilterEventImplCopyWithImpl<$Res>
           : category // ignore: cast_nullable_to_non_nullable
               as Category,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
@@ -1251,7 +1245,9 @@ class _$RemoveCategoryOperationFilterEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RemoveCategoryOperationFilterEventImplCopyWith<
@@ -1265,8 +1261,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(Account account) addAccount,
-    required TResult Function(Account account) removeAccount,
+    required TResult Function(BaseAccount account) addAccount,
+    required TResult Function(BaseAccount account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -1279,8 +1275,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(Account account)? addAccount,
-    TResult? Function(Account account)? removeAccount,
+    TResult? Function(BaseAccount account)? addAccount,
+    TResult? Function(BaseAccount account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -1293,8 +1289,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(Account account)? addAccount,
-    TResult Function(Account account)? removeAccount,
+    TResult Function(BaseAccount account)? addAccount,
+    TResult Function(BaseAccount account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -1364,7 +1360,10 @@ abstract class _RemoveCategoryOperationFilterEvent
       _$RemoveCategoryOperationFilterEventImpl;
 
   Category get category;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OperationFilterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RemoveCategoryOperationFilterEventImplCopyWith<
           _$RemoveCategoryOperationFilterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1373,10 +1372,12 @@ abstract class _RemoveCategoryOperationFilterEvent
 /// @nodoc
 mixin _$OperationFilterState {
   DateTimeRange? get period => throw _privateConstructorUsedError;
-  Set<Account> get accounts => throw _privateConstructorUsedError;
+  Set<BaseAccount> get accounts => throw _privateConstructorUsedError;
   Set<Category> get categories => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OperationFilterStateCopyWith<OperationFilterState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1388,7 +1389,9 @@ abstract class $OperationFilterStateCopyWith<$Res> {
       _$OperationFilterStateCopyWithImpl<$Res, OperationFilterState>;
   @useResult
   $Res call(
-      {DateTimeRange? period, Set<Account> accounts, Set<Category> categories});
+      {DateTimeRange? period,
+      Set<BaseAccount> accounts,
+      Set<Category> categories});
 }
 
 /// @nodoc
@@ -1402,6 +1405,8 @@ class _$OperationFilterStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OperationFilterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1417,7 +1422,7 @@ class _$OperationFilterStateCopyWithImpl<$Res,
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as Set<Account>,
+              as Set<BaseAccount>,
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -1435,7 +1440,9 @@ abstract class _$$OperationFilterStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DateTimeRange? period, Set<Account> accounts, Set<Category> categories});
+      {DateTimeRange? period,
+      Set<BaseAccount> accounts,
+      Set<Category> categories});
 }
 
 /// @nodoc
@@ -1446,6 +1453,8 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
       $Res Function(_$OperationFilterStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OperationFilterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1461,7 +1470,7 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as Set<Account>,
+              as Set<BaseAccount>,
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -1475,7 +1484,7 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
 class _$OperationFilterStateImpl extends _OperationFilterState {
   const _$OperationFilterStateImpl(
       {this.period,
-      final Set<Account> accounts = const {},
+      final Set<BaseAccount> accounts = const {},
       final Set<Category> categories = const {}})
       : _accounts = accounts,
         _categories = categories,
@@ -1483,10 +1492,10 @@ class _$OperationFilterStateImpl extends _OperationFilterState {
 
   @override
   final DateTimeRange? period;
-  final Set<Account> _accounts;
+  final Set<BaseAccount> _accounts;
   @override
   @JsonKey()
-  Set<Account> get accounts {
+  Set<BaseAccount> get accounts {
     if (_accounts is EqualUnmodifiableSetView) return _accounts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableSetView(_accounts);
@@ -1524,7 +1533,9 @@ class _$OperationFilterStateImpl extends _OperationFilterState {
       const DeepCollectionEquality().hash(_accounts),
       const DeepCollectionEquality().hash(_categories));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OperationFilterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OperationFilterStateImplCopyWith<_$OperationFilterStateImpl>
@@ -1536,18 +1547,21 @@ class _$OperationFilterStateImpl extends _OperationFilterState {
 abstract class _OperationFilterState extends OperationFilterState {
   const factory _OperationFilterState(
       {final DateTimeRange? period,
-      final Set<Account> accounts,
+      final Set<BaseAccount> accounts,
       final Set<Category> categories}) = _$OperationFilterStateImpl;
   const _OperationFilterState._() : super._();
 
   @override
   DateTimeRange? get period;
   @override
-  Set<Account> get accounts;
+  Set<BaseAccount> get accounts;
   @override
   Set<Category> get categories;
+
+  /// Create a copy of OperationFilterState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OperationFilterStateImplCopyWith<_$OperationFilterStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models/operation/operation.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
@@ -11,17 +11,17 @@ class ListTileOperation extends StatelessWidget {
   const ListTileOperation(this._operation, {super.key, required this.onTap});
 
   void _onDuplicate(BuildContext context) {
-    sl<DataRepository>().operations.duplicate(_operation);
+    sl<DataRepository>().duplicateOperation(_operation);
     Navigator.of(context).pop();
   }
 
   void _onDelete(BuildContext context) {
-    sl<DataRepository>().operations.delete(_operation);
+    sl<DataRepository>().deleteOperation(_operation); //TODO move to bloc
     Navigator.of(context).pop();
   }
 
   void _onRecover(BuildContext context) {
-    sl<DataRepository>().operations.recover(_operation);
+    sl<DataRepository>().recoverOperation(_operation);
     Navigator.of(context).pop();
   }
 
@@ -73,7 +73,7 @@ class ListTileOperation extends StatelessWidget {
       ),
       title: Text(_operation.analyticTitle),
       trailing: Text(
-        context.loc.numberFormat(_operation.sum, _operation.account.currency),
+        context.loc.sumFormat(_operation.sum),
         style: Theme.of(context)
             .textTheme
             .headlineSmall

@@ -1,36 +1,39 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-import '../enum/currency.dart';
+import '../../../utils/sum.dart';
 import 'account.dart';
 
-part 'account_balance.freezed.dart';
+sealed class BaseAccountBalance extends Equatable {
+  final BaseAccount account;
+  final Balance balance;
 
-@freezed
-class AccountBalance with _$AccountBalance {
-  const AccountBalance._();
+  const BaseAccountBalance({
+    required this.account,
+    required this.balance,
+  });
 
-  const factory AccountBalance({
-    required int id,
-    required String cloudId,
-    required String title,
-    required Currency currency,
-    required int balance,
-    @Default(false) bool isDebt,
-  }) = _AccountBalance;
+  static BaseAccountBalance fromAccount(BaseAccount account) => switch (account) {
+        Account() => AccountBalance(account: account, balance: Balance()),
+        Debt() => DebtBalance(account: account, balance: Balance()),
+      };
+}
 
-  Account get account => Account(
-        id: id,
-        title: title,
-        isDebt: isDebt,
-        cloudId: cloudId,
-        currency: currency,
-      );
+class AccountBalance extends BaseAccountBalance {
+  const AccountBalance({
+    required Account super.account,
+    required super.balance,
+  });
 
-  static AccountBalance fromAccount(Account account) => AccountBalance(
-    id: account.id,
-    cloudId: account.cloudId,
-    title: account.title,
-    currency: account.currency,
-    balance: 0,
-  );
+  @override
+  List<Object?> get props => [account, balance];
+}
+
+class DebtBalance extends BaseAccountBalance {
+  const DebtBalance({
+    required Debt super.account,
+    required super.balance,
+  });
+
+  @override
+  List<Object?> get props => [account, balance];
 }

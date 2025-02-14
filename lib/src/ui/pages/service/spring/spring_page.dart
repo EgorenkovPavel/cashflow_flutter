@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart' as model;
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:spring1/spring.dart';
@@ -10,64 +10,85 @@ class SpringPage extends StatelessWidget {
   const SpringPage({super.key});
 
   Future<void> _upload(String idToken) async {
+    if (idToken.isEmpty) {
+      return;
+    }
+
     final connector = SpringConnector(idToken);
     await connector.connect();
 
-    Map<model.Account, BaseAccount> addedAccounts = {};
-    final accounts = await sl<DataRepository>().accounts.getAll();
+    Map<model.BaseAccount, BaseAccount> addedAccounts = {};
+    final accounts = await sl<DataRepository>().getAllAccounts();
     accounts.forEach((account) async {
-      if (account.isDebt) {
-        addedAccounts[account] =
-            await connector.accounts.createDebt(account.title);
-      } else {
-        addedAccounts[account] =
-            await connector.accounts.createAccount(account.title);
+      switch (account) {
+        case model.Account():
+          addedAccounts[account] =
+              await connector.accounts.createAccount(account.title);
+        case model.Debt():
+          addedAccounts[account] =
+              await connector.accounts.createDebt(account.title);
       }
     });
 
     Map<model.Category, Category> addedCategories = {};
-    final categories = await sl<DataRepository>().categories.getAll();
+    final categories = await sl<DataRepository>().getAllCategories();
     categories.forEach((category) async {
-      if (category.operationType == model.OperationType.INPUT) {
-        addedCategories[category] = await connector.categories
-            .createInputCategoryItem(category.title, category.budget, null);
-      } else {
-        addedCategories[category] = await connector.categories
-            .createOutputCategoryItem(category.title, category.budget, null);
+      switch (category) {
+        case model.InputCategoryItem():
+          addedCategories[category] = await connector.categories
+              .createInputCategoryItem(
+                  category.title, category.budget, category.parent?.id);
+        case model.OutputCategoryItem():
+          addedCategories[category] = await connector.categories
+              .createOutputCategoryItem(
+                  category.title, category.budget, category.parent?.id);
+        case model.InputCategoryGroup():
+          addedCategories[category] = await connector.categories
+              .createInputCategoryGroup(category.title);
+        case model.OutputCategoryGroup():
+          addedCategories[category] = await connector.categories
+              .createOutputCategoryGroup(category.title);
       }
     });
 
-    final operations = await sl<DataRepository>().operations.getAll();
+    final operations = await sl<DataRepository>().getAllOperations();
     operations.forEach((operation) async {
-      operation.map(input: (operation) async {
-        await connector.operations.createInputOperation(
-          operation.date,
-          addedAccounts[operation.account] as Account,
-          addedCategories[operation.category] as InputCategoryItem,
-          operation.sum,
-          Currency.RUB,
-        );
-      }, output: (operation) async {
-        await connector.operations.createOutputOperation(
-          operation.date,
-          addedAccounts[operation.account] as Account,
-          addedCategories[operation.category] as OutputCategoryItem,
-          operation.sum,
-          Currency.RUB,
-        );
-      }, transfer: (operation) async {
-        await connector.operations.createTransferOperation(
-          operation.date,
-          addedAccounts[operation.account] as BaseAccount,
-          addedAccounts[operation.recAccount] as BaseAccount,
-          operation.sum,
-          operation.sum,
-          Currency.RUB,
-          Currency.RUB,
-        );
-      });
+      switch (operation) {
+        case model.InputOperation():
+          await connector.operations.createInputOperation(
+            operation.date,
+            addedAccounts[operation.account] as Account,
+            addedCategories[operation.category] as InputCategoryItem,
+            operation.sum.sum,
+            _mapCurrency(operation.sum.currency),
+          );
+        case model.OutputOperation():
+          await connector.operations.createOutputOperation(
+            operation.date,
+            addedAccounts[operation.account] as Account,
+            addedCategories[operation.category] as OutputCategoryItem,
+            operation.sum.sum,
+            _mapCurrency(operation.sum.currency),
+          );
+        case model.TransferOperation():
+          await connector.operations.createTransferOperation(
+            operation.date,
+            addedAccounts[operation.account] as BaseAccount,
+            addedAccounts[operation.recAccount] as BaseAccount,
+            operation.sum.sum,
+            operation.recSum.sum,
+            _mapCurrency(operation.sum.currency),
+            _mapCurrency(operation.recSum.currency),
+          );
+      }
     });
   }
+
+  Currency _mapCurrency(model.Currency currency) => switch (currency) {
+        model.Currency.RUB => Currency.RUB,
+        model.Currency.USD => Currency.USD,
+        model.Currency.EUR => Currency.EUR,
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +104,7 @@ class SpringPage extends StatelessWidget {
                 if (user == null) {
                   return;
                 }
-                await _upload(user.idToken);
+                await _upload(context.read<AuthBloc>().state.idToken);
               },
               child: const Text('Upload')),
         ],

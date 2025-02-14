@@ -8,7 +8,6 @@ import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models/enum/currency.dart';
 import '../../../blocs/category_cashflow_bloc.dart';
 import '../../../widgets/keyboard.dart';
 import 'widgets/account_item.dart';
@@ -198,9 +197,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                             child: SumField(
                                               highlight: context.highlightSum(),
                                               sum: context.sum(),
-                                              currency:
-                                                  context.account()?.currency ??
-                                                      Currency.RUB,
+                                              currency: context.currencySent(),
                                               onTap: context.sumTap,
                                             ),
                                           ),
@@ -213,10 +210,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                                 highlight:
                                                     context.highlightRecSum(),
                                                 sum: context.recSum(),
-                                                currency: context
-                                                        .recAccount()
-                                                        ?.currency ??
-                                                    Currency.RUB,
+                                                currency: context.currencyReceived(),
                                                 onTap: context.recSumTap,
                                               ),
                                             ),
@@ -274,20 +268,19 @@ extension MasterExt on BuildContext {
   void changeOperationType(OperationType type) =>
       _bloc().add(MasterEvent.changeOperationType(operationType: type));
 
-  void changeAccount(AccountBalance accountBalance) =>
+  void changeAccount(BaseAccountBalance accountBalance) =>
       _bloc().add(MasterEvent.changeAccount(account: accountBalance));
 
   bool showRecSum() => select<MasterBloc, bool>((bloc) =>
       bloc.state.operationType == OperationType.TRANSFER &&
       bloc.state.account != null &&
-      bloc.state.recAccount != null &&
-      bloc.state.account?.currency != bloc.state.recAccount?.currency);
+      bloc.state.recAccount != null);
 
   Future<void> addNewAccount() async {
     addNewItem();
     var account = await openAccountInputDialog();
     if (account != null) {
-      changeAccount(AccountBalance.fromAccount(account));
+      changeAccount(BaseAccountBalance.fromAccount(account));
     }
   }
 
@@ -315,13 +308,13 @@ extension MasterExt on BuildContext {
     addNewItem();
     var account = await openAccountInputDialog();
     if (account != null) {
-      changeRecAccount(AccountBalance.fromAccount(account));
+      changeRecAccount(BaseAccountBalance.fromAccount(account));
     }
   }
 
   void addNewItem() => _bloc().add(const MasterEvent.addNewItem());
 
-  void changeRecAccount(AccountBalance accountBalance) =>
+  void changeRecAccount(BaseAccountBalance accountBalance) =>
       _bloc().add(MasterEvent.changeRecAccount(account: accountBalance));
 
   void changeInCategory(Category category) =>
@@ -330,12 +323,18 @@ extension MasterExt on BuildContext {
   void changeOutCategory(Category category) =>
       _bloc().add(MasterEvent.changeOutCategory(category: category));
 
-  int recSum() => select<MasterBloc, int>((bloc) => bloc.state.recSum);
+  int recSum() => select<MasterBloc, int>((bloc) => bloc.state.recSum.sum);
+
+  Currency currencySent() =>
+      select<MasterBloc, Currency>((bloc) => bloc.state.sum.currency);
+
+  Currency currencyReceived() =>
+      select<MasterBloc, Currency>((bloc) => bloc.state.recSum.currency);
 
   bool highlightRecSum() =>
       select<MasterBloc, bool>((bloc) => bloc.state.highlightRecSum);
 
-  int sum() => select<MasterBloc, int>((bloc) => bloc.state.sum);
+  int sum() => select<MasterBloc, int>((bloc) => bloc.state.sum.sum);
 
   bool highlightSum() =>
       select<MasterBloc, bool>((bloc) => bloc.state.highlightSum);
@@ -343,11 +342,11 @@ extension MasterExt on BuildContext {
   OperationType operationType() =>
       select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
 
-  AccountBalance? account() =>
-      select<MasterBloc, AccountBalance?>((bloc) => bloc.state.account);
+  BaseAccountBalance? account() =>
+      select<MasterBloc, BaseAccountBalance?>((bloc) => bloc.state.account);
 
-  AccountBalance? recAccount() =>
-      select<MasterBloc, AccountBalance?>((bloc) => bloc.state.recAccount);
+  BaseAccountBalance? recAccount() =>
+      select<MasterBloc, BaseAccountBalance?>((bloc) => bloc.state.recAccount);
 }
 
 class BarButton extends StatelessWidget {
@@ -378,7 +377,7 @@ class AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final operationType = context.operationType();
-    final accounts = context.select<AccountBalanceBloc, List<AccountBalance>>(
+    final accounts = context.select<AccountBalanceBloc, List<BaseAccountBalance>>(
       (bloc) => bloc.state.balances,
     );
 
@@ -390,7 +389,7 @@ class AccountList extends StatelessWidget {
       list: AccountPageView(
         accounts: operationType == OperationType.TRANSFER
             ? accounts
-            : accounts.where((element) => !element.isDebt).toList(),
+            : accounts.whereType<DebtBalance>().toList(),
         onItemChanged: context.changeAccount,
       ),
     );
@@ -442,7 +441,7 @@ class AccountRecList extends StatelessWidget {
       title: context.loc.receiver,
       onAdd: context.addNewRecAccount,
       list: AccountPageView(
-        accounts: context.select<AccountBalanceBloc, List<AccountBalance>>(
+        accounts: context.select<AccountBalanceBloc, List<BaseAccountBalance>>(
           (bloc) => bloc.state.balances,
         ),
         onItemChanged: context.changeRecAccount,
@@ -496,8 +495,8 @@ class ItemsList extends StatelessWidget {
 }
 
 class AccountPageView extends StatelessWidget {
-  final List<AccountBalance> accounts;
-  final void Function(AccountBalance) onItemChanged;
+  final List<BaseAccountBalance> accounts;
+  final void Function(BaseAccountBalance) onItemChanged;
 
   const AccountPageView({
     super.key,
@@ -507,7 +506,7 @@ class AccountPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselList<AccountBalance>(
+    return CarouselList<BaseAccountBalance>(
       items: accounts,
       emptyListMessage: context.loc.noAccounts,
       initialItemFinder: (account) => false,
@@ -542,7 +541,7 @@ class CategoryPageView extends StatelessWidget {
       //     state.categoryIn != null &&
       //     category.id == state.categoryIn!.id,
       onItemChanged: onItemChanged,
-      itemBuilder: (context, category) => CategoryItem(category: category),
+      itemBuilder: (context, category) => CategoryListItem(category: category),
     );
   }
 }

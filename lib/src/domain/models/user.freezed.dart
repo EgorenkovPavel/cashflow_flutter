@@ -16,12 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$User {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get googleId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
-  String get idToken => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -30,7 +32,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String name, String photo, String idToken});
+  $Res call({int id, String googleId, String name, String photo});
 }
 
 /// @nodoc
@@ -43,18 +45,24 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? googleId = null,
     Object? name = null,
     Object? photo = null,
-    Object? idToken = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      googleId: null == googleId
+          ? _value.googleId
+          : googleId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -63,10 +71,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       photo: null == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as String,
-      idToken: null == idToken
-          ? _value.idToken
-          : idToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -79,7 +83,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String photo, String idToken});
+  $Res call({int id, String googleId, String name, String photo});
 }
 
 /// @nodoc
@@ -89,18 +93,24 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? googleId = null,
     Object? name = null,
     Object? photo = null,
-    Object? idToken = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      googleId: null == googleId
+          ? _value.googleId
+          : googleId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -110,10 +120,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
-      idToken: null == idToken
-          ? _value.idToken
-          : idToken // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -122,23 +128,24 @@ class __$$UserImplCopyWithImpl<$Res>
 
 class _$UserImpl implements _User {
   const _$UserImpl(
-      {required this.id,
+      {this.id = 0,
+      required this.googleId,
       required this.name,
-      required this.photo,
-      required this.idToken});
+      required this.photo});
 
   @override
-  final String id;
+  @JsonKey()
+  final int id;
+  @override
+  final String googleId;
   @override
   final String name;
   @override
   final String photo;
-  @override
-  final String idToken;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, photo: $photo, idToken: $idToken)';
+    return 'User(id: $id, googleId: $googleId, name: $name, photo: $photo)';
   }
 
   @override
@@ -147,15 +154,18 @@ class _$UserImpl implements _User {
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.googleId, googleId) ||
+                other.googleId == googleId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.photo, photo) || other.photo == photo) &&
-            (identical(other.idToken, idToken) || other.idToken == idToken));
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, photo, idToken);
+  int get hashCode => Object.hash(runtimeType, id, googleId, name, photo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -164,21 +174,24 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String id,
+      {final int id,
+      required final String googleId,
       required final String name,
-      required final String photo,
-      required final String idToken}) = _$UserImpl;
+      required final String photo}) = _$UserImpl;
 
   @override
-  String get id;
+  int get id;
+  @override
+  String get googleId;
   @override
   String get name;
   @override
   String get photo;
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String get idToken;
-  @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

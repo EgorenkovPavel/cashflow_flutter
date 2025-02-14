@@ -25,13 +25,7 @@ class TypeRadioButton<T> extends StatelessWidget {
       borderColor: Theme.of(context).colorScheme.primary,
       selectedColor: Colors.white,
       fillColor: Theme.of(context).colorScheme.primary,
-      children: items
-          .map(
-            (e) => _TypeItem<T>(
-              type: e,
-            ),
-          )
-          .toList(),
+      children: items.map((e) => _TypeItem<T>(type: e)).toList(),
     );
   }
 }
@@ -40,7 +34,7 @@ class _TypeItem<T> extends StatelessWidget {
   const _TypeItem({
     super.key,
     type,
-  })  : _type = type;
+  }) : _type = type;
 
   final T _type;
 

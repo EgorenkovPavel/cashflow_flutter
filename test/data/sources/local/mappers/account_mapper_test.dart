@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:money_tracker/data/sources/local/data/database.dart';
-import 'package:money_tracker/data/sources/local/mappers/account_mapper.dart';
 import 'package:money_tracker/domain/models/account/account.dart';
 
 void main() {

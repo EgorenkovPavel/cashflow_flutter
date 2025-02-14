@@ -1,14 +1,11 @@
 // import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
-
-import '../../../domain/models/enum/currency.dart';
 
 class BudgetPage extends StatefulWidget {
   const BudgetPage({super.key, required this.type});
@@ -134,7 +131,7 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch (operationType){
+    return switch (operationType) {
       OperationType.INPUT => Text(context.loc.earningIn(date)),
       OperationType.OUTPUT => Text(context.loc.spendingIn(date)),
       _ => const Text(''),
@@ -375,9 +372,8 @@ class _CategoryItem extends StatelessWidget {
       onTap: () => context.openCategoryPage(category.category.id),
       title: Text(category.category.title),
       subtitle: Text(
-        context.loc.numberFormat(category.category.budget, category.category.currency),
-      ),
-      trailing: Text(context.loc.numberFormat(_cashflow(), category.category.currency)),
+          context.loc.numberFormat(category.category.budget, baseCurrency)),
+      trailing: Text(context.loc.numberFormat(_cashflow(), baseCurrency)),
       leading: CircularProgressIndicator(
         value: _progress(),
       ),

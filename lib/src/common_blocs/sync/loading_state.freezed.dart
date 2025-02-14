@@ -20,7 +20,9 @@ mixin _$LoadingState {
   int get categoryCount => throw _privateConstructorUsedError;
   int get operationCount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LoadingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LoadingStateCopyWith<LoadingState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$LoadingStateCopyWithImpl<$Res, $Val extends LoadingState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LoadingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$LoadingStateImplCopyWithImpl<$Res>
       _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LoadingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,7 +154,9 @@ class _$LoadingStateImpl implements _LoadingState {
   int get hashCode =>
       Object.hash(runtimeType, accountCount, categoryCount, operationCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LoadingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
@@ -167,8 +175,11 @@ abstract class _LoadingState implements LoadingState {
   int get categoryCount;
   @override
   int get operationCount;
+
+  /// Create a copy of LoadingState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadingStateImplCopyWith<_$LoadingStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

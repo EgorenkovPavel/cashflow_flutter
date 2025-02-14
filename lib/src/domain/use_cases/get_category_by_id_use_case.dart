@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 class GetCategoryByIdUseCase {
@@ -7,5 +7,5 @@ class GetCategoryByIdUseCase {
   GetCategoryByIdUseCase(this._dataRepository);
 
   Future<Category> call({required int categoryId}) =>
-      _dataRepository.categories.getById(categoryId);
+      _dataRepository.getCategoryById(categoryId);
 }

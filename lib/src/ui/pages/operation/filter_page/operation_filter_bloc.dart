@@ -18,10 +18,10 @@ class OperationFilterEvent with _$OperationFilterEvent {
     required DateTimeRange period,
   }) = _SetPeriodOperationFilterEvent;
 
-  const factory OperationFilterEvent.addAccount({required Account account}) =
+  const factory OperationFilterEvent.addAccount({required BaseAccount account}) =
       _AddAccountOperationFilterEvent;
 
-  const factory OperationFilterEvent.removeAccount({required Account account}) =
+  const factory OperationFilterEvent.removeAccount({required BaseAccount account}) =
       _RemoveAccountOperationFilterEvent;
 
   const factory OperationFilterEvent.addCategory({required Category category}) =
@@ -38,7 +38,7 @@ class OperationFilterState with _$OperationFilterState {
 
   const factory OperationFilterState({
     DateTimeRange? period,
-    @Default({}) Set<Account> accounts,
+    @Default({}) Set<BaseAccount> accounts,
     @Default({}) Set<Category> categories,
   }) = _OperationFilterState;
 
@@ -56,11 +56,11 @@ class OperationFilterState with _$OperationFilterState {
 
   OperationFilterState resetPeriod() => copyWith(period: null);
 
-  OperationFilterState addAccount(Account account) => copyWith(
+  OperationFilterState addAccount(BaseAccount account) => copyWith(
         accounts: accounts.toSet()..add(account),
       );
 
-  OperationFilterState removeAccount(Account account) => copyWith(
+  OperationFilterState removeAccount(BaseAccount account) => copyWith(
         accounts: accounts.toSet()..removeWhere((a) => a.id == account.id),
       );
 

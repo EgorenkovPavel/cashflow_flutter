@@ -84,7 +84,7 @@ extension BlocExt on BuildContext{
       .state
       .accountBalances;
 
-  List<AccountBalance> debts() =>
+  List<DebtBalance> debts() =>
       watch<AccountBalanceBloc>()
       .state
       .debtBalances;

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 
@@ -21,10 +21,8 @@ class CategoryCashflowDiagram extends StatelessWidget {
     return StreamBuilder<List<SumOnDate>>(
       stream: budgetType == BudgetType.MONTH
           ? sl<DataRepository>() // TODO
-              .categories
               .watchCashflowByCategoryByMonth(id)
           : sl<DataRepository>() // TODO
-              .categories
               .watchCashflowByCategoryByYear(id),
       builder: (context, snapshot) {
         var data = <SumOnDate>[];

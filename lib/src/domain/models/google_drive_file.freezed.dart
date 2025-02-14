@@ -22,7 +22,9 @@ mixin _$DriveFile {
   DateTime get lastChanges => throw _privateConstructorUsedError;
   bool get enabled => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DriveFile
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DriveFileCopyWith<DriveFile> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$DriveFileCopyWithImpl<$Res, $Val extends DriveFile>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DriveFile
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -108,6 +112,8 @@ class __$$DriveFileImplCopyWithImpl<$Res>
       _$DriveFileImpl _value, $Res Function(_$DriveFileImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DriveFile
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -186,7 +192,9 @@ class _$DriveFileImpl implements _DriveFile {
   int get hashCode =>
       Object.hash(runtimeType, title, id, isFolder, lastChanges, enabled);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DriveFile
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
@@ -211,8 +219,11 @@ abstract class _DriveFile implements DriveFile {
   DateTime get lastChanges;
   @override
   bool get enabled;
+
+  /// Create a copy of DriveFile
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

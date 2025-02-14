@@ -128,6 +128,9 @@ class _$SyncEventCopyWithImpl<$Res, $Val extends SyncEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -146,6 +149,9 @@ class __$$CreateCloudDatabaseSyncEventImplCopyWithImpl<$Res>
       _$CreateCloudDatabaseSyncEventImpl _value,
       $Res Function(_$CreateCloudDatabaseSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -310,6 +316,9 @@ class __$$RefreshConnectionSyncEventImplCopyWithImpl<$Res>
       _$RefreshConnectionSyncEventImpl _value,
       $Res Function(_$RefreshConnectionSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -472,6 +481,9 @@ class __$$SyncNowSyncEventImplCopyWithImpl<$Res>
   __$$SyncNowSyncEventImplCopyWithImpl(_$SyncNowSyncEventImpl _value,
       $Res Function(_$SyncNowSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -632,6 +644,9 @@ class __$$SyncLastDaySyncEventImplCopyWithImpl<$Res>
   __$$SyncLastDaySyncEventImplCopyWithImpl(_$SyncLastDaySyncEventImpl _value,
       $Res Function(_$SyncLastDaySyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -795,6 +810,9 @@ class __$$SyncLastMonthSyncEventImplCopyWithImpl<$Res>
       _$SyncLastMonthSyncEventImpl _value,
       $Res Function(_$SyncLastMonthSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -956,6 +974,9 @@ class __$$SyncAllSyncEventImplCopyWithImpl<$Res>
   __$$SyncAllSyncEventImplCopyWithImpl(_$SyncAllSyncEventImpl _value,
       $Res Function(_$SyncAllSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1121,6 +1142,8 @@ class __$$AddUserSyncEventImplCopyWithImpl<$Res>
       $Res Function(_$AddUserSyncEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1134,6 +1157,8 @@ class __$$AddUserSyncEventImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -1167,7 +1192,9 @@ class _$AddUserSyncEventImpl extends _AddUserSyncEvent {
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddUserSyncEventImplCopyWith<_$AddUserSyncEventImpl> get copyWith =>
@@ -1300,7 +1327,10 @@ abstract class _AddUserSyncEvent extends SyncEvent {
   const _AddUserSyncEvent._() : super._();
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddUserSyncEventImplCopyWith<_$AddUserSyncEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1320,6 +1350,9 @@ class __$$AuthProgressSyncEventImplCopyWithImpl<$Res>
   __$$AuthProgressSyncEventImplCopyWithImpl(_$AuthProgressSyncEventImpl _value,
       $Res Function(_$AuthProgressSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1488,6 +1521,8 @@ class __$$AuthAuthenticatedSyncEventImplCopyWithImpl<$Res>
       $Res Function(_$AuthAuthenticatedSyncEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1501,6 +1536,8 @@ class __$$AuthAuthenticatedSyncEventImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -1534,7 +1571,9 @@ class _$AuthAuthenticatedSyncEventImpl extends _AuthAuthenticatedSyncEvent {
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AuthAuthenticatedSyncEventImplCopyWith<_$AuthAuthenticatedSyncEventImpl>
@@ -1667,7 +1706,10 @@ abstract class _AuthAuthenticatedSyncEvent extends SyncEvent {
   const _AuthAuthenticatedSyncEvent._() : super._();
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthAuthenticatedSyncEventImplCopyWith<_$AuthAuthenticatedSyncEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1686,6 +1728,9 @@ class __$$NotAuthSyncEventImplCopyWithImpl<$Res>
   __$$NotAuthSyncEventImplCopyWithImpl(_$NotAuthSyncEventImpl _value,
       $Res Function(_$NotAuthSyncEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1849,6 +1894,8 @@ class __$$SyncDataSyncEventImplCopyWithImpl<$Res>
       $Res Function(_$SyncDataSyncEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1888,7 +1935,9 @@ class _$SyncDataSyncEventImpl extends _SyncDataSyncEvent {
   @override
   int get hashCode => Object.hash(runtimeType, syncDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SyncDataSyncEventImplCopyWith<_$SyncDataSyncEventImpl> get copyWith =>
@@ -2021,7 +2070,10 @@ abstract class _SyncDataSyncEvent extends SyncEvent {
   const _SyncDataSyncEvent._() : super._();
 
   DateTime get syncDate;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SyncDataSyncEventImplCopyWith<_$SyncDataSyncEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2122,6 +2174,9 @@ class _$SyncStateCopyWithImpl<$Res, $Val extends SyncState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2138,6 +2193,9 @@ class __$$InProgressSyncStateImplCopyWithImpl<$Res>
   __$$InProgressSyncStateImplCopyWithImpl(_$InProgressSyncStateImpl _value,
       $Res Function(_$InProgressSyncStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2286,6 +2344,8 @@ class __$$LoadingToCloudSyncStateImplCopyWithImpl<$Res>
       $Res Function(_$LoadingToCloudSyncStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2348,7 +2408,9 @@ class _$LoadingToCloudSyncStateImpl extends _LoadingToCloudSyncState {
   int get hashCode =>
       Object.hash(runtimeType, accountCount, categoryCount, operationCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadingToCloudSyncStateImplCopyWith<_$LoadingToCloudSyncStateImpl>
@@ -2467,7 +2529,10 @@ abstract class _LoadingToCloudSyncState extends SyncState {
   int get accountCount;
   int get categoryCount;
   int get operationCount;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadingToCloudSyncStateImplCopyWith<_$LoadingToCloudSyncStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2491,6 +2556,8 @@ class __$$LoadingFromCloudSyncStateImplCopyWithImpl<$Res>
       $Res Function(_$LoadingFromCloudSyncStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2553,7 +2620,9 @@ class _$LoadingFromCloudSyncStateImpl extends _LoadingFromCloudSyncState {
   int get hashCode =>
       Object.hash(runtimeType, accountCount, categoryCount, operationCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadingFromCloudSyncStateImplCopyWith<_$LoadingFromCloudSyncStateImpl>
@@ -2672,7 +2741,10 @@ abstract class _LoadingFromCloudSyncState extends SyncState {
   int get accountCount;
   int get categoryCount;
   int get operationCount;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadingFromCloudSyncStateImplCopyWith<_$LoadingFromCloudSyncStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2694,6 +2766,8 @@ class __$$SyncedSyncStateImplCopyWithImpl<$Res>
       _$SyncedSyncStateImpl _value, $Res Function(_$SyncedSyncStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2742,7 +2816,9 @@ class _$SyncedSyncStateImpl extends _SyncedSyncState {
   @override
   int get hashCode => Object.hash(runtimeType, syncDate, isAdmin);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SyncedSyncStateImplCopyWith<_$SyncedSyncStateImpl> get copyWith =>
@@ -2859,7 +2935,10 @@ abstract class _SyncedSyncState extends SyncState {
 
   DateTime get syncDate;
   bool get isAdmin;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SyncedSyncStateImplCopyWith<_$SyncedSyncStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2881,6 +2960,8 @@ class __$$NotSyncedSyncStateImplCopyWithImpl<$Res>
       $Res Function(_$NotSyncedSyncStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2919,7 +3000,9 @@ class _$NotSyncedSyncStateImpl extends _NotSyncedSyncState {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NotSyncedSyncStateImplCopyWith<_$NotSyncedSyncStateImpl> get copyWith =>
@@ -3034,7 +3117,10 @@ abstract class _NotSyncedSyncState extends SyncState {
   const _NotSyncedSyncState._() : super._();
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NotSyncedSyncStateImplCopyWith<_$NotSyncedSyncStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3053,6 +3139,9 @@ class __$$FailureSyncStateImplCopyWithImpl<$Res>
   __$$FailureSyncStateImplCopyWithImpl(_$FailureSyncStateImpl _value,
       $Res Function(_$FailureSyncStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -3195,6 +3284,9 @@ class __$$NoDBSyncStateImplCopyWithImpl<$Res>
   __$$NoDBSyncStateImplCopyWithImpl(
       _$NoDBSyncStateImpl _value, $Res Function(_$NoDBSyncStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SyncState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

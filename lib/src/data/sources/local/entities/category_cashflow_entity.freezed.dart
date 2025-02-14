@@ -20,7 +20,9 @@ mixin _$CategoryCashflowEntity {
   int get monthCashflow => throw _privateConstructorUsedError;
   int get yearCashflow => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryCashflowEntityCopyWith<CategoryCashflowEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,6 +47,8 @@ class _$CategoryCashflowEntityCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryCashflowEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +95,8 @@ class __$$CategoryCashflowEntityImplCopyWithImpl<$Res>
       $Res Function(_$CategoryCashflowEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryCashflowEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -152,7 +158,9 @@ class _$CategoryCashflowEntityImpl implements _CategoryCashflowEntity {
   int get hashCode =>
       Object.hash(runtimeType, category, monthCashflow, yearCashflow);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryCashflowEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryCashflowEntityImplCopyWith<_$CategoryCashflowEntityImpl>
@@ -172,8 +180,11 @@ abstract class _CategoryCashflowEntity implements CategoryCashflowEntity {
   int get monthCashflow;
   @override
   int get yearCashflow;
+
+  /// Create a copy of CategoryCashflowEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryCashflowEntityImplCopyWith<_$CategoryCashflowEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

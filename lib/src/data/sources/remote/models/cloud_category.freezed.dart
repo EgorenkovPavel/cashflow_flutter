@@ -21,10 +21,11 @@ mixin _$CloudCategory {
   int get operationType => throw _privateConstructorUsedError;
   int get budgetType => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudCategory
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CloudCategoryCopyWith<CloudCategory> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -41,7 +42,6 @@ abstract class $CloudCategoryCopyWith<$Res> {
       int operationType,
       int budgetType,
       int budget,
-      String currency,
       bool deleted});
 }
 
@@ -55,6 +55,8 @@ class _$CloudCategoryCopyWithImpl<$Res, $Val extends CloudCategory>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CloudCategory
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -63,7 +65,6 @@ class _$CloudCategoryCopyWithImpl<$Res, $Val extends CloudCategory>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
-    Object? currency = null,
     Object? deleted = null,
   }) {
     return _then(_value.copyWith(
@@ -87,10 +88,6 @@ class _$CloudCategoryCopyWithImpl<$Res, $Val extends CloudCategory>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -113,7 +110,6 @@ abstract class _$$CloudCategoryImplCopyWith<$Res>
       int operationType,
       int budgetType,
       int budget,
-      String currency,
       bool deleted});
 }
 
@@ -125,6 +121,8 @@ class __$$CloudCategoryImplCopyWithImpl<$Res>
       _$CloudCategoryImpl _value, $Res Function(_$CloudCategoryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CloudCategory
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,7 +131,6 @@ class __$$CloudCategoryImplCopyWithImpl<$Res>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
-    Object? currency = null,
     Object? deleted = null,
   }) {
     return _then(_$CloudCategoryImpl(
@@ -157,10 +154,6 @@ class __$$CloudCategoryImplCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
@@ -178,7 +171,6 @@ class _$CloudCategoryImpl implements _CloudCategory {
       required this.operationType,
       required this.budgetType,
       required this.budget,
-      required this.currency,
       required this.deleted});
 
   @override
@@ -192,13 +184,11 @@ class _$CloudCategoryImpl implements _CloudCategory {
   @override
   final int budget;
   @override
-  final String currency;
-  @override
   final bool deleted;
 
   @override
   String toString() {
-    return 'CloudCategory(id: $id, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget, currency: $currency, deleted: $deleted)';
+    return 'CloudCategory(id: $id, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget, deleted: $deleted)';
   }
 
   @override
@@ -213,16 +203,16 @@ class _$CloudCategoryImpl implements _CloudCategory {
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.budget, budget) || other.budget == budget) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             (identical(other.deleted, deleted) || other.deleted == deleted));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, operationType,
-      budgetType, budget, currency, deleted);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, operationType, budgetType, budget, deleted);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudCategory
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CloudCategoryImplCopyWith<_$CloudCategoryImpl> get copyWith =>
@@ -236,7 +226,6 @@ abstract class _CloudCategory implements CloudCategory {
       required final int operationType,
       required final int budgetType,
       required final int budget,
-      required final String currency,
       required final bool deleted}) = _$CloudCategoryImpl;
 
   @override
@@ -250,11 +239,12 @@ abstract class _CloudCategory implements CloudCategory {
   @override
   int get budget;
   @override
-  String get currency;
-  @override
   bool get deleted;
+
+  /// Create a copy of CloudCategory
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CloudCategoryImplCopyWith<_$CloudCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,7 +1,7 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
+import '../../utils/sum.dart';
 import '../models.dart';
-import '../models/operation/operation.dart';
 
 class InsertOperationOutputUseCase{
   final DataRepository _dataRepository;
@@ -11,16 +11,16 @@ class InsertOperationOutputUseCase{
   Future<Operation> call({
     required DateTime date,
     required Account account,
-    required Category category,
-    required int sum,
+    required OutputCategoryItem category,
+    required Sum sum,
   }){
-    final newOperation = Operation.output(
+    final newOperation = OutputOperation(
       date: date,
       account: account,
       category: category,
       sum: sum,
     );
 
-    return _dataRepository.operations.insert(newOperation);
+    return _dataRepository.insertOperation(newOperation);
   }
 }

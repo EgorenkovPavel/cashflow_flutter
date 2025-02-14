@@ -5,14 +5,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_balances_use_case.dart';
 
 import '../../domain/models.dart';
-import '../../domain/models/enum/currency.dart';
+import '../../utils/sum.dart';
 
 part 'account_balance_bloc.freezed.dart';
 
 @freezed
 class AccountBalanceEvent with _$AccountBalanceEvent {
   const factory AccountBalanceEvent.changeBalance({
-    required List<AccountBalance> accounts,
+    required List<BaseAccountBalance> accounts,
   }) = _ChangeBalanceAccountBalanceEvent;
 }
 
@@ -21,18 +21,18 @@ class AccountBalanceState with _$AccountBalanceState {
   const AccountBalanceState._();
 
   const factory AccountBalanceState({
-    required List<AccountBalance> balances,
-    required Map<Currency, int> totals,
+    required List<BaseAccountBalance> balances,
+    required Balance totals,
   }) = _AccountBalanceState;
 
-  List<Account> get allAccounts => balances.map((balance) => balance.account).toList();
+  List<BaseAccount> get allAccounts => balances.map((balance) => balance.account).toList();
 
   List<AccountBalance> get accountBalances => balances
-      .where((account) => !account.isDebt)
+      .whereType<AccountBalance>()
       .toList();
 
-  List<AccountBalance> get debtBalances => balances
-      .where((account) => account.isDebt)
+  List<DebtBalance> get debtBalances => balances
+      .whereType<DebtBalance>()
       .toList();
 }
 
@@ -44,7 +44,7 @@ class AccountBalanceBloc
   AccountBalanceBloc(this._watchBalancesUseCase)
       : super(const AccountBalanceState(
           balances: [],
-          totals: {},
+          totals: Balance(),
         )) {
     on<AccountBalanceEvent>((event, emitter) => event.map(
           changeBalance: (event) => _changeBalance(event, emitter),
@@ -65,10 +65,10 @@ class AccountBalanceBloc
     ));
   }
 
-  Map<Currency, int> _calcTotals(List<AccountBalance> list) {
-    final res = <Currency, int>{};
+  Balance _calcTotals(List<BaseAccountBalance> list) {
+    var res = const Balance();
     for (var item in list) {
-      res[item.currency] = (res[item.currency] ?? 0) + item.balance;
+      res = res + item.balance;
     }
 
     return res;

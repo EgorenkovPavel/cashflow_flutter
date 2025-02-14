@@ -72,6 +72,9 @@ class _$DriveEventCopyWithImpl<$Res, $Val extends DriveEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -91,6 +94,8 @@ class __$$BackupDriveEventImplCopyWithImpl<$Res>
       $Res Function(_$BackupDriveEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -140,7 +145,9 @@ class _$BackupDriveEventImpl implements _BackupDriveEvent {
   @override
   int get hashCode => Object.hash(runtimeType, catalogId, fileName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BackupDriveEventImplCopyWith<_$BackupDriveEventImpl> get copyWith =>
@@ -217,7 +224,10 @@ abstract class _BackupDriveEvent implements DriveEvent {
 
   String get catalogId;
   String get fileName;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BackupDriveEventImplCopyWith<_$BackupDriveEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -239,6 +249,8 @@ class __$$RestoreDriveEventImplCopyWithImpl<$Res>
       $Res Function(_$RestoreDriveEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -277,7 +289,9 @@ class _$RestoreDriveEventImpl implements _RestoreDriveEvent {
   @override
   int get hashCode => Object.hash(runtimeType, fileId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RestoreDriveEventImplCopyWith<_$RestoreDriveEventImpl> get copyWith =>
@@ -352,7 +366,10 @@ abstract class _RestoreDriveEvent implements DriveEvent {
       _$RestoreDriveEventImpl;
 
   String get fileId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DriveEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RestoreDriveEventImplCopyWith<_$RestoreDriveEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -433,6 +450,9 @@ class _$DriveStateCopyWithImpl<$Res, $Val extends DriveState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -449,6 +469,9 @@ class __$$InitialDriveStateImplCopyWithImpl<$Res>
   __$$InitialDriveStateImplCopyWithImpl(_$InitialDriveStateImpl _value,
       $Res Function(_$InitialDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -570,6 +593,9 @@ class __$$InProgressDriveStateImplCopyWithImpl<$Res>
   __$$InProgressDriveStateImplCopyWithImpl(_$InProgressDriveStateImpl _value,
       $Res Function(_$InProgressDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -692,6 +718,9 @@ class __$$FailureDriveStateImplCopyWithImpl<$Res>
   __$$FailureDriveStateImplCopyWithImpl(_$FailureDriveStateImpl _value,
       $Res Function(_$FailureDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -815,6 +844,9 @@ class __$$SuccessBackupDriveStateImplCopyWithImpl<$Res>
       _$SuccessBackupDriveStateImpl _value,
       $Res Function(_$SuccessBackupDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -939,6 +971,9 @@ class __$$SuccessRestoreDriveStateImplCopyWithImpl<$Res>
       _$SuccessRestoreDriveStateImpl _value,
       $Res Function(_$SuccessRestoreDriveStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DriveState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

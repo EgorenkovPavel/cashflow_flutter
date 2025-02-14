@@ -19,10 +19,12 @@ mixin _$CloudAccount {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
   bool get deleted => throw _privateConstructorUsedError;
+  String get user => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudAccount
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CloudAccountCopyWith<CloudAccount> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -33,8 +35,7 @@ abstract class $CloudAccountCopyWith<$Res> {
           CloudAccount value, $Res Function(CloudAccount) then) =
       _$CloudAccountCopyWithImpl<$Res, CloudAccount>;
   @useResult
-  $Res call(
-      {String id, String title, bool isDebt, String currency, bool deleted});
+  $Res call({String id, String title, bool isDebt, bool deleted, String user});
 }
 
 /// @nodoc
@@ -47,14 +48,16 @@ class _$CloudAccountCopyWithImpl<$Res, $Val extends CloudAccount>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CloudAccount
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? title = null,
     Object? isDebt = null,
-    Object? currency = null,
     Object? deleted = null,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,14 +72,14 @@ class _$CloudAccountCopyWithImpl<$Res, $Val extends CloudAccount>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -89,8 +92,7 @@ abstract class _$$CloudAccountImplCopyWith<$Res>
       __$$CloudAccountImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id, String title, bool isDebt, String currency, bool deleted});
+  $Res call({String id, String title, bool isDebt, bool deleted, String user});
 }
 
 /// @nodoc
@@ -101,14 +103,16 @@ class __$$CloudAccountImplCopyWithImpl<$Res>
       _$CloudAccountImpl _value, $Res Function(_$CloudAccountImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CloudAccount
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? title = null,
     Object? isDebt = null,
-    Object? currency = null,
     Object? deleted = null,
+    Object? user = null,
   }) {
     return _then(_$CloudAccountImpl(
       id: null == id
@@ -123,14 +127,14 @@ class __$$CloudAccountImplCopyWithImpl<$Res>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
       deleted: null == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -142,8 +146,8 @@ class _$CloudAccountImpl implements _CloudAccount {
       {required this.id,
       required this.title,
       required this.isDebt,
-      required this.currency,
-      required this.deleted});
+      required this.deleted,
+      required this.user});
 
   @override
   final String id;
@@ -152,13 +156,13 @@ class _$CloudAccountImpl implements _CloudAccount {
   @override
   final bool isDebt;
   @override
-  final String currency;
-  @override
   final bool deleted;
+  @override
+  final String user;
 
   @override
   String toString() {
-    return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, currency: $currency, deleted: $deleted)';
+    return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, deleted: $deleted, user: $user)';
   }
 
   @override
@@ -169,16 +173,17 @@ class _$CloudAccountImpl implements _CloudAccount {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.deleted, deleted) || other.deleted == deleted));
+            (identical(other.deleted, deleted) || other.deleted == deleted) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, isDebt, currency, deleted);
+      Object.hash(runtimeType, id, title, isDebt, deleted, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloudAccount
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CloudAccountImplCopyWith<_$CloudAccountImpl> get copyWith =>
@@ -190,8 +195,8 @@ abstract class _CloudAccount implements CloudAccount {
       {required final String id,
       required final String title,
       required final bool isDebt,
-      required final String currency,
-      required final bool deleted}) = _$CloudAccountImpl;
+      required final bool deleted,
+      required final String user}) = _$CloudAccountImpl;
 
   @override
   String get id;
@@ -200,11 +205,14 @@ abstract class _CloudAccount implements CloudAccount {
   @override
   bool get isDebt;
   @override
-  String get currency;
-  @override
   bool get deleted;
   @override
-  @JsonKey(ignore: true)
+  String get user;
+
+  /// Create a copy of CloudAccount
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CloudAccountImplCopyWith<_$CloudAccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

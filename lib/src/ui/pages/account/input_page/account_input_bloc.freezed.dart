@@ -21,7 +21,6 @@ mixin _$AccountInputEvent {
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) changeTitle,
     required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +29,6 @@ mixin _$AccountInputEvent {
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? changeTitle,
     TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +37,6 @@ mixin _$AccountInputEvent {
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? changeTitle,
     TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -50,8 +47,6 @@ mixin _$AccountInputEvent {
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
     required TResult Function(_ChangeIsDebtAccountInputEvent value)
         changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
@@ -60,7 +55,6 @@ mixin _$AccountInputEvent {
     TResult? Function(_FetchAccountInputEvent value)? fetch,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -69,7 +63,6 @@ mixin _$AccountInputEvent {
     TResult Function(_FetchAccountInputEvent value)? fetch,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -92,6 +85,9 @@ class _$AccountInputEventCopyWithImpl<$Res, $Val extends AccountInputEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -113,6 +109,8 @@ class __$$FetchAccountInputEventImplCopyWithImpl<$Res>
       $Res Function(_$FetchAccountInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -152,7 +150,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @override
   int get hashCode => Object.hash(runtimeType, accountId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchAccountInputEventImplCopyWith<_$FetchAccountInputEventImpl>
@@ -165,7 +165,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) changeTitle,
     required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return fetch(accountId);
@@ -177,7 +176,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? changeTitle,
     TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return fetch?.call(accountId);
@@ -189,7 +187,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? changeTitle,
     TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -206,8 +203,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
     required TResult Function(_ChangeIsDebtAccountInputEvent value)
         changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return fetch(this);
@@ -219,7 +214,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     TResult? Function(_FetchAccountInputEvent value)? fetch,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return fetch?.call(this);
@@ -231,7 +225,6 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
     TResult Function(_FetchAccountInputEvent value)? fetch,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -247,7 +240,10 @@ abstract class _FetchAccountInputEvent implements AccountInputEvent {
       _$FetchAccountInputEventImpl;
 
   int get accountId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchAccountInputEventImplCopyWith<_$FetchAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -272,6 +268,8 @@ class __$$ChangeTitleAccountInputEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeTitleAccountInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -311,7 +309,9 @@ class _$ChangeTitleAccountInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, title);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeTitleAccountInputEventImplCopyWith<
@@ -325,7 +325,6 @@ class _$ChangeTitleAccountInputEventImpl
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) changeTitle,
     required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeTitle(title);
@@ -337,7 +336,6 @@ class _$ChangeTitleAccountInputEventImpl
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? changeTitle,
     TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeTitle?.call(title);
@@ -349,7 +347,6 @@ class _$ChangeTitleAccountInputEventImpl
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? changeTitle,
     TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -366,8 +363,6 @@ class _$ChangeTitleAccountInputEventImpl
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
     required TResult Function(_ChangeIsDebtAccountInputEvent value)
         changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return changeTitle(this);
@@ -379,7 +374,6 @@ class _$ChangeTitleAccountInputEventImpl
     TResult? Function(_FetchAccountInputEvent value)? fetch,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return changeTitle?.call(this);
@@ -391,7 +385,6 @@ class _$ChangeTitleAccountInputEventImpl
     TResult Function(_FetchAccountInputEvent value)? fetch,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -407,7 +400,10 @@ abstract class _ChangeTitleAccountInputEvent implements AccountInputEvent {
       _$ChangeTitleAccountInputEventImpl;
 
   String get title;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeTitleAccountInputEventImplCopyWith<
           _$ChangeTitleAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -433,6 +429,8 @@ class __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeIsDebtAccountInputEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -472,7 +470,9 @@ class _$ChangeIsDebtAccountInputEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, isDebt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeIsDebtAccountInputEventImplCopyWith<
@@ -486,7 +486,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) changeTitle,
     required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return changeIsDebt(isDebt);
@@ -498,7 +497,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? changeTitle,
     TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return changeIsDebt?.call(isDebt);
@@ -510,7 +508,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? changeTitle,
     TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -527,8 +524,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
     required TResult Function(_ChangeIsDebtAccountInputEvent value)
         changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return changeIsDebt(this);
@@ -540,7 +535,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     TResult? Function(_FetchAccountInputEvent value)? fetch,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return changeIsDebt?.call(this);
@@ -552,7 +546,6 @@ class _$ChangeIsDebtAccountInputEventImpl
     TResult Function(_FetchAccountInputEvent value)? fetch,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -568,172 +561,12 @@ abstract class _ChangeIsDebtAccountInputEvent implements AccountInputEvent {
       _$ChangeIsDebtAccountInputEventImpl;
 
   bool get isDebt;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeIsDebtAccountInputEventImplCopyWith<
           _$ChangeIsDebtAccountInputEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ChangeCurrencyAccoutnInputEventImplCopyWith<$Res> {
-  factory _$$ChangeCurrencyAccoutnInputEventImplCopyWith(
-          _$ChangeCurrencyAccoutnInputEventImpl value,
-          $Res Function(_$ChangeCurrencyAccoutnInputEventImpl) then) =
-      __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Currency currency});
-}
-
-/// @nodoc
-class __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<$Res>
-    extends _$AccountInputEventCopyWithImpl<$Res,
-        _$ChangeCurrencyAccoutnInputEventImpl>
-    implements _$$ChangeCurrencyAccoutnInputEventImplCopyWith<$Res> {
-  __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl(
-      _$ChangeCurrencyAccoutnInputEventImpl _value,
-      $Res Function(_$ChangeCurrencyAccoutnInputEventImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currency = null,
-  }) {
-    return _then(_$ChangeCurrencyAccoutnInputEventImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ChangeCurrencyAccoutnInputEventImpl
-    implements _ChangeCurrencyAccoutnInputEvent {
-  const _$ChangeCurrencyAccoutnInputEventImpl({required this.currency});
-
-  @override
-  final Currency currency;
-
-  @override
-  String toString() {
-    return 'AccountInputEvent.changeCurrency(currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeCurrencyAccoutnInputEventImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, currency);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeCurrencyAccoutnInputEventImplCopyWith<
-          _$ChangeCurrencyAccoutnInputEventImpl>
-      get copyWith => __$$ChangeCurrencyAccoutnInputEventImplCopyWithImpl<
-          _$ChangeCurrencyAccoutnInputEventImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int accountId) fetch,
-    required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function() save,
-  }) {
-    return changeCurrency(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int accountId)? fetch,
-    TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeCurrency?.call(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int accountId)? fetch,
-    TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(currency);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchAccountInputEvent value) fetch,
-    required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
-    required TResult Function(_SaveAccountInputEvent value) save,
-  }) {
-    return changeCurrency(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchAccountInputEvent value)? fetch,
-    TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
-    TResult? Function(_SaveAccountInputEvent value)? save,
-  }) {
-    return changeCurrency?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchAccountInputEvent value)? fetch,
-    TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
-    TResult Function(_SaveAccountInputEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeCurrencyAccoutnInputEvent implements AccountInputEvent {
-  const factory _ChangeCurrencyAccoutnInputEvent(
-          {required final Currency currency}) =
-      _$ChangeCurrencyAccoutnInputEventImpl;
-
-  Currency get currency;
-  @JsonKey(ignore: true)
-  _$$ChangeCurrencyAccoutnInputEventImplCopyWith<
-          _$ChangeCurrencyAccoutnInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -752,6 +585,9 @@ class __$$SaveAccountInputEventImplCopyWithImpl<$Res>
   __$$SaveAccountInputEventImplCopyWithImpl(_$SaveAccountInputEventImpl _value,
       $Res Function(_$SaveAccountInputEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -780,7 +616,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) changeTitle,
     required TResult Function(bool isDebt) changeIsDebt,
-    required TResult Function(Currency currency) changeCurrency,
     required TResult Function() save,
   }) {
     return save();
@@ -792,7 +627,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? changeTitle,
     TResult? Function(bool isDebt)? changeIsDebt,
-    TResult? Function(Currency currency)? changeCurrency,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -804,7 +638,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? changeTitle,
     TResult Function(bool isDebt)? changeIsDebt,
-    TResult Function(Currency currency)? changeCurrency,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -821,8 +654,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
     required TResult Function(_ChangeIsDebtAccountInputEvent value)
         changeIsDebt,
-    required TResult Function(_ChangeCurrencyAccoutnInputEvent value)
-        changeCurrency,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return save(this);
@@ -834,7 +665,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     TResult? Function(_FetchAccountInputEvent value)? fetch,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult? Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return save?.call(this);
@@ -846,7 +676,6 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
     TResult Function(_FetchAccountInputEvent value)? fetch,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
     TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
-    TResult Function(_ChangeCurrencyAccoutnInputEvent value)? changeCurrency,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -865,11 +694,12 @@ abstract class _SaveAccountInputEvent implements AccountInputEvent {
 mixin _$AccountInputState {
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
-  Currency get currency => throw _privateConstructorUsedError;
-  Account? get account => throw _privateConstructorUsedError;
+  BaseAccount? get account => throw _privateConstructorUsedError;
   bool get isSaved => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AccountInputStateCopyWith<AccountInputState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -880,14 +710,7 @@ abstract class $AccountInputStateCopyWith<$Res> {
           AccountInputState value, $Res Function(AccountInputState) then) =
       _$AccountInputStateCopyWithImpl<$Res, AccountInputState>;
   @useResult
-  $Res call(
-      {String title,
-      bool isDebt,
-      Currency currency,
-      Account? account,
-      bool isSaved});
-
-  $AccountCopyWith<$Res>? get account;
+  $Res call({String title, bool isDebt, BaseAccount? account, bool isSaved});
 }
 
 /// @nodoc
@@ -900,12 +723,13 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AccountInputState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? title = null,
     Object? isDebt = null,
-    Object? currency = null,
     Object? account = freezed,
     Object? isSaved = null,
   }) {
@@ -918,31 +742,15 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res>? get account {
-    if (_value.account == null) {
-      return null;
-    }
-
-    return $AccountCopyWith<$Res>(_value.account!, (value) {
-      return _then(_value.copyWith(account: value) as $Val);
-    });
   }
 }
 
@@ -954,15 +762,7 @@ abstract class _$$AccountInputStateImplCopyWith<$Res>
       __$$AccountInputStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String title,
-      bool isDebt,
-      Currency currency,
-      Account? account,
-      bool isSaved});
-
-  @override
-  $AccountCopyWith<$Res>? get account;
+  $Res call({String title, bool isDebt, BaseAccount? account, bool isSaved});
 }
 
 /// @nodoc
@@ -973,12 +773,13 @@ class __$$AccountInputStateImplCopyWithImpl<$Res>
       $Res Function(_$AccountInputStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountInputState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? title = null,
     Object? isDebt = null,
-    Object? currency = null,
     Object? account = freezed,
     Object? isSaved = null,
   }) {
@@ -991,14 +792,10 @@ class __$$AccountInputStateImplCopyWithImpl<$Res>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
+              as BaseAccount?,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
@@ -1013,7 +810,6 @@ class _$AccountInputStateImpl implements _AccountInputState {
   const _$AccountInputStateImpl(
       {required this.title,
       required this.isDebt,
-      required this.currency,
       this.account,
       required this.isSaved});
 
@@ -1022,15 +818,13 @@ class _$AccountInputStateImpl implements _AccountInputState {
   @override
   final bool isDebt;
   @override
-  final Currency currency;
-  @override
-  final Account? account;
+  final BaseAccount? account;
   @override
   final bool isSaved;
 
   @override
   String toString() {
-    return 'AccountInputState(title: $title, isDebt: $isDebt, currency: $currency, account: $account, isSaved: $isSaved)';
+    return 'AccountInputState(title: $title, isDebt: $isDebt, account: $account, isSaved: $isSaved)';
   }
 
   @override
@@ -1040,17 +834,16 @@ class _$AccountInputStateImpl implements _AccountInputState {
             other is _$AccountInputStateImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, isDebt, currency, account, isSaved);
+  int get hashCode => Object.hash(runtimeType, title, isDebt, account, isSaved);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccountInputStateImplCopyWith<_$AccountInputStateImpl> get copyWith =>
@@ -1062,8 +855,7 @@ abstract class _AccountInputState implements AccountInputState {
   const factory _AccountInputState(
       {required final String title,
       required final bool isDebt,
-      required final Currency currency,
-      final Account? account,
+      final BaseAccount? account,
       required final bool isSaved}) = _$AccountInputStateImpl;
 
   @override
@@ -1071,13 +863,14 @@ abstract class _AccountInputState implements AccountInputState {
   @override
   bool get isDebt;
   @override
-  Currency get currency;
-  @override
-  Account? get account;
+  BaseAccount? get account;
   @override
   bool get isSaved;
+
+  /// Create a copy of AccountInputState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccountInputStateImplCopyWith<_$AccountInputStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

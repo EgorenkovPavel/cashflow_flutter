@@ -90,6 +90,9 @@ class _$BudgetEventCopyWithImpl<$Res, $Val extends BudgetEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -109,6 +112,8 @@ class __$$FetchBudgetEventImplCopyWithImpl<$Res>
       $Res Function(_$FetchBudgetEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,7 +153,9 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
   @override
   int get hashCode => Object.hash(runtimeType, operationtype);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
@@ -241,7 +248,10 @@ abstract class _FetchBudgetEvent implements BudgetEvent {
       {required final OperationType operationtype}) = _$FetchBudgetEventImpl;
 
   OperationType get operationtype;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -262,6 +272,9 @@ class __$$PreviousYearBudgetEventImplCopyWithImpl<$Res>
       _$PreviousYearBudgetEventImpl _value,
       $Res Function(_$PreviousYearBudgetEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -383,6 +396,9 @@ class __$$NextYearBudgetEventImplCopyWithImpl<$Res>
   __$$NextYearBudgetEventImplCopyWithImpl(_$NextYearBudgetEventImpl _value,
       $Res Function(_$NextYearBudgetEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -507,6 +523,8 @@ class __$$ShowAllBudgetEventImplCopyWithImpl<$Res>
       $Res Function(_$ShowAllBudgetEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -546,7 +564,9 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
   @override
   int get hashCode => Object.hash(runtimeType, budgetType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
@@ -639,7 +659,10 @@ abstract class _ShowAllBudgetEvent implements BudgetEvent {
       _$ShowAllBudgetEventImpl;
 
   BudgetType get budgetType;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -663,6 +686,8 @@ class __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>
       $Res Function(_$ChangeItemsBudgetEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -709,7 +734,9 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
@@ -803,7 +830,10 @@ abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
       _$ChangeItemsBudgetEventImpl;
 
   List<CategoryCashflow> get items;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BudgetEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -820,7 +850,9 @@ mixin _$BudgetState {
   bool get showAllMonthBudget => throw _privateConstructorUsedError;
   bool get showAllYearBudget => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BudgetState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BudgetStateCopyWith<BudgetState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -851,6 +883,8 @@ class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BudgetState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -921,6 +955,8 @@ class __$$BudgetStateImplCopyWithImpl<$Res>
       _$BudgetStateImpl _value, $Res Function(_$BudgetStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BudgetState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1049,7 +1085,9 @@ class _$BudgetStateImpl implements _BudgetState {
       showAllMonthBudget,
       showAllYearBudget);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BudgetState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
@@ -1080,8 +1118,11 @@ abstract class _BudgetState implements BudgetState {
   bool get showAllMonthBudget;
   @override
   bool get showAllYearBudget;
+
+  /// Create a copy of BudgetState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

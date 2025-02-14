@@ -4,10 +4,7 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/src/ui/pages/item_card.dart';
-import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
-
-import '../../../../domain/models/enum/currency.dart';
 
 class AccountInputPage extends StatelessWidget {
   final int? id;
@@ -98,15 +95,6 @@ class _AccountPageState extends State<AccountPage> {
                   const Text('Is debt'),
                 ],
               ),
-            TypeRadioButton<Currency>(
-              onChange: context.onChangeCurrency,
-              type: context.currency(),
-              items: const [
-                Currency.RUB,
-                Currency.USD,
-                Currency.EUR,
-              ],
-            ),
           ],
         ),
       ),
@@ -115,18 +103,12 @@ class _AccountPageState extends State<AccountPage> {
 }
 
 extension BlocExt on BuildContext {
-  onChangeCurrency(Currency currency) => read<AccountInputBloc>()
-      .add(AccountInputEvent.changeCurrency(currency: currency));
 
   onChangeIsDebt(bool isDebt) => read<AccountInputBloc>()
       .add(AccountInputEvent.changeIsDebt(isDebt: isDebt));
 
   onChangeTitle(String title) =>
       read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
-
-  Currency currency() => select<AccountInputBloc, Currency>(
-        (bloc) => bloc.state.currency,
-      );
 
   bool isDebt() => select<AccountInputBloc, bool>(
         (bloc) => bloc.state.isDebt,

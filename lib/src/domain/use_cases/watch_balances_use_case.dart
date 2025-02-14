@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 import '../models/account/account_balance.dart';
 
@@ -7,5 +7,5 @@ class WatchBalancesUseCase{
 
   WatchBalancesUseCase(this._dataRepository);
 
-  Stream<List<AccountBalance>> call() => _dataRepository.accounts.watchAllBalance();
+  Stream<List<BaseAccountBalance>> call() => _dataRepository.watchAllBalance();
 }

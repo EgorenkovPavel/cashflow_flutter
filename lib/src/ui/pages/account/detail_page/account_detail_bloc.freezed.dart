@@ -82,6 +82,9 @@ class _$AccountDetailEventCopyWithImpl<$Res, $Val extends AccountDetailEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -104,6 +107,8 @@ class __$$FetchAccountDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$FetchAccountDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,7 +148,9 @@ class _$FetchAccountDetailEventImpl implements _FetchAccountDetailEvent {
   @override
   int get hashCode => Object.hash(runtimeType, accountId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FetchAccountDetailEventImplCopyWith<_$FetchAccountDetailEventImpl>
@@ -228,7 +235,10 @@ abstract class _FetchAccountDetailEvent implements AccountDetailEvent {
       _$FetchAccountDetailEventImpl;
 
   int get accountId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchAccountDetailEventImplCopyWith<_$FetchAccountDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -253,6 +263,8 @@ class __$$TitleChangedAccountDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$TitleChangedAccountDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -292,7 +304,9 @@ class _$TitleChangedAccountDetailEventImpl
   @override
   int get hashCode => Object.hash(runtimeType, title);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TitleChangedAccountDetailEventImplCopyWith<
@@ -378,7 +392,10 @@ abstract class _TitleChangedAccountDetailEvent implements AccountDetailEvent {
       _$TitleChangedAccountDetailEventImpl;
 
   String get title;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TitleChangedAccountDetailEventImplCopyWith<
           _$TitleChangedAccountDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -404,6 +421,8 @@ class __$$OperationsChangedAccountDetailEventImplCopyWithImpl<$Res>
       $Res Function(_$OperationsChangedAccountDetailEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -452,7 +471,9 @@ class _$OperationsChangedAccountDetailEventImpl
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OperationsChangedAccountDetailEventImplCopyWith<
@@ -540,7 +561,10 @@ abstract class _OperationsChangedAccountDetailEvent
       _$OperationsChangedAccountDetailEventImpl;
 
   List<Operation> get operations;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccountDetailEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OperationsChangedAccountDetailEventImplCopyWith<
           _$OperationsChangedAccountDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -551,7 +575,9 @@ mixin _$AccountDetailState {
   String get title => throw _privateConstructorUsedError;
   List<Operation> get operations => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AccountDetailStateCopyWith<AccountDetailState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -575,6 +601,8 @@ class _$AccountDetailStateCopyWithImpl<$Res, $Val extends AccountDetailState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AccountDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -613,6 +641,8 @@ class __$$AccountDetailStateImplCopyWithImpl<$Res>
       $Res Function(_$AccountDetailStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccountDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -668,7 +698,9 @@ class _$AccountDetailStateImpl implements _AccountDetailState {
   int get hashCode => Object.hash(
       runtimeType, title, const DeepCollectionEquality().hash(_operations));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccountDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccountDetailStateImplCopyWith<_$AccountDetailStateImpl> get copyWith =>
@@ -685,8 +717,11 @@ abstract class _AccountDetailState implements AccountDetailState {
   String get title;
   @override
   List<Operation> get operations;
+
+  /// Create a copy of AccountDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccountDetailStateImplCopyWith<_$AccountDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
-import 'package:money_tracker/src/domain/interfaces/data/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
+import '../../utils/sum.dart';
 import '../models.dart';
 
 class UpdateOperationInputUseCase {
@@ -11,10 +12,10 @@ class UpdateOperationInputUseCase {
     required Operation operation,
     required DateTime date,
     required Account account,
-    required Category category,
-    required int sum,
+    required InputCategoryItem category,
+    required Sum sum,
   }) async {
-    var newOperation = Operation.input(
+    var newOperation = InputOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,
@@ -24,7 +25,7 @@ class UpdateOperationInputUseCase {
       sum: sum,
     );
 
-    await _dataRepository.operations.update(newOperation);
+    await _dataRepository.updateOperation(newOperation);
 
     return newOperation;
   }
