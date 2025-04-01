@@ -5,7 +5,7 @@ import '../../../interfaces/local_sync_source.dart';
 import '../data/database.dart';
 import '../data/operation_dao.dart';
 import '../data/user_dao.dart';
-import '../mapper_db.dart';
+import '../db_mapper.dart' show OperationMapper;
 
 class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
   final OperationDao operationDao;
@@ -17,8 +17,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
   Future<List<Operation>> getAllWithEmptyCloudId() async {
     final operations =
         await operationDao.getAllOperationItemsWithEmptyCloudId();
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperationList(operations, users);
+    return OperationMapper().entityListToModel(operations);
   }
 
   @override
@@ -29,16 +28,13 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
       return null;
     }
 
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperation(operation, users);
+    return OperationMapper().entityToModel(operation);
   }
 
   @override
   Future<List<Operation>> getAllNotSynced() async {
     final operations = await operationDao.getAllOperationItemsNotSynced();
-    final users = await userDao.getAllUsers();
-
-    return MapperDB.mapOperationList(operations, users);
+    return OperationMapper().entityListToModel(operations);
   }
 
   @override
@@ -54,19 +50,21 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
           synced: const Value(true),
+          currencySent: Value(o.sum.currency),
           deleted: Value(operation.deleted),
         ),
         output: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
           synced: const Value(true),
           deleted: Value(operation.deleted),
         ),
@@ -74,10 +72,12 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          recAccount: Value(o.recAccount.id),
-          sum: Value(o.sum),
-          recSum: Value(o.recSum),
+          account: Value(o.account),
+          recAccount: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
+          recSum: Value(o.recSum.sum),
+          currencyReceived: Value(o.recSum.currency),
           synced: const Value(true),
           deleted: Value(operation.deleted),
         ),
@@ -94,9 +94,10 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
           synced: const Value(true),
           deleted: Value(operation.deleted),
         ),
@@ -104,9 +105,10 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
           synced: const Value(true),
           deleted: Value(operation.deleted),
         ),
@@ -114,10 +116,12 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          recAccount: Value(o.recAccount.id),
-          sum: Value(o.sum),
-          recSum: Value(o.recSum),
+          account: Value(o.account),
+          recAccount: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
+          recSum: Value(o.recSum.sum),
+          currencyReceived: Value(o.recSum.currency),
           synced: const Value(true),
           deleted: Value(operation.deleted),
         ),

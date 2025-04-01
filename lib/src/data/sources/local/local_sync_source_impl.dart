@@ -4,7 +4,7 @@ import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import '../../../domain/models.dart';
 
 class LocalSyncSourceImpl extends LocalSyncSource {
-  final LocalSyncTable<Account> accountRepo;
+  final LocalSyncTable<BaseAccount> accountRepo;
   final LocalSyncTable<Category> categoryRepo;
   final LocalSyncTable<Operation> operationRepo;
   final DataRepository dataRepository;
@@ -19,7 +19,7 @@ class LocalSyncSourceImpl extends LocalSyncSource {
   Future<User?> getUserByGoogleId(String googleId) => dataRepository.getUserByGoogleId(googleId);
 
   @override
-  LocalSyncTable<Account> get accounts => accountRepo;
+  LocalSyncTable<BaseAccount> get accounts => accountRepo;
 
   @override
   LocalSyncTable<Category> get categories => categoryRepo;

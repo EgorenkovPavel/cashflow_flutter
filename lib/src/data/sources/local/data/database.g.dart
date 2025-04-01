@@ -650,9 +650,36 @@ class $CategoriesTable extends Categories
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("synced" IN (0, 1))'),
       defaultValue: const Constant(false));
+  static const VerificationMeta _isGroupMeta =
+      const VerificationMeta('isGroup');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, cloudId, title, operationType, budgetType, budget, synced];
+  late final GeneratedColumn<bool> isGroup = GeneratedColumn<bool>(
+      'is_group', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_group" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _parentMeta = const VerificationMeta('parent');
+  @override
+  late final GeneratedColumn<int> parent = GeneratedColumn<int>(
+      'parent', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES categories (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        cloudId,
+        title,
+        operationType,
+        budgetType,
+        budget,
+        synced,
+        isGroup,
+        parent
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -690,6 +717,14 @@ class $CategoriesTable extends Categories
       context.handle(_syncedMeta,
           synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta));
     }
+    if (data.containsKey('is_group')) {
+      context.handle(_isGroupMeta,
+          isGroup.isAcceptableOrUnknown(data['is_group']!, _isGroupMeta));
+    }
+    if (data.containsKey('parent')) {
+      context.handle(_parentMeta,
+          parent.isAcceptableOrUnknown(data['parent']!, _parentMeta));
+    }
     return context;
   }
 
@@ -715,6 +750,10 @@ class $CategoriesTable extends Categories
           .read(DriftSqlType.int, data['${effectivePrefix}budget'])!,
       synced: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}synced'])!,
+      isGroup: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_group'])!,
+      parent: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parent']),
     );
   }
 
@@ -737,6 +776,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final BudgetType budgetType;
   final int budget;
   final bool synced;
+  final bool isGroup;
+  final int? parent;
   const CategoryDB(
       {required this.id,
       required this.cloudId,
@@ -744,7 +785,9 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       required this.operationType,
       required this.budgetType,
       required this.budget,
-      required this.synced});
+      required this.synced,
+      required this.isGroup,
+      this.parent});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -761,6 +804,10 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     }
     map['budget'] = Variable<int>(budget);
     map['synced'] = Variable<bool>(synced);
+    map['is_group'] = Variable<bool>(isGroup);
+    if (!nullToAbsent || parent != null) {
+      map['parent'] = Variable<int>(parent);
+    }
     return map;
   }
 
@@ -773,6 +820,9 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       budgetType: Value(budgetType),
       budget: Value(budget),
       synced: Value(synced),
+      isGroup: Value(isGroup),
+      parent:
+          parent == null && nullToAbsent ? const Value.absent() : Value(parent),
     );
   }
 
@@ -787,6 +837,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
       budget: serializer.fromJson<int>(json['budget']),
       synced: serializer.fromJson<bool>(json['synced']),
+      isGroup: serializer.fromJson<bool>(json['isGroup']),
+      parent: serializer.fromJson<int?>(json['parent']),
     );
   }
   @override
@@ -800,6 +852,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       'budgetType': serializer.toJson<BudgetType>(budgetType),
       'budget': serializer.toJson<int>(budget),
       'synced': serializer.toJson<bool>(synced),
+      'isGroup': serializer.toJson<bool>(isGroup),
+      'parent': serializer.toJson<int?>(parent),
     };
   }
 
@@ -810,7 +864,9 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           OperationType? operationType,
           BudgetType? budgetType,
           int? budget,
-          bool? synced}) =>
+          bool? synced,
+          bool? isGroup,
+          Value<int?> parent = const Value.absent()}) =>
       CategoryDB(
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
@@ -819,6 +875,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
         budgetType: budgetType ?? this.budgetType,
         budget: budget ?? this.budget,
         synced: synced ?? this.synced,
+        isGroup: isGroup ?? this.isGroup,
+        parent: parent.present ? parent.value : this.parent,
       );
   CategoryDB copyWithCompanion(CategoriesCompanion data) {
     return CategoryDB(
@@ -832,6 +890,8 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           data.budgetType.present ? data.budgetType.value : this.budgetType,
       budget: data.budget.present ? data.budget.value : this.budget,
       synced: data.synced.present ? data.synced.value : this.synced,
+      isGroup: data.isGroup.present ? data.isGroup.value : this.isGroup,
+      parent: data.parent.present ? data.parent.value : this.parent,
     );
   }
 
@@ -844,14 +904,16 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           ..write('operationType: $operationType, ')
           ..write('budgetType: $budgetType, ')
           ..write('budget: $budget, ')
-          ..write('synced: $synced')
+          ..write('synced: $synced, ')
+          ..write('isGroup: $isGroup, ')
+          ..write('parent: $parent')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, cloudId, title, operationType, budgetType, budget, synced);
+  int get hashCode => Object.hash(id, cloudId, title, operationType, budgetType,
+      budget, synced, isGroup, parent);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -862,7 +924,9 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
           other.operationType == this.operationType &&
           other.budgetType == this.budgetType &&
           other.budget == this.budget &&
-          other.synced == this.synced);
+          other.synced == this.synced &&
+          other.isGroup == this.isGroup &&
+          other.parent == this.parent);
 }
 
 class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
@@ -873,6 +937,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<BudgetType> budgetType;
   final Value<int> budget;
   final Value<bool> synced;
+  final Value<bool> isGroup;
+  final Value<int?> parent;
   const CategoriesCompanion({
     this.id = const Value.absent(),
     this.cloudId = const Value.absent(),
@@ -881,6 +947,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     this.budgetType = const Value.absent(),
     this.budget = const Value.absent(),
     this.synced = const Value.absent(),
+    this.isGroup = const Value.absent(),
+    this.parent = const Value.absent(),
   });
   CategoriesCompanion.insert({
     this.id = const Value.absent(),
@@ -890,6 +958,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     required BudgetType budgetType,
     required int budget,
     this.synced = const Value.absent(),
+    this.isGroup = const Value.absent(),
+    this.parent = const Value.absent(),
   })  : cloudId = Value(cloudId),
         title = Value(title),
         operationType = Value(operationType),
@@ -903,6 +973,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     Expression<int>? budgetType,
     Expression<int>? budget,
     Expression<bool>? synced,
+    Expression<bool>? isGroup,
+    Expression<int>? parent,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -912,6 +984,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       if (budgetType != null) 'budget_type': budgetType,
       if (budget != null) 'budget': budget,
       if (synced != null) 'synced': synced,
+      if (isGroup != null) 'is_group': isGroup,
+      if (parent != null) 'parent': parent,
     });
   }
 
@@ -922,7 +996,9 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       Value<OperationType>? operationType,
       Value<BudgetType>? budgetType,
       Value<int>? budget,
-      Value<bool>? synced}) {
+      Value<bool>? synced,
+      Value<bool>? isGroup,
+      Value<int?>? parent}) {
     return CategoriesCompanion(
       id: id ?? this.id,
       cloudId: cloudId ?? this.cloudId,
@@ -931,6 +1007,8 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
       budgetType: budgetType ?? this.budgetType,
       budget: budget ?? this.budget,
       synced: synced ?? this.synced,
+      isGroup: isGroup ?? this.isGroup,
+      parent: parent ?? this.parent,
     );
   }
 
@@ -960,6 +1038,12 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     if (synced.present) {
       map['synced'] = Variable<bool>(synced.value);
     }
+    if (isGroup.present) {
+      map['is_group'] = Variable<bool>(isGroup.value);
+    }
+    if (parent.present) {
+      map['parent'] = Variable<int>(parent.value);
+    }
     return map;
   }
 
@@ -972,7 +1056,9 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
           ..write('operationType: $operationType, ')
           ..write('budgetType: $budgetType, ')
           ..write('budget: $budget, ')
-          ..write('synced: $synced')
+          ..write('synced: $synced, ')
+          ..write('isGroup: $isGroup, ')
+          ..write('parent: $parent')
           ..write(')'))
         .toString();
   }
@@ -2872,6 +2958,8 @@ typedef $$CategoriesTableCreateCompanionBuilder = CategoriesCompanion Function({
   required BudgetType budgetType,
   required int budget,
   Value<bool> synced,
+  Value<bool> isGroup,
+  Value<int?> parent,
 });
 typedef $$CategoriesTableUpdateCompanionBuilder = CategoriesCompanion Function({
   Value<int> id,
@@ -2881,11 +2969,28 @@ typedef $$CategoriesTableUpdateCompanionBuilder = CategoriesCompanion Function({
   Value<BudgetType> budgetType,
   Value<int> budget,
   Value<bool> synced,
+  Value<bool> isGroup,
+  Value<int?> parent,
 });
 
 final class $$CategoriesTableReferences
     extends BaseReferences<_$Database, $CategoriesTable, CategoryDB> {
   $$CategoriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $CategoriesTable _parentTable(_$Database db) =>
+      db.categories.createAlias(
+          $_aliasNameGenerator(db.categories.parent, db.categories.id));
+
+  $$CategoriesTableProcessedTableManager? get parent {
+    final $_column = $_itemColumn<int>('parent');
+    if ($_column == null) return null;
+    final manager = $$CategoriesTableTableManager($_db, $_db.categories)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_parentTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static MultiTypedResultKey<$OperationsTable, List<OperationDB>>
       _operationsRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
@@ -2951,6 +3056,29 @@ class $$CategoriesTableFilterComposer
 
   ColumnFilters<bool> get synced => $composableBuilder(
       column: $table.synced, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isGroup => $composableBuilder(
+      column: $table.isGroup, builder: (column) => ColumnFilters(column));
+
+  $$CategoriesTableFilterComposer get parent {
+    final $$CategoriesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.parent,
+        referencedTable: $db.categories,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoriesTableFilterComposer(
+              $db: $db,
+              $table: $db.categories,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<bool> operationsRefs(
       Expression<bool> Function($$OperationsTableFilterComposer f) f) {
@@ -3025,6 +3153,29 @@ class $$CategoriesTableOrderingComposer
 
   ColumnOrderings<bool> get synced => $composableBuilder(
       column: $table.synced, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isGroup => $composableBuilder(
+      column: $table.isGroup, builder: (column) => ColumnOrderings(column));
+
+  $$CategoriesTableOrderingComposer get parent {
+    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.parent,
+        referencedTable: $db.categories,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoriesTableOrderingComposer(
+              $db: $db,
+              $table: $db.categories,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$CategoriesTableAnnotationComposer
@@ -3058,6 +3209,29 @@ class $$CategoriesTableAnnotationComposer
 
   GeneratedColumn<bool> get synced =>
       $composableBuilder(column: $table.synced, builder: (column) => column);
+
+  GeneratedColumn<bool> get isGroup =>
+      $composableBuilder(column: $table.isGroup, builder: (column) => column);
+
+  $$CategoriesTableAnnotationComposer get parent {
+    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.parent,
+        referencedTable: $db.categories,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoriesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.categories,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<T> operationsRefs<T extends Object>(
       Expression<T> Function($$OperationsTableAnnotationComposer a) f) {
@@ -3113,7 +3287,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
     $$CategoriesTableUpdateCompanionBuilder,
     (CategoryDB, $$CategoriesTableReferences),
     CategoryDB,
-    PrefetchHooks Function({bool operationsRefs, bool cashflowsRefs})> {
+    PrefetchHooks Function(
+        {bool parent, bool operationsRefs, bool cashflowsRefs})> {
   $$CategoriesTableTableManager(_$Database db, $CategoriesTable table)
       : super(TableManagerState(
           db: db,
@@ -3132,6 +3307,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
             Value<BudgetType> budgetType = const Value.absent(),
             Value<int> budget = const Value.absent(),
             Value<bool> synced = const Value.absent(),
+            Value<bool> isGroup = const Value.absent(),
+            Value<int?> parent = const Value.absent(),
           }) =>
               CategoriesCompanion(
             id: id,
@@ -3141,6 +3318,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
             budgetType: budgetType,
             budget: budget,
             synced: synced,
+            isGroup: isGroup,
+            parent: parent,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -3150,6 +3329,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
             required BudgetType budgetType,
             required int budget,
             Value<bool> synced = const Value.absent(),
+            Value<bool> isGroup = const Value.absent(),
+            Value<int?> parent = const Value.absent(),
           }) =>
               CategoriesCompanion.insert(
             id: id,
@@ -3159,6 +3340,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
             budgetType: budgetType,
             budget: budget,
             synced: synced,
+            isGroup: isGroup,
+            parent: parent,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -3167,14 +3350,39 @@ class $$CategoriesTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {operationsRefs = false, cashflowsRefs = false}) {
+              {parent = false, operationsRefs = false, cashflowsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (operationsRefs) db.operations,
                 if (cashflowsRefs) db.cashflows
               ],
-              addJoins: null,
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (parent) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.parent,
+                    referencedTable:
+                        $$CategoriesTableReferences._parentTable(db),
+                    referencedColumn:
+                        $$CategoriesTableReferences._parentTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (operationsRefs)
@@ -3221,7 +3429,8 @@ typedef $$CategoriesTableProcessedTableManager = ProcessedTableManager<
     $$CategoriesTableUpdateCompanionBuilder,
     (CategoryDB, $$CategoriesTableReferences),
     CategoryDB,
-    PrefetchHooks Function({bool operationsRefs, bool cashflowsRefs})>;
+    PrefetchHooks Function(
+        {bool parent, bool operationsRefs, bool cashflowsRefs})>;
 typedef $$OperationsTableCreateCompanionBuilder = OperationsCompanion Function({
   Value<int> id,
   required String cloudId,

@@ -7,5 +7,5 @@ class WatchLastOperationsUseCase{
 
   WatchLastOperationsUseCase(this._dataRepository);
 
-  Stream<List<Operation>> call(int count) => _dataRepository.watchLastOperations(count);
+  Stream<List<OperationListItem>> call(int count) => _dataRepository.watchLastOperations(count);
 }

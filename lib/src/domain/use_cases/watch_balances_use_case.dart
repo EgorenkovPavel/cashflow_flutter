@@ -1,11 +1,11 @@
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
-import '../models/account/account_balance.dart';
+import '../models/account/account_balance_list_item.dart';
 
 class WatchBalancesUseCase{
   final DataRepository _dataRepository;
 
   WatchBalancesUseCase(this._dataRepository);
 
-  Stream<List<BaseAccountBalance>> call() => _dataRepository.watchAllBalance();
+  Stream<List<BaseAccountBalanceListItem>> call() => _dataRepository.watchAllBalance();
 }

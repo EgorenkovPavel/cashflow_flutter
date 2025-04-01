@@ -3,45 +3,34 @@ import 'package:money_tracker/src/data/sources/local/data/user_dao.dart';
 
 import '../../../../domain/models.dart';
 import '../../../interfaces/local_sync_source.dart';
+
 import '../data/account_dao.dart';
 import '../data/database.dart';
-import '../mapper_db.dart';
+import '../db_mapper.dart';
 
 class AccountDataRepositoryImpl
-    implements LocalSyncTable<Account> {
+    implements LocalSyncTable<BaseAccount> {
   final AccountDao accountDao;
   final UserDao userDao;
 
   AccountDataRepositoryImpl(this.accountDao, this.userDao);
 
   @override
-  Future<List<Account>> getAllWithEmptyCloudId() async {
+  Future<List<BaseAccount>> getAllWithEmptyCloudId() async {
     final accounts = await accountDao.getAllAccountsWithEmptyCloudId();
-    final users = await userDao.getAllUsers();
-    return MapperDB.combineUsers(accounts, users);
+    return AccountMapper().listToModel(accounts);
   }
 
   @override
-  Future<Account?> getByCloudId(String cloudId) async {
+  Future<BaseAccount?> getByCloudId(String cloudId) async {
     final account = await accountDao.getAccountByCloudId(cloudId);
-
-    if (account == null){
-      return null;
-    }
-    final userId = account.user;
-    if (userId == null){
-      return MapperDB.createAccount(account, null);
-    }else{
-      final user = await userDao.getById(userId);
-      return MapperDB.createAccount(account, user);
-    }
+    return account == null ? null : AccountMapper().toModel(account);
   }
 
   @override
-  Future<List<Account>> getAllNotSynced() async {
+  Future<List<BaseAccount>> getAllNotSynced() async {
     final accounts = await accountDao.getAllAccountsNotSynced();
-    final users = await userDao.getAllUsers();
-    return MapperDB.combineUsers(accounts, users);
+    return AccountMapper().listToModel(accounts);
   }
 
   @override
@@ -50,24 +39,26 @@ class AccountDataRepositoryImpl
   }
 
   @override
-  Future insertFromCloud(Account account) {
+  Future insertFromCloud(BaseAccount account) {
     return accountDao.insertAccount(AccountsCompanion(
       cloudId: Value(account.cloudId),
       title: Value(account.title),
-      isDebt: Value(account.isDebt),
+      isDebt: Value(account is Debt),
       synced: const Value(true),
+      user: Value(account.userId),
     ));
   }
 
   @override
-  Future updateFromCloud(Account account) {
+  Future updateFromCloud(BaseAccount account) {
     return accountDao.updateFields(
       account.id,
       AccountsCompanion(
         cloudId: Value(account.cloudId),
         title: Value(account.title),
-        isDebt: Value(account.isDebt),
+        isDebt: Value(account is Debt),
         synced: const Value(true),
+        user: Value(account.userId),
       ),
     );
   }

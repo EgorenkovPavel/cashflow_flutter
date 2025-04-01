@@ -3,7 +3,10 @@ import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_c
 
 import '../../../../domain/models/enum/operation_type.dart';
 import '../../../../domain/models/sum_on_date.dart';
+import '../../../../utils/sum.dart';
+import '../db_converters/currency_converter.dart';
 import '../db_converters/operation_type_converter.dart';
+import '../entities/cashflow_entity.dart';
 import '../entities/category_budget_entity.dart';
 import '../entities/category_cashflow_entity.dart';
 import '../entities/category_month_cashflow_entity.dart';
@@ -135,6 +138,8 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
             const BudgetTypeConverter().fromSql(row.read('budget_type')),
         synced: row.read<bool>('synced'),
         cloudId: row.read<String>('cloud_id'),
+        isGroup: row.read<bool>('is_group'),
+        parent: row.read<int>('parent'),
       );
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
@@ -237,6 +242,100 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               )
               .toList(),
         );
+  }
+
+  Future<List<CashflowEntity>> getMonthCashFlow(
+      DateTime date, Set<int> categoryIds) async {
+    final monthStart = DateTime(date.year, date.month);
+    final monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return _getCashFlow(monthStart, monthEnd, categoryIds);
+  }
+
+  Stream<List<CashflowEntity>> watchMonthCashFlow(
+      DateTime date, Set<int> categoryIds) {
+    final monthStart = DateTime(date.year, date.month);
+    final monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return _watchCashFlow(monthStart, monthEnd, categoryIds);
+  }
+
+  Future<List<CashflowEntity>> getYearCashFlow(
+      DateTime date, Set<int> categoryIds) async {
+    final yearStart = DateTime(date.year);
+    final monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return _getCashFlow(yearStart, monthEnd, categoryIds);
+  }
+
+  Stream<List<CashflowEntity>> watchYearCashFlow(
+      DateTime date, Set<int> categoryIds) {
+    final yearStart = DateTime(date.year);
+    final monthEnd = date.month < 12
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1, 1);
+
+    return _watchCashFlow(yearStart, monthEnd, categoryIds);
+  }
+
+  Future<List<CashflowEntity>> _getCashFlow(
+      DateTime lower, DateTime higher, Set<int> categoryIds) async {
+    final sumBalance = cashflows.sum.sum().cast<int>();
+    final currency = cashflows.currency.cast<String>();
+    final categoryId = cashflows.category.cast<int>();
+
+    final where = categoryIds.isEmpty
+        ? cashflows.date.isBetweenValues(lower, higher)
+        : cashflows.date.isBetweenValues(lower, higher) &
+            (cashflows.category.isIn(categoryIds));
+
+    final query = db.selectOnly(cashflows);
+    query
+      ..addColumns([categoryId, currency, sumBalance])
+      ..where(where)
+      ..groupBy([categoryId, currency]);
+
+    final result = await query.get();
+
+    return result
+        .map((c) => CashflowEntity(
+              categoryId: c.read(categoryId)!,
+              sum: Sum(c.read(sumBalance)!,
+                  const CurrencyConverter().fromSql(c.read(currency)!)),
+            ))
+        .toList();
+  }
+
+  Stream<List<CashflowEntity>> _watchCashFlow(
+      DateTime lower, DateTime higher, Set<int> categoryIds) {
+    final sumBalance = cashflows.sum.sum().cast<int>();
+    final currency = cashflows.currency.cast<String>();
+    final categoryId = cashflows.category.cast<int>();
+
+    final where = categoryIds.isEmpty
+        ? cashflows.date.isBetweenValues(lower, higher)
+        : cashflows.date.isBetweenValues(lower, higher) &
+            (cashflows.category.isIn(categoryIds));
+
+    final query = db.selectOnly(cashflows);
+    query
+      ..addColumns([categoryId, currency, sumBalance])
+      ..where(where)
+      ..groupBy([categoryId, currency]);
+
+    return query.watch().map((rows) => rows
+        .map((c) => CashflowEntity(
+              categoryId: c.read(categoryId)!,
+              sum: Sum(c.read(sumBalance)!,
+                  const CurrencyConverter().fromSql(c.read(currency)!)),
+            ))
+        .toList());
   }
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(

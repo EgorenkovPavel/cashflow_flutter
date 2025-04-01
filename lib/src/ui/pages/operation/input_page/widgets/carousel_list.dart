@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/widgets/carousel.dart';
 
 class CarouselList<T> extends StatelessWidget {
-
   final List<T> _items;
   final String _emptyListMessage;
-  final bool Function(T) _initialItemFinder;
+  final T? initialValue;
   final Function _onItemChanged;
   final Function(BuildContext, T) _itemBuilder;
 
@@ -13,12 +12,11 @@ class CarouselList<T> extends StatelessWidget {
     super.key,
     required List<T> items,
     required String emptyListMessage,
-    required bool Function(T) initialItemFinder,
     required Function(T) onItemChanged,
     required Function(BuildContext, T) itemBuilder,
+    required this.initialValue,
   })  : _emptyListMessage = emptyListMessage,
         _items = items,
-        _initialItemFinder = initialItemFinder,
         _onItemChanged = onItemChanged,
         _itemBuilder = itemBuilder;
 
@@ -29,7 +27,7 @@ class CarouselList<T> extends StatelessWidget {
         : Carousel(
             key: GlobalKey(),
             items: _items,
-            initialItemFinder: _initialItemFinder,
+            initialValue: initialValue,
             onPageChanged: (pos) => _onItemChanged(_items[pos]),
             itemHeight: 60.0,
             itemBuilder: (context, pos) => _itemBuilder(context, _items[pos]),

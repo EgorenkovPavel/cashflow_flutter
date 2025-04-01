@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/src/common_blocs/sync/sync_bloc.dart';
-import 'package:money_tracker/src/domain/models/user.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CloudDatabaseSettingsPage extends StatelessWidget {

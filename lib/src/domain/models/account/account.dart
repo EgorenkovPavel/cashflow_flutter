@@ -1,18 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-import '../user.dart';
-
 sealed class BaseAccount extends Equatable {
   final int id;
   final String cloudId;
   final String title;
-  final User? user;
+  final int? userId;
 
   const BaseAccount({
     required this.id,
     required this.cloudId,
     required this.title,
-    required this.user,
+    required this.userId,
   });
 }
 
@@ -21,10 +19,17 @@ class Account extends BaseAccount {
       {super.id = 0,
       super.cloudId = '',
       required super.title,
-      required super.user});
+      required super.userId});
 
   @override
-  List<Object?> get props => [id, cloudId, title, user];
+  List<Object?> get props => [id, cloudId, title, userId];
+
+  Account setUser(int? userId) => Account(
+    id: id,
+    cloudId: cloudId,
+    title: title,
+    userId: userId,
+  );
 
   Account copyWith({
     int? id,
@@ -35,7 +40,7 @@ class Account extends BaseAccount {
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
-        user: this.user,
+        userId: userId,
       );
 }
 
@@ -44,10 +49,17 @@ class Debt extends BaseAccount {
       {super.id = 0,
       super.cloudId = '',
       required super.title,
-      required super.user});
+      required super.userId});
 
   @override
-  List<Object?> get props => [id, cloudId, title, user];
+  List<Object?> get props => [id, cloudId, title, userId];
+
+  Debt setUser(int? userId) => Debt(
+    id: id,
+    cloudId: cloudId,
+    title: title,
+    userId: userId,
+  );
 
   Debt copyWith({
     int? id,
@@ -58,6 +70,6 @@ class Debt extends BaseAccount {
         id: id ?? this.id,
         cloudId: cloudId ?? this.cloudId,
         title: title ?? this.title,
-        user: this.user,
+        userId: userId,
       );
 }

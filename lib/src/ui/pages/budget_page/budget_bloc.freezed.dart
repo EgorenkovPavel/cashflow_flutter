@@ -22,7 +22,7 @@ mixin _$BudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,7 +31,7 @@ mixin _$BudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$BudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -169,7 +169,7 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
     return fetch(operationtype);
   }
@@ -181,7 +181,7 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
     return fetch?.call(operationtype);
   }
@@ -193,7 +193,7 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -304,7 +304,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
     return previousYear();
   }
@@ -316,7 +316,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
     return previousYear?.call();
   }
@@ -328,7 +328,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) {
     if (previousYear != null) {
@@ -428,7 +428,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
     return nextYear();
   }
@@ -440,7 +440,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
     return nextYear?.call();
   }
@@ -452,7 +452,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) {
     if (nextYear != null) {
@@ -580,7 +580,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
     return showAll(budgetType);
   }
@@ -592,7 +592,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
     return showAll?.call(budgetType);
   }
@@ -604,7 +604,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) {
     if (showAll != null) {
@@ -674,7 +674,7 @@ abstract class _$$ChangeItemsBudgetEventImplCopyWith<$Res> {
           $Res Function(_$ChangeItemsBudgetEventImpl) then) =
       __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<CategoryCashflow> items});
+  $Res call({List<CategoryCashFlow> items});
 }
 
 /// @nodoc
@@ -697,7 +697,7 @@ class __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
     ));
   }
 }
@@ -706,12 +706,12 @@ class __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>
 
 class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   const _$ChangeItemsBudgetEventImpl(
-      {required final List<CategoryCashflow> items})
+      {required final List<CategoryCashFlow> items})
       : _items = items;
 
-  final List<CategoryCashflow> _items;
+  final List<CategoryCashFlow> _items;
   @override
-  List<CategoryCashflow> get items {
+  List<CategoryCashFlow> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
@@ -750,7 +750,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashflow> items) changeItems,
+    required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
     return changeItems(items);
   }
@@ -762,7 +762,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashflow> items)? changeItems,
+    TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
     return changeItems?.call(items);
   }
@@ -774,7 +774,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashflow> items)? changeItems,
+    TResult Function(List<CategoryCashFlow> items)? changeItems,
     required TResult orElse(),
   }) {
     if (changeItems != null) {
@@ -826,10 +826,10 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
 
 abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
   const factory _ChangeItemsBudgetEvent(
-          {required final List<CategoryCashflow> items}) =
+          {required final List<CategoryCashFlow> items}) =
       _$ChangeItemsBudgetEventImpl;
 
-  List<CategoryCashflow> get items;
+  List<CategoryCashFlow> get items;
 
   /// Create a copy of BudgetEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -842,11 +842,11 @@ abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
 mixin _$BudgetState {
   DateTime get date => throw _privateConstructorUsedError;
   OperationType get operationType => throw _privateConstructorUsedError;
-  List<CategoryCashflow> get itemsMonthBudget =>
+  List<CategoryCashFlow> get itemsMonthBudget =>
       throw _privateConstructorUsedError;
-  List<CategoryCashflow> get itemsYearBudget =>
+  List<CategoryCashFlow> get itemsYearBudget =>
       throw _privateConstructorUsedError;
-  List<CategoryCashflow> get itemsAll => throw _privateConstructorUsedError;
+  List<CategoryCashFlow> get itemsAll => throw _privateConstructorUsedError;
   bool get showAllMonthBudget => throw _privateConstructorUsedError;
   bool get showAllYearBudget => throw _privateConstructorUsedError;
 
@@ -866,9 +866,9 @@ abstract class $BudgetStateCopyWith<$Res> {
   $Res call(
       {DateTime date,
       OperationType operationType,
-      List<CategoryCashflow> itemsMonthBudget,
-      List<CategoryCashflow> itemsYearBudget,
-      List<CategoryCashflow> itemsAll,
+      List<CategoryCashFlow> itemsMonthBudget,
+      List<CategoryCashFlow> itemsYearBudget,
+      List<CategoryCashFlow> itemsAll,
       bool showAllMonthBudget,
       bool showAllYearBudget});
 }
@@ -908,15 +908,15 @@ class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
       itemsMonthBudget: null == itemsMonthBudget
           ? _value.itemsMonthBudget
           : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       itemsYearBudget: null == itemsYearBudget
           ? _value.itemsYearBudget
           : itemsYearBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       itemsAll: null == itemsAll
           ? _value.itemsAll
           : itemsAll // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       showAllMonthBudget: null == showAllMonthBudget
           ? _value.showAllMonthBudget
           : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
@@ -940,9 +940,9 @@ abstract class _$$BudgetStateImplCopyWith<$Res>
   $Res call(
       {DateTime date,
       OperationType operationType,
-      List<CategoryCashflow> itemsMonthBudget,
-      List<CategoryCashflow> itemsYearBudget,
-      List<CategoryCashflow> itemsAll,
+      List<CategoryCashFlow> itemsMonthBudget,
+      List<CategoryCashFlow> itemsYearBudget,
+      List<CategoryCashFlow> itemsAll,
       bool showAllMonthBudget,
       bool showAllYearBudget});
 }
@@ -980,15 +980,15 @@ class __$$BudgetStateImplCopyWithImpl<$Res>
       itemsMonthBudget: null == itemsMonthBudget
           ? _value._itemsMonthBudget
           : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       itemsYearBudget: null == itemsYearBudget
           ? _value._itemsYearBudget
           : itemsYearBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       itemsAll: null == itemsAll
           ? _value._itemsAll
           : itemsAll // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashflow>,
+              as List<CategoryCashFlow>,
       showAllMonthBudget: null == showAllMonthBudget
           ? _value.showAllMonthBudget
           : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
@@ -1007,9 +1007,9 @@ class _$BudgetStateImpl implements _BudgetState {
   const _$BudgetStateImpl(
       {required this.date,
       required this.operationType,
-      required final List<CategoryCashflow> itemsMonthBudget,
-      required final List<CategoryCashflow> itemsYearBudget,
-      required final List<CategoryCashflow> itemsAll,
+      required final List<CategoryCashFlow> itemsMonthBudget,
+      required final List<CategoryCashFlow> itemsYearBudget,
+      required final List<CategoryCashFlow> itemsAll,
       required this.showAllMonthBudget,
       required this.showAllYearBudget})
       : _itemsMonthBudget = itemsMonthBudget,
@@ -1020,26 +1020,26 @@ class _$BudgetStateImpl implements _BudgetState {
   final DateTime date;
   @override
   final OperationType operationType;
-  final List<CategoryCashflow> _itemsMonthBudget;
+  final List<CategoryCashFlow> _itemsMonthBudget;
   @override
-  List<CategoryCashflow> get itemsMonthBudget {
+  List<CategoryCashFlow> get itemsMonthBudget {
     if (_itemsMonthBudget is EqualUnmodifiableListView)
       return _itemsMonthBudget;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_itemsMonthBudget);
   }
 
-  final List<CategoryCashflow> _itemsYearBudget;
+  final List<CategoryCashFlow> _itemsYearBudget;
   @override
-  List<CategoryCashflow> get itemsYearBudget {
+  List<CategoryCashFlow> get itemsYearBudget {
     if (_itemsYearBudget is EqualUnmodifiableListView) return _itemsYearBudget;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_itemsYearBudget);
   }
 
-  final List<CategoryCashflow> _itemsAll;
+  final List<CategoryCashFlow> _itemsAll;
   @override
-  List<CategoryCashflow> get itemsAll {
+  List<CategoryCashFlow> get itemsAll {
     if (_itemsAll is EqualUnmodifiableListView) return _itemsAll;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_itemsAll);
@@ -1098,9 +1098,9 @@ abstract class _BudgetState implements BudgetState {
   const factory _BudgetState(
       {required final DateTime date,
       required final OperationType operationType,
-      required final List<CategoryCashflow> itemsMonthBudget,
-      required final List<CategoryCashflow> itemsYearBudget,
-      required final List<CategoryCashflow> itemsAll,
+      required final List<CategoryCashFlow> itemsMonthBudget,
+      required final List<CategoryCashFlow> itemsYearBudget,
+      required final List<CategoryCashFlow> itemsAll,
       required final bool showAllMonthBudget,
       required final bool showAllYearBudget}) = _$BudgetStateImpl;
 
@@ -1109,11 +1109,11 @@ abstract class _BudgetState implements BudgetState {
   @override
   OperationType get operationType;
   @override
-  List<CategoryCashflow> get itemsMonthBudget;
+  List<CategoryCashFlow> get itemsMonthBudget;
   @override
-  List<CategoryCashflow> get itemsYearBudget;
+  List<CategoryCashFlow> get itemsYearBudget;
   @override
-  List<CategoryCashflow> get itemsAll;
+  List<CategoryCashFlow> get itemsAll;
   @override
   bool get showAllMonthBudget;
   @override

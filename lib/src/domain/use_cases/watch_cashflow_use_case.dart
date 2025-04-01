@@ -7,5 +7,5 @@ class WatchCashflowUseCase{
 
   WatchCashflowUseCase(this._dataRepository);
 
-  Stream<List<CategoryCashflow>> call() => _dataRepository.watchCashflow(DateTime.now());
+  Stream<List<CategoryCashFlow>> call() => _dataRepository.watchCashFlow(DateTime.now());
 }

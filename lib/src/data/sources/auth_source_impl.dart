@@ -44,7 +44,7 @@ class GoogleAuth extends AuthSource {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final userCredential = await _firebaseAuth.signInWithCredential(credential);
+    await _firebaseAuth.signInWithCredential(credential);
   }
 
   @override
@@ -60,7 +60,7 @@ class GoogleAuth extends AuthSource {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    final userCredential = await _firebaseAuth.signInWithCredential(credential);
+    await _firebaseAuth.signInWithCredential(credential);
   }
 
   @override
@@ -70,7 +70,7 @@ class GoogleAuth extends AuthSource {
       return;
     }
 
-    final res = await _googleSignIn.signOut();
+    await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
 

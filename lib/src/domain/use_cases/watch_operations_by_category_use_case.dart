@@ -7,6 +7,6 @@ class WatchOperationsByCategoryUseCase {
 
   WatchOperationsByCategoryUseCase(this._dataRepository);
 
-  Stream<List<Operation>> call({required int categoryId}) =>
+  Stream<List<OperationListItem>> call({required int categoryId}) =>
       _dataRepository.watchAllOperationsByCategory(categoryId);
 }

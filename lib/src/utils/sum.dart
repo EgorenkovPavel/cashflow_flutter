@@ -11,16 +11,18 @@ class Sum extends Equatable {
   const Sum(this.sum, this.currency);
 
   Sum operator +(int sum) {
-    return Sum(this.sum + sum, this.currency);
+    return Sum(this.sum + sum, currency);
   }
 
   Sum operator *(int sum) {
-    return Sum(this.sum * sum, this.currency);
+    return Sum(this.sum * sum, currency);
   }
 
   Sum operator /(int sum) {
-    return Sum((this.sum / sum).floor(), this.currency);
+    return Sum((this.sum / sum).floor(), currency);
   }
+
+  bool get isEmpty => sum == 0;
 
   @override
   List<Object?> get props => [sum, currency];
@@ -39,8 +41,6 @@ class Balance extends Equatable {
   UnmodifiableListView<Sum> get sums => UnmodifiableListView(_sums);
 
   const Balance.fromSums(this._sums);
-
-  bool get isEmpty => _sums.isEmpty;
 
   Balance operator +(Balance balance) {
 
@@ -67,6 +67,18 @@ class Balance extends Equatable {
     return Balance.fromSums(items);
   }
 
+  bool get isEmpty => _sums.isEmpty || _sums.every((e) => e.isEmpty);
+
   @override
   List<Object?> get props => [_sums];
+
+  int toRub(double usd, double eur){
+    return _sums.map<int>((e){
+      return switch(e.currency){
+        Currency.RUB => e.sum,
+        Currency.USD => (e.sum * usd).floor(),
+        Currency.EUR => (e.sum * eur).floor(),
+      };
+    }).fold<int>(0, (previousValue, element) => previousValue + element,);
+  }
 }

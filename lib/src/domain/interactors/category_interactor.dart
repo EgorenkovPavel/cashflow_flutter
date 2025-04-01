@@ -13,13 +13,13 @@ class CategoryInteractor {
     required String title,
     required BudgetType budgetType,
     required int budget,
-    required InputCategoryGroup? parent,
+    required int? parent,
   }) async {
     final category = InputCategoryItem(
       title: title,
       budgetType: budgetType,
       budget: budget,
-      parent: parent,
+      parentId: parent,
     );
 
     final id = await _dataRepository.insertCategory(category);
@@ -31,13 +31,13 @@ class CategoryInteractor {
     required String title,
     required BudgetType budgetType,
     required int budget,
-    required OutputCategoryGroup? parent,
+    required int? parent,
   }) async {
     final category = OutputCategoryItem(
       title: title,
       budgetType: budgetType,
       budget: budget,
-      parent: parent,
+      parentId: parent,
     );
 
     final id = await _dataRepository.insertCategory(category);
@@ -74,7 +74,7 @@ class CategoryInteractor {
     required String title,
     required BudgetType budgetType,
     required int budget,
-    required InputCategoryGroup? parent,
+    required int? parent,
   }) async {
     final newCategory = category
         .copyWith(
@@ -94,7 +94,7 @@ class CategoryInteractor {
     required String title,
     required BudgetType budgetType,
     required int budget,
-    required OutputCategoryGroup? parent,
+    required int? parent,
   }) async {
     final newCategory = category
         .copyWith(

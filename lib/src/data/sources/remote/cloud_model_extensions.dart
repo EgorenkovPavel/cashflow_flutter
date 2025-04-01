@@ -3,62 +3,98 @@ import 'package:money_tracker/src/data/sources/local/db_converters/operation_typ
 import 'package:money_tracker/src/data/sources/remote/models/cloud_models.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-extension CloudAccountMapper on Account {
-  CloudAccount toCloudAccount() => CloudAccount(
+extension CloudAccountMapper on BaseAccount {
+  CloudAccount toCloudAccount(User? user) => CloudAccount(
         id: cloudId,
         title: title,
-        isDebt: isDebt,
+        isDebt: this is Debt,
         deleted: false,
         user: user?.googleId ?? '',
       );
 }
 
 extension CloudCategoryMapper on Category {
-  CloudCategory toCloudCategory() => CloudCategory(
-        id: cloudId,
-        title: title,
-        operationType: const OperationTypeConverter().toSql(operationType),
-        budgetType: const BudgetTypeConverter().toSql(budgetType),
-        budget: budget,
-        deleted: false,
+  CloudCategory toCloudCategory(CategoryGroup? parent) => map(
+        inputItem: (c) => CloudCategory(
+          id: cloudId,
+          title: title,
+          operationType:
+              const OperationTypeConverter().toSql(OperationType.INPUT),
+          budgetType: const BudgetTypeConverter().toSql(c.budgetType),
+          budget: c.budget,
+          isGroup: false,
+          parent: parent?.cloudId ?? '',
+        ),
+        outputItem: (c) => CloudCategory(
+          id: cloudId,
+          title: title,
+          operationType:
+              const OperationTypeConverter().toSql(OperationType.OUTPUT),
+          budgetType: const BudgetTypeConverter().toSql(c.budgetType),
+          budget: c.budget,
+          isGroup: false,
+          parent: parent?.cloudId ?? '',
+        ),
+        inputGroup: (c) => CloudCategory(
+          id: cloudId,
+          title: title,
+          operationType:
+              const OperationTypeConverter().toSql(OperationType.INPUT),
+          budgetType: const BudgetTypeConverter().toSql(BudgetType.MONTH),
+          budget: 0,
+          isGroup: true,
+          parent: '',
+        ),
+        outputGroup: (c) => CloudCategory(
+          id: cloudId,
+          title: title,
+          operationType:
+              const OperationTypeConverter().toSql(OperationType.OUTPUT),
+          budgetType: const BudgetTypeConverter().toSql(BudgetType.MONTH),
+          budget: 0,
+          isGroup: true,
+          parent: '',
+        ),
       );
 }
 
 extension CloudOperationMapper on Operation {
-  CloudOperation toCloudOperation() => map(
+  CloudOperation toCloudOperation(
+          String accountCloudId, String analyticCloudId) =>
+      map(
         input: (o) => CloudOperation(
           id: o.cloudId,
           date: o.date,
           operationType: const OperationTypeConverter().toSql(o.type),
-          account: o.account.cloudId,
-          category: o.category.cloudId,
-          sum: o.sum,
+          account: accountCloudId,
+          category: analyticCloudId,
+          sum: o.sum.sum,
           deleted: o.deleted,
-          currencySent: o.currency.toString(),
-          currencyReceived: o.currency.toString(),
+          currencySent: o.sum.currency.toString(),
+          currencyReceived: o.sum.currency.toString(),
         ),
         output: (o) => CloudOperation(
           id: o.cloudId,
           date: o.date,
           operationType: const OperationTypeConverter().toSql(o.type),
-          account: o.account.cloudId,
-          category: o.category.cloudId,
-          sum: o.sum,
+          account: accountCloudId,
+          category: analyticCloudId,
+          sum: o.sum.sum,
           deleted: o.deleted,
-          currencySent: o.currency.toString(),
-          currencyReceived: o.currency.toString(),
+          currencySent: o.sum.currency.toString(),
+          currencyReceived: o.sum.currency.toString(),
         ),
         transfer: (o) => CloudOperation(
           id: o.cloudId,
           date: o.date,
           operationType: const OperationTypeConverter().toSql(o.type),
-          account: o.account.cloudId,
-          recAccount: o.recAccount.cloudId,
-          sum: o.sum,
-          recSum: o.recSum,
+          account: accountCloudId,
+          recAccount: analyticCloudId,
+          sum: o.sum.sum,
+          recSum: o.recSum.sum,
           deleted: o.deleted,
-          currencySent: o.currencySent.toString(),
-          currencyReceived: o.currencyReceived.toString(),
+          currencySent: o.sum.currency.toString(),
+          currencyReceived: o.sum.currency.toString(),
         ),
       );
 }

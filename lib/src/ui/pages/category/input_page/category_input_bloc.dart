@@ -8,7 +8,8 @@ part 'category_input_bloc.freezed.dart';
 @freezed
 class CategoryInputEvent with _$CategoryInputEvent {
   const factory CategoryInputEvent.initByType({
-    required OperationType operationType,
+    required CategoryType type,
+    required bool isGroup,
   }) = _InitByTypeCategoryInputEvent;
 
   const factory CategoryInputEvent.initById({required int categoryId}) =
@@ -24,33 +25,71 @@ class CategoryInputEvent with _$CategoryInputEvent {
     required BudgetType budgetType,
   }) = _ChangeBudgetTypeCategoryInputEvent;
 
+  const factory CategoryInputEvent.changeParent({
+    required int? parentId,
+  }) = _ChangeParentCategoryInputEvent;
+
   const factory CategoryInputEvent.save() = _SaveCategoryInputEvent;
 }
 
 @freezed
 class CategoryInputState with _$CategoryInputState {
-  const factory CategoryInputState({
-    Category? category,
-    required OperationType operationType,
-    required bool isGroup,
+  const CategoryInputState._();
+
+  const factory CategoryInputState.inputItem({
+    InputCategoryItem? category,
     required BudgetType budgetType,
     required String title,
     required int budget,
+    required int? parent,
     required bool isSaved,
-    required CategoryGroup? parent,
-  }) = _CategoryInputState;
+  }) = _InputItemCategoryInputState;
+
+  const factory CategoryInputState.outputItem({
+    OutputCategoryItem? category,
+    required BudgetType budgetType,
+    required String title,
+    required int budget,
+    required int? parent,
+    required bool isSaved,
+  }) = _OutputItemCategoryInputState;
+
+  const factory CategoryInputState.inputGroup({
+    InputCategoryGroup? category,
+    required String title,
+    required bool isSaved,
+  }) = _InputGroupCategoryInputState;
+
+  const factory CategoryInputState.outputGroup({
+    OutputCategoryGroup? category,
+    required String title,
+    required bool isSaved,
+  }) = _OutputGroupCategoryInputState;
+
+  bool get isNew => category == null;
+
+  bool get isGroup => map(
+      inputItem: (_) => false,
+      outputItem: (_) => false,
+      inputGroup: (_) => true,
+      outputGroup: (_) => true);
+
+  CategoryType get type => map(
+    inputItem: (_) => CategoryType.INPUT,
+    outputItem: (_) => CategoryType.OUTPUT,
+    inputGroup: (_) => CategoryType.INPUT,
+    outputGroup: (_) => CategoryType.OUTPUT,
+  );
 }
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   final CategoryInteractor _interactor;
 
   CategoryInputBloc(this._interactor)
-      : super(const CategoryInputState(
-          operationType: OperationType.INPUT,
+      : super(const CategoryInputState.inputItem(
           budgetType: BudgetType.MONTH,
           title: '',
           budget: 0,
-          isGroup: false,
           isSaved: false,
           parent: null,
         )) {
@@ -60,6 +99,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
           changeTitle: (event) => _changeTitle(event, emitter),
           changeBudget: (event) => _changeBudget(event, emitter),
           changeBudgetType: (event) => _changeBudgetType(event, emitter),
+          changeParent: (event) => _changeParent(event, emitter),
           save: (event) => _save(event, emitter),
         ));
   }
@@ -68,7 +108,32 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _InitByTypeCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(state.copyWith(operationType: event.operationType));
+    switch (event.type) {
+      case CategoryType.INPUT:
+        {
+          if (event.isGroup) {
+            emit(CategoryInputState.inputGroup(title: '', isSaved: false));
+          } else {
+            emit(CategoryInputState.inputItem(
+                budgetType: BudgetType.MONTH,
+                title: '',
+                budget: 0,
+                parent: null,
+                isSaved: false));
+          }
+        }
+      case CategoryType.OUTPUT:
+        if (event.isGroup) {
+          emit(CategoryInputState.outputGroup(title: '', isSaved: false));
+        } else {
+          emit(CategoryInputState.outputItem(
+              budgetType: BudgetType.MONTH,
+              title: '',
+              budget: 0,
+              parent: null,
+              isSaved: false));
+        }
+    }
   }
 
   Future<void> _initById(
@@ -79,43 +144,33 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
 
     switch (category) {
       case InputCategoryItem():
-        emit(state.copyWith(
+        emit(CategoryInputState.inputItem(
           category: category,
-          operationType: OperationType.INPUT,
-          isGroup: false,
           budgetType: category.budgetType,
           title: category.title,
           budget: category.budget,
-          parent: category.parent,
+          parent: category.parentId,
           isSaved: false,
         ));
       case OutputCategoryItem():
-        emit(state.copyWith(
+        emit(CategoryInputState.outputItem(
           category: category,
-          operationType: OperationType.OUTPUT,
-          isGroup: false,
           budgetType: category.budgetType,
           title: category.title,
           budget: category.budget,
-          parent: category.parent,
+          parent: category.parentId,
           isSaved: false,
         ));
       case InputCategoryGroup():
-        emit(state.copyWith(
+        emit(CategoryInputState.inputGroup(
           category: category,
-          operationType: OperationType.INPUT,
-          isGroup: true,
           title: category.title,
-          parent: null,
           isSaved: false,
         ));
       case OutputCategoryGroup():
-        emit(state.copyWith(
+        emit(CategoryInputState.outputGroup(
           category: category,
-          operationType: OperationType.OUTPUT,
-          isGroup: true,
           title: category.title,
-          parent: null,
           isSaved: false,
         ));
     }
@@ -132,101 +187,116 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _ChangeBudgetCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(state.copyWith(budget: event.budget));
+    state.maybeMap(
+      inputItem: (s) => emit(s.copyWith(budget: event.budget)),
+      outputItem: (s) => emit(s.copyWith(budget: event.budget)),
+      orElse: () {},
+    );
+  }
+
+  void _changeParent(
+      _ChangeParentCategoryInputEvent event,
+      Emitter<CategoryInputState> emit,
+      ) {
+    state.maybeMap(
+      inputItem: (s) => emit(s.copyWith(parent: event.parentId)),
+      outputItem: (s) => emit(s.copyWith(parent: event.parentId)),
+      orElse: () {},
+    );
   }
 
   void _changeBudgetType(
     _ChangeBudgetTypeCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    emit(state.copyWith(budgetType: event.budgetType));
+    state.maybeMap(
+      inputItem: (s) => emit(s.copyWith(budgetType: event.budgetType)),
+      outputItem: (s) => emit(s.copyWith(budgetType: event.budgetType)),
+      orElse: () {},
+    );
   }
 
   Future<void> _save(
     _SaveCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) async {
-    if (state.category == null) {
-      if (state.operationType == OperationType.INPUT) {
-        if (state.isGroup) {
-          emit(state.copyWith(
-            isSaved: true,
-            category:
-                await _interactor.insertInputCategoryGroup(title: state.title),
-          ));
-        } else {
-          emit(state.copyWith(
-            isSaved: true,
-            category: await _interactor.insertInputCategoryItem(
-              title: state.title,
-              budget: state.budget,
-              budgetType: state.budgetType,
-              parent: state.parent as InputCategoryGroup,
-            ),
-          ));
-        }
-      } else if (state.operationType == OperationType.OUTPUT) {
-        if (state.isGroup) {
-          emit(state.copyWith(
-            isSaved: true,
-            category:
-                await _interactor.insertOutputCategoryGroup(title: state.title),
-          ));
-        } else {
-          emit(state.copyWith(
-            isSaved: true,
-            category: await _interactor.insertOutputCategoryItem(
-              title: state.title,
-              budget: state.budget,
-              budgetType: state.budgetType,
-              parent: state.parent as OutputCategoryGroup,
-            ),
-          ));
-        }
-      }
+    if (state.isNew) {
+      await state.map(inputItem: (s) async {
+        final category = await _interactor.insertInputCategoryItem(
+          title: s.title,
+          budget: s.budget,
+          budgetType: s.budgetType,
+          parent: s.parent,
+        );
+
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, outputItem: (s) async {
+        final category =  await _interactor.insertOutputCategoryItem(
+          title: s.title,
+          budget: s.budget,
+          budgetType: s.budgetType,
+          parent: s.parent,
+        );
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, inputGroup: (s) async {
+        final category = await _interactor.insertInputCategoryGroup(title: s.title);
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, outputGroup: (s) async {
+        final category = await _interactor.insertOutputCategoryGroup(title: s.title);
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      });
     } else {
-      if (state.operationType == OperationType.INPUT) {
-        if (state.isGroup) {
-          emit(state.copyWith(
-            isSaved: true,
-            category: await _interactor.updateInputCategoryGroup(
-                category: state.category as InputCategoryGroup,
-                title: state.title),
-          ));
-        } else {
-          emit(state.copyWith(
-            isSaved: true,
-            category: await _interactor.updateInputCategoryItem(
-              category: state.category as InputCategoryItem,
-              title: state.title,
-              budget: state.budget,
-              budgetType: state.budgetType,
-              parent: state.parent as InputCategoryGroup,
-            ),
-          ));
-        }
-      } else if (state.operationType == OperationType.OUTPUT) {
-        if (state.isGroup) {
-          emit(state.copyWith(
-            isSaved: true,
-            category:
-                await _interactor.updateOutputCategoryGroup(
-                    category: state.category as OutputCategoryGroup,
-                    title: state.title),
-          ));
-        } else {
-          emit(state.copyWith(
-            isSaved: true,
-            category: await _interactor.updateOutputCategoryItem(
-              category: state.category as OutputCategoryItem,
-              title: state.title,
-              budget: state.budget,
-              budgetType: state.budgetType,
-              parent: state.parent as OutputCategoryGroup,
-            ),
-          ));
-        }
-      }
+      await state.map(inputItem: (s) async {
+        final category = await _interactor.updateInputCategoryItem(
+          category: s.category!,
+          title: s.title,
+          budget: s.budget,
+          budgetType: s.budgetType,
+          parent: s.parent,
+        );
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, outputItem: (s) async {
+        final category = await _interactor.updateOutputCategoryItem(
+          category: s.category!,
+          title: s.title,
+          budget: s.budget,
+          budgetType: s.budgetType,
+          parent: s.parent,
+        );
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, inputGroup: (s) async {
+        final category = await _interactor.updateInputCategoryGroup(
+            category: s.category!, title: s.title);
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      }, outputGroup: (s) async {
+        final category = await _interactor.updateOutputCategoryGroup(
+            category: s.category!, title: s.title);
+        emit(s.copyWith(
+          isSaved: true,
+          category: category,
+        ));
+      });
     }
   }
 }

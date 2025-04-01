@@ -51,12 +51,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   }
 
   void _onAccountChipPressed(BuildContext context) async {
-    final result = await showMenu<BaseAccount>(
+    final result = await showMenu<BaseAccountListItem>(
       context: context,
       position: buttonMenuPosition(_accountKey.currentContext!),
       items: context
-          .allAccounts()
-          .map((a) => PopupMenuItem<BaseAccount>(
+          .readListItems()
+          .map((a) => PopupMenuItem<BaseAccountListItem>(
                 value: a,
                 child: Text(a.title),
               ))
@@ -73,7 +73,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryInKey.currentContext!),
       items: context
-          .allInCategories()
+          .readInCategories()
           .map(
             (c) => PopupMenuItem<Category>(
               value: c,
@@ -93,7 +93,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryOutKey.currentContext!),
       items: context
-          .allOutCategories()
+          .readOutCategories()
           .map((c) => PopupMenuItem<Category>(
                 value: c,
                 child: Text(c.title),
@@ -239,7 +239,7 @@ class PeriodButton extends StatelessWidget {
 }
 
 class AccountChip extends StatelessWidget {
-  final BaseAccount account;
+  final BaseAccountListItem account;
 
   const AccountChip({super.key, required this.account});
 
@@ -273,29 +273,28 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.filter.period,
       );
 
-  List<BaseAccount> allAccounts() => read<AccountBalanceBloc>().state.allAccounts;
+  Set<BaseAccountListItem> accounts() {
+    final ids = select<OperationFilterBloc, Set<int>>(
+          (bloc) => bloc.state.filter.accountIds,
+    );
+    return readListItems().where((e) => ids.contains(e.id)).toSet();
+  }
 
-  List<Category> allInCategories() =>
-      read<CategoryCashflowBloc>().state.inCategories;
+  Set<InputCategoryItem> inCategories() {
+    final ids = select<OperationFilterBloc, Set<int>>(
+          (bloc) =>
+          bloc.state.filter.categoryIds,
+    );
+    return inCategories().where((e) => ids.contains(e.id)).toSet();
+  }
 
-  List<Category> allOutCategories() =>
-      read<CategoryCashflowBloc>().state.outCategories;
-
-  Set<BaseAccount> accounts() => select<OperationFilterBloc, Set<BaseAccount>>(
-        (bloc) => bloc.state.filter.accounts,
-      );
-
-  Set<InputCategoryItem> inCategories() => select<OperationFilterBloc, Set<InputCategoryItem>>(
-        (bloc) => bloc.state.filter.categories
-            .whereType<InputCategoryItem>()
-            .toSet(),
-      );
-
-  Set<OutputCategoryItem> outCategories() => select<OperationFilterBloc, Set<OutputCategoryItem>>(
-        (bloc) => bloc.state.filter.categories
-            .whereType<OutputCategoryItem>()
-            .toSet(),
-      );
+  Set<OutputCategoryItem> outCategories() {
+    final ids = select<OperationFilterBloc, Set<int>>(
+          (bloc) =>
+          bloc.state.filter.categoryIds,
+    );
+    return outCategories().where((e) => ids.contains(e.id)).toSet();
+  }
 
   onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.setPeriod(period: date));
@@ -303,13 +302,13 @@ extension BlocExt on BuildContext {
   onDeletePeriod() =>
       read<OperationFilterBloc>().add(const OperationFilterEvent.resetPeriod());
 
-  void onAddAccount(BaseAccount account) => read<OperationFilterBloc>()
+  void onAddAccount(BaseAccountListItem account) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addAccount(account: account));
 
   void onAddCategory(Category category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addCategory(category: category));
 
-  onDeleteAccount(BaseAccount account) =>
+  onDeleteAccount(BaseAccountListItem account) =>
       read<OperationFilterBloc>().add(OperationFilterEvent.removeAccount(
         account: account,
       ));

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
-import 'sync_button.dart';
 
 import 'home_page_cards/accounts_card.dart';
 import 'home_page_cards/last_operations/last_operations.dart';
-import 'home_page_cards/month_operations/month_operations.dart';
+import 'home_page_cards/month_operations.dart';
 import 'home_page_cards/totals_card.dart';
+import 'sync_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,38 +34,27 @@ class HomePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: TotalsCard(),
+            children: <Widget>[
+              TotalsCard(),
+              AccountsCard(
+                title: context.loc.accounts,
+                accounts: context.watchAccountBalances(),
+                onAdd: () => context.openAccountInputDialog(),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: AccountsCard(
-                  title: context.loc.accounts,
-                  accounts: context.accounts(),
-                ),
+              AccountsCard(
+                title: context.loc.debts,
+                accounts: context.watchDebtBalances(),
+                onAdd: () => context.openDebtInputDialog(),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: AccountsCard(
-                  title: context.loc.debts,
-                  accounts: context.debts(),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: MonthOperations(operationType: OperationType.INPUT),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: MonthOperations(operationType: OperationType.OUTPUT),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: LastOperations(),
-              ),
-            ],
+              MonthOperations(type: CategoryType.INPUT),
+              MonthOperations(type: CategoryType.OUTPUT),
+              LastOperations(),
+            ]
+                .map((e) => Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: e,
+                    ))
+                .toList(),
           ),
         ),
       ),
@@ -77,17 +65,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-extension BlocExt on BuildContext{
-  List<AccountBalance> accounts() =>
-      watch<AccountBalanceBloc>()
-      .state
-      .accountBalances;
-
-  List<DebtBalance> debts() =>
-      watch<AccountBalanceBloc>()
-      .state
-      .debtBalances;
-}
-
-

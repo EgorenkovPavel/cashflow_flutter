@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/utils/date_util.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../../domain/models/enum/currency.dart';
-
 class MonthOperations extends StatelessWidget {
-  final OperationType operationType;
+  final CategoryType type;
 
   const MonthOperations({
     super.key,
-    required this.operationType,
+    required this.type,
   });
 
   @override
@@ -24,7 +20,12 @@ class MonthOperations extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: Text(operationType == OperationType.INPUT ? context.loc.earningIn(DateTime.now()) : context.loc.spendingIn(DateTime.now()) ,style: Theme.of(context).textTheme.titleLarge,),
+            title: Text(
+              type == CategoryType.INPUT
+                  ? context.loc.earningIn(DateTime.now())
+                  : context.loc.spendingIn(DateTime.now()),
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             // title: RichText(
             //   text: TextSpan(
             //     children: [
@@ -45,28 +46,22 @@ class MonthOperations extends StatelessWidget {
             //   ),
             // ),
           ),
-          Column(
-            children: context
-                .select<CategoryCashflowBloc,
-                    Map<Currency, ({int cashflow, int budget})>>(
-                  (bloc) => bloc.state.progress[operationType] ?? {},
-                )
-                .entries
-                .where((entry) => entry.value.cashflow > 0)
-                .map((entry) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: _MonthOperationDiagram(
-                        currency: entry.key,
-                        cashflow: entry.value.cashflow,
-                        budget: entry.value.budget,
-                      ),
-                    ))
-                .toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: _MonthOperationDiagram(
+              cashFlow: context.cashFlow(type),
+              budget: context.budget(type),
+            ),
           ),
-          ButtonBar(
+          OverflowBar(
+            alignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: () => context.openBudgetPage(operationType),
+                onPressed: () => context.openCategoryListPage(type),
+                child: Text('Categories'), //TODO
+              ),
+              TextButton(
+                onPressed: () => context.openBudgetPage(type),
                 child: Text(context.loc.details),
               ),
             ],
@@ -78,13 +73,11 @@ class MonthOperations extends StatelessWidget {
 }
 
 class _MonthOperationDiagram extends StatelessWidget {
-  final Currency currency;
-  final int cashflow;
+  final int cashFlow;
   final int budget;
 
   const _MonthOperationDiagram({
-    required this.currency,
-    required this.cashflow,
+    required this.cashFlow,
     required this.budget,
   });
 
@@ -106,12 +99,7 @@ class _MonthOperationDiagram extends StatelessWidget {
                 child: LinearProgressIndicator(
                   minHeight: 10,
                   color: Theme.of(context).colorScheme.primary,
-                  value: context.select<CategoryCashflowBloc, double>(
-                    (bloc) => _progress(
-                      cashflow,
-                      budget,
-                    ),
-                  ),
+                  value: _progress(cashFlow, budget),
                 ),
               ),
             ),
@@ -128,8 +116,8 @@ class _MonthOperationDiagram extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(context.loc.numberFormat(cashflow, currency)),
-            Text(context.loc.numberFormat(budget, currency)),
+            Text(context.loc.numberFormat(cashFlow, Currency.RUB)),
+            Text(context.loc.numberFormat(budget, Currency.RUB)),
           ],
         ),
       ],

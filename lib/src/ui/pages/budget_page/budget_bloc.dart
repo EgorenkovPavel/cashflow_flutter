@@ -20,7 +20,7 @@ class BudgetEvent with _$BudgetEvent {
       _ShowAllBudgetEvent;
 
   const factory BudgetEvent.changeItems({
-    required List<CategoryCashflow> items,
+    required List<CategoryCashFlow> items,
   }) = _ChangeItemsBudgetEvent;
 }
 
@@ -29,9 +29,9 @@ class BudgetState with _$BudgetState {
   const factory BudgetState({
     required DateTime date,
     required OperationType operationType,
-    required List<CategoryCashflow> itemsMonthBudget,
-    required List<CategoryCashflow> itemsYearBudget,
-    required List<CategoryCashflow> itemsAll,
+    required List<CategoryCashFlow> itemsMonthBudget,
+    required List<CategoryCashFlow> itemsYearBudget,
+    required List<CategoryCashFlow> itemsAll,
     required bool showAllMonthBudget,
     required bool showAllYearBudget,
   }) = _BudgetState;
@@ -40,7 +40,7 @@ class BudgetState with _$BudgetState {
 class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   final DataRepository repo;
 
-  StreamSubscription<List<CategoryCashflow>>? _subscription;
+  StreamSubscription<List<CategoryCashFlow>>? _subscription;
 
   BudgetBloc(this.repo)
       : super(BudgetState(
@@ -103,8 +103,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   Future<void> _watchCashflow(DateTime date, OperationType type) async {
     await _subscription?.cancel();
     _subscription =
-        repo.watchCashflowByType(date, type).listen((items) {
-      items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow);
+        repo.watchCashFlowByType(date, type).listen((items) {
+      //items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow); //TODO
 
       add(BudgetEvent.changeItems(items: items));
     });
@@ -114,14 +114,14 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     emit(state.copyWith(
       itemsAll: event.items,
       itemsMonthBudget: event.items
-          .where((element) => element.category.budgetType == BudgetType.MONTH)
+          .where((element) => element.budgetType == BudgetType.MONTH)
           .where((element) =>
-              state.showAllMonthBudget || element.monthCashflow > 0)
+              state.showAllMonthBudget || !element.monthCashFlow.isEmpty)
           .toList(),
       itemsYearBudget: event.items
-          .where((element) => element.category.budgetType == BudgetType.YEAR)
+          .where((element) => element.budgetType == BudgetType.YEAR)
           .where(
-            (element) => state.showAllYearBudget || element.yearCashflow > 0,
+            (element) => state.showAllYearBudget || !element.yearCashFlow.isEmpty,
           )
           .toList(),
     ));

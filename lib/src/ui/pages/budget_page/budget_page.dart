@@ -7,10 +7,12 @@ import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../utils/sum.dart';
+
 class BudgetPage extends StatefulWidget {
   const BudgetPage({super.key, required this.type});
 
-  final OperationType type;
+  final CategoryType type;
 
   @override
   _BudgetPageState createState() => _BudgetPageState();
@@ -25,7 +27,10 @@ class _BudgetPageState extends State<BudgetPage> {
   void initState() {
     super.initState();
     _bloc = sl<BudgetBloc>()
-      ..add(BudgetEvent.fetch(operationtype: widget.type));
+      ..add(BudgetEvent.fetch(
+          operationtype: widget.type == CategoryType.INPUT
+              ? OperationType.INPUT
+              : OperationType.OUTPUT));
   }
 
   @override
@@ -68,9 +73,9 @@ class _BudgetPageState extends State<BudgetPage> {
                   currency: Currency.RUB,
                   title: context.loc.budgetTypeTitle(BudgetType.MONTH),
                   cashflow: state.itemsMonthBudget.fold(
-                    0,
+                    Balance(),
                     (previousValue, element) =>
-                        previousValue + element.monthCashflow,
+                        previousValue + element.monthCashFlow,
                   ),
                   showAll: state.showAllMonthBudget,
                   onPressed: () => _bloc.add(
@@ -90,9 +95,9 @@ class _BudgetPageState extends State<BudgetPage> {
                   currency: Currency.RUB,
                   title: context.loc.budgetTypeTitle(BudgetType.YEAR),
                   cashflow: state.itemsYearBudget.fold(
-                    0,
+                    Balance(),
                     (previousValue, element) =>
-                        previousValue + element.yearCashflow,
+                        previousValue + element.yearCashFlow,
                   ),
                   showAll: state.showAllYearBudget,
                   onPressed: () => _bloc.add(
@@ -109,9 +114,18 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => context.openCategoryInputDialog(type: widget.type),
-            child: const Icon(Icons.add),
+          floatingActionButton: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatingActionButton(
+                onPressed: () => context.openCategoryInputDialog(type: widget.type, isGroup: true),
+                child: const Icon(Icons.create_new_folder_outlined),
+              ),
+              FloatingActionButton(
+                onPressed: () => context.openCategoryInputDialog(type: widget.type, isGroup: false),
+                child: const Icon(Icons.add),
+              ),
+            ],
           ),
         );
       },
@@ -141,7 +155,7 @@ class AppBarTitle extends StatelessWidget {
 
 class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String title;
-  final int cashflow;
+  final Balance cashflow;
   final Currency currency;
   final bool showAll;
   final void Function() onPressed;
@@ -173,11 +187,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
                 title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const Spacer(),
-              Text(
-                context.loc.numberFormat(cashflow, currency),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              ...cashflow.sums.map((e) => Text(context.loc.sumFormat(e))),
               showAll
                   ? const Icon(Icons.arrow_drop_down)
                   : const Icon(Icons.arrow_drop_up),
@@ -201,7 +211,7 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class DiagramDelegate extends SliverPersistentHeaderDelegate {
-  final List<CategoryCashflow> items;
+  final List<CategoryCashFlow> items;
   final void Function() onBackPressed;
   final void Function() onForwardPressed;
 
@@ -218,7 +228,7 @@ class DiagramDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     return PieDiagram(
-      list: items.where((item) => item.monthCashflow > 0).toList(),
+      list: items.where((item) => !item.monthCashFlow.isEmpty).toList(),
       onBackPressed: onBackPressed,
       onForwardPressed: onForwardPressed,
     );
@@ -237,16 +247,15 @@ class DiagramDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class TitleDelegate extends SliverPersistentHeaderDelegate {
-  final List<CategoryCashflow> items;
+  final List<CategoryCashFlow> items;
 
   TitleDelegate({
     required this.items,
   });
 
-  int _cashflow(List<CategoryCashflow> items) {
-    return items
-        .map((e) => e.monthCashflow)
-        .fold<int>(0, (previousValue, element) => previousValue + element);
+  Balance _cashflow(List<CategoryCashFlow> items) {
+    return items.map((e) => e.monthCashFlow).fold<Balance>(
+        Balance(), (previousValue, element) => previousValue + element);
   }
 
   @override
@@ -264,22 +273,23 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             context.loc.titleCashflow,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          TweenAnimationBuilder<int>(
-            tween: IntTween(
-              begin: 0,
-              end: _cashflow(items),
-            ),
-            duration: _duration,
-            builder: (context, cashflow, _) {
-              return Text(
-                context.loc.numberFormat(cashflow, Currency.RUB),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              );
-            },
-          ),
+          // todo
+          // TweenAnimationBuilder<int>(
+          //   tween: IntTween(
+          //     begin: 0,
+          //     end: _cashflow(items),
+          //   ),
+          //   duration: _duration,
+          //   builder: (context, cashflow, _) {
+          //     return Text(
+          //       context.loc.numberFormat(cashflow, Currency.RUB),
+          //       style: Theme.of(context)
+          //           .textTheme
+          //           .titleLarge!
+          //           .copyWith(color: Theme.of(context).colorScheme.primary),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );
@@ -307,7 +317,7 @@ class PieDiagram extends StatelessWidget {
 
   final void Function()? onBackPressed;
   final void Function()? onForwardPressed;
-  final List<CategoryCashflow> list;
+  final List<CategoryCashFlow> list;
 
   @override
   Widget build(BuildContext context) {
@@ -344,36 +354,37 @@ class PieDiagram extends StatelessWidget {
 }
 
 class _CategoryItem extends StatelessWidget {
-  final CategoryCashflow category;
+  final CategoryCashFlow category;
 
   const _CategoryItem({required this.category});
 
-  int _cashflow() {
-    return category.category.budgetType == BudgetType.MONTH
-        ? category.monthCashflow
-        : category.yearCashflow;
+  Balance _cashflow() {
+    return category.budgetType == BudgetType.MONTH
+        ? category.monthCashFlow
+        : category.yearCashFlow;
   }
 
   double _progress() {
-    var cash = _cashflow();
-    var budget = category.category.budget;
-    if (cash == 0) {
-      return 0;
-    } else if (cash > budget || budget == 0) {
-      return 1;
-    } else {
-      return cash / budget;
-    }
+    return 1;
+    //todo
+    // var cash = _cashflow();
+    // var budget = category.budget;
+    // if (cash == 0) {
+    //   return 0;
+    // } else if (cash > budget || budget == 0) {
+    //   return 1;
+    // } else {
+    //   return cash / budget;
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => context.openCategoryPage(category.category.id),
-      title: Text(category.category.title),
-      subtitle: Text(
-          context.loc.numberFormat(category.category.budget, baseCurrency)),
-      trailing: Text(context.loc.numberFormat(_cashflow(), baseCurrency)),
+      onTap: () => context.openCategoryPage(category.categoryId),
+      title: Text(category.categoryTitle),
+      subtitle: Text(context.loc.numberFormat(category.budget, baseCurrency)),
+      // trailing: Text(context.loc.numberFormat(_cashflow(), baseCurrency)), //TODO
       leading: CircularProgressIndicator(
         value: _progress(),
       ),

@@ -8,15 +8,9 @@ class WatchOperationsByAccountUseCase {
   WatchOperationsByAccountUseCase(this._dataRepository);
 
   //TODO refactoring
-  Stream<List<Operation>> call({required int accountId}) =>
+  Stream<List<OperationListItem>> call({required int accountId}) =>
       _dataRepository.watchAllOperationsByFilter(OperationListFilter(
-        accounts: {
-          Account(
-            id: accountId,
-            title: '',
-            user: const User(photo: '', name: '', googleId: ''),
-          ),
-        },
-        categories: const {},
+        accountIds: {accountId},
+        categoryIds: const {},
       ));
 }

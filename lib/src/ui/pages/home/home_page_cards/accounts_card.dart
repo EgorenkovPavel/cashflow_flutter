@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/models.dart';
@@ -7,9 +8,10 @@ import 'card_title.dart';
 
 class AccountsCard extends StatefulWidget {
   final String title;
-  final List<BaseAccountBalance> accounts;
+  final List<BaseAccountBalanceListItem> accounts;
+  final void Function() onAdd;
 
-  const AccountsCard({super.key, required this.title, required this.accounts});
+  const AccountsCard({super.key, required this.title, required this.accounts, required this.onAdd});
 
   @override
   State<AccountsCard> createState() => _AccountsCardState();
@@ -18,7 +20,7 @@ class AccountsCard extends StatefulWidget {
 class _AccountsCardState extends State<AccountsCard> {
   bool _showAll = true;
 
-  List<BaseAccountBalance> _visibleAccounts() {
+  List<BaseAccountBalanceListItem> _visibleAccounts() {
     if (widget.accounts.where((account) => !account.balance.isEmpty).isEmpty) {
       return widget.accounts;
     } else {
@@ -62,8 +64,8 @@ class _AccountsCardState extends State<AccountsCard> {
                     _showAll ? context.loc.btnShowAll : context.loc.btnHide),
               ),
             TextButton(
-              child: Text(context.loc.btnAdd),
-              onPressed: () => context.openAccountInputDialog(),
+              onPressed: widget.onAdd,
+              child: Text(context.loc.btnAdd)
             ),
           ],
         ),
@@ -73,9 +75,9 @@ class _AccountsCardState extends State<AccountsCard> {
 }
 
 class _AccountListTile extends StatelessWidget {
-  final BaseAccountBalance _account;
+  final BaseAccountBalanceListItem _account;
 
-  const _AccountListTile(BaseAccountBalance account) : _account = account;
+  const _AccountListTile(BaseAccountBalanceListItem account) : _account = account;
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +110,10 @@ class _AccountListTile extends StatelessWidget {
                     .toList(),
               ),
             ),
-            const Positioned(
+            Positioned(
               bottom: 10,
               left: 10,
-              child: CircleAvatar(
-                child: Icon(Icons.account_circle),
-              ),
+              child: UserAvatar(photoUrl: _account.userPhoto),
             ),
           ],
         ),

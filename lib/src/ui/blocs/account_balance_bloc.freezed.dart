@@ -16,20 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AccountBalanceEvent {
-  List<BaseAccountBalance> get accounts => throw _privateConstructorUsedError;
+  List<BaseAccountBalanceListItem> get accounts =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<BaseAccountBalance> accounts) changeBalance,
+    required TResult Function(List<BaseAccountBalanceListItem> accounts)
+        changeBalance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<BaseAccountBalance> accounts)? changeBalance,
+    TResult? Function(List<BaseAccountBalanceListItem> accounts)? changeBalance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<BaseAccountBalance> accounts)? changeBalance,
+    TResult Function(List<BaseAccountBalanceListItem> accounts)? changeBalance,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -64,7 +66,7 @@ abstract class $AccountBalanceEventCopyWith<$Res> {
           AccountBalanceEvent value, $Res Function(AccountBalanceEvent) then) =
       _$AccountBalanceEventCopyWithImpl<$Res, AccountBalanceEvent>;
   @useResult
-  $Res call({List<BaseAccountBalance> accounts});
+  $Res call({List<BaseAccountBalanceListItem> accounts});
 }
 
 /// @nodoc
@@ -88,7 +90,7 @@ class _$AccountBalanceEventCopyWithImpl<$Res, $Val extends AccountBalanceEvent>
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<BaseAccountBalance>,
+              as List<BaseAccountBalanceListItem>,
     ) as $Val);
   }
 }
@@ -102,7 +104,7 @@ abstract class _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res>
       __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<BaseAccountBalance> accounts});
+  $Res call({List<BaseAccountBalanceListItem> accounts});
 }
 
 /// @nodoc
@@ -126,7 +128,7 @@ class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
       accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
-              as List<BaseAccountBalance>,
+              as List<BaseAccountBalanceListItem>,
     ));
   }
 }
@@ -136,12 +138,12 @@ class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
 class _$ChangeBalanceAccountBalanceEventImpl
     implements _ChangeBalanceAccountBalanceEvent {
   const _$ChangeBalanceAccountBalanceEventImpl(
-      {required final List<BaseAccountBalance> accounts})
+      {required final List<BaseAccountBalanceListItem> accounts})
       : _accounts = accounts;
 
-  final List<BaseAccountBalance> _accounts;
+  final List<BaseAccountBalanceListItem> _accounts;
   @override
-  List<BaseAccountBalance> get accounts {
+  List<BaseAccountBalanceListItem> get accounts {
     if (_accounts is EqualUnmodifiableListView) return _accounts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_accounts);
@@ -177,7 +179,8 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<BaseAccountBalance> accounts) changeBalance,
+    required TResult Function(List<BaseAccountBalanceListItem> accounts)
+        changeBalance,
   }) {
     return changeBalance(accounts);
   }
@@ -185,7 +188,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<BaseAccountBalance> accounts)? changeBalance,
+    TResult? Function(List<BaseAccountBalanceListItem> accounts)? changeBalance,
   }) {
     return changeBalance?.call(accounts);
   }
@@ -193,7 +196,7 @@ class _$ChangeBalanceAccountBalanceEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<BaseAccountBalance> accounts)? changeBalance,
+    TResult Function(List<BaseAccountBalanceListItem> accounts)? changeBalance,
     required TResult orElse(),
   }) {
     if (changeBalance != null) {
@@ -235,11 +238,11 @@ class _$ChangeBalanceAccountBalanceEventImpl
 abstract class _ChangeBalanceAccountBalanceEvent
     implements AccountBalanceEvent {
   const factory _ChangeBalanceAccountBalanceEvent(
-          {required final List<BaseAccountBalance> accounts}) =
+          {required final List<BaseAccountBalanceListItem> accounts}) =
       _$ChangeBalanceAccountBalanceEventImpl;
 
   @override
-  List<BaseAccountBalance> get accounts;
+  List<BaseAccountBalanceListItem> get accounts;
 
   /// Create a copy of AccountBalanceEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -252,8 +255,8 @@ abstract class _ChangeBalanceAccountBalanceEvent
 
 /// @nodoc
 mixin _$AccountBalanceState {
-  List<BaseAccountBalance> get balances => throw _privateConstructorUsedError;
-  Balance get totals => throw _privateConstructorUsedError;
+  List<BaseAccountBalanceListItem> get balances =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of AccountBalanceState
   /// with the given fields replaced by the non-null parameter values.
@@ -268,7 +271,7 @@ abstract class $AccountBalanceStateCopyWith<$Res> {
           AccountBalanceState value, $Res Function(AccountBalanceState) then) =
       _$AccountBalanceStateCopyWithImpl<$Res, AccountBalanceState>;
   @useResult
-  $Res call({List<BaseAccountBalance> balances, Balance totals});
+  $Res call({List<BaseAccountBalanceListItem> balances});
 }
 
 /// @nodoc
@@ -287,17 +290,12 @@ class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
   @override
   $Res call({
     Object? balances = null,
-    Object? totals = null,
   }) {
     return _then(_value.copyWith(
       balances: null == balances
           ? _value.balances
           : balances // ignore: cast_nullable_to_non_nullable
-              as List<BaseAccountBalance>,
-      totals: null == totals
-          ? _value.totals
-          : totals // ignore: cast_nullable_to_non_nullable
-              as Balance,
+              as List<BaseAccountBalanceListItem>,
     ) as $Val);
   }
 }
@@ -310,7 +308,7 @@ abstract class _$$AccountBalanceStateImplCopyWith<$Res>
       __$$AccountBalanceStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<BaseAccountBalance> balances, Balance totals});
+  $Res call({List<BaseAccountBalanceListItem> balances});
 }
 
 /// @nodoc
@@ -327,17 +325,12 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? balances = null,
-    Object? totals = null,
   }) {
     return _then(_$AccountBalanceStateImpl(
       balances: null == balances
           ? _value._balances
           : balances // ignore: cast_nullable_to_non_nullable
-              as List<BaseAccountBalance>,
-      totals: null == totals
-          ? _value.totals
-          : totals // ignore: cast_nullable_to_non_nullable
-              as Balance,
+              as List<BaseAccountBalanceListItem>,
     ));
   }
 }
@@ -346,24 +339,21 @@ class __$$AccountBalanceStateImplCopyWithImpl<$Res>
 
 class _$AccountBalanceStateImpl extends _AccountBalanceState {
   const _$AccountBalanceStateImpl(
-      {required final List<BaseAccountBalance> balances, required this.totals})
+      {required final List<BaseAccountBalanceListItem> balances})
       : _balances = balances,
         super._();
 
-  final List<BaseAccountBalance> _balances;
+  final List<BaseAccountBalanceListItem> _balances;
   @override
-  List<BaseAccountBalance> get balances {
+  List<BaseAccountBalanceListItem> get balances {
     if (_balances is EqualUnmodifiableListView) return _balances;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_balances);
   }
 
   @override
-  final Balance totals;
-
-  @override
   String toString() {
-    return 'AccountBalanceState(balances: $balances, totals: $totals)';
+    return 'AccountBalanceState(balances: $balances)';
   }
 
   @override
@@ -371,13 +361,12 @@ class _$AccountBalanceStateImpl extends _AccountBalanceState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccountBalanceStateImpl &&
-            const DeepCollectionEquality().equals(other._balances, _balances) &&
-            (identical(other.totals, totals) || other.totals == totals));
+            const DeepCollectionEquality().equals(other._balances, _balances));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_balances), totals);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_balances));
 
   /// Create a copy of AccountBalanceState
   /// with the given fields replaced by the non-null parameter values.
@@ -391,14 +380,12 @@ class _$AccountBalanceStateImpl extends _AccountBalanceState {
 
 abstract class _AccountBalanceState extends AccountBalanceState {
   const factory _AccountBalanceState(
-      {required final List<BaseAccountBalance> balances,
-      required final Balance totals}) = _$AccountBalanceStateImpl;
+          {required final List<BaseAccountBalanceListItem> balances}) =
+      _$AccountBalanceStateImpl;
   const _AccountBalanceState._() : super._();
 
   @override
-  List<BaseAccountBalance> get balances;
-  @override
-  Balance get totals;
+  List<BaseAccountBalanceListItem> get balances;
 
   /// Create a copy of AccountBalanceState
   /// with the given fields replaced by the non-null parameter values.

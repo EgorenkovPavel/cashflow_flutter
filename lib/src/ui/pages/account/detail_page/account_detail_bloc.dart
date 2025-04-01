@@ -17,7 +17,7 @@ class AccountDetailEvent with _$AccountDetailEvent {
       _TitleChangedAccountDetailEvent;
 
   const factory AccountDetailEvent.operationsChanged({
-    required List<Operation> operations,
+    required List<OperationListItem> operations,
   }) = _OperationsChangedAccountDetailEvent;
 }
 
@@ -25,7 +25,7 @@ class AccountDetailEvent with _$AccountDetailEvent {
 class AccountDetailState with _$AccountDetailState {
   const factory AccountDetailState({
     required String title,
-    required List<Operation> operations,
+    required List<OperationListItem> operations,
   }) = _AccountDetailState;
 }
 

@@ -1,18 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:money_tracker/src/utils/sum.dart';
 
-import 'category.dart';
-
-class CategoryMonthCashflow extends Equatable {
-  final CategoryItem category;
+class CategoryMonthCashFlow extends Equatable {
+  final int categoryId;
   final int month;
-  final int cashflow;
+  final Balance cashFlow;
 
-  const CategoryMonthCashflow({
-    required this.category,
+  const CategoryMonthCashFlow({
+    required this.categoryId,
     required this.month,
-    required this.cashflow,
+    required this.cashFlow,
   });
 
   @override
-  List<Object?> get props => [category,month,cashflow];
+  List<Object?> get props => [categoryId,month,cashFlow];
 }

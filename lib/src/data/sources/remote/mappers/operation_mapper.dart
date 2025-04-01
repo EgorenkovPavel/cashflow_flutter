@@ -55,8 +55,8 @@ class OperationMapper extends CloudConverter<CloudOperation> {
       sum: data.getOrDefault(_KEY_SUM, 0),
       recSum: data.getOrDefault(_KEY_REC_SUM, 0),
       deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
-      currencySent: data.getOrDefault(_KEY_CURRENCY_SENT, Currency.RUB),
-      currencyReceived: data.getOrDefault(_KEY_CURRENCY_RECEIVED, Currency.RUB),
+      currencySent: data.getOrDefault(_KEY_CURRENCY_SENT, Currency.RUB.toString()),
+      currencyReceived: data.getOrDefault(_KEY_CURRENCY_RECEIVED, Currency.RUB.toString()),
     );
   }
 

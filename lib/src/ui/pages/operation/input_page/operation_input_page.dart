@@ -8,6 +8,7 @@ import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../utils/sum.dart';
 import '../../../blocs/category_cashflow_bloc.dart';
 import '../../../widgets/keyboard.dart';
 import 'widgets/account_item.dart';
@@ -127,7 +128,10 @@ class _OperationInputPageState extends State<OperationInputPage>
           child: WillPopScope(
             onWillPop: () => _onBackPressed(context),
             child: Scaffold(
-              appBar: AppBar(title: Text(context.loc.titleMaster)),
+              appBar: AppBar(
+                title: Text(context.loc.titleMaster),
+                forceMaterialTransparency: true,
+              ),
               body: Column(
                 children: <Widget>[
                   Builder(builder: (context) {
@@ -197,7 +201,6 @@ class _OperationInputPageState extends State<OperationInputPage>
                                             child: SumField(
                                               highlight: context.highlightSum(),
                                               sum: context.sum(),
-                                              currency: context.currencySent(),
                                               onTap: context.sumTap,
                                             ),
                                           ),
@@ -210,7 +213,6 @@ class _OperationInputPageState extends State<OperationInputPage>
                                                 highlight:
                                                     context.highlightRecSum(),
                                                 sum: context.recSum(),
-                                                currency: context.currencyReceived(),
                                                 onTap: context.recSumTap,
                                               ),
                                             ),
@@ -221,6 +223,9 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       axis: Axis.vertical,
                                       sizeFactor: _animation,
                                       child: Keyboard(
+                                        onChangeCurrency:
+                                            context.changeHighlightCurrency,
+                                        currency: context.highlightCurrency(),
                                         onDigitPressed: context.digitTap,
                                         onBackPressed: context.backKeyTap,
                                       ),
@@ -257,7 +262,7 @@ extension MasterExt on BuildContext {
 
   void backKeyTap() => _bloc().add(const MasterEvent.backKeyTap());
 
-  void digitTap(int digit) => _bloc().add(MasterEvent.digitTap(digit: digit));
+  void digitTap(int digit) => _bloc().add(MasterEvent.digitTap(digit));
 
   void sumTap() => _bloc().add(const MasterEvent.sumTap());
 
@@ -266,64 +271,99 @@ extension MasterExt on BuildContext {
   void cancelOperation() => _bloc().add(const MasterEvent.cancelOperation());
 
   void changeOperationType(OperationType type) =>
-      _bloc().add(MasterEvent.changeOperationType(operationType: type));
+      _bloc().add(MasterEvent.changeOperationType(type));
 
-  void changeAccount(BaseAccountBalance accountBalance) =>
-      _bloc().add(MasterEvent.changeAccount(account: accountBalance));
+  void changeAccount(int accountId) =>
+      _bloc().add(MasterEvent.changeAccount(accountId: accountId));
 
-  bool showRecSum() => select<MasterBloc, bool>((bloc) =>
-      bloc.state.operationType == OperationType.TRANSFER &&
-      bloc.state.account != null &&
-      bloc.state.recAccount != null);
+  bool showRecSum() => select<MasterBloc, bool>(
+      (bloc) => bloc.state.operationType == OperationType.TRANSFER);
 
   Future<void> addNewAccount() async {
     addNewItem();
-    var account = await openAccountInputDialog();
+
+    final account = await _inputBaseAccount();
     if (account != null) {
-      changeAccount(BaseAccountBalance.fromAccount(account));
+      changeAccount(account.id);
     }
   }
 
-  Future<void> addNewInCategory() async {
+  Future<void> addNewInCategoryItem() async {
     addNewItem();
-    var category = await openCategoryInputDialog(
-      type: OperationType.INPUT,
-    );
+    var category =
+        await openCategoryInputDialog(type: CategoryType.INPUT, isGroup: false);
     if (category != null) {
-      changeInCategory(category);
+      changeInCategory(category.id);
     }
   }
 
-  Future<void> addNewOutCategory() async {
+  Future<void> addNewInCategoryGroup() async {
+    addNewItem();
+    await openCategoryInputDialog(type: CategoryType.INPUT, isGroup: true);
+  }
+
+  Future<void> addNewOutCategoryItem() async {
     addNewItem();
     var category = await openCategoryInputDialog(
-      type: OperationType.OUTPUT,
+      type: CategoryType.OUTPUT,
+      isGroup: false,
     );
     if (category != null) {
-      changeOutCategory(category);
+      changeOutCategory(category.id);
     }
+  }
+
+  Future<void> addNewOutCategoryGroup() async {
+    addNewItem();
+    await openCategoryInputDialog(type: CategoryType.OUTPUT, isGroup: true);
   }
 
   Future<void> addNewRecAccount() async {
     addNewItem();
-    var account = await openAccountInputDialog();
+    final account = await _inputBaseAccount();
     if (account != null) {
-      changeRecAccount(BaseAccountBalance.fromAccount(account));
+      changeRecAccount(account.id);
     }
+  }
+
+  Future<BaseAccount?> _inputBaseAccount() async {
+    return await showDialog<BaseAccount>(
+        context: this,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Select assignment'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context);
+                  openAccountInputDialog();
+                },
+                child: const Text('Account'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context);
+                  openDebtInputDialog();
+                },
+                child: const Text('Debt'),
+              ),
+            ],
+          );
+        });
   }
 
   void addNewItem() => _bloc().add(const MasterEvent.addNewItem());
 
-  void changeRecAccount(BaseAccountBalance accountBalance) =>
-      _bloc().add(MasterEvent.changeRecAccount(account: accountBalance));
+  void changeRecAccount(int accountId) =>
+      _bloc().add(MasterEvent.changeRecAccount(accountId: accountId));
 
-  void changeInCategory(Category category) =>
-      _bloc().add(MasterEvent.changeInCategory(category: category));
+  void changeInCategory(int categoryId) =>
+      _bloc().add(MasterEvent.changeInCategory(categoryId: categoryId));
 
-  void changeOutCategory(Category category) =>
-      _bloc().add(MasterEvent.changeOutCategory(category: category));
+  void changeOutCategory(int categoryId) =>
+      _bloc().add(MasterEvent.changeOutCategory(categoryId: categoryId));
 
-  int recSum() => select<MasterBloc, int>((bloc) => bloc.state.recSum.sum);
+  Sum recSum() => select<MasterBloc, Sum>((bloc) => bloc.state.recSum);
 
   Currency currencySent() =>
       select<MasterBloc, Currency>((bloc) => bloc.state.sum.currency);
@@ -331,10 +371,18 @@ extension MasterExt on BuildContext {
   Currency currencyReceived() =>
       select<MasterBloc, Currency>((bloc) => bloc.state.recSum.currency);
 
+  Currency highlightCurrency() =>
+      select<MasterBloc, Currency>((bloc) => bloc.state.highlightSum
+          ? bloc.state.sum.currency
+          : bloc.state.recSum.currency);
+
+  void changeHighlightCurrency(Currency currency) =>
+      _bloc().add(MasterEvent.changeHighlightCurrency(currency: currency));
+
   bool highlightRecSum() =>
       select<MasterBloc, bool>((bloc) => bloc.state.highlightRecSum);
 
-  int sum() => select<MasterBloc, int>((bloc) => bloc.state.sum.sum);
+  Sum sum() => select<MasterBloc, Sum>((bloc) => bloc.state.sum);
 
   bool highlightSum() =>
       select<MasterBloc, bool>((bloc) => bloc.state.highlightSum);
@@ -342,11 +390,14 @@ extension MasterExt on BuildContext {
   OperationType operationType() =>
       select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
 
-  BaseAccountBalance? account() =>
-      select<MasterBloc, BaseAccountBalance?>((bloc) => bloc.state.account);
+  int? accountId() => _bloc().state.accountId;
 
-  BaseAccountBalance? recAccount() =>
-      select<MasterBloc, BaseAccountBalance?>((bloc) => bloc.state.recAccount);
+  int? recAccountId() => _bloc().state.recAccountId;
+
+  int? categoryInId() => _bloc().state.categoryInId;
+
+  int? categoryOutId() => _bloc().state.categoryOutId;
+
 }
 
 class BarButton extends StatelessWidget {
@@ -377,20 +428,23 @@ class AccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final operationType = context.operationType();
-    final accounts = context.select<AccountBalanceBloc, List<BaseAccountBalance>>(
-      (bloc) => bloc.state.balances,
-    );
+    final accounts = operationType == OperationType.TRANSFER
+        ? context.watchBalances()
+        : context.watchAccountBalances();
+    final title = operationType == OperationType.TRANSFER
+        ? context.loc.source
+        : context.loc.accounts;
 
     return ItemsList(
-      title: operationType == OperationType.TRANSFER
-          ? context.loc.source
-          : context.loc.accounts,
-      onAdd: context.addNewAccount,
+      title: title,
+      onAddItem: context.addNewAccount,
+      onAddGroup: null,
       list: AccountPageView(
-        accounts: operationType == OperationType.TRANSFER
-            ? accounts
-            : accounts.whereType<DebtBalance>().toList(),
-        onItemChanged: context.changeAccount,
+        accounts: accounts,
+        initialValue: accounts
+            .where((e) => e.accountId == context.accountId())
+            .firstOrNull,
+        onItemChanged: (item) => context.changeAccount(item.accountId),
       ),
     );
   }
@@ -401,14 +455,17 @@ class CategoryInList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.watchInCategories();
+
     return ItemsList(
       title: context.loc.categories,
-      onAdd: context.addNewInCategory,
+      onAddItem: context.addNewInCategoryItem,
+      onAddGroup: context.addNewInCategoryGroup,
       list: CategoryPageView(
-        categories: context.select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.inCategories,
-        ),
-        onItemChanged: context.changeInCategory,
+        categories: categories,
+        initialValue:
+            categories.where((e) => e.id == context.categoryInId()).firstOrNull,
+        onItemChanged: (category) => context.changeInCategory(category.id),
       ),
     );
   }
@@ -419,14 +476,18 @@ class CategoryOutList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.watchOutCategories();
+
     return ItemsList(
       title: context.loc.categories,
-      onAdd: context.addNewOutCategory,
+      onAddItem: context.addNewOutCategoryItem,
+      onAddGroup: context.addNewOutCategoryGroup,
       list: CategoryPageView(
-        categories: context.select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.outCategories,
-        ),
-        onItemChanged: context.changeOutCategory,
+        categories: categories,
+        initialValue: categories
+            .where((e) => e.id == context.categoryOutId())
+            .firstOrNull,
+        onItemChanged: (category) => context.changeOutCategory(category.id),
       ),
     );
   }
@@ -437,14 +498,18 @@ class AccountRecList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accounts = context.watchBalances();
+
     return ItemsList(
       title: context.loc.receiver,
-      onAdd: context.addNewRecAccount,
+      onAddItem: context.addNewRecAccount,
+      onAddGroup: null,
       list: AccountPageView(
-        accounts: context.select<AccountBalanceBloc, List<BaseAccountBalance>>(
-          (bloc) => bloc.state.balances,
-        ),
-        onItemChanged: context.changeRecAccount,
+        accounts: accounts,
+        initialValue: accounts
+            .where((e) => e.accountId == context.recAccountId())
+            .firstOrNull,
+        onItemChanged: (item) => context.changeRecAccount(item.accountId),
       ),
     );
   }
@@ -452,14 +517,16 @@ class AccountRecList extends StatelessWidget {
 
 class ItemsList extends StatelessWidget {
   final String title;
-  final void Function() onAdd;
+  final void Function() onAddItem;
+  final void Function()? onAddGroup;
   final Widget list;
 
   const ItemsList({
     super.key,
     required this.title,
-    required this.onAdd,
+    required this.onAddItem,
     required this.list,
+    required this.onAddGroup,
   });
 
   @override
@@ -477,9 +544,14 @@ class ItemsList extends StatelessWidget {
                   title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
+                if (onAddGroup != null)
+                  IconButton(
+                    icon: const Icon(Icons.create_new_folder_outlined),
+                    onPressed: onAddGroup,
+                  ),
                 IconButton(
                   icon: const Icon(Icons.add),
-                  onPressed: onAdd,
+                  onPressed: onAddItem,
                 ),
               ],
             ),
@@ -495,25 +567,23 @@ class ItemsList extends StatelessWidget {
 }
 
 class AccountPageView extends StatelessWidget {
-  final List<BaseAccountBalance> accounts;
-  final void Function(BaseAccountBalance) onItemChanged;
+  final List<BaseAccountBalanceListItem> accounts;
+  final void Function(BaseAccountBalanceListItem) onItemChanged;
+  final BaseAccountBalanceListItem? initialValue;
 
   const AccountPageView({
     super.key,
     required this.accounts,
     required this.onItemChanged,
+    required this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CarouselList<BaseAccountBalance>(
+    return CarouselList<BaseAccountBalanceListItem>(
       items: accounts,
       emptyListMessage: context.loc.noAccounts,
-      initialItemFinder: (account) => false,
-      // initialItemFinder: (account) =>
-      //     state.action == MasterStateAction.SET_ACCOUNT &&
-      //     state.account != null &&
-      //     account.id == state.account!.id,
+      initialValue: initialValue,
       onItemChanged: onItemChanged,
       itemBuilder: (context, account) => AccountItem(account: account),
     );
@@ -523,11 +593,13 @@ class AccountPageView extends StatelessWidget {
 class CategoryPageView extends StatelessWidget {
   final List<Category> categories;
   final void Function(Category) onItemChanged;
+  final Category? initialValue;
 
   const CategoryPageView({
     super.key,
     required this.categories,
     required this.onItemChanged,
+    required this.initialValue,
   });
 
   @override
@@ -535,11 +607,7 @@ class CategoryPageView extends StatelessWidget {
     return CarouselList<Category>(
       items: categories,
       emptyListMessage: context.loc.noCategories,
-      initialItemFinder: (category) => false,
-      // initialItemFinder: (category) =>
-      //     state.action == MasterStateAction.SET_IN_CATEGORY &&
-      //     state.categoryIn != null &&
-      //     category.id == state.categoryIn!.id,
+      initialValue: initialValue,
       onItemChanged: onItemChanged,
       itemBuilder: (context, category) => CategoryListItem(category: category),
     );

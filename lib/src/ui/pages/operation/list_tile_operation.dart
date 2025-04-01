@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/src/domain/models/operation/operation.dart';
 import 'package:money_tracker/src/injection_container.dart';
+import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../domain/models.dart';
+
 class ListTileOperation extends StatelessWidget {
-  final Operation _operation;
+  final OperationListItem _operation;
   final GestureTapCallback onTap;
 
   const ListTileOperation(this._operation, {super.key, required this.onTap});
 
   void _onDuplicate(BuildContext context) {
-    sl<DataRepository>().duplicateOperation(_operation);
+    sl<DataRepository>().duplicateOperation(_operation.id);
     Navigator.of(context).pop();
   }
 
   void _onDelete(BuildContext context) {
-    sl<DataRepository>().deleteOperation(_operation); //TODO move to bloc
+    sl<DataRepository>().deleteOperationById(_operation.id); //TODO move to bloc
     Navigator.of(context).pop();
   }
 
   void _onRecover(BuildContext context) {
-    sl<DataRepository>().recoverOperation(_operation);
+    sl<DataRepository>().recoverOperation(_operation.id);
     Navigator.of(context).pop();
   }
 
@@ -56,10 +58,11 @@ class ListTileOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: UserAvatar(photoUrl: _operation.userPhotoUrl),
       subtitle: Row(
         children: [
           Text(
-            _operation.account.title,
+            _operation.account,
           ),
           const SizedBox(
             width: 8,
@@ -71,7 +74,7 @@ class ListTileOperation extends StatelessWidget {
           if (_operation.deleted) const Icon(Icons.cancel),
         ],
       ),
-      title: Text(_operation.analyticTitle),
+      title: Text(_operation.analytic),
       trailing: Text(
         context.loc.sumFormat(_operation.sum),
         style: Theme.of(context)

@@ -21,7 +21,8 @@ mixin _$CloudCategory {
   int get operationType => throw _privateConstructorUsedError;
   int get budgetType => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
-  bool get deleted => throw _privateConstructorUsedError;
+  bool get isGroup => throw _privateConstructorUsedError;
+  String get parent => throw _privateConstructorUsedError;
 
   /// Create a copy of CloudCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +43,8 @@ abstract class $CloudCategoryCopyWith<$Res> {
       int operationType,
       int budgetType,
       int budget,
-      bool deleted});
+      bool isGroup,
+      String parent});
 }
 
 /// @nodoc
@@ -65,7 +67,8 @@ class _$CloudCategoryCopyWithImpl<$Res, $Val extends CloudCategory>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
-    Object? deleted = null,
+    Object? isGroup = null,
+    Object? parent = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -88,10 +91,14 @@ class _$CloudCategoryCopyWithImpl<$Res, $Val extends CloudCategory>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      deleted: null == deleted
-          ? _value.deleted
-          : deleted // ignore: cast_nullable_to_non_nullable
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
               as bool,
+      parent: null == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -110,7 +117,8 @@ abstract class _$$CloudCategoryImplCopyWith<$Res>
       int operationType,
       int budgetType,
       int budget,
-      bool deleted});
+      bool isGroup,
+      String parent});
 }
 
 /// @nodoc
@@ -131,7 +139,8 @@ class __$$CloudCategoryImplCopyWithImpl<$Res>
     Object? operationType = null,
     Object? budgetType = null,
     Object? budget = null,
-    Object? deleted = null,
+    Object? isGroup = null,
+    Object? parent = null,
   }) {
     return _then(_$CloudCategoryImpl(
       id: null == id
@@ -154,10 +163,14 @@ class __$$CloudCategoryImplCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
-      deleted: null == deleted
-          ? _value.deleted
-          : deleted // ignore: cast_nullable_to_non_nullable
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
               as bool,
+      parent: null == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -171,7 +184,8 @@ class _$CloudCategoryImpl implements _CloudCategory {
       required this.operationType,
       required this.budgetType,
       required this.budget,
-      required this.deleted});
+      required this.isGroup,
+      required this.parent});
 
   @override
   final String id;
@@ -184,11 +198,13 @@ class _$CloudCategoryImpl implements _CloudCategory {
   @override
   final int budget;
   @override
-  final bool deleted;
+  final bool isGroup;
+  @override
+  final String parent;
 
   @override
   String toString() {
-    return 'CloudCategory(id: $id, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget, deleted: $deleted)';
+    return 'CloudCategory(id: $id, title: $title, operationType: $operationType, budgetType: $budgetType, budget: $budget, isGroup: $isGroup, parent: $parent)';
   }
 
   @override
@@ -203,12 +219,13 @@ class _$CloudCategoryImpl implements _CloudCategory {
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.budget, budget) || other.budget == budget) &&
-            (identical(other.deleted, deleted) || other.deleted == deleted));
+            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
+            (identical(other.parent, parent) || other.parent == parent));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, operationType, budgetType, budget, deleted);
+  int get hashCode => Object.hash(runtimeType, id, title, operationType,
+      budgetType, budget, isGroup, parent);
 
   /// Create a copy of CloudCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -226,7 +243,8 @@ abstract class _CloudCategory implements CloudCategory {
       required final int operationType,
       required final int budgetType,
       required final int budget,
-      required final bool deleted}) = _$CloudCategoryImpl;
+      required final bool isGroup,
+      required final String parent}) = _$CloudCategoryImpl;
 
   @override
   String get id;
@@ -239,7 +257,9 @@ abstract class _CloudCategory implements CloudCategory {
   @override
   int get budget;
   @override
-  bool get deleted;
+  bool get isGroup;
+  @override
+  String get parent;
 
   /// Create a copy of CloudCategory
   /// with the given fields replaced by the non-null parameter values.

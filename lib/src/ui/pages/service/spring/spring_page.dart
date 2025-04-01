@@ -17,36 +17,36 @@ class SpringPage extends StatelessWidget {
     final connector = SpringConnector(idToken);
     await connector.connect();
 
-    Map<model.BaseAccount, BaseAccount> addedAccounts = {};
+    Map<int, BaseAccount> addedAccounts = {};
     final accounts = await sl<DataRepository>().getAllAccounts();
     accounts.forEach((account) async {
       switch (account) {
         case model.Account():
-          addedAccounts[account] =
+          addedAccounts[account.id] =
               await connector.accounts.createAccount(account.title);
         case model.Debt():
-          addedAccounts[account] =
+          addedAccounts[account.id] =
               await connector.accounts.createDebt(account.title);
       }
     });
 
-    Map<model.Category, Category> addedCategories = {};
+    Map<int, Category> addedCategories = {};
     final categories = await sl<DataRepository>().getAllCategories();
     categories.forEach((category) async {
       switch (category) {
         case model.InputCategoryItem():
-          addedCategories[category] = await connector.categories
+          addedCategories[category.id] = await connector.categories
               .createInputCategoryItem(
-                  category.title, category.budget, category.parent?.id);
+                  category.title, category.budget, category.parentId);
         case model.OutputCategoryItem():
-          addedCategories[category] = await connector.categories
+          addedCategories[category.id] = await connector.categories
               .createOutputCategoryItem(
-                  category.title, category.budget, category.parent?.id);
+                  category.title, category.budget, category.parentId);
         case model.InputCategoryGroup():
-          addedCategories[category] = await connector.categories
+          addedCategories[category.id] = await connector.categories
               .createInputCategoryGroup(category.title);
         case model.OutputCategoryGroup():
-          addedCategories[category] = await connector.categories
+          addedCategories[category.id] = await connector.categories
               .createOutputCategoryGroup(category.title);
       }
     });
@@ -58,7 +58,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createInputOperation(
             operation.date,
             addedAccounts[operation.account] as Account,
-            addedCategories[operation.category] as InputCategoryItem,
+            addedCategories[operation.analytic] as InputCategoryItem,
             operation.sum.sum,
             _mapCurrency(operation.sum.currency),
           );
@@ -66,7 +66,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createOutputOperation(
             operation.date,
             addedAccounts[operation.account] as Account,
-            addedCategories[operation.category] as OutputCategoryItem,
+            addedCategories[operation.analytic] as OutputCategoryItem,
             operation.sum.sum,
             _mapCurrency(operation.sum.currency),
           );
@@ -74,7 +74,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createTransferOperation(
             operation.date,
             addedAccounts[operation.account] as BaseAccount,
-            addedAccounts[operation.recAccount] as BaseAccount,
+            addedAccounts[operation.analytic] as BaseAccount,
             operation.sum.sum,
             operation.recSum.sum,
             _mapCurrency(operation.sum.currency),

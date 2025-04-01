@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../../domain/models/enum/currency.dart';
+import '../../../../../utils/sum.dart';
 
 class SumField extends StatelessWidget {
   final bool highlight;
-  final int sum;
-  final Currency currency;
+  final Sum sum;
   final void Function() onTap;
 
   const SumField({
     super.key,
     required this.highlight,
     required this.sum,
-    required this.onTap, required this.currency,
+    required this.onTap,
   });
 
   @override
@@ -28,14 +28,14 @@ class SumField extends StatelessWidget {
             color: highlight
                 ? Theme.of(context).colorScheme.secondary
                 : Theme.of(context).colorScheme.primary,
-            width: 2.0,
+            width: highlight ? 2.0 : 1.0,
           ),
         ),
         //width: double.infinity,
         height: 48.0,
         alignment: Alignment.center,
         child: Text(
-          context.loc.numberFormat(sum, currency),
+          context.loc.sumFormat(sum),
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_last_operations_use_case.dart';
 
@@ -13,13 +12,13 @@ class LastOperationsEvent with _$LastOperationsEvent {
   const factory LastOperationsEvent.fetch() = _FetchLastOperationsEvent;
 
   const factory LastOperationsEvent.changeOperations({
-    required List<Operation> operations,
+    required List<OperationListItem> operations,
   }) = _ChangeOperationsLastOperationsEvent;
 }
 
 @freezed
 class LastOperationsState with _$LastOperationsState {
-  const factory LastOperationsState({required List<Operation> operations}) =
+  const factory LastOperationsState({required List<OperationListItem> operations}) =
       _LastOperationsState;
 }
 

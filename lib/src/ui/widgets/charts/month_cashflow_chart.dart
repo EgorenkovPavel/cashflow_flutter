@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models/category/category_cashflow.dart';
 
 class MonthCashflowChart extends StatelessWidget {
-  final List<CategoryCashflow> categoriesInput;
-  final List<CategoryCashflow> categoriesOutput;
+  final List<CategoryCashFlow> categoriesInput;
+  final List<CategoryCashFlow> categoriesOutput;
 
   final bool? animate;
 

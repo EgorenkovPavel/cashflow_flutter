@@ -37,7 +37,7 @@ class LastOperations extends StatelessWidget {
 class _OperationsList extends StatelessWidget {
   const _OperationsList({required this.items});
 
-  final List<Operation> items;
+  final List<OperationListItem> items;
 
   @override
   Widget build(BuildContext context) {

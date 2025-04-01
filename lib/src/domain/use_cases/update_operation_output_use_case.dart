@@ -11,8 +11,8 @@ class UpdateOperationOutputUseCase {
   Future<Operation> call({
     required Operation operation,
     required DateTime date,
-    required Account account,
-    required OutputCategoryItem category,
+    required int accountId,
+    required int categoryId,
     required Sum sum,
   }) async {
     var newOperation = OutputOperation(
@@ -20,8 +20,8 @@ class UpdateOperationOutputUseCase {
       cloudId: operation.cloudId,
       deleted: operation.deleted,
       date: date,
-      account: account,
-      category: category,
+      account: accountId,
+      category: categoryId,
       sum: sum,
     );
 

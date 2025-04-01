@@ -21,9 +21,9 @@ class CategoryCashflowDiagram extends StatelessWidget {
     return StreamBuilder<List<SumOnDate>>(
       stream: budgetType == BudgetType.MONTH
           ? sl<DataRepository>() // TODO
-              .watchCashflowByCategoryByMonth(id)
+              .watchCashFlowByCategoryByMonth(id)
           : sl<DataRepository>() // TODO
-              .watchCashflowByCategoryByYear(id),
+              .watchCashFlowByCategoryByYear(id),
       builder: (context, snapshot) {
         var data = <SumOnDate>[];
         if (snapshot.hasData) {

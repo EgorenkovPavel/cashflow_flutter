@@ -12,49 +12,120 @@ abstract class ModelMapper<C, M> {
   M updateModel(M model, C cloudItem);
 }
 
-class AccountModelMapper extends ModelMapper<CloudAccount, Account> {
+class AccountModelMapper extends ModelMapper<CloudAccount, BaseAccount> {
   final User? user;
+
   const AccountModelMapper(this.user);
 
   @override
-  Account insertModel(CloudAccount cloudAccount) => Account(
-        cloudId: cloudAccount.id,
-        title: cloudAccount.title,
-        isDebt: cloudAccount.isDebt,
-        user: user,
-      );
+  BaseAccount insertModel(CloudAccount cloudAccount) {
+    if (cloudAccount.isDebt) {
+      return Debt(
+          cloudId: cloudAccount.id,
+          title: cloudAccount.title,
+          userId: user?.id);
+    } else {
+      return Account(
+          cloudId: cloudAccount.id,
+          title: cloudAccount.title,
+          userId: user?.id);
+    }
+  }
 
   @override
-  Account updateModel(Account account, CloudAccount cloudAccount) =>
-      account.copyWith(
-        title: cloudAccount.title,
-        isDebt: cloudAccount.isDebt,
-      );
+  BaseAccount updateModel(BaseAccount account, CloudAccount cloudAccount) {
+    if (cloudAccount.isDebt) {
+      return Debt(
+          id: account.id,
+          title: cloudAccount.title,
+          cloudId: account.cloudId,
+          userId: account.userId);
+    } else {
+      return Account(
+          id: account.id,
+          title: cloudAccount.title,
+          cloudId: account.cloudId,
+          userId: account.userId);
+    }
+  }
 }
 
 class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
-  const CategoryModelMapper();
+  final CategoryGroup? parent;
+
+  const CategoryModelMapper(this.parent);
 
   @override
-  Category insertModel(CloudCategory cloudCategory) => Category(
-        title: cloudCategory.title,
-        cloudId: cloudCategory.id,
-        operationType:
-            const OperationTypeConverter().fromSql(cloudCategory.operationType),
-        budgetType:
-            const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
-        budget: cloudCategory.budget,
-      );
+  Category insertModel(CloudCategory cloudCategory) {
+    final operationType =
+        const OperationTypeConverter().fromSql(cloudCategory.operationType);
+    final budgetType =
+        const BudgetTypeConverter().fromSql(cloudCategory.budgetType);
+
+    if (cloudCategory.isGroup) {
+      if (operationType == OperationType.INPUT) {
+        return InputCategoryGroup(
+            cloudId: cloudCategory.id, title: cloudCategory.title);
+      } else {
+        return OutputCategoryGroup(
+            cloudId: cloudCategory.id, title: cloudCategory.title);
+      }
+    } else {
+      if (operationType == OperationType.INPUT) {
+        return InputCategoryItem(
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title,
+            budget: cloudCategory.budget,
+            budgetType: budgetType,
+            parentId: parent?.id);
+      } else {
+        return OutputCategoryItem(
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title,
+            budget: cloudCategory.budget,
+            budgetType: budgetType,
+            parentId: parent?.id);
+      }
+    }
+  }
 
   @override
-  Category updateModel(Category category, CloudCategory cloudCategory) =>
-      category.copyWith(
-        title: cloudCategory.title,
-        cloudId: cloudCategory.id,
-        operationType:
-            const OperationTypeConverter().fromSql(cloudCategory.operationType),
-        budgetType:
-            const BudgetTypeConverter().fromSql(cloudCategory.budgetType),
-        budget: cloudCategory.budget,
-      );
+  Category updateModel(Category category, CloudCategory cloudCategory) {
+    final operationType =
+        const OperationTypeConverter().fromSql(cloudCategory.operationType);
+    final budgetType =
+        const BudgetTypeConverter().fromSql(cloudCategory.budgetType);
+
+    if (cloudCategory.isGroup) {
+      if (operationType == OperationType.INPUT) {
+        return InputCategoryGroup(
+            id: category.id,
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title);
+      } else {
+        return OutputCategoryGroup(
+            id: category.id,
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title);
+      }
+    } else {
+      if (operationType == OperationType.INPUT) {
+        return InputCategoryItem(
+            id: category.id,
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title,
+            budget: cloudCategory.budget,
+            budgetType: budgetType,
+            parentId: parent?.id);
+      } else {
+        return OutputCategoryItem(
+            id: category.id,
+            cloudId: cloudCategory.id,
+            title: cloudCategory.title,
+            budget: cloudCategory.budget,
+            budgetType: budgetType,
+            parentId: parent?.id);
+      }
+    }
+  }
 }

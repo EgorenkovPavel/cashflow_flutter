@@ -10,14 +10,14 @@ class InsertOperationInputUseCase {
 
   Future<Operation> call({
     required DateTime date,
-    required Account account,
-    required InputCategoryItem category,
+    required int accountId,
+    required int categoryId,
     required Sum sum,
   }) {
     final newOperation = InputOperation(
       date: date,
-      account: account,
-      category: category,
+      account: accountId,
+      category: categoryId,
       sum: sum,
     );
 

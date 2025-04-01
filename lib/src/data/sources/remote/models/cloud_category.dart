@@ -10,6 +10,7 @@ class CloudCategory with _$CloudCategory {
     required int operationType,
     required int budgetType,
     required int budget,
-    required bool deleted,
+    required bool isGroup,
+    required String parent,
   }) = _CloudCategory;
 }

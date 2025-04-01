@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_tracker/src/domain/models/operation/operation.dart';
+import 'package:money_tracker/src/domain/models.dart';
 
 class ListDividerOperation extends StatelessWidget {
-  final Operation? operation1;
-  final Operation operation2;
+  final OperationListItem? operation1;
+  final OperationListItem operation2;
   final _TitleType _titleType;
 
   const ListDividerOperation.day(this.operation1, this.operation2, {super.key})

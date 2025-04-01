@@ -6,7 +6,7 @@ class Carousel<T> extends StatelessWidget {
   final double itemHeight;
 
   final List<T> items;
-  final bool Function(T) initialItemFinder;
+  final T? initialValue;
   final ValueChanged<int> onPageChanged;
   final IndexedWidgetBuilder itemBuilder;
 
@@ -15,16 +15,20 @@ class Carousel<T> extends StatelessWidget {
     required this.items,
     required this.onPageChanged,
     required this.itemBuilder,
-    required this.initialItemFinder,
     required this.itemHeight,
+    required this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (initialValue == null){
+      onPageChanged(0);
+    }
+
     return LayoutBuilder(
       builder: (context, constrains) {
         var pageController = PageController(
-          //initialPage: items.indexWhere(initialItemFinder),
+          initialPage: initialValue == null ? 0 : items.indexOf(initialValue!),
           keepPage: true,
           viewportFraction: 1 / (constrains.maxHeight / itemHeight),
         );
@@ -37,7 +41,10 @@ class Carousel<T> extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 3.0,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary,
                   ),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -62,20 +69,26 @@ class Carousel<T> extends StatelessWidget {
                   },
                   animation: pageController,
                   child: GestureDetector(
-                    onTap: () => pageController.animateToPage(
-                      pos,
-                      duration: const Duration(seconds: 1),
-                      curve: const ElasticOutCurve(),
-                    ),
+                    onTap: () =>
+                        pageController.animateToPage(
+                          pos,
+                          duration: const Duration(seconds: 1),
+                          curve: const ElasticOutCurve(),
+                        ),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
+                          color: Theme
+                              .of(context)
+                              .cardColor,
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
                             width: 1.0,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .primary,
                           ),
                         ),
                         height: 20.0,

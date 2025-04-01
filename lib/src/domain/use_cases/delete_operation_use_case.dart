@@ -6,5 +6,5 @@ class DeleteOperationUseCase{
 
   DeleteOperationUseCase(this._dataRepository);
 
-  Future call(Operation operation) => _dataRepository.deleteOperation(operation);
+  Future call(Operation operation) => _dataRepository.deleteOperationById(operation.id);
 }

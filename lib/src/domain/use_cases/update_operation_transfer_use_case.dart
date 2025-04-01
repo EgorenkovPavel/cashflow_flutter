@@ -11,8 +11,8 @@ class UpdateOperationTransferUseCase {
   Future<Operation> call({
     required Operation operation,
     required DateTime date,
-    required BaseAccount account,
-    required BaseAccount recAccount,
+    required int accountId,
+    required int recAccountId,
     required Sum sum,
     required Sum recSum,
   }) async {
@@ -21,8 +21,8 @@ class UpdateOperationTransferUseCase {
       cloudId: operation.cloudId,
       deleted: operation.deleted,
       date: date,
-      account: account,
-      recAccount: recAccount,
+      account: accountId,
+      recAccount: recAccountId,
       sum: sum,
       recSum: recSum,
     );

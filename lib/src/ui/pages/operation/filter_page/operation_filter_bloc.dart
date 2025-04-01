@@ -18,10 +18,10 @@ class OperationFilterEvent with _$OperationFilterEvent {
     required DateTimeRange period,
   }) = _SetPeriodOperationFilterEvent;
 
-  const factory OperationFilterEvent.addAccount({required BaseAccount account}) =
+  const factory OperationFilterEvent.addAccount({required BaseAccountListItem account}) =
       _AddAccountOperationFilterEvent;
 
-  const factory OperationFilterEvent.removeAccount({required BaseAccount account}) =
+  const factory OperationFilterEvent.removeAccount({required BaseAccountListItem account}) =
       _RemoveAccountOperationFilterEvent;
 
   const factory OperationFilterEvent.addCategory({required Category category}) =
@@ -38,38 +38,38 @@ class OperationFilterState with _$OperationFilterState {
 
   const factory OperationFilterState({
     DateTimeRange? period,
-    @Default({}) Set<BaseAccount> accounts,
-    @Default({}) Set<Category> categories,
+    @Default({}) Set<int> accountIds,
+    @Default({}) Set<int> categoryIds,
   }) = _OperationFilterState;
 
   OperationListFilter get filter => OperationListFilter(
         period: period,
-        accounts: accounts,
-        categories: categories,
+        accountIds: accountIds,
+        categoryIds: categoryIds,
       );
 
   static byFilter(OperationListFilter cfilter) => OperationFilterState(
         period: cfilter.period,
-        accounts: cfilter.accounts,
-        categories: cfilter.categories,
+        accountIds: cfilter.accountIds,
+        categoryIds: cfilter.categoryIds,
       );
 
   OperationFilterState resetPeriod() => copyWith(period: null);
 
-  OperationFilterState addAccount(BaseAccount account) => copyWith(
-        accounts: accounts.toSet()..add(account),
+  OperationFilterState addAccount(BaseAccountListItem account) => copyWith(
+        accountIds: accountIds.toSet()..add(account.id),
       );
 
-  OperationFilterState removeAccount(BaseAccount account) => copyWith(
-        accounts: accounts.toSet()..removeWhere((a) => a.id == account.id),
+  OperationFilterState removeAccount(BaseAccountListItem account) => copyWith(
+        accountIds: accountIds.toSet()..remove(account.id),
       );
 
   OperationFilterState addCategory(Category category) => copyWith(
-        categories: categories.toSet()..add(category),
+        categoryIds: categoryIds.toSet()..add(category.id),
       );
 
   OperationFilterState removeCategory(Category category) => copyWith(
-        categories: categories.toSet()..removeWhere((c) => c.id == category.id),
+        categoryIds: categoryIds.toSet()..remove(category.id),
       );
 
 }

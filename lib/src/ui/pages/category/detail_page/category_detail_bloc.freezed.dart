@@ -20,21 +20,22 @@ mixin _$CategoryDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int categoryId) fetch,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(List<Operation> operations) changeOperations,
+    required TResult Function(List<OperationListItem> operations)
+        changeOperations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int categoryId)? fetch,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(List<Operation> operations)? changeOperations,
+    TResult? Function(List<OperationListItem> operations)? changeOperations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int categoryId)? fetch,
     TResult Function(Category category)? changeCategory,
-    TResult Function(List<Operation> operations)? changeOperations,
+    TResult Function(List<OperationListItem> operations)? changeOperations,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -162,7 +163,8 @@ class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int categoryId) fetch,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(List<Operation> operations) changeOperations,
+    required TResult Function(List<OperationListItem> operations)
+        changeOperations,
   }) {
     return fetch(categoryId);
   }
@@ -172,7 +174,7 @@ class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int categoryId)? fetch,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(List<Operation> operations)? changeOperations,
+    TResult? Function(List<OperationListItem> operations)? changeOperations,
   }) {
     return fetch?.call(categoryId);
   }
@@ -182,7 +184,7 @@ class _$FetchCategoryDetailEventImpl implements _FetchCategoryDetailEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int categoryId)? fetch,
     TResult Function(Category category)? changeCategory,
-    TResult Function(List<Operation> operations)? changeOperations,
+    TResult Function(List<OperationListItem> operations)? changeOperations,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -320,7 +322,8 @@ class _$ChangeCategoryCategoryDetailEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function(int categoryId) fetch,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(List<Operation> operations) changeOperations,
+    required TResult Function(List<OperationListItem> operations)
+        changeOperations,
   }) {
     return changeCategory(category);
   }
@@ -330,7 +333,7 @@ class _$ChangeCategoryCategoryDetailEventImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int categoryId)? fetch,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(List<Operation> operations)? changeOperations,
+    TResult? Function(List<OperationListItem> operations)? changeOperations,
   }) {
     return changeCategory?.call(category);
   }
@@ -340,7 +343,7 @@ class _$ChangeCategoryCategoryDetailEventImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int categoryId)? fetch,
     TResult Function(Category category)? changeCategory,
-    TResult Function(List<Operation> operations)? changeOperations,
+    TResult Function(List<OperationListItem> operations)? changeOperations,
     required TResult orElse(),
   }) {
     if (changeCategory != null) {
@@ -411,7 +414,7 @@ abstract class _$$ChangeOperationsCategoryDetailEventImplCopyWith<$Res> {
           $Res Function(_$ChangeOperationsCategoryDetailEventImpl) then) =
       __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Operation> operations});
+  $Res call({List<OperationListItem> operations});
 }
 
 /// @nodoc
@@ -435,7 +438,7 @@ class __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<Operation>,
+              as List<OperationListItem>,
     ));
   }
 }
@@ -445,12 +448,12 @@ class __$$ChangeOperationsCategoryDetailEventImplCopyWithImpl<$Res>
 class _$ChangeOperationsCategoryDetailEventImpl
     implements _ChangeOperationsCategoryDetailEvent {
   const _$ChangeOperationsCategoryDetailEventImpl(
-      {required final List<Operation> operations})
+      {required final List<OperationListItem> operations})
       : _operations = operations;
 
-  final List<Operation> _operations;
+  final List<OperationListItem> _operations;
   @override
-  List<Operation> get operations {
+  List<OperationListItem> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -489,7 +492,8 @@ class _$ChangeOperationsCategoryDetailEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function(int categoryId) fetch,
     required TResult Function(Category category) changeCategory,
-    required TResult Function(List<Operation> operations) changeOperations,
+    required TResult Function(List<OperationListItem> operations)
+        changeOperations,
   }) {
     return changeOperations(operations);
   }
@@ -499,7 +503,7 @@ class _$ChangeOperationsCategoryDetailEventImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int categoryId)? fetch,
     TResult? Function(Category category)? changeCategory,
-    TResult? Function(List<Operation> operations)? changeOperations,
+    TResult? Function(List<OperationListItem> operations)? changeOperations,
   }) {
     return changeOperations?.call(operations);
   }
@@ -509,7 +513,7 @@ class _$ChangeOperationsCategoryDetailEventImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int categoryId)? fetch,
     TResult Function(Category category)? changeCategory,
-    TResult Function(List<Operation> operations)? changeOperations,
+    TResult Function(List<OperationListItem> operations)? changeOperations,
     required TResult orElse(),
   }) {
     if (changeOperations != null) {
@@ -560,10 +564,10 @@ class _$ChangeOperationsCategoryDetailEventImpl
 abstract class _ChangeOperationsCategoryDetailEvent
     implements CategoryDetailEvent {
   const factory _ChangeOperationsCategoryDetailEvent(
-          {required final List<Operation> operations}) =
+          {required final List<OperationListItem> operations}) =
       _$ChangeOperationsCategoryDetailEventImpl;
 
-  List<Operation> get operations;
+  List<OperationListItem> get operations;
 
   /// Create a copy of CategoryDetailEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -578,7 +582,7 @@ mixin _$CategoryDetailState {
   BudgetType get budgetType => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   int get budget => throw _privateConstructorUsedError;
-  List<Operation> get operations => throw _privateConstructorUsedError;
+  List<OperationListItem> get operations => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -597,7 +601,7 @@ abstract class $CategoryDetailStateCopyWith<$Res> {
       {BudgetType budgetType,
       String title,
       int budget,
-      List<Operation> operations});
+      List<OperationListItem> operations});
 }
 
 /// @nodoc
@@ -636,7 +640,7 @@ class _$CategoryDetailStateCopyWithImpl<$Res, $Val extends CategoryDetailState>
       operations: null == operations
           ? _value.operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<Operation>,
+              as List<OperationListItem>,
     ) as $Val);
   }
 }
@@ -653,7 +657,7 @@ abstract class _$$CategoryDetailStateImplCopyWith<$Res>
       {BudgetType budgetType,
       String title,
       int budget,
-      List<Operation> operations});
+      List<OperationListItem> operations});
 }
 
 /// @nodoc
@@ -690,7 +694,7 @@ class __$$CategoryDetailStateImplCopyWithImpl<$Res>
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<Operation>,
+              as List<OperationListItem>,
     ));
   }
 }
@@ -702,7 +706,7 @@ class _$CategoryDetailStateImpl implements _CategoryDetailState {
       {required this.budgetType,
       required this.title,
       required this.budget,
-      required final List<Operation> operations})
+      required final List<OperationListItem> operations})
       : _operations = operations;
 
   @override
@@ -711,9 +715,9 @@ class _$CategoryDetailStateImpl implements _CategoryDetailState {
   final String title;
   @override
   final int budget;
-  final List<Operation> _operations;
+  final List<OperationListItem> _operations;
   @override
-  List<Operation> get operations {
+  List<OperationListItem> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -753,10 +757,11 @@ class _$CategoryDetailStateImpl implements _CategoryDetailState {
 
 abstract class _CategoryDetailState implements CategoryDetailState {
   const factory _CategoryDetailState(
-      {required final BudgetType budgetType,
-      required final String title,
-      required final int budget,
-      required final List<Operation> operations}) = _$CategoryDetailStateImpl;
+          {required final BudgetType budgetType,
+          required final String title,
+          required final int budget,
+          required final List<OperationListItem> operations}) =
+      _$CategoryDetailStateImpl;
 
   @override
   BudgetType get budgetType;
@@ -765,7 +770,7 @@ abstract class _CategoryDetailState implements CategoryDetailState {
   @override
   int get budget;
   @override
-  List<Operation> get operations;
+  List<OperationListItem> get operations;
 
   /// Create a copy of CategoryDetailState
   /// with the given fields replaced by the non-null parameter values.

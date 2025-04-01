@@ -18,31 +18,34 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CategoryInputEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -56,6 +59,8 @@ mixin _$CategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,6 +72,7 @@ mixin _$CategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +84,7 @@ mixin _$CategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -112,7 +119,7 @@ abstract class _$$InitByTypeCategoryInputEventImplCopyWith<$Res> {
           $Res Function(_$InitByTypeCategoryInputEventImpl) then) =
       __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({OperationType operationType});
+  $Res call({CategoryType type, bool isGroup});
 }
 
 /// @nodoc
@@ -130,13 +137,18 @@ class __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? operationType = null,
+    Object? type = null,
+    Object? isGroup = null,
   }) {
     return _then(_$InitByTypeCategoryInputEventImpl(
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -145,14 +157,17 @@ class __$$InitByTypeCategoryInputEventImplCopyWithImpl<$Res>
 
 class _$InitByTypeCategoryInputEventImpl
     implements _InitByTypeCategoryInputEvent {
-  const _$InitByTypeCategoryInputEventImpl({required this.operationType});
+  const _$InitByTypeCategoryInputEventImpl(
+      {required this.type, required this.isGroup});
 
   @override
-  final OperationType operationType;
+  final CategoryType type;
+  @override
+  final bool isGroup;
 
   @override
   String toString() {
-    return 'CategoryInputEvent.initByType(operationType: $operationType)';
+    return 'CategoryInputEvent.initByType(type: $type, isGroup: $isGroup)';
   }
 
   @override
@@ -160,12 +175,12 @@ class _$InitByTypeCategoryInputEventImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitByTypeCategoryInputEventImpl &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.isGroup, isGroup) || other.isGroup == isGroup));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, operationType);
+  int get hashCode => Object.hash(runtimeType, type, isGroup);
 
   /// Create a copy of CategoryInputEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -180,42 +195,45 @@ class _$InitByTypeCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
-    return initByType(operationType);
+    return initByType(type, isGroup);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
-    return initByType?.call(operationType);
+    return initByType?.call(type, isGroup);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
     if (initByType != null) {
-      return initByType(operationType);
+      return initByType(type, isGroup);
     }
     return orElse();
   }
@@ -230,6 +248,8 @@ class _$InitByTypeCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initByType(this);
@@ -244,6 +264,7 @@ class _$InitByTypeCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initByType?.call(this);
@@ -258,6 +279,7 @@ class _$InitByTypeCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -270,10 +292,11 @@ class _$InitByTypeCategoryInputEventImpl
 
 abstract class _InitByTypeCategoryInputEvent implements CategoryInputEvent {
   const factory _InitByTypeCategoryInputEvent(
-          {required final OperationType operationType}) =
-      _$InitByTypeCategoryInputEventImpl;
+      {required final CategoryType type,
+      required final bool isGroup}) = _$InitByTypeCategoryInputEventImpl;
 
-  OperationType get operationType;
+  CategoryType get type;
+  bool get isGroup;
 
   /// Create a copy of CategoryInputEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -356,11 +379,12 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
     return initById(categoryId);
@@ -369,11 +393,12 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
     return initById?.call(categoryId);
@@ -382,11 +407,12 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -406,6 +432,8 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return initById(this);
@@ -420,6 +448,7 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return initById?.call(this);
@@ -434,6 +463,7 @@ class _$InitByIdCategoryInputEventImpl implements _InitByIdCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -531,11 +561,12 @@ class _$ChangeTitleCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
     return changeTitle(title);
@@ -544,11 +575,12 @@ class _$ChangeTitleCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
     return changeTitle?.call(title);
@@ -557,11 +589,12 @@ class _$ChangeTitleCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -581,6 +614,8 @@ class _$ChangeTitleCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeTitle(this);
@@ -595,6 +630,7 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeTitle?.call(this);
@@ -609,6 +645,7 @@ class _$ChangeTitleCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -707,11 +744,12 @@ class _$ChangeBudgetCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
     return changeBudget(budget);
@@ -720,11 +758,12 @@ class _$ChangeBudgetCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
     return changeBudget?.call(budget);
@@ -733,11 +772,12 @@ class _$ChangeBudgetCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -757,6 +797,8 @@ class _$ChangeBudgetCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudget(this);
@@ -771,6 +813,7 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudget?.call(this);
@@ -785,6 +828,7 @@ class _$ChangeBudgetCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -884,11 +928,12 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
     return changeBudgetType(budgetType);
@@ -897,11 +942,12 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
     return changeBudgetType?.call(budgetType);
@@ -910,11 +956,12 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -934,6 +981,8 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return changeBudgetType(this);
@@ -948,6 +997,7 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return changeBudgetType?.call(this);
@@ -962,6 +1012,7 @@ class _$ChangeBudgetTypeCategoryInputEventImpl
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -985,6 +1036,190 @@ abstract class _ChangeBudgetTypeCategoryInputEvent
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeBudgetTypeCategoryInputEventImplCopyWith<
           _$ChangeBudgetTypeCategoryInputEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ChangeParentCategoryInputEventImplCopyWith<$Res> {
+  factory _$$ChangeParentCategoryInputEventImplCopyWith(
+          _$ChangeParentCategoryInputEventImpl value,
+          $Res Function(_$ChangeParentCategoryInputEventImpl) then) =
+      __$$ChangeParentCategoryInputEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? parentId});
+}
+
+/// @nodoc
+class __$$ChangeParentCategoryInputEventImplCopyWithImpl<$Res>
+    extends _$CategoryInputEventCopyWithImpl<$Res,
+        _$ChangeParentCategoryInputEventImpl>
+    implements _$$ChangeParentCategoryInputEventImplCopyWith<$Res> {
+  __$$ChangeParentCategoryInputEventImplCopyWithImpl(
+      _$ChangeParentCategoryInputEventImpl _value,
+      $Res Function(_$ChangeParentCategoryInputEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? parentId = freezed,
+  }) {
+    return _then(_$ChangeParentCategoryInputEventImpl(
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeParentCategoryInputEventImpl
+    implements _ChangeParentCategoryInputEvent {
+  const _$ChangeParentCategoryInputEventImpl({required this.parentId});
+
+  @override
+  final int? parentId;
+
+  @override
+  String toString() {
+    return 'CategoryInputEvent.changeParent(parentId: $parentId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeParentCategoryInputEventImpl &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, parentId);
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeParentCategoryInputEventImplCopyWith<
+          _$ChangeParentCategoryInputEventImpl>
+      get copyWith => __$$ChangeParentCategoryInputEventImplCopyWithImpl<
+          _$ChangeParentCategoryInputEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CategoryType type, bool isGroup) initByType,
+    required TResult Function(int categoryId) initById,
+    required TResult Function(String title) changeTitle,
+    required TResult Function(int budget) changeBudget,
+    required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
+    required TResult Function() save,
+  }) {
+    return changeParent(parentId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
+    TResult? Function(int categoryId)? initById,
+    TResult? Function(String title)? changeTitle,
+    TResult? Function(int budget)? changeBudget,
+    TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
+    TResult? Function()? save,
+  }) {
+    return changeParent?.call(parentId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CategoryType type, bool isGroup)? initByType,
+    TResult Function(int categoryId)? initById,
+    TResult Function(String title)? changeTitle,
+    TResult Function(int budget)? changeBudget,
+    TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
+    TResult Function()? save,
+    required TResult orElse(),
+  }) {
+    if (changeParent != null) {
+      return changeParent(parentId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitByTypeCategoryInputEvent value) initByType,
+    required TResult Function(_InitByIdCategoryInputEvent value) initById,
+    required TResult Function(_ChangeTitleCategoryInputEvent value) changeTitle,
+    required TResult Function(_ChangeBudgetCategoryInputEvent value)
+        changeBudget,
+    required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
+        changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
+    required TResult Function(_SaveCategoryInputEvent value) save,
+  }) {
+    return changeParent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitByTypeCategoryInputEvent value)? initByType,
+    TResult? Function(_InitByIdCategoryInputEvent value)? initById,
+    TResult? Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
+    TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
+    TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
+        changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
+    TResult? Function(_SaveCategoryInputEvent value)? save,
+  }) {
+    return changeParent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitByTypeCategoryInputEvent value)? initByType,
+    TResult Function(_InitByIdCategoryInputEvent value)? initById,
+    TResult Function(_ChangeTitleCategoryInputEvent value)? changeTitle,
+    TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
+    TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
+        changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
+    TResult Function(_SaveCategoryInputEvent value)? save,
+    required TResult orElse(),
+  }) {
+    if (changeParent != null) {
+      return changeParent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeParentCategoryInputEvent implements CategoryInputEvent {
+  const factory _ChangeParentCategoryInputEvent(
+      {required final int? parentId}) = _$ChangeParentCategoryInputEventImpl;
+
+  int? get parentId;
+
+  /// Create a copy of CategoryInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeParentCategoryInputEventImplCopyWith<
+          _$ChangeParentCategoryInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1032,11 +1267,12 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationType) initByType,
+    required TResult Function(CategoryType type, bool isGroup) initByType,
     required TResult Function(int categoryId) initById,
     required TResult Function(String title) changeTitle,
     required TResult Function(int budget) changeBudget,
     required TResult Function(BudgetType budgetType) changeBudgetType,
+    required TResult Function(int? parentId) changeParent,
     required TResult Function() save,
   }) {
     return save();
@@ -1045,11 +1281,12 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationType)? initByType,
+    TResult? Function(CategoryType type, bool isGroup)? initByType,
     TResult? Function(int categoryId)? initById,
     TResult? Function(String title)? changeTitle,
     TResult? Function(int budget)? changeBudget,
     TResult? Function(BudgetType budgetType)? changeBudgetType,
+    TResult? Function(int? parentId)? changeParent,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -1058,11 +1295,12 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationType)? initByType,
+    TResult Function(CategoryType type, bool isGroup)? initByType,
     TResult Function(int categoryId)? initById,
     TResult Function(String title)? changeTitle,
     TResult Function(int budget)? changeBudget,
     TResult Function(BudgetType budgetType)? changeBudgetType,
+    TResult Function(int? parentId)? changeParent,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -1082,6 +1320,8 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
         changeBudget,
     required TResult Function(_ChangeBudgetTypeCategoryInputEvent value)
         changeBudgetType,
+    required TResult Function(_ChangeParentCategoryInputEvent value)
+        changeParent,
     required TResult Function(_SaveCategoryInputEvent value) save,
   }) {
     return save(this);
@@ -1096,6 +1336,7 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult? Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult? Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult? Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult? Function(_SaveCategoryInputEvent value)? save,
   }) {
     return save?.call(this);
@@ -1110,6 +1351,7 @@ class _$SaveCategoryInputEventImpl implements _SaveCategoryInputEvent {
     TResult Function(_ChangeBudgetCategoryInputEvent value)? changeBudget,
     TResult Function(_ChangeBudgetTypeCategoryInputEvent value)?
         changeBudgetType,
+    TResult Function(_ChangeParentCategoryInputEvent value)? changeParent,
     TResult Function(_SaveCategoryInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -1127,13 +1369,89 @@ abstract class _SaveCategoryInputEvent implements CategoryInputEvent {
 /// @nodoc
 mixin _$CategoryInputState {
   Category? get category => throw _privateConstructorUsedError;
-  OperationType get operationType => throw _privateConstructorUsedError;
-  bool get isGroup => throw _privateConstructorUsedError;
-  BudgetType get budgetType => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  int get budget => throw _privateConstructorUsedError;
   bool get isSaved => throw _privateConstructorUsedError;
-  CategoryGroup? get parent => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            InputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        inputItem,
+    required TResult Function(
+            OutputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        outputItem,
+    required TResult Function(
+            InputCategoryGroup? category, String title, bool isSaved)
+        inputGroup,
+    required TResult Function(
+            OutputCategoryGroup? category, String title, bool isSaved)
+        outputGroup,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult? Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult? Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult? Function(
+            OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult Function(OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InputItemCategoryInputState value) inputItem,
+    required TResult Function(_OutputItemCategoryInputState value) outputItem,
+    required TResult Function(_InputGroupCategoryInputState value) inputGroup,
+    required TResult Function(_OutputGroupCategoryInputState value) outputGroup,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InputItemCategoryInputState value)? inputItem,
+    TResult? Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult? Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult? Function(_OutputGroupCategoryInputState value)? outputGroup,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InputItemCategoryInputState value)? inputItem,
+    TResult Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult Function(_OutputGroupCategoryInputState value)? outputGroup,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryInputState
   /// with the given fields replaced by the non-null parameter values.
@@ -1148,15 +1466,7 @@ abstract class $CategoryInputStateCopyWith<$Res> {
           CategoryInputState value, $Res Function(CategoryInputState) then) =
       _$CategoryInputStateCopyWithImpl<$Res, CategoryInputState>;
   @useResult
-  $Res call(
-      {Category? category,
-      OperationType operationType,
-      bool isGroup,
-      BudgetType budgetType,
-      String title,
-      int budget,
-      bool isSaved,
-      CategoryGroup? parent});
+  $Res call({String title, bool isSaved});
 }
 
 /// @nodoc
@@ -1174,77 +1484,48 @@ class _$CategoryInputStateCopyWithImpl<$Res, $Val extends CategoryInputState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
-    Object? operationType = null,
-    Object? isGroup = null,
-    Object? budgetType = null,
     Object? title = null,
-    Object? budget = null,
     Object? isSaved = null,
-    Object? parent = freezed,
   }) {
     return _then(_value.copyWith(
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      isGroup: null == isGroup
-          ? _value.isGroup
-          : isGroup // ignore: cast_nullable_to_non_nullable
-              as bool,
-      budgetType: null == budgetType
-          ? _value.budgetType
-          : budgetType // ignore: cast_nullable_to_non_nullable
-              as BudgetType,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      budget: null == budget
-          ? _value.budget
-          : budget // ignore: cast_nullable_to_non_nullable
-              as int,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as CategoryGroup?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$CategoryInputStateImplCopyWith<$Res>
+abstract class _$$InputItemCategoryInputStateImplCopyWith<$Res>
     implements $CategoryInputStateCopyWith<$Res> {
-  factory _$$CategoryInputStateImplCopyWith(_$CategoryInputStateImpl value,
-          $Res Function(_$CategoryInputStateImpl) then) =
-      __$$CategoryInputStateImplCopyWithImpl<$Res>;
+  factory _$$InputItemCategoryInputStateImplCopyWith(
+          _$InputItemCategoryInputStateImpl value,
+          $Res Function(_$InputItemCategoryInputStateImpl) then) =
+      __$$InputItemCategoryInputStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {Category? category,
-      OperationType operationType,
-      bool isGroup,
+      {InputCategoryItem? category,
       BudgetType budgetType,
       String title,
       int budget,
-      bool isSaved,
-      CategoryGroup? parent});
+      int? parent,
+      bool isSaved});
 }
 
 /// @nodoc
-class __$$CategoryInputStateImplCopyWithImpl<$Res>
-    extends _$CategoryInputStateCopyWithImpl<$Res, _$CategoryInputStateImpl>
-    implements _$$CategoryInputStateImplCopyWith<$Res> {
-  __$$CategoryInputStateImplCopyWithImpl(_$CategoryInputStateImpl _value,
-      $Res Function(_$CategoryInputStateImpl) _then)
+class __$$InputItemCategoryInputStateImplCopyWithImpl<$Res>
+    extends _$CategoryInputStateCopyWithImpl<$Res,
+        _$InputItemCategoryInputStateImpl>
+    implements _$$InputItemCategoryInputStateImplCopyWith<$Res> {
+  __$$InputItemCategoryInputStateImplCopyWithImpl(
+      _$InputItemCategoryInputStateImpl _value,
+      $Res Function(_$InputItemCategoryInputStateImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of CategoryInputState
@@ -1253,27 +1534,17 @@ class __$$CategoryInputStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? category = freezed,
-    Object? operationType = null,
-    Object? isGroup = null,
     Object? budgetType = null,
     Object? title = null,
     Object? budget = null,
-    Object? isSaved = null,
     Object? parent = freezed,
+    Object? isSaved = null,
   }) {
-    return _then(_$CategoryInputStateImpl(
+    return _then(_$InputItemCategoryInputStateImpl(
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      isGroup: null == isGroup
-          ? _value.isGroup
-          : isGroup // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as InputCategoryItem?,
       budgetType: null == budgetType
           ? _value.budgetType
           : budgetType // ignore: cast_nullable_to_non_nullable
@@ -1286,37 +1557,32 @@ class __$$CategoryInputStateImplCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as int,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as int?,
       isSaved: null == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as CategoryGroup?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$CategoryInputStateImpl implements _CategoryInputState {
-  const _$CategoryInputStateImpl(
+class _$InputItemCategoryInputStateImpl extends _InputItemCategoryInputState {
+  const _$InputItemCategoryInputStateImpl(
       {this.category,
-      required this.operationType,
-      required this.isGroup,
       required this.budgetType,
       required this.title,
       required this.budget,
-      required this.isSaved,
-      required this.parent});
+      required this.parent,
+      required this.isSaved})
+      : super._();
 
   @override
-  final Category? category;
-  @override
-  final OperationType operationType;
-  @override
-  final bool isGroup;
+  final InputCategoryItem? category;
   @override
   final BudgetType budgetType;
   @override
@@ -1324,79 +1590,879 @@ class _$CategoryInputStateImpl implements _CategoryInputState {
   @override
   final int budget;
   @override
-  final bool isSaved;
+  final int? parent;
   @override
-  final CategoryGroup? parent;
+  final bool isSaved;
 
   @override
   String toString() {
-    return 'CategoryInputState(category: $category, operationType: $operationType, isGroup: $isGroup, budgetType: $budgetType, title: $title, budget: $budget, isSaved: $isSaved, parent: $parent)';
+    return 'CategoryInputState.inputItem(category: $category, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryInputStateImpl &&
+            other is _$InputItemCategoryInputStateImpl &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType) &&
-            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
             (identical(other.budgetType, budgetType) ||
                 other.budgetType == budgetType) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.budget, budget) || other.budget == budget) &&
-            (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
-            (identical(other.parent, parent) || other.parent == parent));
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, category, operationType, isGroup,
-      budgetType, title, budget, isSaved, parent);
+  int get hashCode => Object.hash(
+      runtimeType, category, budgetType, title, budget, parent, isSaved);
 
   /// Create a copy of CategoryInputState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
-      __$$CategoryInputStateImplCopyWithImpl<_$CategoryInputStateImpl>(
-          this, _$identity);
+  _$$InputItemCategoryInputStateImplCopyWith<_$InputItemCategoryInputStateImpl>
+      get copyWith => __$$InputItemCategoryInputStateImplCopyWithImpl<
+          _$InputItemCategoryInputStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            InputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        inputItem,
+    required TResult Function(
+            OutputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        outputItem,
+    required TResult Function(
+            InputCategoryGroup? category, String title, bool isSaved)
+        inputGroup,
+    required TResult Function(
+            OutputCategoryGroup? category, String title, bool isSaved)
+        outputGroup,
+  }) {
+    return inputItem(category, budgetType, title, budget, parent, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult? Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult? Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult? Function(
+            OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+  }) {
+    return inputItem?.call(
+        category, budgetType, title, budget, parent, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult Function(OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+    required TResult orElse(),
+  }) {
+    if (inputItem != null) {
+      return inputItem(category, budgetType, title, budget, parent, isSaved);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InputItemCategoryInputState value) inputItem,
+    required TResult Function(_OutputItemCategoryInputState value) outputItem,
+    required TResult Function(_InputGroupCategoryInputState value) inputGroup,
+    required TResult Function(_OutputGroupCategoryInputState value) outputGroup,
+  }) {
+    return inputItem(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InputItemCategoryInputState value)? inputItem,
+    TResult? Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult? Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult? Function(_OutputGroupCategoryInputState value)? outputGroup,
+  }) {
+    return inputItem?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InputItemCategoryInputState value)? inputItem,
+    TResult Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult Function(_OutputGroupCategoryInputState value)? outputGroup,
+    required TResult orElse(),
+  }) {
+    if (inputItem != null) {
+      return inputItem(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _CategoryInputState implements CategoryInputState {
-  const factory _CategoryInputState(
-      {final Category? category,
-      required final OperationType operationType,
-      required final bool isGroup,
+abstract class _InputItemCategoryInputState extends CategoryInputState {
+  const factory _InputItemCategoryInputState(
+      {final InputCategoryItem? category,
       required final BudgetType budgetType,
       required final String title,
       required final int budget,
-      required final bool isSaved,
-      required final CategoryGroup? parent}) = _$CategoryInputStateImpl;
+      required final int? parent,
+      required final bool isSaved}) = _$InputItemCategoryInputStateImpl;
+  const _InputItemCategoryInputState._() : super._();
 
   @override
-  Category? get category;
-  @override
-  OperationType get operationType;
-  @override
-  bool get isGroup;
-  @override
+  InputCategoryItem? get category;
   BudgetType get budgetType;
   @override
   String get title;
-  @override
   int get budget;
+  int? get parent;
   @override
   bool get isSaved;
-  @override
-  CategoryGroup? get parent;
 
   /// Create a copy of CategoryInputState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryInputStateImplCopyWith<_$CategoryInputStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$InputItemCategoryInputStateImplCopyWith<_$InputItemCategoryInputStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OutputItemCategoryInputStateImplCopyWith<$Res>
+    implements $CategoryInputStateCopyWith<$Res> {
+  factory _$$OutputItemCategoryInputStateImplCopyWith(
+          _$OutputItemCategoryInputStateImpl value,
+          $Res Function(_$OutputItemCategoryInputStateImpl) then) =
+      __$$OutputItemCategoryInputStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {OutputCategoryItem? category,
+      BudgetType budgetType,
+      String title,
+      int budget,
+      int? parent,
+      bool isSaved});
+}
+
+/// @nodoc
+class __$$OutputItemCategoryInputStateImplCopyWithImpl<$Res>
+    extends _$CategoryInputStateCopyWithImpl<$Res,
+        _$OutputItemCategoryInputStateImpl>
+    implements _$$OutputItemCategoryInputStateImplCopyWith<$Res> {
+  __$$OutputItemCategoryInputStateImplCopyWithImpl(
+      _$OutputItemCategoryInputStateImpl _value,
+      $Res Function(_$OutputItemCategoryInputStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? category = freezed,
+    Object? budgetType = null,
+    Object? title = null,
+    Object? budget = null,
+    Object? parent = freezed,
+    Object? isSaved = null,
+  }) {
+    return _then(_$OutputItemCategoryInputStateImpl(
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as OutputCategoryItem?,
+      budgetType: null == budgetType
+          ? _value.budgetType
+          : budgetType // ignore: cast_nullable_to_non_nullable
+              as BudgetType,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as int,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OutputItemCategoryInputStateImpl extends _OutputItemCategoryInputState {
+  const _$OutputItemCategoryInputStateImpl(
+      {this.category,
+      required this.budgetType,
+      required this.title,
+      required this.budget,
+      required this.parent,
+      required this.isSaved})
+      : super._();
+
+  @override
+  final OutputCategoryItem? category;
+  @override
+  final BudgetType budgetType;
+  @override
+  final String title;
+  @override
+  final int budget;
+  @override
+  final int? parent;
+  @override
+  final bool isSaved;
+
+  @override
+  String toString() {
+    return 'CategoryInputState.outputItem(category: $category, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutputItemCategoryInputStateImpl &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.budgetType, budgetType) ||
+                other.budgetType == budgetType) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.budget, budget) || other.budget == budget) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, category, budgetType, title, budget, parent, isSaved);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutputItemCategoryInputStateImplCopyWith<
+          _$OutputItemCategoryInputStateImpl>
+      get copyWith => __$$OutputItemCategoryInputStateImplCopyWithImpl<
+          _$OutputItemCategoryInputStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            InputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        inputItem,
+    required TResult Function(
+            OutputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        outputItem,
+    required TResult Function(
+            InputCategoryGroup? category, String title, bool isSaved)
+        inputGroup,
+    required TResult Function(
+            OutputCategoryGroup? category, String title, bool isSaved)
+        outputGroup,
+  }) {
+    return outputItem(category, budgetType, title, budget, parent, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult? Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult? Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult? Function(
+            OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+  }) {
+    return outputItem?.call(
+        category, budgetType, title, budget, parent, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult Function(OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+    required TResult orElse(),
+  }) {
+    if (outputItem != null) {
+      return outputItem(category, budgetType, title, budget, parent, isSaved);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InputItemCategoryInputState value) inputItem,
+    required TResult Function(_OutputItemCategoryInputState value) outputItem,
+    required TResult Function(_InputGroupCategoryInputState value) inputGroup,
+    required TResult Function(_OutputGroupCategoryInputState value) outputGroup,
+  }) {
+    return outputItem(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InputItemCategoryInputState value)? inputItem,
+    TResult? Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult? Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult? Function(_OutputGroupCategoryInputState value)? outputGroup,
+  }) {
+    return outputItem?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InputItemCategoryInputState value)? inputItem,
+    TResult Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult Function(_OutputGroupCategoryInputState value)? outputGroup,
+    required TResult orElse(),
+  }) {
+    if (outputItem != null) {
+      return outputItem(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OutputItemCategoryInputState extends CategoryInputState {
+  const factory _OutputItemCategoryInputState(
+      {final OutputCategoryItem? category,
+      required final BudgetType budgetType,
+      required final String title,
+      required final int budget,
+      required final int? parent,
+      required final bool isSaved}) = _$OutputItemCategoryInputStateImpl;
+  const _OutputItemCategoryInputState._() : super._();
+
+  @override
+  OutputCategoryItem? get category;
+  BudgetType get budgetType;
+  @override
+  String get title;
+  int get budget;
+  int? get parent;
+  @override
+  bool get isSaved;
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OutputItemCategoryInputStateImplCopyWith<
+          _$OutputItemCategoryInputStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$InputGroupCategoryInputStateImplCopyWith<$Res>
+    implements $CategoryInputStateCopyWith<$Res> {
+  factory _$$InputGroupCategoryInputStateImplCopyWith(
+          _$InputGroupCategoryInputStateImpl value,
+          $Res Function(_$InputGroupCategoryInputStateImpl) then) =
+      __$$InputGroupCategoryInputStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({InputCategoryGroup? category, String title, bool isSaved});
+}
+
+/// @nodoc
+class __$$InputGroupCategoryInputStateImplCopyWithImpl<$Res>
+    extends _$CategoryInputStateCopyWithImpl<$Res,
+        _$InputGroupCategoryInputStateImpl>
+    implements _$$InputGroupCategoryInputStateImplCopyWith<$Res> {
+  __$$InputGroupCategoryInputStateImplCopyWithImpl(
+      _$InputGroupCategoryInputStateImpl _value,
+      $Res Function(_$InputGroupCategoryInputStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? category = freezed,
+    Object? title = null,
+    Object? isSaved = null,
+  }) {
+    return _then(_$InputGroupCategoryInputStateImpl(
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as InputCategoryGroup?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InputGroupCategoryInputStateImpl extends _InputGroupCategoryInputState {
+  const _$InputGroupCategoryInputStateImpl(
+      {this.category, required this.title, required this.isSaved})
+      : super._();
+
+  @override
+  final InputCategoryGroup? category;
+  @override
+  final String title;
+  @override
+  final bool isSaved;
+
+  @override
+  String toString() {
+    return 'CategoryInputState.inputGroup(category: $category, title: $title, isSaved: $isSaved)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InputGroupCategoryInputStateImpl &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, category, title, isSaved);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InputGroupCategoryInputStateImplCopyWith<
+          _$InputGroupCategoryInputStateImpl>
+      get copyWith => __$$InputGroupCategoryInputStateImplCopyWithImpl<
+          _$InputGroupCategoryInputStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            InputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        inputItem,
+    required TResult Function(
+            OutputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        outputItem,
+    required TResult Function(
+            InputCategoryGroup? category, String title, bool isSaved)
+        inputGroup,
+    required TResult Function(
+            OutputCategoryGroup? category, String title, bool isSaved)
+        outputGroup,
+  }) {
+    return inputGroup(category, title, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult? Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult? Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult? Function(
+            OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+  }) {
+    return inputGroup?.call(category, title, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult Function(OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+    required TResult orElse(),
+  }) {
+    if (inputGroup != null) {
+      return inputGroup(category, title, isSaved);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InputItemCategoryInputState value) inputItem,
+    required TResult Function(_OutputItemCategoryInputState value) outputItem,
+    required TResult Function(_InputGroupCategoryInputState value) inputGroup,
+    required TResult Function(_OutputGroupCategoryInputState value) outputGroup,
+  }) {
+    return inputGroup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InputItemCategoryInputState value)? inputItem,
+    TResult? Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult? Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult? Function(_OutputGroupCategoryInputState value)? outputGroup,
+  }) {
+    return inputGroup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InputItemCategoryInputState value)? inputItem,
+    TResult Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult Function(_OutputGroupCategoryInputState value)? outputGroup,
+    required TResult orElse(),
+  }) {
+    if (inputGroup != null) {
+      return inputGroup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InputGroupCategoryInputState extends CategoryInputState {
+  const factory _InputGroupCategoryInputState(
+      {final InputCategoryGroup? category,
+      required final String title,
+      required final bool isSaved}) = _$InputGroupCategoryInputStateImpl;
+  const _InputGroupCategoryInputState._() : super._();
+
+  @override
+  InputCategoryGroup? get category;
+  @override
+  String get title;
+  @override
+  bool get isSaved;
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InputGroupCategoryInputStateImplCopyWith<
+          _$InputGroupCategoryInputStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OutputGroupCategoryInputStateImplCopyWith<$Res>
+    implements $CategoryInputStateCopyWith<$Res> {
+  factory _$$OutputGroupCategoryInputStateImplCopyWith(
+          _$OutputGroupCategoryInputStateImpl value,
+          $Res Function(_$OutputGroupCategoryInputStateImpl) then) =
+      __$$OutputGroupCategoryInputStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({OutputCategoryGroup? category, String title, bool isSaved});
+}
+
+/// @nodoc
+class __$$OutputGroupCategoryInputStateImplCopyWithImpl<$Res>
+    extends _$CategoryInputStateCopyWithImpl<$Res,
+        _$OutputGroupCategoryInputStateImpl>
+    implements _$$OutputGroupCategoryInputStateImplCopyWith<$Res> {
+  __$$OutputGroupCategoryInputStateImplCopyWithImpl(
+      _$OutputGroupCategoryInputStateImpl _value,
+      $Res Function(_$OutputGroupCategoryInputStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? category = freezed,
+    Object? title = null,
+    Object? isSaved = null,
+  }) {
+    return _then(_$OutputGroupCategoryInputStateImpl(
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as OutputCategoryGroup?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      isSaved: null == isSaved
+          ? _value.isSaved
+          : isSaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OutputGroupCategoryInputStateImpl
+    extends _OutputGroupCategoryInputState {
+  const _$OutputGroupCategoryInputStateImpl(
+      {this.category, required this.title, required this.isSaved})
+      : super._();
+
+  @override
+  final OutputCategoryGroup? category;
+  @override
+  final String title;
+  @override
+  final bool isSaved;
+
+  @override
+  String toString() {
+    return 'CategoryInputState.outputGroup(category: $category, title: $title, isSaved: $isSaved)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutputGroupCategoryInputStateImpl &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, category, title, isSaved);
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutputGroupCategoryInputStateImplCopyWith<
+          _$OutputGroupCategoryInputStateImpl>
+      get copyWith => __$$OutputGroupCategoryInputStateImplCopyWithImpl<
+          _$OutputGroupCategoryInputStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            InputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        inputItem,
+    required TResult Function(
+            OutputCategoryItem? category,
+            BudgetType budgetType,
+            String title,
+            int budget,
+            int? parent,
+            bool isSaved)
+        outputItem,
+    required TResult Function(
+            InputCategoryGroup? category, String title, bool isSaved)
+        inputGroup,
+    required TResult Function(
+            OutputCategoryGroup? category, String title, bool isSaved)
+        outputGroup,
+  }) {
+    return outputGroup(category, title, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult? Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult? Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult? Function(
+            OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+  }) {
+    return outputGroup?.call(category, title, isSaved);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        inputItem,
+    TResult Function(OutputCategoryItem? category, BudgetType budgetType,
+            String title, int budget, int? parent, bool isSaved)?
+        outputItem,
+    TResult Function(InputCategoryGroup? category, String title, bool isSaved)?
+        inputGroup,
+    TResult Function(OutputCategoryGroup? category, String title, bool isSaved)?
+        outputGroup,
+    required TResult orElse(),
+  }) {
+    if (outputGroup != null) {
+      return outputGroup(category, title, isSaved);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InputItemCategoryInputState value) inputItem,
+    required TResult Function(_OutputItemCategoryInputState value) outputItem,
+    required TResult Function(_InputGroupCategoryInputState value) inputGroup,
+    required TResult Function(_OutputGroupCategoryInputState value) outputGroup,
+  }) {
+    return outputGroup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InputItemCategoryInputState value)? inputItem,
+    TResult? Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult? Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult? Function(_OutputGroupCategoryInputState value)? outputGroup,
+  }) {
+    return outputGroup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InputItemCategoryInputState value)? inputItem,
+    TResult Function(_OutputItemCategoryInputState value)? outputItem,
+    TResult Function(_InputGroupCategoryInputState value)? inputGroup,
+    TResult Function(_OutputGroupCategoryInputState value)? outputGroup,
+    required TResult orElse(),
+  }) {
+    if (outputGroup != null) {
+      return outputGroup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OutputGroupCategoryInputState extends CategoryInputState {
+  const factory _OutputGroupCategoryInputState(
+      {final OutputCategoryGroup? category,
+      required final String title,
+      required final bool isSaved}) = _$OutputGroupCategoryInputStateImpl;
+  const _OutputGroupCategoryInputState._() : super._();
+
+  @override
+  OutputCategoryGroup? get category;
+  @override
+  String get title;
+  @override
+  bool get isSaved;
+
+  /// Create a copy of CategoryInputState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OutputGroupCategoryInputStateImplCopyWith<
+          _$OutputGroupCategoryInputStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

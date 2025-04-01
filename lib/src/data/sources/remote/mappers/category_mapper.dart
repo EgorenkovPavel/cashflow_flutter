@@ -11,7 +11,8 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
   static const String _KEY_BUDGET_TYPE = 'budget_type';
   static const String _KEY_BUDGET = 'budget';
   static const String KEY_UPDATED = 'updated';
-  static const String _KEY_DELETION_MARK = 'deleted';
+  static const String _KEY_IS_GROUP = 'is_group';
+  static const String _KEY_PARENT = 'parent';
 
   const CategoryMapper();
 
@@ -23,7 +24,8 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
       _KEY_BUDGET_TYPE: category.budgetType,
       _KEY_BUDGET: category.budget,
       KEY_UPDATED: DateTime.now(),
-      _KEY_DELETION_MARK: category.deleted,
+      _KEY_IS_GROUP: category.isGroup,
+      _KEY_PARENT: category.parent,
     };
   }
 
@@ -37,12 +39,14 @@ class CategoryMapper extends CloudConverter<CloudCategory> {
       budget: data.getOrDefault(_KEY_BUDGET, 0),
       title: data.getOrDefault(_KEY_TITLE, ''),
       operationType: data.getOrDefault(_KEY_OPERATION_TYPE, 1),
-      deleted: data.getOrDefault(_KEY_DELETION_MARK, false),
+      isGroup: data.getOrDefault(_KEY_IS_GROUP, false),
+      parent: data.getOrDefault(_KEY_PARENT, ''),
     );
   }
 
   @override
   Map<String, dynamic> deletionMark() {
-    return {_KEY_DELETION_MARK: true};
+    throw UnimplementedError();
   }
+
 }

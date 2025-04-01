@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:money_tracker/src/data/sources/currency_rate_source.dart';
+import 'package:money_tracker/src/data/sources/local/db_mapper.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -9,31 +11,29 @@ import '../sources/local/data/database.dart';
 import '../sources/local/data/operation_dao.dart';
 import '../sources/local/data/user_dao.dart';
 import '../sources/local/entities/account_balance_entity.dart';
-import '../sources/local/mapper_db.dart';
 
 class DataRepositoryImpl implements DataRepository {
   final AccountDao accountDao;
   final CategoryDao categoryDao;
   final OperationDao operationDao;
   final UserDao userDao;
+  final CurrencyRateSource currencyRateSource;
 
   DataRepositoryImpl({
     required this.accountDao,
     required this.categoryDao,
     required this.operationDao,
     required this.userDao,
+    required this.currencyRateSource
   });
-
-  @override
-  Future<void> deleteOperation(Operation entity) =>
-      operationDao.deleteOperation(MapperDB.mapOperationDB(entity));
 
   @override
   Future<void> deleteOperationById(int operationId) =>
       operationDao.deleteOperationById(operationId);
 
   @override
-  Future<Operation> duplicateOperation(Operation entity) {
+  Future<Operation> duplicateOperation(int operationId) async {
+    final entity = await getOperationById(operationId);
     var newOperation = entity.copyWith(
       id: 0,
       cloudId: '',
@@ -44,71 +44,62 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<Account> getAccountById(int id) async {
+  Future<BaseAccount> getAccountById(int id) async {
     final account = await accountDao.getAccountById(id);
-
-    final userId = account.user;
-    if (userId == null){
-      return MapperDB.createAccount(account, null);
-    }else{
-      final user = await userDao.getById(userId);
-      return MapperDB.createAccount(account, user);
-    }
+    return AccountMapper().toModel(account);
   }
 
   @override
-  Future<List<Account>> getAllAccounts() async {
+  Future<List<BaseAccount>> getAllAccounts() async {
     final accounts = await accountDao.getAllAccounts();
-    final users = await userDao.getAllUsers();
-    return MapperDB.combineUsers(accounts, users);
+    return AccountMapper().listToModel(accounts);
   }
 
   @override
-  Future<List<AccountBalance>> getAllBalance() async {
+  Future<List<BaseAccountBalanceListItem>> getAllBalance() async {
     final accounts = await accountDao.getAllAccounts();
     final users = await userDao.getAllUsers();
     final balances = await accountDao.getAllBalances();
-    return MapperDB.combineBalances(accounts, balances, users);
+    return AccountMapper().combineBalances(accounts, users, balances);
   }
 
   @override
   Future<List<Category>> getAllCategories() async =>
-      MapperDB.mapCategoryList(await categoryDao.getAllCategories());
+      CategoryMapper().listToModel(await categoryDao.getAllCategories());
 
   @override
   Future<List<Category>> getAllCategoriesByType(OperationType type) async =>
-      MapperDB.mapCategoryList(await categoryDao.getAllCategoriesByType(type));
+      CategoryMapper()
+          .listToModel(await categoryDao.getAllCategoriesByType(type));
 
   @override
   Future<List<Operation>> getAllOperations() async {
-    final operations = await operationDao.getAllOperationItems();
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperationList(operations, users);
+    final operations = await operationDao.getAllOperations();
+    return OperationMapper().listToModel(operations);
   }
 
   @override
   Future<List<Operation>> getAllOperationsWithEmptyCloudId() async {
     final operations =
         await operationDao.getAllOperationItemsWithEmptyCloudId();
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperationList(operations, users);
+    return OperationMapper().entityListToModel(operations);
   }
 
   @override
-  Future<List<CategoryCashflow>> getCashflowByType(
-          DateTime date, OperationType type) async =>
-      MapperDB.mapCategoryCashflowList(
-        await categoryDao.getCategoryCashflowByType(date, type),
-      );
+  Future<List<CategoryCashFlow>> getCashFlowByType(
+      DateTime date, OperationType type) async {
+    final categories = await categoryDao.getAllCategoriesByType(type);
+    final ids = categories.map((e) => e.id).toSet();
+    final monthCashFlow = await categoryDao.getMonthCashFlow(date, ids);
+    final yearCashFlow = await categoryDao.getYearCashFlow(date, ids);
 
-  @override
-  Future<List<CategoryMonthCashflow>> getCashflowByYear(int year) async =>
-      MapperDB.mapCategoryMonthCashflowList(
-          await categoryDao.getCashflowByYear(year));
+    return CategoryMapper()
+        .combineCashFlow(categories, monthCashFlow, yearCashFlow);
+  }
 
   @override
   Future<Category> getCategoryById(int id) async =>
-      MapperDB.mapCategory(await categoryDao.getCategoryById(id));
+      CategoryMapper().toModel(await categoryDao.getCategoryById(id));
 
   @override
   Future<Operation?> getLastOperation() async {
@@ -118,15 +109,13 @@ class DataRepositoryImpl implements DataRepository {
       return null;
     }
 
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperation(operation, users);
+    return OperationMapper().entityToModel(operation);
   }
 
   @override
   Future<Operation> getOperationById(int id) async {
     final operation = await operationDao.getOperationById(id);
-    final users = await userDao.getAllUsers();
-    return MapperDB.mapOperation(operation, users);
+    return OperationMapper().entityToModel(operation);
   }
 
   @override
@@ -135,17 +124,48 @@ class DataRepositoryImpl implements DataRepository {
         cloudId: Value(account.cloudId),
         title: Value(account.title),
         isDebt: Value(account is Debt),
-        user: Value(account.user?.id),
+        user: Value(account.userId),
       ));
 
   @override
   Future<int> insertCategory(Category entity) =>
-      categoryDao.insertCategory(CategoriesCompanion(
-        cloudId: Value(entity.cloudId),
-        title: Value(entity.title),
-        operationType: Value(entity.operationType),
-        budgetType: Value(entity.budgetType),
-        budget: Value(entity.budget),
+      categoryDao.insertCategory(entity.map(
+        inputItem: (item) => CategoriesCompanion(
+          cloudId: Value(item.cloudId),
+          title: Value(item.title),
+          operationType: Value(OperationType.INPUT),
+          budgetType: Value(item.budgetType),
+          budget: Value(item.budget),
+          isGroup: Value(false),
+          parent: Value(item.parentId),
+        ),
+        outputItem: (item) => CategoriesCompanion(
+          cloudId: Value(item.cloudId),
+          title: Value(item.title),
+          operationType: Value(OperationType.OUTPUT),
+          budgetType: Value(item.budgetType),
+          budget: Value(item.budget),
+          isGroup: Value(false),
+          parent: Value(item.parentId),
+        ),
+        inputGroup: (item) => CategoriesCompanion(
+          cloudId: Value(item.cloudId),
+          title: Value(item.title),
+          operationType: Value(OperationType.INPUT),
+          budgetType: Value(BudgetType.MONTH),
+          budget: Value(0),
+          isGroup: Value(true),
+          parent: Value(null),
+        ),
+        outputGroup: (item) => CategoriesCompanion(
+          cloudId: Value(item.cloudId),
+          title: Value(item.title),
+          operationType: Value(OperationType.OUTPUT),
+          budgetType: Value(BudgetType.MONTH),
+          budget: Value(0),
+          isGroup: Value(true),
+          parent: Value(null),
+        ),
       ));
 
   @override
@@ -156,30 +176,30 @@ class DataRepositoryImpl implements DataRepository {
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
-          currencySent: Value(o.currency),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
         ),
         output: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          category: Value(o.category.id),
-          sum: Value(o.sum),
-          currencySent: Value(o.currency),
+          account: Value(o.account),
+          category: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          currencySent: Value(o.sum.currency),
         ),
         transfer: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
           operationType: Value(o.type),
-          account: Value(o.account.id),
-          recAccount: Value(o.recAccount.id),
-          sum: Value(o.sum),
-          recSum: Value(o.recSum),
-          currencySent: Value(o.currencySent),
-          currencyReceived: Value(o.currencyReceived),
+          account: Value(o.account),
+          recAccount: Value(o.analytic),
+          sum: Value(o.sum.sum),
+          recSum: Value(o.recSum.sum),
+          currencySent: Value(o.sum.currency),
+          currencyReceived: Value(o.recSum.currency),
         ),
       ),
     );
@@ -188,122 +208,130 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<void> recoverOperation(Operation entity) =>
-      operationDao.recoverOperation(MapperDB.mapOperationDB(entity));
+  Future<void> recoverOperation(int operationId) async {
+    final entity = await getOperationById(operationId);
+    await operationDao.recoverOperation(OperationMapper().toDBO(entity));
+  }
 
   @override
-  Future<void> updateAccount(Account account) =>
-      accountDao.updateAccount(MapperDB.mapAccountDB(account));
+  Future<void> updateAccount(BaseAccount account) =>
+      accountDao.updateAccount(AccountMapper().toDBO(account));
 
   @override
   Future<void> updateCategory(Category entity) =>
-      categoryDao.updateCategory(MapperDB.mapCategoryDB(entity));
+      categoryDao.updateCategory(CategoryMapper().toDBO(entity));
 
   @override
   Future<void> updateOperation(Operation operation) =>
-      operationDao.updateOperation(MapperDB.mapOperationDB(operation));
+      operationDao.updateOperation(OperationMapper().toDBO(operation));
 
   @override
-  Stream<Account> watchAccountById(int id) {
-    return accountDao.watchAccountById(id).asyncMap((a) async {
+  Stream<BaseAccount> watchAccountById(int id) {
+    return accountDao.watchAccountById(id).map(AccountMapper().toModel);
+  }
 
-      final userId = a.user;
-      if (userId == null){
-        return MapperDB.createAccount(a, null);
-      }else{
-        final user = await userDao.getById(userId);
-        return MapperDB.createAccount(a, user);
-      }
+  @override
+  Stream<List<BaseAccount>> watchAllAccounts() =>
+      accountDao.watchAllAccounts().map(AccountMapper().listToModel);
+
+  @override
+  Stream<List<BaseAccountBalanceListItem>> watchAllBalance() =>
+      Rx.combineLatest3<List<AccountDB>, List<UserDB>,
+              List<AccountBalanceEntity>, List<BaseAccountBalanceListItem>>(
+          accountDao.watchAllAccounts(),
+          userDao.watchAllUsers(),
+          accountDao.watchAllBalances(),
+          AccountMapper().combineBalances);
+
+  @override
+  Stream<List<Category>> watchAllCategories() =>
+      categoryDao.watchAllCategories().map(CategoryMapper().listToModel);
+
+  @override
+  Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
+      categoryDao
+          .watchAllCategoriesByType(type)
+          .map(CategoryMapper().listToModel);
+
+  @override
+  Stream<List<Operation>> watchAllOperations() => operationDao
+      .watchAllOperationItems()
+      .map(OperationMapper().entityListToModel);
+
+  @override
+  Stream<List<OperationListItem>> watchAllOperationsByAccount(int accountId) {
+    return Rx.combineLatest2(
+        operationDao.watchAllOperationItemsByAccount(accountId),
+        userDao.watchAllUsers().map(UserMapper().listToModel),
+        (operations, users) {
+      return OperationMapper().entityListToItem(operations, users);
     });
   }
 
   @override
-  Stream<List<Account>> watchAllAccounts() =>
-      Rx.combineLatest2<List<AccountDB>, List<UserDB>, List<Account>>(
-          accountDao.watchAllAccounts(),
-          userDao.watchAllUsers(),
-          MapperDB.combineUsers);
+  Stream<List<OperationListItem>> watchAllOperationsByCategory(int categoryId) {
+    return Rx.combineLatest2(
+        operationDao.watchAllOperationItemsByCategory(categoryId),
+        userDao.watchAllUsers().map(UserMapper().listToModel),
+        (operations, users) {
+      return OperationMapper().entityListToItem(operations, users);
+    });
+  }
 
   @override
-  Stream<List<AccountBalance>> watchAllBalance() => Rx.combineLatest3<
-          List<AccountDB>,
-          List<AccountBalanceEntity>,
-          List<UserDB>,
-          List<AccountBalance>>(
-      accountDao.watchAllAccounts(),
-      accountDao.watchAllBalances(),
-      userDao.watchAllUsers(),
-      MapperDB.combineBalances);
+  Stream<List<OperationListItem>> watchAllOperationsByFilter(
+      OperationListFilter filter) {
+    return Rx.combineLatest2(
+        operationDao.watchAllOperationItemsByFilter(
+          start: filter.period?.start,
+          end: filter.period?.end,
+          accountIds: filter.accountIds,
+          categoriesIds: filter.categoryIds,
+        ),
+        userDao.watchAllUsers().map(UserMapper().listToModel),
+        (operations, users) {
+      return OperationMapper().entityListToItem(operations, users);
+    });
+  }
 
   @override
-  Stream<List<Category>> watchAllCategories() =>
-      categoryDao.watchAllCategories().map(MapperDB.mapCategoryList);
+  Stream<List<CategoryCashFlow>> watchCashFlow(DateTime date) {
+    return Rx.combineLatest3(
+        categoryDao.watchAllCategories(),
+        categoryDao.watchMonthCashFlow(date, {}),
+        categoryDao.watchYearCashFlow(date, {}),
+        CategoryMapper().combineCashFlow);
+  }
 
   @override
-  Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
-      categoryDao.watchAllCategoriesByType(type).map(MapperDB.mapCategoryList);
-
-  @override
-  Stream<List<Operation>> watchAllOperations() => Rx.combineLatest2(
-      operationDao.watchAllOperationItems(),
-      userDao.watchAllUsers(),
-      MapperDB.combineOperationWithUser);
-
-  @override
-  Stream<List<Operation>> watchAllOperationsByAccount(int accountId) =>
-      Rx.combineLatest2(operationDao.watchAllOperationItemsByAccount(accountId),
-          userDao.watchAllUsers(), MapperDB.combineOperationWithUser);
-
-  @override
-  Stream<List<Operation>> watchAllOperationsByCategory(int categoryId) =>
-      Rx.combineLatest2(
-          operationDao.watchAllOperationItemsByCategory(categoryId),
-          userDao.watchAllUsers(),
-          MapperDB.combineOperationWithUser);
-
-  @override
-  Stream<List<Operation>> watchAllOperationsByFilter(
-          OperationListFilter filter) =>
-      Rx.combineLatest2(
-          operationDao.watchAllOperationItemsByFilter(
-            start: filter.period?.start,
-            end: filter.period?.end,
-            accountIds: filter.accounts.map((account) => account.id).toSet(),
-            categoriesIds:
-                filter.categories.map((category) => category.id).toSet(),
-          ),
-          userDao.watchAllUsers(),
-          MapperDB.combineOperationWithUser);
-
-  @override
-  Stream<List<CategoryCashflow>> watchCashflow(DateTime date) => categoryDao
-      .watchAllCategoryCashflowBudget(date)
-      .map(MapperDB.mapCategoryCashflowList);
-
-  @override
-  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) =>
+  Stream<List<SumOnDate>> watchCashFlowByCategoryByMonth(int id) =>
       categoryDao.watchCashflowByCategoryByMonth(id);
 
   @override
-  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) =>
+  Stream<List<SumOnDate>> watchCashFlowByCategoryByYear(int id) =>
       categoryDao.watchCashflowByCategoryByYear(id);
 
   @override
-  Stream<List<CategoryCashflow>> watchCashflowByType(
+  Stream<List<CategoryCashFlow>> watchCashFlowByType(
           DateTime date, OperationType type) =>
-      categoryDao
-          .watchCategoryCashflowByType(date, type)
-          .map(MapperDB.mapCategoryCashflowList);
+      Rx.combineLatest3(
+          categoryDao.watchAllCategoriesByType(type),
+          categoryDao.watchMonthCashFlow(date, {}),
+          categoryDao.watchYearCashFlow(date, {}),
+          CategoryMapper().combineCashFlow);
 
   @override
   Stream<Category> watchCategoryById(int id) =>
-      categoryDao.watchCategoryById(id).map(MapperDB.mapCategory);
+      categoryDao.watchCategoryById(id).map(CategoryMapper().toModel);
 
   @override
-  Stream<List<Operation>> watchLastOperations(int limit) => Rx.combineLatest2(
-      operationDao.watchLastOperationItems(limit),
-      userDao.watchAllUsers(),
-      MapperDB.combineOperationWithUser);
+  Stream<List<OperationListItem>> watchLastOperations(int limit) {
+    return Rx.combineLatest2(operationDao.watchLastOperationItems(limit),
+        userDao.watchAllUsers().map(UserMapper().listToModel),
+        (operations, users) {
+      return OperationMapper().entityListToItem(operations, users);
+    });
+  }
 
   @override
   Future<User?> getUserByGoogleId(String googleId) async {
@@ -311,7 +339,7 @@ class DataRepositoryImpl implements DataRepository {
       return null;
     }
     final user = await userDao.getByGoogleId(googleId);
-    return user == null ? null : MapperDB.mapUser(user);
+    return user == null ? null : UserMapper().toModel(user);
   }
 
   @override
@@ -326,6 +354,16 @@ class DataRepositoryImpl implements DataRepository {
   @override
   Future<List<User>> getAllUsers() async {
     final users = await userDao.getAllUsers();
-    return MapperDB.mapUserList(users);
+    return UserMapper().listToModel(users);
+  }
+
+  @override
+  Future<double> eurRate() {
+    return currencyRateSource.getEUR();
+  }
+
+  @override
+  Future<double> usdRate() {
+    return currencyRateSource.getUSD();
   }
 }

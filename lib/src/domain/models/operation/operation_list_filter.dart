@@ -1,22 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../account/account.dart';
-import '../category/category.dart';
-
-
-
 class OperationListFilter extends Equatable {
   final DateTimeRange? period;
-  final Set<BaseAccount> accounts;
-  final Set<Category> categories;
+  final Set<int> accountIds;
+  final Set<int> categoryIds;
 
   const OperationListFilter({
     this.period,
-    this.accounts = const {},
-    this.categories = const {},
+    this.accountIds = const {},
+    this.categoryIds = const {},
   });
 
   @override
-  List<Object?> get props => [period, accounts, categories];
+  List<Object?> get props => [period, accountIds, categoryIds];
 }

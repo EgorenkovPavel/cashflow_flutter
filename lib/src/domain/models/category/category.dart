@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../enum/budget_type.dart';
-import '../enum/operation_type.dart';
+import '../enum/category_type.dart';
 
 sealed class Category extends Equatable {
   final int id;
@@ -13,12 +13,24 @@ sealed class Category extends Equatable {
     required this.cloudId,
     required this.title,
   });
+
+  T map<T>({
+    required T Function(InputCategoryItem) inputItem,
+    required T Function(OutputCategoryItem) outputItem,
+    required T Function(InputCategoryGroup) inputGroup,
+    required T Function(OutputCategoryGroup) outputGroup,
+  }) => switch(this){
+    InputCategoryItem() => inputItem(this as InputCategoryItem),
+    OutputCategoryItem() => outputItem(this as OutputCategoryItem),
+    InputCategoryGroup() => inputGroup(this as InputCategoryGroup),
+    OutputCategoryGroup() => outputGroup(this as OutputCategoryGroup),
+  };
 }
 
 sealed class CategoryItem extends Category {
   final int budget;
   final BudgetType budgetType;
-  final CategoryGroup? parent;
+  final int? parentId;
 
   const CategoryItem({
     required super.id,
@@ -26,12 +38,12 @@ sealed class CategoryItem extends Category {
     required super.title,
     required this.budget,
     required this.budgetType,
-    required this.parent,
+    required this.parentId,
   });
 
-  OperationType get type => switch(this){
-    InputCategoryItem() => OperationType.INPUT,
-    OutputCategoryItem() => OperationType.OUTPUT,
+  CategoryType get type => switch(this){
+    InputCategoryItem() => CategoryType.INPUT,
+    OutputCategoryItem() => CategoryType.OUTPUT,
   };
 }
 
@@ -42,23 +54,20 @@ class InputCategoryItem extends CategoryItem {
     required super.title,
     required super.budget,
     required super.budgetType,
-    required InputCategoryGroup? super.parent,
+    required super.parentId,
   });
 
-  @override
-  InputCategoryGroup? get parent => parent;
-
-  InputCategoryItem setParent(InputCategoryGroup? newParent) => InputCategoryItem(
+  InputCategoryItem setParent(int? newParent) => InputCategoryItem(
     id: id,
     cloudId: cloudId,
     title: title,
     budget: budget,
     budgetType: budgetType,
-    parent: newParent,
+    parentId: newParent,
   );
 
   @override
-  List<Object?> get props => [id, cloudId, title, budget, budgetType, parent];
+  List<Object?> get props => [id, cloudId, title, budget, budgetType, parentId];
 
   InputCategoryItem copyWith({
     int? id,
@@ -73,7 +82,7 @@ class InputCategoryItem extends CategoryItem {
         title: title ?? this.title,
         budget: budget ?? this.budget,
         budgetType: budgetType ?? this.budgetType,
-        parent: this.parent,
+        parentId: parentId,
       );
 }
 
@@ -84,23 +93,20 @@ class OutputCategoryItem extends CategoryItem {
     required super.title,
     required super.budget,
     required super.budgetType,
-    required OutputCategoryGroup? super.parent,
+    required super.parentId,
   });
 
-  @override
-  OutputCategoryGroup? get parent => parent;
-
-  OutputCategoryItem setParent(OutputCategoryGroup? newParent) => OutputCategoryItem(
+  OutputCategoryItem setParent(int? newParent) => OutputCategoryItem(
     id: id,
     cloudId: cloudId,
     title: title,
     budget: budget,
     budgetType: budgetType,
-    parent: newParent,
+    parentId: newParent,
   );
 
   @override
-  List<Object?> get props => [id, cloudId, title, budget, budgetType, parent];
+  List<Object?> get props => [id, cloudId, title, budget, budgetType, parentId];
 
   OutputCategoryItem copyWith({
     int? id,
@@ -115,7 +121,7 @@ class OutputCategoryItem extends CategoryItem {
         title: title ?? this.title,
         budget: budget ?? this.budget,
         budgetType: budgetType ?? this.budgetType,
-        parent: this.parent,
+        parentId: parentId,
       );
 }
 

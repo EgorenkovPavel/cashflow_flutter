@@ -58,6 +58,10 @@ class Categories extends Table {
   // TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
+
+  BoolColumn get isGroup => boolean().named('is_group').withDefault(const Constant(false))();
+
+  IntColumn get parent => integer().nullable().references(Categories, #id)();
 }
 
 @DataClassName('OperationDB')
@@ -166,7 +170,7 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration =>
@@ -216,6 +220,11 @@ class Database extends _$Database {
 
           if (from < 11) {
             await m.addColumn(accounts, accounts.user);
+          }
+
+          if (from < 12){
+            await m.addColumn(categories, categories.isGroup);
+            await m.addColumn(categories, categories.parent);
           }
         },
       );
@@ -307,6 +316,7 @@ class Database extends _$Database {
                   int.parse(d['category_budget_type']),
                 ),
                 synced: false,
+                isGroup: false,
               ));
             } else {
               categories.add(CategoryDB.fromJson(

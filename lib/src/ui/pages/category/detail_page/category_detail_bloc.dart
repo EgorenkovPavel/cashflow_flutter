@@ -19,7 +19,7 @@ class CategoryDetailEvent with _$CategoryDetailEvent {
   }) = _ChangeCategoryCategoryDetailEvent;
 
   const factory CategoryDetailEvent.changeOperations({
-    required List<Operation> operations,
+    required List<OperationListItem> operations,
   }) = _ChangeOperationsCategoryDetailEvent;
 }
 
@@ -29,7 +29,7 @@ class CategoryDetailState with _$CategoryDetailState {
     required BudgetType budgetType,
     required String title,
     required int budget,
-    required List<Operation> operations,
+    required List<OperationListItem> operations,
   }) = _CategoryDetailState;
 }
 
@@ -65,6 +65,7 @@ class CategoryDetailBloc
         .listen((category) {
       add(CategoryDetailEvent.changeCategory(category: category));
     });
+
     _subOperations =
         _watchOperationsByCategoryUseCase(categoryId: event.categoryId)
             .listen((items) {

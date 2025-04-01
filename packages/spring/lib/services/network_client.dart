@@ -41,7 +41,9 @@ class NetworkClient {
       }
       return mapper(jsonDecode(response.body));
     }catch (e){
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       rethrow;
     }
   }

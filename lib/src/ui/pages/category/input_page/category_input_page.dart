@@ -5,16 +5,21 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/pages/category/input_page/category_input_bloc.dart';
 import 'package:money_tracker/src/ui/pages/item_card.dart';
-import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
+import 'package:money_tracker/src/ui/widgets/category_parent_field.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class CategoryInputPage extends StatelessWidget {
-  final OperationType? type;
+  final CategoryType? type;
+  final bool? isGroup;
   final int? id;
 
-  const CategoryInputPage.byType({super.key, required this.type}) : id = null;
+  const CategoryInputPage.byType(
+      {super.key, required this.type, required this.isGroup})
+      : id = null;
 
-  const CategoryInputPage.edit({super.key, required this.id}) : type = null;
+  const CategoryInputPage.edit({super.key, required this.id})
+      : type = null,
+        isGroup = null;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class CategoryInputPage extends StatelessWidget {
     if (id != null) {
       bloc.add(CategoryInputEvent.initById(categoryId: id!));
     } else {
-      bloc.add(CategoryInputEvent.initByType(operationType: type!));
+      bloc.add(CategoryInputEvent.initByType(type: type!, isGroup: isGroup!));
     }
 
     return BlocProvider(
@@ -62,9 +67,18 @@ class _CategoryPageState extends State<CategoryPage> {
       if (titleController.text != state.title) {
         titleController.text = state.title;
       }
-      if (budgetController.text != state.budget.toString()) {
-        budgetController.text = state.budget.toString();
-      }
+      state.maybeMap(
+          inputItem: (s) {
+            if (budgetController.text != s.budget.toString()) {
+              budgetController.text = s.budget.toString();
+            }
+          },
+          outputItem: (s) {
+            if (budgetController.text != s.budget.toString()) {
+              budgetController.text = s.budget.toString();
+            }
+          },
+          orElse: () {});
     }
   }
 
@@ -81,29 +95,18 @@ class _CategoryPageState extends State<CategoryPage> {
     return BlocListener<CategoryInputBloc, CategoryInputState>(
       listener: _listenState,
       child: ItemCard(
-        title: widget.isNew
-            ? context.loc.newCategoryCardTitle
-            : context.loc.categoryCardTitle,
+        title: context.isGroup()
+            ? widget.isNew
+                ? 'New group'
+                : 'Group' //TODO
+            : widget.isNew
+                ? context.loc.newCategoryCardTitle
+                : context.loc.categoryCardTitle,
         onSave: (context) => context.onSave(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                  context.loc.titleType,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                Text(context.loc.operationTypeTitle(
-                  context.operationType(),
-                )),
-              ],
-            ),
-            const SizedBox(height: 8.0),
             TextFormField(
               //autofocus: true,
               controller: titleController,
@@ -115,31 +118,47 @@ class _CategoryPageState extends State<CategoryPage> {
               onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
-            const SizedBox(height: 8.0),
-            TextFormField(
-              controller: budgetController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: context.loc.budget,
+            const SizedBox(height: 16.0),
+            if (!context.isGroup())
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: budgetController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: context.loc.budget,
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      onChanged: context.onChangeBudget,
+                    ),
+                  ),
+                  const SizedBox(width: 16.0),
+                  DropdownButton<BudgetType>(
+                      underline: SizedBox(),
+                      value: context.budgetType(),
+                      items: BudgetType.values
+                          .map((e) => DropdownMenuItem<BudgetType>(
+                                value: e,
+                                child: Text(e.name),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        context.onChangeBudgetType(value);
+                      })
+                ],
               ),
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              onChanged: context.onChangeBudget,
-            ),
-            const SizedBox(height: 8.0),
-            Row(
-              children: [
-                Text(context.loc.budgetType),
-                const SizedBox(width: 16.0),
-                TypeRadioButton<BudgetType>(
-                  onChange: context.onChangeBudgetType,
-                  type: context.budgetType(),
-                  items: const [BudgetType.MONTH, BudgetType.YEAR],
-                ),
-              ],
-            ),
+            const SizedBox(height: 16.0),
+            if (!context.isGroup())
+              CategoryParentField(
+                initialId: context.parent(),
+                type: context.type(),
+                onChange: context.onChangeParent,
+              ),
+            if (!context.isGroup()) const SizedBox(height: 16.0),
           ],
         ),
       ),
@@ -147,29 +166,46 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 }
 
-extension BlocExt on BuildContext{
-
-  onChangeBudgetType(BudgetType type) => read<CategoryInputBloc>().add(
-    CategoryInputEvent.changeBudgetType(budgetType: type),
-  );
+extension CategoryInputBlocExt on BuildContext {
+  onChangeBudgetType(BudgetType? type) {
+    if (type != null) {
+      read<CategoryInputBloc>().add(
+        CategoryInputEvent.changeBudgetType(budgetType: type),
+      );
+    }
+  }
 
   onChangeBudget(String value) => read<CategoryInputBloc>().add(
-    CategoryInputEvent.changeBudget(
-      budget: int.parse(value.isEmpty ? "0" : value),
-    ),
-  );
+        CategoryInputEvent.changeBudget(
+          budget: int.parse(value.isEmpty ? "0" : value),
+        ),
+      );
 
   onChangeTitle(String value) => read<CategoryInputBloc>()
       .add(CategoryInputEvent.changeTitle(title: value));
 
-  onSave() => read<CategoryInputBloc>()
-      .add(const CategoryInputEvent.save());
+  onChangeParent(int? parentId) => read<CategoryInputBloc>()
+      .add(CategoryInputEvent.changeParent(parentId: parentId));
+
+  onSave() => read<CategoryInputBloc>().add(const CategoryInputEvent.save());
 
   BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
-        (bloc) => bloc.state.budgetType,
-  );
+        (bloc) => bloc.state.maybeMap(
+            inputItem: (s) => s.budgetType,
+            outputItem: (s) => s.budgetType,
+            orElse: () => BudgetType.MONTH),
+      );
 
-  OperationType operationType() => select<CategoryInputBloc, OperationType>(
-        (bloc) => bloc.state.operationType,
-  );
+  int? parent() => select<CategoryInputBloc, int?>(
+        (bloc) => bloc.state.maybeMap(
+            inputItem: (s) => s.parent,
+            outputItem: (s) => s.parent,
+            orElse: () => null),
+      );
+
+  bool isGroup() =>
+      select<CategoryInputBloc, bool>((bloc) => bloc.state.isGroup);
+
+  CategoryType type() =>
+      select<CategoryInputBloc, CategoryType>((bloc) => bloc.state.type);
 }

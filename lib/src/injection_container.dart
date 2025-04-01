@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/src/data/repositories/backup_repository_impl.dart';
+import 'package:money_tracker/src/data/sources/currency_rate_source.dart';
 import 'package:money_tracker/src/data/sources/local/local_sync_source_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/backup_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
@@ -16,6 +17,7 @@ import 'package:money_tracker/src/domain/use_cases/get_account_by_id_use_case.da
 import 'package:money_tracker/src/domain/use_cases/get_category_by_id_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/get_last_operation_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/get_operation_by_id_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/get_users_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_account_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/update_account_use_case.dart';
@@ -23,12 +25,14 @@ import 'package:money_tracker/src/domain/use_cases/update_operation_input_use_ca
 import 'package:money_tracker/src/domain/use_cases/watch_account_title_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_balances_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
+import 'package:money_tracker/src/domain/use_cases/watch_categories_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_category_by_id_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_last_operations_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_operations_by_account_use_case.dart';
 import 'package:money_tracker/src/domain/use_cases/watch_operations_by_category_use_case.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
+import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,9 +50,6 @@ import '../src/data/sources/local/data/account_dao.dart';
 import '../src/data/sources/local/data/category_dao.dart';
 import '../src/data/sources/local/data/database.dart';
 import '../src/data/sources/local/data/operation_dao.dart';
-import '../src/data/sources/local/repos/account_data_repository_impl.dart';
-import '../src/data/sources/local/repos/category_data_repository_impl.dart';
-import '../src/data/sources/local/repos/operation_data_repository_impl.dart';
 import '../src/data/sources/network_info_impl.dart';
 import '../src/data/sources/remote/remote_source_impl.dart';
 import '../src/data/sources/settings_source_impl.dart';
@@ -67,6 +68,9 @@ import '../src/ui/pages/service/data_control_page/data_control_bloc.dart';
 import '../src/ui/pages/service/drive_dialog/drive_dialog_bloc.dart';
 import '../src/ui/pages/service/google_drive_settings_page/google_drive_settings_bloc.dart';
 import 'data/sources/local/data/user_dao.dart';
+import 'data/sources/local/repos/account_data_repository_impl.dart';
+import 'data/sources/local/repos/category_data_repository_impl.dart';
+import 'data/sources/local/repos/operation_data_repository_impl.dart';
 import 'domain/interactors/category_interactor.dart';
 import 'domain/interfaces/data_repository.dart';
 import 'domain/use_cases/insert_operation_output_use_case.dart';
@@ -89,25 +93,23 @@ Future<void> init() async {
   sl.registerLazySingleton<OperationDao>(() => OperationDao(sl<Database>()));
   sl.registerLazySingleton<UserDao>(() => UserDao(sl<Database>()));
 
-  sl.registerLazySingleton<LocalSyncTable<Account>>(
-    () => AccountDataRepositoryImpl(sl<AccountDao>(), sl<UserDao>()),
-  );
-  sl.registerLazySingleton<LocalSyncTable<Category>>(
-    () => CategoryDataRepositoryImpl(sl<CategoryDao>()),
-  );
-  sl.registerLazySingleton<LocalSyncTable<Operation>>(
-    () => OperationDataRepositoryImpl(sl<OperationDao>(), sl<UserDao>()),
-  );
-
   sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
         accountDao: sl<AccountDao>(),
         categoryDao: sl<CategoryDao>(),
         operationDao: sl<OperationDao>(),
         userDao: sl<UserDao>(),
+        currencyRateSource: CurrencyRateSource(),
       ));
 
+  sl.registerLazySingleton<LocalSyncTable<BaseAccount>>(
+      () => AccountDataRepositoryImpl(sl(), sl()));
+  sl.registerLazySingleton<LocalSyncTable<Category>>(
+      () => CategoryDataRepositoryImpl(sl()));
+  sl.registerLazySingleton<LocalSyncTable<Operation>>(
+      () => OperationDataRepositoryImpl(sl(), sl()));
+
   sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(
-        accountRepo: sl<LocalSyncTable<Account>>(),
+        accountRepo: sl<LocalSyncTable<BaseAccount>>(),
         categoryRepo: sl<LocalSyncTable<Category>>(),
         operationRepo: sl<LocalSyncTable<Operation>>(),
         dataRepository: sl<DataRepository>(),
@@ -167,6 +169,8 @@ Future<void> init() async {
 
   //USE CASES
 
+  sl.registerFactory(() => GetUsersUseCase(sl()));
+
   sl.registerFactory(() => WatchAccountTitleUseCase(sl()));
   sl.registerFactory(() => WatchCategoryByIdUseCase(sl()));
 
@@ -175,6 +179,7 @@ Future<void> init() async {
 
   sl.registerFactory(() => WatchBalancesUseCase(sl()));
   sl.registerFactory(() => WatchCashflowUseCase(sl()));
+  sl.registerFactory(() => WatchCategoriesUseCase(sl()));
 
   sl.registerFactory(() => GetAccountByIdUseCase(sl()));
   sl.registerFactory(() => GetCategoryByIdUseCase(sl()));
@@ -183,7 +188,7 @@ Future<void> init() async {
   sl.registerFactory(() => GetLastOperationUseCase(sl()));
   sl.registerFactory(() => WatchLastOperationsUseCase(sl()));
 
-  sl.registerFactory(() => InsertAccountUseCase(sl(), sl()));
+  sl.registerFactory(() => InsertAccountUseCase(sl()));
 
   sl.registerFactory(() => InsertOperationInputUseCase(sl()));
   sl.registerFactory(() => InsertOperationOutputUseCase(sl()));
@@ -209,9 +214,11 @@ Future<void> init() async {
         syncRepo: sl<SyncRepository>(),
       ));
 
+  sl.registerLazySingleton(() => CurrencyRateBloc(sl()));
+
   sl.registerLazySingleton(() => AccountBalanceBloc(sl()));
 
-  sl.registerLazySingleton(() => CategoryCashflowBloc(sl()));
+  sl.registerLazySingleton(() => CategoryCashflowBloc(sl(), sl(), sl()));
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
     (mode, _) => DriveDialogBloc(
@@ -234,6 +241,7 @@ Future<void> init() async {
         sl<GetAccountByIdUseCase>(),
         sl<InsertAccountUseCase>(),
         sl<UpdateAccountUseCase>(),
+        sl(),
       ));
 
   sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));

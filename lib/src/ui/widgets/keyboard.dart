@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:money_tracker/src/domain/models.dart';
+
+import 'currency_menu.dart';
 
 class Keyboard extends StatelessWidget {
   final ValueSetter<int> onDigitPressed;
   final VoidCallback onBackPressed;
+  final Currency currency;
+  final ValueSetter<Currency> onChangeCurrency;
 
   const Keyboard({
     super.key,
     required this.onDigitPressed,
     required this.onBackPressed,
+    required this.currency,
+    required this.onChangeCurrency,
   });
 
   @override
@@ -69,7 +76,27 @@ class Keyboard extends StatelessWidget {
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            _Button(child: null, onPressed: null, width: col),
+            // _Button(child: null, onPressed: null, width: col),
+            SizedBox(
+                width: col,
+                height: col,
+                child: Center(
+                  child: DropdownButton<Currency>(
+                      underline: SizedBox(),
+                      value: currency,
+                      items: Currency.values
+                          .map((e) => DropdownMenuItem<Currency>(
+                        value: e,
+                        child: Text(e.toString()),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        if (value == null) {
+                          return;
+                        }
+                        onChangeCurrency(value);
+                      }),
+                )),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 0,

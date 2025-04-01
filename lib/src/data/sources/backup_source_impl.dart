@@ -21,7 +21,7 @@ class GoogleDrive extends BackupSource {
   ) async {
     final directory = await getTemporaryDirectory();
     var localFile = File('${directory.path}/$fileName.txt');
-    final res = await localFile.writeAsString(jsonEncode(data));
+    await localFile.writeAsString(jsonEncode(data));
 
     var media = drive.Media(localFile.openRead(), localFile.lengthSync());
 
@@ -30,8 +30,7 @@ class GoogleDrive extends BackupSource {
     file.parents = [catalogId];
     file.mimeType = 'application/json';
 
-    var response =
-        await drive.DriveApi(_client).files.create(file, uploadMedia: media);
+    await drive.DriveApi(_client).files.create(file, uploadMedia: media);
   }
 
   @override
@@ -52,7 +51,7 @@ class GoogleDrive extends BackupSource {
 
       debugPrint('Task Done');
 
-      final res = await saveFile.writeAsBytes(dataStore);
+      await saveFile.writeAsBytes(dataStore);
 
       debugPrint('File saved at ${saveFile.path}');
 

@@ -19,24 +19,27 @@ mixin _$AccountInputEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
     required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
+    required TResult Function(User? user) changeUser,
     required TResult Function() save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
     TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
+    TResult? Function(User? user)? changeUser,
     TResult? Function()? save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
     TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
+    TResult Function(User? user)? changeUser,
     TResult Function()? save,
     required TResult orElse(),
   }) =>
@@ -44,25 +47,27 @@ mixin _$AccountInputEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) =>
@@ -163,8 +168,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
     required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
+    required TResult Function(User? user) changeUser,
     required TResult Function() save,
   }) {
     return fetch(accountId);
@@ -174,8 +180,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
     TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
+    TResult? Function(User? user)? changeUser,
     TResult? Function()? save,
   }) {
     return fetch?.call(accountId);
@@ -185,8 +192,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
     TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
+    TResult Function(User? user)? changeUser,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -200,9 +208,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return fetch(this);
@@ -212,8 +220,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return fetch?.call(this);
@@ -223,8 +232,9 @@ class _$FetchAccountInputEventImpl implements _FetchAccountInputEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -245,6 +255,168 @@ abstract class _FetchAccountInputEvent implements AccountInputEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchAccountInputEventImplCopyWith<_$FetchAccountInputEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$InputAccountInputEventImplCopyWith<$Res> {
+  factory _$$InputAccountInputEventImplCopyWith(
+          _$InputAccountInputEventImpl value,
+          $Res Function(_$InputAccountInputEventImpl) then) =
+      __$$InputAccountInputEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isDebt});
+}
+
+/// @nodoc
+class __$$InputAccountInputEventImplCopyWithImpl<$Res>
+    extends _$AccountInputEventCopyWithImpl<$Res, _$InputAccountInputEventImpl>
+    implements _$$InputAccountInputEventImplCopyWith<$Res> {
+  __$$InputAccountInputEventImplCopyWithImpl(
+      _$InputAccountInputEventImpl _value,
+      $Res Function(_$InputAccountInputEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isDebt = null,
+  }) {
+    return _then(_$InputAccountInputEventImpl(
+      isDebt: null == isDebt
+          ? _value.isDebt
+          : isDebt // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InputAccountInputEventImpl implements _InputAccountInputEvent {
+  const _$InputAccountInputEventImpl({required this.isDebt});
+
+  @override
+  final bool isDebt;
+
+  @override
+  String toString() {
+    return 'AccountInputEvent.input(isDebt: $isDebt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InputAccountInputEventImpl &&
+            (identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isDebt);
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InputAccountInputEventImplCopyWith<_$InputAccountInputEventImpl>
+      get copyWith => __$$InputAccountInputEventImplCopyWithImpl<
+          _$InputAccountInputEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
+    required TResult Function(String title) changeTitle,
+    required TResult Function(User? user) changeUser,
+    required TResult Function() save,
+  }) {
+    return input(isDebt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
+    TResult? Function(String title)? changeTitle,
+    TResult? Function(User? user)? changeUser,
+    TResult? Function()? save,
+  }) {
+    return input?.call(isDebt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
+    TResult Function(String title)? changeTitle,
+    TResult Function(User? user)? changeUser,
+    TResult Function()? save,
+    required TResult orElse(),
+  }) {
+    if (input != null) {
+      return input(isDebt);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
+    required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
+    required TResult Function(_SaveAccountInputEvent value) save,
+  }) {
+    return input(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
+    TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
+    TResult? Function(_SaveAccountInputEvent value)? save,
+  }) {
+    return input?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
+    TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
+    TResult Function(_SaveAccountInputEvent value)? save,
+    required TResult orElse(),
+  }) {
+    if (input != null) {
+      return input(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InputAccountInputEvent implements AccountInputEvent {
+  const factory _InputAccountInputEvent({required final bool isDebt}) =
+      _$InputAccountInputEventImpl;
+
+  bool get isDebt;
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InputAccountInputEventImplCopyWith<_$InputAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -323,8 +495,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
     required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
+    required TResult Function(User? user) changeUser,
     required TResult Function() save,
   }) {
     return changeTitle(title);
@@ -334,8 +507,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
     TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
+    TResult? Function(User? user)? changeUser,
     TResult? Function()? save,
   }) {
     return changeTitle?.call(title);
@@ -345,8 +519,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
     TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
+    TResult Function(User? user)? changeUser,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -360,9 +535,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return changeTitle(this);
@@ -372,8 +547,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return changeTitle?.call(this);
@@ -383,8 +559,9 @@ class _$ChangeTitleAccountInputEventImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -410,23 +587,25 @@ abstract class _ChangeTitleAccountInputEvent implements AccountInputEvent {
 }
 
 /// @nodoc
-abstract class _$$ChangeIsDebtAccountInputEventImplCopyWith<$Res> {
-  factory _$$ChangeIsDebtAccountInputEventImplCopyWith(
-          _$ChangeIsDebtAccountInputEventImpl value,
-          $Res Function(_$ChangeIsDebtAccountInputEventImpl) then) =
-      __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>;
+abstract class _$$ChangeUserAccountInputEventImplCopyWith<$Res> {
+  factory _$$ChangeUserAccountInputEventImplCopyWith(
+          _$ChangeUserAccountInputEventImpl value,
+          $Res Function(_$ChangeUserAccountInputEventImpl) then) =
+      __$$ChangeUserAccountInputEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isDebt});
+  $Res call({User? user});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
-class __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>
+class __$$ChangeUserAccountInputEventImplCopyWithImpl<$Res>
     extends _$AccountInputEventCopyWithImpl<$Res,
-        _$ChangeIsDebtAccountInputEventImpl>
-    implements _$$ChangeIsDebtAccountInputEventImplCopyWith<$Res> {
-  __$$ChangeIsDebtAccountInputEventImplCopyWithImpl(
-      _$ChangeIsDebtAccountInputEventImpl _value,
-      $Res Function(_$ChangeIsDebtAccountInputEventImpl) _then)
+        _$ChangeUserAccountInputEventImpl>
+    implements _$$ChangeUserAccountInputEventImplCopyWith<$Res> {
+  __$$ChangeUserAccountInputEventImplCopyWithImpl(
+      _$ChangeUserAccountInputEventImpl _value,
+      $Res Function(_$ChangeUserAccountInputEventImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of AccountInputEvent
@@ -434,85 +613,101 @@ class __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isDebt = null,
+    Object? user = freezed,
   }) {
-    return _then(_$ChangeIsDebtAccountInputEventImpl(
-      isDebt: null == isDebt
-          ? _value.isDebt
-          : isDebt // ignore: cast_nullable_to_non_nullable
-              as bool,
+    return _then(_$ChangeUserAccountInputEventImpl(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
+  }
+
+  /// Create a copy of AccountInputEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ChangeIsDebtAccountInputEventImpl
-    implements _ChangeIsDebtAccountInputEvent {
-  const _$ChangeIsDebtAccountInputEventImpl({required this.isDebt});
+class _$ChangeUserAccountInputEventImpl
+    implements _ChangeUserAccountInputEvent {
+  const _$ChangeUserAccountInputEventImpl({required this.user});
 
   @override
-  final bool isDebt;
+  final User? user;
 
   @override
   String toString() {
-    return 'AccountInputEvent.changeIsDebt(isDebt: $isDebt)';
+    return 'AccountInputEvent.changeUser(user: $user)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChangeIsDebtAccountInputEventImpl &&
-            (identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+            other is _$ChangeUserAccountInputEventImpl &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isDebt);
+  int get hashCode => Object.hash(runtimeType, user);
 
   /// Create a copy of AccountInputEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChangeIsDebtAccountInputEventImplCopyWith<
-          _$ChangeIsDebtAccountInputEventImpl>
-      get copyWith => __$$ChangeIsDebtAccountInputEventImplCopyWithImpl<
-          _$ChangeIsDebtAccountInputEventImpl>(this, _$identity);
+  _$$ChangeUserAccountInputEventImplCopyWith<_$ChangeUserAccountInputEventImpl>
+      get copyWith => __$$ChangeUserAccountInputEventImplCopyWithImpl<
+          _$ChangeUserAccountInputEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
     required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
+    required TResult Function(User? user) changeUser,
     required TResult Function() save,
   }) {
-    return changeIsDebt(isDebt);
+    return changeUser(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
     TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
+    TResult? Function(User? user)? changeUser,
     TResult? Function()? save,
   }) {
-    return changeIsDebt?.call(isDebt);
+    return changeUser?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
     TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
+    TResult Function(User? user)? changeUser,
     TResult Function()? save,
     required TResult orElse(),
   }) {
-    if (changeIsDebt != null) {
-      return changeIsDebt(isDebt);
+    if (changeUser != null) {
+      return changeUser(user);
     }
     return orElse();
   }
@@ -521,52 +716,53 @@ class _$ChangeIsDebtAccountInputEventImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
-    return changeIsDebt(this);
+    return changeUser(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
-    return changeIsDebt?.call(this);
+    return changeUser?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
-    if (changeIsDebt != null) {
-      return changeIsDebt(this);
+    if (changeUser != null) {
+      return changeUser(this);
     }
     return orElse();
   }
 }
 
-abstract class _ChangeIsDebtAccountInputEvent implements AccountInputEvent {
-  const factory _ChangeIsDebtAccountInputEvent({required final bool isDebt}) =
-      _$ChangeIsDebtAccountInputEventImpl;
+abstract class _ChangeUserAccountInputEvent implements AccountInputEvent {
+  const factory _ChangeUserAccountInputEvent({required final User? user}) =
+      _$ChangeUserAccountInputEventImpl;
 
-  bool get isDebt;
+  User? get user;
 
   /// Create a copy of AccountInputEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeIsDebtAccountInputEventImplCopyWith<
-          _$ChangeIsDebtAccountInputEventImpl>
+  _$$ChangeUserAccountInputEventImplCopyWith<_$ChangeUserAccountInputEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -614,8 +810,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
+    required TResult Function(bool isDebt) input,
     required TResult Function(String title) changeTitle,
-    required TResult Function(bool isDebt) changeIsDebt,
+    required TResult Function(User? user) changeUser,
     required TResult Function() save,
   }) {
     return save();
@@ -625,8 +822,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
+    TResult? Function(bool isDebt)? input,
     TResult? Function(String title)? changeTitle,
-    TResult? Function(bool isDebt)? changeIsDebt,
+    TResult? Function(User? user)? changeUser,
     TResult? Function()? save,
   }) {
     return save?.call();
@@ -636,8 +834,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
+    TResult Function(bool isDebt)? input,
     TResult Function(String title)? changeTitle,
-    TResult Function(bool isDebt)? changeIsDebt,
+    TResult Function(User? user)? changeUser,
     TResult Function()? save,
     required TResult orElse(),
   }) {
@@ -651,9 +850,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FetchAccountInputEvent value) fetch,
+    required TResult Function(_InputAccountInputEvent value) input,
     required TResult Function(_ChangeTitleAccountInputEvent value) changeTitle,
-    required TResult Function(_ChangeIsDebtAccountInputEvent value)
-        changeIsDebt,
+    required TResult Function(_ChangeUserAccountInputEvent value) changeUser,
     required TResult Function(_SaveAccountInputEvent value) save,
   }) {
     return save(this);
@@ -663,8 +862,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_FetchAccountInputEvent value)? fetch,
+    TResult? Function(_InputAccountInputEvent value)? input,
     TResult? Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult? Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult? Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult? Function(_SaveAccountInputEvent value)? save,
   }) {
     return save?.call(this);
@@ -674,8 +874,9 @@ class _$SaveAccountInputEventImpl implements _SaveAccountInputEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FetchAccountInputEvent value)? fetch,
+    TResult Function(_InputAccountInputEvent value)? input,
     TResult Function(_ChangeTitleAccountInputEvent value)? changeTitle,
-    TResult Function(_ChangeIsDebtAccountInputEvent value)? changeIsDebt,
+    TResult Function(_ChangeUserAccountInputEvent value)? changeUser,
     TResult Function(_SaveAccountInputEvent value)? save,
     required TResult orElse(),
   }) {
@@ -694,6 +895,8 @@ abstract class _SaveAccountInputEvent implements AccountInputEvent {
 mixin _$AccountInputState {
   String get title => throw _privateConstructorUsedError;
   bool get isDebt => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
+  List<User> get users => throw _privateConstructorUsedError;
   BaseAccount? get account => throw _privateConstructorUsedError;
   bool get isSaved => throw _privateConstructorUsedError;
 
@@ -710,7 +913,13 @@ abstract class $AccountInputStateCopyWith<$Res> {
           AccountInputState value, $Res Function(AccountInputState) then) =
       _$AccountInputStateCopyWithImpl<$Res, AccountInputState>;
   @useResult
-  $Res call({String title, bool isDebt, BaseAccount? account, bool isSaved});
+  $Res call(
+      {String title,
+      bool isDebt,
+      int? userId,
+      List<User> users,
+      BaseAccount? account,
+      bool isSaved});
 }
 
 /// @nodoc
@@ -730,6 +939,8 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
   $Res call({
     Object? title = null,
     Object? isDebt = null,
+    Object? userId = freezed,
+    Object? users = null,
     Object? account = freezed,
     Object? isSaved = null,
   }) {
@@ -742,6 +953,14 @@ class _$AccountInputStateCopyWithImpl<$Res, $Val extends AccountInputState>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      users: null == users
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<User>,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -762,7 +981,13 @@ abstract class _$$AccountInputStateImplCopyWith<$Res>
       __$$AccountInputStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, bool isDebt, BaseAccount? account, bool isSaved});
+  $Res call(
+      {String title,
+      bool isDebt,
+      int? userId,
+      List<User> users,
+      BaseAccount? account,
+      bool isSaved});
 }
 
 /// @nodoc
@@ -780,6 +1005,8 @@ class __$$AccountInputStateImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? isDebt = null,
+    Object? userId = freezed,
+    Object? users = null,
     Object? account = freezed,
     Object? isSaved = null,
   }) {
@@ -792,6 +1019,14 @@ class __$$AccountInputStateImplCopyWithImpl<$Res>
           ? _value.isDebt
           : isDebt // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      users: null == users
+          ? _value._users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<User>,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -810,13 +1045,26 @@ class _$AccountInputStateImpl implements _AccountInputState {
   const _$AccountInputStateImpl(
       {required this.title,
       required this.isDebt,
+      required this.userId,
+      required final List<User> users,
       this.account,
-      required this.isSaved});
+      required this.isSaved})
+      : _users = users;
 
   @override
   final String title;
   @override
   final bool isDebt;
+  @override
+  final int? userId;
+  final List<User> _users;
+  @override
+  List<User> get users {
+    if (_users is EqualUnmodifiableListView) return _users;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_users);
+  }
+
   @override
   final BaseAccount? account;
   @override
@@ -824,7 +1072,7 @@ class _$AccountInputStateImpl implements _AccountInputState {
 
   @override
   String toString() {
-    return 'AccountInputState(title: $title, isDebt: $isDebt, account: $account, isSaved: $isSaved)';
+    return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved)';
   }
 
   @override
@@ -834,12 +1082,15 @@ class _$AccountInputStateImpl implements _AccountInputState {
             other is _$AccountInputStateImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isDebt, isDebt) || other.isDebt == isDebt) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            const DeepCollectionEquality().equals(other._users, _users) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, isDebt, account, isSaved);
+  int get hashCode => Object.hash(runtimeType, title, isDebt, userId,
+      const DeepCollectionEquality().hash(_users), account, isSaved);
 
   /// Create a copy of AccountInputState
   /// with the given fields replaced by the non-null parameter values.
@@ -855,6 +1106,8 @@ abstract class _AccountInputState implements AccountInputState {
   const factory _AccountInputState(
       {required final String title,
       required final bool isDebt,
+      required final int? userId,
+      required final List<User> users,
       final BaseAccount? account,
       required final bool isSaved}) = _$AccountInputStateImpl;
 
@@ -862,6 +1115,10 @@ abstract class _AccountInputState implements AccountInputState {
   String get title;
   @override
   bool get isDebt;
+  @override
+  int? get userId;
+  @override
+  List<User> get users;
   @override
   BaseAccount? get account;
   @override

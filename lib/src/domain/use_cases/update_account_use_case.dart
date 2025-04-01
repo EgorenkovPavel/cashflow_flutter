@@ -10,19 +10,16 @@ class UpdateAccountUseCase {
   Future<BaseAccount> call({
     required BaseAccount account,
     required String title,
+    required int? userId,
   }) async {
     switch (account) {
       case Account():
-        final newAccount = account.copyWith(
-          title: title,
-        );
+        final newAccount = account.copyWith(title: title).setUser(userId);
         await _dataRepository.updateAccount(newAccount);
 
         return newAccount;
       case Debt():
-        final newAccount = account.copyWith(
-          title: title,
-        );
+        final newAccount = account.copyWith(title: title).setUser(userId);
         await _dataRepository.updateAccount(newAccount);
 
         return newAccount;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import '../../../../domain/models.dart';
 import '../../../../injection_container.dart';
 
@@ -21,9 +22,7 @@ class UsersPage extends StatelessWidget {
                     .map((e) => ListTile(
                           title: Text(e.name),
                           subtitle: Text(e.googleId),
-                          leading: CircleAvatar(
-                            child: Image.network(e.photo),
-                          ),
+                          leading: UserAvatar(photoUrl: e.photo,),
                         ))
                     .toList(),
               );

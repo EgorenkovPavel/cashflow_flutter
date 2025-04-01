@@ -3,6 +3,9 @@ import '../models.dart';
 
 abstract class DataRepository {
 
+  Future<double> usdRate();
+  Future<double> eurRate();
+
   // Users
 
   Future<User?> getUserByGoogleId(String googleId);
@@ -15,8 +18,8 @@ abstract class DataRepository {
   Stream<List<BaseAccount>> watchAllAccounts();
   Future<List<BaseAccount>> getAllAccounts();
 
-  Stream<List<BaseAccountBalance>> watchAllBalance();
-  Future<List<BaseAccountBalance>> getAllBalance();
+  Stream<List<BaseAccountBalanceListItem>> watchAllBalance();
+  Future<List<BaseAccountBalanceListItem>> getAllBalance();
 
   Stream<BaseAccount> watchAccountById(int id);
   Future<BaseAccount> getAccountById(int id);
@@ -28,19 +31,19 @@ abstract class DataRepository {
   Stream<List<Category>> watchAllCategories();
   Future<List<Category>> getAllCategories();
 
-  Stream<List<CategoryCashflow>> watchCashflow(DateTime date);
-  Stream<List<CategoryCashflow>> watchCashflowByType(
+  Stream<List<CategoryCashFlow>> watchCashFlow(DateTime date);
+  Stream<List<CategoryCashFlow>> watchCashFlowByType(
       DateTime date,
       OperationType type,
       );
-  Future<List<CategoryCashflow>> getCashflowByType(
+  Future<List<CategoryCashFlow>> getCashFlowByType(
       DateTime date,
       OperationType type,
       );
 
-  Future<List<CategoryMonthCashflow>> getCashflowByYear(int year);
-  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id);
-  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id);
+  // Future<List<CategoryMonthCashflow>> getCashflowByYear(int year);
+  Stream<List<SumOnDate>> watchCashFlowByCategoryByMonth(int id);
+  Stream<List<SumOnDate>> watchCashFlowByCategoryByYear(int id);
 
   Future<Category> getCategoryById(int id);
   Stream<Category> watchCategoryById(int id);
@@ -56,20 +59,19 @@ abstract class DataRepository {
   Stream<List<Operation>> watchAllOperations();
 
   Future<List<Operation>> getAllOperationsWithEmptyCloudId();
-  Stream<List<Operation>> watchAllOperationsByFilter(OperationListFilter filter);
+  Stream<List<OperationListItem>> watchAllOperationsByFilter(OperationListFilter filter);
 
   Future<Operation> getOperationById(int id);
 
-  Stream<List<Operation>> watchAllOperationsByAccount(int accountId);
-  Stream<List<Operation>> watchAllOperationsByCategory(int categoryId);
-  Stream<List<Operation>> watchLastOperations(int limit);
+  Stream<List<OperationListItem>> watchAllOperationsByAccount(int accountId);
+  Stream<List<OperationListItem>> watchAllOperationsByCategory(int categoryId);
+  Stream<List<OperationListItem>> watchLastOperations(int limit);
   Future<Operation?> getLastOperation();
 
   Future<Operation> insertOperation(Operation entity);
-  Future<Operation> duplicateOperation(Operation entity);
+  Future<Operation> duplicateOperation(int operationId);
   Future<void> updateOperation(Operation operation);
-  Future<void> deleteOperation(Operation entity);
-  Future<void> recoverOperation(Operation entity);
+  Future<void> recoverOperation(int operationId);
   Future<void> deleteOperationById(int operationId);
 
 }

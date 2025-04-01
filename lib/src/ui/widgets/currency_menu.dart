@@ -24,6 +24,7 @@ class _CurrencyMenuState extends State<CurrencyMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<Currency>(
+      underline: SizedBox(),
         value: _currency,
         items: Currency.values
             .map((e) => DropdownMenuItem<Currency>(

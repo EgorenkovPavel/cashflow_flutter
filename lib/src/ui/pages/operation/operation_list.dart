@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/models/operation/operation.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
@@ -7,12 +6,14 @@ import 'package:money_tracker/src/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../../domain/models.dart';
+
 class OperationList extends StatelessWidget {
-  final List<Operation> _operations;
+  final List<OperationListItem> _operations;
 
   const OperationList(this._operations, {super.key});
 
-  Widget _listBuilder(BuildContext context, List<Operation> operations) {
+  Widget _listBuilder(BuildContext context, List<OperationListItem> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
 
     Widget positionsView() {

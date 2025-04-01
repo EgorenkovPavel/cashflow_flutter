@@ -32,14 +32,15 @@ class OperationEditEvent with _$OperationEditEvent {
   }) = _ChangeOperationTypeOperationEditEvent;
 
   const factory OperationEditEvent.changeAccount(
-      {required BaseAccount account}) = _ChangeAccountOperationEditEvent;
+          {required BaseAccountListItem account}) =
+      _ChangeAccountOperationEditEvent;
 
   const factory OperationEditEvent.changeCategory({
     required Category category,
   }) = _ChangeCategoryOperationEditEvent;
 
   const factory OperationEditEvent.changeRecAccount({
-    required BaseAccount recAccount,
+    required BaseAccountListItem recAccount,
   }) = _ChangeRecAccountOperationEditEvent;
 
   const factory OperationEditEvent.changeSum({required int sum}) =
@@ -66,9 +67,9 @@ class OperationEditState with _$OperationEditState {
     required DateTime date,
     required TimeOfDay time,
     required OperationType operationType,
-    BaseAccount? account,
-    Category? category,
-    BaseAccount? recAccount,
+    int? accountId,
+    int? categoryId,
+    int? recAccountId,
     required Sum sum,
     required Sum recSum,
     required bool isSaved,
@@ -79,8 +80,8 @@ class OperationEditState with _$OperationEditState {
             operation: operation,
             operationType: operation.type,
             date: operation.date,
-            account: operation.account,
-            category: operation.category,
+            accountId: operation.account,
+            categoryId: operation.analytic,
             sum: operation.sum,
             time: TimeOfDay.fromDateTime(operation.date),
           ),
@@ -88,8 +89,8 @@ class OperationEditState with _$OperationEditState {
             operation: operation,
             operationType: operation.type,
             date: operation.date,
-            account: operation.account,
-            category: operation.category,
+            accountId: operation.account,
+            categoryId: operation.analytic,
             sum: operation.sum,
             time: TimeOfDay.fromDateTime(operation.date),
           ),
@@ -97,8 +98,8 @@ class OperationEditState with _$OperationEditState {
             operation: operation,
             operationType: operation.type,
             date: operation.date,
-            account: operation.account,
-            recAccount: operation.recAccount,
+            accountId: operation.account,
+            recAccountId: operation.analytic,
             sum: operation.sum,
             recSum: operation.recSum,
             time: TimeOfDay.fromDateTime(operation.date),
@@ -137,11 +138,11 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           changeTime: (event) => emitter(state.copyWith(time: event.time)),
           changeOperationType: (event) => _changeOperationType(event, emitter),
           changeAccount: (event) =>
-              emitter(state.copyWith(account: event.account)),
+              emitter(state.copyWith(accountId: event.account.id)),
           changeCategory: (event) =>
-              emitter(state.copyWith(category: event.category)),
+              emitter(state.copyWith(categoryId: event.category.id)),
           changeRecAccount: (event) =>
-              emitter(state.copyWith(recAccount: event.recAccount)),
+              emitter(state.copyWith(recAccountId: event.recAccount.id)),
           changeSum: (event) =>
               emitter(state.copyWith(sum: state.sum.copyWith(sum: event.sum))),
           changeRecSum: (event) => emitter(
@@ -149,7 +150,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           changeCurrency: (event) => emitter(state.copyWith(
               sum: state.sum.copyWith(currency: event.currency))),
           changeRecCurrency: (event) => emitter(state.copyWith(
-              sum: state.recSum.copyWith(currency: event.currency))),
+              recSum: state.recSum.copyWith(currency: event.currency))),
           save: (event) => _save(event, emitter),
         ));
   }
@@ -166,7 +167,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     _ChangeOperationTypeOperationEditEvent event,
     Emitter<OperationEditState> emit,
   ) {
-    emit(state.copyWith(operationType: event.operationType, category: null));
+    emit(state.copyWith(operationType: event.operationType, categoryId: null));
   }
 
   Future<void> _save(
@@ -199,8 +200,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
       TRANSFER: () {
         return _insertOperationTransferUseCase(
           date: date,
-          account: state.account!,
-          recAccount: state.recAccount!,
+          accountId: state.accountId!,
+          recAccountId: state.recAccountId!,
           sum: state.sum,
           recSum: state.recSum,
         );
@@ -208,16 +209,16 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
       INPUT: () {
         return _insertOperationInputUseCase(
           date: date,
-          account: state.account! as Account,
-          category: state.category! as InputCategoryItem,
+          accountId: state.accountId!,
+          categoryId: state.categoryId!,
           sum: state.sum,
         );
       },
       OUTPUT: () {
         return _insertOperationOutputUseCase(
           date: date,
-          account: state.account! as Account,
-          category: state.category! as OutputCategoryItem,
+          accountId: state.accountId!,
+          categoryId: state.categoryId!,
           sum: state.sum,
         );
       },
@@ -238,8 +239,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         return _updateOperationTransferUseCase(
           operation: state.operation!,
           date: date,
-          account: state.account!,
-          recAccount: state.recAccount!,
+          accountId: state.accountId!,
+          recAccountId: state.recAccountId!,
           sum: state.sum,
           recSum: state.recSum,
         );
@@ -248,8 +249,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         return _updateOperationInputUseCase(
           operation: state.operation!,
           date: date,
-          account: state.account! as Account,
-          category: state.category! as InputCategoryItem,
+          accountId: state.accountId!,
+          categoryId: state.categoryId!,
           sum: state.sum,
         );
       },
@@ -257,8 +258,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         return _updateOperationOutputUseCase(
           operation: state.operation!,
           date: date,
-          account: state.account! as Account,
-          category: state.category! as OutputCategoryItem,
+          accountId: state.accountId!,
+          categoryId: state.categoryId!,
           sum: state.sum,
         );
       },

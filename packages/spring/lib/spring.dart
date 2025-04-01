@@ -1,7 +1,5 @@
 library spring;
 
-import 'models/models.dart';
-
 import 'services/account_service.dart';
 import 'services/account_service_impl.dart';
 import 'services/category_service.dart';
@@ -11,7 +9,6 @@ import 'services/operation_service.dart';
 import 'services/operation_service_impl.dart';
 import 'services/user_service.dart';
 import 'services/user_service_impl.dart';
-
 
 /*
 final c = SpringConnector(token);

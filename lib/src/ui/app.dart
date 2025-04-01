@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:money_tracker/src/ui/pages/category/list_page/category_list_page.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
 import 'package:money_tracker/src/ui/pages/service/users/users_page.dart';
@@ -81,8 +82,17 @@ final _router = GoRouter(
           name: 'budget',
           path: 'budget/:fid',
           builder: (context, state) => BudgetPage(
-            type: OperationType.values.firstWhere(
+            type: CategoryType.values.firstWhere(
               (element) => element.toString() == state.pathParameters['fid'],
+            ),
+          ),
+        ),
+        GoRoute(
+          name: 'categoryList',
+          path: 'categoryList/:fid',
+          builder: (context, state) => CategoryListPage(
+            type: CategoryType.values.firstWhere(
+                  (element) => element.toString() == state.pathParameters['fid'],
             ),
           ),
         ),
@@ -164,19 +174,27 @@ extension PageNavigator on BuildContext {
 
   void openReportsPage() => push(namedLocation('reports'));
 
-  void openBudgetPage(OperationType operationType) => push(namedLocation(
+  void openBudgetPage(CategoryType type) => push(namedLocation(
         'budget',
-        pathParameters: <String, String>{'fid': operationType.toString()},
+        pathParameters: <String, String>{'fid': type.toString()},
       ));
 
+  void openCategoryListPage(CategoryType type) => push(namedLocation(
+    'categoryList',
+    pathParameters: <String, String>{'fid': type.toString()},
+  ));
+
   Future<BaseAccount?> openAccountInputDialog() =>
-      const _Card<BaseAccount>().open(this, const AccountInputPage.input());
+      const _Card<BaseAccount>().open(this, const AccountInputPage.inputAccount());
+
+  Future<BaseAccount?> openDebtInputDialog() =>
+      const _Card<BaseAccount>().open(this, const AccountInputPage.inputDebt());
 
   Future<Account?> openAccountEditDialog(int id) =>
       const _Card<Account>().open(this, AccountInputPage.edit(id));
 
-  Future<Category?> openCategoryInputDialog({required OperationType type}) =>
-      const _Card<Category>().open(this, CategoryInputPage.byType(type: type));
+  Future<Category?> openCategoryInputDialog({required CategoryType type, required bool isGroup}) =>
+      const _Card<Category>().open(this, CategoryInputPage.byType(type: type, isGroup: isGroup,));
 
   Future<Category?> openCategoryEditDialog({required int id}) =>
       const _Card<Category>().open(this, CategoryInputPage.edit(id: id));

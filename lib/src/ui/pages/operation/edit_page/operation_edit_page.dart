@@ -11,8 +11,6 @@ import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models/enum/currency.dart';
-
 class OperationEditPage extends StatelessWidget {
   final int? id;
 
@@ -59,11 +57,11 @@ class _OperationEditPageState extends State<_OperationEditPage> {
   }
 
   void _listenState(BuildContext context, OperationEditState state) {
-    if (_sumController.text != state.sum.toString()) {
-      _sumController.text = state.sum.toString();
+    if (_sumController.text != state.sum.sum.toString()) {
+      _sumController.text = state.sum.sum.toString();
     }
-    if (_recSumController.text != state.recSum.toString()) {
-      _recSumController.text = state.recSum.toString();
+    if (_recSumController.text != state.recSum.sum.toString()) {
+      _recSumController.text = state.recSum.sum.toString();
     }
     if (state.isSaved) {
       Navigator.of(context).pop();
@@ -128,45 +126,46 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     ],
                   ),
                   Title(text: context.loc.titleAccount),
-                  DropdownList<BaseAccount>(
-                    value: context.account(),
+                  DropdownList<BaseAccountListItem>(
+                    value: context.account(context.watchListItems()),
                     hint: context.loc.hintAccount,
-                    items: context.accounts(),
+                    items: context.watchListItems(),
                     onChange: context.onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
                   Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
                         INPUT: () => DropdownList<Category>(
-                          value: context.category(),
+                          value: context.category(context.watchInCategories()),
+                          //TODO
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
-                          items: context.inCategories(),
+                          items: context.watchInCategories(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
                         OUTPUT: () => DropdownList<Category>(
-                          value: context.category(),
+                          value: context.category(context.watchOutCategories()),
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
-                          items: context.outCategories(),
+                          items: context.watchOutCategories(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
-                        TRANSFER: () => DropdownList<BaseAccount>(
-                          value: context.recAccount(),
+                        TRANSFER: () => DropdownList<BaseAccountListItem>(
+                          value: context.recAccount(context.watchListItems()),
                           hint: context.loc.hintAccount,
                           onChange: context.onRecAccountChange,
-                          items: context.accounts(),
+                          items: context.watchListItems(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
                       ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Row(
-                      children: [
-                        TextFormField(
+                  SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
                           keyboardType: TextInputType.number,
                           controller: _sumController,
                           decoration: InputDecoration(
@@ -177,30 +176,34 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                           onChanged: context.onChangeSum,
                           validator: _sumValidator,
                         ),
-                        CurrencyMenu(
-                            currency: context.currencySent(),
-                            onChange: context.onChangeCurrency),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 16.0),
+                      CurrencyMenu(
+                          currency: context.currencySent(),
+                          onChange: context.onChangeCurrency),
+                    ],
                   ),
                   if (context.showRecSum())
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: Row(
                         children: [
-                          TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: _recSumController,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              labelText:
-                                  '${context.loc.titleSum}, ${context.currencyReceived().symbol}',
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: _recSumController,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText:
+                                    '${context.loc.titleSum}, ${context.currencyReceived().symbol}',
+                              ),
+                              onChanged: context.onChangeRecSum,
+                              validator: _sumValidator,
                             ),
-                            onChanged: context.onChangeRecSum,
-                            validator: _sumValidator,
                           ),
+                          SizedBox(width: 16.0),
                           CurrencyMenu(
-                              currency: context.currencySent(),
+                              currency: context.currencyReceived(),
                               onChange: context.onChangeRecCurrency),
                         ],
                       ),
@@ -225,7 +228,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
   }
 }
 
-extension BlocExt on BuildContext {
+extension OperationEditBlocExt on BuildContext {
   OperationEditBloc _bloc() => read<OperationEditBloc>();
 
   OperationType operationType() => select<OperationEditBloc, OperationType>(
@@ -242,17 +245,26 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.time,
       ).format(this);
 
-  Category? category() => select<OperationEditBloc, Category?>(
-        (bloc) => bloc.state.category,
-      );
+  Category? category(List<Category> categories) {
+    final categoryId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.categoryId,
+    );
+    return categories.where((e) => e.id == categoryId).firstOrNull;
+  }
 
-  BaseAccount? recAccount() => select<OperationEditBloc, BaseAccount?>(
-        (bloc) => bloc.state.recAccount,
-      );
+  BaseAccountListItem? recAccount(List<BaseAccountListItem> accounts) {
+    final accountId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.recAccountId,
+    );
+    return accounts.where((e) => e.id == accountId).firstOrNull;
+  }
 
-  BaseAccount? account() => select<OperationEditBloc, BaseAccount?>(
-        (bloc) => bloc.state.account,
-      );
+  BaseAccountListItem? account(List<BaseAccountListItem> accounts) {
+    final accountId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.accountId,
+    );
+    return accounts.where((e) => e.id == accountId).firstOrNull;
+  }
 
   Currency currencySent() => select<OperationEditBloc, Currency>(
         (bloc) => bloc.state.sum.currency,
@@ -268,28 +280,15 @@ extension BlocExt on BuildContext {
 
   bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
       bloc.state.operationType == OperationType.TRANSFER &&
-      bloc.state.account != null &&
-      bloc.state.recAccount != null);
-
-  List<BaseAccount> accounts() => select<AccountBalanceBloc, List<BaseAccount>>(
-        (bloc) => bloc.state.balances.map((a) => a.account).toList(),
-      );
-
-  List<Category> outCategories() =>
-      select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.outCategories,
-      );
-
-  List<Category> inCategories() => select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.inCategories,
-      );
+      bloc.state.accountId != null &&
+      bloc.state.recAccountId != null);
 
   void onChangeOperationType(newValue) =>
       read<OperationEditBloc>().add(OperationEditEvent.changeOperationType(
         operationType: newValue,
       ));
 
-  void onChangeAccount(BaseAccount? newValue) {
+  void onChangeAccount(BaseAccountListItem? newValue) {
     if (newValue != null) {
       _bloc().add(OperationEditEvent.changeAccount(account: newValue));
     }
@@ -307,8 +306,7 @@ extension BlocExt on BuildContext {
   void onChangeRecCurrency(Currency currency) =>
       _bloc().add(OperationEditEvent.changeRecCurrency(currency: currency));
 
-
-  void onRecAccountChange(BaseAccount? newValue) {
+  void onRecAccountChange(BaseAccountListItem? newValue) {
     if (newValue != null) {
       _bloc().add(OperationEditEvent.changeRecAccount(recAccount: newValue));
     }

@@ -21,8 +21,8 @@ mixin _$OperationFilterEvent {
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) =>
@@ -32,8 +32,8 @@ mixin _$OperationFilterEvent {
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) =>
@@ -43,8 +43,8 @@ mixin _$OperationFilterEvent {
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -190,8 +190,8 @@ class _$InitPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -204,8 +204,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -218,8 +218,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -346,8 +346,8 @@ class _$ResetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -360,8 +360,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -374,8 +374,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -521,8 +521,8 @@ class _$SetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -535,8 +535,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -549,8 +549,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -635,7 +635,7 @@ abstract class _$$AddAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$AddAccountOperationFilterEventImpl) then) =
       __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccount account});
+  $Res call({BaseAccountListItem account});
 }
 
 /// @nodoc
@@ -659,7 +659,7 @@ class __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as BaseAccount,
+              as BaseAccountListItem,
     ));
   }
 }
@@ -671,7 +671,7 @@ class _$AddAccountOperationFilterEventImpl
   const _$AddAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final BaseAccount account;
+  final BaseAccountListItem account;
 
   @override
   String toString() {
@@ -705,8 +705,8 @@ class _$AddAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -719,8 +719,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -733,8 +733,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -799,10 +799,10 @@ class _$AddAccountOperationFilterEventImpl
 
 abstract class _AddAccountOperationFilterEvent implements OperationFilterEvent {
   const factory _AddAccountOperationFilterEvent(
-          {required final BaseAccount account}) =
+          {required final BaseAccountListItem account}) =
       _$AddAccountOperationFilterEventImpl;
 
-  BaseAccount get account;
+  BaseAccountListItem get account;
 
   /// Create a copy of OperationFilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -819,7 +819,7 @@ abstract class _$$RemoveAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$RemoveAccountOperationFilterEventImpl) then) =
       __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccount account});
+  $Res call({BaseAccountListItem account});
 }
 
 /// @nodoc
@@ -843,7 +843,7 @@ class __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as BaseAccount,
+              as BaseAccountListItem,
     ));
   }
 }
@@ -855,7 +855,7 @@ class _$RemoveAccountOperationFilterEventImpl
   const _$RemoveAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final BaseAccount account;
+  final BaseAccountListItem account;
 
   @override
   String toString() {
@@ -889,8 +889,8 @@ class _$RemoveAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -903,8 +903,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -917,8 +917,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -984,10 +984,10 @@ class _$RemoveAccountOperationFilterEventImpl
 abstract class _RemoveAccountOperationFilterEvent
     implements OperationFilterEvent {
   const factory _RemoveAccountOperationFilterEvent(
-          {required final BaseAccount account}) =
+          {required final BaseAccountListItem account}) =
       _$RemoveAccountOperationFilterEventImpl;
 
-  BaseAccount get account;
+  BaseAccountListItem get account;
 
   /// Create a copy of OperationFilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1075,8 +1075,8 @@ class _$AddCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -1089,8 +1089,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -1103,8 +1103,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -1261,8 +1261,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccount account) addAccount,
-    required TResult Function(BaseAccount account) removeAccount,
+    required TResult Function(BaseAccountListItem account) addAccount,
+    required TResult Function(BaseAccountListItem account) removeAccount,
     required TResult Function(Category category) addCategory,
     required TResult Function(Category category) removeCategory,
   }) {
@@ -1275,8 +1275,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccount account)? addAccount,
-    TResult? Function(BaseAccount account)? removeAccount,
+    TResult? Function(BaseAccountListItem account)? addAccount,
+    TResult? Function(BaseAccountListItem account)? removeAccount,
     TResult? Function(Category category)? addCategory,
     TResult? Function(Category category)? removeCategory,
   }) {
@@ -1289,8 +1289,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccount account)? addAccount,
-    TResult Function(BaseAccount account)? removeAccount,
+    TResult Function(BaseAccountListItem account)? addAccount,
+    TResult Function(BaseAccountListItem account)? removeAccount,
     TResult Function(Category category)? addCategory,
     TResult Function(Category category)? removeCategory,
     required TResult orElse(),
@@ -1372,8 +1372,8 @@ abstract class _RemoveCategoryOperationFilterEvent
 /// @nodoc
 mixin _$OperationFilterState {
   DateTimeRange? get period => throw _privateConstructorUsedError;
-  Set<BaseAccount> get accounts => throw _privateConstructorUsedError;
-  Set<Category> get categories => throw _privateConstructorUsedError;
+  Set<int> get accountIds => throw _privateConstructorUsedError;
+  Set<int> get categoryIds => throw _privateConstructorUsedError;
 
   /// Create a copy of OperationFilterState
   /// with the given fields replaced by the non-null parameter values.
@@ -1388,10 +1388,7 @@ abstract class $OperationFilterStateCopyWith<$Res> {
           $Res Function(OperationFilterState) then) =
       _$OperationFilterStateCopyWithImpl<$Res, OperationFilterState>;
   @useResult
-  $Res call(
-      {DateTimeRange? period,
-      Set<BaseAccount> accounts,
-      Set<Category> categories});
+  $Res call({DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds});
 }
 
 /// @nodoc
@@ -1411,22 +1408,22 @@ class _$OperationFilterStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? period = freezed,
-    Object? accounts = null,
-    Object? categories = null,
+    Object? accountIds = null,
+    Object? categoryIds = null,
   }) {
     return _then(_value.copyWith(
       period: freezed == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
               as DateTimeRange?,
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as Set<BaseAccount>,
-      categories: null == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as Set<Category>,
+      accountIds: null == accountIds
+          ? _value.accountIds
+          : accountIds // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      categoryIds: null == categoryIds
+          ? _value.categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
     ) as $Val);
   }
 }
@@ -1439,10 +1436,7 @@ abstract class _$$OperationFilterStateImplCopyWith<$Res>
       __$$OperationFilterStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTimeRange? period,
-      Set<BaseAccount> accounts,
-      Set<Category> categories});
+  $Res call({DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds});
 }
 
 /// @nodoc
@@ -1459,22 +1453,22 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? period = freezed,
-    Object? accounts = null,
-    Object? categories = null,
+    Object? accountIds = null,
+    Object? categoryIds = null,
   }) {
     return _then(_$OperationFilterStateImpl(
       period: freezed == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
               as DateTimeRange?,
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as Set<BaseAccount>,
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as Set<Category>,
+      accountIds: null == accountIds
+          ? _value._accountIds
+          : accountIds // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      categoryIds: null == categoryIds
+          ? _value._categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
     ));
   }
 }
@@ -1484,35 +1478,35 @@ class __$$OperationFilterStateImplCopyWithImpl<$Res>
 class _$OperationFilterStateImpl extends _OperationFilterState {
   const _$OperationFilterStateImpl(
       {this.period,
-      final Set<BaseAccount> accounts = const {},
-      final Set<Category> categories = const {}})
-      : _accounts = accounts,
-        _categories = categories,
+      final Set<int> accountIds = const {},
+      final Set<int> categoryIds = const {}})
+      : _accountIds = accountIds,
+        _categoryIds = categoryIds,
         super._();
 
   @override
   final DateTimeRange? period;
-  final Set<BaseAccount> _accounts;
+  final Set<int> _accountIds;
   @override
   @JsonKey()
-  Set<BaseAccount> get accounts {
-    if (_accounts is EqualUnmodifiableSetView) return _accounts;
+  Set<int> get accountIds {
+    if (_accountIds is EqualUnmodifiableSetView) return _accountIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_accounts);
+    return EqualUnmodifiableSetView(_accountIds);
   }
 
-  final Set<Category> _categories;
+  final Set<int> _categoryIds;
   @override
   @JsonKey()
-  Set<Category> get categories {
-    if (_categories is EqualUnmodifiableSetView) return _categories;
+  Set<int> get categoryIds {
+    if (_categoryIds is EqualUnmodifiableSetView) return _categoryIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_categories);
+    return EqualUnmodifiableSetView(_categoryIds);
   }
 
   @override
   String toString() {
-    return 'OperationFilterState(period: $period, accounts: $accounts, categories: $categories)';
+    return 'OperationFilterState(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
   }
 
   @override
@@ -1521,17 +1515,18 @@ class _$OperationFilterStateImpl extends _OperationFilterState {
         (other.runtimeType == runtimeType &&
             other is _$OperationFilterStateImpl &&
             (identical(other.period, period) || other.period == period) &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts) &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._accountIds, _accountIds) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryIds, _categoryIds));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       period,
-      const DeepCollectionEquality().hash(_accounts),
-      const DeepCollectionEquality().hash(_categories));
+      const DeepCollectionEquality().hash(_accountIds),
+      const DeepCollectionEquality().hash(_categoryIds));
 
   /// Create a copy of OperationFilterState
   /// with the given fields replaced by the non-null parameter values.
@@ -1547,16 +1542,16 @@ class _$OperationFilterStateImpl extends _OperationFilterState {
 abstract class _OperationFilterState extends OperationFilterState {
   const factory _OperationFilterState(
       {final DateTimeRange? period,
-      final Set<BaseAccount> accounts,
-      final Set<Category> categories}) = _$OperationFilterStateImpl;
+      final Set<int> accountIds,
+      final Set<int> categoryIds}) = _$OperationFilterStateImpl;
   const _OperationFilterState._() : super._();
 
   @override
   DateTimeRange? get period;
   @override
-  Set<BaseAccount> get accounts;
+  Set<int> get accountIds;
   @override
-  Set<Category> get categories;
+  Set<int> get categoryIds;
 
   /// Create a copy of OperationFilterState
   /// with the given fields replaced by the non-null parameter values.

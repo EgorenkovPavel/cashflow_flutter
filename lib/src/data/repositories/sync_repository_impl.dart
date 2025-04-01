@@ -7,8 +7,8 @@ import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
-import '../../domain/models/enum/currency.dart';
 import '../../utils/exceptions.dart';
+import '../../utils/sum.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
@@ -71,9 +71,10 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     final cloudUsers = await _remoteSource.getAllUsers();
-    for (final cloudUser in cloudUsers){
-      final localUser = await _dataRepository.getUserByGoogleId(cloudUser.googleId);
-      if (localUser == null){
+    for (final cloudUser in cloudUsers) {
+      final localUser =
+          await _dataRepository.getUserByGoogleId(cloudUser.googleId);
+      if (localUser == null) {
         await _dataRepository.insertUser(cloudUser);
       }
     }
@@ -111,7 +112,22 @@ class SyncRepositoryImpl implements SyncRepository {
       ));
     }
 
-    for (var cloudCategory in categories) {
+    for (var cloudCategory in categories.where((e) => e.parent.isEmpty)) {
+      if (kDebugMode) {
+        print('Load from cloud category ${cloudCategory.title}');
+      }
+
+      await _downloadCategoryFromCloud(cloudCategory);
+
+      categoryCount--;
+      yield (LoadingState(
+        accountCount: accountCount,
+        categoryCount: categoryCount,
+        operationCount: operationCount,
+      ));
+    }
+
+    for (var cloudCategory in categories.where((e) => e.parent.isNotEmpty)) {
       if (kDebugMode) {
         print('Load from cloud category ${cloudCategory.title}');
       }
@@ -157,19 +173,26 @@ class SyncRepositoryImpl implements SyncRepository {
   }
 
   Future<void> _downloadCategoryFromCloud(CloudCategory cloudCategory) async {
-    var category = await _localSource.categories.getByCloudId(cloudCategory.id);
+    final category =
+        await _localSource.categories.getByCloudId(cloudCategory.id);
+
+    final parent = cloudCategory.parent.isEmpty
+        ? null
+        : await _localSource.categories.getByCloudId(cloudCategory.parent)
+            as CategoryGroup;
+
     if (category == null) {
       await _localSource.categories.insertFromCloud(
-        const CategoryModelMapper().insertModel(cloudCategory),
+        CategoryModelMapper(parent).insertModel(cloudCategory),
       );
     } else {
       await _localSource.categories.updateFromCloud(
-        const CategoryModelMapper().updateModel(category, cloudCategory),
+        CategoryModelMapper(parent).updateModel(category, cloudCategory),
       );
     }
   }
 
-  Future<Account> _getAccountByCloudOperation(
+  Future<BaseAccount> _getAccountByCloudOperation(
     CloudOperation cloudOperation,
   ) async {
     final account =
@@ -204,7 +227,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
   }
 
-  Future<Account> _getRecAccountByCloudOperation(
+  Future<BaseAccount> _getRecAccountByCloudOperation(
     CloudOperation cloudOperation,
   ) async {
     if (cloudOperation.recAccount == null) {
@@ -235,36 +258,37 @@ class SyncRepositoryImpl implements SyncRepository {
           const OperationTypeConverter().fromSql(cloudOperation.operationType);
 
       final newOperation = await type.map(
-        INPUT: () async => Operation.input(
-            cloudId: cloudOperation.id,
-            synced: true,
-            deleted: cloudOperation.deleted,
-            date: cloudOperation.date,
-            account: await _getAccountByCloudOperation(cloudOperation),
-            category: await _getCategoryByCloudOperation(cloudOperation),
-            sum: cloudOperation.sum,
-            currency: Currency.byName(cloudOperation.currencySent)),
-        OUTPUT: () async => Operation.output(
+        INPUT: () async => InputOperation(
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          category: await _getCategoryByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-          currency: Currency.byName(cloudOperation.currencySent),
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
         ),
-        TRANSFER: () async => Operation.transfer(
+        OUTPUT: () async => OutputOperation(
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          recAccount: await _getRecAccountByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-          recSum: cloudOperation.recSum ?? 0,
-          currencySent: Currency.byName(cloudOperation.currencySent),
-          currencyReceived: Currency.byName(cloudOperation.currencyReceived),
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
+        ),
+        TRANSFER: () async => TransferOperation(
+          cloudId: cloudOperation.id,
+          synced: true,
+          deleted: cloudOperation.deleted,
+          date: cloudOperation.date,
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
+          recSum: Sum(cloudOperation.recSum ?? 0,
+              Currency.byName(cloudOperation.currencyReceived)),
         ),
       );
 
@@ -274,40 +298,40 @@ class SyncRepositoryImpl implements SyncRepository {
           const OperationTypeConverter().fromSql(cloudOperation.operationType);
 
       final newOperation = await type.map(
-        INPUT: () async => Operation.input(
+        INPUT: () async => InputOperation(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          category: await _getCategoryByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-          currency: Currency.byName(cloudOperation.currencySent),
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
         ),
-        OUTPUT: () async => Operation.output(
+        OUTPUT: () async => OutputOperation(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          category: await _getCategoryByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-          currency: Currency.byName(cloudOperation.currencySent),
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
         ),
-        TRANSFER: () async => Operation.transfer(
+        TRANSFER: () async => TransferOperation(
           id: operation.id,
           cloudId: cloudOperation.id,
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: await _getAccountByCloudOperation(cloudOperation),
-          recAccount: await _getRecAccountByCloudOperation(cloudOperation),
-          sum: cloudOperation.sum,
-          recSum: cloudOperation.recSum ?? 0,
-          currencySent: Currency.byName(cloudOperation.currencySent),
-          currencyReceived: Currency.byName(cloudOperation.currencyReceived),
+          account: (await _getAccountByCloudOperation(cloudOperation)).id,
+          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
+          sum: Sum(
+              cloudOperation.sum, Currency.byName(cloudOperation.currencySent)),
+          recSum: Sum(cloudOperation.recSum ?? 0,
+              Currency.byName(cloudOperation.currencyReceived)),
         ),
       );
       await _localSource.operations.updateFromCloud(newOperation);
@@ -316,7 +340,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> uploadToCloud() async* {
-    //TODO rewrite to streamController
+    //TODO ошибка возникает когда добавляется новый счет и новая операция. Счет получает свой клауд ид но при выгрузке операции берется старый экземпляр еще до синхронизации
 
     final accountTable = _remoteSource.accounts;
     final categoryTable = _remoteSource.categories;
@@ -327,6 +351,10 @@ class SyncRepositoryImpl implements SyncRepository {
         operationTable == null) {
       return;
     }
+
+    final allUsers = await _dataRepository.getAllUsers();
+    final allAccounts = await _dataRepository.getAllAccounts();
+    final allCategories = await _dataRepository.getAllCategories();
 
     final accounts = await _localSource.accounts.getAllNotSynced();
     final categories = await _localSource.categories.getAllNotSynced();
@@ -347,7 +375,9 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud account ${account.title}');
       }
 
-      await _uploadAccountToCloud(account, accountTable);
+      final user = allUsers.where((e) => e.id == account.userId).firstOrNull;
+
+      await _uploadAccountToCloud(account, user, accountTable);
 
       accountCount--;
       yield (LoadingState(
@@ -362,7 +392,18 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud category ${category.title}');
       }
 
-      await _uploadCategoryToCloud(category, categoryTable);
+      final parentId = category.map(
+        inputItem: (c) => c.parentId,
+        outputItem: (c) => c.parentId,
+        inputGroup: (c) => null,
+        outputGroup: (c) => null,
+      );
+
+      final parent = parentId == null
+          ? null
+          : allCategories.where((e) => e.id == parentId).first as CategoryGroup;
+
+      await _uploadCategoryToCloud(category, parent, categoryTable);
 
       categoryCount--;
       yield (LoadingState(
@@ -377,7 +418,20 @@ class SyncRepositoryImpl implements SyncRepository {
         print('Load to cloud operation ${operation.id}');
       }
 
-      await _uploadOperationToCloud(operation, operationTable);
+      final accountCloudId =
+          allAccounts.where((e) => e.id == operation.account).first.cloudId;
+
+      final analyticCloudId = operation.map(
+        input: (op) =>
+            allCategories.where((e) => e.id == op.analytic).first.cloudId,
+        output: (op) =>
+            allCategories.where((e) => e.id == op.analytic).first.cloudId,
+        transfer: (op) =>
+            allAccounts.where((e) => e.id == op.analytic).first.cloudId,
+      );
+
+      await _uploadOperationToCloud(
+          operation, accountCloudId, analyticCloudId, operationTable);
 
       operationCount--;
       yield (LoadingState(
@@ -390,14 +444,15 @@ class SyncRepositoryImpl implements SyncRepository {
 
   /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _uploadAccountToCloud(
-    Account account,
+    BaseAccount account,
+    User? user,
     TableDAO<CloudAccount> accounts,
   ) async {
     if (account.cloudId.isNotEmpty) {
-      await accounts.update(account.toCloudAccount());
+      await accounts.update(account.toCloudAccount(user));
       await _localSource.accounts.markAsSynced(account.id, account.cloudId);
     } else {
-      var cloudId = await accounts.add(account.toCloudAccount());
+      var cloudId = await accounts.add(account.toCloudAccount(user));
       await _localSource.accounts.markAsSynced(account.id, cloudId);
     }
   }
@@ -405,13 +460,14 @@ class SyncRepositoryImpl implements SyncRepository {
   /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _uploadCategoryToCloud(
     model.Category category,
+    CategoryGroup? parent,
     TableDAO<CloudCategory> categories,
   ) async {
     if (category.cloudId.isNotEmpty) {
-      await categories.update(category.toCloudCategory());
+      await categories.update(category.toCloudCategory(parent));
       await _localSource.categories.markAsSynced(category.id, category.cloudId);
     } else {
-      var cloudId = await categories.add(category.toCloudCategory());
+      var cloudId = await categories.add(category.toCloudCategory(parent));
       await _localSource.categories.markAsSynced(category.id, cloudId);
     }
   }
@@ -419,14 +475,18 @@ class SyncRepositoryImpl implements SyncRepository {
   /// Throw [NoRemoteDBException] and [NetworkException]
   Future<void> _uploadOperationToCloud(
     Operation operation,
+    String accountCloudId,
+    String analyticCloudId,
     TableDAO<CloudOperation> operations,
   ) async {
     if (operation.cloudId.isNotEmpty) {
-      await operations.update(operation.toCloudOperation());
+      await operations
+          .update(operation.toCloudOperation(accountCloudId, analyticCloudId));
       await _localSource.operations
           .markAsSynced(operation.id, operation.cloudId);
     } else {
-      var cloudId = await operations.add(operation.toCloudOperation());
+      var cloudId = await operations
+          .add(operation.toCloudOperation(accountCloudId, analyticCloudId));
       await _localSource.operations.markAsSynced(operation.id, cloudId);
     }
   }

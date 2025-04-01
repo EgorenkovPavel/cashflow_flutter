@@ -13,13 +13,13 @@ class Fetch extends OperationListEvent {
 }
 
 class ChangeOperations extends OperationListEvent {
-  final List<Operation> operations;
+  final List<OperationListItem> operations;
 
   ChangeOperations(this.operations);
 }
 
 class OperationListState {
-  final List<Operation> operations;
+  final List<OperationListItem> operations;
   final OperationListFilter filter;
 
   OperationListState({
