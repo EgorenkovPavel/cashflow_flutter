@@ -2,23 +2,45 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class CurrencyRateSource{
+import '../interfaces/settings_source.dart';
+import '../../domain/models.dart';
 
-  Future<double> getUSD() => _getRate('USD');
+class CurrencyRateSource {
+  final SettingsSource settingsSource;
 
-  Future<double> getEUR() => _getRate('EUR');
+  CurrencyRateSource({required this.settingsSource});
 
-  Future<double> _getRate(String cur) async {
-    final url = Uri.https('www.cbr-xml-daily.ru', 'latest.js');
-    try {
-      final response = await http.get(url, headers: {'Host': 'www.example.com'});
-      final body = jsonDecode(response.body);
+  Future<double> getUSD() => _getRate(Currency.USD);
 
-      return body['rates'][cur];
-    }catch (e, stacktrace){
-     print(stacktrace);
-     return 1;
+  Future<double> getEUR() => _getRate(Currency.EUR);
+
+  Future<double> _getRate(Currency currency) async {
+    final rateDate = settingsSource.rateDate;
+    final now = DateTime.now();
+    if (rateDate != DateTime(now.year, now.month, now.day)){
+      await _updateRateFromNetwork();
     }
+
+    return switch (currency){
+      Currency.RUB => 1,
+      Currency.USD => settingsSource.rateUsd,
+      Currency.EUR => settingsSource.rateEur,
+    };
   }
 
+  Future<void> _updateRateFromNetwork() async {
+    final url = Uri.parse('http://www.cbr-xml-daily.ru/latest.js');
+    try {
+      final response = await http.get(url);
+      final body = jsonDecode(response.body);
+
+      final date = DateTime.fromMillisecondsSinceEpoch(body['timestamp'] * 1000);
+
+      settingsSource.setRateDate(date);
+      settingsSource.setRateUsd(body['rates']['USD']);
+      settingsSource.setRateEur(body['rates']['EUR']);
+    } catch (e, stacktrace) {
+      print(stacktrace);
+    }
+  }
 }

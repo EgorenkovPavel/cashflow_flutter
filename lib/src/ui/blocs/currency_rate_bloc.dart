@@ -44,7 +44,7 @@ class CurrencyRateBloc extends Bloc<CurrencyRateEvent, CurrencyRateState> {
     Emitter<CurrencyRateState> emit,
   ) async {
     final usd = await _dataRepository.usdRate();
-    final eur = await _dataRepository.usdRate();
+    final eur = await _dataRepository.eurRate();
     emit(CurrencyRateState(usd: usd, eur: eur));
   }
 }

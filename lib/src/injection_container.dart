@@ -87,6 +87,10 @@ Future<void> init() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+  sl.registerLazySingleton<SettingsSource>(
+        () => SettingsSourceImpl(sl<SharedPreferences>()),
+  );
+
   sl.registerLazySingleton<Database>(() => Database());
   sl.registerLazySingleton<AccountDao>(() => AccountDao(sl<Database>()));
   sl.registerLazySingleton<CategoryDao>(() => CategoryDao(sl<Database>()));
@@ -98,7 +102,7 @@ Future<void> init() async {
         categoryDao: sl<CategoryDao>(),
         operationDao: sl<OperationDao>(),
         userDao: sl<UserDao>(),
-        currencyRateSource: CurrencyRateSource(),
+        currencyRateSource: CurrencyRateSource(settingsSource: sl()),
       ));
 
   sl.registerLazySingleton<LocalSyncTable<BaseAccount>>(
@@ -152,9 +156,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
-  sl.registerLazySingleton<SettingsSource>(
-    () => SettingsSourceImpl(sl<SharedPreferences>()),
-  );
+
 
   sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
         localSource: sl<LocalSyncSource>(),

@@ -190,8 +190,8 @@ extension PageNavigator on BuildContext {
   Future<BaseAccount?> openDebtInputDialog() =>
       const _Card<BaseAccount>().open(this, const AccountInputPage.inputDebt());
 
-  Future<Account?> openAccountEditDialog(int id) =>
-      const _Card<Account>().open(this, AccountInputPage.edit(id));
+  Future<BaseAccount?> openAccountEditDialog(int id) =>
+      const _Card<BaseAccount>().open(this, AccountInputPage.edit(id));
 
   Future<Category?> openCategoryInputDialog({required CategoryType type, required bool isGroup}) =>
       const _Card<Category>().open(this, CategoryInputPage.byType(type: type, isGroup: isGroup,));

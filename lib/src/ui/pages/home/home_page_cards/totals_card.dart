@@ -9,6 +9,10 @@ import '../../../blocs/account_balance_bloc.dart';
 class TotalsCard extends StatelessWidget {
   const TotalsCard({super.key});
 
+  double _rate(double rate) {
+    return ((1 / rate) * 100).floor() / 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,20 +31,21 @@ class TotalsCard extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Chip(
                     label: Text(
-                        'USD ${1 / context.watch<CurrencyRateBloc>().state.usd}'),
+                        'USD ${_rate(context.watch<CurrencyRateBloc>().state.usd)}'),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Chip(
                     label: Text(
-                        'EUR ${1 / context.watch<CurrencyRateBloc>().state.eur}'),
+                        'EUR ${_rate(context.watch<CurrencyRateBloc>().state.eur)}'),
                   ),
                 ),
               ],
             ),
             Wrap(
-              children: context.watchTotals()
+              children: context
+                  .watchTotals()
                   .sums
                   .map((sum) => Padding(
                         padding: const EdgeInsets.only(right: 8.0),
