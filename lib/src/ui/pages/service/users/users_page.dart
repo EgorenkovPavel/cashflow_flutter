@@ -22,7 +22,7 @@ class UsersPage extends StatelessWidget {
                     .map((e) => ListTile(
                           title: Text(e.name),
                           subtitle: Text(e.googleId),
-                          leading: UserAvatar(photoUrl: e.photo,),
+                          leading: UserAvatar(photoUrl: e.photo, name: e.name),
                         ))
                     .toList(),
               );

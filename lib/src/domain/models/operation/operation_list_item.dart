@@ -10,6 +10,7 @@ class OperationListItem extends Equatable {
   final String account;
   final String analytic;
   final String userPhotoUrl;
+  final String userName;
   final Sum sum;
   final OperationType type;
 
@@ -23,9 +24,10 @@ class OperationListItem extends Equatable {
     required this.sum,
     required this.type,
     required this.userPhotoUrl,
+    required this.userName,
   });
 
   @override
   List<Object?> get props =>
-      [id, date, deleted, synced, account, analytic, sum, type, userPhotoUrl];
+      [id, date, deleted, synced, account, analytic, sum, type, userPhotoUrl, userName];
 }

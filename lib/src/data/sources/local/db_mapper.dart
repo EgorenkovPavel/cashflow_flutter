@@ -114,6 +114,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         sum: Sum(dbo.sum, dbo.currencySent),
         type: OperationType.INPUT,
         userPhotoUrl: user?.photo ?? '',
+        userName: user?.name ?? '',
       ),
       OUTPUT: () => OperationListItem(
         id: dbo.id,
@@ -125,6 +126,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         sum: Sum(dbo.sum, dbo.currencySent),
         type: OperationType.OUTPUT,
         userPhotoUrl: user?.photo ?? '',
+        userName: user?.name ?? '',
       ),
       TRANSFER: () => OperationListItem(
         id: dbo.id,
@@ -136,6 +138,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         sum: Sum(dbo.sum, dbo.currencySent),
         type: OperationType.TRANSFER,
         userPhotoUrl: user?.photo ?? '',
+        userName: user?.name ?? '',
       ),
     );
   }

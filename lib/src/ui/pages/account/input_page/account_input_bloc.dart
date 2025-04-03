@@ -75,7 +75,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   ) : super(AccountInputState.init()) {
     on<AccountInputEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
-          input: (event) => emitter(state.copyWith(isDebt: event.isDebt)),
+          input: (event) => _input(event, emitter),
           changeTitle: (event) => emitter(state.copyWith(title: event.title)),
           changeUser: (event) =>
               emitter(state.copyWith(userId: event.user?.id)),
@@ -92,6 +92,15 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
 
     emit(AccountInputState.byAccount(account, users));
   }
+
+  Future<void> _input(
+      _InputAccountInputEvent event,
+      Emitter<AccountInputState> emit,
+      ) async {
+    final users = await _getUsersUseCase();
+    emit(state.copyWith(isDebt: event.isDebt, users: users));
+  }
+
 
   Future<void> _save(
     _SaveAccountInputEvent event,

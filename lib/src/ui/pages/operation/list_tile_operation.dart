@@ -58,7 +58,7 @@ class ListTileOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: UserAvatar(photoUrl: _operation.userPhotoUrl),
+      leading: UserAvatar(photoUrl: _operation.userPhotoUrl, name: _operation.userName,),
       subtitle: Row(
         children: [
           Text(

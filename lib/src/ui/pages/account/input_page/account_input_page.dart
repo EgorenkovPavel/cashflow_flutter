@@ -4,6 +4,7 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/pages/account/input_page/account_input_bloc.dart';
 import 'package:money_tracker/src/ui/pages/item_card.dart';
+import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class AccountInputPage extends StatelessWidget {
@@ -108,7 +109,9 @@ class _AccountPageState extends State<AccountPage> {
               onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
-            SizedBox(height: 8.0,),
+            SizedBox(
+              height: 8.0,
+            ),
             _UserChooser(
               initialId: context.userId(),
               users: context.users(),
@@ -139,14 +142,23 @@ class _UserChooser extends StatelessWidget {
       children: users
           .map((e) => InkWell(
                 onTap: () => onChange(e.id == initialId ? null : e),
-                child: CircleAvatar(
-                  radius: 24,
-                  backgroundColor: e.id == initialId ? Colors.green : Colors.transparent,
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(e.photo),
+                child: Stack(children: [
+                  UserAvatar(photoUrl: e.photo, name: e.name),
+                  if (e.id == initialId) Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                            color: Colors.cyanAccent, shape: BoxShape.circle),
+                        child: Icon(
+                          Icons.done,
+                          color: Colors.green[900],
+                          size: 14,
+                        )),
                   ),
-                ),
+                ]),
               ))
           .toList(),
     );

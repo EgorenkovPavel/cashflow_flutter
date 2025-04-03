@@ -112,7 +112,7 @@ class _AccountListTile extends StatelessWidget {
             Positioned(
               bottom: 10,
               left: 10,
-              child: UserAvatar(photoUrl: _account.userPhoto),
+              child: UserAvatar(photoUrl: _account.userPhoto, name: _account.userName,),
             ),
           ],
         ),
