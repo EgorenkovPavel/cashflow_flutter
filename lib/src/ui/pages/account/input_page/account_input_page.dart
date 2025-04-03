@@ -108,6 +108,7 @@ class _AccountPageState extends State<AccountPage> {
               onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
+            SizedBox(height: 8.0,),
             _UserChooser(
               initialId: context.userId(),
               users: context.users(),
@@ -139,9 +140,12 @@ class _UserChooser extends StatelessWidget {
           .map((e) => InkWell(
                 onTap: () => onChange(e.id == initialId ? null : e),
                 child: CircleAvatar(
-                  backgroundColor:
-                      e.id == initialId ? Colors.amberAccent : null,
-                  child: Text(e.name),
+                  radius: 24,
+                  backgroundColor: e.id == initialId ? Colors.green : Colors.transparent,
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage: NetworkImage(e.photo),
+                  ),
                 ),
               ))
           .toList(),
@@ -150,7 +154,6 @@ class _UserChooser extends StatelessWidget {
 }
 
 extension AccountInputBlocExt on BuildContext {
-
   onChangeTitle(String title) =>
       read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
 

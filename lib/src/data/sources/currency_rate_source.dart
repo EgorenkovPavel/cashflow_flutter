@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../interfaces/settings_source.dart';
@@ -40,7 +41,9 @@ class CurrencyRateSource {
       settingsSource.setRateUsd(body['rates']['USD']);
       settingsSource.setRateEur(body['rates']['EUR']);
     } catch (e, stacktrace) {
-      print(stacktrace);
+      if (kDebugMode) {
+        print(stacktrace);
+      }
     }
   }
 }

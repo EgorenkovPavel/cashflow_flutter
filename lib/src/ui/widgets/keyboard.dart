@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-import 'currency_menu.dart';
-
 class Keyboard extends StatelessWidget {
   final ValueSetter<int> onDigitPressed;
   final VoidCallback onBackPressed;

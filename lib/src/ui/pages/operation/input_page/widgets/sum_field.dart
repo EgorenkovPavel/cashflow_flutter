@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../../domain/models/enum/currency.dart';
 import '../../../../../utils/sum.dart';
 
 class SumField extends StatelessWidget {

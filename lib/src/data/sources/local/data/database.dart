@@ -288,7 +288,7 @@ class Database extends _$Database {
                 title: d['account_title'],
                 isDebt: false,
                 synced: false,
-                user: 1, //TODO
+                user: null,
               ));
             } else {
               accounts.add(AccountDB.fromJson(

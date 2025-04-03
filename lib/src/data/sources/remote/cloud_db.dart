@@ -83,7 +83,6 @@ class CloudDb {
     return querySnapshot.docs.isNotEmpty;
   }
 
-  @override
   TableDAO<CloudAccount>? get accounts =>
       AccountsDAO(
     collection: _db.collection(_ACCOUNTS),
@@ -91,14 +90,12 @@ class CloudDb {
     mapper: const AccountMapper(),
   );
 
-  @override
   TableDAO<CloudCategory>? get categories => CategoriesDAO(
     collection: _db.collection(_CATEGORIES),
     key_updated: CategoryMapper.KEY_UPDATED,
     mapper: const CategoryMapper(),
   );
 
-  @override
   TableDAO<CloudOperation>? get operations => OperationDAO(
     collection: _db.collection(_OPERATIONS),
     key_updated: OperationMapper.KEY_UPDATED,
