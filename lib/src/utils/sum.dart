@@ -76,8 +76,8 @@ class Balance extends Equatable {
     return _sums.map<int>((e){
       return switch(e.currency){
         Currency.RUB => e.sum,
-        Currency.USD => (e.sum * usd).floor(),
-        Currency.EUR => (e.sum * eur).floor(),
+        Currency.USD => (e.sum / usd).floor(),
+        Currency.EUR => (e.sum / eur).floor(),
       };
     }).fold<int>(0, (previousValue, element) => previousValue + element,);
   }
