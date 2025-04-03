@@ -58,7 +58,7 @@ class MonthOperations extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => context.openCategoryListPage(type),
-                child: Text('Categories'), //TODO
+                child: Text(context.loc.categories),
               ),
               TextButton(
                 onPressed: () => context.openBudgetPage(type),
