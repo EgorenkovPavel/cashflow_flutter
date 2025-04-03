@@ -13,11 +13,14 @@ class UserAvatar extends StatelessWidget {
       return SizedBox();
     }
     return CircleAvatar(
-      child: CachedNetworkImage(
-        imageUrl: photoUrl,
-        placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) =>
-            Text(name.substring(0, 1).toUpperCase()),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18.0),
+        child: CachedNetworkImage(
+          imageUrl: photoUrl,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) =>
+              Text(name.substring(0, 1).toUpperCase()),
+        ),
       ),
     );
   }
