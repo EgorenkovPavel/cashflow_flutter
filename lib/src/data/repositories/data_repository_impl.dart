@@ -313,12 +313,19 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Stream<List<CategoryCashFlow>> watchCashFlowByType(
-          DateTime date, OperationType type) =>
-      Rx.combineLatest3(
-          categoryDao.watchAllCategoriesByType(type),
-          categoryDao.watchMonthCashFlow(date, {}),
-          categoryDao.watchYearCashFlow(date, {}),
-          CategoryMapper().combineCashFlow);
+          DateTime date, CategoryType type) {
+
+    final operationType = switch(type){
+      CategoryType.INPUT => OperationType.INPUT,
+      CategoryType.OUTPUT => OperationType.OUTPUT,
+    };
+
+    return Rx.combineLatest3(
+        categoryDao.watchAllCategoriesByType(operationType), // TODO rewrite to CategoryType
+        categoryDao.watchMonthCashFlow(date, {}),
+        categoryDao.watchYearCashFlow(date, {}),
+        CategoryMapper().combineCashFlow);
+  }
 
   @override
   Stream<Category> watchCategoryById(int id) =>

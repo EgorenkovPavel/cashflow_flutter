@@ -393,6 +393,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "5276944c6ffc975ae796569a826c38a62d2abcf264e26b88fa6f482e107f4237"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.70.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -419,6 +427,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_randomcolor:
+    dependency: "direct main"
+    description:
+      name: flutter_randomcolor
+      sha256: "831095ae7883d006de8067d58b96fb722591c72b42364ffd503bfdbe4f65f592"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.18"
   flutter_test:
     dependency: "direct dev"
     description: flutter

@@ -9,7 +9,7 @@ part 'budget_bloc.freezed.dart';
 
 @freezed
 class BudgetEvent with _$BudgetEvent {
-  const factory BudgetEvent.fetch({required OperationType operationtype}) =
+  const factory BudgetEvent.fetch({required CategoryType type}) =
       _FetchBudgetEvent;
 
   const factory BudgetEvent.previousYear() = _PreviousYearBudgetEvent;
@@ -28,7 +28,7 @@ class BudgetEvent with _$BudgetEvent {
 class BudgetState with _$BudgetState {
   const factory BudgetState({
     required DateTime date,
-    required OperationType operationType,
+    required CategoryType type,
     required List<CategoryCashFlow> itemsMonthBudget,
     required List<CategoryCashFlow> itemsYearBudget,
     required List<CategoryCashFlow> itemsAll,
@@ -50,7 +50,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           showAllMonthBudget: false,
           showAllYearBudget: false,
           date: DateTime.now(),
-          operationType: OperationType.INPUT,
+          type: CategoryType.INPUT,
         )) {
     on<BudgetEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
@@ -62,8 +62,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   }
 
   void _fetch(_FetchBudgetEvent event, Emitter<BudgetState> emit) {
-    emit(state.copyWith(operationType: event.operationtype));
-    _watchCashflow(state.date, event.operationtype);
+    emit(state.copyWith(type: event.type));
+    _watchCashflow(state.date, event.type);
   }
 
   void _previousYear(
@@ -75,7 +75,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         : DateTime(state.date.year, state.date.month - 1);
 
     emit(state.copyWith(date: date));
-    _watchCashflow(date, state.operationType);
+    _watchCashflow(date, state.type);
   }
 
   void _nextYear(_NextYearBudgetEvent event, Emitter<BudgetState> emit) {
@@ -84,7 +84,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         : DateTime(state.date.year, state.date.month + 1);
 
     emit(state.copyWith(date: date));
-    _watchCashflow(date, state.operationType);
+    _watchCashflow(date, state.type);
   }
 
   void _showAll(_ShowAllBudgetEvent event, Emitter<BudgetState> emit) {
@@ -100,7 +100,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     add(BudgetEvent.changeItems(items: state.itemsAll));
   }
 
-  Future<void> _watchCashflow(DateTime date, OperationType type) async {
+  Future<void> _watchCashflow(DateTime date, CategoryType type) async {
     await _subscription?.cancel();
     _subscription =
         repo.watchCashFlowByType(date, type).listen((items) {

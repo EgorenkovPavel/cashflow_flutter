@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BudgetEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
@@ -27,7 +27,7 @@ mixin _$BudgetEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
@@ -36,7 +36,7 @@ mixin _$BudgetEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -101,7 +101,7 @@ abstract class _$$FetchBudgetEventImplCopyWith<$Res> {
           $Res Function(_$FetchBudgetEventImpl) then) =
       __$$FetchBudgetEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({OperationType operationtype});
+  $Res call({CategoryType type});
 }
 
 /// @nodoc
@@ -117,13 +117,13 @@ class __$$FetchBudgetEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? operationtype = null,
+    Object? type = null,
   }) {
     return _then(_$FetchBudgetEventImpl(
-      operationtype: null == operationtype
-          ? _value.operationtype
-          : operationtype // ignore: cast_nullable_to_non_nullable
-              as OperationType,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
     ));
   }
 }
@@ -131,14 +131,14 @@ class __$$FetchBudgetEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
-  const _$FetchBudgetEventImpl({required this.operationtype});
+  const _$FetchBudgetEventImpl({required this.type});
 
   @override
-  final OperationType operationtype;
+  final CategoryType type;
 
   @override
   String toString() {
-    return 'BudgetEvent.fetch(operationtype: $operationtype)';
+    return 'BudgetEvent.fetch(type: $type)';
   }
 
   @override
@@ -146,12 +146,11 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchBudgetEventImpl &&
-            (identical(other.operationtype, operationtype) ||
-                other.operationtype == operationtype));
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, operationtype);
+  int get hashCode => Object.hash(runtimeType, type);
 
   /// Create a copy of BudgetEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -165,31 +164,31 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
     required TResult Function(List<CategoryCashFlow> items) changeItems,
   }) {
-    return fetch(operationtype);
+    return fetch(type);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
     TResult? Function(List<CategoryCashFlow> items)? changeItems,
   }) {
-    return fetch?.call(operationtype);
+    return fetch?.call(type);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -197,7 +196,7 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch(operationtype);
+      return fetch(type);
     }
     return orElse();
   }
@@ -244,10 +243,10 @@ class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
 }
 
 abstract class _FetchBudgetEvent implements BudgetEvent {
-  const factory _FetchBudgetEvent(
-      {required final OperationType operationtype}) = _$FetchBudgetEventImpl;
+  const factory _FetchBudgetEvent({required final CategoryType type}) =
+      _$FetchBudgetEventImpl;
 
-  OperationType get operationtype;
+  CategoryType get type;
 
   /// Create a copy of BudgetEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -300,7 +299,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
@@ -312,7 +311,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
@@ -324,7 +323,7 @@ class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -424,7 +423,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
@@ -436,7 +435,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
@@ -448,7 +447,7 @@ class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -576,7 +575,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
@@ -588,7 +587,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
@@ -600,7 +599,7 @@ class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -746,7 +745,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(OperationType operationtype) fetch,
+    required TResult Function(CategoryType type) fetch,
     required TResult Function() previousYear,
     required TResult Function() nextYear,
     required TResult Function(BudgetType budgetType) showAll,
@@ -758,7 +757,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(OperationType operationtype)? fetch,
+    TResult? Function(CategoryType type)? fetch,
     TResult? Function()? previousYear,
     TResult? Function()? nextYear,
     TResult? Function(BudgetType budgetType)? showAll,
@@ -770,7 +769,7 @@ class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(OperationType operationtype)? fetch,
+    TResult Function(CategoryType type)? fetch,
     TResult Function()? previousYear,
     TResult Function()? nextYear,
     TResult Function(BudgetType budgetType)? showAll,
@@ -841,7 +840,7 @@ abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
 /// @nodoc
 mixin _$BudgetState {
   DateTime get date => throw _privateConstructorUsedError;
-  OperationType get operationType => throw _privateConstructorUsedError;
+  CategoryType get type => throw _privateConstructorUsedError;
   List<CategoryCashFlow> get itemsMonthBudget =>
       throw _privateConstructorUsedError;
   List<CategoryCashFlow> get itemsYearBudget =>
@@ -865,7 +864,7 @@ abstract class $BudgetStateCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime date,
-      OperationType operationType,
+      CategoryType type,
       List<CategoryCashFlow> itemsMonthBudget,
       List<CategoryCashFlow> itemsYearBudget,
       List<CategoryCashFlow> itemsAll,
@@ -889,7 +888,7 @@ class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
   @override
   $Res call({
     Object? date = null,
-    Object? operationType = null,
+    Object? type = null,
     Object? itemsMonthBudget = null,
     Object? itemsYearBudget = null,
     Object? itemsAll = null,
@@ -901,10 +900,10 @@ class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
       itemsMonthBudget: null == itemsMonthBudget
           ? _value.itemsMonthBudget
           : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
@@ -939,7 +938,7 @@ abstract class _$$BudgetStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime date,
-      OperationType operationType,
+      CategoryType type,
       List<CategoryCashFlow> itemsMonthBudget,
       List<CategoryCashFlow> itemsYearBudget,
       List<CategoryCashFlow> itemsAll,
@@ -961,7 +960,7 @@ class __$$BudgetStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? date = null,
-    Object? operationType = null,
+    Object? type = null,
     Object? itemsMonthBudget = null,
     Object? itemsYearBudget = null,
     Object? itemsAll = null,
@@ -973,10 +972,10 @@ class __$$BudgetStateImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
       itemsMonthBudget: null == itemsMonthBudget
           ? _value._itemsMonthBudget
           : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
@@ -1006,7 +1005,7 @@ class __$$BudgetStateImplCopyWithImpl<$Res>
 class _$BudgetStateImpl implements _BudgetState {
   const _$BudgetStateImpl(
       {required this.date,
-      required this.operationType,
+      required this.type,
       required final List<CategoryCashFlow> itemsMonthBudget,
       required final List<CategoryCashFlow> itemsYearBudget,
       required final List<CategoryCashFlow> itemsAll,
@@ -1019,7 +1018,7 @@ class _$BudgetStateImpl implements _BudgetState {
   @override
   final DateTime date;
   @override
-  final OperationType operationType;
+  final CategoryType type;
   final List<CategoryCashFlow> _itemsMonthBudget;
   @override
   List<CategoryCashFlow> get itemsMonthBudget {
@@ -1052,7 +1051,7 @@ class _$BudgetStateImpl implements _BudgetState {
 
   @override
   String toString() {
-    return 'BudgetState(date: $date, operationType: $operationType, itemsMonthBudget: $itemsMonthBudget, itemsYearBudget: $itemsYearBudget, itemsAll: $itemsAll, showAllMonthBudget: $showAllMonthBudget, showAllYearBudget: $showAllYearBudget)';
+    return 'BudgetState(date: $date, type: $type, itemsMonthBudget: $itemsMonthBudget, itemsYearBudget: $itemsYearBudget, itemsAll: $itemsAll, showAllMonthBudget: $showAllMonthBudget, showAllYearBudget: $showAllYearBudget)';
   }
 
   @override
@@ -1061,8 +1060,7 @@ class _$BudgetStateImpl implements _BudgetState {
         (other.runtimeType == runtimeType &&
             other is _$BudgetStateImpl &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
                 .equals(other._itemsMonthBudget, _itemsMonthBudget) &&
             const DeepCollectionEquality()
@@ -1078,7 +1076,7 @@ class _$BudgetStateImpl implements _BudgetState {
   int get hashCode => Object.hash(
       runtimeType,
       date,
-      operationType,
+      type,
       const DeepCollectionEquality().hash(_itemsMonthBudget),
       const DeepCollectionEquality().hash(_itemsYearBudget),
       const DeepCollectionEquality().hash(_itemsAll),
@@ -1097,7 +1095,7 @@ class _$BudgetStateImpl implements _BudgetState {
 abstract class _BudgetState implements BudgetState {
   const factory _BudgetState(
       {required final DateTime date,
-      required final OperationType operationType,
+      required final CategoryType type,
       required final List<CategoryCashFlow> itemsMonthBudget,
       required final List<CategoryCashFlow> itemsYearBudget,
       required final List<CategoryCashFlow> itemsAll,
@@ -1107,7 +1105,7 @@ abstract class _BudgetState implements BudgetState {
   @override
   DateTime get date;
   @override
-  OperationType get operationType;
+  CategoryType get type;
   @override
   List<CategoryCashFlow> get itemsMonthBudget;
   @override

@@ -34,7 +34,7 @@ abstract class DataRepository {
   Stream<List<CategoryCashFlow>> watchCashFlow(DateTime date);
   Stream<List<CategoryCashFlow>> watchCashFlowByType(
       DateTime date,
-      OperationType type,
+      CategoryType type,
       );
   Future<List<CategoryCashFlow>> getCashFlowByType(
       DateTime date,

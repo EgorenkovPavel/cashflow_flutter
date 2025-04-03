@@ -1,10 +1,14 @@
 // import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_randomcolor/flutter_randomcolor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
+import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../utils/sum.dart';
@@ -26,11 +30,7 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = sl<BudgetBloc>()
-      ..add(BudgetEvent.fetch(
-          operationtype: widget.type == CategoryType.INPUT
-              ? OperationType.INPUT
-              : OperationType.OUTPUT));
+    _bloc = sl<BudgetBloc>()..add(BudgetEvent.fetch(type: widget.type));
   }
 
   @override
@@ -47,7 +47,7 @@ class _BudgetPageState extends State<BudgetPage> {
         return Scaffold(
           appBar: AppBar(
             title: AppBarTitle(
-              operationType: state.operationType,
+              type: state.type,
               date: state.date,
             ),
           ),
@@ -114,19 +114,6 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
             ],
           ),
-          floatingActionButton: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FloatingActionButton(
-                onPressed: () => context.openCategoryInputDialog(type: widget.type, isGroup: true),
-                child: const Icon(Icons.create_new_folder_outlined),
-              ),
-              FloatingActionButton(
-                onPressed: () => context.openCategoryInputDialog(type: widget.type, isGroup: false),
-                child: const Icon(Icons.add),
-              ),
-            ],
-          ),
         );
       },
     );
@@ -136,19 +123,18 @@ class _BudgetPageState extends State<BudgetPage> {
 class AppBarTitle extends StatelessWidget {
   const AppBarTitle({
     super.key,
-    required this.operationType,
+    required this.type,
     required this.date,
   });
 
-  final OperationType operationType;
+  final CategoryType type;
   final DateTime date;
 
   @override
   Widget build(BuildContext context) {
-    return switch (operationType) {
-      OperationType.INPUT => Text(context.loc.earningIn(date)),
-      OperationType.OUTPUT => Text(context.loc.spendingIn(date)),
-      _ => const Text(''),
+    return switch (type) {
+      CategoryType.INPUT => Text(context.loc.earningIn(date)),
+      CategoryType.OUTPUT => Text(context.loc.spendingIn(date)),
     };
   }
 }
@@ -182,12 +168,14 @@ class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              ...cashflow.sums.map((e) => Text(context.loc.sumFormat(e))),
+              ...cashflow.sums
+                  .map((e) => Chip(label: Text(context.loc.sumFormat(e)))),
               showAll
                   ? const Icon(Icons.arrow_drop_down)
                   : const Icon(Icons.arrow_drop_up),
@@ -273,23 +261,25 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
             context.loc.titleCashflow,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          // todo
-          // TweenAnimationBuilder<int>(
-          //   tween: IntTween(
-          //     begin: 0,
-          //     end: _cashflow(items),
-          //   ),
-          //   duration: _duration,
-          //   builder: (context, cashflow, _) {
-          //     return Text(
-          //       context.loc.numberFormat(cashflow, Currency.RUB),
-          //       style: Theme.of(context)
-          //           .textTheme
-          //           .titleLarge!
-          //           .copyWith(color: Theme.of(context).colorScheme.primary),
-          //     );
-          //   },
-          // ),
+          ..._cashflow(items)
+              .sums
+              .map(
+                (sum) => TweenAnimationBuilder<int>(
+                  tween: IntTween(
+                    begin: 0,
+                    end: sum.sum,
+                  ),
+                  duration: _duration,
+                  builder: (context, cashflow, _) {
+                    return Text(
+                      context.loc.numberFormat(cashflow, sum.currency),
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    );
+                  },
+                ),
+              )
+              .toList()
         ],
       ),
     );
@@ -328,21 +318,30 @@ class PieDiagram extends StatelessWidget {
           onPressed: onBackPressed,
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        const SizedBox(
+        SizedBox(
           width: 200.0,
           height: 200.0,
-          // child: charts.PieChart(
-          //   [
-          //     charts.Series<CategoryCashflow, int>(
-          //       id: 'Cashflow',
-          //       domainFn: (CategoryCashflow sales, _) => sales.category.id,
-          //       measureFn: (CategoryCashflow sales, _) => sales.monthCashflow,
-          //       data: list,
-          //     ),
-          //   ],
-          //   animate: true,
-          //   animationDuration: _duration,
-          // ),
+          child: PieChart(
+            PieChartData(
+              sectionsSpace: 2,
+              centerSpaceRadius: 0,
+              sections: list
+                  .map((e) => PieChartSectionData(
+                      radius: 90,
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                      color: RandomColor.getColorObject(
+                          Options(luminosity: Luminosity.light)),
+                      title: e.categoryTitle,
+                      titlePositionPercentageOffset: 1.1,
+                      value:
+                          e.monthCashFlow.toRub(context.usd(), context.eur()) *
+                              1.0))
+                  .toList(),
+            ),
+            duration: _duration, // Optional
+            curve: Curves.linear, // Optional
+          ),
         ),
         IconButton(
           onPressed: onForwardPressed,
@@ -364,30 +363,16 @@ class _CategoryItem extends StatelessWidget {
         : category.yearCashFlow;
   }
 
-  double _progress() {
-    return 1;
-    //todo
-    // var cash = _cashflow();
-    // var budget = category.budget;
-    // if (cash == 0) {
-    //   return 0;
-    // } else if (cash > budget || budget == 0) {
-    //   return 1;
-    // } else {
-    //   return cash / budget;
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => context.openCategoryPage(category.categoryId),
       title: Text(category.categoryTitle),
       subtitle: Text(context.loc.numberFormat(category.budget, baseCurrency)),
-      // trailing: Text(context.loc.numberFormat(_cashflow(), baseCurrency)), //TODO
-      leading: CircularProgressIndicator(
-        value: _progress(),
-      ),
+      trailing: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: _cashflow().sums.map((sum) => ListItemSum(sum: sum)).toList(),
+      ), //TODO
     );
   }
 }
