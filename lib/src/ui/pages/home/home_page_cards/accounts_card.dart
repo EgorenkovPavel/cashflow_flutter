@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
@@ -104,9 +105,7 @@ class _AccountListTile extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: _account.balance.sums
-                    .map((e) => Text(
-                          context.loc.sumFormat(e),
-                        ))
+                    .map((e) => ListItemSum(sum: e))
                     .toList(),
               ),
             ),
