@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 const Divider(thickness: 0.2,),
                 ListTile(
-                  title: const Text('Users'), //TODO
+                  title: Text(context.loc.users),
                   onTap: () => context.openUsersPage(),
                 ),
                 const Divider(thickness: 0.2,),

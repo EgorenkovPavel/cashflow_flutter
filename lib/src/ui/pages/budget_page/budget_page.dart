@@ -357,7 +357,7 @@ class _CategoryItem extends StatelessWidget {
 
   const _CategoryItem({required this.category});
 
-  Balance _cashflow() {
+  Balance _cashFlow() {
     return category.budgetType == BudgetType.MONTH
         ? category.monthCashFlow
         : category.yearCashFlow;
@@ -371,7 +371,7 @@ class _CategoryItem extends StatelessWidget {
       subtitle: Text(context.loc.numberFormat(category.budget, baseCurrency)),
       trailing: Column(
         mainAxisSize: MainAxisSize.min,
-        children: _cashflow().sums.map((sum) => ListItemSum(sum: sum)).toList(),
+        children: _cashFlow().sums.map((sum) => ListItemSum(sum: sum)).toList(),
       ), //TODO
     );
   }

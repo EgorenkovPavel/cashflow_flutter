@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
+import 'package:money_tracker/src/utils/extensions.dart';
 
 class CategoryListPage extends StatelessWidget {
   final CategoryType type;
@@ -13,21 +14,21 @@ class CategoryListPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: const Text('Select assignment'),
+            title: Text(context.loc.create),
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context);
                   context.openCategoryInputDialog(type: type, isGroup: false);
                 },
-                child: const Text('Item'), //TODO
+                child: Text(context.loc.item),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context);
                   context.openCategoryInputDialog(type: type, isGroup: true);
                 },
-                child: const Text('Group'), //TODO
+                child: Text(context.loc.group),
               ),
             ],
           );
@@ -38,8 +39,8 @@ class CategoryListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
-      ), //TODO
+        title: Text(context.loc.categories),
+      ),
       body: ListView(
         children: [
           ...context
@@ -58,7 +59,7 @@ class CategoryListPage extends StatelessWidget {
 class _CategoryListTile extends StatelessWidget {
   final Category category;
 
-  const _CategoryListTile({super.key, required this.category});
+  const _CategoryListTile({required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class _CategoryListTile extends StatelessWidget {
 class _ItemListTile extends StatelessWidget {
   final CategoryItem item;
 
-  const _ItemListTile({super.key, required this.item});
+  const _ItemListTile({required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,7 @@ class _ItemListTile extends StatelessWidget {
 class _GroupListTile extends StatelessWidget {
   final CategoryGroup group;
 
-  const _GroupListTile({super.key, required this.group});
+  const _GroupListTile({required this.group});
 
   @override
   Widget build(BuildContext context) {

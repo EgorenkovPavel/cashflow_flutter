@@ -97,8 +97,8 @@ class _CategoryPageState extends State<CategoryPage> {
       child: ItemCard(
         title: context.isGroup()
             ? widget.isNew
-                ? 'New group'
-                : 'Group' //TODO
+                ? context.loc.newCategoryGroupCardTitle
+                : context.loc.categoryGroupCardTitle
             : widget.isNew
                 ? context.loc.newCategoryCardTitle
                 : context.loc.categoryCardTitle,

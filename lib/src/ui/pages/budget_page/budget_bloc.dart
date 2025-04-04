@@ -63,7 +63,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
 
   void _fetch(_FetchBudgetEvent event, Emitter<BudgetState> emit) {
     emit(state.copyWith(type: event.type));
-    _watchCashflow(state.date, event.type);
+    _watchCashFlow(state.date, event.type);
   }
 
   void _previousYear(
@@ -75,7 +75,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         : DateTime(state.date.year, state.date.month - 1);
 
     emit(state.copyWith(date: date));
-    _watchCashflow(date, state.type);
+    _watchCashFlow(date, state.type);
   }
 
   void _nextYear(_NextYearBudgetEvent event, Emitter<BudgetState> emit) {
@@ -84,7 +84,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         : DateTime(state.date.year, state.date.month + 1);
 
     emit(state.copyWith(date: date));
-    _watchCashflow(date, state.type);
+    _watchCashFlow(date, state.type);
   }
 
   void _showAll(_ShowAllBudgetEvent event, Emitter<BudgetState> emit) {
@@ -100,11 +100,10 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     add(BudgetEvent.changeItems(items: state.itemsAll));
   }
 
-  Future<void> _watchCashflow(DateTime date, CategoryType type) async {
+  Future<void> _watchCashFlow(DateTime date, CategoryType type) async {
     await _subscription?.cancel();
     _subscription =
         repo.watchCashFlowByType(date, type).listen((items) {
-      //items.sort((c1, c2) => c2.monthCashflow - c1.monthCashflow); //TODO
 
       add(BudgetEvent.changeItems(items: items));
     });
