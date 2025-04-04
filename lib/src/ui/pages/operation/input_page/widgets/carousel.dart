@@ -76,7 +76,7 @@ class Carousel<T> extends StatelessWidget {
                           curve: const ElasticOutCurve(),
                         ),
                     child: Padding(
-                      padding: const EdgeInsets.all(3.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Theme
