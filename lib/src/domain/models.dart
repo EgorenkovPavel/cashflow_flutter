@@ -7,6 +7,7 @@ export 'models/enum/budget_type.dart';
 export 'models/category/category.dart';
 export 'models/category/category_cashflow.dart';
 export 'models/category/category_month_cashflow.dart';
+export 'models/category/category_view.dart';
 export 'models/operation/operation.dart';
 export 'models/operation/operation_list_filter.dart';
 export 'models/enum/operation_type.dart';

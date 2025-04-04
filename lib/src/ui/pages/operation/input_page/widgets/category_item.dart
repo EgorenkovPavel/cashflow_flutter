@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/models/category/category.dart';
+import '../../../../../domain/models.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem({
@@ -8,7 +8,7 @@ class CategoryListItem extends StatelessWidget {
     required this.category,
   });
 
-  final Category category;
+  final CategoryView category;
 
   @override
   Widget build(BuildContext context) {

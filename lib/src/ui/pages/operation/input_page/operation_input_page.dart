@@ -591,9 +591,9 @@ class AccountPageView extends StatelessWidget {
 }
 
 class CategoryPageView extends StatelessWidget {
-  final List<Category> categories;
-  final void Function(Category) onItemChanged;
-  final Category? initialValue;
+  final List<CategoryView> categories;
+  final void Function(CategoryView) onItemChanged;
+  final CategoryView? initialValue;
 
   const CategoryPageView({
     super.key,
@@ -604,7 +604,7 @@ class CategoryPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselList<Category>(
+    return CarouselList<CategoryView>(
       items: categories,
       emptyListMessage: context.loc.noCategories,
       initialValue: initialValue,

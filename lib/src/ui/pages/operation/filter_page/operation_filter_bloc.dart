@@ -24,11 +24,11 @@ class OperationFilterEvent with _$OperationFilterEvent {
   const factory OperationFilterEvent.removeAccount({required BaseAccountListItem account}) =
       _RemoveAccountOperationFilterEvent;
 
-  const factory OperationFilterEvent.addCategory({required Category category}) =
+  const factory OperationFilterEvent.addCategory({required CategoryView category}) =
       _AddCategoryOperationFilterEvent;
 
   const factory OperationFilterEvent.removeCategory({
-    required Category category,
+    required CategoryView category,
   }) = _RemoveCategoryOperationFilterEvent;
 }
 
@@ -64,11 +64,11 @@ class OperationFilterState with _$OperationFilterState {
         accountIds: accountIds.toSet()..remove(account.id),
       );
 
-  OperationFilterState addCategory(Category category) => copyWith(
+  OperationFilterState addCategory(CategoryView category) => copyWith(
         categoryIds: categoryIds.toSet()..add(category.id),
       );
 
-  OperationFilterState removeCategory(Category category) => copyWith(
+  OperationFilterState removeCategory(CategoryView category) => copyWith(
         categoryIds: categoryIds.toSet()..remove(category.id),
       );
 

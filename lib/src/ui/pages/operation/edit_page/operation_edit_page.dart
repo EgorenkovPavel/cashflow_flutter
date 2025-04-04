@@ -131,16 +131,15 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   ),
                   Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
-                        INPUT: () => DropdownList<Category>(
+                        INPUT: () => DropdownList<CategoryView>(
                           value: context.category(context.watchInCategories()),
-                          //TODO
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
                           items: context.watchInCategories(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
-                        OUTPUT: () => DropdownList<Category>(
+                        OUTPUT: () => DropdownList<CategoryView>(
                           value: context.category(context.watchOutCategories()),
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
@@ -241,7 +240,7 @@ extension OperationEditBlocExt on BuildContext {
         (bloc) => bloc.state.time,
       ).format(this);
 
-  Category? category(List<Category> categories) {
+  CategoryView? category(List<CategoryView> categories) {
     final categoryId = select<OperationEditBloc, int?>(
       (bloc) => bloc.state.categoryId,
     );
@@ -308,7 +307,7 @@ extension OperationEditBlocExt on BuildContext {
     }
   }
 
-  void onCategoryChange(Category? newValue) {
+  void onCategoryChange(CategoryView? newValue) {
     if (newValue != null) {
       _bloc().add(OperationEditEvent.changeCategory(category: newValue));
     }

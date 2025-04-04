@@ -36,7 +36,7 @@ class OperationEditEvent with _$OperationEditEvent {
       _ChangeAccountOperationEditEvent;
 
   const factory OperationEditEvent.changeCategory({
-    required Category category,
+    required CategoryView category,
   }) = _ChangeCategoryOperationEditEvent;
 
   const factory OperationEditEvent.changeRecAccount({

@@ -69,13 +69,13 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   }
 
   void _onCategoryInPressed(BuildContext context) async {
-    final result = await showMenu<Category>(
+    final result = await showMenu<CategoryView>(
       context: context,
       position: buttonMenuPosition(_categoryInKey.currentContext!),
       items: context
           .readInCategories()
           .map(
-            (c) => PopupMenuItem<Category>(
+            (c) => PopupMenuItem<CategoryView>(
               value: c,
               child: Text(c.title),
             ),
@@ -89,12 +89,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   }
 
   void _onCategoryOutPressed(BuildContext context) async {
-    final result = await showMenu<Category>(
+    final result = await showMenu<CategoryView>(
       context: context,
       position: buttonMenuPosition(_categoryOutKey.currentContext!),
       items: context
           .readOutCategories()
-          .map((c) => PopupMenuItem<Category>(
+          .map((c) => PopupMenuItem<CategoryView>(
                 value: c,
                 child: Text(c.title),
               ))
@@ -254,7 +254,7 @@ class AccountChip extends StatelessWidget {
 }
 
 class CategoryChip extends StatelessWidget {
-  final Category category;
+  final CategoryView category;
 
   const CategoryChip({super.key, required this.category});
 
@@ -275,25 +275,23 @@ extension BlocExt on BuildContext {
 
   Set<BaseAccountListItem> accounts() {
     final ids = select<OperationFilterBloc, Set<int>>(
-          (bloc) => bloc.state.filter.accountIds,
+      (bloc) => bloc.state.filter.accountIds,
     );
     return readListItems().where((e) => ids.contains(e.id)).toSet();
   }
 
-  Set<InputCategoryItem> inCategories() {
+  Set<CategoryView> inCategories() {
     final ids = select<OperationFilterBloc, Set<int>>(
-          (bloc) =>
-          bloc.state.filter.categoryIds,
+      (bloc) => bloc.state.filter.categoryIds,
     );
-    return inCategories().where((e) => ids.contains(e.id)).toSet();
+    return readInCategories().where((e) => ids.contains(e.id)).toSet();
   }
 
-  Set<OutputCategoryItem> outCategories() {
+  Set<CategoryView> outCategories() {
     final ids = select<OperationFilterBloc, Set<int>>(
-          (bloc) =>
-          bloc.state.filter.categoryIds,
+      (bloc) => bloc.state.filter.categoryIds,
     );
-    return outCategories().where((e) => ids.contains(e.id)).toSet();
+    return readOutCategories().where((e) => ids.contains(e.id)).toSet();
   }
 
   onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
@@ -305,7 +303,7 @@ extension BlocExt on BuildContext {
   void onAddAccount(BaseAccountListItem account) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addAccount(account: account));
 
-  void onAddCategory(Category category) => read<OperationFilterBloc>()
+  void onAddCategory(CategoryView category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addCategory(category: category));
 
   onDeleteAccount(BaseAccountListItem account) =>
@@ -313,8 +311,6 @@ extension BlocExt on BuildContext {
         account: account,
       ));
 
-  onDeleteCategory(Category category) =>
-      read<OperationFilterBloc>().add(OperationFilterEvent.removeCategory(
-        category: category,
-      ));
+  onDeleteCategory(CategoryView category) => read<OperationFilterBloc>()
+      .add(OperationFilterEvent.removeCategory(category: category));
 }

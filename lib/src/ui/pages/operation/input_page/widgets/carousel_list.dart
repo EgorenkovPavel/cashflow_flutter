@@ -6,14 +6,14 @@ class CarouselList<T> extends StatelessWidget {
   final String _emptyListMessage;
   final T? initialValue;
   final Function _onItemChanged;
-  final Function(BuildContext, T) _itemBuilder;
+  final Widget Function(BuildContext, T) _itemBuilder;
 
   const CarouselList({
     super.key,
     required List<T> items,
     required String emptyListMessage,
     required Function(T) onItemChanged,
-    required Function(BuildContext, T) itemBuilder,
+    required Widget Function(BuildContext, T) itemBuilder,
     required this.initialValue,
   })  : _emptyListMessage = emptyListMessage,
         _items = items,

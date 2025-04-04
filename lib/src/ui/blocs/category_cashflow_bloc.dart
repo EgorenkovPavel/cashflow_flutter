@@ -186,20 +186,31 @@ extension CategoryCashFlowBlocExt on BuildContext {
   int budget(type) =>
       select<CategoryCashflowBloc, int>((bloc) => bloc.state.budget(type));
 
-  List<Category> watchInCategories() =>
-      select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.inItems);
+  List<CategoryView> watchInCategories() =>
+      select<CategoryCashflowBloc, List<CategoryView>>(
+          (bloc) => bloc.state.inItems.map(_mapToListItem).toList());
 
-  List<Category> watchOutCategories() =>
-      select<CategoryCashflowBloc, List<Category>>(
-          (bloc) => bloc.state.outItems);
+  List<CategoryView> watchOutCategories() =>
+      select<CategoryCashflowBloc, List<CategoryView>>(
+          (bloc) => bloc.state.outItems.map(_mapToListItem).toList());
 
-  List<Category> readInCategories() =>
-      read<CategoryCashflowBloc>().state.inItems;
+  List<CategoryView> readInCategories() =>
+      read<CategoryCashflowBloc>().state.inItems.map(_mapToListItem).toList();
 
-  List<Category> readOutCategories() =>
-      read<CategoryCashflowBloc>().state.outItems;
+  List<CategoryView> readOutCategories() =>
+      read<CategoryCashflowBloc>().state.outItems.map(_mapToListItem).toList();
 
   List<CategoryGroup> readCategoryGroups(CategoryType type) =>
       read<CategoryCashflowBloc>().state.groups(type);
+
+  CategoryView _mapToListItem(Category category) => switch (category) {
+    InputCategoryItem() =>
+        CategoryView(id: category.id, title: category.title),
+    OutputCategoryItem() =>
+        CategoryView(id: category.id, title: category.title),
+    InputCategoryGroup() =>
+        CategoryView(id: category.id, title: category.title),
+    OutputCategoryGroup() =>
+        CategoryView(id: category.id, title: category.title),
+  };
 }
