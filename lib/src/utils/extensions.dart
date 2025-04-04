@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
-import '../domain/models/enum/budget_type.dart';
-import '../domain/models/enum/currency.dart';
-import '../domain/models/enum/operation_type.dart';
+import '../domain/models.dart';
 import 'sum.dart';
 
 extension StringExtension on String {

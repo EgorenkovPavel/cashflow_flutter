@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/models/enum/currency.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 class TypeRadioButton<T> extends StatelessWidget {

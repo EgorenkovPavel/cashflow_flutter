@@ -1,6 +1,6 @@
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
-import '../models/account/account_balance_list_item.dart';
+import '../models.dart';
 
 class WatchBalancesUseCase{
   final DataRepository _dataRepository;
