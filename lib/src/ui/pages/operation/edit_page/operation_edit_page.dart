@@ -119,11 +119,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   TypeRadioButton<OperationType>(
                     type: context.operationType(),
                     onChange: context.onChangeOperationType,
-                    items: const [
-                      OperationType.INPUT,
-                      OperationType.OUTPUT,
-                      OperationType.TRANSFER,
-                    ],
+                    items: OperationType.values,
                   ),
                   Title(text: context.loc.titleAccount),
                   DropdownList<BaseAccountListItem>(

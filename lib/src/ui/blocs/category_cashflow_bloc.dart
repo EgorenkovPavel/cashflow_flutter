@@ -188,13 +188,11 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   List<Category> watchInCategories() =>
       select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.inItems,
-      );
+          (bloc) => bloc.state.inItems);
 
   List<Category> watchOutCategories() =>
       select<CategoryCashflowBloc, List<Category>>(
-        (bloc) => bloc.state.outItems,
-      );
+          (bloc) => bloc.state.outItems);
 
   List<Category> readInCategories() =>
       read<CategoryCashflowBloc>().state.inItems;
