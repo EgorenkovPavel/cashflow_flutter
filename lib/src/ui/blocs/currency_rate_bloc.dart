@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:money_tracker/src/domain/interfaces/currency_interactor.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 part 'currency_rate_bloc.freezed.dart';
@@ -26,9 +27,9 @@ class CurrencyRateState with _$CurrencyRateState {
 }
 
 class CurrencyRateBloc extends Bloc<CurrencyRateEvent, CurrencyRateState> {
-  final DataRepository _dataRepository;
+  final CurrencyInteractor _currencyInteractor;
 
-  CurrencyRateBloc(this._dataRepository)
+  CurrencyRateBloc(this._currencyInteractor)
       : super(const CurrencyRateState(usd: 1, eur: 1)) {
     on<CurrencyRateEvent>(
       (event, emit) => event.map(
@@ -44,8 +45,8 @@ class CurrencyRateBloc extends Bloc<CurrencyRateEvent, CurrencyRateState> {
     _FetchCurrencyRateEvent event,
     Emitter<CurrencyRateState> emit,
   ) async {
-    final usd = await _dataRepository.usdRate();
-    final eur = await _dataRepository.eurRate();
+    final usd = await _currencyInteractor.usdRate();
+    final eur = await _currencyInteractor.eurRate();
     emit(CurrencyRateState(usd: usd, eur: eur));
   }
 }

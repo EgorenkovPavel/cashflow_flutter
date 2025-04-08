@@ -69,11 +69,6 @@ class DataRepositoryImpl implements DataRepository {
       CategoryMapper().listToModel(await categoryDao.getAllCategories());
 
   @override
-  Future<List<Category>> getAllCategoriesByType(OperationType type) async =>
-      CategoryMapper()
-          .listToModel(await categoryDao.getAllCategoriesByType(type));
-
-  @override
   Future<List<Operation>> getAllOperations() async {
     final operations = await operationDao.getAllOperations();
     return OperationMapper().listToModel(operations);
@@ -84,18 +79,6 @@ class DataRepositoryImpl implements DataRepository {
     final operations =
         await operationDao.getAllOperationItemsWithEmptyCloudId();
     return OperationMapper().entityListToModel(operations);
-  }
-
-  @override
-  Future<List<CategoryCashFlow>> getCashFlowByType(
-      DateTime date, OperationType type) async {
-    final categories = await categoryDao.getAllCategoriesByType(type);
-    final ids = categories.map((e) => e.id).toSet();
-    final monthCashFlow = await categoryDao.getMonthCashFlow(date, ids);
-    final yearCashFlow = await categoryDao.getYearCashFlow(date, ids);
-
-    return CategoryMapper()
-        .combineCashFlow(categories, monthCashFlow, yearCashFlow);
   }
 
   @override
@@ -247,12 +230,6 @@ class DataRepositoryImpl implements DataRepository {
   @override
   Stream<List<Category>> watchAllCategories() =>
       categoryDao.watchAllCategories().map(CategoryMapper().listToModel);
-
-  @override
-  Stream<List<Category>> watchAllCategoriesByType(OperationType type) =>
-      categoryDao
-          .watchAllCategoriesByType(type)
-          .map(CategoryMapper().listToModel);
 
   @override
   Stream<List<Operation>> watchAllOperations() => operationDao

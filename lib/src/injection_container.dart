@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:money_tracker/src/domain/interfaces/currency_interactor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common_blocs/auth/auth_bloc.dart';
@@ -153,6 +154,7 @@ Future<void> init() async {
   sl.registerFactory(() => AccountInteractor(sl<DataRepository>()));
   sl.registerFactory(() => CategoryInteractor(sl<DataRepository>()));
   sl.registerFactory(() => OperationInteractor(sl<DataRepository>()));
+  sl.registerFactory(() => CurrencyInteractor(sl<DataRepository>()));
 
   // BLOCs
 
@@ -164,7 +166,7 @@ Future<void> init() async {
         syncRepo: sl<SyncRepository>(),
       ));
 
-  sl.registerLazySingleton(() => CurrencyRateBloc(sl<DataRepository>()));
+  sl.registerLazySingleton(() => CurrencyRateBloc(sl<CurrencyInteractor>()));
 
   sl.registerLazySingleton(() => AccountBalanceBloc(sl<AccountInteractor>()));
 
@@ -207,7 +209,7 @@ Future<void> init() async {
   sl.registerFactory(() => OperationEditBloc(sl<OperationInteractor>()));
   sl.registerFactory(() => MasterBloc(sl<OperationInteractor>()));
   sl.registerFactory(() => OperationFilterBloc());
-  sl.registerFactory(() => OperationListBloc(sl<DataRepository>()));
+  sl.registerFactory(() => OperationListBloc(sl<OperationInteractor>()));
   sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
   sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));
 }

@@ -4,12 +4,12 @@ import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 
-class CategoryCashflowDiagram extends StatelessWidget {
+class CategoryCashFlowDiagram extends StatelessWidget {
   final int id;
   final int budget;
   final BudgetType budgetType;
 
-  const CategoryCashflowDiagram({
+  const CategoryCashFlowDiagram({
     super.key,
     required this.id,
     required this.budget,

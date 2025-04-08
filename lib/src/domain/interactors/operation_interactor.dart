@@ -1,9 +1,9 @@
+import '../../utils/sum.dart';
 import '../interfaces/data_repository.dart';
 import '../models.dart';
-import '../../utils/sum.dart';
 import '../view_models.dart';
 
-class OperationInteractor{
+class OperationInteractor {
   final DataRepository _dataRepository;
 
   OperationInteractor(this._dataRepository);
@@ -12,7 +12,8 @@ class OperationInteractor{
 
   Future<Operation?> getLast() => _dataRepository.getLastOperation();
 
-  Stream<List<OperationView>> watchLast(int count) => _dataRepository.watchLastOperations(count);
+  Stream<List<OperationView>> watchLast(int count) =>
+      _dataRepository.watchLastOperations(count);
 
   Stream<List<OperationView>> watchByAccountId(int id) =>
       _dataRepository.watchAllOperationsByFilter(OperationListFilter(
@@ -22,6 +23,9 @@ class OperationInteractor{
 
   Stream<List<OperationView>> watchByCategoryId(int id) =>
       _dataRepository.watchAllOperationsByCategory(id);
+
+  Stream<List<OperationView>> watchByFilter(OperationListFilter filter) =>
+      _dataRepository.watchAllOperationsByFilter(filter);
 
   Future<Operation> insertInput({
     required DateTime date,
@@ -44,7 +48,7 @@ class OperationInteractor{
     required int accountId,
     required int categoryId,
     required Sum sum,
-  }){
+  }) {
     final newOperation = OutputOperation(
       date: date,
       account: accountId,
@@ -141,7 +145,8 @@ class OperationInteractor{
     return newOperation;
   }
 
-  Future delete(Operation operation) => _dataRepository.deleteOperationById(operation.id);
+  Future delete(Operation operation) =>
+      _dataRepository.deleteOperationById(operation.id);
 
   Future<void> deleteById(int id) => _dataRepository.deleteOperationById(id);
 

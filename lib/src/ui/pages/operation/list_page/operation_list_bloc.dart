@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 import '../../../../domain/view_models.dart';
@@ -35,10 +35,11 @@ class OperationListState {
 }
 
 class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
-  final DataRepository _repository;
+  final OperationInteractor _operationInteractor;
   StreamSubscription? _sub;
 
-  OperationListBloc(this._repository) : super(OperationListState.initial()) {
+  OperationListBloc(this._operationInteractor)
+      : super(OperationListState.initial()) {
     on<Fetch>(_fetch);
     on<ChangeOperations>(_changeOperations);
   }
@@ -48,8 +49,7 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
       OperationListState(operations: state.operations, filter: event.filter),
     );
     _sub?.cancel();
-    _sub =
-        _repository.watchAllOperationsByFilter(event.filter).listen((items) {
+    _sub = _operationInteractor.watchByFilter(event.filter).listen((items) {
       add(ChangeOperations(items));
     });
   }
