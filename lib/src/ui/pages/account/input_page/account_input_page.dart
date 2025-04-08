@@ -32,9 +32,7 @@ class AccountInputPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => bloc,
-      child: AccountPage(
-        isNew: id == null,
-      ),
+      child: AccountPage(isNew: id == null),
     );
   }
 }
@@ -109,9 +107,7 @@ class _AccountPageState extends State<AccountPage> {
               onChanged: context.onChangeTitle,
               validator: _titleValidator,
             ),
-            SizedBox(
-              height: 8.0,
-            ),
+            SizedBox(height: 8.0),
             _UserChooser(
               initialId: context.userId(),
               users: context.users(),
@@ -140,26 +136,34 @@ class _UserChooser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: users
-          .map((e) => InkWell(
-                onTap: () => onChange(e.id == initialId ? null : e),
-                child: Stack(children: [
+          .map(
+            (e) => InkWell(
+              onTap: () => onChange(e.id == initialId ? null : e),
+              child: Stack(
+                children: [
                   UserAvatar(photoUrl: e.photo, name: e.name),
-                  if (e.id == initialId) Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
+                  if (e.id == initialId)
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
                         width: 15,
                         height: 15,
                         decoration: BoxDecoration(
-                            color: Colors.cyanAccent, shape: BoxShape.circle),
+                          color: Colors.cyanAccent,
+                          shape: BoxShape.circle,
+                        ),
                         child: Icon(
                           Icons.done,
                           color: Colors.green[900],
                           size: 14,
-                        )),
-                  ),
-                ]),
-              ))
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          )
           .toList(),
     );
   }
@@ -167,22 +171,17 @@ class _UserChooser extends StatelessWidget {
 
 extension AccountInputBlocExt on BuildContext {
   onChangeTitle(String title) =>
-      read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title: title));
+      read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title));
 
-  bool isDebt() => select<AccountInputBloc, bool>(
-        (bloc) => bloc.state.isDebt,
-      );
+  bool isDebt() => select<AccountInputBloc, bool>((bloc) => bloc.state.isDebt);
 
-  int? userId() => select<AccountInputBloc, int?>(
-        (bloc) => bloc.state.userId,
-      );
+  int? userId() => select<AccountInputBloc, int?>((bloc) => bloc.state.userId);
 
-  List<User> users() => select<AccountInputBloc, List<User>>(
-        (bloc) => bloc.state.users,
-      );
+  List<User> users() =>
+      select<AccountInputBloc, List<User>>((bloc) => bloc.state.users);
 
   onChangeUser(User? user) =>
-      read<AccountInputBloc>().add(AccountInputEvent.changeUser(user: user));
+      read<AccountInputBloc>().add(AccountInputEvent.changeUser(user));
 
   onSave() => read<AccountInputBloc>().add(const AccountInputEvent.save());
 }

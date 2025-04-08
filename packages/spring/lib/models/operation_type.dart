@@ -10,6 +10,7 @@ enum OperationType {
         String() => throw UnimplementedError(),
       };
 
+  @override
   String toString() => switch(this){
     OperationType.input => 'INPUT',
     OperationType.output => 'OUTPUT',

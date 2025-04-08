@@ -43,6 +43,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Pages {
+  static final String accountEdit = 'account';
+  static final String categoryEdit = 'category';
+  static final String categoryList = 'categories';
+  static final String operationNew = 'operationNew';
+  static final String operationEdit = 'operationEdit';
+  static final String operationList = 'operations';
+  static final String budgetEdit = 'budget';
+  static final String settings = 'settings';
+  static final String dataControl = 'dataControl';
+  static final String googleDrive = 'googleDrive';
+  static final String cloudDatabase = 'cloudDatabase';
+  static final String spring = 'spring';
+  static final String users = 'users';
+  static final String reports = 'reports';
+}
+
 final _router = GoRouter(
   routes: <GoRoute>[
     GoRoute(
@@ -50,36 +67,36 @@ final _router = GoRouter(
       builder: (context, state) => const HomePage(),
       routes: <GoRoute>[
         GoRoute(
-          name: 'account',
+          name: Pages.accountEdit,
           path: 'account/:fid',
           builder: (context, state) =>
               AccountDetailPage(id: int.parse(state.pathParameters['fid']!)),
         ),
         GoRoute(
-          name: 'category',
+          name: Pages.categoryEdit,
           path: 'category/:fid',
           builder: (context, state) =>
               CategoryDetailPage(id: int.parse(state.pathParameters['fid']!)),
         ),
         GoRoute(
-          name: 'operation',
-          path: 'operation',
+          name: Pages.operationList,
+          path: 'operations',
           builder: (context, state) => const OperationListPage(),
         ),
         GoRoute(
-          name: 'operationId',
-          path: 'operation/edit/:fid',
+          name: Pages.operationEdit,
+          path: 'operations/:fid',
           builder: (context, state) => OperationEditPage.edit(
             int.parse(state.pathParameters['fid']!),
           ),
         ),
         GoRoute(
-          name: 'operationNew',
+          name: Pages.operationNew,
           path: 'operation/new',
           builder: (context, state) => const OperationInputPage(),
         ),
         GoRoute(
-          name: 'budget',
+          name: Pages.budgetEdit,
           path: 'budget/:fid',
           builder: (context, state) => BudgetPage(
             type: CategoryType.values.firstWhere(
@@ -88,48 +105,48 @@ final _router = GoRouter(
           ),
         ),
         GoRoute(
-          name: 'categoryList',
+          name: Pages.categoryList,
           path: 'categoryList/:fid',
           builder: (context, state) => CategoryListPage(
             type: CategoryType.values.firstWhere(
-                  (element) => element.toString() == state.pathParameters['fid'],
+              (element) => element.toString() == state.pathParameters['fid'],
             ),
           ),
         ),
         GoRoute(
-          name: 'settings',
+          name: Pages.settings,
           path: 'settings',
           builder: (context, state) => const SettingsPage(),
           routes: <GoRoute>[
             GoRoute(
-              name: 'dataControl',
+              name: Pages.dataControl,
               path: 'dataControl',
               builder: (context, state) => const DataControlPage(),
             ),
             GoRoute(
-              name: 'googleDriveSettings',
+              name: Pages.googleDrive,
               path: 'googleDriveSettings',
               builder: (context, state) => const GoogleDriveSettingsPage(),
             ),
             GoRoute(
-              name: 'cloudDatabaseSettings',
+              name: Pages.cloudDatabase,
               path: 'cloudDatabaseSettings',
               builder: (context, state) => const CloudDatabaseSettingsPage(),
             ),
             GoRoute(
-              name: 'spring',
+              name: Pages.spring,
               path: 'spring',
               builder: (context, state) => const SpringPage(),
             ),
             GoRoute(
-              name: 'users',
+              name: Pages.users,
               path: 'users',
               builder: (context, state) => const UsersPage(),
             ),
           ],
         ),
         GoRoute(
-          name: 'reports',
+          name: Pages.reports,
           path: 'reports',
           builder: (context, state) => const ReportsPage(),
         ),
@@ -140,52 +157,51 @@ final _router = GoRouter(
 
 extension PageNavigator on BuildContext {
   void openAccountPage(int accountId) => push(namedLocation(
-        'account',
+        Pages.accountEdit,
         pathParameters: <String, String>{'fid': accountId.toString()},
       ));
 
   void openCategoryPage(int categoryId) => push(namedLocation(
-        'category',
+        Pages.categoryEdit,
         pathParameters: <String, String>{'fid': categoryId.toString()},
       ));
 
-  void openOperationListPage() => push(namedLocation('operation'));
+  void openOperationListPage() => push(namedLocation(Pages.operationList));
 
   void openOperationEditPage(int operationId) => push(namedLocation(
-        'operationId',
+        Pages.operationEdit,
         pathParameters: <String, String>{'fid': operationId.toString()},
       ));
 
-  void openOperationInputPage() => push(namedLocation('operationNew'));
+  void openOperationInputPage() => push(namedLocation(Pages.operationNew));
 
-  void openSettingsPage() => push(namedLocation('settings'));
+  void openSettingsPage() => push(namedLocation(Pages.settings));
 
-  void openDataControlPage() => push(namedLocation('dataControl'));
+  void openDataControlPage() => push(namedLocation(Pages.dataControl));
 
-  void openSpringPage() => push(namedLocation('spring'));
+  void openSpringPage() => push(namedLocation(Pages.spring));
 
-  void openUsersPage() => push(namedLocation('users'));
+  void openUsersPage() => push(namedLocation(Pages.users));
 
-  void openGoogleDriveSettingsPage() =>
-      push(namedLocation('googleDriveSettings'));
+  void openGoogleDriveSettingsPage() => push(namedLocation(Pages.googleDrive));
 
   void openCloudDatabaseSettingsPage() =>
-      push(namedLocation('cloudDatabaseSettings'));
+      push(namedLocation(Pages.cloudDatabase));
 
-  void openReportsPage() => push(namedLocation('reports'));
+  void openReportsPage() => push(namedLocation(Pages.reports));
 
   void openBudgetPage(CategoryType type) => push(namedLocation(
-        'budget',
+        Pages.budgetEdit,
         pathParameters: <String, String>{'fid': type.toString()},
       ));
 
   void openCategoryListPage(CategoryType type) => push(namedLocation(
-    'categoryList',
-    pathParameters: <String, String>{'fid': type.toString()},
-  ));
+        Pages.categoryList,
+        pathParameters: <String, String>{'fid': type.toString()},
+      ));
 
-  Future<BaseAccount?> openAccountInputDialog() =>
-      const _Card<BaseAccount>().open(this, const AccountInputPage.inputAccount());
+  Future<BaseAccount?> openAccountInputDialog() => const _Card<BaseAccount>()
+      .open(this, const AccountInputPage.inputAccount());
 
   Future<BaseAccount?> openDebtInputDialog() =>
       const _Card<BaseAccount>().open(this, const AccountInputPage.inputDebt());
@@ -193,8 +209,10 @@ extension PageNavigator on BuildContext {
   Future<BaseAccount?> openAccountEditDialog(int id) =>
       const _Card<BaseAccount>().open(this, AccountInputPage.edit(id));
 
-  Future<Category?> openCategoryInputDialog({required CategoryType type, required bool isGroup}) =>
-      const _Card<Category>().open(this, CategoryInputPage.byType(type: type, isGroup: isGroup,));
+  Future<Category?> openCategoryInputDialog(
+          {required CategoryType type, required bool isGroup}) =>
+      const _Card<Category>()
+          .open(this, CategoryInputPage.byType(type: type, isGroup: isGroup));
 
   Future<Category?> openCategoryEditDialog({required int id}) =>
       const _Card<Category>().open(this, CategoryInputPage.edit(id: id));
@@ -203,9 +221,7 @@ extension PageNavigator on BuildContext {
           OperationListFilter filter) =>
       const _Card<OperationListFilter>().open(
         this,
-        OperationFilterPage(
-          filter: filter,
-        ),
+        OperationFilterPage(filter: filter),
       );
 
   Future<DriveFile?> chooseFileDialog() =>

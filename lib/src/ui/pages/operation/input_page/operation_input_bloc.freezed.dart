@@ -27,10 +27,12 @@ mixin _$MasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -47,10 +49,12 @@ mixin _$MasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -67,10 +71,12 @@ mixin _$MasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -92,8 +98,12 @@ mixin _$MasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -117,7 +127,11 @@ mixin _$MasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -139,7 +153,11 @@ mixin _$MasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -224,10 +242,12 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -247,10 +267,12 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -270,10 +292,12 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -301,8 +325,12 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -329,7 +357,11 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -354,7 +386,11 @@ class _$BackPressedMasterEventImpl implements _BackPressedMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -423,10 +459,12 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -446,10 +484,12 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -469,10 +509,12 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -500,8 +542,12 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -528,7 +574,11 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -553,7 +603,11 @@ class _$StartMasterEventImpl implements _StartMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -625,10 +679,12 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -648,10 +704,12 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -671,10 +729,12 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -702,8 +762,12 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -730,7 +794,11 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -755,7 +823,11 @@ class _$AddNewItemMassterEventImpl implements _AddNewItemMassterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -824,10 +896,12 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -847,10 +921,12 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -870,10 +946,12 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -901,8 +979,12 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -929,7 +1011,11 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -954,7 +1040,11 @@ class _$SumTapMasterEventImpl implements _SumTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1024,10 +1114,12 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -1047,10 +1139,12 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -1070,10 +1164,12 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -1101,8 +1197,12 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -1129,7 +1229,11 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1154,7 +1258,11 @@ class _$RecSumTapMasterEventImpl implements _RecSumTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1257,10 +1365,12 @@ class _$ChangeOperationTypeMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -1280,10 +1390,12 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -1303,10 +1415,12 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -1334,8 +1448,12 @@ class _$ChangeOperationTypeMasterEventImpl
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -1362,7 +1480,11 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1387,7 +1509,11 @@ class _$ChangeOperationTypeMasterEventImpl
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1494,10 +1620,12 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -1517,10 +1645,12 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -1540,10 +1670,12 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -1571,8 +1703,12 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -1599,7 +1735,11 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1624,7 +1764,11 @@ class _$DigitTapMasterEventImpl implements _DigitTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1704,10 +1848,12 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -1727,10 +1873,12 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -1750,10 +1898,12 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -1781,8 +1931,12 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -1809,7 +1963,11 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1834,7 +1992,11 @@ class _$BackKeyTapMasterEventImpl implements _BackKeyTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -1903,10 +2065,12 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -1926,10 +2090,12 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -1949,10 +2115,12 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -1980,8 +2148,12 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -2008,7 +2180,11 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2033,7 +2209,11 @@ class _$MoreTapMasterEventImpl implements _MoreTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2059,7 +2239,7 @@ abstract class _$$ChangeAccountMasterEventImplCopyWith<$Res> {
           $Res Function(_$ChangeAccountMasterEventImpl) then) =
       __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int accountId});
+  $Res call({int id});
 }
 
 /// @nodoc
@@ -2076,12 +2256,12 @@ class __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountId = null,
+    Object? id = null,
   }) {
     return _then(_$ChangeAccountMasterEventImpl(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -2090,14 +2270,14 @@ class __$$ChangeAccountMasterEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
-  const _$ChangeAccountMasterEventImpl({required this.accountId});
+  const _$ChangeAccountMasterEventImpl(this.id);
 
   @override
-  final int accountId;
+  final int id;
 
   @override
   String toString() {
-    return 'MasterEvent.changeAccount(accountId: $accountId)';
+    return 'MasterEvent.changeAccount(id: $id)';
   }
 
   @override
@@ -2105,12 +2285,11 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeAccountMasterEventImpl &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, accountId);
+  int get hashCode => Object.hash(runtimeType, id);
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2133,15 +2312,17 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
-    return changeAccount(accountId);
+    return changeAccount(id);
   }
 
   @override
@@ -2156,15 +2337,17 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
-    return changeAccount?.call(accountId);
+    return changeAccount?.call(id);
   }
 
   @override
@@ -2179,17 +2362,19 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
   }) {
     if (changeAccount != null) {
-      return changeAccount(accountId);
+      return changeAccount(id);
     }
     return orElse();
   }
@@ -2210,8 +2395,12 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -2238,7 +2427,11 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2263,7 +2456,11 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2279,10 +2476,10 @@ class _$ChangeAccountMasterEventImpl implements _ChangeAccountMasterEvent {
 }
 
 abstract class _ChangeAccountMasterEvent implements MasterEvent {
-  const factory _ChangeAccountMasterEvent({required final int accountId}) =
+  const factory _ChangeAccountMasterEvent(final int id) =
       _$ChangeAccountMasterEventImpl;
 
-  int get accountId;
+  int get id;
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2298,7 +2495,7 @@ abstract class _$$ChangeInCategoryMasterEventImplCopyWith<$Res> {
           $Res Function(_$ChangeInCategoryMasterEventImpl) then) =
       __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int categoryId});
+  $Res call({int? id});
 }
 
 /// @nodoc
@@ -2315,13 +2512,13 @@ class __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categoryId = null,
+    Object? id = freezed,
   }) {
     return _then(_$ChangeInCategoryMasterEventImpl(
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+      freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -2330,14 +2527,14 @@ class __$$ChangeInCategoryMasterEventImplCopyWithImpl<$Res>
 
 class _$ChangeInCategoryMasterEventImpl
     implements _ChangeInCategoryMasterEvent {
-  const _$ChangeInCategoryMasterEventImpl({required this.categoryId});
+  const _$ChangeInCategoryMasterEventImpl(this.id);
 
   @override
-  final int categoryId;
+  final int? id;
 
   @override
   String toString() {
-    return 'MasterEvent.changeInCategory(categoryId: $categoryId)';
+    return 'MasterEvent.changeInCategory(id: $id)';
   }
 
   @override
@@ -2345,12 +2542,11 @@ class _$ChangeInCategoryMasterEventImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeInCategoryMasterEventImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, categoryId);
+  int get hashCode => Object.hash(runtimeType, id);
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2373,15 +2569,17 @@ class _$ChangeInCategoryMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
-    return changeInCategory(categoryId);
+    return changeInCategory(id);
   }
 
   @override
@@ -2396,15 +2594,17 @@ class _$ChangeInCategoryMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
-    return changeInCategory?.call(categoryId);
+    return changeInCategory?.call(id);
   }
 
   @override
@@ -2419,17 +2619,19 @@ class _$ChangeInCategoryMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
   }) {
     if (changeInCategory != null) {
-      return changeInCategory(categoryId);
+      return changeInCategory(id);
     }
     return orElse();
   }
@@ -2450,8 +2652,12 @@ class _$ChangeInCategoryMasterEventImpl
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -2478,7 +2684,11 @@ class _$ChangeInCategoryMasterEventImpl
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2503,7 +2713,11 @@ class _$ChangeInCategoryMasterEventImpl
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2519,15 +2733,275 @@ class _$ChangeInCategoryMasterEventImpl
 }
 
 abstract class _ChangeInCategoryMasterEvent implements MasterEvent {
-  const factory _ChangeInCategoryMasterEvent({required final int categoryId}) =
+  const factory _ChangeInCategoryMasterEvent(final int? id) =
       _$ChangeInCategoryMasterEventImpl;
 
-  int get categoryId;
+  int? get id;
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeInCategoryMasterEventImplCopyWith<_$ChangeInCategoryMasterEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ChangeInCategoryGroupMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeInCategoryGroupMasterEventImplCopyWith(
+          _$ChangeInCategoryGroupMasterEventImpl value,
+          $Res Function(_$ChangeInCategoryGroupMasterEventImpl) then) =
+      __$$ChangeInCategoryGroupMasterEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? id});
+}
+
+/// @nodoc
+class __$$ChangeInCategoryGroupMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res,
+        _$ChangeInCategoryGroupMasterEventImpl>
+    implements _$$ChangeInCategoryGroupMasterEventImplCopyWith<$Res> {
+  __$$ChangeInCategoryGroupMasterEventImplCopyWithImpl(
+      _$ChangeInCategoryGroupMasterEventImpl _value,
+      $Res Function(_$ChangeInCategoryGroupMasterEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+  }) {
+    return _then(_$ChangeInCategoryGroupMasterEventImpl(
+      freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeInCategoryGroupMasterEventImpl
+    implements _ChangeInCategoryGroupMasterEvent {
+  const _$ChangeInCategoryGroupMasterEventImpl(this.id);
+
+  @override
+  final int? id;
+
+  @override
+  String toString() {
+    return 'MasterEvent.changeInCategoryGroup(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeInCategoryGroupMasterEventImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeInCategoryGroupMasterEventImplCopyWith<
+          _$ChangeInCategoryGroupMasterEventImpl>
+      get copyWith => __$$ChangeInCategoryGroupMasterEventImplCopyWithImpl<
+          _$ChangeInCategoryGroupMasterEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() backPressed,
+    required TResult Function() start,
+    required TResult Function() addNewItem,
+    required TResult Function() sumTap,
+    required TResult Function() recSumTap,
+    required TResult Function(OperationType operationType) changeOperationType,
+    required TResult Function(int digit) digitTap,
+    required TResult Function() backKeyTap,
+    required TResult Function() moreTap,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
+    required TResult Function(Currency currency) changeHighlightCurrency,
+    required TResult Function() cancelOperation,
+    required TResult Function() nextTap,
+  }) {
+    return changeInCategoryGroup(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? backPressed,
+    TResult? Function()? start,
+    TResult? Function()? addNewItem,
+    TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
+    TResult? Function(OperationType operationType)? changeOperationType,
+    TResult? Function(int digit)? digitTap,
+    TResult? Function()? backKeyTap,
+    TResult? Function()? moreTap,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
+    TResult? Function(Currency currency)? changeHighlightCurrency,
+    TResult? Function()? cancelOperation,
+    TResult? Function()? nextTap,
+  }) {
+    return changeInCategoryGroup?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? backPressed,
+    TResult Function()? start,
+    TResult Function()? addNewItem,
+    TResult Function()? sumTap,
+    TResult Function()? recSumTap,
+    TResult Function(OperationType operationType)? changeOperationType,
+    TResult Function(int digit)? digitTap,
+    TResult Function()? backKeyTap,
+    TResult Function()? moreTap,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
+    TResult Function(Currency currency)? changeHighlightCurrency,
+    TResult Function()? cancelOperation,
+    TResult Function()? nextTap,
+    required TResult orElse(),
+  }) {
+    if (changeInCategoryGroup != null) {
+      return changeInCategoryGroup(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BackPressedMasterEvent value) backPressed,
+    required TResult Function(_StartMasterEvent value) start,
+    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
+    required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
+    required TResult Function(_ChangeOperationTypeMasterEvent value)
+        changeOperationType,
+    required TResult Function(_DigitTapMasterEvent value) digitTap,
+    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
+    required TResult Function(_MoreTapMasterEvent value) moreTap,
+    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
+    required TResult Function(_ChangeInCategoryMasterEvent value)
+        changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
+    required TResult Function(_ChangeOutCategoryMasterEvent value)
+        changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
+    required TResult Function(_ChangeRecAccountMasterEvent value)
+        changeRecAccount,
+    required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
+        changeHighlightCurrency,
+    required TResult Function(_CancelOperationMasterEvent value)
+        cancelOperation,
+    required TResult Function(_NextTapMasterEvent value) nextTap,
+  }) {
+    return changeInCategoryGroup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BackPressedMasterEvent value)? backPressed,
+    TResult? Function(_StartMasterEvent value)? start,
+    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult? Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult? Function(_DigitTapMasterEvent value)? digitTap,
+    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult? Function(_MoreTapMasterEvent value)? moreTap,
+    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
+    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
+    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
+        changeHighlightCurrency,
+    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult? Function(_NextTapMasterEvent value)? nextTap,
+  }) {
+    return changeInCategoryGroup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BackPressedMasterEvent value)? backPressed,
+    TResult Function(_StartMasterEvent value)? start,
+    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult Function(_DigitTapMasterEvent value)? digitTap,
+    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult Function(_MoreTapMasterEvent value)? moreTap,
+    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
+    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
+    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
+        changeHighlightCurrency,
+    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult Function(_NextTapMasterEvent value)? nextTap,
+    required TResult orElse(),
+  }) {
+    if (changeInCategoryGroup != null) {
+      return changeInCategoryGroup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeInCategoryGroupMasterEvent implements MasterEvent {
+  const factory _ChangeInCategoryGroupMasterEvent(final int? id) =
+      _$ChangeInCategoryGroupMasterEventImpl;
+
+  int? get id;
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeInCategoryGroupMasterEventImplCopyWith<
+          _$ChangeInCategoryGroupMasterEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -2538,7 +3012,7 @@ abstract class _$$ChangeOutCategoryMasterEventImplCopyWith<$Res> {
           $Res Function(_$ChangeOutCategoryMasterEventImpl) then) =
       __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int categoryId});
+  $Res call({int? id});
 }
 
 /// @nodoc
@@ -2555,13 +3029,13 @@ class __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categoryId = null,
+    Object? id = freezed,
   }) {
     return _then(_$ChangeOutCategoryMasterEventImpl(
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+      freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -2570,14 +3044,14 @@ class __$$ChangeOutCategoryMasterEventImplCopyWithImpl<$Res>
 
 class _$ChangeOutCategoryMasterEventImpl
     implements _ChangeOutCategoryMasterEvent {
-  const _$ChangeOutCategoryMasterEventImpl({required this.categoryId});
+  const _$ChangeOutCategoryMasterEventImpl(this.id);
 
   @override
-  final int categoryId;
+  final int? id;
 
   @override
   String toString() {
-    return 'MasterEvent.changeOutCategory(categoryId: $categoryId)';
+    return 'MasterEvent.changeOutCategory(id: $id)';
   }
 
   @override
@@ -2585,12 +3059,11 @@ class _$ChangeOutCategoryMasterEventImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeOutCategoryMasterEventImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, categoryId);
+  int get hashCode => Object.hash(runtimeType, id);
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2614,15 +3087,17 @@ class _$ChangeOutCategoryMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
-    return changeOutCategory(categoryId);
+    return changeOutCategory(id);
   }
 
   @override
@@ -2637,15 +3112,17 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
-    return changeOutCategory?.call(categoryId);
+    return changeOutCategory?.call(id);
   }
 
   @override
@@ -2660,17 +3137,19 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
   }) {
     if (changeOutCategory != null) {
-      return changeOutCategory(categoryId);
+      return changeOutCategory(id);
     }
     return orElse();
   }
@@ -2691,8 +3170,12 @@ class _$ChangeOutCategoryMasterEventImpl
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -2719,7 +3202,11 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2744,7 +3231,11 @@ class _$ChangeOutCategoryMasterEventImpl
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2760,10 +3251,10 @@ class _$ChangeOutCategoryMasterEventImpl
 }
 
 abstract class _ChangeOutCategoryMasterEvent implements MasterEvent {
-  const factory _ChangeOutCategoryMasterEvent({required final int categoryId}) =
+  const factory _ChangeOutCategoryMasterEvent(final int? id) =
       _$ChangeOutCategoryMasterEventImpl;
 
-  int get categoryId;
+  int? get id;
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2774,13 +3265,273 @@ abstract class _ChangeOutCategoryMasterEvent implements MasterEvent {
 }
 
 /// @nodoc
+abstract class _$$ChangeOutCategoryGroupMasterEventImplCopyWith<$Res> {
+  factory _$$ChangeOutCategoryGroupMasterEventImplCopyWith(
+          _$ChangeOutCategoryGroupMasterEventImpl value,
+          $Res Function(_$ChangeOutCategoryGroupMasterEventImpl) then) =
+      __$$ChangeOutCategoryGroupMasterEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? id});
+}
+
+/// @nodoc
+class __$$ChangeOutCategoryGroupMasterEventImplCopyWithImpl<$Res>
+    extends _$MasterEventCopyWithImpl<$Res,
+        _$ChangeOutCategoryGroupMasterEventImpl>
+    implements _$$ChangeOutCategoryGroupMasterEventImplCopyWith<$Res> {
+  __$$ChangeOutCategoryGroupMasterEventImplCopyWithImpl(
+      _$ChangeOutCategoryGroupMasterEventImpl _value,
+      $Res Function(_$ChangeOutCategoryGroupMasterEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+  }) {
+    return _then(_$ChangeOutCategoryGroupMasterEventImpl(
+      freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeOutCategoryGroupMasterEventImpl
+    implements _ChangeOutCategoryGroupMasterEvent {
+  const _$ChangeOutCategoryGroupMasterEventImpl(this.id);
+
+  @override
+  final int? id;
+
+  @override
+  String toString() {
+    return 'MasterEvent.changeOutCategoryGroup(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeOutCategoryGroupMasterEventImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeOutCategoryGroupMasterEventImplCopyWith<
+          _$ChangeOutCategoryGroupMasterEventImpl>
+      get copyWith => __$$ChangeOutCategoryGroupMasterEventImplCopyWithImpl<
+          _$ChangeOutCategoryGroupMasterEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() backPressed,
+    required TResult Function() start,
+    required TResult Function() addNewItem,
+    required TResult Function() sumTap,
+    required TResult Function() recSumTap,
+    required TResult Function(OperationType operationType) changeOperationType,
+    required TResult Function(int digit) digitTap,
+    required TResult Function() backKeyTap,
+    required TResult Function() moreTap,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
+    required TResult Function(Currency currency) changeHighlightCurrency,
+    required TResult Function() cancelOperation,
+    required TResult Function() nextTap,
+  }) {
+    return changeOutCategoryGroup(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? backPressed,
+    TResult? Function()? start,
+    TResult? Function()? addNewItem,
+    TResult? Function()? sumTap,
+    TResult? Function()? recSumTap,
+    TResult? Function(OperationType operationType)? changeOperationType,
+    TResult? Function(int digit)? digitTap,
+    TResult? Function()? backKeyTap,
+    TResult? Function()? moreTap,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
+    TResult? Function(Currency currency)? changeHighlightCurrency,
+    TResult? Function()? cancelOperation,
+    TResult? Function()? nextTap,
+  }) {
+    return changeOutCategoryGroup?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? backPressed,
+    TResult Function()? start,
+    TResult Function()? addNewItem,
+    TResult Function()? sumTap,
+    TResult Function()? recSumTap,
+    TResult Function(OperationType operationType)? changeOperationType,
+    TResult Function(int digit)? digitTap,
+    TResult Function()? backKeyTap,
+    TResult Function()? moreTap,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
+    TResult Function(Currency currency)? changeHighlightCurrency,
+    TResult Function()? cancelOperation,
+    TResult Function()? nextTap,
+    required TResult orElse(),
+  }) {
+    if (changeOutCategoryGroup != null) {
+      return changeOutCategoryGroup(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BackPressedMasterEvent value) backPressed,
+    required TResult Function(_StartMasterEvent value) start,
+    required TResult Function(_AddNewItemMassterEvent value) addNewItem,
+    required TResult Function(_SumTapMasterEvent value) sumTap,
+    required TResult Function(_RecSumTapMasterEvent value) recSumTap,
+    required TResult Function(_ChangeOperationTypeMasterEvent value)
+        changeOperationType,
+    required TResult Function(_DigitTapMasterEvent value) digitTap,
+    required TResult Function(_BackKeyTapMasterEvent value) backKeyTap,
+    required TResult Function(_MoreTapMasterEvent value) moreTap,
+    required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
+    required TResult Function(_ChangeInCategoryMasterEvent value)
+        changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
+    required TResult Function(_ChangeOutCategoryMasterEvent value)
+        changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
+    required TResult Function(_ChangeRecAccountMasterEvent value)
+        changeRecAccount,
+    required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
+        changeHighlightCurrency,
+    required TResult Function(_CancelOperationMasterEvent value)
+        cancelOperation,
+    required TResult Function(_NextTapMasterEvent value) nextTap,
+  }) {
+    return changeOutCategoryGroup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BackPressedMasterEvent value)? backPressed,
+    TResult? Function(_StartMasterEvent value)? start,
+    TResult? Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult? Function(_SumTapMasterEvent value)? sumTap,
+    TResult? Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult? Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult? Function(_DigitTapMasterEvent value)? digitTap,
+    TResult? Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult? Function(_MoreTapMasterEvent value)? moreTap,
+    TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
+    TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
+    TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
+        changeHighlightCurrency,
+    TResult? Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult? Function(_NextTapMasterEvent value)? nextTap,
+  }) {
+    return changeOutCategoryGroup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BackPressedMasterEvent value)? backPressed,
+    TResult Function(_StartMasterEvent value)? start,
+    TResult Function(_AddNewItemMassterEvent value)? addNewItem,
+    TResult Function(_SumTapMasterEvent value)? sumTap,
+    TResult Function(_RecSumTapMasterEvent value)? recSumTap,
+    TResult Function(_ChangeOperationTypeMasterEvent value)?
+        changeOperationType,
+    TResult Function(_DigitTapMasterEvent value)? digitTap,
+    TResult Function(_BackKeyTapMasterEvent value)? backKeyTap,
+    TResult Function(_MoreTapMasterEvent value)? moreTap,
+    TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
+    TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
+    TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
+    TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
+    TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
+        changeHighlightCurrency,
+    TResult Function(_CancelOperationMasterEvent value)? cancelOperation,
+    TResult Function(_NextTapMasterEvent value)? nextTap,
+    required TResult orElse(),
+  }) {
+    if (changeOutCategoryGroup != null) {
+      return changeOutCategoryGroup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeOutCategoryGroupMasterEvent implements MasterEvent {
+  const factory _ChangeOutCategoryGroupMasterEvent(final int? id) =
+      _$ChangeOutCategoryGroupMasterEventImpl;
+
+  int? get id;
+
+  /// Create a copy of MasterEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeOutCategoryGroupMasterEventImplCopyWith<
+          _$ChangeOutCategoryGroupMasterEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 abstract class _$$ChangeRecAccountMasterEventImplCopyWith<$Res> {
   factory _$$ChangeRecAccountMasterEventImplCopyWith(
           _$ChangeRecAccountMasterEventImpl value,
           $Res Function(_$ChangeRecAccountMasterEventImpl) then) =
       __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int accountId});
+  $Res call({int id});
 }
 
 /// @nodoc
@@ -2797,12 +3548,12 @@ class __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountId = null,
+    Object? id = null,
   }) {
     return _then(_$ChangeRecAccountMasterEventImpl(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -2812,14 +3563,14 @@ class __$$ChangeRecAccountMasterEventImplCopyWithImpl<$Res>
 
 class _$ChangeRecAccountMasterEventImpl
     implements _ChangeRecAccountMasterEvent {
-  const _$ChangeRecAccountMasterEventImpl({required this.accountId});
+  const _$ChangeRecAccountMasterEventImpl(this.id);
 
   @override
-  final int accountId;
+  final int id;
 
   @override
   String toString() {
-    return 'MasterEvent.changeRecAccount(accountId: $accountId)';
+    return 'MasterEvent.changeRecAccount(id: $id)';
   }
 
   @override
@@ -2827,12 +3578,11 @@ class _$ChangeRecAccountMasterEventImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeRecAccountMasterEventImpl &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, accountId);
+  int get hashCode => Object.hash(runtimeType, id);
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2855,15 +3605,17 @@ class _$ChangeRecAccountMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
   }) {
-    return changeRecAccount(accountId);
+    return changeRecAccount(id);
   }
 
   @override
@@ -2878,15 +3630,17 @@ class _$ChangeRecAccountMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
   }) {
-    return changeRecAccount?.call(accountId);
+    return changeRecAccount?.call(id);
   }
 
   @override
@@ -2901,17 +3655,19 @@ class _$ChangeRecAccountMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
     required TResult orElse(),
   }) {
     if (changeRecAccount != null) {
-      return changeRecAccount(accountId);
+      return changeRecAccount(id);
     }
     return orElse();
   }
@@ -2932,8 +3688,12 @@ class _$ChangeRecAccountMasterEventImpl
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -2960,7 +3720,11 @@ class _$ChangeRecAccountMasterEventImpl
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -2985,7 +3749,11 @@ class _$ChangeRecAccountMasterEventImpl
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3001,10 +3769,10 @@ class _$ChangeRecAccountMasterEventImpl
 }
 
 abstract class _ChangeRecAccountMasterEvent implements MasterEvent {
-  const factory _ChangeRecAccountMasterEvent({required final int accountId}) =
+  const factory _ChangeRecAccountMasterEvent(final int id) =
       _$ChangeRecAccountMasterEventImpl;
 
-  int get accountId;
+  int get id;
 
   /// Create a copy of MasterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -3041,7 +3809,7 @@ class __$$ChangeHighlightCurrencyMasterEventImplCopyWithImpl<$Res>
     Object? currency = null,
   }) {
     return _then(_$ChangeHighlightCurrencyMasterEventImpl(
-      currency: null == currency
+      null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
@@ -3053,7 +3821,7 @@ class __$$ChangeHighlightCurrencyMasterEventImplCopyWithImpl<$Res>
 
 class _$ChangeHighlightCurrencyMasterEventImpl
     implements _ChangeHighlightCurrencyMasterEvent {
-  const _$ChangeHighlightCurrencyMasterEventImpl({required this.currency});
+  const _$ChangeHighlightCurrencyMasterEventImpl(this.currency);
 
   @override
   final Currency currency;
@@ -3097,10 +3865,12 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -3120,10 +3890,12 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -3143,10 +3915,12 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -3174,8 +3948,12 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -3202,7 +3980,11 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3227,7 +4009,11 @@ class _$ChangeHighlightCurrencyMasterEventImpl
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3243,8 +4029,7 @@ class _$ChangeHighlightCurrencyMasterEventImpl
 }
 
 abstract class _ChangeHighlightCurrencyMasterEvent implements MasterEvent {
-  const factory _ChangeHighlightCurrencyMasterEvent(
-          {required final Currency currency}) =
+  const factory _ChangeHighlightCurrencyMasterEvent(final Currency currency) =
       _$ChangeHighlightCurrencyMasterEventImpl;
 
   Currency get currency;
@@ -3310,10 +4095,12 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -3333,10 +4120,12 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -3356,10 +4145,12 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -3387,8 +4178,12 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -3415,7 +4210,11 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3440,7 +4239,11 @@ class _$CancelOperationMasterEventImpl implements _CancelOperationMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3510,10 +4313,12 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     required TResult Function(int digit) digitTap,
     required TResult Function() backKeyTap,
     required TResult Function() moreTap,
-    required TResult Function(int accountId) changeAccount,
-    required TResult Function(int categoryId) changeInCategory,
-    required TResult Function(int categoryId) changeOutCategory,
-    required TResult Function(int accountId) changeRecAccount,
+    required TResult Function(int id) changeAccount,
+    required TResult Function(int? id) changeInCategory,
+    required TResult Function(int? id) changeInCategoryGroup,
+    required TResult Function(int? id) changeOutCategory,
+    required TResult Function(int? id) changeOutCategoryGroup,
+    required TResult Function(int id) changeRecAccount,
     required TResult Function(Currency currency) changeHighlightCurrency,
     required TResult Function() cancelOperation,
     required TResult Function() nextTap,
@@ -3533,10 +4338,12 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult? Function(int digit)? digitTap,
     TResult? Function()? backKeyTap,
     TResult? Function()? moreTap,
-    TResult? Function(int accountId)? changeAccount,
-    TResult? Function(int categoryId)? changeInCategory,
-    TResult? Function(int categoryId)? changeOutCategory,
-    TResult? Function(int accountId)? changeRecAccount,
+    TResult? Function(int id)? changeAccount,
+    TResult? Function(int? id)? changeInCategory,
+    TResult? Function(int? id)? changeInCategoryGroup,
+    TResult? Function(int? id)? changeOutCategory,
+    TResult? Function(int? id)? changeOutCategoryGroup,
+    TResult? Function(int id)? changeRecAccount,
     TResult? Function(Currency currency)? changeHighlightCurrency,
     TResult? Function()? cancelOperation,
     TResult? Function()? nextTap,
@@ -3556,10 +4363,12 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult Function(int digit)? digitTap,
     TResult Function()? backKeyTap,
     TResult Function()? moreTap,
-    TResult Function(int accountId)? changeAccount,
-    TResult Function(int categoryId)? changeInCategory,
-    TResult Function(int categoryId)? changeOutCategory,
-    TResult Function(int accountId)? changeRecAccount,
+    TResult Function(int id)? changeAccount,
+    TResult Function(int? id)? changeInCategory,
+    TResult Function(int? id)? changeInCategoryGroup,
+    TResult Function(int? id)? changeOutCategory,
+    TResult Function(int? id)? changeOutCategoryGroup,
+    TResult Function(int id)? changeRecAccount,
     TResult Function(Currency currency)? changeHighlightCurrency,
     TResult Function()? cancelOperation,
     TResult Function()? nextTap,
@@ -3587,8 +4396,12 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     required TResult Function(_ChangeAccountMasterEvent value) changeAccount,
     required TResult Function(_ChangeInCategoryMasterEvent value)
         changeInCategory,
+    required TResult Function(_ChangeInCategoryGroupMasterEvent value)
+        changeInCategoryGroup,
     required TResult Function(_ChangeOutCategoryMasterEvent value)
         changeOutCategory,
+    required TResult Function(_ChangeOutCategoryGroupMasterEvent value)
+        changeOutCategoryGroup,
     required TResult Function(_ChangeRecAccountMasterEvent value)
         changeRecAccount,
     required TResult Function(_ChangeHighlightCurrencyMasterEvent value)
@@ -3615,7 +4428,11 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult? Function(_MoreTapMasterEvent value)? moreTap,
     TResult? Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult? Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult? Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult? Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult? Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult? Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult? Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3640,7 +4457,11 @@ class _$NextTapMasterEventImpl implements _NextTapMasterEvent {
     TResult Function(_MoreTapMasterEvent value)? moreTap,
     TResult Function(_ChangeAccountMasterEvent value)? changeAccount,
     TResult Function(_ChangeInCategoryMasterEvent value)? changeInCategory,
+    TResult Function(_ChangeInCategoryGroupMasterEvent value)?
+        changeInCategoryGroup,
     TResult Function(_ChangeOutCategoryMasterEvent value)? changeOutCategory,
+    TResult Function(_ChangeOutCategoryGroupMasterEvent value)?
+        changeOutCategoryGroup,
     TResult Function(_ChangeRecAccountMasterEvent value)? changeRecAccount,
     TResult Function(_ChangeHighlightCurrencyMasterEvent value)?
         changeHighlightCurrency,
@@ -3672,6 +4493,8 @@ mixin _$MasterState {
   int? get categoryInId => throw _privateConstructorUsedError;
   int? get categoryOutId => throw _privateConstructorUsedError;
   int? get recAccountId => throw _privateConstructorUsedError;
+  int? get categoryInParentId => throw _privateConstructorUsedError;
+  int? get categoryOutParentId => throw _privateConstructorUsedError;
   Operation? get operation => throw _privateConstructorUsedError;
 
   /// Create a copy of MasterState
@@ -3699,6 +4522,8 @@ abstract class $MasterStateCopyWith<$Res> {
       int? categoryInId,
       int? categoryOutId,
       int? recAccountId,
+      int? categoryInParentId,
+      int? categoryOutParentId,
       Operation? operation});
 }
 
@@ -3728,6 +4553,8 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
     Object? categoryInId = freezed,
     Object? categoryOutId = freezed,
     Object? recAccountId = freezed,
+    Object? categoryInParentId = freezed,
+    Object? categoryOutParentId = freezed,
     Object? operation = freezed,
   }) {
     return _then(_value.copyWith(
@@ -3775,6 +4602,14 @@ class _$MasterStateCopyWithImpl<$Res, $Val extends MasterState>
           ? _value.recAccountId
           : recAccountId // ignore: cast_nullable_to_non_nullable
               as int?,
+      categoryInParentId: freezed == categoryInParentId
+          ? _value.categoryInParentId
+          : categoryInParentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryOutParentId: freezed == categoryOutParentId
+          ? _value.categoryOutParentId
+          : categoryOutParentId // ignore: cast_nullable_to_non_nullable
+              as int?,
       operation: freezed == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
@@ -3803,6 +4638,8 @@ abstract class _$$MasterStateImplCopyWith<$Res>
       int? categoryInId,
       int? categoryOutId,
       int? recAccountId,
+      int? categoryInParentId,
+      int? categoryOutParentId,
       Operation? operation});
 }
 
@@ -3830,6 +4667,8 @@ class __$$MasterStateImplCopyWithImpl<$Res>
     Object? categoryInId = freezed,
     Object? categoryOutId = freezed,
     Object? recAccountId = freezed,
+    Object? categoryInParentId = freezed,
+    Object? categoryOutParentId = freezed,
     Object? operation = freezed,
   }) {
     return _then(_$MasterStateImpl(
@@ -3877,6 +4716,14 @@ class __$$MasterStateImplCopyWithImpl<$Res>
           ? _value.recAccountId
           : recAccountId // ignore: cast_nullable_to_non_nullable
               as int?,
+      categoryInParentId: freezed == categoryInParentId
+          ? _value.categoryInParentId
+          : categoryInParentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryOutParentId: freezed == categoryOutParentId
+          ? _value.categoryOutParentId
+          : categoryOutParentId // ignore: cast_nullable_to_non_nullable
+              as int?,
       operation: freezed == operation
           ? _value.operation
           : operation // ignore: cast_nullable_to_non_nullable
@@ -3900,6 +4747,8 @@ class _$MasterStateImpl implements _MasterState {
       this.categoryInId,
       this.categoryOutId,
       this.recAccountId,
+      this.categoryInParentId,
+      this.categoryOutParentId,
       this.operation});
 
   @override
@@ -3925,11 +4774,15 @@ class _$MasterStateImpl implements _MasterState {
   @override
   final int? recAccountId;
   @override
+  final int? categoryInParentId;
+  @override
+  final int? categoryOutParentId;
+  @override
   final Operation? operation;
 
   @override
   String toString() {
-    return 'MasterState(action: $action, operationType: $operationType, sum: $sum, recSum: $recSum, showKeyboard: $showKeyboard, highlightSum: $highlightSum, highlightRecSum: $highlightRecSum, accountId: $accountId, categoryInId: $categoryInId, categoryOutId: $categoryOutId, recAccountId: $recAccountId, operation: $operation)';
+    return 'MasterState(action: $action, operationType: $operationType, sum: $sum, recSum: $recSum, showKeyboard: $showKeyboard, highlightSum: $highlightSum, highlightRecSum: $highlightRecSum, accountId: $accountId, categoryInId: $categoryInId, categoryOutId: $categoryOutId, recAccountId: $recAccountId, categoryInParentId: $categoryInParentId, categoryOutParentId: $categoryOutParentId, operation: $operation)';
   }
 
   @override
@@ -3956,6 +4809,10 @@ class _$MasterStateImpl implements _MasterState {
                 other.categoryOutId == categoryOutId) &&
             (identical(other.recAccountId, recAccountId) ||
                 other.recAccountId == recAccountId) &&
+            (identical(other.categoryInParentId, categoryInParentId) ||
+                other.categoryInParentId == categoryInParentId) &&
+            (identical(other.categoryOutParentId, categoryOutParentId) ||
+                other.categoryOutParentId == categoryOutParentId) &&
             (identical(other.operation, operation) ||
                 other.operation == operation));
   }
@@ -3974,6 +4831,8 @@ class _$MasterStateImpl implements _MasterState {
       categoryInId,
       categoryOutId,
       recAccountId,
+      categoryInParentId,
+      categoryOutParentId,
       operation);
 
   /// Create a copy of MasterState
@@ -3998,6 +4857,8 @@ abstract class _MasterState implements MasterState {
       final int? categoryInId,
       final int? categoryOutId,
       final int? recAccountId,
+      final int? categoryInParentId,
+      final int? categoryOutParentId,
       final Operation? operation}) = _$MasterStateImpl;
 
   @override
@@ -4022,6 +4883,10 @@ abstract class _MasterState implements MasterState {
   int? get categoryOutId;
   @override
   int? get recAccountId;
+  @override
+  int? get categoryInParentId;
+  @override
+  int? get categoryOutParentId;
   @override
   Operation? get operation;
 

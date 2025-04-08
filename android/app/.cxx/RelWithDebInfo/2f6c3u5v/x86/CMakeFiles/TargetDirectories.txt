@@ -1,0 +1,2 @@
+C:/Users/Pavel/StudioProjects/cashflow_flutter/android/app/.cxx/RelWithDebInfo/2f6c3u5v/x86/CMakeFiles/edit_cache.dir
+C:/Users/Pavel/StudioProjects/cashflow_flutter/android/app/.cxx/RelWithDebInfo/2f6c3u5v/x86/CMakeFiles/rebuild_cache.dir

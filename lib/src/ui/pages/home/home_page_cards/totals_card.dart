@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:money_tracker/src/utils/sum.dart';
@@ -29,17 +28,11 @@ class TotalsCard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Chip(
-                    label: Text(
-                        'USD ${_rate(context.watch<CurrencyRateBloc>().state.usd)}'),
-                  ),
+                  child: Chip(label: Text('USD ${_rate(context.usd())}')),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Chip(
-                    label: Text(
-                        'EUR ${_rate(context.watch<CurrencyRateBloc>().state.eur)}'),
-                  ),
+                  child: Chip(label: Text('EUR ${_rate(context.eur())}')),
                 ),
               ],
             ),
@@ -49,9 +42,7 @@ class TotalsCard extends StatelessWidget {
                   .sums
                   .map((sum) => Padding(
                         padding: const EdgeInsets.only(right: 8.0),
-                        child: SumChip(
-                          sum: sum,
-                        ),
+                        child: SumChip(sum: sum),
                       ))
                   .toList(),
             ),
@@ -72,10 +63,6 @@ class SumChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      label: Text(
-        context.loc.sumFormat(sum),
-      ),
-    );
+    return Chip(label: Text(context.loc.sumFormat(sum)));
   }
 }

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_balances_use_case.dart';
+import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
 
-import '../../domain/models.dart';
+import '../../domain/view_models.dart';
 import '../../utils/sum.dart';
 
 part 'account_balance_bloc.freezed.dart';
@@ -13,7 +13,7 @@ part 'account_balance_bloc.freezed.dart';
 @freezed
 class AccountBalanceEvent with _$AccountBalanceEvent {
   const factory AccountBalanceEvent.changeBalance({
-    required List<BaseAccountBalanceListItem> accounts,
+    required List<AccountBalanceView> accounts,
   }) = _ChangeBalanceAccountBalanceEvent;
 }
 
@@ -22,17 +22,17 @@ class AccountBalanceState with _$AccountBalanceState {
   const AccountBalanceState._();
 
   const factory AccountBalanceState({
-    required List<BaseAccountBalanceListItem> balances,
+    required List<AccountBalanceView> balances,
   }) = _AccountBalanceState;
 
-  List<BaseAccountListItem> get allAccounts =>
+  List<AccountView> get allAccounts =>
       balances.map((balance) => balance.account).toList();
 
-  List<AccountBalanceListItem> get accountBalances =>
-      balances.whereType<AccountBalanceListItem>().toList();
+  List<AccountBalanceView> get accountBalances =>
+      balances.where((e) => !e.isDebt).toList();
 
-  List<DebtBalanceListItem> get debtBalances =>
-      balances.whereType<DebtBalanceListItem>().toList();
+  List<AccountBalanceView> get debtBalances =>
+      balances.where((e) => e.isDebt).toList();
 
   Balance get totals {
     var res = const Balance();
@@ -46,16 +46,16 @@ class AccountBalanceState with _$AccountBalanceState {
 
 class AccountBalanceBloc
     extends Bloc<AccountBalanceEvent, AccountBalanceState> {
-  final WatchBalancesUseCase _watchBalancesUseCase;
+  final AccountInteractor _accountInteractor;
   StreamSubscription? _sub;
 
-  AccountBalanceBloc(this._watchBalancesUseCase)
+  AccountBalanceBloc(this._accountInteractor)
       : super(const AccountBalanceState(balances: [])) {
     on<AccountBalanceEvent>((event, emitter) => event.map(
           changeBalance: (event) => _changeBalance(event, emitter),
         ));
 
-    _sub = _watchBalancesUseCase().listen((items) {
+    _sub = _accountInteractor.watchBalances().listen((items) {
       add(AccountBalanceEvent.changeBalance(accounts: items));
     });
   }
@@ -76,20 +76,20 @@ class AccountBalanceBloc
 }
 
 extension AccountBalanceBlocExt on BuildContext {
-  List<BaseAccountBalanceListItem> watchBalances() =>
+  List<AccountBalanceView> watchBalances() =>
       watch<AccountBalanceBloc>().state.balances;
 
-  List<AccountBalanceListItem> watchAccountBalances() =>
+  List<AccountBalanceView> watchAccountBalances() =>
       watch<AccountBalanceBloc>().state.accountBalances;
 
-  List<DebtBalanceListItem> watchDebtBalances() =>
+  List<AccountBalanceView> watchDebtBalances() =>
       watch<AccountBalanceBloc>().state.debtBalances;
 
   Balance watchTotals() => watch<AccountBalanceBloc>().state.totals;
 
-  List<BaseAccountListItem> watchListItems() =>
+  List<AccountView> watchListItems() =>
       watchBalances().map((a) => a.account).toList();
 
-  List<BaseAccountListItem> readListItems() =>
+  List<AccountView> readListItems() =>
       read<AccountBalanceBloc>().state.allAccounts;
 }

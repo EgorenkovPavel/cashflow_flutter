@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
+import '../../../../domain/view_models.dart';
+
 part 'operation_filter_bloc.freezed.dart';
 
 @freezed
@@ -18,10 +20,10 @@ class OperationFilterEvent with _$OperationFilterEvent {
     required DateTimeRange period,
   }) = _SetPeriodOperationFilterEvent;
 
-  const factory OperationFilterEvent.addAccount({required BaseAccountListItem account}) =
+  const factory OperationFilterEvent.addAccount({required AccountView account}) =
       _AddAccountOperationFilterEvent;
 
-  const factory OperationFilterEvent.removeAccount({required BaseAccountListItem account}) =
+  const factory OperationFilterEvent.removeAccount({required AccountView account}) =
       _RemoveAccountOperationFilterEvent;
 
   const factory OperationFilterEvent.addCategory({required CategoryView category}) =
@@ -56,11 +58,11 @@ class OperationFilterState with _$OperationFilterState {
 
   OperationFilterState resetPeriod() => copyWith(period: null);
 
-  OperationFilterState addAccount(BaseAccountListItem account) => copyWith(
+  OperationFilterState addAccount(AccountView account) => copyWith(
         accountIds: accountIds.toSet()..add(account.id),
       );
 
-  OperationFilterState removeAccount(BaseAccountListItem account) => copyWith(
+  OperationFilterState removeAccount(AccountView account) => copyWith(
         accountIds: accountIds.toSet()..remove(account.id),
       );
 

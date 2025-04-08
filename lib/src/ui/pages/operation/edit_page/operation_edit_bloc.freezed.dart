@@ -22,9 +22,9 @@ mixin _$OperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -38,9 +38,9 @@ mixin _$OperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -54,9 +54,9 @@ mixin _$OperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -227,9 +227,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -246,9 +246,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -265,9 +265,9 @@ class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -447,9 +447,9 @@ class _$ChangeDateOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -466,9 +466,9 @@ class _$ChangeDateOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -485,9 +485,9 @@ class _$ChangeDateOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -668,9 +668,9 @@ class _$ChangeTimeOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -687,9 +687,9 @@ class _$ChangeTimeOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -706,9 +706,9 @@ class _$ChangeTimeOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -839,7 +839,7 @@ class __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<$Res>
     Object? operationType = null,
   }) {
     return _then(_$ChangeOperationTypeOperationEditEventImpl(
-      operationType: null == operationType
+      null == operationType
           ? _value.operationType
           : operationType // ignore: cast_nullable_to_non_nullable
               as OperationType,
@@ -851,8 +851,7 @@ class __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeOperationTypeOperationEditEventImpl
     implements _ChangeOperationTypeOperationEditEvent {
-  const _$ChangeOperationTypeOperationEditEventImpl(
-      {required this.operationType});
+  const _$ChangeOperationTypeOperationEditEventImpl(this.operationType);
 
   @override
   final OperationType operationType;
@@ -891,9 +890,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -910,9 +909,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -929,9 +928,9 @@ class _$ChangeOperationTypeOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -1023,7 +1022,7 @@ class _$ChangeOperationTypeOperationEditEventImpl
 abstract class _ChangeOperationTypeOperationEditEvent
     implements OperationEditEvent {
   const factory _ChangeOperationTypeOperationEditEvent(
-          {required final OperationType operationType}) =
+          final OperationType operationType) =
       _$ChangeOperationTypeOperationEditEventImpl;
 
   OperationType get operationType;
@@ -1043,7 +1042,7 @@ abstract class _$$ChangeAccountOperationEditEventImplCopyWith<$Res> {
           $Res Function(_$ChangeAccountOperationEditEventImpl) then) =
       __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccountListItem account});
+  $Res call({AccountView account});
 }
 
 /// @nodoc
@@ -1064,10 +1063,10 @@ class __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>
     Object? account = null,
   }) {
     return _then(_$ChangeAccountOperationEditEventImpl(
-      account: null == account
+      null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as BaseAccountListItem,
+              as AccountView,
     ));
   }
 }
@@ -1076,10 +1075,10 @@ class __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeAccountOperationEditEventImpl
     implements _ChangeAccountOperationEditEvent {
-  const _$ChangeAccountOperationEditEventImpl({required this.account});
+  const _$ChangeAccountOperationEditEventImpl(this.account);
 
   @override
-  final BaseAccountListItem account;
+  final AccountView account;
 
   @override
   String toString() {
@@ -1114,9 +1113,9 @@ class _$ChangeAccountOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -1133,9 +1132,9 @@ class _$ChangeAccountOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -1152,9 +1151,9 @@ class _$ChangeAccountOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -1244,11 +1243,10 @@ class _$ChangeAccountOperationEditEventImpl
 }
 
 abstract class _ChangeAccountOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeAccountOperationEditEvent(
-          {required final BaseAccountListItem account}) =
+  const factory _ChangeAccountOperationEditEvent(final AccountView account) =
       _$ChangeAccountOperationEditEventImpl;
 
-  BaseAccountListItem get account;
+  AccountView get account;
 
   /// Create a copy of OperationEditEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1286,7 +1284,7 @@ class __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>
     Object? category = null,
   }) {
     return _then(_$ChangeCategoryOperationEditEventImpl(
-      category: null == category
+      null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryView,
@@ -1298,7 +1296,7 @@ class __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeCategoryOperationEditEventImpl
     implements _ChangeCategoryOperationEditEvent {
-  const _$ChangeCategoryOperationEditEventImpl({required this.category});
+  const _$ChangeCategoryOperationEditEventImpl(this.category);
 
   @override
   final CategoryView category;
@@ -1337,9 +1335,9 @@ class _$ChangeCategoryOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -1356,9 +1354,9 @@ class _$ChangeCategoryOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -1375,9 +1373,9 @@ class _$ChangeCategoryOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -1467,8 +1465,7 @@ class _$ChangeCategoryOperationEditEventImpl
 }
 
 abstract class _ChangeCategoryOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeCategoryOperationEditEvent(
-          {required final CategoryView category}) =
+  const factory _ChangeCategoryOperationEditEvent(final CategoryView category) =
       _$ChangeCategoryOperationEditEventImpl;
 
   CategoryView get category;
@@ -1488,7 +1485,7 @@ abstract class _$$ChangeRecAccountOperationEditEventImplCopyWith<$Res> {
           $Res Function(_$ChangeRecAccountOperationEditEventImpl) then) =
       __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccountListItem recAccount});
+  $Res call({AccountView recAccount});
 }
 
 /// @nodoc
@@ -1509,10 +1506,10 @@ class __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>
     Object? recAccount = null,
   }) {
     return _then(_$ChangeRecAccountOperationEditEventImpl(
-      recAccount: null == recAccount
+      null == recAccount
           ? _value.recAccount
           : recAccount // ignore: cast_nullable_to_non_nullable
-              as BaseAccountListItem,
+              as AccountView,
     ));
   }
 }
@@ -1521,10 +1518,10 @@ class __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeRecAccountOperationEditEventImpl
     implements _ChangeRecAccountOperationEditEvent {
-  const _$ChangeRecAccountOperationEditEventImpl({required this.recAccount});
+  const _$ChangeRecAccountOperationEditEventImpl(this.recAccount);
 
   @override
-  final BaseAccountListItem recAccount;
+  final AccountView recAccount;
 
   @override
   String toString() {
@@ -1560,9 +1557,9 @@ class _$ChangeRecAccountOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -1579,9 +1576,9 @@ class _$ChangeRecAccountOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -1598,9 +1595,9 @@ class _$ChangeRecAccountOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -1692,10 +1689,9 @@ class _$ChangeRecAccountOperationEditEventImpl
 abstract class _ChangeRecAccountOperationEditEvent
     implements OperationEditEvent {
   const factory _ChangeRecAccountOperationEditEvent(
-          {required final BaseAccountListItem recAccount}) =
-      _$ChangeRecAccountOperationEditEventImpl;
+      final AccountView recAccount) = _$ChangeRecAccountOperationEditEventImpl;
 
-  BaseAccountListItem get recAccount;
+  AccountView get recAccount;
 
   /// Create a copy of OperationEditEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1733,7 +1729,7 @@ class __$$ChangeSumOperationEditEventImplCopyWithImpl<$Res>
     Object? sum = null,
   }) {
     return _then(_$ChangeSumOperationEditEventImpl(
-      sum: null == sum
+      null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
@@ -1745,7 +1741,7 @@ class __$$ChangeSumOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeSumOperationEditEventImpl
     implements _ChangeSumOperationEditEvent {
-  const _$ChangeSumOperationEditEventImpl({required this.sum});
+  const _$ChangeSumOperationEditEventImpl(this.sum);
 
   @override
   final int sum;
@@ -1782,9 +1778,9 @@ class _$ChangeSumOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -1801,9 +1797,9 @@ class _$ChangeSumOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -1820,9 +1816,9 @@ class _$ChangeSumOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -1912,7 +1908,7 @@ class _$ChangeSumOperationEditEventImpl
 }
 
 abstract class _ChangeSumOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeSumOperationEditEvent({required final int sum}) =
+  const factory _ChangeSumOperationEditEvent(final int sum) =
       _$ChangeSumOperationEditEventImpl;
 
   int get sum;
@@ -1952,7 +1948,7 @@ class __$$ChangeRecSumOperationEditEventImplCopyWithImpl<$Res>
     Object? sum = null,
   }) {
     return _then(_$ChangeRecSumOperationEditEventImpl(
-      sum: null == sum
+      null == sum
           ? _value.sum
           : sum // ignore: cast_nullable_to_non_nullable
               as int,
@@ -1964,7 +1960,7 @@ class __$$ChangeRecSumOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeRecSumOperationEditEventImpl
     implements _ChangeRecSumOperationEditEvent {
-  const _$ChangeRecSumOperationEditEventImpl({required this.sum});
+  const _$ChangeRecSumOperationEditEventImpl(this.sum);
 
   @override
   final int sum;
@@ -2002,9 +1998,9 @@ class _$ChangeRecSumOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -2021,9 +2017,9 @@ class _$ChangeRecSumOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -2040,9 +2036,9 @@ class _$ChangeRecSumOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -2132,7 +2128,7 @@ class _$ChangeRecSumOperationEditEventImpl
 }
 
 abstract class _ChangeRecSumOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeRecSumOperationEditEvent({required final int sum}) =
+  const factory _ChangeRecSumOperationEditEvent(final int sum) =
       _$ChangeRecSumOperationEditEventImpl;
 
   int get sum;
@@ -2173,7 +2169,7 @@ class __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>
     Object? currency = null,
   }) {
     return _then(_$ChangeCurrencyOperationEditEventImpl(
-      currency: null == currency
+      null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
@@ -2185,7 +2181,7 @@ class __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeCurrencyOperationEditEventImpl
     implements _ChangeCurrencyOperationEditEvent {
-  const _$ChangeCurrencyOperationEditEventImpl({required this.currency});
+  const _$ChangeCurrencyOperationEditEventImpl(this.currency);
 
   @override
   final Currency currency;
@@ -2224,9 +2220,9 @@ class _$ChangeCurrencyOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -2243,9 +2239,9 @@ class _$ChangeCurrencyOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -2262,9 +2258,9 @@ class _$ChangeCurrencyOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -2354,8 +2350,7 @@ class _$ChangeCurrencyOperationEditEventImpl
 }
 
 abstract class _ChangeCurrencyOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeCurrencyOperationEditEvent(
-          {required final Currency currency}) =
+  const factory _ChangeCurrencyOperationEditEvent(final Currency currency) =
       _$ChangeCurrencyOperationEditEventImpl;
 
   Currency get currency;
@@ -2396,7 +2391,7 @@ class __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>
     Object? currency = null,
   }) {
     return _then(_$ChangeRecCurrencyOperationEditEventImpl(
-      currency: null == currency
+      null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
@@ -2408,7 +2403,7 @@ class __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>
 
 class _$ChangeRecCurrencyOperationEditEventImpl
     implements _ChangeRecCurrencyOperationEditEvent {
-  const _$ChangeRecCurrencyOperationEditEventImpl({required this.currency});
+  const _$ChangeRecCurrencyOperationEditEventImpl(this.currency);
 
   @override
   final Currency currency;
@@ -2447,9 +2442,9 @@ class _$ChangeRecCurrencyOperationEditEventImpl
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -2466,9 +2461,9 @@ class _$ChangeRecCurrencyOperationEditEventImpl
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -2485,9 +2480,9 @@ class _$ChangeRecCurrencyOperationEditEventImpl
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,
@@ -2578,8 +2573,7 @@ class _$ChangeRecCurrencyOperationEditEventImpl
 
 abstract class _ChangeRecCurrencyOperationEditEvent
     implements OperationEditEvent {
-  const factory _ChangeRecCurrencyOperationEditEvent(
-          {required final Currency currency}) =
+  const factory _ChangeRecCurrencyOperationEditEvent(final Currency currency) =
       _$ChangeRecCurrencyOperationEditEventImpl;
 
   Currency get currency;
@@ -2640,9 +2634,9 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     required TResult Function(DateTime date) changeDate,
     required TResult Function(TimeOfDay time) changeTime,
     required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(BaseAccountListItem account) changeAccount,
+    required TResult Function(AccountView account) changeAccount,
     required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(BaseAccountListItem recAccount) changeRecAccount,
+    required TResult Function(AccountView recAccount) changeRecAccount,
     required TResult Function(int sum) changeSum,
     required TResult Function(int sum) changeRecSum,
     required TResult Function(Currency currency) changeCurrency,
@@ -2659,9 +2653,9 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     TResult? Function(DateTime date)? changeDate,
     TResult? Function(TimeOfDay time)? changeTime,
     TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(BaseAccountListItem account)? changeAccount,
+    TResult? Function(AccountView account)? changeAccount,
     TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult? Function(AccountView recAccount)? changeRecAccount,
     TResult? Function(int sum)? changeSum,
     TResult? Function(int sum)? changeRecSum,
     TResult? Function(Currency currency)? changeCurrency,
@@ -2678,9 +2672,9 @@ class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
     TResult Function(DateTime date)? changeDate,
     TResult Function(TimeOfDay time)? changeTime,
     TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(BaseAccountListItem account)? changeAccount,
+    TResult Function(AccountView account)? changeAccount,
     TResult Function(CategoryView category)? changeCategory,
-    TResult Function(BaseAccountListItem recAccount)? changeRecAccount,
+    TResult Function(AccountView recAccount)? changeRecAccount,
     TResult Function(int sum)? changeSum,
     TResult Function(int sum)? changeRecSum,
     TResult Function(Currency currency)? changeCurrency,

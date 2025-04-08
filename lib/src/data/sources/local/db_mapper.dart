@@ -1,6 +1,8 @@
 import 'package:money_tracker/src/data/sources/local/data/database.dart';
 import 'package:money_tracker/src/data/sources/local/entities/cashflow_entity.dart';
+
 import '../../../domain/models.dart';
+import '../../../domain/view_models.dart';
 import '../../../utils/sum.dart';
 import 'entities/account_balance_entity.dart';
 import 'entities/operation_entity.dart';
@@ -101,10 +103,10 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
   List<Operation> entityListToModel(List<OperationDbEntity> list) =>
       list.map((e) => entityToModel(e)).toList();
 
-  OperationListItem toListItem(OperationDbEntity entity, User? user) {
+  OperationView toListItem(OperationDbEntity entity, User? user) {
     final dbo = entity.operationData;
     return dbo.operationType.map(
-      INPUT: () => OperationListItem(
+      INPUT: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -116,7 +118,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      OUTPUT: () => OperationListItem(
+      OUTPUT: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -128,7 +130,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      TRANSFER: () => OperationListItem(
+      TRANSFER: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -143,7 +145,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
     );
   }
 
-  List<OperationListItem> entityListToItem(
+  List<OperationView> entityListToItem(
           List<OperationDbEntity> list, List<User> users) =>
       list
           .map((e) => toListItem(
@@ -302,7 +304,7 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
     }
   }
 
-  List<BaseAccountBalanceListItem> combineBalances(List<AccountDB> accounts,
+  List<AccountBalanceView> combineBalances(List<AccountDB> accounts,
       List<UserDB> users, List<AccountBalanceEntity> balances) {
     try {
       return accounts.map((account) {
@@ -313,23 +315,16 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
             .where((balance) => balance.accountId == account.id)
             .map((balance) => Sum(balance.sum, balance.currency))
             .toList());
-        if (account.isDebt) {
-          return DebtBalanceListItem(
-              accountId: account.id,
-              userId: account.user,
-              accountTitle: account.title,
-              userName: user?.name ?? '',
-              userPhoto: user?.photo ?? '',
-              balance: balance);
-        } else {
-          return AccountBalanceListItem(
-              accountId: account.id,
-              userId: account.user,
-              accountTitle: account.title,
-              userName: user?.name ?? '',
-              userPhoto: user?.photo ?? '',
-              balance: balance);
-        }
+
+        return AccountBalanceView(
+          accountId: account.id,
+          userId: account.user,
+          accountTitle: account.title,
+          userName: user?.name ?? '',
+          userPhoto: user?.photo ?? '',
+          balance: balance,
+          isDebt: account.isDebt,
+        );
       }).toList();
     } catch (e, stacktrace) {
       print(stacktrace);

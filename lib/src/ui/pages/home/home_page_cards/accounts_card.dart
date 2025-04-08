@@ -4,12 +4,12 @@ import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/models.dart';
+import '../../../../domain/view_models.dart';
 import 'card_title.dart';
 
 class AccountsCard extends StatefulWidget {
   final String title;
-  final List<BaseAccountBalanceListItem> accounts;
+  final List<AccountBalanceView> accounts;
   final void Function() onAdd;
 
   const AccountsCard({super.key, required this.title, required this.accounts, required this.onAdd});
@@ -21,7 +21,7 @@ class AccountsCard extends StatefulWidget {
 class _AccountsCardState extends State<AccountsCard> {
   bool _showAll = true;
 
-  List<BaseAccountBalanceListItem> _visibleAccounts() {
+  List<AccountBalanceView> _visibleAccounts() {
     if (widget.accounts.where((account) => !account.balance.isEmpty).isEmpty) {
       return widget.accounts;
     } else {
@@ -76,9 +76,9 @@ class _AccountsCardState extends State<AccountsCard> {
 }
 
 class _AccountListTile extends StatelessWidget {
-  final BaseAccountBalanceListItem _account;
+  final AccountBalanceView _account;
 
-  const _AccountListTile(BaseAccountBalanceListItem account) : _account = account;
+  const _AccountListTile(AccountBalanceView account) : _account = account;
 
   @override
   Widget build(BuildContext context) {

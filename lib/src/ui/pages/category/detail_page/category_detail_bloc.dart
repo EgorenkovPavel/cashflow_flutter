@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:money_tracker/src/domain/interactors/category_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_operations_by_category_use_case.dart';
 
-import '../../../../domain/use_cases/watch_category_by_id_use_case.dart';
+import '../../../../domain/view_models.dart';
 
 part 'category_detail_bloc.freezed.dart';
 
@@ -14,13 +15,11 @@ class CategoryDetailEvent with _$CategoryDetailEvent {
   const factory CategoryDetailEvent.fetch({required int categoryId}) =
       _FetchCategoryDetailEvent;
 
-  const factory CategoryDetailEvent.changeCategory({
-    required Category category,
-  }) = _ChangeCategoryCategoryDetailEvent;
+  const factory CategoryDetailEvent.changeCategory(Category category) =
+      _ChangeCategoryCategoryDetailEvent;
 
-  const factory CategoryDetailEvent.changeOperations({
-    required List<OperationListItem> operations,
-  }) = _ChangeOperationsCategoryDetailEvent;
+  const factory CategoryDetailEvent.changeOperations(
+      List<OperationView> operations) = _ChangeOperationsCategoryDetailEvent;
 }
 
 @freezed
@@ -29,21 +28,21 @@ class CategoryDetailState with _$CategoryDetailState {
     required BudgetType budgetType,
     required String title,
     required int budget,
-    required List<OperationListItem> operations,
+    required List<OperationView> operations,
   }) = _CategoryDetailState;
 }
 
 class CategoryDetailBloc
     extends Bloc<CategoryDetailEvent, CategoryDetailState> {
-  final WatchOperationsByCategoryUseCase _watchOperationsByCategoryUseCase;
-  final WatchCategoryByIdUseCase _watchCategoryByIdUseCase;
+  final CategoryInteractor _categoryInteractor;
+  final OperationInteractor _operationInteractor;
 
   StreamSubscription<Category>? _subCategory;
   StreamSubscription? _subOperations;
 
   CategoryDetailBloc(
-    this._watchOperationsByCategoryUseCase,
-    this._watchCategoryByIdUseCase,
+    this._categoryInteractor,
+    this._operationInteractor,
   ) : super(const CategoryDetailState(
           budgetType: BudgetType.MONTH,
           title: '',
@@ -61,15 +60,15 @@ class CategoryDetailBloc
     _FetchCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    _subCategory = _watchCategoryByIdUseCase(categoryId: event.categoryId)
-        .listen((category) {
-      add(CategoryDetailEvent.changeCategory(category: category));
+    _subCategory =
+        _categoryInteractor.watchById(event.categoryId).listen((category) {
+      add(CategoryDetailEvent.changeCategory(category));
     });
 
-    _subOperations =
-        _watchOperationsByCategoryUseCase(categoryId: event.categoryId)
-            .listen((items) {
-      add(CategoryDetailEvent.changeOperations(operations: items));
+    _subOperations = _operationInteractor
+        .watchByCategoryId(event.categoryId)
+        .listen((items) {
+      add(CategoryDetailEvent.changeOperations(items));
     });
   }
 
@@ -78,7 +77,7 @@ class CategoryDetailBloc
     Emitter<CategoryDetailState> emit,
   ) {
     final category = event.category;
-    switch(category){
+    switch (category) {
       case InputCategoryItem():
         emit(state.copyWith(
           title: category.title,

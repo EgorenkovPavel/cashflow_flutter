@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../domain/models.dart';
+import '../../../domain/view_models.dart';
 
 class ListTileOperation extends StatelessWidget {
-  final OperationListItem _operation;
+  final OperationView _operation;
   final GestureTapCallback onTap;
 
   const ListTileOperation(this._operation, {super.key, required this.onTap});
 
   void _onDuplicate(BuildContext context) {
-    sl<DataRepository>().duplicateOperation(_operation.id);
+    sl<OperationInteractor>().duplicate(_operation.id);
     Navigator.of(context).pop();
   }
 
   void _onDelete(BuildContext context) {
-    sl<DataRepository>().deleteOperationById(_operation.id); //TODO move to bloc
+    sl<OperationInteractor>().deleteById(_operation.id);
     Navigator.of(context).pop();
   }
 
   void _onRecover(BuildContext context) {
-    sl<DataRepository>().recoverOperation(_operation.id);
+    sl<OperationInteractor>().recover(_operation.id);
     Navigator.of(context).pop();
   }
 
@@ -58,19 +58,16 @@ class ListTileOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: UserAvatar(photoUrl: _operation.userPhotoUrl, name: _operation.userName,),
+      leading: UserAvatar(
+        photoUrl: _operation.userPhotoUrl,
+        name: _operation.userName,
+      ),
       subtitle: Row(
         children: [
-          Text(
-            _operation.account,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
+          Text(_operation.account),
+          const SizedBox(width: 8),
           if (_operation.synced) const Icon(Icons.check),
-          const SizedBox(
-            width: 8,
-          ),
+          const SizedBox(width: 8),
           if (_operation.deleted) const Icon(Icons.cancel),
         ],
       ),

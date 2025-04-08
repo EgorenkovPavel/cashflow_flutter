@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_account_title_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_operations_by_account_use_case.dart';
+import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
+
+import '../../../../domain/view_models.dart';
 
 part 'account_detail_bloc.freezed.dart';
 
@@ -13,32 +14,32 @@ class AccountDetailEvent with _$AccountDetailEvent {
   const factory AccountDetailEvent.fetch({required int accountId}) =
       _FetchAccountDetailEvent;
 
-  const factory AccountDetailEvent.titleChanged({required String title}) =
+  const factory AccountDetailEvent.titleChanged(String title) =
       _TitleChangedAccountDetailEvent;
 
-  const factory AccountDetailEvent.operationsChanged({
-    required List<OperationListItem> operations,
-  }) = _OperationsChangedAccountDetailEvent;
+  const factory AccountDetailEvent.operationsChanged(
+          List<OperationView> operations) =
+      _OperationsChangedAccountDetailEvent;
 }
 
 @freezed
 class AccountDetailState with _$AccountDetailState {
   const factory AccountDetailState({
     required String title,
-    required List<OperationListItem> operations,
+    required List<OperationView> operations,
   }) = _AccountDetailState;
 }
 
 class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
-  final WatchAccountTitleUseCase _watchAccountTitleUseCase;
-  final WatchOperationsByAccountUseCase _watchOperationsByAccountUseCase;
+  final AccountInteractor _accountInteractor;
+  final OperationInteractor _operationInteractor;
 
   StreamSubscription? _subTitle;
   StreamSubscription? _subOperations;
 
   AccountDetailBloc(
-    this._watchAccountTitleUseCase,
-    this._watchOperationsByAccountUseCase,
+    this._accountInteractor,
+    this._operationInteractor,
   ) : super(const AccountDetailState(title: '', operations: [])) {
     on<AccountDetailEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
@@ -51,15 +52,13 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
     _FetchAccountDetailEvent event,
     Emitter<AccountDetailState> emit,
   ) async {
-    _subTitle =
-        _watchAccountTitleUseCase(accountId: event.accountId).listen((title) {
-      add(AccountDetailEvent.titleChanged(title: title));
+    _subTitle = _accountInteractor.watchById(event.accountId).listen((account) {
+      add(AccountDetailEvent.titleChanged(account.title));
     });
 
     _subOperations =
-        _watchOperationsByAccountUseCase(accountId: event.accountId)
-            .listen((event) {
-      add(AccountDetailEvent.operationsChanged(operations: event));
+        _operationInteractor.watchByAccountId(event.accountId).listen((list) {
+      add(AccountDetailEvent.operationsChanged(list));
     });
   }
 

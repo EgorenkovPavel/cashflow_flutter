@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_bloc.dart';
+import 'package:money_tracker/src/ui/pages/operation/input_page/widgets/category_group.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../utils/sum.dart';
+import '../../../../domain/view_models.dart';
 import '../../../blocs/category_cashflow_bloc.dart';
+import '../../../widgets/dropdown_list.dart';
 import '../../../widgets/keyboard.dart';
 import 'widgets/account_item.dart';
 import 'widgets/carousel_list.dart';
@@ -93,7 +93,7 @@ class _OperationInputPageState extends State<OperationInputPage>
               content: Text(context.loc.mesOperationCreated),
               action: SnackBarAction(
                 label: context.loc.cancel,
-                onPressed: () => context.cancelOperation(),
+                onPressed: () => context.onCancelOperation(),
               ),
             ),
           );
@@ -134,29 +134,36 @@ class _OperationInputPageState extends State<OperationInputPage>
               ),
               body: Column(
                 children: <Widget>[
+                  _Title(
+                    context.operationType() != OperationType.TRANSFER
+                        ? context.loc.account
+                        : context.loc.source,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: DropdownList<AccountBalanceView>(
+                      value: context
+                          .watchBalances()
+                          .where((e) => e.accountId == context.accountId())
+                          .firstOrNull,
+                      hint: context.loc.hintAccount,
+                      items: context.watchBalances(),
+                      onChange: (a) => context.onChangeAccount(a!.accountId),
+                      getListItem: (data) => AccountItem(account: data),
+                    ),
+                  ),
+                  _Title(context.loc.titleType),
                   Builder(builder: (context) {
                     return TypeRadioButton<OperationType>(
                       type: context.operationType(),
-                      items: const [
-                        OperationType.INPUT,
-                        OperationType.OUTPUT,
-                        OperationType.TRANSFER,
-                      ],
-                      onChange: context.changeOperationType,
+                      items: OperationType.values,
+                      onChange: context.onChangeOperationType,
                     );
                   }),
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        const AccountList(),
-                        context.operationType().map(
-                              INPUT: () => const CategoryInList(),
-                              OUTPUT: () => const CategoryOutList(),
-                              TRANSFER: () => const AccountRecList(),
-                            ),
-                      ],
-                    ),
-                  ),
+                  context.operationType().map(
+                      INPUT: () => const _CategoryList(CategoryType.INPUT),
+                      OUTPUT: () => const _CategoryList(CategoryType.OUTPUT),
+                      TRANSFER: () => const AccountRecList()),
                   Builder(
                     builder: (BuildContext context) {
                       return ClipRRect(
@@ -183,7 +190,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               BarButton(
-                                onPressed: context.moreTap,
+                                onPressed: context.onMoreTap,
                                 title: context.loc.more,
                               ),
                               Expanded(
@@ -192,8 +199,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                      ),
+                                          vertical: 8.0),
                                       child: Row(
                                         children: [
                                           Flexible(
@@ -201,7 +207,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                             child: SumField(
                                               highlight: context.highlightSum(),
                                               sum: context.sum(),
-                                              onTap: context.sumTap,
+                                              onTap: context.onSumTap,
                                             ),
                                           ),
                                           if (context.showRecSum())
@@ -213,7 +219,7 @@ class _OperationInputPageState extends State<OperationInputPage>
                                                 highlight:
                                                     context.highlightRecSum(),
                                                 sum: context.recSum(),
-                                                onTap: context.recSumTap,
+                                                onTap: context.onRecSumTap,
                                               ),
                                             ),
                                         ],
@@ -224,17 +230,17 @@ class _OperationInputPageState extends State<OperationInputPage>
                                       sizeFactor: _animation,
                                       child: Keyboard(
                                         onChangeCurrency:
-                                            context.changeHighlightCurrency,
+                                            context.onChangeHighlightCurrency,
                                         currency: context.highlightCurrency(),
-                                        onDigitPressed: context.digitTap,
-                                        onBackPressed: context.backKeyTap,
+                                        onDigitPressed: context.onDigitKeyTap,
+                                        onBackPressed: context.onBackKeyTap,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               BarButton(
-                                onPressed: context.nextTap,
+                                onPressed: context.onNextTap,
                                 title: context.loc.create,
                               ),
                             ],
@@ -253,151 +259,29 @@ class _OperationInputPageState extends State<OperationInputPage>
   }
 }
 
-extension MasterExt on BuildContext {
-  MasterBloc _bloc() => read<MasterBloc>();
+class _Title extends StatelessWidget {
+  final String title;
 
-  void nextTap() => _bloc().add(const MasterEvent.nextTap());
+  const _Title(
+    this.title, {
+    super.key,
+  });
 
-  void moreTap() => _bloc().add(const MasterEvent.moreTap());
-
-  void backKeyTap() => _bloc().add(const MasterEvent.backKeyTap());
-
-  void digitTap(int digit) => _bloc().add(MasterEvent.digitTap(digit));
-
-  void sumTap() => _bloc().add(const MasterEvent.sumTap());
-
-  void recSumTap() => _bloc().add(const MasterEvent.recSumTap());
-
-  void cancelOperation() => _bloc().add(const MasterEvent.cancelOperation());
-
-  void changeOperationType(OperationType type) =>
-      _bloc().add(MasterEvent.changeOperationType(type));
-
-  void changeAccount(int accountId) =>
-      _bloc().add(MasterEvent.changeAccount(accountId: accountId));
-
-  bool showRecSum() => select<MasterBloc, bool>(
-      (bloc) => bloc.state.operationType == OperationType.TRANSFER);
-
-  Future<void> addNewAccount() async {
-    addNewItem();
-
-    final account = await _inputBaseAccount();
-    if (account != null) {
-      changeAccount(account.id);
-    }
-  }
-
-  Future<void> addNewInCategoryItem() async {
-    addNewItem();
-    var category =
-        await openCategoryInputDialog(type: CategoryType.INPUT, isGroup: false);
-    if (category != null) {
-      changeInCategory(category.id);
-    }
-  }
-
-  Future<void> addNewInCategoryGroup() async {
-    addNewItem();
-    await openCategoryInputDialog(type: CategoryType.INPUT, isGroup: true);
-  }
-
-  Future<void> addNewOutCategoryItem() async {
-    addNewItem();
-    var category = await openCategoryInputDialog(
-      type: CategoryType.OUTPUT,
-      isGroup: false,
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
+      ),
     );
-    if (category != null) {
-      changeOutCategory(category.id);
-    }
   }
-
-  Future<void> addNewOutCategoryGroup() async {
-    addNewItem();
-    await openCategoryInputDialog(type: CategoryType.OUTPUT, isGroup: true);
-  }
-
-  Future<void> addNewRecAccount() async {
-    addNewItem();
-    final account = await _inputBaseAccount();
-    if (account != null) {
-      changeRecAccount(account.id);
-    }
-  }
-
-  Future<BaseAccount?> _inputBaseAccount() async {
-    return await showDialog<BaseAccount>(
-        context: this,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: const Text('Select assignment'),
-            children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context);
-                  openAccountInputDialog();
-                },
-                child: const Text('Account'),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context);
-                  openDebtInputDialog();
-                },
-                child: const Text('Debt'),
-              ),
-            ],
-          );
-        });
-  }
-
-  void addNewItem() => _bloc().add(const MasterEvent.addNewItem());
-
-  void changeRecAccount(int accountId) =>
-      _bloc().add(MasterEvent.changeRecAccount(accountId: accountId));
-
-  void changeInCategory(int categoryId) =>
-      _bloc().add(MasterEvent.changeInCategory(categoryId: categoryId));
-
-  void changeOutCategory(int categoryId) =>
-      _bloc().add(MasterEvent.changeOutCategory(categoryId: categoryId));
-
-  Sum recSum() => select<MasterBloc, Sum>((bloc) => bloc.state.recSum);
-
-  Currency currencySent() =>
-      select<MasterBloc, Currency>((bloc) => bloc.state.sum.currency);
-
-  Currency currencyReceived() =>
-      select<MasterBloc, Currency>((bloc) => bloc.state.recSum.currency);
-
-  Currency highlightCurrency() =>
-      select<MasterBloc, Currency>((bloc) => bloc.state.highlightSum
-          ? bloc.state.sum.currency
-          : bloc.state.recSum.currency);
-
-  void changeHighlightCurrency(Currency currency) =>
-      _bloc().add(MasterEvent.changeHighlightCurrency(currency: currency));
-
-  bool highlightRecSum() =>
-      select<MasterBloc, bool>((bloc) => bloc.state.highlightRecSum);
-
-  Sum sum() => select<MasterBloc, Sum>((bloc) => bloc.state.sum);
-
-  bool highlightSum() =>
-      select<MasterBloc, bool>((bloc) => bloc.state.highlightSum);
-
-  OperationType operationType() =>
-      select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
-
-  int? accountId() => _bloc().state.accountId;
-
-  int? recAccountId() => _bloc().state.recAccountId;
-
-  int? categoryInId() => _bloc().state.categoryInId;
-
-  int? categoryOutId() => _bloc().state.categoryOutId;
-
 }
 
 class BarButton extends StatelessWidget {
@@ -422,72 +306,107 @@ class BarButton extends StatelessWidget {
   }
 }
 
-class AccountList extends StatelessWidget {
-  const AccountList({super.key});
+class _CategoryList extends StatelessWidget {
+  final CategoryType type;
+
+  const _CategoryList(this.type, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final operationType = context.operationType();
-    final accounts = operationType == OperationType.TRANSFER
-        ? context.watchBalances()
-        : context.watchAccountBalances();
-    final title = operationType == OperationType.TRANSFER
-        ? context.loc.source
-        : context.loc.accounts;
-
     return ItemsList(
-      title: title,
-      onAddItem: context.addNewAccount,
-      onAddGroup: null,
-      list: AccountPageView(
-        accounts: accounts,
-        initialValue: accounts
-            .where((e) => e.accountId == context.accountId())
-            .firstOrNull,
-        onItemChanged: (item) => context.changeAccount(item.accountId),
+      title: context.loc.categories,
+      onAddItem: () => context.addNewCategoryItem(type),
+      onAddGroup: () => context.addNewCategoryGroup(type),
+      list: Row(
+        children: [
+          Builder(
+            builder: (context) => Flexible(
+              child: CategoryGroupList(
+                type: type,
+                initialParent: context.readCategoryGroupId(type),
+                onChange: (e) => context.onChangeCategoryGroup(e?.id, type),
+              ),
+            ),
+          ),
+          SizedBox(width: 16.0),
+          Builder(
+            builder: (context) => Flexible(
+              child: CategoryItemList(
+                type: type,
+                parent: context.watchCategoryGroupId(type),
+                initialItem: context.categoryId(type),
+                onChange: (e) => context.onChangeCategory(e?.id, type),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class CategoryInList extends StatelessWidget {
-  const CategoryInList({super.key});
+class CategoryItemList extends StatelessWidget {
+  final CategoryType type;
+  final int? initialItem;
+  final int? parent;
+  final void Function(CategoryView?) onChange;
+
+  const CategoryItemList(
+      {super.key,
+      required this.type,
+      required this.initialItem,
+      required this.onChange,
+      required this.parent});
 
   @override
   Widget build(BuildContext context) {
-    final categories = context.watchInCategories();
+    final items = context.watchCategoryItems(type, parent);
 
-    return ItemsList(
-      title: context.loc.categories,
-      onAddItem: context.addNewInCategoryItem,
-      onAddGroup: context.addNewInCategoryGroup,
-      list: CategoryPageView(
-        categories: categories,
-        initialValue:
-            categories.where((e) => e.id == context.categoryInId()).firstOrNull,
-        onItemChanged: (category) => context.changeInCategory(category.id),
-      ),
+    if (items.isEmpty) {
+      onChange(null);
+    }
+
+    return CarouselList<CategoryView>(
+      items: items,
+      emptyListMessage: context.loc.noCategories,
+      initialValue: initialItem == null
+          ? null
+          : items.where((e) => e.id == initialItem).firstOrNull,
+      onItemChanged: onChange,
+      itemBuilder: (context, category) => CategoryListItem(category: category),
     );
   }
 }
 
-class CategoryOutList extends StatelessWidget {
-  const CategoryOutList({super.key});
+class CategoryGroupList extends StatelessWidget {
+  final CategoryType type;
+  final int? initialParent;
+  final void Function(CategoryView?) onChange;
+
+  const CategoryGroupList({
+    super.key,
+    required this.type,
+    this.initialParent,
+    required this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final categories = context.watchOutCategories();
+    final items = context.watchCategoryGroups(type)
+      ..add(CategoryView.groupNoParent());
 
-    return ItemsList(
-      title: context.loc.categories,
-      onAddItem: context.addNewOutCategoryItem,
-      onAddGroup: context.addNewOutCategoryGroup,
-      list: CategoryPageView(
-        categories: categories,
-        initialValue: categories
-            .where((e) => e.id == context.categoryOutId())
-            .firstOrNull,
-        onItemChanged: (category) => context.changeOutCategory(category.id),
+    return CarouselList<CategoryView>(
+      items: items,
+      emptyListMessage: context.loc.noCategories,
+      initialValue: initialParent == null
+          ? items.where((e) => e == CategoryView.groupNoParent()).firstOrNull
+          : items.where((e) => e.id == initialParent).firstOrNull,
+      onItemChanged: (e) {
+        onChange(e == CategoryView.groupNoParent() ? null : e);
+      },
+      itemBuilder: (context, category) => CategoryListGroup(
+        category: category,
+        type: type,
       ),
     );
   }
@@ -498,7 +417,10 @@ class AccountRecList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accounts = context.watchBalances();
+    final accounts = context
+        .watchBalances()
+        .where((e) => e.accountId != context.accountId())
+        .toList();
 
     return ItemsList(
       title: context.loc.receiver,
@@ -509,7 +431,7 @@ class AccountRecList extends StatelessWidget {
         initialValue: accounts
             .where((e) => e.accountId == context.recAccountId())
             .firstOrNull,
-        onItemChanged: (item) => context.changeRecAccount(item.accountId),
+        onItemChanged: (item) => context.onChangeRecAccount(item.accountId),
       ),
     );
   }
@@ -533,17 +455,17 @@ class ItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
+                Spacer(),
                 if (onAddGroup != null)
                   IconButton(
                     icon: const Icon(Icons.create_new_folder_outlined),
@@ -567,9 +489,9 @@ class ItemsList extends StatelessWidget {
 }
 
 class AccountPageView extends StatelessWidget {
-  final List<BaseAccountBalanceListItem> accounts;
-  final void Function(BaseAccountBalanceListItem) onItemChanged;
-  final BaseAccountBalanceListItem? initialValue;
+  final List<AccountBalanceView> accounts;
+  final void Function(AccountBalanceView) onItemChanged;
+  final AccountBalanceView? initialValue;
 
   const AccountPageView({
     super.key,
@@ -580,36 +502,12 @@ class AccountPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselList<BaseAccountBalanceListItem>(
+    return CarouselList<AccountBalanceView>(
       items: accounts,
       emptyListMessage: context.loc.noAccounts,
       initialValue: initialValue,
       onItemChanged: onItemChanged,
       itemBuilder: (context, account) => AccountItem(account: account),
-    );
-  }
-}
-
-class CategoryPageView extends StatelessWidget {
-  final List<CategoryView> categories;
-  final void Function(CategoryView) onItemChanged;
-  final CategoryView? initialValue;
-
-  const CategoryPageView({
-    super.key,
-    required this.categories,
-    required this.onItemChanged,
-    required this.initialValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselList<CategoryView>(
-      items: categories,
-      emptyListMessage: context.loc.noCategories,
-      initialValue: initialValue,
-      onItemChanged: onItemChanged,
-      itemBuilder: (context, category) => CategoryListItem(category: category),
     );
   }
 }

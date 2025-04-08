@@ -20,22 +20,21 @@ mixin _$AccountDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) titleChanged,
-    required TResult Function(List<OperationListItem> operations)
-        operationsChanged,
+    required TResult Function(List<OperationView> operations) operationsChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? titleChanged,
-    TResult? Function(List<OperationListItem> operations)? operationsChanged,
+    TResult? Function(List<OperationView> operations)? operationsChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? titleChanged,
-    TResult Function(List<OperationListItem> operations)? operationsChanged,
+    TResult Function(List<OperationView> operations)? operationsChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -163,8 +162,7 @@ class _$FetchAccountDetailEventImpl implements _FetchAccountDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) titleChanged,
-    required TResult Function(List<OperationListItem> operations)
-        operationsChanged,
+    required TResult Function(List<OperationView> operations) operationsChanged,
   }) {
     return fetch(accountId);
   }
@@ -174,7 +172,7 @@ class _$FetchAccountDetailEventImpl implements _FetchAccountDetailEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? titleChanged,
-    TResult? Function(List<OperationListItem> operations)? operationsChanged,
+    TResult? Function(List<OperationView> operations)? operationsChanged,
   }) {
     return fetch?.call(accountId);
   }
@@ -184,7 +182,7 @@ class _$FetchAccountDetailEventImpl implements _FetchAccountDetailEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? titleChanged,
-    TResult Function(List<OperationListItem> operations)? operationsChanged,
+    TResult Function(List<OperationView> operations)? operationsChanged,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -273,7 +271,7 @@ class __$$TitleChangedAccountDetailEventImplCopyWithImpl<$Res>
     Object? title = null,
   }) {
     return _then(_$TitleChangedAccountDetailEventImpl(
-      title: null == title
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
@@ -285,7 +283,7 @@ class __$$TitleChangedAccountDetailEventImplCopyWithImpl<$Res>
 
 class _$TitleChangedAccountDetailEventImpl
     implements _TitleChangedAccountDetailEvent {
-  const _$TitleChangedAccountDetailEventImpl({required this.title});
+  const _$TitleChangedAccountDetailEventImpl(this.title);
 
   @override
   final String title;
@@ -321,8 +319,7 @@ class _$TitleChangedAccountDetailEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) titleChanged,
-    required TResult Function(List<OperationListItem> operations)
-        operationsChanged,
+    required TResult Function(List<OperationView> operations) operationsChanged,
   }) {
     return titleChanged(title);
   }
@@ -332,7 +329,7 @@ class _$TitleChangedAccountDetailEventImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? titleChanged,
-    TResult? Function(List<OperationListItem> operations)? operationsChanged,
+    TResult? Function(List<OperationView> operations)? operationsChanged,
   }) {
     return titleChanged?.call(title);
   }
@@ -342,7 +339,7 @@ class _$TitleChangedAccountDetailEventImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? titleChanged,
-    TResult Function(List<OperationListItem> operations)? operationsChanged,
+    TResult Function(List<OperationView> operations)? operationsChanged,
     required TResult orElse(),
   }) {
     if (titleChanged != null) {
@@ -391,7 +388,7 @@ class _$TitleChangedAccountDetailEventImpl
 }
 
 abstract class _TitleChangedAccountDetailEvent implements AccountDetailEvent {
-  const factory _TitleChangedAccountDetailEvent({required final String title}) =
+  const factory _TitleChangedAccountDetailEvent(final String title) =
       _$TitleChangedAccountDetailEventImpl;
 
   String get title;
@@ -411,7 +408,7 @@ abstract class _$$OperationsChangedAccountDetailEventImplCopyWith<$Res> {
           $Res Function(_$OperationsChangedAccountDetailEventImpl) then) =
       __$$OperationsChangedAccountDetailEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<OperationListItem> operations});
+  $Res call({List<OperationView> operations});
 }
 
 /// @nodoc
@@ -432,10 +429,10 @@ class __$$OperationsChangedAccountDetailEventImplCopyWithImpl<$Res>
     Object? operations = null,
   }) {
     return _then(_$OperationsChangedAccountDetailEventImpl(
-      operations: null == operations
+      null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ));
   }
 }
@@ -445,12 +442,12 @@ class __$$OperationsChangedAccountDetailEventImplCopyWithImpl<$Res>
 class _$OperationsChangedAccountDetailEventImpl
     implements _OperationsChangedAccountDetailEvent {
   const _$OperationsChangedAccountDetailEventImpl(
-      {required final List<OperationListItem> operations})
+      final List<OperationView> operations)
       : _operations = operations;
 
-  final List<OperationListItem> _operations;
+  final List<OperationView> _operations;
   @override
-  List<OperationListItem> get operations {
+  List<OperationView> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -489,8 +486,7 @@ class _$OperationsChangedAccountDetailEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function(int accountId) fetch,
     required TResult Function(String title) titleChanged,
-    required TResult Function(List<OperationListItem> operations)
-        operationsChanged,
+    required TResult Function(List<OperationView> operations) operationsChanged,
   }) {
     return operationsChanged(operations);
   }
@@ -500,7 +496,7 @@ class _$OperationsChangedAccountDetailEventImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int accountId)? fetch,
     TResult? Function(String title)? titleChanged,
-    TResult? Function(List<OperationListItem> operations)? operationsChanged,
+    TResult? Function(List<OperationView> operations)? operationsChanged,
   }) {
     return operationsChanged?.call(operations);
   }
@@ -510,7 +506,7 @@ class _$OperationsChangedAccountDetailEventImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int accountId)? fetch,
     TResult Function(String title)? titleChanged,
-    TResult Function(List<OperationListItem> operations)? operationsChanged,
+    TResult Function(List<OperationView> operations)? operationsChanged,
     required TResult orElse(),
   }) {
     if (operationsChanged != null) {
@@ -561,10 +557,10 @@ class _$OperationsChangedAccountDetailEventImpl
 abstract class _OperationsChangedAccountDetailEvent
     implements AccountDetailEvent {
   const factory _OperationsChangedAccountDetailEvent(
-          {required final List<OperationListItem> operations}) =
+          final List<OperationView> operations) =
       _$OperationsChangedAccountDetailEventImpl;
 
-  List<OperationListItem> get operations;
+  List<OperationView> get operations;
 
   /// Create a copy of AccountDetailEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -577,7 +573,7 @@ abstract class _OperationsChangedAccountDetailEvent
 /// @nodoc
 mixin _$AccountDetailState {
   String get title => throw _privateConstructorUsedError;
-  List<OperationListItem> get operations => throw _privateConstructorUsedError;
+  List<OperationView> get operations => throw _privateConstructorUsedError;
 
   /// Create a copy of AccountDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -592,7 +588,7 @@ abstract class $AccountDetailStateCopyWith<$Res> {
           AccountDetailState value, $Res Function(AccountDetailState) then) =
       _$AccountDetailStateCopyWithImpl<$Res, AccountDetailState>;
   @useResult
-  $Res call({String title, List<OperationListItem> operations});
+  $Res call({String title, List<OperationView> operations});
 }
 
 /// @nodoc
@@ -621,7 +617,7 @@ class _$AccountDetailStateCopyWithImpl<$Res, $Val extends AccountDetailState>
       operations: null == operations
           ? _value.operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ) as $Val);
   }
 }
@@ -634,7 +630,7 @@ abstract class _$$AccountDetailStateImplCopyWith<$Res>
       __$$AccountDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, List<OperationListItem> operations});
+  $Res call({String title, List<OperationView> operations});
 }
 
 /// @nodoc
@@ -661,7 +657,7 @@ class __$$AccountDetailStateImplCopyWithImpl<$Res>
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ));
   }
 }
@@ -670,14 +666,14 @@ class __$$AccountDetailStateImplCopyWithImpl<$Res>
 
 class _$AccountDetailStateImpl implements _AccountDetailState {
   const _$AccountDetailStateImpl(
-      {required this.title, required final List<OperationListItem> operations})
+      {required this.title, required final List<OperationView> operations})
       : _operations = operations;
 
   @override
   final String title;
-  final List<OperationListItem> _operations;
+  final List<OperationView> _operations;
   @override
-  List<OperationListItem> get operations {
+  List<OperationView> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -715,13 +711,13 @@ class _$AccountDetailStateImpl implements _AccountDetailState {
 abstract class _AccountDetailState implements AccountDetailState {
   const factory _AccountDetailState(
           {required final String title,
-          required final List<OperationListItem> operations}) =
+          required final List<OperationView> operations}) =
       _$AccountDetailStateImpl;
 
   @override
   String get title;
   @override
-  List<OperationListItem> get operations;
+  List<OperationView> get operations;
 
   /// Create a copy of AccountDetailState
   /// with the given fields replaced by the non-null parameter values.

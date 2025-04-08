@@ -1,5 +1,6 @@
 
 import '../models.dart';
+import '../view_models.dart';
 
 abstract class DataRepository {
 
@@ -18,8 +19,8 @@ abstract class DataRepository {
   Stream<List<BaseAccount>> watchAllAccounts();
   Future<List<BaseAccount>> getAllAccounts();
 
-  Stream<List<BaseAccountBalanceListItem>> watchAllBalance();
-  Future<List<BaseAccountBalanceListItem>> getAllBalance();
+  Stream<List<AccountBalanceView>> watchAllBalance();
+  Future<List<AccountBalanceView>> getAllBalance();
 
   Stream<BaseAccount> watchAccountById(int id);
   Future<BaseAccount> getAccountById(int id);
@@ -59,13 +60,13 @@ abstract class DataRepository {
   Stream<List<Operation>> watchAllOperations();
 
   Future<List<Operation>> getAllOperationsWithEmptyCloudId();
-  Stream<List<OperationListItem>> watchAllOperationsByFilter(OperationListFilter filter);
+  Stream<List<OperationView>> watchAllOperationsByFilter(OperationListFilter filter);
 
   Future<Operation> getOperationById(int id);
 
-  Stream<List<OperationListItem>> watchAllOperationsByAccount(int accountId);
-  Stream<List<OperationListItem>> watchAllOperationsByCategory(int categoryId);
-  Stream<List<OperationListItem>> watchLastOperations(int limit);
+  Stream<List<OperationView>> watchAllOperationsByAccount(int accountId);
+  Stream<List<OperationView>> watchAllOperationsByCategory(int categoryId);
+  Stream<List<OperationView>> watchLastOperations(int limit);
   Future<Operation?> getLastOperation();
 
   Future<Operation> insertOperation(Operation entity);

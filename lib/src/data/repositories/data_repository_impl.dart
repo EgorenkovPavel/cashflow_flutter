@@ -5,6 +5,7 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../domain/interfaces/data_repository.dart';
+import '../../domain/view_models.dart';
 import '../sources/local/data/account_dao.dart';
 import '../sources/local/data/category_dao.dart';
 import '../sources/local/data/database.dart';
@@ -56,7 +57,7 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<List<BaseAccountBalanceListItem>> getAllBalance() async {
+  Future<List<AccountBalanceView>> getAllBalance() async {
     final accounts = await accountDao.getAllAccounts();
     final users = await userDao.getAllUsers();
     final balances = await accountDao.getAllBalances();
@@ -235,9 +236,9 @@ class DataRepositoryImpl implements DataRepository {
       accountDao.watchAllAccounts().map(AccountMapper().listToModel);
 
   @override
-  Stream<List<BaseAccountBalanceListItem>> watchAllBalance() =>
+  Stream<List<AccountBalanceView>> watchAllBalance() =>
       Rx.combineLatest3<List<AccountDB>, List<UserDB>,
-              List<AccountBalanceEntity>, List<BaseAccountBalanceListItem>>(
+              List<AccountBalanceEntity>, List<AccountBalanceView>>(
           accountDao.watchAllAccounts(),
           userDao.watchAllUsers(),
           accountDao.watchAllBalances(),
@@ -259,7 +260,7 @@ class DataRepositoryImpl implements DataRepository {
       .map(OperationMapper().entityListToModel);
 
   @override
-  Stream<List<OperationListItem>> watchAllOperationsByAccount(int accountId) {
+  Stream<List<OperationView>> watchAllOperationsByAccount(int accountId) {
     return Rx.combineLatest2(
         operationDao.watchAllOperationItemsByAccount(accountId),
         userDao.watchAllUsers().map(UserMapper().listToModel),
@@ -269,7 +270,7 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Stream<List<OperationListItem>> watchAllOperationsByCategory(int categoryId) {
+  Stream<List<OperationView>> watchAllOperationsByCategory(int categoryId) {
     return Rx.combineLatest2(
         operationDao.watchAllOperationItemsByCategory(categoryId),
         userDao.watchAllUsers().map(UserMapper().listToModel),
@@ -279,7 +280,7 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Stream<List<OperationListItem>> watchAllOperationsByFilter(
+  Stream<List<OperationView>> watchAllOperationsByFilter(
       OperationListFilter filter) {
     return Rx.combineLatest2(
         operationDao.watchAllOperationItemsByFilter(
@@ -332,7 +333,7 @@ class DataRepositoryImpl implements DataRepository {
       categoryDao.watchCategoryById(id).map(CategoryMapper().toModel);
 
   @override
-  Stream<List<OperationListItem>> watchLastOperations(int limit) {
+  Stream<List<OperationView>> watchLastOperations(int limit) {
     return Rx.combineLatest2(operationDao.watchLastOperationItems(limit),
         userDao.watchAllUsers().map(UserMapper().listToModel),
         (operations, users) {

@@ -279,7 +279,6 @@ class TitleDelegate extends SliverPersistentHeaderDelegate {
                   },
                 ),
               )
-              .toList()
         ],
       ),
     );

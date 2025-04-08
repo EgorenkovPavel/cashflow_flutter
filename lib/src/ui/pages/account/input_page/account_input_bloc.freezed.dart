@@ -448,7 +448,7 @@ class __$$ChangeTitleAccountInputEventImplCopyWithImpl<$Res>
     Object? title = null,
   }) {
     return _then(_$ChangeTitleAccountInputEventImpl(
-      title: null == title
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
@@ -460,7 +460,7 @@ class __$$ChangeTitleAccountInputEventImplCopyWithImpl<$Res>
 
 class _$ChangeTitleAccountInputEventImpl
     implements _ChangeTitleAccountInputEvent {
-  const _$ChangeTitleAccountInputEventImpl({required this.title});
+  const _$ChangeTitleAccountInputEventImpl(this.title);
 
   @override
   final String title;
@@ -573,7 +573,7 @@ class _$ChangeTitleAccountInputEventImpl
 }
 
 abstract class _ChangeTitleAccountInputEvent implements AccountInputEvent {
-  const factory _ChangeTitleAccountInputEvent({required final String title}) =
+  const factory _ChangeTitleAccountInputEvent(final String title) =
       _$ChangeTitleAccountInputEventImpl;
 
   String get title;
@@ -616,7 +616,7 @@ class __$$ChangeUserAccountInputEventImplCopyWithImpl<$Res>
     Object? user = freezed,
   }) {
     return _then(_$ChangeUserAccountInputEventImpl(
-      user: freezed == user
+      freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
@@ -642,7 +642,7 @@ class __$$ChangeUserAccountInputEventImplCopyWithImpl<$Res>
 
 class _$ChangeUserAccountInputEventImpl
     implements _ChangeUserAccountInputEvent {
-  const _$ChangeUserAccountInputEventImpl({required this.user});
+  const _$ChangeUserAccountInputEventImpl(this.user);
 
   @override
   final User? user;
@@ -754,7 +754,7 @@ class _$ChangeUserAccountInputEventImpl
 }
 
 abstract class _ChangeUserAccountInputEvent implements AccountInputEvent {
-  const factory _ChangeUserAccountInputEvent({required final User? user}) =
+  const factory _ChangeUserAccountInputEvent(final User? user) =
       _$ChangeUserAccountInputEventImpl;
 
   User? get user;

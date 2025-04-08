@@ -3,15 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/use_cases/get_operation_by_id_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/insert_operation_input_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/insert_operation_output_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/insert_operation_transfer_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/update_operation_input_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/update_operation_output_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/update_operation_transfer_use_case.dart';
 
+import '../../../../domain/view_models.dart';
 import '../../../../utils/sum.dart';
 
 part 'operation_edit_bloc.freezed.dart';
@@ -27,33 +23,29 @@ class OperationEditEvent with _$OperationEditEvent {
   const factory OperationEditEvent.changeTime({required TimeOfDay time}) =
       _ChangeTimeOperationEditEvent;
 
-  const factory OperationEditEvent.changeOperationType({
-    required OperationType operationType,
-  }) = _ChangeOperationTypeOperationEditEvent;
+  const factory OperationEditEvent.changeOperationType(
+      OperationType operationType) = _ChangeOperationTypeOperationEditEvent;
 
-  const factory OperationEditEvent.changeAccount(
-          {required BaseAccountListItem account}) =
+  const factory OperationEditEvent.changeAccount(AccountView account) =
       _ChangeAccountOperationEditEvent;
 
-  const factory OperationEditEvent.changeCategory({
-    required CategoryView category,
-  }) = _ChangeCategoryOperationEditEvent;
+  const factory OperationEditEvent.changeCategory(CategoryView category) =
+      _ChangeCategoryOperationEditEvent;
 
-  const factory OperationEditEvent.changeRecAccount({
-    required BaseAccountListItem recAccount,
-  }) = _ChangeRecAccountOperationEditEvent;
+  const factory OperationEditEvent.changeRecAccount(
+      AccountView recAccount) = _ChangeRecAccountOperationEditEvent;
 
-  const factory OperationEditEvent.changeSum({required int sum}) =
+  const factory OperationEditEvent.changeSum(int sum) =
       _ChangeSumOperationEditEvent;
 
-  const factory OperationEditEvent.changeRecSum({required int sum}) =
+  const factory OperationEditEvent.changeRecSum(int sum) =
       _ChangeRecSumOperationEditEvent;
 
-  const factory OperationEditEvent.changeCurrency(
-      {required Currency currency}) = _ChangeCurrencyOperationEditEvent;
+  const factory OperationEditEvent.changeCurrency(Currency currency) =
+      _ChangeCurrencyOperationEditEvent;
 
-  const factory OperationEditEvent.changeRecCurrency(
-      {required Currency currency}) = _ChangeRecCurrencyOperationEditEvent;
+  const factory OperationEditEvent.changeRecCurrency(Currency currency) =
+      _ChangeRecCurrencyOperationEditEvent;
 
   const factory OperationEditEvent.save() = _SaveOperationEditEvent;
 }
@@ -108,23 +100,10 @@ class OperationEditState with _$OperationEditState {
 }
 
 class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
-  final GetOperationByIdUseCase _getOperationByIdUseCase;
-  final InsertOperationInputUseCase _insertOperationInputUseCase;
-  final InsertOperationOutputUseCase _insertOperationOutputUseCase;
-  final InsertOperationTransferUseCase _insertOperationTransferUseCase;
-  final UpdateOperationInputUseCase _updateOperationInputUseCase;
-  final UpdateOperationOutputUseCase _updateOperationOutputUseCase;
-  final UpdateOperationTransferUseCase _updateOperationTransferUseCase;
+  final OperationInteractor _operationInteractor;
 
-  OperationEditBloc(
-    this._getOperationByIdUseCase,
-    this._insertOperationInputUseCase,
-    this._insertOperationOutputUseCase,
-    this._insertOperationTransferUseCase,
-    this._updateOperationInputUseCase,
-    this._updateOperationOutputUseCase,
-    this._updateOperationTransferUseCase,
-  ) : super(OperationEditState(
+  OperationEditBloc(this._operationInteractor)
+      : super(OperationEditState(
           date: DateTime.now(),
           time: TimeOfDay.now(),
           operationType: OperationType.INPUT,
@@ -159,7 +138,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     _FetchOperationEditEvent event,
     Emitter<OperationEditState> emit,
   ) async {
-    final operation = await _getOperationByIdUseCase(event.operationId);
+    final operation = await _operationInteractor.getById(event.operationId);
     emit(state.fromOperation(operation));
   }
 
@@ -198,7 +177,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
 
     return state.operationType.map(
       TRANSFER: () {
-        return _insertOperationTransferUseCase(
+        return _operationInteractor.insertTransfer(
           date: date,
           accountId: state.accountId!,
           recAccountId: state.recAccountId!,
@@ -207,7 +186,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         );
       },
       INPUT: () {
-        return _insertOperationInputUseCase(
+        return _operationInteractor.insertInput(
           date: date,
           accountId: state.accountId!,
           categoryId: state.categoryId!,
@@ -215,7 +194,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         );
       },
       OUTPUT: () {
-        return _insertOperationOutputUseCase(
+        return _operationInteractor.insertOutput(
           date: date,
           accountId: state.accountId!,
           categoryId: state.categoryId!,
@@ -236,7 +215,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
 
     return state.operationType.map(
       TRANSFER: () {
-        return _updateOperationTransferUseCase(
+        return _operationInteractor.updateTransfer(
           operation: state.operation!,
           date: date,
           accountId: state.accountId!,
@@ -246,7 +225,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         );
       },
       INPUT: () {
-        return _updateOperationInputUseCase(
+        return _operationInteractor.updateInput(
           operation: state.operation!,
           date: date,
           accountId: state.accountId!,
@@ -255,7 +234,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         );
       },
       OUTPUT: () {
-        return _updateOperationOutputUseCase(
+        return _operationInteractor.updateOutput(
           operation: state.operation!,
           date: date,
           accountId: state.accountId!,
@@ -264,5 +243,116 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
         );
       },
     );
+  }
+}
+
+extension OperationEditBlocExt on BuildContext {
+  OperationEditBloc _bloc() => read<OperationEditBloc>();
+
+  OperationType operationType() => select<OperationEditBloc, OperationType>(
+        (bloc) => bloc.state.operationType,
+      );
+
+  String date() => DateFormat.yMMMd(
+        Localizations.localeOf(this).languageCode,
+      ).format(select<OperationEditBloc, DateTime>(
+        (bloc) => bloc.state.date,
+      ));
+
+  String time() => select<OperationEditBloc, TimeOfDay>(
+        (bloc) => bloc.state.time,
+      ).format(this);
+
+  CategoryView? category(List<CategoryView> categories) {
+    final categoryId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.categoryId,
+    );
+    return categories.where((e) => e.id == categoryId).firstOrNull;
+  }
+
+  AccountView? recAccount(List<AccountView> accounts) {
+    final accountId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.recAccountId,
+    );
+    return accounts.where((e) => e.id == accountId).firstOrNull;
+  }
+
+  AccountView? account(List<AccountView> accounts) {
+    final accountId = select<OperationEditBloc, int?>(
+      (bloc) => bloc.state.accountId,
+    );
+    return accounts.where((e) => e.id == accountId).firstOrNull;
+  }
+
+  Currency currencySent() => select<OperationEditBloc, Currency>(
+        (bloc) => bloc.state.sum.currency,
+      );
+
+  Currency currencyReceived() => select<OperationEditBloc, Currency>(
+        (bloc) => bloc.state.recSum.currency,
+      );
+
+  String cloudId() => select<OperationEditBloc, String>(
+        (bloc) => bloc.state.operation?.cloudId ?? '',
+      );
+
+  bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
+      bloc.state.operationType == OperationType.TRANSFER &&
+      bloc.state.accountId != null &&
+      bloc.state.recAccountId != null);
+
+  void onChangeOperationType(OperationType newValue) =>
+      _bloc().add(OperationEditEvent.changeOperationType(newValue));
+
+  void onChangeAccount(AccountView? newValue) {
+    if (newValue != null) {
+      _bloc().add(OperationEditEvent.changeAccount(newValue));
+    }
+  }
+
+  void onChangeRecSum(String value) =>
+      _bloc().add(OperationEditEvent.changeRecSum(int.parse(value)));
+
+  void onChangeSum(String value) =>
+      _bloc().add(OperationEditEvent.changeSum(int.parse(value)));
+
+  void onChangeCurrency(Currency currency) =>
+      _bloc().add(OperationEditEvent.changeCurrency(currency));
+
+  void onChangeRecCurrency(Currency currency) =>
+      _bloc().add(OperationEditEvent.changeRecCurrency(currency));
+
+  void onRecAccountChange(AccountView? newValue) {
+    if (newValue != null) {
+      _bloc().add(OperationEditEvent.changeRecAccount(newValue));
+    }
+  }
+
+  void onCategoryChange(CategoryView? newValue) {
+    if (newValue != null) {
+      _bloc().add(OperationEditEvent.changeCategory(newValue));
+    }
+  }
+
+  void selectTime() async {
+    final picked = await showTimePicker(
+      context: this,
+      initialTime: _bloc().state.time,
+    );
+    if (picked != null) {
+      _bloc().add(OperationEditEvent.changeTime(time: picked));
+    }
+  }
+
+  void selectDate() async {
+    final picked = await showDatePicker(
+      context: this,
+      initialDate: _bloc().state.date,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      _bloc().add(OperationEditEvent.changeDate(date: picked));
+    }
   }
 }

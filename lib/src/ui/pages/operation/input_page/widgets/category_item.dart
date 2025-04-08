@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/models.dart';
+import '../../../../../domain/view_models.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem({

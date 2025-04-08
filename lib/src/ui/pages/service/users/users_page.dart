@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/interactors/user_interactor.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+
 import '../../../../domain/models.dart';
 import '../../../../injection_container.dart';
 
@@ -15,7 +16,7 @@ class UsersPage extends StatelessWidget {
           title: Text(context.loc.users),
         ),
         body: FutureBuilder<List<User>>(
-            future: sl<DataRepository>().getAllUsers(),
+            future: sl<UserInteractor>().getAll(),
             initialData: [],
             builder: (context, snapshot) {
               return ListView(

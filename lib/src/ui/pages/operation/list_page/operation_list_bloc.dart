@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
+import '../../../../domain/view_models.dart';
+
 abstract class OperationListEvent {}
 
 class Fetch extends OperationListEvent {
@@ -13,13 +15,13 @@ class Fetch extends OperationListEvent {
 }
 
 class ChangeOperations extends OperationListEvent {
-  final List<OperationListItem> operations;
+  final List<OperationView> operations;
 
   ChangeOperations(this.operations);
 }
 
 class OperationListState {
-  final List<OperationListItem> operations;
+  final List<OperationView> operations;
   final OperationListFilter filter;
 
   OperationListState({

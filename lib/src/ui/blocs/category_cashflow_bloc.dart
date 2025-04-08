@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_cashflow_use_case.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_categories_use_case.dart';
+import 'package:money_tracker/src/domain/interactors/category_interactor.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/models.dart';
+import '../../domain/view_models.dart';
 
 part 'category_cashflow_bloc.freezed.dart';
 
@@ -126,17 +126,15 @@ class CategoryCashflowState with _$CategoryCashflowState {
 
 class CategoryCashflowBloc
     extends Bloc<CategoryCashflowEvent, CategoryCashflowState> {
-  final WatchCashflowUseCase _watchCashFlowUseCase;
-  final WatchCategoriesUseCase _watchCategoriesUseCase;
+  final CategoryInteractor _categoryInteractor;
   final CurrencyRateBloc _currencyRateBloc;
   StreamSubscription? _subCashFlows;
   StreamSubscription? _subCategories;
   StreamSubscription? _subCurrencyRateBloc;
 
   CategoryCashflowBloc(
-    this._watchCashFlowUseCase,
-    this._watchCategoriesUseCase,
     this._currencyRateBloc,
+    this._categoryInteractor,
   ) : super(const CategoryCashflowState(
           cashflows: [],
           categories: [],
@@ -153,11 +151,11 @@ class CategoryCashflowBloc
       ),
     );
 
-    _subCategories = _watchCategoriesUseCase().listen((list) {
+    _subCategories = _categoryInteractor.watchAll().listen((list) {
       add(CategoryCashflowEvent.changeCategories(categories: list));
     });
 
-    _subCashFlows = _watchCashFlowUseCase().listen((list) {
+    _subCashFlows = _categoryInteractor.watchCashFlows().listen((list) {
       add(CategoryCashflowEvent.change(cashflows: list));
     });
 
@@ -186,31 +184,56 @@ extension CategoryCashFlowBlocExt on BuildContext {
   int budget(type) =>
       select<CategoryCashflowBloc, int>((bloc) => bloc.state.budget(type));
 
-  List<CategoryView> watchInCategories() =>
+  List<CategoryView> watchInCategoryItems() =>
       select<CategoryCashflowBloc, List<CategoryView>>(
           (bloc) => bloc.state.inItems.map(_mapToListItem).toList());
 
-  List<CategoryView> watchOutCategories() =>
+  List<CategoryView> watchOutCategoryItems() =>
       select<CategoryCashflowBloc, List<CategoryView>>(
           (bloc) => bloc.state.outItems.map(_mapToListItem).toList());
 
-  List<CategoryView> readInCategories() =>
+  List<CategoryView> watchCategoryItems(CategoryType type, int? parent) =>
+      select<CategoryCashflowBloc, List<CategoryView>>((bloc) => bloc.state
+          .items(type)
+          .where((e) => e.parentId == parent)
+          .map(_mapToListItem)
+          .toList());
+
+  int watchGroupItemsAmount(int parentId) =>
+      select<CategoryCashflowBloc, int>((bloc) => bloc.state.categories
+          .whereType<CategoryItem>()
+          .where((e) => e.parentId == parentId)
+          .length);
+
+  int watchItemsAmountNoParent(CategoryType type) =>
+      select<CategoryCashflowBloc, int>((bloc) =>
+          bloc.state.items(type).where((e) => e.parentId == null).length);
+
+  List<CategoryView> watchCategoryGroups(CategoryType type) =>
+      select<CategoryCashflowBloc, List<CategoryView>>(
+          (bloc) => bloc.state.groups(type).map(_mapToListItem).toList());
+
+  List<CategoryView> readInCategoryItems() =>
       read<CategoryCashflowBloc>().state.inItems.map(_mapToListItem).toList();
 
-  List<CategoryView> readOutCategories() =>
+  List<CategoryView> readOutCategoryItems() =>
       read<CategoryCashflowBloc>().state.outItems.map(_mapToListItem).toList();
 
-  List<CategoryGroup> readCategoryGroups(CategoryType type) =>
-      read<CategoryCashflowBloc>().state.groups(type);
+  List<CategoryView> readCategoryGroups(CategoryType type) =>
+      read<CategoryCashflowBloc>()
+          .state
+          .groups(type)
+          .map(_mapToListItem)
+          .toList();
 
   CategoryView _mapToListItem(Category category) => switch (category) {
-    InputCategoryItem() =>
-        CategoryView(id: category.id, title: category.title),
-    OutputCategoryItem() =>
-        CategoryView(id: category.id, title: category.title),
-    InputCategoryGroup() =>
-        CategoryView(id: category.id, title: category.title),
-    OutputCategoryGroup() =>
-        CategoryView(id: category.id, title: category.title),
-  };
+        InputCategoryItem() =>
+          CategoryView(id: category.id, title: category.title),
+        OutputCategoryItem() =>
+          CategoryView(id: category.id, title: category.title),
+        InputCategoryGroup() =>
+          CategoryView(id: category.id, title: category.title),
+        OutputCategoryGroup() =>
+          CategoryView(id: category.id, title: category.title),
+      };
 }

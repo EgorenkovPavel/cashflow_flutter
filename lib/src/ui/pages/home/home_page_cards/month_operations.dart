@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/domain/view_models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/utils/date_util.dart';
@@ -91,9 +91,8 @@ class _MonthOperationDiagram extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  border:
+                      Border.all(color: Theme.of(context).colorScheme.primary),
                   borderRadius: BorderRadius.circular(2.0),
                 ),
                 child: LinearProgressIndicator(
@@ -124,14 +123,14 @@ class _MonthOperationDiagram extends StatelessWidget {
     );
   }
 
-  double _progress(int cashflow, int budget) {
+  double _progress(int cashFlow, int budget) {
     var progress = 0.0;
-    if (cashflow == 0) {
+    if (cashFlow == 0) {
       progress = 0;
-    } else if (cashflow > budget || budget == 0) {
+    } else if (cashFlow > budget || budget == 0) {
       progress = 1;
     } else {
-      progress = cashflow / budget;
+      progress = cashFlow / budget;
     }
 
     return progress;

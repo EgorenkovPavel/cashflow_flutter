@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/home/home_page_cards/card_title.dart';
@@ -8,6 +7,7 @@ import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../../domain/view_models.dart';
 import 'last_operations_bloc.dart';
 
 class LastOperations extends StatelessWidget {
@@ -37,7 +37,7 @@ class LastOperations extends StatelessWidget {
 class _OperationsList extends StatelessWidget {
   const _OperationsList({required this.items});
 
-  final List<OperationListItem> items;
+  final List<OperationView> items;
 
   @override
   Widget build(BuildContext context) {

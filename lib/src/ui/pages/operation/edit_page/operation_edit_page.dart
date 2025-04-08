@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
@@ -10,6 +8,8 @@ import 'package:money_tracker/src/ui/widgets/currency_menu.dart';
 import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
+
+import '../../../../domain/view_models.dart';
 
 class OperationEditPage extends StatelessWidget {
   final int? id;
@@ -122,7 +122,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     items: OperationType.values,
                   ),
                   Title(text: context.loc.titleAccount),
-                  DropdownList<BaseAccountListItem>(
+                  DropdownList<AccountView>(
                     value: context.account(context.watchListItems()),
                     hint: context.loc.hintAccount,
                     items: context.watchListItems(),
@@ -132,22 +132,22 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
                         INPUT: () => DropdownList<CategoryView>(
-                          value: context.category(context.watchInCategories()),
+                          value: context.category(context.watchInCategoryItems()),
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
-                          items: context.watchInCategories(),
+                          items: context.watchInCategoryItems(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
                         OUTPUT: () => DropdownList<CategoryView>(
-                          value: context.category(context.watchOutCategories()),
+                          value: context.category(context.watchOutCategoryItems()),
                           hint: context.loc.hintCategory,
                           onChange: context.onCategoryChange,
-                          items: context.watchOutCategories(),
+                          items: context.watchOutCategoryItems(),
                           getListItem: (item) =>
                               ListTile(title: Text(item.title)),
                         ),
-                        TRANSFER: () => DropdownList<BaseAccountListItem>(
+                        TRANSFER: () => DropdownList<AccountView>(
                           value: context.recAccount(context.watchListItems()),
                           hint: context.loc.hintAccount,
                           onChange: context.onRecAccountChange,
@@ -156,7 +156,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                               ListTile(title: Text(item.title)),
                         ),
                       ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     children: [
                       Expanded(
@@ -172,7 +172,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                           validator: _sumValidator,
                         ),
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       CurrencyMenu(
                           currency: context.currencySent(),
                           onChange: context.onChangeCurrency),
@@ -196,7 +196,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                               validator: _sumValidator,
                             ),
                           ),
-                          SizedBox(width: 16.0),
+                          const SizedBox(width: 16.0),
                           CurrencyMenu(
                               currency: context.currencyReceived(),
                               onChange: context.onChangeRecCurrency),
@@ -220,119 +220,6 @@ class _OperationEditPageState extends State<_OperationEditPage> {
         ),
       ),
     );
-  }
-}
-
-extension OperationEditBlocExt on BuildContext {
-  OperationEditBloc _bloc() => read<OperationEditBloc>();
-
-  OperationType operationType() => select<OperationEditBloc, OperationType>(
-        (bloc) => bloc.state.operationType,
-      );
-
-  String date() => DateFormat.yMMMd(
-        Localizations.localeOf(this).languageCode,
-      ).format(select<OperationEditBloc, DateTime>(
-        (bloc) => bloc.state.date,
-      ));
-
-  String time() => select<OperationEditBloc, TimeOfDay>(
-        (bloc) => bloc.state.time,
-      ).format(this);
-
-  CategoryView? category(List<CategoryView> categories) {
-    final categoryId = select<OperationEditBloc, int?>(
-      (bloc) => bloc.state.categoryId,
-    );
-    return categories.where((e) => e.id == categoryId).firstOrNull;
-  }
-
-  BaseAccountListItem? recAccount(List<BaseAccountListItem> accounts) {
-    final accountId = select<OperationEditBloc, int?>(
-      (bloc) => bloc.state.recAccountId,
-    );
-    return accounts.where((e) => e.id == accountId).firstOrNull;
-  }
-
-  BaseAccountListItem? account(List<BaseAccountListItem> accounts) {
-    final accountId = select<OperationEditBloc, int?>(
-      (bloc) => bloc.state.accountId,
-    );
-    return accounts.where((e) => e.id == accountId).firstOrNull;
-  }
-
-  Currency currencySent() => select<OperationEditBloc, Currency>(
-        (bloc) => bloc.state.sum.currency,
-      );
-
-  Currency currencyReceived() => select<OperationEditBloc, Currency>(
-        (bloc) => bloc.state.recSum.currency,
-      );
-
-  String cloudId() => select<OperationEditBloc, String>(
-        (bloc) => bloc.state.operation?.cloudId ?? '',
-      );
-
-  bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
-      bloc.state.operationType == OperationType.TRANSFER &&
-      bloc.state.accountId != null &&
-      bloc.state.recAccountId != null);
-
-  void onChangeOperationType(newValue) =>
-      read<OperationEditBloc>().add(OperationEditEvent.changeOperationType(
-        operationType: newValue,
-      ));
-
-  void onChangeAccount(BaseAccountListItem? newValue) {
-    if (newValue != null) {
-      _bloc().add(OperationEditEvent.changeAccount(account: newValue));
-    }
-  }
-
-  void onChangeRecSum(String value) =>
-      _bloc().add(OperationEditEvent.changeRecSum(sum: int.parse(value)));
-
-  void onChangeSum(String value) =>
-      _bloc().add(OperationEditEvent.changeSum(sum: int.parse(value)));
-
-  void onChangeCurrency(Currency currency) =>
-      _bloc().add(OperationEditEvent.changeCurrency(currency: currency));
-
-  void onChangeRecCurrency(Currency currency) =>
-      _bloc().add(OperationEditEvent.changeRecCurrency(currency: currency));
-
-  void onRecAccountChange(BaseAccountListItem? newValue) {
-    if (newValue != null) {
-      _bloc().add(OperationEditEvent.changeRecAccount(recAccount: newValue));
-    }
-  }
-
-  void onCategoryChange(CategoryView? newValue) {
-    if (newValue != null) {
-      _bloc().add(OperationEditEvent.changeCategory(category: newValue));
-    }
-  }
-
-  void selectTime() async {
-    final picked = await showTimePicker(
-      context: this,
-      initialTime: _bloc().state.time,
-    );
-    if (picked != null) {
-      _bloc().add(OperationEditEvent.changeTime(time: picked));
-    }
-  }
-
-  void selectDate() async {
-    final picked = await showDatePicker(
-      context: this,
-      initialDate: _bloc().state.date,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      _bloc().add(OperationEditEvent.changeDate(date: picked));
-    }
   }
 }
 

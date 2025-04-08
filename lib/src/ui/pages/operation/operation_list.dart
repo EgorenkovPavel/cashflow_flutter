@@ -6,14 +6,14 @@ import 'package:money_tracker/src/ui/widgets/empty_list_hint.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../domain/models.dart';
+import '../../../domain/view_models.dart';
 
 class OperationList extends StatelessWidget {
-  final List<OperationListItem> _operations;
+  final List<OperationView> _operations;
 
   const OperationList(this._operations, {super.key});
 
-  Widget _listBuilder(BuildContext context, List<OperationListItem> operations) {
+  Widget _listBuilder(BuildContext context, List<OperationView> operations) {
     final itemPositionsListener = ItemPositionsListener.create();
 
     Widget positionsView() {

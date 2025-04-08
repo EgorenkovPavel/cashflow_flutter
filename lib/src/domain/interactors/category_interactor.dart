@@ -9,6 +9,13 @@ class CategoryInteractor {
   Future<Category> getById({required int categoryId}) =>
       _dataRepository.getCategoryById(categoryId);
 
+  Stream<Category> watchById(int id) =>
+      _dataRepository.watchCategoryById(id);
+
+  Stream<List<CategoryCashFlow>> watchCashFlows() => _dataRepository.watchCashFlow(DateTime.now());
+
+  Stream<List<Category>> watchAll() => _dataRepository.watchAllCategories();
+
   Future<InputCategoryItem> insertInputCategoryItem({
     required String title,
     required BudgetType budgetType,

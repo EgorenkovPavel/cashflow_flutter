@@ -19,20 +19,19 @@ mixin _$LastOperationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
-    required TResult Function(List<OperationListItem> operations)
-        changeOperations,
+    required TResult Function(List<OperationView> operations) changeOperations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
-    TResult? Function(List<OperationListItem> operations)? changeOperations,
+    TResult? Function(List<OperationView> operations)? changeOperations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
-    TResult Function(List<OperationListItem> operations)? changeOperations,
+    TResult Function(List<OperationView> operations)? changeOperations,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,8 +126,7 @@ class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
-    required TResult Function(List<OperationListItem> operations)
-        changeOperations,
+    required TResult Function(List<OperationView> operations) changeOperations,
   }) {
     return fetch();
   }
@@ -137,7 +135,7 @@ class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
-    TResult? Function(List<OperationListItem> operations)? changeOperations,
+    TResult? Function(List<OperationView> operations)? changeOperations,
   }) {
     return fetch?.call();
   }
@@ -146,7 +144,7 @@ class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
-    TResult Function(List<OperationListItem> operations)? changeOperations,
+    TResult Function(List<OperationView> operations)? changeOperations,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -201,7 +199,7 @@ abstract class _$$ChangeOperationsLastOperationsEventImplCopyWith<$Res> {
           $Res Function(_$ChangeOperationsLastOperationsEventImpl) then) =
       __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<OperationListItem> operations});
+  $Res call({List<OperationView> operations});
 }
 
 /// @nodoc
@@ -222,10 +220,10 @@ class __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>
     Object? operations = null,
   }) {
     return _then(_$ChangeOperationsLastOperationsEventImpl(
-      operations: null == operations
+      null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ));
   }
 }
@@ -235,12 +233,12 @@ class __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>
 class _$ChangeOperationsLastOperationsEventImpl
     implements _ChangeOperationsLastOperationsEvent {
   const _$ChangeOperationsLastOperationsEventImpl(
-      {required final List<OperationListItem> operations})
+      final List<OperationView> operations)
       : _operations = operations;
 
-  final List<OperationListItem> _operations;
+  final List<OperationView> _operations;
   @override
-  List<OperationListItem> get operations {
+  List<OperationView> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -278,8 +276,7 @@ class _$ChangeOperationsLastOperationsEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
-    required TResult Function(List<OperationListItem> operations)
-        changeOperations,
+    required TResult Function(List<OperationView> operations) changeOperations,
   }) {
     return changeOperations(operations);
   }
@@ -288,7 +285,7 @@ class _$ChangeOperationsLastOperationsEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
-    TResult? Function(List<OperationListItem> operations)? changeOperations,
+    TResult? Function(List<OperationView> operations)? changeOperations,
   }) {
     return changeOperations?.call(operations);
   }
@@ -297,7 +294,7 @@ class _$ChangeOperationsLastOperationsEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
-    TResult Function(List<OperationListItem> operations)? changeOperations,
+    TResult Function(List<OperationView> operations)? changeOperations,
     required TResult orElse(),
   }) {
     if (changeOperations != null) {
@@ -344,10 +341,10 @@ class _$ChangeOperationsLastOperationsEventImpl
 abstract class _ChangeOperationsLastOperationsEvent
     implements LastOperationsEvent {
   const factory _ChangeOperationsLastOperationsEvent(
-          {required final List<OperationListItem> operations}) =
+          final List<OperationView> operations) =
       _$ChangeOperationsLastOperationsEventImpl;
 
-  List<OperationListItem> get operations;
+  List<OperationView> get operations;
 
   /// Create a copy of LastOperationsEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -359,7 +356,7 @@ abstract class _ChangeOperationsLastOperationsEvent
 
 /// @nodoc
 mixin _$LastOperationsState {
-  List<OperationListItem> get operations => throw _privateConstructorUsedError;
+  List<OperationView> get operations => throw _privateConstructorUsedError;
 
   /// Create a copy of LastOperationsState
   /// with the given fields replaced by the non-null parameter values.
@@ -374,7 +371,7 @@ abstract class $LastOperationsStateCopyWith<$Res> {
           LastOperationsState value, $Res Function(LastOperationsState) then) =
       _$LastOperationsStateCopyWithImpl<$Res, LastOperationsState>;
   @useResult
-  $Res call({List<OperationListItem> operations});
+  $Res call({List<OperationView> operations});
 }
 
 /// @nodoc
@@ -398,7 +395,7 @@ class _$LastOperationsStateCopyWithImpl<$Res, $Val extends LastOperationsState>
       operations: null == operations
           ? _value.operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ) as $Val);
   }
 }
@@ -411,7 +408,7 @@ abstract class _$$LastOperationsStateImplCopyWith<$Res>
       __$$LastOperationsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<OperationListItem> operations});
+  $Res call({List<OperationView> operations});
 }
 
 /// @nodoc
@@ -433,7 +430,7 @@ class __$$LastOperationsStateImplCopyWithImpl<$Res>
       operations: null == operations
           ? _value._operations
           : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationListItem>,
+              as List<OperationView>,
     ));
   }
 }
@@ -442,12 +439,12 @@ class __$$LastOperationsStateImplCopyWithImpl<$Res>
 
 class _$LastOperationsStateImpl implements _LastOperationsState {
   const _$LastOperationsStateImpl(
-      {required final List<OperationListItem> operations})
+      {required final List<OperationView> operations})
       : _operations = operations;
 
-  final List<OperationListItem> _operations;
+  final List<OperationView> _operations;
   @override
-  List<OperationListItem> get operations {
+  List<OperationView> get operations {
     if (_operations is EqualUnmodifiableListView) return _operations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_operations);
@@ -483,11 +480,11 @@ class _$LastOperationsStateImpl implements _LastOperationsState {
 
 abstract class _LastOperationsState implements LastOperationsState {
   const factory _LastOperationsState(
-          {required final List<OperationListItem> operations}) =
+          {required final List<OperationView> operations}) =
       _$LastOperationsStateImpl;
 
   @override
-  List<OperationListItem> get operations;
+  List<OperationView> get operations;
 
   /// Create a copy of LastOperationsState
   /// with the given fields replaced by the non-null parameter values.

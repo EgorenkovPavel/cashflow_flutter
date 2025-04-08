@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/use_cases/watch_last_operations_use_case.dart';
+import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
+
+import '../../../../../domain/view_models.dart';
 
 part 'last_operations_bloc.freezed.dart';
 
@@ -11,28 +12,27 @@ part 'last_operations_bloc.freezed.dart';
 class LastOperationsEvent with _$LastOperationsEvent {
   const factory LastOperationsEvent.fetch() = _FetchLastOperationsEvent;
 
-  const factory LastOperationsEvent.changeOperations({
-    required List<OperationListItem> operations,
-  }) = _ChangeOperationsLastOperationsEvent;
+  const factory LastOperationsEvent.changeOperations(
+          List<OperationView> operations) =
+      _ChangeOperationsLastOperationsEvent;
 }
 
 @freezed
 class LastOperationsState with _$LastOperationsState {
-  const factory LastOperationsState({required List<OperationListItem> operations}) =
-      _LastOperationsState;
+  const factory LastOperationsState(
+      {required List<OperationView> operations}) = _LastOperationsState;
 }
 
 class LastOperationsBloc
     extends Bloc<LastOperationsEvent, LastOperationsState> {
-  final WatchLastOperationsUseCase _watchLastOperationsUseCase;
+  final OperationInteractor _operationInteractor;
 
   StreamSubscription? _sub;
 
   static const int _operationCount = 5;
 
-  LastOperationsBloc(this._watchLastOperationsUseCase)
+  LastOperationsBloc(this._operationInteractor)
       : super(const LastOperationsState(operations: [])) {
-
     on<LastOperationsEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
           changeOperations: (event) => _changeOperations(event, emitter),
@@ -43,8 +43,8 @@ class LastOperationsBloc
     _FetchLastOperationsEvent event,
     Emitter<LastOperationsState> emit,
   ) {
-    _sub = _watchLastOperationsUseCase(_operationCount).listen((items) {
-      add(LastOperationsEvent.changeOperations(operations: items));
+    _sub = _operationInteractor.watchLast(_operationCount).listen((items) {
+      add(LastOperationsEvent.changeOperations(items));
     });
   }
 

@@ -21,8 +21,8 @@ mixin _$OperationFilterEvent {
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) =>
@@ -32,8 +32,8 @@ mixin _$OperationFilterEvent {
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) =>
@@ -43,8 +43,8 @@ mixin _$OperationFilterEvent {
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -190,8 +190,8 @@ class _$InitPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -204,8 +204,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -218,8 +218,8 @@ class _$InitPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -346,8 +346,8 @@ class _$ResetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -360,8 +360,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -374,8 +374,8 @@ class _$ResetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -521,8 +521,8 @@ class _$SetPeriodOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -535,8 +535,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -549,8 +549,8 @@ class _$SetPeriodOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -635,7 +635,7 @@ abstract class _$$AddAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$AddAccountOperationFilterEventImpl) then) =
       __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccountListItem account});
+  $Res call({AccountView account});
 }
 
 /// @nodoc
@@ -659,7 +659,7 @@ class __$$AddAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as BaseAccountListItem,
+              as AccountView,
     ));
   }
 }
@@ -671,7 +671,7 @@ class _$AddAccountOperationFilterEventImpl
   const _$AddAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final BaseAccountListItem account;
+  final AccountView account;
 
   @override
   String toString() {
@@ -705,8 +705,8 @@ class _$AddAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -719,8 +719,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -733,8 +733,8 @@ class _$AddAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -799,10 +799,10 @@ class _$AddAccountOperationFilterEventImpl
 
 abstract class _AddAccountOperationFilterEvent implements OperationFilterEvent {
   const factory _AddAccountOperationFilterEvent(
-          {required final BaseAccountListItem account}) =
+          {required final AccountView account}) =
       _$AddAccountOperationFilterEventImpl;
 
-  BaseAccountListItem get account;
+  AccountView get account;
 
   /// Create a copy of OperationFilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -819,7 +819,7 @@ abstract class _$$RemoveAccountOperationFilterEventImplCopyWith<$Res> {
           $Res Function(_$RemoveAccountOperationFilterEventImpl) then) =
       __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BaseAccountListItem account});
+  $Res call({AccountView account});
 }
 
 /// @nodoc
@@ -843,7 +843,7 @@ class __$$RemoveAccountOperationFilterEventImplCopyWithImpl<$Res>
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as BaseAccountListItem,
+              as AccountView,
     ));
   }
 }
@@ -855,7 +855,7 @@ class _$RemoveAccountOperationFilterEventImpl
   const _$RemoveAccountOperationFilterEventImpl({required this.account});
 
   @override
-  final BaseAccountListItem account;
+  final AccountView account;
 
   @override
   String toString() {
@@ -889,8 +889,8 @@ class _$RemoveAccountOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -903,8 +903,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -917,8 +917,8 @@ class _$RemoveAccountOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -984,10 +984,10 @@ class _$RemoveAccountOperationFilterEventImpl
 abstract class _RemoveAccountOperationFilterEvent
     implements OperationFilterEvent {
   const factory _RemoveAccountOperationFilterEvent(
-          {required final BaseAccountListItem account}) =
+          {required final AccountView account}) =
       _$RemoveAccountOperationFilterEventImpl;
 
-  BaseAccountListItem get account;
+  AccountView get account;
 
   /// Create a copy of OperationFilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1075,8 +1075,8 @@ class _$AddCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -1089,8 +1089,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -1103,8 +1103,8 @@ class _$AddCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),
@@ -1261,8 +1261,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     required TResult Function(OperationListFilter filter) init,
     required TResult Function() resetPeriod,
     required TResult Function(DateTimeRange period) setPeriod,
-    required TResult Function(BaseAccountListItem account) addAccount,
-    required TResult Function(BaseAccountListItem account) removeAccount,
+    required TResult Function(AccountView account) addAccount,
+    required TResult Function(AccountView account) removeAccount,
     required TResult Function(CategoryView category) addCategory,
     required TResult Function(CategoryView category) removeCategory,
   }) {
@@ -1275,8 +1275,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult? Function(OperationListFilter filter)? init,
     TResult? Function()? resetPeriod,
     TResult? Function(DateTimeRange period)? setPeriod,
-    TResult? Function(BaseAccountListItem account)? addAccount,
-    TResult? Function(BaseAccountListItem account)? removeAccount,
+    TResult? Function(AccountView account)? addAccount,
+    TResult? Function(AccountView account)? removeAccount,
     TResult? Function(CategoryView category)? addCategory,
     TResult? Function(CategoryView category)? removeCategory,
   }) {
@@ -1289,8 +1289,8 @@ class _$RemoveCategoryOperationFilterEventImpl
     TResult Function(OperationListFilter filter)? init,
     TResult Function()? resetPeriod,
     TResult Function(DateTimeRange period)? setPeriod,
-    TResult Function(BaseAccountListItem account)? addAccount,
-    TResult Function(BaseAccountListItem account)? removeAccount,
+    TResult Function(AccountView account)? addAccount,
+    TResult Function(AccountView account)? removeAccount,
     TResult Function(CategoryView category)? addCategory,
     TResult Function(CategoryView category)? removeCategory,
     required TResult orElse(),

@@ -1,31 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/user_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/domain/use_cases/get_users_use_case.dart';
-
-import '../../../../domain/use_cases/get_account_by_id_use_case.dart';
-import '../../../../domain/use_cases/insert_account_use_case.dart';
-import '../../../../domain/use_cases/update_account_use_case.dart';
 
 part 'account_input_bloc.freezed.dart';
 
 @freezed
 class AccountInputEvent with _$AccountInputEvent {
-  const factory AccountInputEvent.fetch({
-    required int accountId,
-  }) = _FetchAccountInputEvent;
+  const factory AccountInputEvent.fetch({required int accountId}) =
+      _FetchAccountInputEvent;
 
-  const factory AccountInputEvent.input({
-    required bool isDebt,
-  }) = _InputAccountInputEvent;
+  const factory AccountInputEvent.input({required bool isDebt}) =
+      _InputAccountInputEvent;
 
-  const factory AccountInputEvent.changeTitle({
-    required String title,
-  }) = _ChangeTitleAccountInputEvent;
+  const factory AccountInputEvent.changeTitle(String title) =
+      _ChangeTitleAccountInputEvent;
 
-  const factory AccountInputEvent.changeUser({
-    required User? user,
-  }) = _ChangeUserAccountInputEvent;
+  const factory AccountInputEvent.changeUser(User? user) =
+      _ChangeUserAccountInputEvent;
 
   const factory AccountInputEvent.save() = _SaveAccountInputEvent;
 }
@@ -62,16 +55,12 @@ class AccountInputState with _$AccountInputState {
 }
 
 class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
-  final GetAccountByIdUseCase _getAccountByIdUseCase;
-  final InsertAccountUseCase _insertAccountUseCase;
-  final UpdateAccountUseCase _updateAccountUseCase;
-  final GetUsersUseCase _getUsersUseCase;
+  final AccountInteractor _accountInteractor;
+  final UserInteractor _userInteractor;
 
   AccountInputBloc(
-    this._getAccountByIdUseCase,
-    this._insertAccountUseCase,
-    this._updateAccountUseCase,
-    this._getUsersUseCase,
+    this._accountInteractor,
+    this._userInteractor,
   ) : super(AccountInputState.init()) {
     on<AccountInputEvent>((event, emitter) => event.map(
           fetch: (event) => _fetch(event, emitter),
@@ -87,20 +76,19 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _FetchAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
-    final account = await _getAccountByIdUseCase(accountId: event.accountId);
-    final users = await _getUsersUseCase();
+    final account = await _accountInteractor.getById(event.accountId);
+    final users = await _userInteractor.getAll();
 
     emit(AccountInputState.byAccount(account, users));
   }
 
   Future<void> _input(
-      _InputAccountInputEvent event,
-      Emitter<AccountInputState> emit,
-      ) async {
-    final users = await _getUsersUseCase();
+    _InputAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
+    final users = await _userInteractor.getAll();
     emit(state.copyWith(isDebt: event.isDebt, users: users));
   }
-
 
   Future<void> _save(
     _SaveAccountInputEvent event,
@@ -108,7 +96,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   ) async {
     if (state.account == null) {
       emit(state.copyWith(
-        account: await _insertAccountUseCase(
+        account: await _accountInteractor.insert(
           title: state.title,
           isDebt: state.isDebt,
           userId: state.userId,
@@ -117,7 +105,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
       ));
     } else {
       emit(state.copyWith(
-        account: await _updateAccountUseCase(
+        account: await _accountInteractor.update(
           account: state.account!,
           title: state.title,
           userId: state.userId,

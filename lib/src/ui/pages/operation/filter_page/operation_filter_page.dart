@@ -7,6 +7,7 @@ import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../../domain/view_models.dart';
 import '../../../blocs/account_balance_bloc.dart';
 
 class OperationFilterPage extends StatelessWidget {
@@ -51,12 +52,12 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
   }
 
   void _onAccountChipPressed(BuildContext context) async {
-    final result = await showMenu<BaseAccountListItem>(
+    final result = await showMenu<AccountView>(
       context: context,
       position: buttonMenuPosition(_accountKey.currentContext!),
       items: context
           .readListItems()
-          .map((a) => PopupMenuItem<BaseAccountListItem>(
+          .map((a) => PopupMenuItem<AccountView>(
                 value: a,
                 child: Text(a.title),
               ))
@@ -73,7 +74,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryInKey.currentContext!),
       items: context
-          .readInCategories()
+          .readInCategoryItems()
           .map(
             (c) => PopupMenuItem<CategoryView>(
               value: c,
@@ -93,7 +94,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryOutKey.currentContext!),
       items: context
-          .readOutCategories()
+          .readOutCategoryItems()
           .map((c) => PopupMenuItem<CategoryView>(
                 value: c,
                 child: Text(c.title),
@@ -239,7 +240,7 @@ class PeriodButton extends StatelessWidget {
 }
 
 class AccountChip extends StatelessWidget {
-  final BaseAccountListItem account;
+  final AccountView account;
 
   const AccountChip({super.key, required this.account});
 
@@ -273,7 +274,7 @@ extension BlocExt on BuildContext {
         (bloc) => bloc.state.filter.period,
       );
 
-  Set<BaseAccountListItem> accounts() {
+  Set<AccountView> accounts() {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.accountIds,
     );
@@ -284,14 +285,14 @@ extension BlocExt on BuildContext {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
-    return readInCategories().where((e) => ids.contains(e.id)).toSet();
+    return readInCategoryItems().where((e) => ids.contains(e.id)).toSet();
   }
 
   Set<CategoryView> outCategories() {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
-    return readOutCategories().where((e) => ids.contains(e.id)).toSet();
+    return readOutCategoryItems().where((e) => ids.contains(e.id)).toSet();
   }
 
   onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
@@ -300,13 +301,13 @@ extension BlocExt on BuildContext {
   onDeletePeriod() =>
       read<OperationFilterBloc>().add(const OperationFilterEvent.resetPeriod());
 
-  void onAddAccount(BaseAccountListItem account) => read<OperationFilterBloc>()
+  void onAddAccount(AccountView account) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addAccount(account: account));
 
   void onAddCategory(CategoryView category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addCategory(category: category));
 
-  onDeleteAccount(BaseAccountListItem account) =>
+  onDeleteAccount(AccountView account) =>
       read<OperationFilterBloc>().add(OperationFilterEvent.removeAccount(
         account: account,
       ));
