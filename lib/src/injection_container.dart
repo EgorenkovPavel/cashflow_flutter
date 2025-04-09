@@ -70,8 +70,7 @@ Future<void> init() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   sl.registerLazySingleton<SettingsSource>(
-    () => SettingsSourceImpl(sl<SharedPreferences>()),
-  );
+      () => SettingsSourceImpl(sl<SharedPreferences>()));
 
   sl.registerLazySingleton<Database>(() => Database());
   sl.registerLazySingleton<AccountDao>(() => AccountDao(sl<Database>()));
@@ -131,7 +130,8 @@ Future<void> init() async {
         networkInfo: sl<NetworkInfo>(),
       ));
 
-  sl.registerLazySingleton<RemoteDataSource>(() => RemoteSourceImpl(sl()));
+  sl.registerLazySingleton<RemoteDataSource>(
+      () => RemoteSourceImpl(sl<FirebaseFirestore>()));
 
   final prefs = await SharedPreferences.getInstance();
 

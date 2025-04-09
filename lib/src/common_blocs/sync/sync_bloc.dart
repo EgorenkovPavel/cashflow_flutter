@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
@@ -61,7 +62,8 @@ class SyncState with _$SyncState {
     required bool isAdmin,
   }) = _SyncedSyncState;
 
-  const factory SyncState.notSynced({required String message}) = _NotSyncedSyncState;
+  const factory SyncState.notSynced({required String message}) =
+      _NotSyncedSyncState;
 
   const factory SyncState.failure() = _FailureSyncState;
 
@@ -233,4 +235,22 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
 
     return super.close();
   }
+}
+
+extension SyncBlocExt on BuildContext {
+  SyncBloc _bloc() => read<SyncBloc>();
+
+  void syncNow() => _bloc().add(const SyncEvent.syncNow());
+
+  void syncLastDay() => _bloc().add(const SyncEvent.syncLastDay());
+
+  void syncLastMonth() => _bloc().add(const SyncEvent.syncLastMonth());
+
+  void syncAll() => _bloc().add(const SyncEvent.syncAll());
+
+  void createCloudDatabase() =>
+      _bloc().add(const SyncEvent.createCloudDatabase());
+
+  void refreshConnection() => _bloc()
+      .add(const SyncEvent.refreshConnection());
 }
