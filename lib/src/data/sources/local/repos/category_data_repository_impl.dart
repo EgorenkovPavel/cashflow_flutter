@@ -108,7 +108,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
             budgetType: Value(BudgetType.MONTH),
             budget: Value(0),
             synced: const Value(true),
-            isGroup: Value(false),
+            isGroup: Value(true),
           ),
           outputGroup: (c) => CategoriesCompanion(
             cloudId: Value(c.cloudId),
@@ -117,7 +117,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
             budgetType: Value(BudgetType.MONTH),
             budget: Value(0),
             synced: const Value(true),
-            isGroup: Value(false),
+            isGroup: Value(true),
           ),
         ));
   }
