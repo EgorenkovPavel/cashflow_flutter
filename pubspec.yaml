@@ -1,7 +1,7 @@
 name: money_tracker
 description: A new Flutter application.
 
-version: 1.1.44+54
+version: 1.1.45+55
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
