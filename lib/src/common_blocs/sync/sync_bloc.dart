@@ -43,7 +43,16 @@ class SyncEvent with _$SyncEvent {
 class SyncState with _$SyncState {
   const SyncState._();
 
-  const factory SyncState.inProgress() = _InProgressSyncState;
+  //noDB
+  //  notSynced
+  //    loadingToCloud
+  //    loadingFromCloud
+  //      synced
+
+  const factory SyncState.noDB() = _NoDBSyncState;
+
+  const factory SyncState.notSynced({required String message}) =
+      _NotSyncedSyncState;
 
   const factory SyncState.loadingToCloud({
     required int accountCount,
@@ -62,12 +71,9 @@ class SyncState with _$SyncState {
     required bool isAdmin,
   }) = _SyncedSyncState;
 
-  const factory SyncState.notSynced({required String message}) =
-      _NotSyncedSyncState;
-
   const factory SyncState.failure() = _FailureSyncState;
 
-  const factory SyncState.noDB() = _NoDBSyncState;
+  const factory SyncState.inProgress() = _InProgressSyncState;
 }
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
