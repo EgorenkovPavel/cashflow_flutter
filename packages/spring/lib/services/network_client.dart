@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/models.dart';
-import 'package:http/http.dart' as http;
 
 class NetworkClient {
   String _token;
@@ -40,7 +40,7 @@ class NetworkClient {
         print('GET response ${response.statusCode}: ${response.body}');
       }
       return mapper(jsonDecode(response.body));
-    }catch (e){
+    } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
@@ -61,24 +61,31 @@ class NetworkClient {
       print('POST body: $encodedString');
     }
 
-    final response = await http.post(
-      _url(path),
-      headers: _headers
-        ..addAll({
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        }),
-      body: encodedString,
-    );
+    try {
+      final response = await http.post(
+        _url(path),
+        headers: _headers
+          ..addAll({
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          }),
+        body: encodedString,
+      );
 
-    if (kDebugMode) {
-      print('POST response ${response.statusCode}: ${response.body}');
-    }
+      if (kDebugMode) {
+        print('POST response ${response.statusCode}: ${response.body}');
+      }
 
-    if (T is int) {
-      return response.body as T;
-    } else {
-      return jsonDecode(response.body) as T;
+      if (T is int) {
+        return response.body as T;
+      } else {
+        return jsonDecode(response.body) as T;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+      rethrow;
     }
   }
 
