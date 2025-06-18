@@ -32,8 +32,8 @@ class OperationEditEvent with _$OperationEditEvent {
   const factory OperationEditEvent.changeCategory(CategoryView category) =
       _ChangeCategoryOperationEditEvent;
 
-  const factory OperationEditEvent.changeRecAccount(
-      AccountView recAccount) = _ChangeRecAccountOperationEditEvent;
+  const factory OperationEditEvent.changeRecAccount(AccountView recAccount) =
+      _ChangeRecAccountOperationEditEvent;
 
   const factory OperationEditEvent.changeSum(int sum) =
       _ChangeSumOperationEditEvent;

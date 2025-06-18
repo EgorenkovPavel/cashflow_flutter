@@ -30,31 +30,33 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-            children: <Widget>[
-              TotalsCard(),
-              AccountsCard(
-                title: context.loc.accounts,
-                accounts: context.watchAccountBalances(),
-                onAdd: () => context.openAccountInputDialog(),
-              ),
-              AccountsCard(
-                title: context.loc.debts,
-                accounts: context.watchDebtBalances(),
-                onAdd: () => context.openDebtInputDialog(),
-              ),
-              MonthOperations(type: CategoryType.INPUT),
-              MonthOperations(type: CategoryType.OUTPUT),
-              LastOperations(),
-            ]
-                .map((e) => Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: e,
-                    ))
-                .toList(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Column(
+              children: <Widget>[
+                TotalsCard(),
+                AccountsCard(
+                  title: context.loc.accounts,
+                  accounts: context.watchAccountBalances(),
+                  onAdd: () => context.openAccountInputDialog(),
+                ),
+                AccountsCard(
+                  title: context.loc.debts,
+                  accounts: context.watchDebtBalances(),
+                  onAdd: () => context.openDebtInputDialog(),
+                ),
+                MonthOperations(type: CategoryType.INPUT),
+                MonthOperations(type: CategoryType.OUTPUT),
+                LastOperations(),
+              ]
+                  .map((e) => Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: e,
+                      ))
+                  .toList(),
+            ),
           ),
         ),
       ),

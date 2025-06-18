@@ -132,124 +132,126 @@ class _OperationInputPageState extends State<OperationInputPage>
                 title: Text(context.loc.titleMaster),
                 forceMaterialTransparency: true,
               ),
-              body: Column(
-                children: <Widget>[
-                  _Title(
-                    context.operationType() != OperationType.TRANSFER
-                        ? context.loc.account
-                        : context.loc.source,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: DropdownList<AccountBalanceView>(
-                      value: context
-                          .watchBalances()
-                          .where((e) => e.accountId == context.accountId())
-                          .firstOrNull,
-                      hint: context.loc.hintAccount,
-                      items: context.watchBalances(),
-                      onChange: (a) => context.onChangeAccount(a!.accountId),
-                      getListItem: (data) => AccountItem(account: data),
+              body: SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    _Title(
+                      context.operationType() != OperationType.TRANSFER
+                          ? context.loc.account
+                          : context.loc.source,
                     ),
-                  ),
-                  _Title(context.loc.titleType),
-                  Builder(builder: (context) {
-                    return TypeRadioButton<OperationType>(
-                      type: context.operationType(),
-                      items: OperationType.values,
-                      onChange: context.onChangeOperationType,
-                    );
-                  }),
-                  context.operationType().map(
-                      INPUT: () => const _CategoryList(CategoryType.INPUT),
-                      OUTPUT: () => const _CategoryList(CategoryType.OUTPUT),
-                      TRANSFER: () => const AccountRecList()),
-                  Builder(
-                    builder: (BuildContext context) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(5.0),
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 6.0),
-                          //Same as `blurRadius` i guess
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(16.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: DropdownList<AccountBalanceView>(
+                        value: context
+                            .watchBalances()
+                            .where((e) => e.accountId == context.accountId())
+                            .firstOrNull,
+                        hint: context.loc.hintAccount,
+                        items: context.watchBalances(),
+                        onChange: (a) => context.onChangeAccount(a!.accountId),
+                        getListItem: (data) => AccountItem(account: data),
+                      ),
+                    ),
+                    _Title(context.loc.titleType),
+                    Builder(builder: (context) {
+                      return TypeRadioButton<OperationType>(
+                        type: context.operationType(),
+                        items: OperationType.values,
+                        onChange: context.onChangeOperationType,
+                      );
+                    }),
+                    context.operationType().map(
+                        INPUT: () => const _CategoryList(CategoryType.INPUT),
+                        OUTPUT: () => const _CategoryList(CategoryType.OUTPUT),
+                        TRANSFER: () => const AccountRecList()),
+                    Builder(
+                      builder: (BuildContext context) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 6.0),
+                            //Same as `blurRadius` i guess
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(16.0),
+                              ),
+                              color: Theme.of(context)
+                                  .dialogBackgroundColor, //Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
                             ),
-                            color: Theme.of(context)
-                                .dialogBackgroundColor, //Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(0.0, 1.0), //(x,y)
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              BarButton(
-                                onPressed: context.onMoreTap,
-                                title: context.loc.more,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: SumField(
-                                              highlight: context.highlightSum(),
-                                              sum: context.sum(),
-                                              onTap: context.onSumTap,
-                                            ),
-                                          ),
-                                          if (context.showRecSum())
-                                            const SizedBox(width: 8),
-                                          if (context.showRecSum())
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                BarButton(
+                                  onPressed: context.onMoreTap,
+                                  title: context.loc.more,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0),
+                                        child: Row(
+                                          children: [
                                             Flexible(
                                               flex: 1,
                                               child: SumField(
-                                                highlight:
-                                                    context.highlightRecSum(),
-                                                sum: context.recSum(),
-                                                onTap: context.onRecSumTap,
+                                                highlight: context.highlightSum(),
+                                                sum: context.sum(),
+                                                onTap: context.onSumTap,
                                               ),
                                             ),
-                                        ],
+                                            if (context.showRecSum())
+                                              const SizedBox(width: 8),
+                                            if (context.showRecSum())
+                                              Flexible(
+                                                flex: 1,
+                                                child: SumField(
+                                                  highlight:
+                                                      context.highlightRecSum(),
+                                                  sum: context.recSum(),
+                                                  onTap: context.onRecSumTap,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizeTransition(
-                                      axis: Axis.vertical,
-                                      sizeFactor: _animation,
-                                      child: Keyboard(
-                                        onChangeCurrency:
-                                            context.onChangeHighlightCurrency,
-                                        currency: context.highlightCurrency(),
-                                        onDigitPressed: context.onDigitKeyTap,
-                                        onBackPressed: context.onBackKeyTap,
+                                      SizeTransition(
+                                        axis: Axis.vertical,
+                                        sizeFactor: _animation,
+                                        child: Keyboard(
+                                          onChangeCurrency:
+                                              context.onChangeHighlightCurrency,
+                                          currency: context.highlightCurrency(),
+                                          onDigitPressed: context.onDigitKeyTap,
+                                          onBackPressed: context.onBackKeyTap,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              BarButton(
-                                onPressed: context.onNextTap,
-                                title: context.loc.create,
-                              ),
-                            ],
+                                BarButton(
+                                  onPressed: context.onNextTap,
+                                  title: context.loc.create,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
