@@ -22,7 +22,7 @@ class NetworkClient {
     return true;
   }
 
-  Uri _url(String path) => Uri.http('192.168.1.135:8080', 'api/$path');
+  Uri _url(String path) => Uri.http('192.168.1.135:8080', '$path'); //'api/$path');
 
   Map<String, String> get _headers => {"Authorization": "Bearer $_token"};
 

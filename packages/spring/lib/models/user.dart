@@ -1,6 +1,6 @@
 import 'user_group.dart';
 
-typedef UserId = int;
+typedef UserId = String;
 
 class User {
   final UserId id;
@@ -22,6 +22,6 @@ class User {
     name: data['name'],
     email: data['email'],
     photo: data['photo'],
-    userGroup: data['group'],
+    userGroup: data['groupId'],
   );
 }

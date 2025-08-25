@@ -1,6 +1,6 @@
 import 'currency.dart';
 
-typedef UserGroupId = int;
+typedef UserGroupId = String;
 
 class UserGroup {
   final UserGroupId id;

@@ -17,6 +17,7 @@ class SpringPage extends StatelessWidget {
     final connector = SpringConnector(idToken);
     await connector.connect();
 
+
     Map<int, BaseAccount> addedAccounts = {};
     final accounts = await sl<DataRepository>().getAllAccounts();
     for (final account in accounts) {
@@ -29,6 +30,7 @@ class SpringPage extends StatelessWidget {
               await connector.accounts.createDebt(account.title);
       }
     }
+    return;
 
     Map<int, Category> addedCategories = {};
     final categories = await sl<DataRepository>().getAllCategories();
