@@ -31,26 +31,28 @@ class ListTileOperation extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Wrap(
-        children: <Widget>[
-          ListTile(
-            leading: const Icon(Icons.control_point_duplicate),
-            title: Text(context.loc.duplicate),
-            onTap: () => _onDuplicate(context),
-          ),
-          if (_operation.deleted)
+      builder: (context) => SafeArea(
+        child: Wrap(
+          children: <Widget>[
             ListTile(
-              leading: const Icon(Icons.delete_outline),
-              title: Text(context.loc.recover),
-              onTap: () => _onRecover(context),
+              leading: const Icon(Icons.control_point_duplicate),
+              title: Text(context.loc.duplicate),
+              onTap: () => _onDuplicate(context),
             ),
-          if (!_operation.deleted)
-            ListTile(
-              leading: const Icon(Icons.delete),
-              title: Text(context.loc.delete),
-              onTap: () => _onDelete(context),
-            ),
-        ],
+            if (_operation.deleted)
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: Text(context.loc.recover),
+                onTap: () => _onRecover(context),
+              ),
+            if (!_operation.deleted)
+              ListTile(
+                leading: const Icon(Icons.delete),
+                title: Text(context.loc.delete),
+                onTap: () => _onDelete(context),
+              ),
+          ],
+        ),
       ),
     );
   }
