@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/category_interactor.dart';
@@ -177,6 +177,9 @@ class CategoryCashflowBloc
 extension CategoryCashFlowBlocExt on BuildContext {
   List<Category> readHierarchy(CategoryType type) =>
       read<CategoryCashflowBloc>().state.hierarchy(type);
+
+  List<Category> watchHierarchy(CategoryType type) =>
+      watch<CategoryCashflowBloc>().state.hierarchy(type);
 
   int cashFlow(type) =>
       select<CategoryCashflowBloc, int>((bloc) => bloc.state.cashFlow(type));

@@ -27,23 +27,32 @@ class Sum extends Equatable {
   @override
   List<Object?> get props => [sum, currency];
 
-  Sum copyWith({int? sum, Currency? currency})=>Sum(
-    sum ?? this.sum,
-    currency ?? this.currency,
-  );
+  Sum copyWith({int? sum, Currency? currency}) => Sum(
+        sum ?? this.sum,
+        currency ?? this.currency,
+      );
 }
 
 class Balance extends Equatable {
   final List<Sum> _sums;
 
-  const Balance(): _sums = const [];
+  const Balance() : _sums = const [];
 
   UnmodifiableListView<Sum> get sums => UnmodifiableListView(_sums);
 
   const Balance.fromSums(this._sums);
 
-  Balance operator +(Balance balance) {
+  Sum totalInRub(double usdRate, double eurRate) => _sums.fold<Sum>(
+      Sum(0, Currency.RUB),
+      (prev, sum) =>
+          prev +
+          switch (sum.currency) {
+            Currency.RUB => sum.sum,
+            Currency.USD => (sum.sum / usdRate).toInt(),
+            Currency.EUR => (sum.sum / eurRate).toInt(),
+          });
 
+  Balance operator +(Balance balance) {
     var res = Balance.fromSums(_sums);
 
     for (var sum in balance._sums) {
@@ -54,13 +63,12 @@ class Balance extends Equatable {
   }
 
   Balance addSum(Sum sum) {
-
     var items = _sums.toList();
-    if (_sums.where((e) => e.currency == sum.currency).isEmpty){
+    if (_sums.where((e) => e.currency == sum.currency).isEmpty) {
       items.add(sum);
-    }else{
-      items = _sums.map(
-              (e) => e.currency == sum.currency ? e + sum.sum : e)
+    } else {
+      items = _sums
+          .map((e) => e.currency == sum.currency ? e + sum.sum : e)
           .toList();
     }
 
@@ -72,13 +80,16 @@ class Balance extends Equatable {
   @override
   List<Object?> get props => [_sums];
 
-  int toRub(double usd, double eur){
-    return _sums.map<int>((e){
-      return switch(e.currency){
+  int toRub(double usd, double eur) {
+    return _sums.map<int>((e) {
+      return switch (e.currency) {
         Currency.RUB => e.sum,
         Currency.USD => (e.sum / usd).floor(),
         Currency.EUR => (e.sum / eur).floor(),
       };
-    }).fold<int>(0, (previousValue, element) => previousValue + element,);
+    }).fold<int>(
+      0,
+      (previousValue, element) => previousValue + element,
+    );
   }
 }

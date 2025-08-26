@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
+import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/view_models.dart';
 import '../../utils/sum.dart';
@@ -85,7 +86,13 @@ extension AccountBalanceBlocExt on BuildContext {
   List<AccountBalanceView> watchDebtBalances() =>
       watch<AccountBalanceBloc>().state.debtBalances;
 
-  Balance watchTotals() => watch<AccountBalanceBloc>().state.totals;
+  Balance watchTotals() {
+    var sums = List.of(watch<AccountBalanceBloc>().state.totals.sums);
+    sums.sort((a, b) => a.currency.index - b.currency.index,);
+    return Balance.fromSums(sums);
+  }
+
+  Sum watchTotalSum() => watchTotals().totalInRub(usd(), eur());
 
   List<AccountView> watchListItems() =>
       watchBalances().map((a) => a.account).toList();
