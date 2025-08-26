@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:money_tracker/src/domain/interfaces/currency_interactor.dart';
+import 'package:money_tracker/src/ui/blocs/user_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common_blocs/auth/auth_bloc.dart';
@@ -167,6 +168,8 @@ Future<void> init() async {
       ));
 
   sl.registerLazySingleton(() => CurrencyRateBloc(sl<CurrencyInteractor>()));
+
+  sl.registerLazySingleton(() => UserBloc(sl<UserInteractor>()));
 
   sl.registerLazySingleton(() => AccountBalanceBloc(sl<AccountInteractor>()));
 

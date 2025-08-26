@@ -115,8 +115,8 @@ class _MonthOperationDiagram extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(context.loc.numberFormat(cashFlow, Currency.RUB)),
             Text(context.loc.numberFormat(budget, Currency.RUB)),
+            Text(context.loc.numberFormat(cashFlow, Currency.RUB)),
           ],
         ),
       ],

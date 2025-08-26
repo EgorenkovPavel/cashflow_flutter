@@ -36,8 +36,10 @@ class OperationListPage extends StatelessWidget {
               ),
             ],
           ),
-          body: OperationList(
-            context.watch<OperationListBloc>().state.operations,
+          body: SafeArea(
+            child: OperationList(
+              context.watch<OperationListBloc>().state.operations,
+            ),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => context.openOperationInputPage(),
