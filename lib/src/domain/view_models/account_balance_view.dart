@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../utils/sum.dart';
+import '../../utils/balance.dart';
 import '../models.dart';
 import '../view_models.dart';
 

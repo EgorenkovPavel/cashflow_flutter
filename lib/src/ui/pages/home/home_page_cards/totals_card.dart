@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/user_bloc.dart';
+import 'package:money_tracker/src/utils/balance.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:money_tracker/src/utils/sum.dart';
 
@@ -10,10 +12,6 @@ import '../../../blocs/account_balance_bloc.dart';
 class TotalsCard extends StatelessWidget {
   const TotalsCard({super.key});
 
-  double _rate(double rate) {
-    return ((1 / rate) * 100).floor() / 100;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,10 +19,10 @@ class TotalsCard extends StatelessWidget {
         padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
         child: Column(
           children: [
-            _Title(context.loc.titleTotalBalance, context.watchTotalSum()),
+            _Header(context.loc.titleTotalBalance, context.watchTotalSum()),
             Table(
               columnWidths: const <int, TableColumnWidth>{
-                0: FixedColumnWidth(70),
+                0: FixedColumnWidth(90),
                 1: FlexColumnWidth(),
                 2: FlexColumnWidth(),
               },
@@ -34,26 +32,18 @@ class TotalsCard extends StatelessWidget {
                   .map((sum) => TableRow(
                         children: [
                           switch (sum.currency) {
-                            Currency.RUB => SizedBox(),
-                            Currency.USD => Text('USD ${_rate(context.usd())}'),
-                            Currency.EUR => Text('EUR ${_rate(context.eur())}'),
+                            Currency.RUB => Text('RUB'),
+                            Currency.USD =>
+                              Text('USD (${context.usdRateFormat()})'),
+                            Currency.EUR =>
+                              Text('EUR (${context.eurRateFormat()})'),
                           },
                           Text(
                             context.loc.sumFormat(sum),
                             textAlign: TextAlign.end,
                           ),
                           Text(
-                            context.loc.sumFormat(
-                              switch (sum.currency) {
-                                Currency.RUB => sum,
-                                Currency.USD => Sum(
-                                    (sum.sum / context.usd()).toInt(),
-                                    Currency.RUB),
-                                Currency.EUR => Sum(
-                                    (sum.sum / context.eur()).toInt(),
-                                    Currency.RUB),
-                              },
-                            ),
+                            context.loc.sumFormat(context.sumToRub(sum)),
                             textAlign: TextAlign.end,
                           )
                         ],
@@ -65,8 +55,9 @@ class TotalsCard extends StatelessWidget {
             OverflowBar(
               alignment: MainAxisAlignment.end,
               children: [
-                TextButton(onPressed: () {}, child: Text('Details') //TODO
-                    ),
+                TextButton(
+                    onPressed: () => context.openAccountListPage(),
+                    child: Text('Details')), //TODO
               ],
             ),
           ],
@@ -83,20 +74,20 @@ class _UserAccounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final total = context
-        .watchBalances()
-        .where((e) => e.userId == user?.id)
-        .map((e) => e.balance)
-        .reduce((a, b) => a + b)
-        .totalInRub(context.usd(), context.eur());
+    final total = Sum(
+        context.balanceToRub(context
+            .watchBalances()
+            .where((e) => e.userId == user?.id)
+            .map((e) => e.balance)
+            .fold(Balance(), (a, b) => a + b)),
+        Currency.RUB);
 
     final balances = context
         .watchBalances()
         .where((e) => e.userId == user?.id)
-        .where((balance) =>
-            balance.balance.totalInRub(context.usd(), context.eur()).sum != 0);
+        .where((balance) => context.balanceToRub(balance.balance) != 0);
 
-    if (user == null && balances.isEmpty){
+    if (user == null && balances.isEmpty) {
       return SizedBox();
     }
 
@@ -107,7 +98,33 @@ class _UserAccounts extends StatelessWidget {
             user?.name ?? 'Other', //TODO
             total),
         ...balances.map((balance) => _SubTitle(balance.accountTitle,
-            balance.balance.totalInRub(context.usd(), context.eur()))),
+            Sum(context.balanceToRub(balance.balance), Currency.RUB))),
+      ],
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  final String title;
+  final Sum sum;
+
+  const _Header(this.title, this.sum, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          // style: TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        Text(
+          context.loc.sumFormat(sum),
+          // style: TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ],
     );
   }
@@ -148,11 +165,7 @@ class _SubTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-            child: Text(
-          title,
-          overflow: TextOverflow.ellipsis,
-        )),
+        Flexible(child: Text(title, overflow: TextOverflow.ellipsis)),
         Text(context.loc.sumFormat(sum)),
       ],
     );

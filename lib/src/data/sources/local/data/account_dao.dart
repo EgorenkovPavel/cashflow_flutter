@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/src/utils/sum.dart';
+import 'package:money_tracker/src/utils/balance.dart';
 import '../db_converters/currency_converter.dart';
 import 'database.dart';
 import '../entities/account_balance_entity.dart';

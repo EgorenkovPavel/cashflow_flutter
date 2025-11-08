@@ -1,377 +1,255 @@
 // import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_randomcolor/flutter_randomcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/injection_container.dart';
-import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
-import 'package:money_tracker/src/ui/pages/budget_page/budget_bloc.dart';
-import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
+import '../../../utils/balance.dart';
+import '../../../utils/date_util.dart';
 import '../../../utils/sum.dart';
 
 class BudgetPage extends StatefulWidget {
+  final CategoryType type;
+
   const BudgetPage({super.key, required this.type});
 
-  final CategoryType type;
-
   @override
-  _BudgetPageState createState() => _BudgetPageState();
+  State<BudgetPage> createState() => _BudgetPageState();
 }
-
-const _duration = Duration(seconds: 1);
 
 class _BudgetPageState extends State<BudgetPage> {
-  late BudgetBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = sl<BudgetBloc>()..add(BudgetEvent.fetch(type: widget.type));
-  }
-
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
+  BudgetType _budgetType = BudgetType.MONTH;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BudgetBloc, BudgetState>(
-      bloc: _bloc,
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: AppBarTitle(
-              type: state.type,
-              date: state.date,
-            ),
-          ),
-          body: CustomScrollView(
-            slivers: [
-              SliverPersistentHeader(
-                delegate: TitleDelegate(
-                  items: state.itemsAll,
-                ),
-              ),
-              SliverPersistentHeader(
-                delegate: DiagramDelegate(
-                  items: state.itemsAll,
-                  onBackPressed: () =>
-                      _bloc.add(const BudgetEvent.previousYear()),
-                  onForwardPressed: () =>
-                      _bloc.add(const BudgetEvent.nextYear()),
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: BudgetTypeHeaderDelegate(
-                  currency: Currency.RUB,
-                  title: context.loc.budgetTypeTitle(BudgetType.MONTH),
-                  cashflow: state.itemsMonthBudget.fold(
-                    Balance(),
-                    (previousValue, element) =>
-                        previousValue + element.monthCashFlow,
-                  ),
-                  showAll: state.showAllMonthBudget,
-                  onPressed: () => _bloc.add(
-                    const BudgetEvent.showAll(budgetType: BudgetType.MONTH),
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(state.itemsMonthBudget
-                    .expand(
-                      (e) => [_CategoryItem(category: e), const Divider()],
-                    )
-                    .toList()),
-              ),
-              SliverPersistentHeader(
-                delegate: BudgetTypeHeaderDelegate(
-                  currency: Currency.RUB,
-                  title: context.loc.budgetTypeTitle(BudgetType.YEAR),
-                  cashflow: state.itemsYearBudget.fold(
-                    Balance(),
-                    (previousValue, element) =>
-                        previousValue + element.yearCashFlow,
-                  ),
-                  showAll: state.showAllYearBudget,
-                  onPressed: () => _bloc.add(
-                    const BudgetEvent.showAll(budgetType: BudgetType.YEAR),
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(state.itemsYearBudget
-                    .expand(
-                      (e) => [_CategoryItem(category: e), const Divider()],
-                    )
-                    .toList()),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class AppBarTitle extends StatelessWidget {
-  const AppBarTitle({
-    super.key,
-    required this.type,
-    required this.date,
-  });
-
-  final CategoryType type;
-  final DateTime date;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (type) {
-      CategoryType.INPUT => Text(context.loc.earningIn(date)),
-      CategoryType.OUTPUT => Text(context.loc.spendingIn(date)),
+    final list = switch (widget.type) {
+      CategoryType.INPUT => context.watchInputCashFlow(),
+      CategoryType.OUTPUT => context.watchOutputCashFlow(),
     };
-  }
-}
 
-class BudgetTypeHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String title;
-  final Balance cashflow;
-  final Currency currency;
-  final bool showAll;
-  final void Function() onPressed;
+    switch (_budgetType) {
+      case BudgetType.MONTH:
+        list.sort(
+          (a, b) =>
+              context.balanceToRub(b.monthCashFlow) -
+              context.balanceToRub(a.monthCashFlow),
+        );
+      case BudgetType.YEAR:
+        list.sort(
+          (a, b) =>
+              context.balanceToRub(b.yearCashFlow) -
+              context.balanceToRub(a.yearCashFlow),
+        );
+    }
 
-  BudgetTypeHeaderDelegate({
-    required this.cashflow,
-    required this.showAll,
-    required this.onPressed,
-    required this.title,
-    required this.currency,
-  });
+    final budget = switch (_budgetType) {
+      BudgetType.MONTH =>
+        list.fold(0, (prev, cashflow) => prev + cashflow.monthBudget),
+      BudgetType.YEAR =>
+        list.fold(0, (prev, cashflow) => prev + cashflow.yearBudget),
+    };
 
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              ...cashflow.sums
-                  .map((e) => Chip(label: Text(context.loc.sumFormat(e)))),
-              showAll
-                  ? const Icon(Icons.arrow_drop_down)
-                  : const Icon(Icons.arrow_drop_up),
-            ],
+    final cashflow = context.balanceToRub(switch (_budgetType) {
+      BudgetType.MONTH =>
+        list.fold(Balance(), (prev, cashflow) => prev + cashflow.monthCashFlow),
+      BudgetType.YEAR =>
+        list.fold(Balance(), (prev, cashflow) => prev + cashflow.yearCashFlow),
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: switch (widget.type) {
+          CategoryType.INPUT => Text('Earning'), // TODO
+          CategoryType.OUTPUT => Text('Spending'),
+        },
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                SegmentedButton<BudgetType>(
+                  segments: [
+                    ButtonSegment<BudgetType>(
+                      value: BudgetType.MONTH,
+                      label: Text('Month'), // TODO
+                    ),
+                    ButtonSegment<BudgetType>(
+                      value: BudgetType.YEAR,
+                      label: Text('Year'),
+                    )
+                  ],
+                  selected: {_budgetType},
+                  multiSelectionEnabled: false,
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      _budgetType = value.first;
+                    });
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Budget',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      'Cashflow',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(context.loc.sumFormat(Sum(budget, Currency.RUB))),
+                    Text(context.loc.sumFormat(Sum(cashflow, Currency.RUB))),
+                  ],
+                ),
+                switch (_budgetType) {
+                  BudgetType.MONTH => Align(
+                      alignment: Alignment(getMonthAlign() * 2 - 1, 0),
+                      child: Text(DateFormat.d().format(DateTime.now())),
+                    ),
+                  BudgetType.YEAR => Align(
+                      alignment: Alignment(getYearAlign() * 2 - 1, 0),
+                      child: Text(DateFormat.MMM().format(DateTime.now())),
+                    ),
+                },
+              ],
+            ),
           ),
         ),
       ),
+      body: SafeArea(
+        child: ListView(
+            children: list
+                .map((e) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CashflowColumn(
+                        categoryCashFlow: e,
+                        budgetType: _budgetType,
+                      ),
+                    ))
+                .toList()),
+      ),
     );
-  }
-
-  @override
-  double get maxExtent => 50;
-
-  @override
-  double get minExtent => 50;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
   }
 }
 
-class DiagramDelegate extends SliverPersistentHeaderDelegate {
-  final List<CategoryCashFlow> items;
-  final void Function() onBackPressed;
-  final void Function() onForwardPressed;
+class CashflowColumn extends StatelessWidget {
+  final CategoryCashFlow categoryCashFlow;
+  final BudgetType budgetType;
 
-  DiagramDelegate({
-    required this.items,
-    required this.onBackPressed,
-    required this.onForwardPressed,
+  const CashflowColumn({
+    super.key,
+    required this.categoryCashFlow,
+    required this.budgetType,
   });
 
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return PieDiagram(
-      list: items.where((item) => !item.monthCashFlow.isEmpty).toList(),
-      onBackPressed: onBackPressed,
-      onForwardPressed: onForwardPressed,
-    );
-  }
+  final double _heigth = 60;
 
   @override
-  double get maxExtent => 200;
+  Widget build(BuildContext context) {
+    final budget = switch (budgetType) {
+      BudgetType.MONTH => categoryCashFlow.monthBudget,
+      BudgetType.YEAR => categoryCashFlow.yearBudget,
+    };
 
-  @override
-  double get minExtent => 200;
+    final cashflow = context.balanceToRub(switch (budgetType) {
+      BudgetType.MONTH => categoryCashFlow.monthCashFlow,
+      BudgetType.YEAR => categoryCashFlow.yearCashFlow,
+    });
 
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-}
+    final alignment = switch (budgetType) {
+      BudgetType.MONTH => getMonthAlign(),
+      BudgetType.YEAR => getYearAlign(),
+    };
 
-class TitleDelegate extends SliverPersistentHeaderDelegate {
-  final List<CategoryCashFlow> items;
-
-  TitleDelegate({
-    required this.items,
-  });
-
-  Balance _cashflow(List<CategoryCashFlow> items) {
-    return items.map((e) => e.monthCashFlow).fold<Balance>(
-        Balance(), (previousValue, element) => previousValue + element);
-  }
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SizedBox(
+      height: _heigth,
+      child: Stack(
         children: [
-          Text(
-            context.loc.titleCashflow,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          ..._cashflow(items)
-              .sums
-              .map(
-                (sum) => TweenAnimationBuilder<int>(
-                  tween: IntTween(
-                    begin: 0,
-                    end: sum.sum,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                categoryCashFlow.categoryTitle,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                children: [
+                  LinearProgressIndicator(
+                    minHeight: 10,
+                    color: Colors.amber,
+                    backgroundColor: Colors.transparent,
+                    value: _progress(cashflow, budget),
                   ),
-                  duration: _duration,
-                  builder: (context, cashflow, _) {
-                    return Text(
-                      context.loc.numberFormat(cashflow, sum.currency),
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary),
-                    );
-                  },
-                ),
+                  LinearProgressIndicator(
+                    minHeight: 10,
+                    color: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Colors.transparent,
+                    value: alignment < _progress(cashflow, budget)
+                        ? alignment
+                        : _progress(cashflow, budget),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(context.loc.numberFormat(budget, Currency.RUB)),
+                  Text(context.loc.numberFormat(cashflow, Currency.RUB)),
+                ],
               )
+            ],
+          ),
+          Align(
+            alignment: Alignment(alignment * 2 - 1, 0.0),
+            child: Container(
+              color: Colors.grey,
+              width: 1.0,
+              height: _heigth,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  @override
-  double get maxExtent => 50;
+  double _progress(int cashFlow, int budget) {
+    var progress = 0.0;
+    if (cashFlow == 0) {
+      progress = 0;
+    } else if (cashFlow > budget || budget == 0) {
+      progress = 1;
+    } else {
+      progress = cashFlow / budget;
+    }
 
-  @override
-  double get minExtent => 50;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
+    return progress;
   }
 }
 
-class PieDiagram extends StatelessWidget {
-  const PieDiagram({
-    super.key,
-    required this.list,
-    this.onBackPressed,
-    this.onForwardPressed,
-  });
+double getMonthAlign() {
+  var now = DateTime.now();
+  var days = DateUtil.daysInMonth(now.month, now.year);
 
-  final void Function()? onBackPressed;
-  final void Function()? onForwardPressed;
-  final List<CategoryCashFlow> list;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          onPressed: onBackPressed,
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
-        SizedBox(
-          width: 200.0,
-          height: 200.0,
-          child: PieChart(
-            PieChartData(
-              sectionsSpace: 2,
-              centerSpaceRadius: 0,
-              sections: list
-                  .map((e) => PieChartSectionData(
-                      radius: 90,
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                      color: RandomColor.getColorObject(
-                          Options(luminosity: Luminosity.light)),
-                      title: e.categoryTitle,
-                      titlePositionPercentageOffset: 1.1,
-                      value:
-                          e.monthCashFlow.toRub(context.usd(), context.eur()) *
-                              1.0))
-                  .toList(),
-            ),
-            duration: _duration, // Optional
-            curve: Curves.linear, // Optional
-          ),
-        ),
-        IconButton(
-          onPressed: onForwardPressed,
-          icon: const Icon(Icons.arrow_forward_ios),
-        ),
-      ],
-    );
-  }
+  return now.day / days;
 }
 
-class _CategoryItem extends StatelessWidget {
-  final CategoryCashFlow category;
+double getYearAlign() {
+  var now = DateTime.now();
 
-  const _CategoryItem({required this.category});
+  final firstDayOfYear = DateTime(now.year, 1, 1);
 
-  Balance _cashFlow() {
-    return category.budgetType == BudgetType.MONTH
-        ? category.monthCashFlow
-        : category.yearCashFlow;
-  }
+  final dayOfYear = now.difference(firstDayOfYear).inDays + 1;
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => context.openCategoryPage(category.categoryId),
-      title: Text(category.categoryTitle),
-      subtitle: Text(context.loc.numberFormat(category.budget, baseCurrency)),
-      trailing: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: _cashFlow().sums.map((sum) => ListItemSum(sum: sum)).toList(),
-      ), //TODO
-    );
-  }
+  final yearDaysAmount =
+      DateTime(now.year + 1, 1, 1).difference(firstDayOfYear).inDays;
+
+  return dayOfYear / yearDaysAmount;
 }

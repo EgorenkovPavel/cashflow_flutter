@@ -59,30 +59,31 @@ class ListTileOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: UserAvatar(
-        photoUrl: _operation.userPhotoUrl,
-        name: _operation.userName,
+    return Opacity(
+      opacity: _operation.deleted ? 0.5 : 1,
+      child: ListTile(
+        leading: UserAvatar(
+          photoUrl: _operation.userPhotoUrl,
+          name: _operation.userName,
+        ),
+        title: Text(_operation.analytic),
+        subtitle: Row(
+          children: [
+            Text(_operation.account),
+            const SizedBox(width: 8),
+            if (_operation.synced) const Icon(Icons.check),
+          ],
+        ),
+        trailing: Text(
+          context.loc.sumFormat(_operation.sum),
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall
+              ?.copyWith(color: _operation.type.color),
+        ),
+        onTap: onTap,
+        onLongPress: () => _onLongPress(context),
       ),
-      subtitle: Row(
-        children: [
-          Text(_operation.account),
-          const SizedBox(width: 8),
-          if (_operation.synced) const Icon(Icons.check),
-          const SizedBox(width: 8),
-          if (_operation.deleted) const Icon(Icons.cancel),
-        ],
-      ),
-      title: Text(_operation.analytic),
-      trailing: Text(
-        context.loc.sumFormat(_operation.sum),
-        style: Theme.of(context)
-            .textTheme
-            .headlineSmall
-            ?.copyWith(color: _operation.type.color),
-      ),
-      onTap: onTap,
-      onLongPress: () => _onLongPress(context),
     );
   }
 }

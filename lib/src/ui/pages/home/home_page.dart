@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 
+import 'home_page_cards/cashflow_card.dart';
 import 'home_page_cards/last_operations/last_operations.dart';
-import 'home_page_cards/month_operations.dart';
 import 'home_page_cards/totals_card.dart';
 import 'sync_button.dart';
 
@@ -34,8 +34,8 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 TotalsCard(),
-                MonthOperations(type: CategoryType.INPUT),
-                MonthOperations(type: CategoryType.OUTPUT),
+                CashflowCard(type: CategoryType.INPUT),
+                CashflowCard(type: CategoryType.OUTPUT),
                 LastOperations(),
               ]
                   .map((e) => Padding(padding: EdgeInsets.all(4.0), child: e))
@@ -51,3 +51,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+

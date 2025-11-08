@@ -38,6 +38,12 @@ extension AppLocalizationExtended on AppLocalizations {
     ).format(number);
   }
 
+  String rateFormat(double rate) => NumberFormat.currency(
+    //locale: locale.languageCode,
+    symbol: Currency.RUB.symbol,
+    decimalDigits: 2,
+  ).format(rate);
+
   String sumFormat(Sum sum) => numberFormat(sum.sum, sum.currency);
 
   String operationTypeTitle(OperationType type) => switch (type) {

@@ -26,25 +26,6 @@ class MonthOperations extends StatelessWidget {
                   : context.loc.spendingIn(DateTime.now()),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            // title: RichText(
-            //   text: TextSpan(
-            //     children: [
-            //       TextSpan(
-            //         text:
-            //             '${operationType == OperationType.INPUT ? context.loc.earningIn : context.loc.spendingIn} ',
-            //         style: Theme.of(context).textTheme.titleLarge,
-            //       ),
-            //       TextSpan(
-            //         text: DateFormat.MMMM(
-            //           Localizations.localeOf(context).toString(),
-            //         ).format(DateTime.now()),
-            //         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            //               color: Theme.of(context).colorScheme.primary,
-            //             ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

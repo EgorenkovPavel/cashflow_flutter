@@ -37,16 +37,17 @@ class CategoryListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final items = context.readHierarchy(type);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.loc.categories),
       ),
-      body: ListView(
-        children: [
-          ...context
-              .readHierarchy(type)
-              .map((e) => _CategoryListTile(category: e))
-        ],
+      body: ListView.separated(
+        itemCount: items.length,
+        separatorBuilder: (context, _) => Divider(),
+        itemBuilder: (context, index) =>
+            _CategoryListTile(category: items[index]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => onAdd(context),
@@ -80,7 +81,13 @@ class _ItemListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: item.parentId == null ? null : Icon(Icons.remove),
+      leading: item.parentId == null
+          ? Icon(Icons.remove)
+          : SizedBox(
+              width: 60,
+              child: Align(
+                  alignment: Alignment.centerRight, child: Icon(Icons.remove)),
+            ),
       title: Text(item.title),
       onTap: () => context.openCategoryPage(item.id),
     );

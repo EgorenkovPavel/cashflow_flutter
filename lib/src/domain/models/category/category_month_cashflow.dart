@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:money_tracker/src/utils/sum.dart';
+import 'package:money_tracker/src/utils/balance.dart';
 
 class CategoryMonthCashFlow extends Equatable {
   final int categoryId;

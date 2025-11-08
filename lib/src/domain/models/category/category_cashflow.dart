@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/utils/sum.dart';
+import 'package:money_tracker/src/utils/balance.dart';
 
 sealed class CategoryCashFlow extends Equatable {
   final int categoryId;
@@ -17,6 +17,16 @@ sealed class CategoryCashFlow extends Equatable {
       required this.budget,
       required this.monthCashFlow,
       required this.yearCashFlow});
+
+  int get monthBudget => switch (budgetType) {
+        BudgetType.MONTH => budget,
+        BudgetType.YEAR => (budget / 12).toInt(),
+      };
+
+  int get yearBudget => switch (budgetType) {
+        BudgetType.MONTH => budget * 12,
+        BudgetType.YEAR => budget,
+      };
 
   @override
   List<Object?> get props => [

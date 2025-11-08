@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:money_tracker/src/ui/pages/account/list_page/account_list_page.dart';
 import 'package:money_tracker/src/ui/pages/category/list_page/category_list_page.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
 
 class Pages {
   static final String accountEdit = 'account';
+  static final String accountList = 'accounts';
   static final String categoryEdit = 'category';
   static final String categoryList = 'categories';
   static final String operationNew = 'operationNew';
@@ -103,6 +105,11 @@ final _router = GoRouter(
               (element) => element.toString() == state.pathParameters['fid'],
             ),
           ),
+        ),
+        GoRoute(
+          name: Pages.accountList,
+          path: 'accounts',
+          builder: (context, state) => const AccountListPage(),
         ),
         GoRoute(
           name: Pages.categoryList,
@@ -194,6 +201,8 @@ extension PageNavigator on BuildContext {
         Pages.budgetEdit,
         pathParameters: <String, String>{'fid': type.toString()},
       ));
+
+  void openAccountListPage() => push(namedLocation(Pages.accountList));
 
   void openCategoryListPage(CategoryType type) => push(namedLocation(
         Pages.categoryList,
