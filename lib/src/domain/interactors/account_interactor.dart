@@ -11,30 +11,22 @@ class AccountInteractor {
 
   Stream<BaseAccount> watchById(int id) => _dataRepository.watchAccountById(id);
 
-  Stream<List<AccountBalanceView>> watchBalances() => _dataRepository.watchAllBalance();
+  Stream<List<AccountBalanceView>> watchBalances() =>
+      _dataRepository.watchAllBalance();
 
   Future<BaseAccount> insert({
     required String title,
     required bool isDebt,
     required int? userId,
   }) async {
-    if (isDebt) {
-      final account = Debt(
-        title: title,
-        userId: userId,
-      );
-      final id = await _dataRepository.insertAccount(account);
+    final account = switch (isDebt) {
+      true => Debt(title: title, userId: userId),
+      false => Account(title: title, userId: userId),
+    };
 
-      return account.copyWith(id: id);
-    } else {
-      final account = Account(
-        title: title,
-        userId: userId,
-      );
-      final id = await _dataRepository.insertAccount(account);
+    final id = await _dataRepository.insertAccount(account);
 
-      return account.copyWith(id: id);
-    }
+    return account.copyWith(id: id);
   }
 
   Future<BaseAccount> update({
@@ -42,17 +34,8 @@ class AccountInteractor {
     required String title,
     required int? userId,
   }) async {
-    switch (account) {
-      case Account():
-        final newAccount = account.copyWith(title: title).setUser(userId);
-        await _dataRepository.updateAccount(newAccount);
-
-        return newAccount;
-      case Debt():
-        final newAccount = account.copyWith(title: title).setUser(userId);
-        await _dataRepository.updateAccount(newAccount);
-
-        return newAccount;
-    }
+    final newAccount = account.copyWith(title: title).setUser(userId);
+    await _dataRepository.updateAccount(newAccount);
+    return newAccount;
   }
 }

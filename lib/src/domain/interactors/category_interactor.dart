@@ -9,10 +9,10 @@ class CategoryInteractor {
   Future<Category> getById({required int categoryId}) =>
       _dataRepository.getCategoryById(categoryId);
 
-  Stream<Category> watchById(int id) =>
-      _dataRepository.watchCategoryById(id);
+  Stream<Category> watchById(int id) => _dataRepository.watchCategoryById(id);
 
-  Stream<List<CategoryCashFlow>> watchCashFlows() => _dataRepository.watchCashFlow(DateTime.now());
+  Stream<List<CategoryCashFlow>> watchCashFlows() =>
+      _dataRepository.watchCashFlow(DateTime.now());
 
   Stream<List<Category>> watchAll() => _dataRepository.watchAllCategories();
 
@@ -55,9 +55,7 @@ class CategoryInteractor {
   Future<InputCategoryGroup> insertInputCategoryGroup({
     required String title,
   }) async {
-    final category = InputCategoryGroup(
-      title: title,
-    );
+    final category = InputCategoryGroup(title: title);
 
     final id = await _dataRepository.insertCategory(category);
 
@@ -67,9 +65,7 @@ class CategoryInteractor {
   Future<OutputCategoryGroup> insertOutputCategoryGroup({
     required String title,
   }) async {
-    final category = OutputCategoryGroup(
-      title: title,
-    );
+    final category = OutputCategoryGroup(title: title);
 
     final id = await _dataRepository.insertCategory(category);
 
@@ -84,11 +80,7 @@ class CategoryInteractor {
     required int? parent,
   }) async {
     final newCategory = category
-        .copyWith(
-          title: title,
-          budgetType: budgetType,
-          budget: budget,
-        )
+        .copyWith(title: title, budgetType: budgetType, budget: budget)
         .setParent(parent);
 
     await _dataRepository.updateCategory(newCategory);
@@ -104,11 +96,7 @@ class CategoryInteractor {
     required int? parent,
   }) async {
     final newCategory = category
-        .copyWith(
-          title: title,
-          budgetType: budgetType,
-          budget: budget,
-        )
+        .copyWith(title: title, budgetType: budgetType, budget: budget)
         .setParent(parent);
 
     await _dataRepository.updateCategory(newCategory);
@@ -120,9 +108,7 @@ class CategoryInteractor {
     required InputCategoryGroup category,
     required String title,
   }) async {
-    final newCategory = category.copyWith(
-      title: title,
-    );
+    final newCategory = category.copyWith(title: title);
 
     await _dataRepository.updateCategory(newCategory);
 
@@ -133,9 +119,7 @@ class CategoryInteractor {
     required OutputCategoryGroup category,
     required String title,
   }) async {
-    final newCategory = category.copyWith(
-      title: title,
-    );
+    final newCategory = category.copyWith(title: title);
 
     await _dataRepository.updateCategory(newCategory);
 

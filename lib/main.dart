@@ -43,3 +43,7 @@ Future<void> main() async {
     },
   );
 }
+
+// TODO
+// 1. Add OperationType = exchage => choose account, and 2 sums with different currencies
+// 2. Redesign operation input page (maybe operation edit page)

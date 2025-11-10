@@ -745,10 +745,7 @@ case _InputItemCategoryInputState():
 return inputItem(_that);case _OutputItemCategoryInputState():
 return outputItem(_that);case _InputGroupCategoryInputState():
 return inputGroup(_that);case _OutputGroupCategoryInputState():
-return outputGroup(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return outputGroup(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -816,10 +813,7 @@ case _InputItemCategoryInputState():
 return inputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _OutputItemCategoryInputState():
 return outputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _InputGroupCategoryInputState():
 return inputGroup(_that.category,_that.title,_that.isSaved);case _OutputGroupCategoryInputState():
-return outputGroup(_that.category,_that.title,_that.isSaved);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return outputGroup(_that.category,_that.title,_that.isSaved);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

@@ -12,64 +12,53 @@ sealed class BaseAccount extends Equatable {
     required this.title,
     required this.userId,
   });
+
+  BaseAccount copyWith({int? id, String? cloudId, String? title}) =>
+      copyWith(id: id, title: title, cloudId: cloudId);
+
+  BaseAccount setUser(int? userId) => setUser(userId);
 }
 
 class Account extends BaseAccount {
-  const Account(
-      {super.id = 0,
-      super.cloudId = '',
-      required super.title,
-      required super.userId});
+  const Account({
+    super.id = 0,
+    super.cloudId = '',
+    required super.title,
+    required super.userId,
+  });
 
   @override
   List<Object?> get props => [id, cloudId, title, userId];
 
-  Account setUser(int? userId) => Account(
-    id: id,
-    cloudId: cloudId,
-    title: title,
+  Account setUser(int? userId) =>
+      Account(id: id, cloudId: cloudId, title: title, userId: userId);
+
+  Account copyWith({int? id, String? cloudId, String? title}) => Account(
+    id: id ?? this.id,
+    cloudId: cloudId ?? this.cloudId,
+    title: title ?? this.title,
     userId: userId,
   );
-
-  Account copyWith({
-    int? id,
-    String? cloudId,
-    String? title,
-  }) =>
-      Account(
-        id: id ?? this.id,
-        cloudId: cloudId ?? this.cloudId,
-        title: title ?? this.title,
-        userId: userId,
-      );
 }
 
 class Debt extends BaseAccount {
-  const Debt(
-      {super.id = 0,
-      super.cloudId = '',
-      required super.title,
-      required super.userId});
+  const Debt({
+    super.id = 0,
+    super.cloudId = '',
+    required super.title,
+    required super.userId,
+  });
 
   @override
   List<Object?> get props => [id, cloudId, title, userId];
 
-  Debt setUser(int? userId) => Debt(
-    id: id,
-    cloudId: cloudId,
-    title: title,
+  Debt setUser(int? userId) =>
+      Debt(id: id, cloudId: cloudId, title: title, userId: userId);
+
+  Debt copyWith({int? id, String? cloudId, String? title}) => Debt(
+    id: id ?? this.id,
+    cloudId: cloudId ?? this.cloudId,
+    title: title ?? this.title,
     userId: userId,
   );
-
-  Debt copyWith({
-    int? id,
-    String? cloudId,
-    String? title,
-  }) =>
-      Debt(
-        id: id ?? this.id,
-        cloudId: cloudId ?? this.cloudId,
-        title: title ?? this.title,
-        userId: userId,
-      );
 }

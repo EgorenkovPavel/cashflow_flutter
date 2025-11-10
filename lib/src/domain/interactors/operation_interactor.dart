@@ -16,10 +16,9 @@ class OperationInteractor {
       _dataRepository.watchLastOperations(count);
 
   Stream<List<OperationView>> watchByAccountId(int id) =>
-      _dataRepository.watchAllOperationsByFilter(OperationListFilter(
-        accountIds: {id},
-        categoryIds: const {},
-      ));
+      _dataRepository.watchAllOperationsByFilter(
+        OperationListFilter(accountIds: {id}, categoryIds: const {}),
+      );
 
   Stream<List<OperationView>> watchByCategoryId(int id) =>
       _dataRepository.watchAllOperationsByCategory(id);
