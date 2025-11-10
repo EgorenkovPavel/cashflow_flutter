@@ -4,7 +4,7 @@ import 'package:money_tracker/src/data/sources/local/data/database.dart';
 part 'category_month_cashflow_entity.freezed.dart';
 
 @freezed
-class CategoryMonthCashflowEntity with _$CategoryMonthCashflowEntity {
+abstract class CategoryMonthCashflowEntity with _$CategoryMonthCashflowEntity {
   const factory CategoryMonthCashflowEntity({
     required CategoryDB category,
     required int month,

@@ -28,7 +28,7 @@ class CategoryCashflowEvent with _$CategoryCashflowEvent {
 }
 
 @freezed
-class CategoryCashflowState with _$CategoryCashflowState {
+sealed class CategoryCashflowState with _$CategoryCashflowState {
   const CategoryCashflowState._();
 
   const factory CategoryCashflowState({

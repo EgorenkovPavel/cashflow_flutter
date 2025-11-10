@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,176 +9,269 @@ part of 'account_balance_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$AccountBalanceEntity {
-  int get accountId => throw _privateConstructorUsedError;
-  Currency get currency => throw _privateConstructorUsedError;
-  int get sum => throw _privateConstructorUsedError;
 
-  /// Create a copy of AccountBalanceEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AccountBalanceEntityCopyWith<AccountBalanceEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+ int get accountId; Currency get currency; int get sum;
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AccountBalanceEntityCopyWith<AccountBalanceEntity> get copyWith => _$AccountBalanceEntityCopyWithImpl<AccountBalanceEntity>(this as AccountBalanceEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.sum, sum) || other.sum == sum));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,accountId,currency,sum);
+
+@override
+String toString() {
+  return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $AccountBalanceEntityCopyWith<$Res> {
-  factory $AccountBalanceEntityCopyWith(AccountBalanceEntity value,
-          $Res Function(AccountBalanceEntity) then) =
-      _$AccountBalanceEntityCopyWithImpl<$Res, AccountBalanceEntity>;
-  @useResult
-  $Res call({int accountId, Currency currency, int sum});
-}
+abstract mixin class $AccountBalanceEntityCopyWith<$Res>  {
+  factory $AccountBalanceEntityCopyWith(AccountBalanceEntity value, $Res Function(AccountBalanceEntity) _then) = _$AccountBalanceEntityCopyWithImpl;
+@useResult
+$Res call({
+ int accountId, Currency currency, int sum
+});
 
+
+
+
+}
 /// @nodoc
-class _$AccountBalanceEntityCopyWithImpl<$Res,
-        $Val extends AccountBalanceEntity>
+class _$AccountBalanceEntityCopyWithImpl<$Res>
     implements $AccountBalanceEntityCopyWith<$Res> {
-  _$AccountBalanceEntityCopyWithImpl(this._value, this._then);
+  _$AccountBalanceEntityCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final AccountBalanceEntity _self;
+  final $Res Function(AccountBalanceEntity) _then;
 
-  /// Create a copy of AccountBalanceEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accountId = null,
-    Object? currency = null,
-    Object? sum = null,
-  }) {
-    return _then(_value.copyWith(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? currency = null,Object? sum = null,}) {
+  return _then(_self.copyWith(
+accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [AccountBalanceEntity].
+extension AccountBalanceEntityPatterns on AccountBalanceEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AccountBalanceEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _AccountBalanceEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AccountBalanceEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalanceEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AccountBalanceEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalanceEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int accountId,  Currency currency,  int sum)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _AccountBalanceEntity() when $default != null:
+return $default(_that.accountId,_that.currency,_that.sum);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int accountId,  Currency currency,  int sum)  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalanceEntity():
+return $default(_that.accountId,_that.currency,_that.sum);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int accountId,  Currency currency,  int sum)?  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalanceEntity() when $default != null:
+return $default(_that.accountId,_that.currency,_that.sum);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$AccountBalanceEntityImplCopyWith<$Res>
-    implements $AccountBalanceEntityCopyWith<$Res> {
-  factory _$$AccountBalanceEntityImplCopyWith(_$AccountBalanceEntityImpl value,
-          $Res Function(_$AccountBalanceEntityImpl) then) =
-      __$$AccountBalanceEntityImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int accountId, Currency currency, int sum});
+
+
+class _AccountBalanceEntity implements AccountBalanceEntity {
+  const _AccountBalanceEntity({required this.accountId, required this.currency, required this.sum});
+  
+
+@override final  int accountId;
+@override final  Currency currency;
+@override final  int sum;
+
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AccountBalanceEntityCopyWith<_AccountBalanceEntity> get copyWith => __$AccountBalanceEntityCopyWithImpl<_AccountBalanceEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.sum, sum) || other.sum == sum));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,accountId,currency,sum);
+
+@override
+String toString() {
+  return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-class __$$AccountBalanceEntityImplCopyWithImpl<$Res>
-    extends _$AccountBalanceEntityCopyWithImpl<$Res, _$AccountBalanceEntityImpl>
-    implements _$$AccountBalanceEntityImplCopyWith<$Res> {
-  __$$AccountBalanceEntityImplCopyWithImpl(_$AccountBalanceEntityImpl _value,
-      $Res Function(_$AccountBalanceEntityImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$AccountBalanceEntityCopyWith<$Res> implements $AccountBalanceEntityCopyWith<$Res> {
+  factory _$AccountBalanceEntityCopyWith(_AccountBalanceEntity value, $Res Function(_AccountBalanceEntity) _then) = __$AccountBalanceEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ int accountId, Currency currency, int sum
+});
 
-  /// Create a copy of AccountBalanceEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accountId = null,
-    Object? currency = null,
-    Object? sum = null,
-  }) {
-    return _then(_$AccountBalanceEntityImpl(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$AccountBalanceEntityCopyWithImpl<$Res>
+    implements _$AccountBalanceEntityCopyWith<$Res> {
+  __$AccountBalanceEntityCopyWithImpl(this._self, this._then);
 
-class _$AccountBalanceEntityImpl implements _AccountBalanceEntity {
-  const _$AccountBalanceEntityImpl(
-      {required this.accountId, required this.currency, required this.sum});
+  final _AccountBalanceEntity _self;
+  final $Res Function(_AccountBalanceEntity) _then;
 
-  @override
-  final int accountId;
-  @override
-  final Currency currency;
-  @override
-  final int sum;
-
-  @override
-  String toString() {
-    return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AccountBalanceEntityImpl &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.sum, sum) || other.sum == sum));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, accountId, currency, sum);
-
-  /// Create a copy of AccountBalanceEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
-      get copyWith =>
-          __$$AccountBalanceEntityImplCopyWithImpl<_$AccountBalanceEntityImpl>(
-              this, _$identity);
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = null,Object? currency = null,Object? sum = null,}) {
+  return _then(_AccountBalanceEntity(
+accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-abstract class _AccountBalanceEntity implements AccountBalanceEntity {
-  const factory _AccountBalanceEntity(
-      {required final int accountId,
-      required final Currency currency,
-      required final int sum}) = _$AccountBalanceEntityImpl;
 
-  @override
-  int get accountId;
-  @override
-  Currency get currency;
-  @override
-  int get sum;
-
-  /// Create a copy of AccountBalanceEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AccountBalanceEntityImplCopyWith<_$AccountBalanceEntityImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
+
+// dart format on

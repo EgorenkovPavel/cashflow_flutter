@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,1118 +9,751 @@ part of 'budget_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$BudgetEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'BudgetEvent()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BudgetEventCopyWith<$Res> {
-  factory $BudgetEventCopyWith(
-          BudgetEvent value, $Res Function(BudgetEvent) then) =
-      _$BudgetEventCopyWithImpl<$Res, BudgetEvent>;
+class $BudgetEventCopyWith<$Res>  {
+$BudgetEventCopyWith(BudgetEvent _, $Res Function(BudgetEvent) __);
 }
 
-/// @nodoc
-class _$BudgetEventCopyWithImpl<$Res, $Val extends BudgetEvent>
-    implements $BudgetEventCopyWith<$Res> {
-  _$BudgetEventCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [BudgetEvent].
+extension BudgetEventPatterns on BudgetEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchBudgetEvent value)?  fetch,TResult Function( _PreviousYearBudgetEvent value)?  previousYear,TResult Function( _NextYearBudgetEvent value)?  nextYear,TResult Function( _ShowAllBudgetEvent value)?  showAll,TResult Function( _ChangeItemsBudgetEvent value)?  changeItems,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FetchBudgetEvent() when fetch != null:
+return fetch(_that);case _PreviousYearBudgetEvent() when previousYear != null:
+return previousYear(_that);case _NextYearBudgetEvent() when nextYear != null:
+return nextYear(_that);case _ShowAllBudgetEvent() when showAll != null:
+return showAll(_that);case _ChangeItemsBudgetEvent() when changeItems != null:
+return changeItems(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchBudgetEvent value)  fetch,required TResult Function( _PreviousYearBudgetEvent value)  previousYear,required TResult Function( _NextYearBudgetEvent value)  nextYear,required TResult Function( _ShowAllBudgetEvent value)  showAll,required TResult Function( _ChangeItemsBudgetEvent value)  changeItems,}){
+final _that = this;
+switch (_that) {
+case _FetchBudgetEvent():
+return fetch(_that);case _PreviousYearBudgetEvent():
+return previousYear(_that);case _NextYearBudgetEvent():
+return nextYear(_that);case _ShowAllBudgetEvent():
+return showAll(_that);case _ChangeItemsBudgetEvent():
+return changeItems(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchBudgetEvent value)?  fetch,TResult? Function( _PreviousYearBudgetEvent value)?  previousYear,TResult? Function( _NextYearBudgetEvent value)?  nextYear,TResult? Function( _ShowAllBudgetEvent value)?  showAll,TResult? Function( _ChangeItemsBudgetEvent value)?  changeItems,}){
+final _that = this;
+switch (_that) {
+case _FetchBudgetEvent() when fetch != null:
+return fetch(_that);case _PreviousYearBudgetEvent() when previousYear != null:
+return previousYear(_that);case _NextYearBudgetEvent() when nextYear != null:
+return nextYear(_that);case _ShowAllBudgetEvent() when showAll != null:
+return showAll(_that);case _ChangeItemsBudgetEvent() when changeItems != null:
+return changeItems(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( CategoryType type)?  fetch,TResult Function()?  previousYear,TResult Function()?  nextYear,TResult Function( BudgetType budgetType)?  showAll,TResult Function( List<CategoryCashFlow> items)?  changeItems,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FetchBudgetEvent() when fetch != null:
+return fetch(_that.type);case _PreviousYearBudgetEvent() when previousYear != null:
+return previousYear();case _NextYearBudgetEvent() when nextYear != null:
+return nextYear();case _ShowAllBudgetEvent() when showAll != null:
+return showAll(_that.budgetType);case _ChangeItemsBudgetEvent() when changeItems != null:
+return changeItems(_that.items);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( CategoryType type)  fetch,required TResult Function()  previousYear,required TResult Function()  nextYear,required TResult Function( BudgetType budgetType)  showAll,required TResult Function( List<CategoryCashFlow> items)  changeItems,}) {final _that = this;
+switch (_that) {
+case _FetchBudgetEvent():
+return fetch(_that.type);case _PreviousYearBudgetEvent():
+return previousYear();case _NextYearBudgetEvent():
+return nextYear();case _ShowAllBudgetEvent():
+return showAll(_that.budgetType);case _ChangeItemsBudgetEvent():
+return changeItems(_that.items);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( CategoryType type)?  fetch,TResult? Function()?  previousYear,TResult? Function()?  nextYear,TResult? Function( BudgetType budgetType)?  showAll,TResult? Function( List<CategoryCashFlow> items)?  changeItems,}) {final _that = this;
+switch (_that) {
+case _FetchBudgetEvent() when fetch != null:
+return fetch(_that.type);case _PreviousYearBudgetEvent() when previousYear != null:
+return previousYear();case _NextYearBudgetEvent() when nextYear != null:
+return nextYear();case _ShowAllBudgetEvent() when showAll != null:
+return showAll(_that.budgetType);case _ChangeItemsBudgetEvent() when changeItems != null:
+return changeItems(_that.items);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$FetchBudgetEventImplCopyWith<$Res> {
-  factory _$$FetchBudgetEventImplCopyWith(_$FetchBudgetEventImpl value,
-          $Res Function(_$FetchBudgetEventImpl) then) =
-      __$$FetchBudgetEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({CategoryType type});
-}
-
-/// @nodoc
-class __$$FetchBudgetEventImplCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$FetchBudgetEventImpl>
-    implements _$$FetchBudgetEventImplCopyWith<$Res> {
-  __$$FetchBudgetEventImplCopyWithImpl(_$FetchBudgetEventImpl _value,
-      $Res Function(_$FetchBudgetEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? type = null,
-  }) {
-    return _then(_$FetchBudgetEventImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$FetchBudgetEventImpl implements _FetchBudgetEvent {
-  const _$FetchBudgetEventImpl({required this.type});
-
-  @override
-  final CategoryType type;
-
-  @override
-  String toString() {
-    return 'BudgetEvent.fetch(type: $type)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FetchBudgetEventImpl &&
-            (identical(other.type, type) || other.type == type));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, type);
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
-      __$$FetchBudgetEventImplCopyWithImpl<_$FetchBudgetEventImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) {
-    return fetch(type);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) {
-    return fetch?.call(type);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(type);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) {
-    return fetch(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) {
-    return fetch?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FetchBudgetEvent implements BudgetEvent {
-  const factory _FetchBudgetEvent({required final CategoryType type}) =
-      _$FetchBudgetEventImpl;
-
-  CategoryType get type;
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FetchBudgetEventImplCopyWith<_$FetchBudgetEventImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$PreviousYearBudgetEventImplCopyWith<$Res> {
-  factory _$$PreviousYearBudgetEventImplCopyWith(
-          _$PreviousYearBudgetEventImpl value,
-          $Res Function(_$PreviousYearBudgetEventImpl) then) =
-      __$$PreviousYearBudgetEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PreviousYearBudgetEventImplCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$PreviousYearBudgetEventImpl>
-    implements _$$PreviousYearBudgetEventImplCopyWith<$Res> {
-  __$$PreviousYearBudgetEventImplCopyWithImpl(
-      _$PreviousYearBudgetEventImpl _value,
-      $Res Function(_$PreviousYearBudgetEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$PreviousYearBudgetEventImpl implements _PreviousYearBudgetEvent {
-  const _$PreviousYearBudgetEventImpl();
 
-  @override
-  String toString() {
-    return 'BudgetEvent.previousYear()';
-  }
+class _FetchBudgetEvent implements BudgetEvent {
+  const _FetchBudgetEvent({required this.type});
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PreviousYearBudgetEventImpl);
-  }
+ final  CategoryType type;
 
-  @override
-  int get hashCode => runtimeType.hashCode;
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FetchBudgetEventCopyWith<_FetchBudgetEvent> get copyWith => __$FetchBudgetEventCopyWithImpl<_FetchBudgetEvent>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) {
-    return previousYear();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) {
-    return previousYear?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (previousYear != null) {
-      return previousYear();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) {
-    return previousYear(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) {
-    return previousYear?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (previousYear != null) {
-      return previousYear(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchBudgetEvent&&(identical(other.type, type) || other.type == type));
 }
 
-abstract class _PreviousYearBudgetEvent implements BudgetEvent {
-  const factory _PreviousYearBudgetEvent() = _$PreviousYearBudgetEventImpl;
+
+@override
+int get hashCode => Object.hash(runtimeType,type);
+
+@override
+String toString() {
+  return 'BudgetEvent.fetch(type: $type)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$NextYearBudgetEventImplCopyWith<$Res> {
-  factory _$$NextYearBudgetEventImplCopyWith(_$NextYearBudgetEventImpl value,
-          $Res Function(_$NextYearBudgetEventImpl) then) =
-      __$$NextYearBudgetEventImplCopyWithImpl<$Res>;
+abstract mixin class _$FetchBudgetEventCopyWith<$Res> implements $BudgetEventCopyWith<$Res> {
+  factory _$FetchBudgetEventCopyWith(_FetchBudgetEvent value, $Res Function(_FetchBudgetEvent) _then) = __$FetchBudgetEventCopyWithImpl;
+@useResult
+$Res call({
+ CategoryType type
+});
+
+
+
+
+}
+/// @nodoc
+class __$FetchBudgetEventCopyWithImpl<$Res>
+    implements _$FetchBudgetEventCopyWith<$Res> {
+  __$FetchBudgetEventCopyWithImpl(this._self, this._then);
+
+  final _FetchBudgetEvent _self;
+  final $Res Function(_FetchBudgetEvent) _then;
+
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? type = null,}) {
+  return _then(_FetchBudgetEvent(
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,
+  ));
 }
 
-/// @nodoc
-class __$$NextYearBudgetEventImplCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$NextYearBudgetEventImpl>
-    implements _$$NextYearBudgetEventImplCopyWith<$Res> {
-  __$$NextYearBudgetEventImplCopyWithImpl(_$NextYearBudgetEventImpl _value,
-      $Res Function(_$NextYearBudgetEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$NextYearBudgetEventImpl implements _NextYearBudgetEvent {
-  const _$NextYearBudgetEventImpl();
 
-  @override
-  String toString() {
-    return 'BudgetEvent.nextYear()';
-  }
+class _PreviousYearBudgetEvent implements BudgetEvent {
+  const _PreviousYearBudgetEvent();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$NextYearBudgetEventImpl);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) {
-    return nextYear();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) {
-    return nextYear?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (nextYear != null) {
-      return nextYear();
-    }
-    return orElse();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) {
-    return nextYear(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) {
-    return nextYear?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (nextYear != null) {
-      return nextYear(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreviousYearBudgetEvent);
 }
 
-abstract class _NextYearBudgetEvent implements BudgetEvent {
-  const factory _NextYearBudgetEvent() = _$NextYearBudgetEventImpl;
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'BudgetEvent.previousYear()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _NextYearBudgetEvent implements BudgetEvent {
+  const _NextYearBudgetEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NextYearBudgetEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'BudgetEvent.nextYear()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _ShowAllBudgetEvent implements BudgetEvent {
+  const _ShowAllBudgetEvent({required this.budgetType});
+  
+
+ final  BudgetType budgetType;
+
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ShowAllBudgetEventCopyWith<_ShowAllBudgetEvent> get copyWith => __$ShowAllBudgetEventCopyWithImpl<_ShowAllBudgetEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShowAllBudgetEvent&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,budgetType);
+
+@override
+String toString() {
+  return 'BudgetEvent.showAll(budgetType: $budgetType)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ShowAllBudgetEventImplCopyWith<$Res> {
-  factory _$$ShowAllBudgetEventImplCopyWith(_$ShowAllBudgetEventImpl value,
-          $Res Function(_$ShowAllBudgetEventImpl) then) =
-      __$$ShowAllBudgetEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({BudgetType budgetType});
+abstract mixin class _$ShowAllBudgetEventCopyWith<$Res> implements $BudgetEventCopyWith<$Res> {
+  factory _$ShowAllBudgetEventCopyWith(_ShowAllBudgetEvent value, $Res Function(_ShowAllBudgetEvent) _then) = __$ShowAllBudgetEventCopyWithImpl;
+@useResult
+$Res call({
+ BudgetType budgetType
+});
+
+
+
+
+}
+/// @nodoc
+class __$ShowAllBudgetEventCopyWithImpl<$Res>
+    implements _$ShowAllBudgetEventCopyWith<$Res> {
+  __$ShowAllBudgetEventCopyWithImpl(this._self, this._then);
+
+  final _ShowAllBudgetEvent _self;
+  final $Res Function(_ShowAllBudgetEvent) _then;
+
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? budgetType = null,}) {
+  return _then(_ShowAllBudgetEvent(
+budgetType: null == budgetType ? _self.budgetType : budgetType // ignore: cast_nullable_to_non_nullable
+as BudgetType,
+  ));
 }
 
-/// @nodoc
-class __$$ShowAllBudgetEventImplCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$ShowAllBudgetEventImpl>
-    implements _$$ShowAllBudgetEventImplCopyWith<$Res> {
-  __$$ShowAllBudgetEventImplCopyWithImpl(_$ShowAllBudgetEventImpl _value,
-      $Res Function(_$ShowAllBudgetEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? budgetType = null,
-  }) {
-    return _then(_$ShowAllBudgetEventImpl(
-      budgetType: null == budgetType
-          ? _value.budgetType
-          : budgetType // ignore: cast_nullable_to_non_nullable
-              as BudgetType,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ShowAllBudgetEventImpl implements _ShowAllBudgetEvent {
-  const _$ShowAllBudgetEventImpl({required this.budgetType});
 
-  @override
-  final BudgetType budgetType;
+class _ChangeItemsBudgetEvent implements BudgetEvent {
+  const _ChangeItemsBudgetEvent({required final  List<CategoryCashFlow> items}): _items = items;
+  
 
-  @override
-  String toString() {
-    return 'BudgetEvent.showAll(budgetType: $budgetType)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ShowAllBudgetEventImpl &&
-            (identical(other.budgetType, budgetType) ||
-                other.budgetType == budgetType));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, budgetType);
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
-      __$$ShowAllBudgetEventImplCopyWithImpl<_$ShowAllBudgetEventImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) {
-    return showAll(budgetType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) {
-    return showAll?.call(budgetType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (showAll != null) {
-      return showAll(budgetType);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) {
-    return showAll(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) {
-    return showAll?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (showAll != null) {
-      return showAll(this);
-    }
-    return orElse();
-  }
+ final  List<CategoryCashFlow> _items;
+ List<CategoryCashFlow> get items {
+  if (_items is EqualUnmodifiableListView) return _items;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_items);
 }
 
-abstract class _ShowAllBudgetEvent implements BudgetEvent {
-  const factory _ShowAllBudgetEvent({required final BudgetType budgetType}) =
-      _$ShowAllBudgetEventImpl;
 
-  BudgetType get budgetType;
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeItemsBudgetEventCopyWith<_ChangeItemsBudgetEvent> get copyWith => __$ChangeItemsBudgetEventCopyWithImpl<_ChangeItemsBudgetEvent>(this, _$identity);
 
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ShowAllBudgetEventImplCopyWith<_$ShowAllBudgetEventImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeItemsBudgetEvent&&const DeepCollectionEquality().equals(other._items, _items));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_items));
+
+@override
+String toString() {
+  return 'BudgetEvent.changeItems(items: $items)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeItemsBudgetEventImplCopyWith<$Res> {
-  factory _$$ChangeItemsBudgetEventImplCopyWith(
-          _$ChangeItemsBudgetEventImpl value,
-          $Res Function(_$ChangeItemsBudgetEventImpl) then) =
-      __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<CategoryCashFlow> items});
-}
+abstract mixin class _$ChangeItemsBudgetEventCopyWith<$Res> implements $BudgetEventCopyWith<$Res> {
+  factory _$ChangeItemsBudgetEventCopyWith(_ChangeItemsBudgetEvent value, $Res Function(_ChangeItemsBudgetEvent) _then) = __$ChangeItemsBudgetEventCopyWithImpl;
+@useResult
+$Res call({
+ List<CategoryCashFlow> items
+});
 
+
+
+
+}
 /// @nodoc
-class __$$ChangeItemsBudgetEventImplCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res, _$ChangeItemsBudgetEventImpl>
-    implements _$$ChangeItemsBudgetEventImplCopyWith<$Res> {
-  __$$ChangeItemsBudgetEventImplCopyWithImpl(
-      _$ChangeItemsBudgetEventImpl _value,
-      $Res Function(_$ChangeItemsBudgetEventImpl) _then)
-      : super(_value, _then);
+class __$ChangeItemsBudgetEventCopyWithImpl<$Res>
+    implements _$ChangeItemsBudgetEventCopyWith<$Res> {
+  __$ChangeItemsBudgetEventCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? items = null,
-  }) {
-    return _then(_$ChangeItemsBudgetEventImpl(
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-    ));
-  }
+  final _ChangeItemsBudgetEvent _self;
+  final $Res Function(_ChangeItemsBudgetEvent) _then;
+
+/// Create a copy of BudgetEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? items = null,}) {
+  return _then(_ChangeItemsBudgetEvent(
+items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,
+  ));
 }
 
-/// @nodoc
 
-class _$ChangeItemsBudgetEventImpl implements _ChangeItemsBudgetEvent {
-  const _$ChangeItemsBudgetEventImpl(
-      {required final List<CategoryCashFlow> items})
-      : _items = items;
-
-  final List<CategoryCashFlow> _items;
-  @override
-  List<CategoryCashFlow> get items {
-    if (_items is EqualUnmodifiableListView) return _items;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
-  }
-
-  @override
-  String toString() {
-    return 'BudgetEvent.changeItems(items: $items)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeItemsBudgetEventImpl &&
-            const DeepCollectionEquality().equals(other._items, _items));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
-      get copyWith => __$$ChangeItemsBudgetEventImplCopyWithImpl<
-          _$ChangeItemsBudgetEventImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryType type) fetch,
-    required TResult Function() previousYear,
-    required TResult Function() nextYear,
-    required TResult Function(BudgetType budgetType) showAll,
-    required TResult Function(List<CategoryCashFlow> items) changeItems,
-  }) {
-    return changeItems(items);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryType type)? fetch,
-    TResult? Function()? previousYear,
-    TResult? Function()? nextYear,
-    TResult? Function(BudgetType budgetType)? showAll,
-    TResult? Function(List<CategoryCashFlow> items)? changeItems,
-  }) {
-    return changeItems?.call(items);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryType type)? fetch,
-    TResult Function()? previousYear,
-    TResult Function()? nextYear,
-    TResult Function(BudgetType budgetType)? showAll,
-    TResult Function(List<CategoryCashFlow> items)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (changeItems != null) {
-      return changeItems(items);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchBudgetEvent value) fetch,
-    required TResult Function(_PreviousYearBudgetEvent value) previousYear,
-    required TResult Function(_NextYearBudgetEvent value) nextYear,
-    required TResult Function(_ShowAllBudgetEvent value) showAll,
-    required TResult Function(_ChangeItemsBudgetEvent value) changeItems,
-  }) {
-    return changeItems(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchBudgetEvent value)? fetch,
-    TResult? Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult? Function(_NextYearBudgetEvent value)? nextYear,
-    TResult? Function(_ShowAllBudgetEvent value)? showAll,
-    TResult? Function(_ChangeItemsBudgetEvent value)? changeItems,
-  }) {
-    return changeItems?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchBudgetEvent value)? fetch,
-    TResult Function(_PreviousYearBudgetEvent value)? previousYear,
-    TResult Function(_NextYearBudgetEvent value)? nextYear,
-    TResult Function(_ShowAllBudgetEvent value)? showAll,
-    TResult Function(_ChangeItemsBudgetEvent value)? changeItems,
-    required TResult orElse(),
-  }) {
-    if (changeItems != null) {
-      return changeItems(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeItemsBudgetEvent implements BudgetEvent {
-  const factory _ChangeItemsBudgetEvent(
-          {required final List<CategoryCashFlow> items}) =
-      _$ChangeItemsBudgetEventImpl;
-
-  List<CategoryCashFlow> get items;
-
-  /// Create a copy of BudgetEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeItemsBudgetEventImplCopyWith<_$ChangeItemsBudgetEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$BudgetState {
-  DateTime get date => throw _privateConstructorUsedError;
-  CategoryType get type => throw _privateConstructorUsedError;
-  List<CategoryCashFlow> get itemsMonthBudget =>
-      throw _privateConstructorUsedError;
-  List<CategoryCashFlow> get itemsYearBudget =>
-      throw _privateConstructorUsedError;
-  List<CategoryCashFlow> get itemsAll => throw _privateConstructorUsedError;
-  bool get showAllMonthBudget => throw _privateConstructorUsedError;
-  bool get showAllYearBudget => throw _privateConstructorUsedError;
 
-  /// Create a copy of BudgetState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BudgetStateCopyWith<BudgetState> get copyWith =>
-      throw _privateConstructorUsedError;
+ DateTime get date; CategoryType get type; List<CategoryCashFlow> get itemsMonthBudget; List<CategoryCashFlow> get itemsYearBudget; List<CategoryCashFlow> get itemsAll; bool get showAllMonthBudget; bool get showAllYearBudget;
+/// Create a copy of BudgetState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BudgetStateCopyWith<BudgetState> get copyWith => _$BudgetStateCopyWithImpl<BudgetState>(this as BudgetState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetState&&(identical(other.date, date) || other.date == date)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.itemsMonthBudget, itemsMonthBudget)&&const DeepCollectionEquality().equals(other.itemsYearBudget, itemsYearBudget)&&const DeepCollectionEquality().equals(other.itemsAll, itemsAll)&&(identical(other.showAllMonthBudget, showAllMonthBudget) || other.showAllMonthBudget == showAllMonthBudget)&&(identical(other.showAllYearBudget, showAllYearBudget) || other.showAllYearBudget == showAllYearBudget));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,date,type,const DeepCollectionEquality().hash(itemsMonthBudget),const DeepCollectionEquality().hash(itemsYearBudget),const DeepCollectionEquality().hash(itemsAll),showAllMonthBudget,showAllYearBudget);
+
+@override
+String toString() {
+  return 'BudgetState(date: $date, type: $type, itemsMonthBudget: $itemsMonthBudget, itemsYearBudget: $itemsYearBudget, itemsAll: $itemsAll, showAllMonthBudget: $showAllMonthBudget, showAllYearBudget: $showAllYearBudget)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BudgetStateCopyWith<$Res> {
-  factory $BudgetStateCopyWith(
-          BudgetState value, $Res Function(BudgetState) then) =
-      _$BudgetStateCopyWithImpl<$Res, BudgetState>;
-  @useResult
-  $Res call(
-      {DateTime date,
-      CategoryType type,
-      List<CategoryCashFlow> itemsMonthBudget,
-      List<CategoryCashFlow> itemsYearBudget,
-      List<CategoryCashFlow> itemsAll,
-      bool showAllMonthBudget,
-      bool showAllYearBudget});
-}
+abstract mixin class $BudgetStateCopyWith<$Res>  {
+  factory $BudgetStateCopyWith(BudgetState value, $Res Function(BudgetState) _then) = _$BudgetStateCopyWithImpl;
+@useResult
+$Res call({
+ DateTime date, CategoryType type, List<CategoryCashFlow> itemsMonthBudget, List<CategoryCashFlow> itemsYearBudget, List<CategoryCashFlow> itemsAll, bool showAllMonthBudget, bool showAllYearBudget
+});
 
+
+
+
+}
 /// @nodoc
-class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
+class _$BudgetStateCopyWithImpl<$Res>
     implements $BudgetStateCopyWith<$Res> {
-  _$BudgetStateCopyWithImpl(this._value, this._then);
+  _$BudgetStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BudgetState _self;
+  final $Res Function(BudgetState) _then;
 
-  /// Create a copy of BudgetState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? type = null,
-    Object? itemsMonthBudget = null,
-    Object? itemsYearBudget = null,
-    Object? itemsAll = null,
-    Object? showAllMonthBudget = null,
-    Object? showAllYearBudget = null,
-  }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      itemsMonthBudget: null == itemsMonthBudget
-          ? _value.itemsMonthBudget
-          : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      itemsYearBudget: null == itemsYearBudget
-          ? _value.itemsYearBudget
-          : itemsYearBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      itemsAll: null == itemsAll
-          ? _value.itemsAll
-          : itemsAll // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      showAllMonthBudget: null == showAllMonthBudget
-          ? _value.showAllMonthBudget
-          : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showAllYearBudget: null == showAllYearBudget
-          ? _value.showAllYearBudget
-          : showAllYearBudget // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
+/// Create a copy of BudgetState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? type = null,Object? itemsMonthBudget = null,Object? itemsYearBudget = null,Object? itemsAll = null,Object? showAllMonthBudget = null,Object? showAllYearBudget = null,}) {
+  return _then(_self.copyWith(
+date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,itemsMonthBudget: null == itemsMonthBudget ? _self.itemsMonthBudget : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,itemsYearBudget: null == itemsYearBudget ? _self.itemsYearBudget : itemsYearBudget // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,itemsAll: null == itemsAll ? _self.itemsAll : itemsAll // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,showAllMonthBudget: null == showAllMonthBudget ? _self.showAllMonthBudget : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
+as bool,showAllYearBudget: null == showAllYearBudget ? _self.showAllYearBudget : showAllYearBudget // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [BudgetState].
+extension BudgetStatePatterns on BudgetState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BudgetState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BudgetState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BudgetState value)  $default,){
+final _that = this;
+switch (_that) {
+case _BudgetState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BudgetState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BudgetState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime date,  CategoryType type,  List<CategoryCashFlow> itemsMonthBudget,  List<CategoryCashFlow> itemsYearBudget,  List<CategoryCashFlow> itemsAll,  bool showAllMonthBudget,  bool showAllYearBudget)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BudgetState() when $default != null:
+return $default(_that.date,_that.type,_that.itemsMonthBudget,_that.itemsYearBudget,_that.itemsAll,_that.showAllMonthBudget,_that.showAllYearBudget);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime date,  CategoryType type,  List<CategoryCashFlow> itemsMonthBudget,  List<CategoryCashFlow> itemsYearBudget,  List<CategoryCashFlow> itemsAll,  bool showAllMonthBudget,  bool showAllYearBudget)  $default,) {final _that = this;
+switch (_that) {
+case _BudgetState():
+return $default(_that.date,_that.type,_that.itemsMonthBudget,_that.itemsYearBudget,_that.itemsAll,_that.showAllMonthBudget,_that.showAllYearBudget);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime date,  CategoryType type,  List<CategoryCashFlow> itemsMonthBudget,  List<CategoryCashFlow> itemsYearBudget,  List<CategoryCashFlow> itemsAll,  bool showAllMonthBudget,  bool showAllYearBudget)?  $default,) {final _that = this;
+switch (_that) {
+case _BudgetState() when $default != null:
+return $default(_that.date,_that.type,_that.itemsMonthBudget,_that.itemsYearBudget,_that.itemsAll,_that.showAllMonthBudget,_that.showAllYearBudget);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$BudgetStateImplCopyWith<$Res>
-    implements $BudgetStateCopyWith<$Res> {
-  factory _$$BudgetStateImplCopyWith(
-          _$BudgetStateImpl value, $Res Function(_$BudgetStateImpl) then) =
-      __$$BudgetStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {DateTime date,
-      CategoryType type,
-      List<CategoryCashFlow> itemsMonthBudget,
-      List<CategoryCashFlow> itemsYearBudget,
-      List<CategoryCashFlow> itemsAll,
-      bool showAllMonthBudget,
-      bool showAllYearBudget});
+
+
+class _BudgetState implements BudgetState {
+  const _BudgetState({required this.date, required this.type, required final  List<CategoryCashFlow> itemsMonthBudget, required final  List<CategoryCashFlow> itemsYearBudget, required final  List<CategoryCashFlow> itemsAll, required this.showAllMonthBudget, required this.showAllYearBudget}): _itemsMonthBudget = itemsMonthBudget,_itemsYearBudget = itemsYearBudget,_itemsAll = itemsAll;
+  
+
+@override final  DateTime date;
+@override final  CategoryType type;
+ final  List<CategoryCashFlow> _itemsMonthBudget;
+@override List<CategoryCashFlow> get itemsMonthBudget {
+  if (_itemsMonthBudget is EqualUnmodifiableListView) return _itemsMonthBudget;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_itemsMonthBudget);
+}
+
+ final  List<CategoryCashFlow> _itemsYearBudget;
+@override List<CategoryCashFlow> get itemsYearBudget {
+  if (_itemsYearBudget is EqualUnmodifiableListView) return _itemsYearBudget;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_itemsYearBudget);
+}
+
+ final  List<CategoryCashFlow> _itemsAll;
+@override List<CategoryCashFlow> get itemsAll {
+  if (_itemsAll is EqualUnmodifiableListView) return _itemsAll;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_itemsAll);
+}
+
+@override final  bool showAllMonthBudget;
+@override final  bool showAllYearBudget;
+
+/// Create a copy of BudgetState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BudgetStateCopyWith<_BudgetState> get copyWith => __$BudgetStateCopyWithImpl<_BudgetState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BudgetState&&(identical(other.date, date) || other.date == date)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._itemsMonthBudget, _itemsMonthBudget)&&const DeepCollectionEquality().equals(other._itemsYearBudget, _itemsYearBudget)&&const DeepCollectionEquality().equals(other._itemsAll, _itemsAll)&&(identical(other.showAllMonthBudget, showAllMonthBudget) || other.showAllMonthBudget == showAllMonthBudget)&&(identical(other.showAllYearBudget, showAllYearBudget) || other.showAllYearBudget == showAllYearBudget));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,date,type,const DeepCollectionEquality().hash(_itemsMonthBudget),const DeepCollectionEquality().hash(_itemsYearBudget),const DeepCollectionEquality().hash(_itemsAll),showAllMonthBudget,showAllYearBudget);
+
+@override
+String toString() {
+  return 'BudgetState(date: $date, type: $type, itemsMonthBudget: $itemsMonthBudget, itemsYearBudget: $itemsYearBudget, itemsAll: $itemsAll, showAllMonthBudget: $showAllMonthBudget, showAllYearBudget: $showAllYearBudget)';
+}
+
+
 }
 
 /// @nodoc
-class __$$BudgetStateImplCopyWithImpl<$Res>
-    extends _$BudgetStateCopyWithImpl<$Res, _$BudgetStateImpl>
-    implements _$$BudgetStateImplCopyWith<$Res> {
-  __$$BudgetStateImplCopyWithImpl(
-      _$BudgetStateImpl _value, $Res Function(_$BudgetStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$BudgetStateCopyWith<$Res> implements $BudgetStateCopyWith<$Res> {
+  factory _$BudgetStateCopyWith(_BudgetState value, $Res Function(_BudgetState) _then) = __$BudgetStateCopyWithImpl;
+@override @useResult
+$Res call({
+ DateTime date, CategoryType type, List<CategoryCashFlow> itemsMonthBudget, List<CategoryCashFlow> itemsYearBudget, List<CategoryCashFlow> itemsAll, bool showAllMonthBudget, bool showAllYearBudget
+});
 
-  /// Create a copy of BudgetState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? type = null,
-    Object? itemsMonthBudget = null,
-    Object? itemsYearBudget = null,
-    Object? itemsAll = null,
-    Object? showAllMonthBudget = null,
-    Object? showAllYearBudget = null,
-  }) {
-    return _then(_$BudgetStateImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      itemsMonthBudget: null == itemsMonthBudget
-          ? _value._itemsMonthBudget
-          : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      itemsYearBudget: null == itemsYearBudget
-          ? _value._itemsYearBudget
-          : itemsYearBudget // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      itemsAll: null == itemsAll
-          ? _value._itemsAll
-          : itemsAll // ignore: cast_nullable_to_non_nullable
-              as List<CategoryCashFlow>,
-      showAllMonthBudget: null == showAllMonthBudget
-          ? _value.showAllMonthBudget
-          : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showAllYearBudget: null == showAllYearBudget
-          ? _value.showAllYearBudget
-          : showAllYearBudget // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$BudgetStateCopyWithImpl<$Res>
+    implements _$BudgetStateCopyWith<$Res> {
+  __$BudgetStateCopyWithImpl(this._self, this._then);
 
-class _$BudgetStateImpl implements _BudgetState {
-  const _$BudgetStateImpl(
-      {required this.date,
-      required this.type,
-      required final List<CategoryCashFlow> itemsMonthBudget,
-      required final List<CategoryCashFlow> itemsYearBudget,
-      required final List<CategoryCashFlow> itemsAll,
-      required this.showAllMonthBudget,
-      required this.showAllYearBudget})
-      : _itemsMonthBudget = itemsMonthBudget,
-        _itemsYearBudget = itemsYearBudget,
-        _itemsAll = itemsAll;
+  final _BudgetState _self;
+  final $Res Function(_BudgetState) _then;
 
-  @override
-  final DateTime date;
-  @override
-  final CategoryType type;
-  final List<CategoryCashFlow> _itemsMonthBudget;
-  @override
-  List<CategoryCashFlow> get itemsMonthBudget {
-    if (_itemsMonthBudget is EqualUnmodifiableListView)
-      return _itemsMonthBudget;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_itemsMonthBudget);
-  }
-
-  final List<CategoryCashFlow> _itemsYearBudget;
-  @override
-  List<CategoryCashFlow> get itemsYearBudget {
-    if (_itemsYearBudget is EqualUnmodifiableListView) return _itemsYearBudget;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_itemsYearBudget);
-  }
-
-  final List<CategoryCashFlow> _itemsAll;
-  @override
-  List<CategoryCashFlow> get itemsAll {
-    if (_itemsAll is EqualUnmodifiableListView) return _itemsAll;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_itemsAll);
-  }
-
-  @override
-  final bool showAllMonthBudget;
-  @override
-  final bool showAllYearBudget;
-
-  @override
-  String toString() {
-    return 'BudgetState(date: $date, type: $type, itemsMonthBudget: $itemsMonthBudget, itemsYearBudget: $itemsYearBudget, itemsAll: $itemsAll, showAllMonthBudget: $showAllMonthBudget, showAllYearBudget: $showAllYearBudget)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BudgetStateImpl &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality()
-                .equals(other._itemsMonthBudget, _itemsMonthBudget) &&
-            const DeepCollectionEquality()
-                .equals(other._itemsYearBudget, _itemsYearBudget) &&
-            const DeepCollectionEquality().equals(other._itemsAll, _itemsAll) &&
-            (identical(other.showAllMonthBudget, showAllMonthBudget) ||
-                other.showAllMonthBudget == showAllMonthBudget) &&
-            (identical(other.showAllYearBudget, showAllYearBudget) ||
-                other.showAllYearBudget == showAllYearBudget));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      date,
-      type,
-      const DeepCollectionEquality().hash(_itemsMonthBudget),
-      const DeepCollectionEquality().hash(_itemsYearBudget),
-      const DeepCollectionEquality().hash(_itemsAll),
-      showAllMonthBudget,
-      showAllYearBudget);
-
-  /// Create a copy of BudgetState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
-      __$$BudgetStateImplCopyWithImpl<_$BudgetStateImpl>(this, _$identity);
+/// Create a copy of BudgetState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? type = null,Object? itemsMonthBudget = null,Object? itemsYearBudget = null,Object? itemsAll = null,Object? showAllMonthBudget = null,Object? showAllYearBudget = null,}) {
+  return _then(_BudgetState(
+date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,itemsMonthBudget: null == itemsMonthBudget ? _self._itemsMonthBudget : itemsMonthBudget // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,itemsYearBudget: null == itemsYearBudget ? _self._itemsYearBudget : itemsYearBudget // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,itemsAll: null == itemsAll ? _self._itemsAll : itemsAll // ignore: cast_nullable_to_non_nullable
+as List<CategoryCashFlow>,showAllMonthBudget: null == showAllMonthBudget ? _self.showAllMonthBudget : showAllMonthBudget // ignore: cast_nullable_to_non_nullable
+as bool,showAllYearBudget: null == showAllYearBudget ? _self.showAllYearBudget : showAllYearBudget // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-abstract class _BudgetState implements BudgetState {
-  const factory _BudgetState(
-      {required final DateTime date,
-      required final CategoryType type,
-      required final List<CategoryCashFlow> itemsMonthBudget,
-      required final List<CategoryCashFlow> itemsYearBudget,
-      required final List<CategoryCashFlow> itemsAll,
-      required final bool showAllMonthBudget,
-      required final bool showAllYearBudget}) = _$BudgetStateImpl;
 
-  @override
-  DateTime get date;
-  @override
-  CategoryType get type;
-  @override
-  List<CategoryCashFlow> get itemsMonthBudget;
-  @override
-  List<CategoryCashFlow> get itemsYearBudget;
-  @override
-  List<CategoryCashFlow> get itemsAll;
-  @override
-  bool get showAllMonthBudget;
-  @override
-  bool get showAllYearBudget;
-
-  /// Create a copy of BudgetState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BudgetStateImplCopyWith<_$BudgetStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,151 +9,266 @@ part of 'sum_on_date.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$SumOnDate {
-  DateTime get date => throw _privateConstructorUsedError;
-  int get sum => throw _privateConstructorUsedError;
 
-  /// Create a copy of SumOnDate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SumOnDateCopyWith<SumOnDate> get copyWith =>
-      throw _privateConstructorUsedError;
+ DateTime get date; int get sum;
+/// Create a copy of SumOnDate
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SumOnDateCopyWith<SumOnDate> get copyWith => _$SumOnDateCopyWithImpl<SumOnDate>(this as SumOnDate, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SumOnDate&&(identical(other.date, date) || other.date == date)&&(identical(other.sum, sum) || other.sum == sum));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,date,sum);
+
+@override
+String toString() {
+  return 'SumOnDate(date: $date, sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $SumOnDateCopyWith<$Res> {
-  factory $SumOnDateCopyWith(SumOnDate value, $Res Function(SumOnDate) then) =
-      _$SumOnDateCopyWithImpl<$Res, SumOnDate>;
-  @useResult
-  $Res call({DateTime date, int sum});
-}
+abstract mixin class $SumOnDateCopyWith<$Res>  {
+  factory $SumOnDateCopyWith(SumOnDate value, $Res Function(SumOnDate) _then) = _$SumOnDateCopyWithImpl;
+@useResult
+$Res call({
+ DateTime date, int sum
+});
 
+
+
+
+}
 /// @nodoc
-class _$SumOnDateCopyWithImpl<$Res, $Val extends SumOnDate>
+class _$SumOnDateCopyWithImpl<$Res>
     implements $SumOnDateCopyWith<$Res> {
-  _$SumOnDateCopyWithImpl(this._value, this._then);
+  _$SumOnDateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SumOnDate _self;
+  final $Res Function(SumOnDate) _then;
 
-  /// Create a copy of SumOnDate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? sum = null,
-  }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of SumOnDate
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? sum = null,}) {
+  return _then(_self.copyWith(
+date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [SumOnDate].
+extension SumOnDatePatterns on SumOnDate {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SumOnDate value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _SumOnDate() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SumOnDate value)  $default,){
+final _that = this;
+switch (_that) {
+case _SumOnDate():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SumOnDate value)?  $default,){
+final _that = this;
+switch (_that) {
+case _SumOnDate() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime date,  int sum)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _SumOnDate() when $default != null:
+return $default(_that.date,_that.sum);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime date,  int sum)  $default,) {final _that = this;
+switch (_that) {
+case _SumOnDate():
+return $default(_that.date,_that.sum);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime date,  int sum)?  $default,) {final _that = this;
+switch (_that) {
+case _SumOnDate() when $default != null:
+return $default(_that.date,_that.sum);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$SumOnDateImplCopyWith<$Res>
-    implements $SumOnDateCopyWith<$Res> {
-  factory _$$SumOnDateImplCopyWith(
-          _$SumOnDateImpl value, $Res Function(_$SumOnDateImpl) then) =
-      __$$SumOnDateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({DateTime date, int sum});
+
+
+class _SumOnDate implements SumOnDate {
+  const _SumOnDate({required this.date, required this.sum});
+  
+
+@override final  DateTime date;
+@override final  int sum;
+
+/// Create a copy of SumOnDate
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SumOnDateCopyWith<_SumOnDate> get copyWith => __$SumOnDateCopyWithImpl<_SumOnDate>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SumOnDate&&(identical(other.date, date) || other.date == date)&&(identical(other.sum, sum) || other.sum == sum));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,date,sum);
+
+@override
+String toString() {
+  return 'SumOnDate(date: $date, sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-class __$$SumOnDateImplCopyWithImpl<$Res>
-    extends _$SumOnDateCopyWithImpl<$Res, _$SumOnDateImpl>
-    implements _$$SumOnDateImplCopyWith<$Res> {
-  __$$SumOnDateImplCopyWithImpl(
-      _$SumOnDateImpl _value, $Res Function(_$SumOnDateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$SumOnDateCopyWith<$Res> implements $SumOnDateCopyWith<$Res> {
+  factory _$SumOnDateCopyWith(_SumOnDate value, $Res Function(_SumOnDate) _then) = __$SumOnDateCopyWithImpl;
+@override @useResult
+$Res call({
+ DateTime date, int sum
+});
 
-  /// Create a copy of SumOnDate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? sum = null,
-  }) {
-    return _then(_$SumOnDateImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$SumOnDateCopyWithImpl<$Res>
+    implements _$SumOnDateCopyWith<$Res> {
+  __$SumOnDateCopyWithImpl(this._self, this._then);
 
-class _$SumOnDateImpl implements _SumOnDate {
-  const _$SumOnDateImpl({required this.date, required this.sum});
+  final _SumOnDate _self;
+  final $Res Function(_SumOnDate) _then;
 
-  @override
-  final DateTime date;
-  @override
-  final int sum;
-
-  @override
-  String toString() {
-    return 'SumOnDate(date: $date, sum: $sum)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SumOnDateImpl &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.sum, sum) || other.sum == sum));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, date, sum);
-
-  /// Create a copy of SumOnDate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
-      __$$SumOnDateImplCopyWithImpl<_$SumOnDateImpl>(this, _$identity);
+/// Create a copy of SumOnDate
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? sum = null,}) {
+  return _then(_SumOnDate(
+date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-abstract class _SumOnDate implements SumOnDate {
-  const factory _SumOnDate(
-      {required final DateTime date, required final int sum}) = _$SumOnDateImpl;
 
-  @override
-  DateTime get date;
-  @override
-  int get sum;
-
-  /// Create a copy of SumOnDate
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SumOnDateImplCopyWith<_$SumOnDateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

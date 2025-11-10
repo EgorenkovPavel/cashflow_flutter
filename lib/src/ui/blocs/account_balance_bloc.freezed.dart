@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,384 +9,526 @@ part of 'account_balance_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$AccountBalanceEvent {
-  List<AccountBalanceView> get accounts => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalanceView> accounts) changeBalance,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalanceView> accounts)? changeBalance,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalanceView> accounts)? changeBalance,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeBalanceAccountBalanceEvent value)
-        changeBalance,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeBalanceAccountBalanceEvent value)? changeBalance,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeBalanceAccountBalanceEvent value)? changeBalance,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
 
-  /// Create a copy of AccountBalanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AccountBalanceEventCopyWith<AccountBalanceEvent> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<AccountBalanceView> get accounts;
+/// Create a copy of AccountBalanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AccountBalanceEventCopyWith<AccountBalanceEvent> get copyWith => _$AccountBalanceEventCopyWithImpl<AccountBalanceEvent>(this as AccountBalanceEvent, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEvent&&const DeepCollectionEquality().equals(other.accounts, accounts));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(accounts));
+
+@override
+String toString() {
+  return 'AccountBalanceEvent(accounts: $accounts)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $AccountBalanceEventCopyWith<$Res> {
-  factory $AccountBalanceEventCopyWith(
-          AccountBalanceEvent value, $Res Function(AccountBalanceEvent) then) =
-      _$AccountBalanceEventCopyWithImpl<$Res, AccountBalanceEvent>;
-  @useResult
-  $Res call({List<AccountBalanceView> accounts});
-}
+abstract mixin class $AccountBalanceEventCopyWith<$Res>  {
+  factory $AccountBalanceEventCopyWith(AccountBalanceEvent value, $Res Function(AccountBalanceEvent) _then) = _$AccountBalanceEventCopyWithImpl;
+@useResult
+$Res call({
+ List<AccountBalanceView> accounts
+});
 
+
+
+
+}
 /// @nodoc
-class _$AccountBalanceEventCopyWithImpl<$Res, $Val extends AccountBalanceEvent>
+class _$AccountBalanceEventCopyWithImpl<$Res>
     implements $AccountBalanceEventCopyWith<$Res> {
-  _$AccountBalanceEventCopyWithImpl(this._value, this._then);
+  _$AccountBalanceEventCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final AccountBalanceEvent _self;
+  final $Res Function(AccountBalanceEvent) _then;
 
-  /// Create a copy of AccountBalanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accounts = null,
-  }) {
-    return _then(_value.copyWith(
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalanceView>,
-    ) as $Val);
-  }
+/// Create a copy of AccountBalanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? accounts = null,}) {
+  return _then(_self.copyWith(
+accounts: null == accounts ? _self.accounts : accounts // ignore: cast_nullable_to_non_nullable
+as List<AccountBalanceView>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [AccountBalanceEvent].
+extension AccountBalanceEventPatterns on AccountBalanceEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ChangeBalanceAccountBalanceEvent value)?  changeBalance,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent() when changeBalance != null:
+return changeBalance(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ChangeBalanceAccountBalanceEvent value)  changeBalance,}){
+final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent():
+return changeBalance(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ChangeBalanceAccountBalanceEvent value)?  changeBalance,}){
+final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent() when changeBalance != null:
+return changeBalance(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<AccountBalanceView> accounts)?  changeBalance,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent() when changeBalance != null:
+return changeBalance(_that.accounts);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<AccountBalanceView> accounts)  changeBalance,}) {final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent():
+return changeBalance(_that.accounts);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<AccountBalanceView> accounts)?  changeBalance,}) {final _that = this;
+switch (_that) {
+case _ChangeBalanceAccountBalanceEvent() when changeBalance != null:
+return changeBalance(_that.accounts);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res>
-    implements $AccountBalanceEventCopyWith<$Res> {
-  factory _$$ChangeBalanceAccountBalanceEventImplCopyWith(
-          _$ChangeBalanceAccountBalanceEventImpl value,
-          $Res Function(_$ChangeBalanceAccountBalanceEventImpl) then) =
-      __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<AccountBalanceView> accounts});
+
+
+class _ChangeBalanceAccountBalanceEvent implements AccountBalanceEvent {
+  const _ChangeBalanceAccountBalanceEvent({required final  List<AccountBalanceView> accounts}): _accounts = accounts;
+  
+
+ final  List<AccountBalanceView> _accounts;
+@override List<AccountBalanceView> get accounts {
+  if (_accounts is EqualUnmodifiableListView) return _accounts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_accounts);
+}
+
+
+/// Create a copy of AccountBalanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeBalanceAccountBalanceEventCopyWith<_ChangeBalanceAccountBalanceEvent> get copyWith => __$ChangeBalanceAccountBalanceEventCopyWithImpl<_ChangeBalanceAccountBalanceEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBalanceAccountBalanceEvent&&const DeepCollectionEquality().equals(other._accounts, _accounts));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_accounts));
+
+@override
+String toString() {
+  return 'AccountBalanceEvent.changeBalance(accounts: $accounts)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<$Res>
-    extends _$AccountBalanceEventCopyWithImpl<$Res,
-        _$ChangeBalanceAccountBalanceEventImpl>
-    implements _$$ChangeBalanceAccountBalanceEventImplCopyWith<$Res> {
-  __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl(
-      _$ChangeBalanceAccountBalanceEventImpl _value,
-      $Res Function(_$ChangeBalanceAccountBalanceEventImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ChangeBalanceAccountBalanceEventCopyWith<$Res> implements $AccountBalanceEventCopyWith<$Res> {
+  factory _$ChangeBalanceAccountBalanceEventCopyWith(_ChangeBalanceAccountBalanceEvent value, $Res Function(_ChangeBalanceAccountBalanceEvent) _then) = __$ChangeBalanceAccountBalanceEventCopyWithImpl;
+@override @useResult
+$Res call({
+ List<AccountBalanceView> accounts
+});
 
-  /// Create a copy of AccountBalanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accounts = null,
-  }) {
-    return _then(_$ChangeBalanceAccountBalanceEventImpl(
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalanceView>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$ChangeBalanceAccountBalanceEventCopyWithImpl<$Res>
+    implements _$ChangeBalanceAccountBalanceEventCopyWith<$Res> {
+  __$ChangeBalanceAccountBalanceEventCopyWithImpl(this._self, this._then);
 
-class _$ChangeBalanceAccountBalanceEventImpl
-    implements _ChangeBalanceAccountBalanceEvent {
-  const _$ChangeBalanceAccountBalanceEventImpl(
-      {required final List<AccountBalanceView> accounts})
-      : _accounts = accounts;
+  final _ChangeBalanceAccountBalanceEvent _self;
+  final $Res Function(_ChangeBalanceAccountBalanceEvent) _then;
 
-  final List<AccountBalanceView> _accounts;
-  @override
-  List<AccountBalanceView> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
-  }
-
-  @override
-  String toString() {
-    return 'AccountBalanceEvent.changeBalance(accounts: $accounts)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeBalanceAccountBalanceEventImpl &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_accounts));
-
-  /// Create a copy of AccountBalanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeBalanceAccountBalanceEventImplCopyWith<
-          _$ChangeBalanceAccountBalanceEventImpl>
-      get copyWith => __$$ChangeBalanceAccountBalanceEventImplCopyWithImpl<
-          _$ChangeBalanceAccountBalanceEventImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<AccountBalanceView> accounts) changeBalance,
-  }) {
-    return changeBalance(accounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<AccountBalanceView> accounts)? changeBalance,
-  }) {
-    return changeBalance?.call(accounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<AccountBalanceView> accounts)? changeBalance,
-    required TResult orElse(),
-  }) {
-    if (changeBalance != null) {
-      return changeBalance(accounts);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeBalanceAccountBalanceEvent value)
-        changeBalance,
-  }) {
-    return changeBalance(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeBalanceAccountBalanceEvent value)? changeBalance,
-  }) {
-    return changeBalance?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeBalanceAccountBalanceEvent value)? changeBalance,
-    required TResult orElse(),
-  }) {
-    if (changeBalance != null) {
-      return changeBalance(this);
-    }
-    return orElse();
-  }
+/// Create a copy of AccountBalanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accounts = null,}) {
+  return _then(_ChangeBalanceAccountBalanceEvent(
+accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
+as List<AccountBalanceView>,
+  ));
 }
 
-abstract class _ChangeBalanceAccountBalanceEvent
-    implements AccountBalanceEvent {
-  const factory _ChangeBalanceAccountBalanceEvent(
-          {required final List<AccountBalanceView> accounts}) =
-      _$ChangeBalanceAccountBalanceEventImpl;
 
-  @override
-  List<AccountBalanceView> get accounts;
-
-  /// Create a copy of AccountBalanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeBalanceAccountBalanceEventImplCopyWith<
-          _$ChangeBalanceAccountBalanceEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$AccountBalanceState {
-  List<AccountBalanceView> get balances => throw _privateConstructorUsedError;
 
-  /// Create a copy of AccountBalanceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AccountBalanceStateCopyWith<AccountBalanceState> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<AccountBalanceView> get balances;
+/// Create a copy of AccountBalanceState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AccountBalanceStateCopyWith<AccountBalanceState> get copyWith => _$AccountBalanceStateCopyWithImpl<AccountBalanceState>(this as AccountBalanceState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceState&&const DeepCollectionEquality().equals(other.balances, balances));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(balances));
+
+@override
+String toString() {
+  return 'AccountBalanceState(balances: $balances)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $AccountBalanceStateCopyWith<$Res> {
-  factory $AccountBalanceStateCopyWith(
-          AccountBalanceState value, $Res Function(AccountBalanceState) then) =
-      _$AccountBalanceStateCopyWithImpl<$Res, AccountBalanceState>;
-  @useResult
-  $Res call({List<AccountBalanceView> balances});
-}
+abstract mixin class $AccountBalanceStateCopyWith<$Res>  {
+  factory $AccountBalanceStateCopyWith(AccountBalanceState value, $Res Function(AccountBalanceState) _then) = _$AccountBalanceStateCopyWithImpl;
+@useResult
+$Res call({
+ List<AccountBalanceView> balances
+});
 
+
+
+
+}
 /// @nodoc
-class _$AccountBalanceStateCopyWithImpl<$Res, $Val extends AccountBalanceState>
+class _$AccountBalanceStateCopyWithImpl<$Res>
     implements $AccountBalanceStateCopyWith<$Res> {
-  _$AccountBalanceStateCopyWithImpl(this._value, this._then);
+  _$AccountBalanceStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final AccountBalanceState _self;
+  final $Res Function(AccountBalanceState) _then;
 
-  /// Create a copy of AccountBalanceState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? balances = null,
-  }) {
-    return _then(_value.copyWith(
-      balances: null == balances
-          ? _value.balances
-          : balances // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalanceView>,
-    ) as $Val);
-  }
+/// Create a copy of AccountBalanceState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? balances = null,}) {
+  return _then(_self.copyWith(
+balances: null == balances ? _self.balances : balances // ignore: cast_nullable_to_non_nullable
+as List<AccountBalanceView>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [AccountBalanceState].
+extension AccountBalanceStatePatterns on AccountBalanceState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AccountBalanceState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _AccountBalanceState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AccountBalanceState value)  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalanceState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AccountBalanceState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalanceState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<AccountBalanceView> balances)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _AccountBalanceState() when $default != null:
+return $default(_that.balances);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<AccountBalanceView> balances)  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalanceState():
+return $default(_that.balances);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<AccountBalanceView> balances)?  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalanceState() when $default != null:
+return $default(_that.balances);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$AccountBalanceStateImplCopyWith<$Res>
-    implements $AccountBalanceStateCopyWith<$Res> {
-  factory _$$AccountBalanceStateImplCopyWith(_$AccountBalanceStateImpl value,
-          $Res Function(_$AccountBalanceStateImpl) then) =
-      __$$AccountBalanceStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<AccountBalanceView> balances});
+
+
+class _AccountBalanceState extends AccountBalanceState {
+  const _AccountBalanceState({required final  List<AccountBalanceView> balances}): _balances = balances,super._();
+  
+
+ final  List<AccountBalanceView> _balances;
+@override List<AccountBalanceView> get balances {
+  if (_balances is EqualUnmodifiableListView) return _balances;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_balances);
+}
+
+
+/// Create a copy of AccountBalanceState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AccountBalanceStateCopyWith<_AccountBalanceState> get copyWith => __$AccountBalanceStateCopyWithImpl<_AccountBalanceState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceState&&const DeepCollectionEquality().equals(other._balances, _balances));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_balances));
+
+@override
+String toString() {
+  return 'AccountBalanceState(balances: $balances)';
+}
+
+
 }
 
 /// @nodoc
-class __$$AccountBalanceStateImplCopyWithImpl<$Res>
-    extends _$AccountBalanceStateCopyWithImpl<$Res, _$AccountBalanceStateImpl>
-    implements _$$AccountBalanceStateImplCopyWith<$Res> {
-  __$$AccountBalanceStateImplCopyWithImpl(_$AccountBalanceStateImpl _value,
-      $Res Function(_$AccountBalanceStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$AccountBalanceStateCopyWith<$Res> implements $AccountBalanceStateCopyWith<$Res> {
+  factory _$AccountBalanceStateCopyWith(_AccountBalanceState value, $Res Function(_AccountBalanceState) _then) = __$AccountBalanceStateCopyWithImpl;
+@override @useResult
+$Res call({
+ List<AccountBalanceView> balances
+});
 
-  /// Create a copy of AccountBalanceState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? balances = null,
-  }) {
-    return _then(_$AccountBalanceStateImpl(
-      balances: null == balances
-          ? _value._balances
-          : balances // ignore: cast_nullable_to_non_nullable
-              as List<AccountBalanceView>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$AccountBalanceStateCopyWithImpl<$Res>
+    implements _$AccountBalanceStateCopyWith<$Res> {
+  __$AccountBalanceStateCopyWithImpl(this._self, this._then);
 
-class _$AccountBalanceStateImpl extends _AccountBalanceState {
-  const _$AccountBalanceStateImpl(
-      {required final List<AccountBalanceView> balances})
-      : _balances = balances,
-        super._();
+  final _AccountBalanceState _self;
+  final $Res Function(_AccountBalanceState) _then;
 
-  final List<AccountBalanceView> _balances;
-  @override
-  List<AccountBalanceView> get balances {
-    if (_balances is EqualUnmodifiableListView) return _balances;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_balances);
-  }
-
-  @override
-  String toString() {
-    return 'AccountBalanceState(balances: $balances)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AccountBalanceStateImpl &&
-            const DeepCollectionEquality().equals(other._balances, _balances));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_balances));
-
-  /// Create a copy of AccountBalanceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
-      __$$AccountBalanceStateImplCopyWithImpl<_$AccountBalanceStateImpl>(
-          this, _$identity);
+/// Create a copy of AccountBalanceState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? balances = null,}) {
+  return _then(_AccountBalanceState(
+balances: null == balances ? _self._balances : balances // ignore: cast_nullable_to_non_nullable
+as List<AccountBalanceView>,
+  ));
 }
 
-abstract class _AccountBalanceState extends AccountBalanceState {
-  const factory _AccountBalanceState(
-          {required final List<AccountBalanceView> balances}) =
-      _$AccountBalanceStateImpl;
-  const _AccountBalanceState._() : super._();
 
-  @override
-  List<AccountBalanceView> get balances;
-
-  /// Create a copy of AccountBalanceState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AccountBalanceStateImplCopyWith<_$AccountBalanceStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

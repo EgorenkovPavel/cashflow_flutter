@@ -20,7 +20,7 @@ class CurrencyRateEvent with _$CurrencyRateEvent {
 }
 
 @freezed
-class CurrencyRateState with _$CurrencyRateState {
+abstract class CurrencyRateState with _$CurrencyRateState {
   const CurrencyRateState._();
 
   const factory CurrencyRateState({

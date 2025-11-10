@@ -77,7 +77,7 @@ enum MasterStateAction {
 }
 
 @freezed
-class MasterState with _$MasterState {
+abstract class MasterState with _$MasterState {
   const factory MasterState({
     required MasterStateAction action,
     required OperationType operationType,

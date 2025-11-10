@@ -33,7 +33,7 @@ class CategoryInputEvent with _$CategoryInputEvent {
 }
 
 @freezed
-class CategoryInputState with _$CategoryInputState {
+abstract class CategoryInputState with _$CategoryInputState {
   const CategoryInputState._();
 
   const factory CategoryInputState.inputItem({

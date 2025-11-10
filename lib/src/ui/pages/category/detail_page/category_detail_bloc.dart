@@ -23,7 +23,7 @@ class CategoryDetailEvent with _$CategoryDetailEvent {
 }
 
 @freezed
-class CategoryDetailState with _$CategoryDetailState {
+abstract class CategoryDetailState with _$CategoryDetailState {
   const factory CategoryDetailState({
     required BudgetType budgetType,
     required String title,

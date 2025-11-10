@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,3081 +9,1274 @@ part of 'operation_edit_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$OperationEditEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'OperationEditEvent()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $OperationEditEventCopyWith<$Res> {
-  factory $OperationEditEventCopyWith(
-          OperationEditEvent value, $Res Function(OperationEditEvent) then) =
-      _$OperationEditEventCopyWithImpl<$Res, OperationEditEvent>;
+class $OperationEditEventCopyWith<$Res>  {
+$OperationEditEventCopyWith(OperationEditEvent _, $Res Function(OperationEditEvent) __);
 }
 
-/// @nodoc
-class _$OperationEditEventCopyWithImpl<$Res, $Val extends OperationEditEvent>
-    implements $OperationEditEventCopyWith<$Res> {
-  _$OperationEditEventCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [OperationEditEvent].
+extension OperationEditEventPatterns on OperationEditEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchOperationEditEvent value)?  fetch,TResult Function( _ChangeDateOperationEditEvent value)?  changeDate,TResult Function( _ChangeTimeOperationEditEvent value)?  changeTime,TResult Function( _ChangeOperationTypeOperationEditEvent value)?  changeOperationType,TResult Function( _ChangeAccountOperationEditEvent value)?  changeAccount,TResult Function( _ChangeCategoryOperationEditEvent value)?  changeCategory,TResult Function( _ChangeRecAccountOperationEditEvent value)?  changeRecAccount,TResult Function( _ChangeSumOperationEditEvent value)?  changeSum,TResult Function( _ChangeRecSumOperationEditEvent value)?  changeRecSum,TResult Function( _ChangeCurrencyOperationEditEvent value)?  changeCurrency,TResult Function( _ChangeRecCurrencyOperationEditEvent value)?  changeRecCurrency,TResult Function( _SaveOperationEditEvent value)?  save,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent() when fetch != null:
+return fetch(_that);case _ChangeDateOperationEditEvent() when changeDate != null:
+return changeDate(_that);case _ChangeTimeOperationEditEvent() when changeTime != null:
+return changeTime(_that);case _ChangeOperationTypeOperationEditEvent() when changeOperationType != null:
+return changeOperationType(_that);case _ChangeAccountOperationEditEvent() when changeAccount != null:
+return changeAccount(_that);case _ChangeCategoryOperationEditEvent() when changeCategory != null:
+return changeCategory(_that);case _ChangeRecAccountOperationEditEvent() when changeRecAccount != null:
+return changeRecAccount(_that);case _ChangeSumOperationEditEvent() when changeSum != null:
+return changeSum(_that);case _ChangeRecSumOperationEditEvent() when changeRecSum != null:
+return changeRecSum(_that);case _ChangeCurrencyOperationEditEvent() when changeCurrency != null:
+return changeCurrency(_that);case _ChangeRecCurrencyOperationEditEvent() when changeRecCurrency != null:
+return changeRecCurrency(_that);case _SaveOperationEditEvent() when save != null:
+return save(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchOperationEditEvent value)  fetch,required TResult Function( _ChangeDateOperationEditEvent value)  changeDate,required TResult Function( _ChangeTimeOperationEditEvent value)  changeTime,required TResult Function( _ChangeOperationTypeOperationEditEvent value)  changeOperationType,required TResult Function( _ChangeAccountOperationEditEvent value)  changeAccount,required TResult Function( _ChangeCategoryOperationEditEvent value)  changeCategory,required TResult Function( _ChangeRecAccountOperationEditEvent value)  changeRecAccount,required TResult Function( _ChangeSumOperationEditEvent value)  changeSum,required TResult Function( _ChangeRecSumOperationEditEvent value)  changeRecSum,required TResult Function( _ChangeCurrencyOperationEditEvent value)  changeCurrency,required TResult Function( _ChangeRecCurrencyOperationEditEvent value)  changeRecCurrency,required TResult Function( _SaveOperationEditEvent value)  save,}){
+final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent():
+return fetch(_that);case _ChangeDateOperationEditEvent():
+return changeDate(_that);case _ChangeTimeOperationEditEvent():
+return changeTime(_that);case _ChangeOperationTypeOperationEditEvent():
+return changeOperationType(_that);case _ChangeAccountOperationEditEvent():
+return changeAccount(_that);case _ChangeCategoryOperationEditEvent():
+return changeCategory(_that);case _ChangeRecAccountOperationEditEvent():
+return changeRecAccount(_that);case _ChangeSumOperationEditEvent():
+return changeSum(_that);case _ChangeRecSumOperationEditEvent():
+return changeRecSum(_that);case _ChangeCurrencyOperationEditEvent():
+return changeCurrency(_that);case _ChangeRecCurrencyOperationEditEvent():
+return changeRecCurrency(_that);case _SaveOperationEditEvent():
+return save(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchOperationEditEvent value)?  fetch,TResult? Function( _ChangeDateOperationEditEvent value)?  changeDate,TResult? Function( _ChangeTimeOperationEditEvent value)?  changeTime,TResult? Function( _ChangeOperationTypeOperationEditEvent value)?  changeOperationType,TResult? Function( _ChangeAccountOperationEditEvent value)?  changeAccount,TResult? Function( _ChangeCategoryOperationEditEvent value)?  changeCategory,TResult? Function( _ChangeRecAccountOperationEditEvent value)?  changeRecAccount,TResult? Function( _ChangeSumOperationEditEvent value)?  changeSum,TResult? Function( _ChangeRecSumOperationEditEvent value)?  changeRecSum,TResult? Function( _ChangeCurrencyOperationEditEvent value)?  changeCurrency,TResult? Function( _ChangeRecCurrencyOperationEditEvent value)?  changeRecCurrency,TResult? Function( _SaveOperationEditEvent value)?  save,}){
+final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent() when fetch != null:
+return fetch(_that);case _ChangeDateOperationEditEvent() when changeDate != null:
+return changeDate(_that);case _ChangeTimeOperationEditEvent() when changeTime != null:
+return changeTime(_that);case _ChangeOperationTypeOperationEditEvent() when changeOperationType != null:
+return changeOperationType(_that);case _ChangeAccountOperationEditEvent() when changeAccount != null:
+return changeAccount(_that);case _ChangeCategoryOperationEditEvent() when changeCategory != null:
+return changeCategory(_that);case _ChangeRecAccountOperationEditEvent() when changeRecAccount != null:
+return changeRecAccount(_that);case _ChangeSumOperationEditEvent() when changeSum != null:
+return changeSum(_that);case _ChangeRecSumOperationEditEvent() when changeRecSum != null:
+return changeRecSum(_that);case _ChangeCurrencyOperationEditEvent() when changeCurrency != null:
+return changeCurrency(_that);case _ChangeRecCurrencyOperationEditEvent() when changeRecCurrency != null:
+return changeRecCurrency(_that);case _SaveOperationEditEvent() when save != null:
+return save(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int operationId)?  fetch,TResult Function( DateTime date)?  changeDate,TResult Function( TimeOfDay time)?  changeTime,TResult Function( OperationType operationType)?  changeOperationType,TResult Function( AccountView account)?  changeAccount,TResult Function( CategoryView category)?  changeCategory,TResult Function( AccountView recAccount)?  changeRecAccount,TResult Function( int sum)?  changeSum,TResult Function( int sum)?  changeRecSum,TResult Function( Currency currency)?  changeCurrency,TResult Function( Currency currency)?  changeRecCurrency,TResult Function()?  save,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent() when fetch != null:
+return fetch(_that.operationId);case _ChangeDateOperationEditEvent() when changeDate != null:
+return changeDate(_that.date);case _ChangeTimeOperationEditEvent() when changeTime != null:
+return changeTime(_that.time);case _ChangeOperationTypeOperationEditEvent() when changeOperationType != null:
+return changeOperationType(_that.operationType);case _ChangeAccountOperationEditEvent() when changeAccount != null:
+return changeAccount(_that.account);case _ChangeCategoryOperationEditEvent() when changeCategory != null:
+return changeCategory(_that.category);case _ChangeRecAccountOperationEditEvent() when changeRecAccount != null:
+return changeRecAccount(_that.recAccount);case _ChangeSumOperationEditEvent() when changeSum != null:
+return changeSum(_that.sum);case _ChangeRecSumOperationEditEvent() when changeRecSum != null:
+return changeRecSum(_that.sum);case _ChangeCurrencyOperationEditEvent() when changeCurrency != null:
+return changeCurrency(_that.currency);case _ChangeRecCurrencyOperationEditEvent() when changeRecCurrency != null:
+return changeRecCurrency(_that.currency);case _SaveOperationEditEvent() when save != null:
+return save();case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int operationId)  fetch,required TResult Function( DateTime date)  changeDate,required TResult Function( TimeOfDay time)  changeTime,required TResult Function( OperationType operationType)  changeOperationType,required TResult Function( AccountView account)  changeAccount,required TResult Function( CategoryView category)  changeCategory,required TResult Function( AccountView recAccount)  changeRecAccount,required TResult Function( int sum)  changeSum,required TResult Function( int sum)  changeRecSum,required TResult Function( Currency currency)  changeCurrency,required TResult Function( Currency currency)  changeRecCurrency,required TResult Function()  save,}) {final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent():
+return fetch(_that.operationId);case _ChangeDateOperationEditEvent():
+return changeDate(_that.date);case _ChangeTimeOperationEditEvent():
+return changeTime(_that.time);case _ChangeOperationTypeOperationEditEvent():
+return changeOperationType(_that.operationType);case _ChangeAccountOperationEditEvent():
+return changeAccount(_that.account);case _ChangeCategoryOperationEditEvent():
+return changeCategory(_that.category);case _ChangeRecAccountOperationEditEvent():
+return changeRecAccount(_that.recAccount);case _ChangeSumOperationEditEvent():
+return changeSum(_that.sum);case _ChangeRecSumOperationEditEvent():
+return changeRecSum(_that.sum);case _ChangeCurrencyOperationEditEvent():
+return changeCurrency(_that.currency);case _ChangeRecCurrencyOperationEditEvent():
+return changeRecCurrency(_that.currency);case _SaveOperationEditEvent():
+return save();case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int operationId)?  fetch,TResult? Function( DateTime date)?  changeDate,TResult? Function( TimeOfDay time)?  changeTime,TResult? Function( OperationType operationType)?  changeOperationType,TResult? Function( AccountView account)?  changeAccount,TResult? Function( CategoryView category)?  changeCategory,TResult? Function( AccountView recAccount)?  changeRecAccount,TResult? Function( int sum)?  changeSum,TResult? Function( int sum)?  changeRecSum,TResult? Function( Currency currency)?  changeCurrency,TResult? Function( Currency currency)?  changeRecCurrency,TResult? Function()?  save,}) {final _that = this;
+switch (_that) {
+case _FetchOperationEditEvent() when fetch != null:
+return fetch(_that.operationId);case _ChangeDateOperationEditEvent() when changeDate != null:
+return changeDate(_that.date);case _ChangeTimeOperationEditEvent() when changeTime != null:
+return changeTime(_that.time);case _ChangeOperationTypeOperationEditEvent() when changeOperationType != null:
+return changeOperationType(_that.operationType);case _ChangeAccountOperationEditEvent() when changeAccount != null:
+return changeAccount(_that.account);case _ChangeCategoryOperationEditEvent() when changeCategory != null:
+return changeCategory(_that.category);case _ChangeRecAccountOperationEditEvent() when changeRecAccount != null:
+return changeRecAccount(_that.recAccount);case _ChangeSumOperationEditEvent() when changeSum != null:
+return changeSum(_that.sum);case _ChangeRecSumOperationEditEvent() when changeRecSum != null:
+return changeRecSum(_that.sum);case _ChangeCurrencyOperationEditEvent() when changeCurrency != null:
+return changeCurrency(_that.currency);case _ChangeRecCurrencyOperationEditEvent() when changeRecCurrency != null:
+return changeRecCurrency(_that.currency);case _SaveOperationEditEvent() when save != null:
+return save();case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$FetchOperationEditEventImplCopyWith<$Res> {
-  factory _$$FetchOperationEditEventImplCopyWith(
-          _$FetchOperationEditEventImpl value,
-          $Res Function(_$FetchOperationEditEventImpl) then) =
-      __$$FetchOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int operationId});
-}
-
-/// @nodoc
-class __$$FetchOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$FetchOperationEditEventImpl>
-    implements _$$FetchOperationEditEventImplCopyWith<$Res> {
-  __$$FetchOperationEditEventImplCopyWithImpl(
-      _$FetchOperationEditEventImpl _value,
-      $Res Function(_$FetchOperationEditEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operationId = null,
-  }) {
-    return _then(_$FetchOperationEditEventImpl(
-      operationId: null == operationId
-          ? _value.operationId
-          : operationId // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$FetchOperationEditEventImpl implements _FetchOperationEditEvent {
-  const _$FetchOperationEditEventImpl({required this.operationId});
-
-  @override
-  final int operationId;
-
-  @override
-  String toString() {
-    return 'OperationEditEvent.fetch(operationId: $operationId)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FetchOperationEditEventImpl &&
-            (identical(other.operationId, operationId) ||
-                other.operationId == operationId));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, operationId);
-
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FetchOperationEditEventImplCopyWith<_$FetchOperationEditEventImpl>
-      get copyWith => __$$FetchOperationEditEventImplCopyWithImpl<
-          _$FetchOperationEditEventImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return fetch(operationId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return fetch?.call(operationId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(operationId);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return fetch(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return fetch?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FetchOperationEditEvent implements OperationEditEvent {
-  const factory _FetchOperationEditEvent({required final int operationId}) =
-      _$FetchOperationEditEventImpl;
-
-  int get operationId;
-
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FetchOperationEditEventImplCopyWith<_$FetchOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ChangeDateOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeDateOperationEditEventImplCopyWith(
-          _$ChangeDateOperationEditEventImpl value,
-          $Res Function(_$ChangeDateOperationEditEventImpl) then) =
-      __$$ChangeDateOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({DateTime date});
-}
-
-/// @nodoc
-class __$$ChangeDateOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeDateOperationEditEventImpl>
-    implements _$$ChangeDateOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeDateOperationEditEventImplCopyWithImpl(
-      _$ChangeDateOperationEditEventImpl _value,
-      $Res Function(_$ChangeDateOperationEditEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-  }) {
-    return _then(_$ChangeDateOperationEditEventImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeDateOperationEditEventImpl
-    implements _ChangeDateOperationEditEvent {
-  const _$ChangeDateOperationEditEventImpl({required this.date});
 
-  @override
-  final DateTime date;
+class _FetchOperationEditEvent implements OperationEditEvent {
+  const _FetchOperationEditEvent({required this.operationId});
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeDate(date: $date)';
-  }
+ final  int operationId;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeDateOperationEditEventImpl &&
-            (identical(other.date, date) || other.date == date));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FetchOperationEditEventCopyWith<_FetchOperationEditEvent> get copyWith => __$FetchOperationEditEventCopyWithImpl<_FetchOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, date);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeDateOperationEditEventImplCopyWith<
-          _$ChangeDateOperationEditEventImpl>
-      get copyWith => __$$ChangeDateOperationEditEventImplCopyWithImpl<
-          _$ChangeDateOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeDate(date);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeDate?.call(date);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeDate != null) {
-      return changeDate(date);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeDate(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeDate?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeDate != null) {
-      return changeDate(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationEditEvent&&(identical(other.operationId, operationId) || other.operationId == operationId));
 }
 
-abstract class _ChangeDateOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeDateOperationEditEvent({required final DateTime date}) =
-      _$ChangeDateOperationEditEventImpl;
 
-  DateTime get date;
+@override
+int get hashCode => Object.hash(runtimeType,operationId);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeDateOperationEditEventImplCopyWith<
-          _$ChangeDateOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.fetch(operationId: $operationId)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeTimeOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeTimeOperationEditEventImplCopyWith(
-          _$ChangeTimeOperationEditEventImpl value,
-          $Res Function(_$ChangeTimeOperationEditEventImpl) then) =
-      __$$ChangeTimeOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({TimeOfDay time});
+abstract mixin class _$FetchOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$FetchOperationEditEventCopyWith(_FetchOperationEditEvent value, $Res Function(_FetchOperationEditEvent) _then) = __$FetchOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ int operationId
+});
+
+
+
+
+}
+/// @nodoc
+class __$FetchOperationEditEventCopyWithImpl<$Res>
+    implements _$FetchOperationEditEventCopyWith<$Res> {
+  __$FetchOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _FetchOperationEditEvent _self;
+  final $Res Function(_FetchOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? operationId = null,}) {
+  return _then(_FetchOperationEditEvent(
+operationId: null == operationId ? _self.operationId : operationId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeTimeOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeTimeOperationEditEventImpl>
-    implements _$$ChangeTimeOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeTimeOperationEditEventImplCopyWithImpl(
-      _$ChangeTimeOperationEditEventImpl _value,
-      $Res Function(_$ChangeTimeOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? time = null,
-  }) {
-    return _then(_$ChangeTimeOperationEditEventImpl(
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeTimeOperationEditEventImpl
-    implements _ChangeTimeOperationEditEvent {
-  const _$ChangeTimeOperationEditEventImpl({required this.time});
 
-  @override
-  final TimeOfDay time;
+class _ChangeDateOperationEditEvent implements OperationEditEvent {
+  const _ChangeDateOperationEditEvent({required this.date});
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeTime(time: $time)';
-  }
+ final  DateTime date;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeTimeOperationEditEventImpl &&
-            (identical(other.time, time) || other.time == time));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeDateOperationEditEventCopyWith<_ChangeDateOperationEditEvent> get copyWith => __$ChangeDateOperationEditEventCopyWithImpl<_ChangeDateOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, time);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeTimeOperationEditEventImplCopyWith<
-          _$ChangeTimeOperationEditEventImpl>
-      get copyWith => __$$ChangeTimeOperationEditEventImplCopyWithImpl<
-          _$ChangeTimeOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeTime(time);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeTime?.call(time);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeTime != null) {
-      return changeTime(time);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeTime(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeTime?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeTime != null) {
-      return changeTime(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeDateOperationEditEvent&&(identical(other.date, date) || other.date == date));
 }
 
-abstract class _ChangeTimeOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeTimeOperationEditEvent({required final TimeOfDay time}) =
-      _$ChangeTimeOperationEditEventImpl;
 
-  TimeOfDay get time;
+@override
+int get hashCode => Object.hash(runtimeType,date);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeTimeOperationEditEventImplCopyWith<
-          _$ChangeTimeOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeDate(date: $date)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeOperationTypeOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeOperationTypeOperationEditEventImplCopyWith(
-          _$ChangeOperationTypeOperationEditEventImpl value,
-          $Res Function(_$ChangeOperationTypeOperationEditEventImpl) then) =
-      __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({OperationType operationType});
+abstract mixin class _$ChangeDateOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeDateOperationEditEventCopyWith(_ChangeDateOperationEditEvent value, $Res Function(_ChangeDateOperationEditEvent) _then) = __$ChangeDateOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ DateTime date
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeDateOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeDateOperationEditEventCopyWith<$Res> {
+  __$ChangeDateOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeDateOperationEditEvent _self;
+  final $Res Function(_ChangeDateOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? date = null,}) {
+  return _then(_ChangeDateOperationEditEvent(
+date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeOperationTypeOperationEditEventImpl>
-    implements _$$ChangeOperationTypeOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl(
-      _$ChangeOperationTypeOperationEditEventImpl _value,
-      $Res Function(_$ChangeOperationTypeOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operationType = null,
-  }) {
-    return _then(_$ChangeOperationTypeOperationEditEventImpl(
-      null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeOperationTypeOperationEditEventImpl
-    implements _ChangeOperationTypeOperationEditEvent {
-  const _$ChangeOperationTypeOperationEditEventImpl(this.operationType);
 
-  @override
-  final OperationType operationType;
+class _ChangeTimeOperationEditEvent implements OperationEditEvent {
+  const _ChangeTimeOperationEditEvent({required this.time});
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeOperationType(operationType: $operationType)';
-  }
+ final  TimeOfDay time;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeOperationTypeOperationEditEventImpl &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeTimeOperationEditEventCopyWith<_ChangeTimeOperationEditEvent> get copyWith => __$ChangeTimeOperationEditEventCopyWithImpl<_ChangeTimeOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, operationType);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeOperationTypeOperationEditEventImplCopyWith<
-          _$ChangeOperationTypeOperationEditEventImpl>
-      get copyWith => __$$ChangeOperationTypeOperationEditEventImplCopyWithImpl<
-          _$ChangeOperationTypeOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeOperationType(operationType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeOperationType?.call(operationType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeOperationType != null) {
-      return changeOperationType(operationType);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeOperationType(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeOperationType?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeOperationType != null) {
-      return changeOperationType(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTimeOperationEditEvent&&(identical(other.time, time) || other.time == time));
 }
 
-abstract class _ChangeOperationTypeOperationEditEvent
-    implements OperationEditEvent {
-  const factory _ChangeOperationTypeOperationEditEvent(
-          final OperationType operationType) =
-      _$ChangeOperationTypeOperationEditEventImpl;
 
-  OperationType get operationType;
+@override
+int get hashCode => Object.hash(runtimeType,time);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeOperationTypeOperationEditEventImplCopyWith<
-          _$ChangeOperationTypeOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeTime(time: $time)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeAccountOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeAccountOperationEditEventImplCopyWith(
-          _$ChangeAccountOperationEditEventImpl value,
-          $Res Function(_$ChangeAccountOperationEditEventImpl) then) =
-      __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AccountView account});
+abstract mixin class _$ChangeTimeOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeTimeOperationEditEventCopyWith(_ChangeTimeOperationEditEvent value, $Res Function(_ChangeTimeOperationEditEvent) _then) = __$ChangeTimeOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ TimeOfDay time
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeTimeOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeTimeOperationEditEventCopyWith<$Res> {
+  __$ChangeTimeOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeTimeOperationEditEvent _self;
+  final $Res Function(_ChangeTimeOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? time = null,}) {
+  return _then(_ChangeTimeOperationEditEvent(
+time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
+as TimeOfDay,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeAccountOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeAccountOperationEditEventImpl>
-    implements _$$ChangeAccountOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeAccountOperationEditEventImplCopyWithImpl(
-      _$ChangeAccountOperationEditEventImpl _value,
-      $Res Function(_$ChangeAccountOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? account = null,
-  }) {
-    return _then(_$ChangeAccountOperationEditEventImpl(
-      null == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as AccountView,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeAccountOperationEditEventImpl
-    implements _ChangeAccountOperationEditEvent {
-  const _$ChangeAccountOperationEditEventImpl(this.account);
 
-  @override
-  final AccountView account;
+class _ChangeOperationTypeOperationEditEvent implements OperationEditEvent {
+  const _ChangeOperationTypeOperationEditEvent(this.operationType);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeAccount(account: $account)';
-  }
+ final  OperationType operationType;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeAccountOperationEditEventImpl &&
-            (identical(other.account, account) || other.account == account));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeOperationTypeOperationEditEventCopyWith<_ChangeOperationTypeOperationEditEvent> get copyWith => __$ChangeOperationTypeOperationEditEventCopyWithImpl<_ChangeOperationTypeOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, account);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeAccountOperationEditEventImplCopyWith<
-          _$ChangeAccountOperationEditEventImpl>
-      get copyWith => __$$ChangeAccountOperationEditEventImplCopyWithImpl<
-          _$ChangeAccountOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeAccount(account);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeAccount?.call(account);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeAccount != null) {
-      return changeAccount(account);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeAccount(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeAccount?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeAccount != null) {
-      return changeAccount(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationTypeOperationEditEvent&&(identical(other.operationType, operationType) || other.operationType == operationType));
 }
 
-abstract class _ChangeAccountOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeAccountOperationEditEvent(final AccountView account) =
-      _$ChangeAccountOperationEditEventImpl;
 
-  AccountView get account;
+@override
+int get hashCode => Object.hash(runtimeType,operationType);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeAccountOperationEditEventImplCopyWith<
-          _$ChangeAccountOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeOperationType(operationType: $operationType)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeCategoryOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeCategoryOperationEditEventImplCopyWith(
-          _$ChangeCategoryOperationEditEventImpl value,
-          $Res Function(_$ChangeCategoryOperationEditEventImpl) then) =
-      __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({CategoryView category});
+abstract mixin class _$ChangeOperationTypeOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeOperationTypeOperationEditEventCopyWith(_ChangeOperationTypeOperationEditEvent value, $Res Function(_ChangeOperationTypeOperationEditEvent) _then) = __$ChangeOperationTypeOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ OperationType operationType
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeOperationTypeOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeOperationTypeOperationEditEventCopyWith<$Res> {
+  __$ChangeOperationTypeOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeOperationTypeOperationEditEvent _self;
+  final $Res Function(_ChangeOperationTypeOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? operationType = null,}) {
+  return _then(_ChangeOperationTypeOperationEditEvent(
+null == operationType ? _self.operationType : operationType // ignore: cast_nullable_to_non_nullable
+as OperationType,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeCategoryOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeCategoryOperationEditEventImpl>
-    implements _$$ChangeCategoryOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeCategoryOperationEditEventImplCopyWithImpl(
-      _$ChangeCategoryOperationEditEventImpl _value,
-      $Res Function(_$ChangeCategoryOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? category = null,
-  }) {
-    return _then(_$ChangeCategoryOperationEditEventImpl(
-      null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryView,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeCategoryOperationEditEventImpl
-    implements _ChangeCategoryOperationEditEvent {
-  const _$ChangeCategoryOperationEditEventImpl(this.category);
 
-  @override
-  final CategoryView category;
+class _ChangeAccountOperationEditEvent implements OperationEditEvent {
+  const _ChangeAccountOperationEditEvent(this.account);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeCategory(category: $category)';
-  }
+ final  AccountView account;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeCategoryOperationEditEventImpl &&
-            (identical(other.category, category) ||
-                other.category == category));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeAccountOperationEditEventCopyWith<_ChangeAccountOperationEditEvent> get copyWith => __$ChangeAccountOperationEditEventCopyWithImpl<_ChangeAccountOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, category);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeCategoryOperationEditEventImplCopyWith<
-          _$ChangeCategoryOperationEditEventImpl>
-      get copyWith => __$$ChangeCategoryOperationEditEventImplCopyWithImpl<
-          _$ChangeCategoryOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeCategory(category);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeCategory?.call(category);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeCategory != null) {
-      return changeCategory(category);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeCategory(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeCategory?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeCategory != null) {
-      return changeCategory(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeAccountOperationEditEvent&&(identical(other.account, account) || other.account == account));
 }
 
-abstract class _ChangeCategoryOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeCategoryOperationEditEvent(final CategoryView category) =
-      _$ChangeCategoryOperationEditEventImpl;
 
-  CategoryView get category;
+@override
+int get hashCode => Object.hash(runtimeType,account);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeCategoryOperationEditEventImplCopyWith<
-          _$ChangeCategoryOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeAccount(account: $account)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeRecAccountOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeRecAccountOperationEditEventImplCopyWith(
-          _$ChangeRecAccountOperationEditEventImpl value,
-          $Res Function(_$ChangeRecAccountOperationEditEventImpl) then) =
-      __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AccountView recAccount});
+abstract mixin class _$ChangeAccountOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeAccountOperationEditEventCopyWith(_ChangeAccountOperationEditEvent value, $Res Function(_ChangeAccountOperationEditEvent) _then) = __$ChangeAccountOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ AccountView account
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeAccountOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeAccountOperationEditEventCopyWith<$Res> {
+  __$ChangeAccountOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeAccountOperationEditEvent _self;
+  final $Res Function(_ChangeAccountOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? account = null,}) {
+  return _then(_ChangeAccountOperationEditEvent(
+null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
+as AccountView,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeRecAccountOperationEditEventImpl>
-    implements _$$ChangeRecAccountOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeRecAccountOperationEditEventImplCopyWithImpl(
-      _$ChangeRecAccountOperationEditEventImpl _value,
-      $Res Function(_$ChangeRecAccountOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? recAccount = null,
-  }) {
-    return _then(_$ChangeRecAccountOperationEditEventImpl(
-      null == recAccount
-          ? _value.recAccount
-          : recAccount // ignore: cast_nullable_to_non_nullable
-              as AccountView,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeRecAccountOperationEditEventImpl
-    implements _ChangeRecAccountOperationEditEvent {
-  const _$ChangeRecAccountOperationEditEventImpl(this.recAccount);
 
-  @override
-  final AccountView recAccount;
+class _ChangeCategoryOperationEditEvent implements OperationEditEvent {
+  const _ChangeCategoryOperationEditEvent(this.category);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeRecAccount(recAccount: $recAccount)';
-  }
+ final  CategoryView category;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeRecAccountOperationEditEventImpl &&
-            (identical(other.recAccount, recAccount) ||
-                other.recAccount == recAccount));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeCategoryOperationEditEventCopyWith<_ChangeCategoryOperationEditEvent> get copyWith => __$ChangeCategoryOperationEditEventCopyWithImpl<_ChangeCategoryOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, recAccount);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeRecAccountOperationEditEventImplCopyWith<
-          _$ChangeRecAccountOperationEditEventImpl>
-      get copyWith => __$$ChangeRecAccountOperationEditEventImplCopyWithImpl<
-          _$ChangeRecAccountOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeRecAccount(recAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeRecAccount?.call(recAccount);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecAccount != null) {
-      return changeRecAccount(recAccount);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeRecAccount(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeRecAccount?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecAccount != null) {
-      return changeRecAccount(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryOperationEditEvent&&(identical(other.category, category) || other.category == category));
 }
 
-abstract class _ChangeRecAccountOperationEditEvent
-    implements OperationEditEvent {
-  const factory _ChangeRecAccountOperationEditEvent(
-      final AccountView recAccount) = _$ChangeRecAccountOperationEditEventImpl;
 
-  AccountView get recAccount;
+@override
+int get hashCode => Object.hash(runtimeType,category);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeRecAccountOperationEditEventImplCopyWith<
-          _$ChangeRecAccountOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeCategory(category: $category)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeSumOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeSumOperationEditEventImplCopyWith(
-          _$ChangeSumOperationEditEventImpl value,
-          $Res Function(_$ChangeSumOperationEditEventImpl) then) =
-      __$$ChangeSumOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int sum});
+abstract mixin class _$ChangeCategoryOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeCategoryOperationEditEventCopyWith(_ChangeCategoryOperationEditEvent value, $Res Function(_ChangeCategoryOperationEditEvent) _then) = __$ChangeCategoryOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ CategoryView category
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeCategoryOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeCategoryOperationEditEventCopyWith<$Res> {
+  __$ChangeCategoryOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeCategoryOperationEditEvent _self;
+  final $Res Function(_ChangeCategoryOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? category = null,}) {
+  return _then(_ChangeCategoryOperationEditEvent(
+null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as CategoryView,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeSumOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeSumOperationEditEventImpl>
-    implements _$$ChangeSumOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeSumOperationEditEventImplCopyWithImpl(
-      _$ChangeSumOperationEditEventImpl _value,
-      $Res Function(_$ChangeSumOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? sum = null,
-  }) {
-    return _then(_$ChangeSumOperationEditEventImpl(
-      null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeSumOperationEditEventImpl
-    implements _ChangeSumOperationEditEvent {
-  const _$ChangeSumOperationEditEventImpl(this.sum);
 
-  @override
-  final int sum;
+class _ChangeRecAccountOperationEditEvent implements OperationEditEvent {
+  const _ChangeRecAccountOperationEditEvent(this.recAccount);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeSum(sum: $sum)';
-  }
+ final  AccountView recAccount;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeSumOperationEditEventImpl &&
-            (identical(other.sum, sum) || other.sum == sum));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeRecAccountOperationEditEventCopyWith<_ChangeRecAccountOperationEditEvent> get copyWith => __$ChangeRecAccountOperationEditEventCopyWithImpl<_ChangeRecAccountOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, sum);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeSumOperationEditEventImplCopyWith<_$ChangeSumOperationEditEventImpl>
-      get copyWith => __$$ChangeSumOperationEditEventImplCopyWithImpl<
-          _$ChangeSumOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeSum(sum);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeSum?.call(sum);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeSum != null) {
-      return changeSum(sum);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeSum(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeSum?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeSum != null) {
-      return changeSum(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecAccountOperationEditEvent&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
 }
 
-abstract class _ChangeSumOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeSumOperationEditEvent(final int sum) =
-      _$ChangeSumOperationEditEventImpl;
 
-  int get sum;
+@override
+int get hashCode => Object.hash(runtimeType,recAccount);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeSumOperationEditEventImplCopyWith<_$ChangeSumOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeRecAccount(recAccount: $recAccount)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeRecSumOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeRecSumOperationEditEventImplCopyWith(
-          _$ChangeRecSumOperationEditEventImpl value,
-          $Res Function(_$ChangeRecSumOperationEditEventImpl) then) =
-      __$$ChangeRecSumOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int sum});
+abstract mixin class _$ChangeRecAccountOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeRecAccountOperationEditEventCopyWith(_ChangeRecAccountOperationEditEvent value, $Res Function(_ChangeRecAccountOperationEditEvent) _then) = __$ChangeRecAccountOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ AccountView recAccount
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeRecAccountOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeRecAccountOperationEditEventCopyWith<$Res> {
+  __$ChangeRecAccountOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeRecAccountOperationEditEvent _self;
+  final $Res Function(_ChangeRecAccountOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? recAccount = null,}) {
+  return _then(_ChangeRecAccountOperationEditEvent(
+null == recAccount ? _self.recAccount : recAccount // ignore: cast_nullable_to_non_nullable
+as AccountView,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeRecSumOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeRecSumOperationEditEventImpl>
-    implements _$$ChangeRecSumOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeRecSumOperationEditEventImplCopyWithImpl(
-      _$ChangeRecSumOperationEditEventImpl _value,
-      $Res Function(_$ChangeRecSumOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? sum = null,
-  }) {
-    return _then(_$ChangeRecSumOperationEditEventImpl(
-      null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeRecSumOperationEditEventImpl
-    implements _ChangeRecSumOperationEditEvent {
-  const _$ChangeRecSumOperationEditEventImpl(this.sum);
 
-  @override
-  final int sum;
+class _ChangeSumOperationEditEvent implements OperationEditEvent {
+  const _ChangeSumOperationEditEvent(this.sum);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeRecSum(sum: $sum)';
-  }
+ final  int sum;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeRecSumOperationEditEventImpl &&
-            (identical(other.sum, sum) || other.sum == sum));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeSumOperationEditEventCopyWith<_ChangeSumOperationEditEvent> get copyWith => __$ChangeSumOperationEditEventCopyWithImpl<_ChangeSumOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, sum);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeRecSumOperationEditEventImplCopyWith<
-          _$ChangeRecSumOperationEditEventImpl>
-      get copyWith => __$$ChangeRecSumOperationEditEventImplCopyWithImpl<
-          _$ChangeRecSumOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeRecSum(sum);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeRecSum?.call(sum);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecSum != null) {
-      return changeRecSum(sum);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeRecSum(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeRecSum?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecSum != null) {
-      return changeRecSum(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
-abstract class _ChangeRecSumOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeRecSumOperationEditEvent(final int sum) =
-      _$ChangeRecSumOperationEditEventImpl;
 
-  int get sum;
+@override
+int get hashCode => Object.hash(runtimeType,sum);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeRecSumOperationEditEventImplCopyWith<
-          _$ChangeRecSumOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeSum(sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeCurrencyOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeCurrencyOperationEditEventImplCopyWith(
-          _$ChangeCurrencyOperationEditEventImpl value,
-          $Res Function(_$ChangeCurrencyOperationEditEventImpl) then) =
-      __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Currency currency});
+abstract mixin class _$ChangeSumOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeSumOperationEditEventCopyWith(_ChangeSumOperationEditEvent value, $Res Function(_ChangeSumOperationEditEvent) _then) = __$ChangeSumOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ int sum
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeSumOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeSumOperationEditEventCopyWith<$Res> {
+  __$ChangeSumOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeSumOperationEditEvent _self;
+  final $Res Function(_ChangeSumOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
+  return _then(_ChangeSumOperationEditEvent(
+null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeCurrencyOperationEditEventImpl>
-    implements _$$ChangeCurrencyOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeCurrencyOperationEditEventImplCopyWithImpl(
-      _$ChangeCurrencyOperationEditEventImpl _value,
-      $Res Function(_$ChangeCurrencyOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currency = null,
-  }) {
-    return _then(_$ChangeCurrencyOperationEditEventImpl(
-      null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeCurrencyOperationEditEventImpl
-    implements _ChangeCurrencyOperationEditEvent {
-  const _$ChangeCurrencyOperationEditEventImpl(this.currency);
 
-  @override
-  final Currency currency;
+class _ChangeRecSumOperationEditEvent implements OperationEditEvent {
+  const _ChangeRecSumOperationEditEvent(this.sum);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeCurrency(currency: $currency)';
-  }
+ final  int sum;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeCurrencyOperationEditEventImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeRecSumOperationEditEventCopyWith<_ChangeRecSumOperationEditEvent> get copyWith => __$ChangeRecSumOperationEditEventCopyWithImpl<_ChangeRecSumOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, currency);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeCurrencyOperationEditEventImplCopyWith<
-          _$ChangeCurrencyOperationEditEventImpl>
-      get copyWith => __$$ChangeCurrencyOperationEditEventImplCopyWithImpl<
-          _$ChangeCurrencyOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeCurrency(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeCurrency?.call(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(currency);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeCurrency(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeCurrency?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeCurrency != null) {
-      return changeCurrency(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
-abstract class _ChangeCurrencyOperationEditEvent implements OperationEditEvent {
-  const factory _ChangeCurrencyOperationEditEvent(final Currency currency) =
-      _$ChangeCurrencyOperationEditEventImpl;
 
-  Currency get currency;
+@override
+int get hashCode => Object.hash(runtimeType,sum);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeCurrencyOperationEditEventImplCopyWith<
-          _$ChangeCurrencyOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeRecSum(sum: $sum)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ChangeRecCurrencyOperationEditEventImplCopyWith<$Res> {
-  factory _$$ChangeRecCurrencyOperationEditEventImplCopyWith(
-          _$ChangeRecCurrencyOperationEditEventImpl value,
-          $Res Function(_$ChangeRecCurrencyOperationEditEventImpl) then) =
-      __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Currency currency});
+abstract mixin class _$ChangeRecSumOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeRecSumOperationEditEventCopyWith(_ChangeRecSumOperationEditEvent value, $Res Function(_ChangeRecSumOperationEditEvent) _then) = __$ChangeRecSumOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ int sum
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeRecSumOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeRecSumOperationEditEventCopyWith<$Res> {
+  __$ChangeRecSumOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeRecSumOperationEditEvent _self;
+  final $Res Function(_ChangeRecSumOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
+  return _then(_ChangeRecSumOperationEditEvent(
+null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-class __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res,
-        _$ChangeRecCurrencyOperationEditEventImpl>
-    implements _$$ChangeRecCurrencyOperationEditEventImplCopyWith<$Res> {
-  __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl(
-      _$ChangeRecCurrencyOperationEditEventImpl _value,
-      $Res Function(_$ChangeRecCurrencyOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currency = null,
-  }) {
-    return _then(_$ChangeRecCurrencyOperationEditEventImpl(
-      null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeRecCurrencyOperationEditEventImpl
-    implements _ChangeRecCurrencyOperationEditEvent {
-  const _$ChangeRecCurrencyOperationEditEventImpl(this.currency);
 
-  @override
-  final Currency currency;
+class _ChangeCurrencyOperationEditEvent implements OperationEditEvent {
+  const _ChangeCurrencyOperationEditEvent(this.currency);
+  
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.changeRecCurrency(currency: $currency)';
-  }
+ final  Currency currency;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeRecCurrencyOperationEditEventImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeCurrencyOperationEditEventCopyWith<_ChangeCurrencyOperationEditEvent> get copyWith => __$ChangeCurrencyOperationEditEventCopyWithImpl<_ChangeCurrencyOperationEditEvent>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, currency);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeRecCurrencyOperationEditEventImplCopyWith<
-          _$ChangeRecCurrencyOperationEditEventImpl>
-      get copyWith => __$$ChangeRecCurrencyOperationEditEventImplCopyWithImpl<
-          _$ChangeRecCurrencyOperationEditEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return changeRecCurrency(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return changeRecCurrency?.call(currency);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecCurrency != null) {
-      return changeRecCurrency(currency);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return changeRecCurrency(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return changeRecCurrency?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (changeRecCurrency != null) {
-      return changeRecCurrency(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
 }
 
-abstract class _ChangeRecCurrencyOperationEditEvent
-    implements OperationEditEvent {
-  const factory _ChangeRecCurrencyOperationEditEvent(final Currency currency) =
-      _$ChangeRecCurrencyOperationEditEventImpl;
 
-  Currency get currency;
+@override
+int get hashCode => Object.hash(runtimeType,currency);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeRecCurrencyOperationEditEventImplCopyWith<
-          _$ChangeRecCurrencyOperationEditEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'OperationEditEvent.changeCurrency(currency: $currency)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$SaveOperationEditEventImplCopyWith<$Res> {
-  factory _$$SaveOperationEditEventImplCopyWith(
-          _$SaveOperationEditEventImpl value,
-          $Res Function(_$SaveOperationEditEventImpl) then) =
-      __$$SaveOperationEditEventImplCopyWithImpl<$Res>;
+abstract mixin class _$ChangeCurrencyOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeCurrencyOperationEditEventCopyWith(_ChangeCurrencyOperationEditEvent value, $Res Function(_ChangeCurrencyOperationEditEvent) _then) = __$ChangeCurrencyOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ Currency currency
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeCurrencyOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeCurrencyOperationEditEventCopyWith<$Res> {
+  __$ChangeCurrencyOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeCurrencyOperationEditEvent _self;
+  final $Res Function(_ChangeCurrencyOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? currency = null,}) {
+  return _then(_ChangeCurrencyOperationEditEvent(
+null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,
+  ));
 }
 
-/// @nodoc
-class __$$SaveOperationEditEventImplCopyWithImpl<$Res>
-    extends _$OperationEditEventCopyWithImpl<$Res, _$SaveOperationEditEventImpl>
-    implements _$$SaveOperationEditEventImplCopyWith<$Res> {
-  __$$SaveOperationEditEventImplCopyWithImpl(
-      _$SaveOperationEditEventImpl _value,
-      $Res Function(_$SaveOperationEditEventImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of OperationEditEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$SaveOperationEditEventImpl implements _SaveOperationEditEvent {
-  const _$SaveOperationEditEventImpl();
 
-  @override
-  String toString() {
-    return 'OperationEditEvent.save()';
-  }
+class _ChangeRecCurrencyOperationEditEvent implements OperationEditEvent {
+  const _ChangeRecCurrencyOperationEditEvent(this.currency);
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SaveOperationEditEventImpl);
-  }
+ final  Currency currency;
 
-  @override
-  int get hashCode => runtimeType.hashCode;
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeRecCurrencyOperationEditEventCopyWith<_ChangeRecCurrencyOperationEditEvent> get copyWith => __$ChangeRecCurrencyOperationEditEventCopyWithImpl<_ChangeRecCurrencyOperationEditEvent>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int operationId) fetch,
-    required TResult Function(DateTime date) changeDate,
-    required TResult Function(TimeOfDay time) changeTime,
-    required TResult Function(OperationType operationType) changeOperationType,
-    required TResult Function(AccountView account) changeAccount,
-    required TResult Function(CategoryView category) changeCategory,
-    required TResult Function(AccountView recAccount) changeRecAccount,
-    required TResult Function(int sum) changeSum,
-    required TResult Function(int sum) changeRecSum,
-    required TResult Function(Currency currency) changeCurrency,
-    required TResult Function(Currency currency) changeRecCurrency,
-    required TResult Function() save,
-  }) {
-    return save();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int operationId)? fetch,
-    TResult? Function(DateTime date)? changeDate,
-    TResult? Function(TimeOfDay time)? changeTime,
-    TResult? Function(OperationType operationType)? changeOperationType,
-    TResult? Function(AccountView account)? changeAccount,
-    TResult? Function(CategoryView category)? changeCategory,
-    TResult? Function(AccountView recAccount)? changeRecAccount,
-    TResult? Function(int sum)? changeSum,
-    TResult? Function(int sum)? changeRecSum,
-    TResult? Function(Currency currency)? changeCurrency,
-    TResult? Function(Currency currency)? changeRecCurrency,
-    TResult? Function()? save,
-  }) {
-    return save?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int operationId)? fetch,
-    TResult Function(DateTime date)? changeDate,
-    TResult Function(TimeOfDay time)? changeTime,
-    TResult Function(OperationType operationType)? changeOperationType,
-    TResult Function(AccountView account)? changeAccount,
-    TResult Function(CategoryView category)? changeCategory,
-    TResult Function(AccountView recAccount)? changeRecAccount,
-    TResult Function(int sum)? changeSum,
-    TResult Function(int sum)? changeRecSum,
-    TResult Function(Currency currency)? changeCurrency,
-    TResult Function(Currency currency)? changeRecCurrency,
-    TResult Function()? save,
-    required TResult orElse(),
-  }) {
-    if (save != null) {
-      return save();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchOperationEditEvent value) fetch,
-    required TResult Function(_ChangeDateOperationEditEvent value) changeDate,
-    required TResult Function(_ChangeTimeOperationEditEvent value) changeTime,
-    required TResult Function(_ChangeOperationTypeOperationEditEvent value)
-        changeOperationType,
-    required TResult Function(_ChangeAccountOperationEditEvent value)
-        changeAccount,
-    required TResult Function(_ChangeCategoryOperationEditEvent value)
-        changeCategory,
-    required TResult Function(_ChangeRecAccountOperationEditEvent value)
-        changeRecAccount,
-    required TResult Function(_ChangeSumOperationEditEvent value) changeSum,
-    required TResult Function(_ChangeRecSumOperationEditEvent value)
-        changeRecSum,
-    required TResult Function(_ChangeCurrencyOperationEditEvent value)
-        changeCurrency,
-    required TResult Function(_ChangeRecCurrencyOperationEditEvent value)
-        changeRecCurrency,
-    required TResult Function(_SaveOperationEditEvent value) save,
-  }) {
-    return save(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchOperationEditEvent value)? fetch,
-    TResult? Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult? Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult? Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult? Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult? Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult? Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult? Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult? Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult? Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult? Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult? Function(_SaveOperationEditEvent value)? save,
-  }) {
-    return save?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchOperationEditEvent value)? fetch,
-    TResult Function(_ChangeDateOperationEditEvent value)? changeDate,
-    TResult Function(_ChangeTimeOperationEditEvent value)? changeTime,
-    TResult Function(_ChangeOperationTypeOperationEditEvent value)?
-        changeOperationType,
-    TResult Function(_ChangeAccountOperationEditEvent value)? changeAccount,
-    TResult Function(_ChangeCategoryOperationEditEvent value)? changeCategory,
-    TResult Function(_ChangeRecAccountOperationEditEvent value)?
-        changeRecAccount,
-    TResult Function(_ChangeSumOperationEditEvent value)? changeSum,
-    TResult Function(_ChangeRecSumOperationEditEvent value)? changeRecSum,
-    TResult Function(_ChangeCurrencyOperationEditEvent value)? changeCurrency,
-    TResult Function(_ChangeRecCurrencyOperationEditEvent value)?
-        changeRecCurrency,
-    TResult Function(_SaveOperationEditEvent value)? save,
-    required TResult orElse(),
-  }) {
-    if (save != null) {
-      return save(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
 }
 
-abstract class _SaveOperationEditEvent implements OperationEditEvent {
-  const factory _SaveOperationEditEvent() = _$SaveOperationEditEventImpl;
+
+@override
+int get hashCode => Object.hash(runtimeType,currency);
+
+@override
+String toString() {
+  return 'OperationEditEvent.changeRecCurrency(currency: $currency)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ChangeRecCurrencyOperationEditEventCopyWith<$Res> implements $OperationEditEventCopyWith<$Res> {
+  factory _$ChangeRecCurrencyOperationEditEventCopyWith(_ChangeRecCurrencyOperationEditEvent value, $Res Function(_ChangeRecCurrencyOperationEditEvent) _then) = __$ChangeRecCurrencyOperationEditEventCopyWithImpl;
+@useResult
+$Res call({
+ Currency currency
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeRecCurrencyOperationEditEventCopyWithImpl<$Res>
+    implements _$ChangeRecCurrencyOperationEditEventCopyWith<$Res> {
+  __$ChangeRecCurrencyOperationEditEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeRecCurrencyOperationEditEvent _self;
+  final $Res Function(_ChangeRecCurrencyOperationEditEvent) _then;
+
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? currency = null,}) {
+  return _then(_ChangeRecCurrencyOperationEditEvent(
+null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _SaveOperationEditEvent implements OperationEditEvent {
+  const _SaveOperationEditEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveOperationEditEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'OperationEditEvent.save()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$OperationEditState {
-  Operation? get operation => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
-  TimeOfDay get time => throw _privateConstructorUsedError;
-  OperationType get operationType => throw _privateConstructorUsedError;
-  int? get accountId => throw _privateConstructorUsedError;
-  int? get categoryId => throw _privateConstructorUsedError;
-  int? get recAccountId => throw _privateConstructorUsedError;
-  Sum get sum => throw _privateConstructorUsedError;
-  Sum get recSum => throw _privateConstructorUsedError;
-  bool get isSaved => throw _privateConstructorUsedError;
 
-  /// Create a copy of OperationEditState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $OperationEditStateCopyWith<OperationEditState> get copyWith =>
-      throw _privateConstructorUsedError;
+ Operation? get operation; DateTime get date; TimeOfDay get time; OperationType get operationType; int? get accountId; int? get categoryId; int? get recAccountId; Sum get sum; Sum get recSum; bool get isSaved;
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OperationEditStateCopyWith<OperationEditState> get copyWith => _$OperationEditStateCopyWithImpl<OperationEditState>(this as OperationEditState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditState&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,operation,date,time,operationType,accountId,categoryId,recAccountId,sum,recSum,isSaved);
+
+@override
+String toString() {
+  return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $OperationEditStateCopyWith<$Res> {
-  factory $OperationEditStateCopyWith(
-          OperationEditState value, $Res Function(OperationEditState) then) =
-      _$OperationEditStateCopyWithImpl<$Res, OperationEditState>;
-  @useResult
-  $Res call(
-      {Operation? operation,
-      DateTime date,
-      TimeOfDay time,
-      OperationType operationType,
-      int? accountId,
-      int? categoryId,
-      int? recAccountId,
-      Sum sum,
-      Sum recSum,
-      bool isSaved});
-}
+abstract mixin class $OperationEditStateCopyWith<$Res>  {
+  factory $OperationEditStateCopyWith(OperationEditState value, $Res Function(OperationEditState) _then) = _$OperationEditStateCopyWithImpl;
+@useResult
+$Res call({
+ Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Sum sum, Sum recSum, bool isSaved
+});
 
+
+
+
+}
 /// @nodoc
-class _$OperationEditStateCopyWithImpl<$Res, $Val extends OperationEditState>
+class _$OperationEditStateCopyWithImpl<$Res>
     implements $OperationEditStateCopyWith<$Res> {
-  _$OperationEditStateCopyWithImpl(this._value, this._then);
+  _$OperationEditStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final OperationEditState _self;
+  final $Res Function(OperationEditState) _then;
 
-  /// Create a copy of OperationEditState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operation = freezed,
-    Object? date = null,
-    Object? time = null,
-    Object? operationType = null,
-    Object? accountId = freezed,
-    Object? categoryId = freezed,
-    Object? recAccountId = freezed,
-    Object? sum = null,
-    Object? recSum = null,
-    Object? isSaved = null,
-  }) {
-    return _then(_value.copyWith(
-      operation: freezed == operation
-          ? _value.operation
-          : operation // ignore: cast_nullable_to_non_nullable
-              as Operation?,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      recAccountId: freezed == recAccountId
-          ? _value.recAccountId
-          : recAccountId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as Sum,
-      recSum: null == recSum
-          ? _value.recSum
-          : recSum // ignore: cast_nullable_to_non_nullable
-              as Sum,
-      isSaved: null == isSaved
-          ? _value.isSaved
-          : isSaved // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? operation = freezed,Object? date = null,Object? time = null,Object? operationType = null,Object? accountId = freezed,Object? categoryId = freezed,Object? recAccountId = freezed,Object? sum = null,Object? recSum = null,Object? isSaved = null,}) {
+  return _then(_self.copyWith(
+operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
+as TimeOfDay,operationType: null == operationType ? _self.operationType : operationType // ignore: cast_nullable_to_non_nullable
+as OperationType,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Sum,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [OperationEditState].
+extension OperationEditStatePatterns on OperationEditState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _OperationEditState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _OperationEditState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _OperationEditState value)  $default,){
+final _that = this;
+switch (_that) {
+case _OperationEditState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _OperationEditState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _OperationEditState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _OperationEditState() when $default != null:
+return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)  $default,) {final _that = this;
+switch (_that) {
+case _OperationEditState():
+return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)?  $default,) {final _that = this;
+switch (_that) {
+case _OperationEditState() when $default != null:
+return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$OperationEditStateImplCopyWith<$Res>
-    implements $OperationEditStateCopyWith<$Res> {
-  factory _$$OperationEditStateImplCopyWith(_$OperationEditStateImpl value,
-          $Res Function(_$OperationEditStateImpl) then) =
-      __$$OperationEditStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {Operation? operation,
-      DateTime date,
-      TimeOfDay time,
-      OperationType operationType,
-      int? accountId,
-      int? categoryId,
-      int? recAccountId,
-      Sum sum,
-      Sum recSum,
-      bool isSaved});
+
+
+class _OperationEditState extends OperationEditState {
+  const _OperationEditState({this.operation, required this.date, required this.time, required this.operationType, this.accountId, this.categoryId, this.recAccountId, required this.sum, required this.recSum, required this.isSaved}): super._();
+  
+
+@override final  Operation? operation;
+@override final  DateTime date;
+@override final  TimeOfDay time;
+@override final  OperationType operationType;
+@override final  int? accountId;
+@override final  int? categoryId;
+@override final  int? recAccountId;
+@override final  Sum sum;
+@override final  Sum recSum;
+@override final  bool isSaved;
+
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OperationEditStateCopyWith<_OperationEditState> get copyWith => __$OperationEditStateCopyWithImpl<_OperationEditState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationEditState&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,operation,date,time,operationType,accountId,categoryId,recAccountId,sum,recSum,isSaved);
+
+@override
+String toString() {
+  return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
+}
+
+
 }
 
 /// @nodoc
-class __$$OperationEditStateImplCopyWithImpl<$Res>
-    extends _$OperationEditStateCopyWithImpl<$Res, _$OperationEditStateImpl>
-    implements _$$OperationEditStateImplCopyWith<$Res> {
-  __$$OperationEditStateImplCopyWithImpl(_$OperationEditStateImpl _value,
-      $Res Function(_$OperationEditStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$OperationEditStateCopyWith<$Res> implements $OperationEditStateCopyWith<$Res> {
+  factory _$OperationEditStateCopyWith(_OperationEditState value, $Res Function(_OperationEditState) _then) = __$OperationEditStateCopyWithImpl;
+@override @useResult
+$Res call({
+ Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Sum sum, Sum recSum, bool isSaved
+});
 
-  /// Create a copy of OperationEditState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operation = freezed,
-    Object? date = null,
-    Object? time = null,
-    Object? operationType = null,
-    Object? accountId = freezed,
-    Object? categoryId = freezed,
-    Object? recAccountId = freezed,
-    Object? sum = null,
-    Object? recSum = null,
-    Object? isSaved = null,
-  }) {
-    return _then(_$OperationEditStateImpl(
-      operation: freezed == operation
-          ? _value.operation
-          : operation // ignore: cast_nullable_to_non_nullable
-              as Operation?,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      operationType: null == operationType
-          ? _value.operationType
-          : operationType // ignore: cast_nullable_to_non_nullable
-              as OperationType,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      recAccountId: freezed == recAccountId
-          ? _value.recAccountId
-          : recAccountId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
-              as Sum,
-      recSum: null == recSum
-          ? _value.recSum
-          : recSum // ignore: cast_nullable_to_non_nullable
-              as Sum,
-      isSaved: null == isSaved
-          ? _value.isSaved
-          : isSaved // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$OperationEditStateCopyWithImpl<$Res>
+    implements _$OperationEditStateCopyWith<$Res> {
+  __$OperationEditStateCopyWithImpl(this._self, this._then);
 
-class _$OperationEditStateImpl extends _OperationEditState {
-  const _$OperationEditStateImpl(
-      {this.operation,
-      required this.date,
-      required this.time,
-      required this.operationType,
-      this.accountId,
-      this.categoryId,
-      this.recAccountId,
-      required this.sum,
-      required this.recSum,
-      required this.isSaved})
-      : super._();
+  final _OperationEditState _self;
+  final $Res Function(_OperationEditState) _then;
 
-  @override
-  final Operation? operation;
-  @override
-  final DateTime date;
-  @override
-  final TimeOfDay time;
-  @override
-  final OperationType operationType;
-  @override
-  final int? accountId;
-  @override
-  final int? categoryId;
-  @override
-  final int? recAccountId;
-  @override
-  final Sum sum;
-  @override
-  final Sum recSum;
-  @override
-  final bool isSaved;
-
-  @override
-  String toString() {
-    return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$OperationEditStateImpl &&
-            (identical(other.operation, operation) ||
-                other.operation == operation) &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.time, time) || other.time == time) &&
-            (identical(other.operationType, operationType) ||
-                other.operationType == operationType) &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.recAccountId, recAccountId) ||
-                other.recAccountId == recAccountId) &&
-            (identical(other.sum, sum) || other.sum == sum) &&
-            (identical(other.recSum, recSum) || other.recSum == recSum) &&
-            (identical(other.isSaved, isSaved) || other.isSaved == isSaved));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, operation, date, time,
-      operationType, accountId, categoryId, recAccountId, sum, recSum, isSaved);
-
-  /// Create a copy of OperationEditState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$OperationEditStateImplCopyWith<_$OperationEditStateImpl> get copyWith =>
-      __$$OperationEditStateImplCopyWithImpl<_$OperationEditStateImpl>(
-          this, _$identity);
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? operation = freezed,Object? date = null,Object? time = null,Object? operationType = null,Object? accountId = freezed,Object? categoryId = freezed,Object? recAccountId = freezed,Object? sum = null,Object? recSum = null,Object? isSaved = null,}) {
+  return _then(_OperationEditState(
+operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
+as TimeOfDay,operationType: null == operationType ? _self.operationType : operationType // ignore: cast_nullable_to_non_nullable
+as OperationType,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Sum,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-abstract class _OperationEditState extends OperationEditState {
-  const factory _OperationEditState(
-      {final Operation? operation,
-      required final DateTime date,
-      required final TimeOfDay time,
-      required final OperationType operationType,
-      final int? accountId,
-      final int? categoryId,
-      final int? recAccountId,
-      required final Sum sum,
-      required final Sum recSum,
-      required final bool isSaved}) = _$OperationEditStateImpl;
-  const _OperationEditState._() : super._();
 
-  @override
-  Operation? get operation;
-  @override
-  DateTime get date;
-  @override
-  TimeOfDay get time;
-  @override
-  OperationType get operationType;
-  @override
-  int? get accountId;
-  @override
-  int? get categoryId;
-  @override
-  int? get recAccountId;
-  @override
-  Sum get sum;
-  @override
-  Sum get recSum;
-  @override
-  bool get isSaved;
-
-  /// Create a copy of OperationEditState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OperationEditStateImplCopyWith<_$OperationEditStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

@@ -8,14 +8,14 @@ import '../../domain/models.dart';
 part 'user_bloc.freezed.dart';
 
 @freezed
-class UserEvent with _$UserEvent {
+sealed class UserEvent with _$UserEvent {
   const factory UserEvent.changeUsers({
     required List<User> users,
   }) = _ChangeUsersUserEvent;
 }
 
 @freezed
-class UserState with _$UserState {
+abstract class UserState with _$UserState {
   const UserState._();
 
   const factory UserState({

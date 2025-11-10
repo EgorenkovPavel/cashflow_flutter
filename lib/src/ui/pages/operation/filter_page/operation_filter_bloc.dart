@@ -35,7 +35,7 @@ class OperationFilterEvent with _$OperationFilterEvent {
 }
 
 @freezed
-class OperationFilterState with _$OperationFilterState {
+abstract class OperationFilterState with _$OperationFilterState {
   const OperationFilterState._();
 
   const factory OperationFilterState({

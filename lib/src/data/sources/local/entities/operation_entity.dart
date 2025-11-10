@@ -6,7 +6,7 @@ import 'package:money_tracker/src/domain/models.dart';
 part 'operation_entity.freezed.dart';
 
 @freezed
-class OperationDbEntity with _$OperationDbEntity {
+abstract class OperationDbEntity with _$OperationDbEntity {
   const OperationDbEntity._();
 
   const factory OperationDbEntity({

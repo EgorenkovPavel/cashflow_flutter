@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,221 +9,275 @@ part of 'google_drive_file.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$DriveFile {
-  String get title => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
-  bool get isFolder => throw _privateConstructorUsedError;
-  DateTime get lastChanges => throw _privateConstructorUsedError;
-  bool get enabled => throw _privateConstructorUsedError;
 
-  /// Create a copy of DriveFile
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $DriveFileCopyWith<DriveFile> get copyWith =>
-      throw _privateConstructorUsedError;
+ String get title; String get id; bool get isFolder; DateTime get lastChanges; bool get enabled;
+/// Create a copy of DriveFile
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DriveFileCopyWith<DriveFile> get copyWith => _$DriveFileCopyWithImpl<DriveFile>(this as DriveFile, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveFile&&(identical(other.title, title) || other.title == title)&&(identical(other.id, id) || other.id == id)&&(identical(other.isFolder, isFolder) || other.isFolder == isFolder)&&(identical(other.lastChanges, lastChanges) || other.lastChanges == lastChanges)&&(identical(other.enabled, enabled) || other.enabled == enabled));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,title,id,isFolder,lastChanges,enabled);
+
+@override
+String toString() {
+  return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $DriveFileCopyWith<$Res> {
-  factory $DriveFileCopyWith(DriveFile value, $Res Function(DriveFile) then) =
-      _$DriveFileCopyWithImpl<$Res, DriveFile>;
-  @useResult
-  $Res call(
-      {String title,
-      String id,
-      bool isFolder,
-      DateTime lastChanges,
-      bool enabled});
-}
+abstract mixin class $DriveFileCopyWith<$Res>  {
+  factory $DriveFileCopyWith(DriveFile value, $Res Function(DriveFile) _then) = _$DriveFileCopyWithImpl;
+@useResult
+$Res call({
+ String title, String id, bool isFolder, DateTime lastChanges, bool enabled
+});
 
+
+
+
+}
 /// @nodoc
-class _$DriveFileCopyWithImpl<$Res, $Val extends DriveFile>
+class _$DriveFileCopyWithImpl<$Res>
     implements $DriveFileCopyWith<$Res> {
-  _$DriveFileCopyWithImpl(this._value, this._then);
+  _$DriveFileCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final DriveFile _self;
+  final $Res Function(DriveFile) _then;
 
-  /// Create a copy of DriveFile
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? id = null,
-    Object? isFolder = null,
-    Object? lastChanges = null,
-    Object? enabled = null,
-  }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFolder: null == isFolder
-          ? _value.isFolder
-          : isFolder // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastChanges: null == lastChanges
-          ? _value.lastChanges
-          : lastChanges // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      enabled: null == enabled
-          ? _value.enabled
-          : enabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
+/// Create a copy of DriveFile
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? id = null,Object? isFolder = null,Object? lastChanges = null,Object? enabled = null,}) {
+  return _then(_self.copyWith(
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,isFolder: null == isFolder ? _self.isFolder : isFolder // ignore: cast_nullable_to_non_nullable
+as bool,lastChanges: null == lastChanges ? _self.lastChanges : lastChanges // ignore: cast_nullable_to_non_nullable
+as DateTime,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DriveFile].
+extension DriveFilePatterns on DriveFile {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DriveFile value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DriveFile() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DriveFile value)  $default,){
+final _that = this;
+switch (_that) {
+case _DriveFile():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DriveFile value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DriveFile() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String id,  bool isFolder,  DateTime lastChanges,  bool enabled)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DriveFile() when $default != null:
+return $default(_that.title,_that.id,_that.isFolder,_that.lastChanges,_that.enabled);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String id,  bool isFolder,  DateTime lastChanges,  bool enabled)  $default,) {final _that = this;
+switch (_that) {
+case _DriveFile():
+return $default(_that.title,_that.id,_that.isFolder,_that.lastChanges,_that.enabled);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String id,  bool isFolder,  DateTime lastChanges,  bool enabled)?  $default,) {final _that = this;
+switch (_that) {
+case _DriveFile() when $default != null:
+return $default(_that.title,_that.id,_that.isFolder,_that.lastChanges,_that.enabled);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$DriveFileImplCopyWith<$Res>
-    implements $DriveFileCopyWith<$Res> {
-  factory _$$DriveFileImplCopyWith(
-          _$DriveFileImpl value, $Res Function(_$DriveFileImpl) then) =
-      __$$DriveFileImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String title,
-      String id,
-      bool isFolder,
-      DateTime lastChanges,
-      bool enabled});
+
+
+class _DriveFile implements DriveFile {
+  const _DriveFile({required this.title, required this.id, required this.isFolder, required this.lastChanges, required this.enabled});
+  
+
+@override final  String title;
+@override final  String id;
+@override final  bool isFolder;
+@override final  DateTime lastChanges;
+@override final  bool enabled;
+
+/// Create a copy of DriveFile
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DriveFileCopyWith<_DriveFile> get copyWith => __$DriveFileCopyWithImpl<_DriveFile>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DriveFile&&(identical(other.title, title) || other.title == title)&&(identical(other.id, id) || other.id == id)&&(identical(other.isFolder, isFolder) || other.isFolder == isFolder)&&(identical(other.lastChanges, lastChanges) || other.lastChanges == lastChanges)&&(identical(other.enabled, enabled) || other.enabled == enabled));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,title,id,isFolder,lastChanges,enabled);
+
+@override
+String toString() {
+  return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
+}
+
+
 }
 
 /// @nodoc
-class __$$DriveFileImplCopyWithImpl<$Res>
-    extends _$DriveFileCopyWithImpl<$Res, _$DriveFileImpl>
-    implements _$$DriveFileImplCopyWith<$Res> {
-  __$$DriveFileImplCopyWithImpl(
-      _$DriveFileImpl _value, $Res Function(_$DriveFileImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$DriveFileCopyWith<$Res> implements $DriveFileCopyWith<$Res> {
+  factory _$DriveFileCopyWith(_DriveFile value, $Res Function(_DriveFile) _then) = __$DriveFileCopyWithImpl;
+@override @useResult
+$Res call({
+ String title, String id, bool isFolder, DateTime lastChanges, bool enabled
+});
 
-  /// Create a copy of DriveFile
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? id = null,
-    Object? isFolder = null,
-    Object? lastChanges = null,
-    Object? enabled = null,
-  }) {
-    return _then(_$DriveFileImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFolder: null == isFolder
-          ? _value.isFolder
-          : isFolder // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastChanges: null == lastChanges
-          ? _value.lastChanges
-          : lastChanges // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      enabled: null == enabled
-          ? _value.enabled
-          : enabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$DriveFileCopyWithImpl<$Res>
+    implements _$DriveFileCopyWith<$Res> {
+  __$DriveFileCopyWithImpl(this._self, this._then);
 
-class _$DriveFileImpl implements _DriveFile {
-  const _$DriveFileImpl(
-      {required this.title,
-      required this.id,
-      required this.isFolder,
-      required this.lastChanges,
-      required this.enabled});
+  final _DriveFile _self;
+  final $Res Function(_DriveFile) _then;
 
-  @override
-  final String title;
-  @override
-  final String id;
-  @override
-  final bool isFolder;
-  @override
-  final DateTime lastChanges;
-  @override
-  final bool enabled;
-
-  @override
-  String toString() {
-    return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DriveFileImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.isFolder, isFolder) ||
-                other.isFolder == isFolder) &&
-            (identical(other.lastChanges, lastChanges) ||
-                other.lastChanges == lastChanges) &&
-            (identical(other.enabled, enabled) || other.enabled == enabled));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, id, isFolder, lastChanges, enabled);
-
-  /// Create a copy of DriveFile
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
-      __$$DriveFileImplCopyWithImpl<_$DriveFileImpl>(this, _$identity);
+/// Create a copy of DriveFile
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? id = null,Object? isFolder = null,Object? lastChanges = null,Object? enabled = null,}) {
+  return _then(_DriveFile(
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,isFolder: null == isFolder ? _self.isFolder : isFolder // ignore: cast_nullable_to_non_nullable
+as bool,lastChanges: null == lastChanges ? _self.lastChanges : lastChanges // ignore: cast_nullable_to_non_nullable
+as DateTime,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-abstract class _DriveFile implements DriveFile {
-  const factory _DriveFile(
-      {required final String title,
-      required final String id,
-      required final bool isFolder,
-      required final DateTime lastChanges,
-      required final bool enabled}) = _$DriveFileImpl;
 
-  @override
-  String get title;
-  @override
-  String get id;
-  @override
-  bool get isFolder;
-  @override
-  DateTime get lastChanges;
-  @override
-  bool get enabled;
-
-  /// Create a copy of DriveFile
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DriveFileImplCopyWith<_$DriveFileImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

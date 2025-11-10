@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'cloud_category.freezed.dart';
 
 @freezed
-class CloudCategory with _$CloudCategory {
+abstract class CloudCategory with _$CloudCategory {
   const factory CloudCategory({
     required String id,
     required String title,

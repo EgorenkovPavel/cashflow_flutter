@@ -13,14 +13,14 @@ import '../../utils/balance.dart';
 part 'account_balance_bloc.freezed.dart';
 
 @freezed
-class AccountBalanceEvent with _$AccountBalanceEvent {
+sealed class AccountBalanceEvent with _$AccountBalanceEvent {
   const factory AccountBalanceEvent.changeBalance({
     required List<AccountBalanceView> accounts,
   }) = _ChangeBalanceAccountBalanceEvent;
 }
 
 @freezed
-class AccountBalanceState with _$AccountBalanceState {
+abstract class AccountBalanceState with _$AccountBalanceState {
   const AccountBalanceState._();
 
   const factory AccountBalanceState({

@@ -23,7 +23,7 @@ class AccountDetailEvent with _$AccountDetailEvent {
 }
 
 @freezed
-class AccountDetailState with _$AccountDetailState {
+abstract class AccountDetailState with _$AccountDetailState {
   const factory AccountDetailState({
     required String title,
     required List<OperationView> operations,

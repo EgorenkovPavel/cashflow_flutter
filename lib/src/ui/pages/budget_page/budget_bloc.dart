@@ -25,7 +25,7 @@ class BudgetEvent with _$BudgetEvent {
 }
 
 @freezed
-class BudgetState with _$BudgetState {
+abstract class BudgetState with _$BudgetState {
   const factory BudgetState({
     required DateTime date,
     required CategoryType type,

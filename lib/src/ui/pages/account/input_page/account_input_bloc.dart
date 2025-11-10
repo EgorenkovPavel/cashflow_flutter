@@ -24,7 +24,7 @@ class AccountInputEvent with _$AccountInputEvent {
 }
 
 @freezed
-class AccountInputState with _$AccountInputState {
+abstract class AccountInputState with _$AccountInputState {
   const factory AccountInputState({
     required String title,
     required bool isDebt,

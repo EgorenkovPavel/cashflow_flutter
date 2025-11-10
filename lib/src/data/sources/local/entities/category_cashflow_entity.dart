@@ -5,7 +5,7 @@ import '../data/database.dart';
 part 'category_cashflow_entity.freezed.dart';
 
 @freezed
-class CategoryCashflowEntity with _$CategoryCashflowEntity {
+abstract class CategoryCashflowEntity with _$CategoryCashflowEntity {
   const factory CategoryCashflowEntity({
     required CategoryDB category,
     required int monthCashflow,

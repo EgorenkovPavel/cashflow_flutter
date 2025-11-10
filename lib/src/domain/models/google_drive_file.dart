@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'google_drive_file.freezed.dart';
 
 @freezed
-class DriveFile with _$DriveFile {
+abstract class DriveFile with _$DriveFile {
   const factory DriveFile({
     required String title,
     required String id,

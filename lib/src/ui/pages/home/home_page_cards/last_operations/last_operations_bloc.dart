@@ -18,7 +18,7 @@ class LastOperationsEvent with _$LastOperationsEvent {
 }
 
 @freezed
-class LastOperationsState with _$LastOperationsState {
+abstract class LastOperationsState with _$LastOperationsState {
   const factory LastOperationsState(
       {required List<OperationView> operations}) = _LastOperationsState;
 }

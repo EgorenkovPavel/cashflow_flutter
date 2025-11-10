@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/models.dart';
+import '../l10n/app_localizations.dart';
 import 'sum.dart';
 
 extension StringExtension on String {
@@ -24,7 +24,7 @@ extension MapExtension on Map<String, dynamic> {
 }
 
 extension AppLocalization on BuildContext {
-  AppLocalizations get loc => AppLocalizations.of(this);
+  AppLocalizations get loc => AppLocalizations.of(this)!;
 
   MaterialLocalizations get materialLoc => MaterialLocalizations.of(this);
 }

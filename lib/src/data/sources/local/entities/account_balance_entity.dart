@@ -5,7 +5,7 @@ import 'package:money_tracker/src/domain/models/enum/currency.dart';
 part 'account_balance_entity.freezed.dart';
 
 @freezed
-class AccountBalanceEntity with _$AccountBalanceEntity{
+abstract class AccountBalanceEntity with _$AccountBalanceEntity{
   const factory AccountBalanceEntity({
     required int accountId,
     required Currency currency,

@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,487 +9,539 @@ part of 'last_operations_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$LastOperationsEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
-    required TResult Function(List<OperationView> operations) changeOperations,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
-    TResult? Function(List<OperationView> operations)? changeOperations,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
-    TResult Function(List<OperationView> operations)? changeOperations,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchLastOperationsEvent value) fetch,
-    required TResult Function(_ChangeOperationsLastOperationsEvent value)
-        changeOperations,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchLastOperationsEvent value)? fetch,
-    TResult? Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchLastOperationsEvent value)? fetch,
-    TResult Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'LastOperationsEvent()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $LastOperationsEventCopyWith<$Res> {
-  factory $LastOperationsEventCopyWith(
-          LastOperationsEvent value, $Res Function(LastOperationsEvent) then) =
-      _$LastOperationsEventCopyWithImpl<$Res, LastOperationsEvent>;
+class $LastOperationsEventCopyWith<$Res>  {
+$LastOperationsEventCopyWith(LastOperationsEvent _, $Res Function(LastOperationsEvent) __);
 }
 
-/// @nodoc
-class _$LastOperationsEventCopyWithImpl<$Res, $Val extends LastOperationsEvent>
-    implements $LastOperationsEventCopyWith<$Res> {
-  _$LastOperationsEventCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [LastOperationsEvent].
+extension LastOperationsEventPatterns on LastOperationsEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// Create a copy of LastOperationsEvent
-  /// with the given fields replaced by the non-null parameter values.
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchLastOperationsEvent value)?  fetch,TResult Function( _ChangeOperationsLastOperationsEvent value)?  changeOperations,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent() when fetch != null:
+return fetch(_that);case _ChangeOperationsLastOperationsEvent() when changeOperations != null:
+return changeOperations(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchLastOperationsEvent value)  fetch,required TResult Function( _ChangeOperationsLastOperationsEvent value)  changeOperations,}){
+final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent():
+return fetch(_that);case _ChangeOperationsLastOperationsEvent():
+return changeOperations(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchLastOperationsEvent value)?  fetch,TResult? Function( _ChangeOperationsLastOperationsEvent value)?  changeOperations,}){
+final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent() when fetch != null:
+return fetch(_that);case _ChangeOperationsLastOperationsEvent() when changeOperations != null:
+return changeOperations(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetch,TResult Function( List<OperationView> operations)?  changeOperations,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent() when fetch != null:
+return fetch();case _ChangeOperationsLastOperationsEvent() when changeOperations != null:
+return changeOperations(_that.operations);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetch,required TResult Function( List<OperationView> operations)  changeOperations,}) {final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent():
+return fetch();case _ChangeOperationsLastOperationsEvent():
+return changeOperations(_that.operations);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetch,TResult? Function( List<OperationView> operations)?  changeOperations,}) {final _that = this;
+switch (_that) {
+case _FetchLastOperationsEvent() when fetch != null:
+return fetch();case _ChangeOperationsLastOperationsEvent() when changeOperations != null:
+return changeOperations(_that.operations);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$FetchLastOperationsEventImplCopyWith<$Res> {
-  factory _$$FetchLastOperationsEventImplCopyWith(
-          _$FetchLastOperationsEventImpl value,
-          $Res Function(_$FetchLastOperationsEventImpl) then) =
-      __$$FetchLastOperationsEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FetchLastOperationsEventImplCopyWithImpl<$Res>
-    extends _$LastOperationsEventCopyWithImpl<$Res,
-        _$FetchLastOperationsEventImpl>
-    implements _$$FetchLastOperationsEventImplCopyWith<$Res> {
-  __$$FetchLastOperationsEventImplCopyWithImpl(
-      _$FetchLastOperationsEventImpl _value,
-      $Res Function(_$FetchLastOperationsEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LastOperationsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$FetchLastOperationsEventImpl implements _FetchLastOperationsEvent {
-  const _$FetchLastOperationsEventImpl();
-
-  @override
-  String toString() {
-    return 'LastOperationsEvent.fetch()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FetchLastOperationsEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
-    required TResult Function(List<OperationView> operations) changeOperations,
-  }) {
-    return fetch();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
-    TResult? Function(List<OperationView> operations)? changeOperations,
-  }) {
-    return fetch?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
-    TResult Function(List<OperationView> operations)? changeOperations,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchLastOperationsEvent value) fetch,
-    required TResult Function(_ChangeOperationsLastOperationsEvent value)
-        changeOperations,
-  }) {
-    return fetch(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchLastOperationsEvent value)? fetch,
-    TResult? Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-  }) {
-    return fetch?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchLastOperationsEvent value)? fetch,
-    TResult Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-    required TResult orElse(),
-  }) {
-    if (fetch != null) {
-      return fetch(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FetchLastOperationsEvent implements LastOperationsEvent {
-  const factory _FetchLastOperationsEvent() = _$FetchLastOperationsEventImpl;
-}
-
-/// @nodoc
-abstract class _$$ChangeOperationsLastOperationsEventImplCopyWith<$Res> {
-  factory _$$ChangeOperationsLastOperationsEventImplCopyWith(
-          _$ChangeOperationsLastOperationsEventImpl value,
-          $Res Function(_$ChangeOperationsLastOperationsEventImpl) then) =
-      __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<OperationView> operations});
-}
-
-/// @nodoc
-class __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<$Res>
-    extends _$LastOperationsEventCopyWithImpl<$Res,
-        _$ChangeOperationsLastOperationsEventImpl>
-    implements _$$ChangeOperationsLastOperationsEventImplCopyWith<$Res> {
-  __$$ChangeOperationsLastOperationsEventImplCopyWithImpl(
-      _$ChangeOperationsLastOperationsEventImpl _value,
-      $Res Function(_$ChangeOperationsLastOperationsEventImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LastOperationsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operations = null,
-  }) {
-    return _then(_$ChangeOperationsLastOperationsEventImpl(
-      null == operations
-          ? _value._operations
-          : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationView>,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ChangeOperationsLastOperationsEventImpl
-    implements _ChangeOperationsLastOperationsEvent {
-  const _$ChangeOperationsLastOperationsEventImpl(
-      final List<OperationView> operations)
-      : _operations = operations;
 
-  final List<OperationView> _operations;
-  @override
-  List<OperationView> get operations {
-    if (_operations is EqualUnmodifiableListView) return _operations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_operations);
-  }
+class _FetchLastOperationsEvent implements LastOperationsEvent {
+  const _FetchLastOperationsEvent();
+  
 
-  @override
-  String toString() {
-    return 'LastOperationsEvent.changeOperations(operations: $operations)';
-  }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChangeOperationsLastOperationsEventImpl &&
-            const DeepCollectionEquality()
-                .equals(other._operations, _operations));
-  }
 
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_operations));
 
-  /// Create a copy of LastOperationsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChangeOperationsLastOperationsEventImplCopyWith<
-          _$ChangeOperationsLastOperationsEventImpl>
-      get copyWith => __$$ChangeOperationsLastOperationsEventImplCopyWithImpl<
-          _$ChangeOperationsLastOperationsEventImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
-    required TResult Function(List<OperationView> operations) changeOperations,
-  }) {
-    return changeOperations(operations);
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
-    TResult? Function(List<OperationView> operations)? changeOperations,
-  }) {
-    return changeOperations?.call(operations);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
-    TResult Function(List<OperationView> operations)? changeOperations,
-    required TResult orElse(),
-  }) {
-    if (changeOperations != null) {
-      return changeOperations(operations);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_FetchLastOperationsEvent value) fetch,
-    required TResult Function(_ChangeOperationsLastOperationsEvent value)
-        changeOperations,
-  }) {
-    return changeOperations(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FetchLastOperationsEvent value)? fetch,
-    TResult? Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-  }) {
-    return changeOperations?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchLastOperationsEvent value)? fetch,
-    TResult Function(_ChangeOperationsLastOperationsEvent value)?
-        changeOperations,
-    required TResult orElse(),
-  }) {
-    if (changeOperations != null) {
-      return changeOperations(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchLastOperationsEvent);
 }
 
-abstract class _ChangeOperationsLastOperationsEvent
-    implements LastOperationsEvent {
-  const factory _ChangeOperationsLastOperationsEvent(
-          final List<OperationView> operations) =
-      _$ChangeOperationsLastOperationsEventImpl;
 
-  List<OperationView> get operations;
+@override
+int get hashCode => runtimeType.hashCode;
 
-  /// Create a copy of LastOperationsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeOperationsLastOperationsEventImplCopyWith<
-          _$ChangeOperationsLastOperationsEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'LastOperationsEvent.fetch()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _ChangeOperationsLastOperationsEvent implements LastOperationsEvent {
+  const _ChangeOperationsLastOperationsEvent(final  List<OperationView> operations): _operations = operations;
+  
+
+ final  List<OperationView> _operations;
+ List<OperationView> get operations {
+  if (_operations is EqualUnmodifiableListView) return _operations;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_operations);
+}
+
+
+/// Create a copy of LastOperationsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeOperationsLastOperationsEventCopyWith<_ChangeOperationsLastOperationsEvent> get copyWith => __$ChangeOperationsLastOperationsEventCopyWithImpl<_ChangeOperationsLastOperationsEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsLastOperationsEvent&&const DeepCollectionEquality().equals(other._operations, _operations));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+
+@override
+String toString() {
+  return 'LastOperationsEvent.changeOperations(operations: $operations)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ChangeOperationsLastOperationsEventCopyWith<$Res> implements $LastOperationsEventCopyWith<$Res> {
+  factory _$ChangeOperationsLastOperationsEventCopyWith(_ChangeOperationsLastOperationsEvent value, $Res Function(_ChangeOperationsLastOperationsEvent) _then) = __$ChangeOperationsLastOperationsEventCopyWithImpl;
+@useResult
+$Res call({
+ List<OperationView> operations
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeOperationsLastOperationsEventCopyWithImpl<$Res>
+    implements _$ChangeOperationsLastOperationsEventCopyWith<$Res> {
+  __$ChangeOperationsLastOperationsEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeOperationsLastOperationsEvent _self;
+  final $Res Function(_ChangeOperationsLastOperationsEvent) _then;
+
+/// Create a copy of LastOperationsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? operations = null,}) {
+  return _then(_ChangeOperationsLastOperationsEvent(
+null == operations ? _self._operations : operations // ignore: cast_nullable_to_non_nullable
+as List<OperationView>,
+  ));
+}
+
+
 }
 
 /// @nodoc
 mixin _$LastOperationsState {
-  List<OperationView> get operations => throw _privateConstructorUsedError;
 
-  /// Create a copy of LastOperationsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LastOperationsStateCopyWith<LastOperationsState> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<OperationView> get operations;
+/// Create a copy of LastOperationsState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LastOperationsStateCopyWith<LastOperationsState> get copyWith => _$LastOperationsStateCopyWithImpl<LastOperationsState>(this as LastOperationsState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsState&&const DeepCollectionEquality().equals(other.operations, operations));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(operations));
+
+@override
+String toString() {
+  return 'LastOperationsState(operations: $operations)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $LastOperationsStateCopyWith<$Res> {
-  factory $LastOperationsStateCopyWith(
-          LastOperationsState value, $Res Function(LastOperationsState) then) =
-      _$LastOperationsStateCopyWithImpl<$Res, LastOperationsState>;
-  @useResult
-  $Res call({List<OperationView> operations});
-}
+abstract mixin class $LastOperationsStateCopyWith<$Res>  {
+  factory $LastOperationsStateCopyWith(LastOperationsState value, $Res Function(LastOperationsState) _then) = _$LastOperationsStateCopyWithImpl;
+@useResult
+$Res call({
+ List<OperationView> operations
+});
 
+
+
+
+}
 /// @nodoc
-class _$LastOperationsStateCopyWithImpl<$Res, $Val extends LastOperationsState>
+class _$LastOperationsStateCopyWithImpl<$Res>
     implements $LastOperationsStateCopyWith<$Res> {
-  _$LastOperationsStateCopyWithImpl(this._value, this._then);
+  _$LastOperationsStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final LastOperationsState _self;
+  final $Res Function(LastOperationsState) _then;
 
-  /// Create a copy of LastOperationsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operations = null,
-  }) {
-    return _then(_value.copyWith(
-      operations: null == operations
-          ? _value.operations
-          : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationView>,
-    ) as $Val);
-  }
+/// Create a copy of LastOperationsState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? operations = null,}) {
+  return _then(_self.copyWith(
+operations: null == operations ? _self.operations : operations // ignore: cast_nullable_to_non_nullable
+as List<OperationView>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [LastOperationsState].
+extension LastOperationsStatePatterns on LastOperationsState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LastOperationsState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _LastOperationsState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LastOperationsState value)  $default,){
+final _that = this;
+switch (_that) {
+case _LastOperationsState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LastOperationsState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _LastOperationsState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<OperationView> operations)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _LastOperationsState() when $default != null:
+return $default(_that.operations);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<OperationView> operations)  $default,) {final _that = this;
+switch (_that) {
+case _LastOperationsState():
+return $default(_that.operations);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<OperationView> operations)?  $default,) {final _that = this;
+switch (_that) {
+case _LastOperationsState() when $default != null:
+return $default(_that.operations);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$LastOperationsStateImplCopyWith<$Res>
-    implements $LastOperationsStateCopyWith<$Res> {
-  factory _$$LastOperationsStateImplCopyWith(_$LastOperationsStateImpl value,
-          $Res Function(_$LastOperationsStateImpl) then) =
-      __$$LastOperationsStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<OperationView> operations});
+
+
+class _LastOperationsState implements LastOperationsState {
+  const _LastOperationsState({required final  List<OperationView> operations}): _operations = operations;
+  
+
+ final  List<OperationView> _operations;
+@override List<OperationView> get operations {
+  if (_operations is EqualUnmodifiableListView) return _operations;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_operations);
+}
+
+
+/// Create a copy of LastOperationsState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LastOperationsStateCopyWith<_LastOperationsState> get copyWith => __$LastOperationsStateCopyWithImpl<_LastOperationsState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LastOperationsState&&const DeepCollectionEquality().equals(other._operations, _operations));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+
+@override
+String toString() {
+  return 'LastOperationsState(operations: $operations)';
+}
+
+
 }
 
 /// @nodoc
-class __$$LastOperationsStateImplCopyWithImpl<$Res>
-    extends _$LastOperationsStateCopyWithImpl<$Res, _$LastOperationsStateImpl>
-    implements _$$LastOperationsStateImplCopyWith<$Res> {
-  __$$LastOperationsStateImplCopyWithImpl(_$LastOperationsStateImpl _value,
-      $Res Function(_$LastOperationsStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$LastOperationsStateCopyWith<$Res> implements $LastOperationsStateCopyWith<$Res> {
+  factory _$LastOperationsStateCopyWith(_LastOperationsState value, $Res Function(_LastOperationsState) _then) = __$LastOperationsStateCopyWithImpl;
+@override @useResult
+$Res call({
+ List<OperationView> operations
+});
 
-  /// Create a copy of LastOperationsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? operations = null,
-  }) {
-    return _then(_$LastOperationsStateImpl(
-      operations: null == operations
-          ? _value._operations
-          : operations // ignore: cast_nullable_to_non_nullable
-              as List<OperationView>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$LastOperationsStateCopyWithImpl<$Res>
+    implements _$LastOperationsStateCopyWith<$Res> {
+  __$LastOperationsStateCopyWithImpl(this._self, this._then);
 
-class _$LastOperationsStateImpl implements _LastOperationsState {
-  const _$LastOperationsStateImpl(
-      {required final List<OperationView> operations})
-      : _operations = operations;
+  final _LastOperationsState _self;
+  final $Res Function(_LastOperationsState) _then;
 
-  final List<OperationView> _operations;
-  @override
-  List<OperationView> get operations {
-    if (_operations is EqualUnmodifiableListView) return _operations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_operations);
-  }
-
-  @override
-  String toString() {
-    return 'LastOperationsState(operations: $operations)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LastOperationsStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._operations, _operations));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_operations));
-
-  /// Create a copy of LastOperationsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
-      __$$LastOperationsStateImplCopyWithImpl<_$LastOperationsStateImpl>(
-          this, _$identity);
+/// Create a copy of LastOperationsState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? operations = null,}) {
+  return _then(_LastOperationsState(
+operations: null == operations ? _self._operations : operations // ignore: cast_nullable_to_non_nullable
+as List<OperationView>,
+  ));
 }
 
-abstract class _LastOperationsState implements LastOperationsState {
-  const factory _LastOperationsState(
-          {required final List<OperationView> operations}) =
-      _$LastOperationsStateImpl;
 
-  @override
-  List<OperationView> get operations;
-
-  /// Create a copy of LastOperationsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LastOperationsStateImplCopyWith<_$LastOperationsStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

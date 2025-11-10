@@ -51,7 +51,7 @@ class OperationEditEvent with _$OperationEditEvent {
 }
 
 @freezed
-class OperationEditState with _$OperationEditState {
+abstract class OperationEditState with _$OperationEditState {
   const OperationEditState._();
 
   const factory OperationEditState({
