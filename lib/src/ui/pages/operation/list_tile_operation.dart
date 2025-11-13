@@ -59,31 +59,52 @@ class ListTileOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: _operation.deleted ? 0.5 : 1,
-      child: ListTile(
-        leading: UserAvatar(
-          photoUrl: _operation.userPhotoUrl,
-          name: _operation.userName,
-        ),
-        title: Text(_operation.analytic),
-        subtitle: Row(
-          children: [
-            Text(_operation.account),
-            const SizedBox(width: 8),
-            if (_operation.synced) const Icon(Icons.check),
-          ],
-        ),
-        trailing: Text(
-          context.loc.sumFormat(_operation.sum),
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: _operation.type.color),
-        ),
-        onTap: onTap,
-        onLongPress: () => _onLongPress(context),
+    final child = ListTile(
+      leading: UserAvatar(
+        photoUrl: _operation.userPhotoUrl,
+        name: _operation.userName,
       ),
+      title: Text(_operation.analytic),
+      subtitle: Row(
+        children: [
+          Text(_operation.account),
+          const SizedBox(width: 8),
+          if (_operation.synced) const Icon(Icons.check),
+        ],
+      ),
+      trailing: Text(
+        context.loc.sumFormat(_operation.sum),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineSmall?.copyWith(color: _operation.type.color),
+      ),
+      onTap: onTap,
+      onLongPress: () => _onLongPress(context),
     );
+    if (_operation.deleted) {
+      return CustomPaint(
+        painter: StrikeThroughPainter(),
+        child: Opacity(opacity: 0.5, child: child),
+      );
+    } else {
+      return child;
+    }
   }
+}
+
+class StrikeThroughPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.grey
+      ..strokeWidth = 1;
+
+    // Диагональная линия от левого верхнего к правому нижнему
+    canvas.drawLine(Offset(0, 0), Offset(size.width, size.height), paint);
+
+    canvas.drawLine(Offset(0, size.height), Offset(size.width, 0), paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

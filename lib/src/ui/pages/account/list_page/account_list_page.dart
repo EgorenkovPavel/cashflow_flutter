@@ -6,21 +6,65 @@ import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/view_models.dart';
 
-class AccountListPage extends StatelessWidget {
+class AccountListPage extends StatefulWidget {
   const AccountListPage({super.key});
+
+  @override
+  State<AccountListPage> createState() => _AccountListPageState();
+}
+
+class _AccountListPageState extends State<AccountListPage> {
+  var _isDebt = false;
 
   @override
   Widget build(BuildContext context) {
     final items = context.watchAllBalances();
+    final listItems = items.where((e) => e.isDebt == _isDebt).toList();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(context.loc.accounts),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(30),
+          child: SegmentedButton<bool>(
+            segments: [
+              ButtonSegment<bool>(
+                value: false,
+                label: Text(
+                  'Accounts (${items.where((e) => !e.isDebt).length})',
+                ), // TODO loc
+              ),
+              ButtonSegment<bool>(
+                value: true,
+                label: Text(
+                  'Debts (${items.where((e) => e.isDebt).length})',
+                ), //TODO loc
+              ),
+            ],
+            selected: {_isDebt},
+            multiSelectionEnabled: false,
+            onSelectionChanged: (value) {
+              setState(() {
+                _isDebt = value.first;
+              });
+            },
+          ),
+        ),
       ),
       body: ListView.separated(
-        itemCount: items.length,
+        itemCount: listItems.length,
         separatorBuilder: (context, _) => Divider(),
-        itemBuilder: (context, index) => AccountListItem(account: items[index]),
+        itemBuilder: (context, index) => AccountListItem(listItems[index]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (_isDebt) {
+            context.openDebtInputDialog();
+          } else {
+            context.openAccountInputDialog();
+          }
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -29,7 +73,7 @@ class AccountListPage extends StatelessWidget {
 class AccountListItem extends StatelessWidget {
   final AccountBalanceView account;
 
-  const AccountListItem({super.key, required this.account});
+  const AccountListItem(this.account, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +84,14 @@ class AccountListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: account.balance.sums
-            .map((sum) => Text(
-                  context.loc.sumFormat(sum),
-                  style: Theme.of(context).textTheme.labelMedium,
-                ))
+            .map(
+              (sum) => Text(
+                context.loc.sumFormat(sum),
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            )
             .toList(),
       ),
-      subtitle: account.isDebt ? Text('Debt') : null,
-      // TODO
       onTap: () => context.openAccountPage(account.accountId),
     );
   }

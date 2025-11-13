@@ -52,7 +52,7 @@ class TotalsCard extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => context.openAccountListPage(),
-                  child: Text('Details'), // TODO loc
+                  child: Text('Accounts'), // TODO loc
                 ),
               ],
             ),

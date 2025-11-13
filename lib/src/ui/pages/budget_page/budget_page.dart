@@ -25,8 +25,8 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     final list = switch (widget.type) {
-      CategoryType.INPUT => context.watchInputCashFlow(),
-      CategoryType.OUTPUT => context.watchOutputCashFlow(),
+      .INPUT => context.watchInputCashFlow(),
+      .OUTPUT => context.watchOutputCashFlow(),
     };
 
     switch (_budgetType) {
@@ -45,17 +45,25 @@ class _BudgetPageState extends State<BudgetPage> {
     }
 
     final budget = switch (_budgetType) {
-      BudgetType.MONTH =>
-        list.fold(0, (prev, cashflow) => prev + cashflow.monthBudget),
-      BudgetType.YEAR =>
-        list.fold(0, (prev, cashflow) => prev + cashflow.yearBudget),
+      BudgetType.MONTH => list.fold(
+        0,
+        (prev, cashflow) => prev + cashflow.monthBudget,
+      ),
+      BudgetType.YEAR => list.fold(
+        0,
+        (prev, cashflow) => prev + cashflow.yearBudget,
+      ),
     };
 
     final cashflow = context.balanceToRub(switch (_budgetType) {
-      BudgetType.MONTH =>
-        list.fold(Balance(), (prev, cashflow) => prev + cashflow.monthCashFlow),
-      BudgetType.YEAR =>
-        list.fold(Balance(), (prev, cashflow) => prev + cashflow.yearCashFlow),
+      BudgetType.MONTH => list.fold(
+        Balance(),
+        (prev, cashflow) => prev + cashflow.monthCashFlow,
+      ),
+      BudgetType.YEAR => list.fold(
+        Balance(),
+        (prev, cashflow) => prev + cashflow.yearCashFlow,
+      ),
     });
 
     return Scaffold(
@@ -74,12 +82,12 @@ class _BudgetPageState extends State<BudgetPage> {
                   segments: [
                     ButtonSegment<BudgetType>(
                       value: BudgetType.MONTH,
-                      label: Text('Month'), // TODO
+                      label: Text('Month'), // TODO loc
                     ),
                     ButtonSegment<BudgetType>(
                       value: BudgetType.YEAR,
-                      label: Text('Year'),
-                    )
+                      label: Text('Year'), //TODO loc
+                    ),
                   ],
                   selected: {_budgetType},
                   multiSelectionEnabled: false,
@@ -99,7 +107,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     Text(
                       'Cashflow',
                       style: TextStyle(fontWeight: FontWeight.bold),
-                    )
+                    ),
                   ],
                 ),
                 Row(
@@ -111,13 +119,13 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
                 switch (_budgetType) {
                   BudgetType.MONTH => Align(
-                      alignment: Alignment(getMonthAlign() * 2 - 1, 0),
-                      child: Text(DateFormat.d().format(DateTime.now())),
-                    ),
+                    alignment: Alignment(getMonthAlign() * 2 - 1, 0),
+                    child: Text(DateFormat.d().format(DateTime.now())),
+                  ),
                   BudgetType.YEAR => Align(
-                      alignment: Alignment(getYearAlign() * 2 - 1, 0),
-                      child: Text(DateFormat.MMM().format(DateTime.now())),
-                    ),
+                    alignment: Alignment(getYearAlign() * 2 - 1, 0),
+                    child: Text(DateFormat.MMM().format(DateTime.now())),
+                  ),
                 },
               ],
             ),
@@ -126,15 +134,18 @@ class _BudgetPageState extends State<BudgetPage> {
       ),
       body: SafeArea(
         child: ListView(
-            children: list
-                .map((e) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: CashflowColumn(
-                        categoryCashFlow: e,
-                        budgetType: _budgetType,
-                      ),
-                    ))
-                .toList()),
+          children: list
+              .map(
+                (e) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: CashflowColumn(
+                    categoryCashFlow: e,
+                    budgetType: _budgetType,
+                  ),
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
@@ -204,16 +215,12 @@ class CashflowColumn extends StatelessWidget {
                   Text(context.loc.numberFormat(budget, Currency.RUB)),
                   Text(context.loc.numberFormat(cashflow, Currency.RUB)),
                 ],
-              )
+              ),
             ],
           ),
           Align(
             alignment: Alignment(alignment * 2 - 1, 0.0),
-            child: Container(
-              color: Colors.grey,
-              width: 1.0,
-              height: _heigth,
-            ),
+            child: Container(color: Colors.grey, width: 1.0, height: _heigth),
           ),
         ],
       ),
@@ -248,8 +255,11 @@ double getYearAlign() {
 
   final dayOfYear = now.difference(firstDayOfYear).inDays + 1;
 
-  final yearDaysAmount =
-      DateTime(now.year + 1, 1, 1).difference(firstDayOfYear).inDays;
+  final yearDaysAmount = DateTime(
+    now.year + 1,
+    1,
+    1,
+  ).difference(firstDayOfYear).inDays;
 
   return dayOfYear / yearDaysAmount;
 }

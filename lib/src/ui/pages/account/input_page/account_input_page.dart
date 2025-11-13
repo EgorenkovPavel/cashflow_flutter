@@ -11,13 +11,9 @@ class AccountInputPage extends StatelessWidget {
   final int? id;
   final bool? isDebt;
 
-  const AccountInputPage.inputAccount({super.key})
-      : id = null,
-        isDebt = false;
+  const AccountInputPage.inputAccount({super.key}) : id = null, isDebt = false;
 
-  const AccountInputPage.inputDebt({super.key})
-      : id = null,
-        isDebt = true;
+  const AccountInputPage.inputDebt({super.key}) : id = null, isDebt = true;
 
   const AccountInputPage.edit(this.id, {super.key}) : isDebt = null;
 
@@ -134,37 +130,53 @@ class _UserChooser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: users
-          .map(
-            (e) => InkWell(
-              onTap: () => onChange(e.id == initialId ? null : e),
-              child: Stack(
-                children: [
-                  UserAvatar(photoUrl: e.photo, name: e.name),
-                  if (e.id == initialId)
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 15,
-                        height: 15,
-                        decoration: BoxDecoration(
-                          color: Colors.cyanAccent,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.done,
-                          color: Colors.green[900],
-                          size: 14,
-                        ),
-                      ),
+    return Column(
+      crossAxisAlignment: .start,
+      children: [
+        Text('User'), // TODO loc
+        Row(
+          children: [
+            ...users.map(
+              (e) => InkWell(
+                onTap: () => onChange(e),
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: initialId == e.id
+                          ? Colors.amber
+                          : Colors.transparent,
+                      width: 4,
                     ),
-                ],
+                  ),
+                  child: UserAvatar(photoUrl: e.photo, name: e.name),
+                ),
               ),
             ),
-          )
-          .toList(),
+            InkWell(
+              onTap: () => onChange(null),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: initialId == null
+                        ? Colors.amber
+                        : Colors.transparent,
+                    width: 4,
+                  ),
+                ),
+                child: CircleAvatar(
+                  child: Icon(Icons.block),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Text(switch (initialId) {
+          int() => users.firstWhere((e) => e.id == initialId).name,
+          null => 'No user', // TODO loc
+        }),
+      ],
     );
   }
 }
