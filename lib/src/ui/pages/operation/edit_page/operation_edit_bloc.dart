@@ -24,7 +24,8 @@ class OperationEditEvent with _$OperationEditEvent {
       _ChangeTimeOperationEditEvent;
 
   const factory OperationEditEvent.changeOperationType(
-      OperationType operationType) = _ChangeOperationTypeOperationEditEvent;
+    OperationType operationType,
+  ) = _ChangeOperationTypeOperationEditEvent;
 
   const factory OperationEditEvent.changeAccount(AccountView account) =
       _ChangeAccountOperationEditEvent;
@@ -68,70 +69,87 @@ abstract class OperationEditState with _$OperationEditState {
   }) = _OperationEditState;
 
   OperationEditState fromOperation(Operation operation) => switch (operation) {
-        InputOperation() => copyWith(
-            operation: operation,
-            operationType: operation.type,
-            date: operation.date,
-            accountId: operation.account,
-            categoryId: operation.analytic,
-            sum: operation.sum,
-            time: TimeOfDay.fromDateTime(operation.date),
-          ),
-        OutputOperation() => copyWith(
-            operation: operation,
-            operationType: operation.type,
-            date: operation.date,
-            accountId: operation.account,
-            categoryId: operation.analytic,
-            sum: operation.sum,
-            time: TimeOfDay.fromDateTime(operation.date),
-          ),
-        TransferOperation() => copyWith(
-            operation: operation,
-            operationType: operation.type,
-            date: operation.date,
-            accountId: operation.account,
-            recAccountId: operation.analytic,
-            sum: operation.sum,
-            recSum: operation.recSum,
-            time: TimeOfDay.fromDateTime(operation.date),
-          ),
-      };
+    InputOperation() => copyWith(
+      operation: operation,
+      operationType: operation.type,
+      date: operation.date,
+      accountId: operation.account,
+      categoryId: operation.analytic,
+      sum: operation.sum,
+      time: TimeOfDay.fromDateTime(operation.date),
+    ),
+    OutputOperation() => copyWith(
+      operation: operation,
+      operationType: operation.type,
+      date: operation.date,
+      accountId: operation.account,
+      categoryId: operation.analytic,
+      sum: operation.sum,
+      time: TimeOfDay.fromDateTime(operation.date),
+    ),
+    TransferOperation() => copyWith(
+      operation: operation,
+      operationType: operation.type,
+      date: operation.date,
+      accountId: operation.account,
+      recAccountId: operation.analytic,
+      sum: operation.sum,
+      time: TimeOfDay.fromDateTime(operation.date),
+    ),
+    ExchangeOperation() => copyWith(
+      operation: operation,
+      operationType: operation.type,
+      date: operation.date,
+      accountId: operation.account,
+      sum: operation.sum,
+      recSum: operation.recSum,
+      time: TimeOfDay.fromDateTime(operation.date),
+    ),
+  };
 }
 
 class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
   final OperationInteractor _operationInteractor;
 
   OperationEditBloc(this._operationInteractor)
-      : super(OperationEditState(
+    : super(
+        OperationEditState(
           date: DateTime.now(),
           time: TimeOfDay.now(),
           operationType: OperationType.INPUT,
           sum: Sum(0, Currency.RUB),
           recSum: Sum(0, Currency.RUB),
           isSaved: false,
-        )) {
-    on<OperationEditEvent>((event, emitter) => event.map(
-          fetch: (event) => _fetch(event, emitter),
-          changeDate: (event) => emitter(state.copyWith(date: event.date)),
-          changeTime: (event) => emitter(state.copyWith(time: event.time)),
-          changeOperationType: (event) => _changeOperationType(event, emitter),
-          changeAccount: (event) =>
-              emitter(state.copyWith(accountId: event.account.id)),
-          changeCategory: (event) =>
-              emitter(state.copyWith(categoryId: event.category.id)),
-          changeRecAccount: (event) =>
-              emitter(state.copyWith(recAccountId: event.recAccount.id)),
-          changeSum: (event) =>
-              emitter(state.copyWith(sum: state.sum.copyWith(sum: event.sum))),
-          changeRecSum: (event) => emitter(
-              state.copyWith(recSum: state.recSum.copyWith(sum: event.sum))),
-          changeCurrency: (event) => emitter(state.copyWith(
-              sum: state.sum.copyWith(currency: event.currency))),
-          changeRecCurrency: (event) => emitter(state.copyWith(
-              recSum: state.recSum.copyWith(currency: event.currency))),
-          save: (event) => _save(event, emitter),
-        ));
+        ),
+      ) {
+    on<OperationEditEvent>(
+      (event, emitter) => event.map(
+        fetch: (event) => _fetch(event, emitter),
+        changeDate: (event) => emitter(state.copyWith(date: event.date)),
+        changeTime: (event) => emitter(state.copyWith(time: event.time)),
+        changeOperationType: (event) => _changeOperationType(event, emitter),
+        changeAccount: (event) =>
+            emitter(state.copyWith(accountId: event.account.id)),
+        changeCategory: (event) =>
+            emitter(state.copyWith(categoryId: event.category.id)),
+        changeRecAccount: (event) =>
+            emitter(state.copyWith(recAccountId: event.recAccount.id)),
+        changeSum: (event) =>
+            emitter(state.copyWith(sum: state.sum.copyWith(sum: event.sum))),
+        changeRecSum: (event) => emitter(
+          state.copyWith(recSum: state.recSum.copyWith(sum: event.sum)),
+        ),
+        changeCurrency: (event) => emitter(
+          state.copyWith(sum: state.sum.copyWith(currency: event.currency)),
+        ),
+        changeRecCurrency: (event) => emitter(
+          state.copyWith(
+            recSum: state.recSum.copyWith(currency: event.currency),
+          ),
+        ),
+        save: (event) => _save(event, emitter),
+      ),
+    );
   }
 
   Future<void> _fetch(
@@ -154,15 +172,9 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     Emitter<OperationEditState> emit,
   ) async {
     if (state.operation == null) {
-      emit(state.copyWith(
-        operation: await _insertOperation(),
-        isSaved: true,
-      ));
+      emit(state.copyWith(operation: await _insertOperation(), isSaved: true));
     } else {
-      emit(state.copyWith(
-        operation: await _updateOperation(),
-        isSaved: true,
-      ));
+      emit(state.copyWith(operation: await _updateOperation(), isSaved: true));
     }
   }
 
@@ -176,16 +188,23 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     );
 
     return state.operationType.map(
-      TRANSFER: () {
+      exchange: () {
+        return _operationInteractor.insertExchange(
+          date: date,
+          accountId: state.accountId!,
+          sum: state.sum,
+          recSum: state.recSum
+        );
+      },
+      transfer: () {
         return _operationInteractor.insertTransfer(
           date: date,
           accountId: state.accountId!,
           recAccountId: state.recAccountId!,
           sum: state.sum,
-          recSum: state.recSum,
         );
       },
-      INPUT: () {
+      input: () {
         return _operationInteractor.insertInput(
           date: date,
           accountId: state.accountId!,
@@ -193,7 +212,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           sum: state.sum,
         );
       },
-      OUTPUT: () {
+      output: () {
         return _operationInteractor.insertOutput(
           date: date,
           accountId: state.accountId!,
@@ -214,17 +233,25 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     );
 
     return state.operationType.map(
-      TRANSFER: () {
+      exchange: () {
+        return _operationInteractor.updateExchange(
+          operation: state.operation!,
+          date: date,
+          accountId: state.accountId!,
+          sum: state.sum,
+          recSum: state.recSum
+        );
+      },
+      transfer: () {
         return _operationInteractor.updateTransfer(
           operation: state.operation!,
           date: date,
           accountId: state.accountId!,
           recAccountId: state.recAccountId!,
           sum: state.sum,
-          recSum: state.recSum,
         );
       },
-      INPUT: () {
+      input: () {
         return _operationInteractor.updateInput(
           operation: state.operation!,
           date: date,
@@ -233,7 +260,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           sum: state.sum,
         );
       },
-      OUTPUT: () {
+      output: () {
         return _operationInteractor.updateOutput(
           operation: state.operation!,
           date: date,
@@ -250,18 +277,16 @@ extension OperationEditBlocExt on BuildContext {
   OperationEditBloc _bloc() => read<OperationEditBloc>();
 
   OperationType operationType() => select<OperationEditBloc, OperationType>(
-        (bloc) => bloc.state.operationType,
-      );
+    (bloc) => bloc.state.operationType,
+  );
 
   String date() => DateFormat.yMMMd(
-        Localizations.localeOf(this).languageCode,
-      ).format(select<OperationEditBloc, DateTime>(
-        (bloc) => bloc.state.date,
-      ));
+    Localizations.localeOf(this).languageCode,
+  ).format(select<OperationEditBloc, DateTime>((bloc) => bloc.state.date));
 
   String time() => select<OperationEditBloc, TimeOfDay>(
-        (bloc) => bloc.state.time,
-      ).format(this);
+    (bloc) => bloc.state.time,
+  ).format(this);
 
   CategoryView? category(List<CategoryView> categories) {
     final categoryId = select<OperationEditBloc, int?>(
@@ -284,22 +309,21 @@ extension OperationEditBlocExt on BuildContext {
     return accounts.where((e) => e.id == accountId).firstOrNull;
   }
 
-  Currency currencySent() => select<OperationEditBloc, Currency>(
-        (bloc) => bloc.state.sum.currency,
-      );
+  Currency currencySent() =>
+      select<OperationEditBloc, Currency>((bloc) => bloc.state.sum.currency);
 
-  Currency currencyReceived() => select<OperationEditBloc, Currency>(
-        (bloc) => bloc.state.recSum.currency,
-      );
+  Currency currencyReceived() =>
+      select<OperationEditBloc, Currency>((bloc) => bloc.state.recSum.currency);
 
   String cloudId() => select<OperationEditBloc, String>(
-        (bloc) => bloc.state.operation?.cloudId ?? '',
-      );
+    (bloc) => bloc.state.operation?.cloudId ?? '',
+  );
 
-  bool showRecSum() => select<OperationEditBloc, bool>((bloc) =>
-      bloc.state.operationType == OperationType.TRANSFER &&
-      bloc.state.accountId != null &&
-      bloc.state.recAccountId != null);
+  bool showRecSum() => select<OperationEditBloc, bool>(
+    (bloc) =>
+        bloc.state.operationType == OperationType.EXCHANGE &&
+        bloc.state.accountId != null,
+  );
 
   void onChangeOperationType(OperationType newValue) =>
       _bloc().add(OperationEditEvent.changeOperationType(newValue));

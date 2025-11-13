@@ -78,7 +78,7 @@ class AccountBalanceBloc
 }
 
 extension AccountBalanceBlocExt on BuildContext {
-  List<AccountBalanceView> watchBalances() =>
+  List<AccountBalanceView> watchAllBalances() =>
       watch<AccountBalanceBloc>().state.balances;
 
   List<AccountBalanceView> watchAccountBalances() =>
@@ -96,7 +96,7 @@ extension AccountBalanceBlocExt on BuildContext {
   Sum watchTotalSum() => watchTotals().totalInRub(usd(), eur());
 
   List<AccountView> watchListItems() =>
-      watchBalances().map((a) => a.account).toList();
+      watchAllBalances().map((a) => a.account).toList();
 
   List<AccountView> readListItems() =>
       read<AccountBalanceBloc>().state.allAccounts;

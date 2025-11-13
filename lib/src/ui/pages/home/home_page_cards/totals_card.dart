@@ -16,7 +16,7 @@ class TotalsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        padding: const .only(top: 16.0, left: 16.0, right: 16.0),
         child: Column(
           children: [
             _Header(context.loc.titleTotalBalance, context.watchTotalSum()),
@@ -29,40 +29,63 @@ class TotalsCard extends StatelessWidget {
               children: context
                   .watchTotals()
                   .sums
-                  .map((sum) => TableRow(
-                        children: [
-                          switch (sum.currency) {
-                            Currency.RUB => Text('RUB'),
-                            Currency.USD =>
-                              Text('USD (${context.usdRateFormat()})'),
-                            Currency.EUR =>
-                              Text('EUR (${context.eurRateFormat()})'),
-                          },
-                          Text(
-                            context.loc.sumFormat(sum),
-                            textAlign: TextAlign.end,
-                          ),
-                          Text(
-                            context.loc.sumFormat(context.sumToRub(sum)),
-                            textAlign: TextAlign.end,
-                          )
-                        ],
-                      ))
+                  .map(
+                    (sum) => TableRow(
+                      children: [
+                        Text(switch (sum.currency) {
+                          .RUB => Currency.RUB.toString(),
+                          .USD => 'USD (${context.usdRateFormat()})',
+                          .EUR => 'EUR (${context.eurRateFormat()})',
+                        }),
+                        SumText(sum, textAlign: .end),
+                        SumText(context.sumToRub(sum), textAlign: .end),
+                      ],
+                    ),
+                  )
                   .toList(),
             ),
             ...context.watchUsers().map((user) => _UserAccounts(user: user)),
             _UserAccounts(user: null),
+            _Debts(),
             OverflowBar(
-              alignment: MainAxisAlignment.end,
+              alignment: .end,
               children: [
                 TextButton(
-                    onPressed: () => context.openAccountListPage(),
-                    child: Text('Details')), //TODO
+                  onPressed: () => context.openAccountListPage(),
+                  child: Text('Details'), // TODO loc
+                ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class SumText extends StatelessWidget {
+  final Sum sum;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+
+  const SumText(this.sum, {super.key, this.style, this.textAlign});
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? newStyle = TextStyle();
+    if (sum.sum < 0) {
+      if (style == null) {
+        newStyle = TextStyle(color: Colors.red);
+      } else {
+        newStyle = style!.copyWith(color: Colors.red);
+      }
+    } else {
+      newStyle = style;
+    }
+    return Text(
+      context.loc.sumFormat(sum),
+      style: newStyle,
+      textAlign: textAlign,
     );
   }
 }
@@ -75,15 +98,18 @@ class _UserAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = Sum(
-        context.balanceToRub(context
-            .watchBalances()
+      context.balanceToRub(
+        context
+            .watchAccountBalances()
             .where((e) => e.userId == user?.id)
             .map((e) => e.balance)
-            .fold(Balance(), (a, b) => a + b)),
-        Currency.RUB);
+            .fold(Balance(), (a, b) => a + b),
+      ),
+      .RUB,
+    );
 
     final balances = context
-        .watchBalances()
+        .watchAccountBalances()
         .where((e) => e.userId == user?.id)
         .where((balance) => context.balanceToRub(balance.balance) != 0);
 
@@ -94,11 +120,51 @@ class _UserAccounts extends StatelessWidget {
     return Column(
       children: [
         Divider(),
-        _Title(
-            user?.name ?? 'Other', //TODO
-            total),
-        ...balances.map((balance) => _SubTitle(balance.accountTitle,
-            Sum(context.balanceToRub(balance.balance), Currency.RUB))),
+        _Title(user?.name ?? 'Other', total), //TODO loc
+        ...balances.map(
+          (balance) => _SubTitle(
+            balance.accountTitle,
+            Sum(context.balanceToRub(balance.balance), .RUB),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Debts extends StatelessWidget {
+  const _Debts({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final total = Sum(
+      context.balanceToRub(
+        context
+            .watchDebtBalances()
+            .map((e) => e.balance)
+            .fold(Balance(), (a, b) => a + b),
+      ),
+      .RUB,
+    );
+
+    final balances = context.watchDebtBalances().where(
+      (balance) => context.balanceToRub(balance.balance) != 0,
+    );
+
+    if (balances.isEmpty) {
+      return SizedBox();
+    }
+
+    return Column(
+      children: [
+        Divider(),
+        _Title('Debts', total), //TODO loc
+        ...balances.map(
+          (balance) => _SubTitle(
+            balance.accountTitle,
+            Sum(context.balanceToRub(balance.balance), .RUB),
+          ),
+        ),
       ],
     );
   }
@@ -115,16 +181,8 @@ class _Header extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          // style: TextStyle(fontWeight: FontWeight.bold),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        Text(
-          context.loc.sumFormat(sum),
-          // style: TextStyle(fontWeight: FontWeight.bold),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        Text(title, style: Theme.of(context).textTheme.titleLarge),
+        SumText(sum, style: Theme.of(context).textTheme.titleLarge),
       ],
     );
   }
@@ -141,14 +199,8 @@ class _Title extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Text(
-          context.loc.sumFormat(sum),
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        Text(title, style: Theme.of(context).textTheme.titleMedium),
+        SumText(sum, style: Theme.of(context).textTheme.titleMedium),
       ],
     );
   }
@@ -166,7 +218,7 @@ class _SubTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(child: Text(title, overflow: TextOverflow.ellipsis)),
-        Text(context.loc.sumFormat(sum)),
+        SumText(sum),
       ],
     );
   }

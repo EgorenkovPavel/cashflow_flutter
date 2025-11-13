@@ -28,6 +28,10 @@ abstract class OperationDbEntity with _$OperationDbEntity {
           account: account.id,
           recAccount: drift.Value(recAccount!.id),
         );
+      case OperationType.EXCHANGE:
+        return operation.copyWith(
+          account: account.id,
+        );
     }
   }
 

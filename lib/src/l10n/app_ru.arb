@@ -29,6 +29,7 @@
   "typeInput": "Приход",
   "typeOutput": "Расход",
   "typeTransfer": "Перевод",
+  "typeExchange": "Обмен",
   "budgetTypeMonth": "Месяц",
   "budgetTypeYear": "Год",
   "accountCardTitle": "Счет",

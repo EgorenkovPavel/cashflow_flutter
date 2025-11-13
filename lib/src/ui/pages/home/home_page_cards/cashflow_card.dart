@@ -14,54 +14,67 @@ class CashflowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .only(top: 16.0, left: 16.0, right: 16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
+            Text(switch (type) {
+              .INPUT => context.loc.earningIn(DateTime.now()),
+              .OUTPUT => context.loc.spendingIn(DateTime.now()),
+            }, style: Theme.of(context).textTheme.titleLarge),
+            Row(
+              mainAxisAlignment: .spaceBetween,
+              children: [
+                Text('Budget'), //TODO loc
+                Text(context.loc.numberFormat(context.budget(type), .RUB)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: .spaceBetween,
+              children: [
+                Text('Cashflow'), //TODO loc
+                Text(context.loc.numberFormat(context.cashFlow(type), .RUB)),
+              ],
+            ),
+            Divider(),
             Text(
-              switch (type) {
-                CategoryType.INPUT => context.loc.earningIn(DateTime.now()),
-                CategoryType.OUTPUT => context.loc.spendingIn(DateTime.now()),
-              },
-              // style: TextStyle(fontWeight: FontWeight.bold),
-              style: Theme.of(context).textTheme.titleLarge,
+              'Top of month',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Budget'), //TODO
-                Text(context.loc
-                    .numberFormat(context.budget(type), Currency.RUB)),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Cashflow'), //TODO
-                Text(context.loc
-                    .numberFormat(context.cashFlow(type), Currency.RUB)),
-              ],
-            ),
+            ...context
+                .watchTop(type, BudgetType.MONTH, 3)
+                .map(
+                  (e) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(e.categoryTitle),
+                      Text(
+                        context.loc.numberFormat(
+                          context.balanceToRub(e.monthCashFlow),
+                          .RUB,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             Divider(),
-            Text('Top of month', style: TextStyle(fontWeight: FontWeight.bold)),
-            ...context.watchTop(type, BudgetType.MONTH, 3).map((e) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(e.categoryTitle),
-                    Text(context.loc.numberFormat(
-                        context.balanceToRub(e.monthCashFlow), Currency.RUB)),
-                  ],
-                )),
-            Divider(),
-            Text('Top of year', style: TextStyle(fontWeight: FontWeight.bold)),
-            ...context.watchTop(type, BudgetType.YEAR, 3).map((e) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(e.categoryTitle),
-                    Text(context.loc.numberFormat(
-                        context.balanceToRub(e.yearCashFlow), Currency.RUB)),
-                  ],
-                )),
+            Text('Top of year', style: Theme.of(context).textTheme.titleMedium),
+            ...context
+                .watchTop(type, BudgetType.YEAR, 3)
+                .map(
+                  (e) => Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Text(e.categoryTitle),
+                      Text(
+                        context.loc.numberFormat(
+                          context.balanceToRub(e.yearCashFlow),
+                          .RUB,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             OverflowBar(
               alignment: MainAxisAlignment.end,
               children: [
@@ -70,9 +83,9 @@ class CashflowCard extends StatelessWidget {
                   child: Text(context.loc.categories),
                 ),
                 TextButton(
-                    onPressed: () => context.openBudgetPage(type),
-                    child: Text('Details') //TODO
-                    ),
+                  onPressed: () => context.openBudgetPage(type),
+                  child: Text('Details'), //TODO
+                ),
               ],
             ),
           ],

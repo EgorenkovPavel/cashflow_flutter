@@ -63,12 +63,26 @@ class OperationInteractor {
     required int accountId,
     required int recAccountId,
     required Sum sum,
-    required Sum recSum,
   }) {
     final newOperation = TransferOperation(
       date: date,
       account: accountId,
       recAccount: recAccountId,
+      sum: sum,
+    );
+
+    return _dataRepository.insertOperation(newOperation);
+  }
+
+  Future<Operation> insertExchange({
+    required DateTime date,
+    required int accountId,
+    required Sum sum,
+    required Sum recSum,
+  }) {
+    final newOperation = ExchangeOperation(
+      date: date,
+      account: accountId,
       sum: sum,
       recSum: recSum,
     );
@@ -83,7 +97,7 @@ class OperationInteractor {
     required int categoryId,
     required Sum sum,
   }) async {
-    var newOperation = InputOperation(
+    final newOperation = InputOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,
@@ -105,7 +119,7 @@ class OperationInteractor {
     required int categoryId,
     required Sum sum,
   }) async {
-    var newOperation = OutputOperation(
+    final newOperation = OutputOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,
@@ -126,7 +140,6 @@ class OperationInteractor {
     required int accountId,
     required int recAccountId,
     required Sum sum,
-    required Sum recSum,
   }) async {
     var newOperation = TransferOperation(
       id: operation.id,
@@ -135,6 +148,27 @@ class OperationInteractor {
       date: date,
       account: accountId,
       recAccount: recAccountId,
+      sum: sum,
+    );
+
+    await _dataRepository.updateOperation(newOperation);
+
+    return newOperation;
+  }
+
+  Future<Operation> updateExchange({
+    required Operation operation,
+    required DateTime date,
+    required int accountId,
+    required Sum sum,
+    required Sum recSum,
+  }) async {
+    var newOperation = ExchangeOperation(
+      id: operation.id,
+      cloudId: operation.cloudId,
+      deleted: operation.deleted,
+      date: date,
+      account: accountId,
       sum: sum,
       recSum: recSum,
     );

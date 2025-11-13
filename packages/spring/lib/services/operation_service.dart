@@ -25,11 +25,18 @@ abstract interface class OperationService {
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sumSent,
-    int sumReceived,
-    Currency currencySent,
-    Currency currencyReceived,
+    int sum,
+    Currency currency,
   );
+
+  Future<ExchangeOperation> createExchangeOperation(
+      DateTime date,
+      BaseAccount account,
+      int sum,
+      Currency currency,
+      int recSum,
+      Currency recCurrency,
+);
 
   Future<InputOperation> swapToInputOperation(
     Operation operation,
@@ -54,10 +61,8 @@ abstract interface class OperationService {
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sumSent,
-    int sumReceived,
-    Currency currencySent,
-    Currency currencyReceived,
+    int sum,
+    Currency currency,
   );
 
   Future<void> deleteOperation(OperationId id);

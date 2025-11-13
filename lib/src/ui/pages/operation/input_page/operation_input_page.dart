@@ -82,9 +82,9 @@ class _OperationInputPageState extends State<OperationInputPage>
         }
       case MasterStateAction.SHOW_EMPTY_SUM_MESSAGE:
         {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.loc.emptySumError)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(context.loc.emptySumError)));
         }
       case MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE:
         {
@@ -122,141 +122,154 @@ class _OperationInputPageState extends State<OperationInputPage>
   Widget build(BuildContext context) {
     return BlocProvider<MasterBloc>(
       create: (context) => sl<MasterBloc>(),
-      child: Builder(builder: (context) {
-        return BlocListener<MasterBloc, MasterState>(
-          listener: (context, state) => _stateListener(context, state),
-          child: WillPopScope(
-            onWillPop: () => _onBackPressed(context),
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(context.loc.titleMaster),
-                forceMaterialTransparency: true,
-              ),
-              body: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    _Title(
-                      context.operationType() != OperationType.TRANSFER
-                          ? context.loc.account
-                          : context.loc.source,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: DropdownList<AccountBalanceView>(
-                        value: context
-                            .watchBalances()
-                            .where((e) => e.accountId == context.accountId())
-                            .firstOrNull,
-                        hint: context.loc.hintAccount,
-                        items: context.watchBalances(),
-                        onChange: (a) => context.onChangeAccount(a!.accountId),
-                        getListItem: (data) => AccountItem(account: data),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<MasterBloc, MasterState>(
+            listener: (context, state) => _stateListener(context, state),
+            child: WillPopScope(
+              onWillPop: () => _onBackPressed(context),
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(context.loc.titleMaster),
+                  forceMaterialTransparency: true,
+                ),
+                body: SafeArea(
+                  child: Column(
+                    children: <Widget>[
+                      _Title(
+                        context.operationType() != OperationType.TRANSFER
+                            ? context.loc.account
+                            : context.loc.source,
                       ),
-                    ),
-                    _Title(context.loc.titleType),
-                    Builder(builder: (context) {
-                      return TypeRadioButton<OperationType>(
-                        type: context.operationType(),
-                        items: OperationType.values,
-                        onChange: context.onChangeOperationType,
-                      );
-                    }),
-                    context.operationType().map(
-                        INPUT: () => const _CategoryList(CategoryType.INPUT),
-                        OUTPUT: () => const _CategoryList(CategoryType.OUTPUT),
-                        TRANSFER: () => const AccountRecList()),
-                    Builder(
-                      builder: (BuildContext context) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 6.0),
-                            //Same as `blurRadius` i guess
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: DropdownList<AccountBalanceView>(
+                          value: context
+                              .watchAllBalances()
+                              .where((e) => e.accountId == context.accountId())
+                              .firstOrNull,
+                          hint: context.loc.hintAccount,
+                          items: context.watchAllBalances(),
+                          onChange: (a) =>
+                              context.onChangeAccount(a!.accountId),
+                          getListItem: (data) => AccountItem(account: data),
+                        ),
+                      ),
+                      _Title(context.loc.titleType),
+                      Builder(
+                        builder: (context) {
+                          return TypeRadioButton<OperationType>(
+                            type: context.operationType(),
+                            items: OperationType.values,
+                            onChange: context.onChangeOperationType,
+                          );
+                        },
+                      ),
+                      context.operationType().map(
+                        input: () => const _CategoryList(CategoryType.INPUT),
+                        output: () => const _CategoryList(CategoryType.OUTPUT),
+                        transfer: () => const AccountRecList(),
+                        exchange: () => SizedBox(), // TODO
+                      ),
+                      Builder(
+                        builder: (BuildContext context) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 6.0),
+                              //Same as `blurRadius` i guess
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(16.0),
+                                ),
+                                color: Theme.of(
+                                  context,
+                                ).dialogBackgroundColor, //Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    offset: Offset(0.0, 1.0), //(x,y)
+                                    blurRadius: 6.0,
+                                  ),
+                                ],
                               ),
-                              color: Theme.of(context)
-                                  .dialogBackgroundColor, //Colors.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(0.0, 1.0), //(x,y)
-                                  blurRadius: 6.0,
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                BarButton(
-                                  onPressed: context.onMoreTap,
-                                  title: context.loc.more,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: Row(
-                                          children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: SumField(
-                                                highlight: context.highlightSum(),
-                                                sum: context.sum(),
-                                                onTap: context.onSumTap,
-                                              ),
-                                            ),
-                                            if (context.showRecSum())
-                                              const SizedBox(width: 8),
-                                            if (context.showRecSum())
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  BarButton(
+                                    onPressed: context.onMoreTap,
+                                    title: context.loc.more,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                          ),
+                                          child: Row(
+                                            children: [
                                               Flexible(
                                                 flex: 1,
                                                 child: SumField(
-                                                  highlight:
-                                                      context.highlightRecSum(),
-                                                  sum: context.recSum(),
-                                                  onTap: context.onRecSumTap,
+                                                  highlight: context
+                                                      .highlightSum(),
+                                                  sum: context.sum(),
+                                                  onTap: context.onSumTap,
                                                 ),
                                               ),
-                                          ],
+                                              if (context.showRecSum())
+                                                const SizedBox(width: 8),
+                                              if (context.showRecSum())
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: SumField(
+                                                    highlight: context
+                                                        .highlightRecSum(),
+                                                    sum: context.recSum(),
+                                                    onTap: context.onRecSumTap,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizeTransition(
-                                        axis: Axis.vertical,
-                                        sizeFactor: _animation,
-                                        child: Keyboard(
-                                          onChangeCurrency:
-                                              context.onChangeHighlightCurrency,
-                                          currency: context.highlightCurrency(),
-                                          onDigitPressed: context.onDigitKeyTap,
-                                          onBackPressed: context.onBackKeyTap,
+                                        SizeTransition(
+                                          axis: Axis.vertical,
+                                          sizeFactor: _animation,
+                                          child: Keyboard(
+                                            onChangeCurrency: context
+                                                .onChangeHighlightCurrency,
+                                            currency: context
+                                                .highlightCurrency(),
+                                            onDigitPressed:
+                                                context.onDigitKeyTap,
+                                            onBackPressed: context.onBackKeyTap,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                BarButton(
-                                  onPressed: context.onNextTap,
-                                  title: context.loc.create,
-                                ),
-                              ],
+                                  BarButton(
+                                    onPressed: context.onNextTap,
+                                    title: context.loc.create,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
@@ -264,10 +277,7 @@ class _OperationInputPageState extends State<OperationInputPage>
 class _Title extends StatelessWidget {
   final String title;
 
-  const _Title(
-    this.title, {
-    super.key,
-  });
+  const _Title(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -275,12 +285,7 @@ class _Title extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ],
+        children: [Text(title, style: Theme.of(context).textTheme.titleSmall)],
       ),
     );
   }
@@ -290,11 +295,7 @@ class BarButton extends StatelessWidget {
   final void Function() onPressed;
   final String title;
 
-  const BarButton({
-    super.key,
-    required this.onPressed,
-    required this.title,
-  });
+  const BarButton({super.key, required this.onPressed, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -353,12 +354,13 @@ class CategoryItemList extends StatelessWidget {
   final int? parent;
   final void Function(CategoryView?) onChange;
 
-  const CategoryItemList(
-      {super.key,
-      required this.type,
-      required this.initialItem,
-      required this.onChange,
-      required this.parent});
+  const CategoryItemList({
+    super.key,
+    required this.type,
+    required this.initialItem,
+    required this.onChange,
+    required this.parent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -406,10 +408,8 @@ class CategoryGroupList extends StatelessWidget {
       onItemChanged: (e) {
         onChange(e == CategoryView.groupNoParent() ? null : e);
       },
-      itemBuilder: (context, category) => CategoryListGroup(
-        category: category,
-        type: type,
-      ),
+      itemBuilder: (context, category) =>
+          CategoryListGroup(category: category, type: type),
     );
   }
 }
@@ -420,7 +420,7 @@ class AccountRecList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accounts = context
-        .watchBalances()
+        .watchAllBalances()
         .where((e) => e.accountId != context.accountId())
         .toList();
 
@@ -463,26 +463,18 @@ class ItemsList extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+                Text(title, style: Theme.of(context).textTheme.titleSmall),
                 Spacer(),
                 if (onAddGroup != null)
                   IconButton(
                     icon: const Icon(Icons.create_new_folder_outlined),
                     onPressed: onAddGroup,
                   ),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: onAddItem,
-                ),
+                IconButton(icon: const Icon(Icons.add), onPressed: onAddItem),
               ],
             ),
             const Divider(),
-            Flexible(
-              child: Container(child: list),
-            ),
+            Flexible(child: Container(child: list)),
           ],
         ),
       ),

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 enum OperationType {
   INPUT(Colors.green, Icons.add),
   OUTPUT(Colors.red, Icons.remove),
-  TRANSFER(Colors.blue, Icons.redo);
+  TRANSFER(Colors.blue, Icons.redo),
+  EXCHANGE(Colors.cyan, Icons.currency_exchange);
 
   final Color color;
   final IconData icon;
@@ -13,17 +14,15 @@ enum OperationType {
   const OperationType(this.color, this.icon);
 
   T map<T>({
-    required T Function() INPUT,
-    required T Function() OUTPUT,
-    required T Function() TRANSFER,
-  }) {
-    switch (this) {
-      case OperationType.INPUT:
-        return INPUT();
-      case OperationType.OUTPUT:
-        return OUTPUT();
-      case OperationType.TRANSFER:
-        return TRANSFER();
-    }
-  }
+    required T Function() input,
+    required T Function() output,
+    required T Function() transfer,
+    required T Function() exchange,
+  }) =>
+      switch (this) {
+        OperationType.INPUT => input(),
+        OperationType.OUTPUT => output(),
+        OperationType.TRANSFER => transfer(),
+        OperationType.EXCHANGE => exchange(),
+      };
 }

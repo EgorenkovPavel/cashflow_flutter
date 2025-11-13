@@ -32,6 +32,7 @@
   "typeInput": "Input",
   "typeOutput": "Output",
   "typeTransfer": "Transfer",
+  "typeExchange": "Exchange",
   "budgetTypeMonth": "Month",
   "budgetTypeYear": "Year",
   "accountCardTitle": "Account",

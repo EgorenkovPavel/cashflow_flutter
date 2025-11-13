@@ -61,10 +61,8 @@ abstract base class Operation {
           date: date,
           account: account,
           analytic: analytic,
-          sumSent: sumSent,
-          sumReceived: sumReceived,
-          currencySent: currencySent,
-          currencyReceived: currencyReceived,
+          sum: sumSent,
+          currency: currencySent,
           user: user,
         ),
     };
@@ -163,11 +161,14 @@ final class TransferOperation extends Operation {
       required super.date,
       required super.account,
       required super.analytic,
-      required super.sumSent,
-      required super.sumReceived,
-      required super.currencySent,
-      required super.currencyReceived,
-      required super.user});
+      required int sum,
+      required Currency currency,
+      required super.user})
+      : super(
+            sumSent: sum,
+            sumReceived: sum,
+            currencySent: currency,
+            currencyReceived: currency);
 
   @override
   Map<String, dynamic> toJson() => {
@@ -189,10 +190,52 @@ final class TransferOperation extends Operation {
         date: date,
         account: account,
         analytic: analytic,
-        sumSent: sumSent,
-        sumReceived: sumReceived,
-        currencySent: currencySent,
-        currencyReceived: currencyReceived,
+        sum: sumSent,
+        currency: currencySent,
+        user: user,
+      );
+}
+
+final class ExchangeOperation extends Operation {
+  ExchangeOperation(
+      {super.id,
+      required super.date,
+      required super.account,
+      required int sum,
+      required Currency currency,
+      required int recSum,
+      required Currency recCurrency,
+      required super.user})
+      : super(
+            analytic: 0,
+            sumSent: sum,
+            sumReceived: recSum,
+            currencySent: currency,
+            currencyReceived: recCurrency);
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'date': date,
+        'type': OperationType.transfer.toString(),
+        'account': account,
+        'analytic': analytic,
+        'sumSent': sumSent,
+        'sumReceived': sumReceived,
+        'currencySent': currencySent.toString(),
+        'currencyReceived': currencyReceived.toString(),
+        'user': user,
+      };
+
+  @override
+  ExchangeOperation copyWithId(OperationId id) => ExchangeOperation(
+        id: id,
+        date: date,
+        account: account,
+        sum: sumSent,
+        recSum: sumReceived,
+        currency: currencySent,
+        recCurrency: currencyReceived,
         user: user,
       );
 }

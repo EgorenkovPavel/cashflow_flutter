@@ -1,7 +1,6 @@
-import 'operation_service.dart';
-
 import '../models/models.dart';
 import 'network_client.dart';
+import 'operation_service.dart';
 
 class OperationServiceImpl implements OperationService {
   final NetworkClient _connector;
@@ -67,19 +66,37 @@ class OperationServiceImpl implements OperationService {
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sumSent,
-    int sumReceived,
-    Currency currencySent,
-    Currency currencyReceived,
+    int sum,
+    Currency currency,
   ) async {
     TransferOperation operation = TransferOperation(
       date: date,
       account: account.id!,
       analytic: accountRec.id!,
-      sumSent: sumSent,
-      sumReceived: sumReceived,
-      currencySent: currencySent,
-      currencyReceived: currencyReceived,
+      sum: sum,
+      currency: currency,
+      user: _connector.user!.id,
+    );
+    final id = await _postOperation(operation);
+    return operation.copyWithId(id);
+  }
+
+  @override
+  Future<ExchangeOperation> createExchangeOperation(
+    DateTime date,
+    BaseAccount account,
+    int sum,
+    Currency currency,
+    int recSum,
+    Currency recCurrency,
+  ) async {
+    final operation = ExchangeOperation(
+      date: date,
+      account: account.id!,
+      sum: sum,
+      currency: currency,
+      recSum: recSum,
+      recCurrency: recCurrency,
       user: _connector.user!.id,
     );
     final id = await _postOperation(operation);
@@ -149,20 +166,16 @@ class OperationServiceImpl implements OperationService {
     DateTime date,
     BaseAccount account,
     BaseAccount accountRec,
-    int sumSent,
-    int sumReceived,
-    Currency currencySent,
-    Currency currencyReceived,
+    int sum,
+    Currency currency,
   ) async {
     TransferOperation newOperation = TransferOperation(
       id: operation.id,
       date: date,
       account: account.id!,
       analytic: accountRec.id!,
-      sumSent: sumSent,
-      sumReceived: sumReceived,
-      currencySent: currencySent,
-      currencyReceived: currencyReceived,
+      sum: sum,
+      currency: currency,
       user: _connector.user!.id,
     );
     return await _connector.update(

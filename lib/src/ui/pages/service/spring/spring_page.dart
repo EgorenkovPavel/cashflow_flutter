@@ -93,8 +93,15 @@ class SpringPage extends StatelessWidget {
             addedAccounts[operation.account] as BaseAccount,
             addedAccounts[operation.analytic] as BaseAccount,
             operation.sum.sum,
-            operation.recSum.sum,
             _mapCurrency(operation.sum.currency),
+          );
+        case model.ExchangeOperation():
+          await connector.operations.createExchangeOperation(
+            operation.date,
+            addedAccounts[operation.account] as BaseAccount,
+            operation.sum.sum,
+            _mapCurrency(operation.sum.currency),
+            operation.recSum.sum,
             _mapCurrency(operation.recSum.currency),
           );
       }

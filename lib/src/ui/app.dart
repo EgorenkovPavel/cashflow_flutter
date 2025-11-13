@@ -7,8 +7,6 @@ import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
 import 'package:money_tracker/src/ui/pages/service/users/users_page.dart';
 
 import '../domain/models.dart';
-// import '../l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import '../l10n/app_localizations.dart';
 import 'pages/account/detail_page/account_detail_page.dart';
 import 'pages/account/input_page/account_input_page.dart';

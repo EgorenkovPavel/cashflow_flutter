@@ -55,6 +55,7 @@ class _TypeItem<T> extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Text(
         getTitle(context).toUpperCase(),
+        style: TextStyle(fontSize: 12),
       ),
     );
   }

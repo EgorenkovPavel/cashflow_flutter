@@ -91,10 +91,20 @@ extension CloudOperationMapper on Operation {
           account: accountCloudId,
           recAccount: analyticCloudId,
           sum: o.sum.sum,
-          recSum: o.recSum.sum,
           deleted: o.deleted,
           currencySent: o.sum.currency.toString(),
           currencyReceived: o.sum.currency.toString(),
+        ),
+        exchange: (o) => CloudOperation(
+          id: o.cloudId,
+          date: o.date,
+          operationType: const OperationTypeConverter().toSql(o.type),
+          account: accountCloudId,
+          sum: o.sum.sum,
+          recSum: o.recSum.sum,
+          deleted: o.deleted,
+          currencySent: o.sum.currency.toString(),
+          currencyReceived: o.recSum.currency.toString(),
         ),
       );
 }

@@ -27,9 +27,7 @@ class OperationEditPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => bloc,
-      child: _OperationEditPage(
-        isNew: id == null,
-      ),
+      child: _OperationEditPage(isNew: id == null),
     );
   }
 }
@@ -89,9 +87,7 @@ class _OperationEditPageState extends State<_OperationEditPage> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(context.loc.operationCardTitle),
-          ),
+          appBar: AppBar(title: Text(context.loc.operationCardTitle)),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
@@ -131,31 +127,29 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   ),
                   Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
-                        INPUT: () => DropdownList<CategoryView>(
-                          value: context.category(context.watchInCategoryItems()),
-                          hint: context.loc.hintCategory,
-                          onChange: context.onCategoryChange,
-                          items: context.watchInCategoryItems(),
-                          getListItem: (item) =>
-                              ListTile(title: Text(item.title)),
-                        ),
-                        OUTPUT: () => DropdownList<CategoryView>(
-                          value: context.category(context.watchOutCategoryItems()),
-                          hint: context.loc.hintCategory,
-                          onChange: context.onCategoryChange,
-                          items: context.watchOutCategoryItems(),
-                          getListItem: (item) =>
-                              ListTile(title: Text(item.title)),
-                        ),
-                        TRANSFER: () => DropdownList<AccountView>(
-                          value: context.recAccount(context.watchListItems()),
-                          hint: context.loc.hintAccount,
-                          onChange: context.onRecAccountChange,
-                          items: context.watchListItems(),
-                          getListItem: (item) =>
-                              ListTile(title: Text(item.title)),
-                        ),
-                      ),
+                    input: () => DropdownList<CategoryView>(
+                      value: context.category(context.watchInCategoryItems()),
+                      hint: context.loc.hintCategory,
+                      onChange: context.onCategoryChange,
+                      items: context.watchInCategoryItems(),
+                      getListItem: (item) => ListTile(title: Text(item.title)),
+                    ),
+                    output: () => DropdownList<CategoryView>(
+                      value: context.category(context.watchOutCategoryItems()),
+                      hint: context.loc.hintCategory,
+                      onChange: context.onCategoryChange,
+                      items: context.watchOutCategoryItems(),
+                      getListItem: (item) => ListTile(title: Text(item.title)),
+                    ),
+                    transfer: () => DropdownList<AccountView>(
+                      value: context.recAccount(context.watchListItems()),
+                      hint: context.loc.hintAccount,
+                      onChange: context.onRecAccountChange,
+                      items: context.watchListItems(),
+                      getListItem: (item) => ListTile(title: Text(item.title)),
+                    ),
+                    exchange: () => SizedBox(), // TODO
+                  ),
                   const SizedBox(height: 16.0),
                   Row(
                     children: [
@@ -174,8 +168,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                       ),
                       const SizedBox(width: 16.0),
                       CurrencyMenu(
-                          currency: context.currencySent(),
-                          onChange: context.onChangeCurrency),
+                        currency: context.currencySent(),
+                        onChange: context.onChangeCurrency,
+                      ),
                     ],
                   ),
                   if (context.showRecSum())
@@ -198,8 +193,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                           ),
                           const SizedBox(width: 16.0),
                           CurrencyMenu(
-                              currency: context.currencyReceived(),
-                              onChange: context.onChangeRecCurrency),
+                            currency: context.currencyReceived(),
+                            onChange: context.onChangeRecCurrency,
+                          ),
                         ],
                       ),
                     ),
@@ -240,21 +236,14 @@ class DateButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       child: Row(
-        children: <Widget>[
-          Icon(icon),
-          const SizedBox(width: 4.0),
-          Text(text),
-        ],
+        children: <Widget>[Icon(icon), const SizedBox(width: 4.0), Text(text)],
       ),
     );
   }
 }
 
 class Title extends StatelessWidget {
-  const Title({
-    super.key,
-    required this.text,
-  });
+  const Title({super.key, required this.text});
 
   final String text;
 
@@ -262,10 +251,7 @@ class Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 0.0, top: 8.0),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.bodySmall,
-      ),
+      child: Text(text, style: Theme.of(context).textTheme.bodySmall),
     );
   }
 }

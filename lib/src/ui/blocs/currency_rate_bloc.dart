@@ -23,22 +23,21 @@ class CurrencyRateEvent with _$CurrencyRateEvent {
 abstract class CurrencyRateState with _$CurrencyRateState {
   const CurrencyRateState._();
 
-  const factory CurrencyRateState({
-    required double usd,
-    required double eur,
-  }) = _CurrencyRateState;
+  const factory CurrencyRateState({required double usd, required double eur}) =
+      _CurrencyRateState;
 }
 
 class CurrencyRateBloc extends Bloc<CurrencyRateEvent, CurrencyRateState> {
   final CurrencyInteractor _currencyInteractor;
 
   CurrencyRateBloc(this._currencyInteractor)
-      : super(const CurrencyRateState(usd: 1, eur: 1)) {
+    : super(const CurrencyRateState(usd: 1, eur: 1)) {
     on<CurrencyRateEvent>(
       (event, emit) => event.map(
-          fetch: (event) => _onFetch(event, emit),
-          change: (event) =>
-              emit(CurrencyRateState(usd: event.usd, eur: event.eur))),
+        fetch: (event) => _onFetch(event, emit),
+        change: (event) =>
+            emit(CurrencyRateState(usd: event.usd, eur: event.eur)),
+      ),
     );
 
     add(CurrencyRateEvent.fetch());
@@ -68,18 +67,21 @@ extension CurrencyRateBlocExt on BuildContext {
   String eurRateFormat() => loc.rateFormat(_rate(eur()));
 
   Sum sumToRub(Sum sum) => switch (sum.currency) {
-        Currency.RUB => sum,
-        Currency.USD => fromUsd(sum.sum),
-        Currency.EUR => fromEur(sum.sum),
-      };
+    .RUB => sum,
+    .USD => fromUsd(sum.sum),
+    .EUR => fromEur(sum.sum),
+  };
 
   int balanceToRub(Balance balance) => balance.sums
-      .map<num>((e) => switch (e.currency) {
-            Currency.RUB => e.sum,
-            Currency.USD => (e.sum / usd()),
-            Currency.EUR => (e.sum / eur()),
-          })
-      .fold<double>(0, (a, b) => a + b).toInt();
+      .map<num>(
+        (e) => switch (e.currency) {
+          .RUB => e.sum,
+          .USD => (e.sum / usd()),
+          .EUR => (e.sum / eur()),
+        },
+      )
+      .fold<double>(0, (a, b) => a + b)
+      .toInt();
 
   double _rate(double rate) {
     return ((1 / rate) * 100).floor() / 100;

@@ -3,8 +3,8 @@ import 'package:money_tracker/src/data/sources/local/entities/cashflow_entity.da
 
 import '../../../domain/models.dart';
 import '../../../domain/view_models.dart';
-import '../../../utils/sum.dart';
 import '../../../utils/balance.dart';
+import '../../../utils/sum.dart';
 import 'entities/account_balance_entity.dart';
 import 'entities/operation_entity.dart';
 
@@ -13,57 +13,71 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
 
   @override
   OperationDB toDBO(Operation model) => model.map(
-        input: (o) => OperationDB(
-          id: o.id,
-          cloudId: o.cloudId,
-          date: o.date,
-          operationType: o.type,
-          account: o.account,
-          category: o.analytic,
-          recAccount: null,
-          sum: o.sum.sum,
-          recSum: 0,
-          synced: false,
-          deleted: o.deleted,
-          currencySent: o.sum.currency,
-          currencyReceived: o.sum.currency,
-        ),
-        output: (o) => OperationDB(
-          id: o.id,
-          cloudId: o.cloudId,
-          date: o.date,
-          operationType: o.type,
-          account: o.account,
-          category: o.analytic,
-          recAccount: null,
-          sum: o.sum.sum,
-          recSum: 0,
-          synced: false,
-          deleted: o.deleted,
-          currencySent: o.sum.currency,
-          currencyReceived: o.sum.currency,
-        ),
-        transfer: (o) => OperationDB(
-          id: o.id,
-          cloudId: o.cloudId,
-          date: o.date,
-          operationType: o.type,
-          account: o.account,
-          category: null,
-          recAccount: o.analytic,
-          sum: o.sum.sum,
-          recSum: o.recSum.sum,
-          synced: false,
-          deleted: o.deleted,
-          currencySent: o.sum.currency,
-          currencyReceived: o.recSum.currency,
-        ),
-      );
+    input: (o) => OperationDB(
+      id: o.id,
+      cloudId: o.cloudId,
+      date: o.date,
+      operationType: o.type,
+      account: o.account,
+      category: o.analytic,
+      recAccount: null,
+      sum: o.sum.sum,
+      recSum: 0,
+      synced: false,
+      deleted: o.deleted,
+      currencySent: o.sum.currency,
+      currencyReceived: o.sum.currency,
+    ),
+    output: (o) => OperationDB(
+      id: o.id,
+      cloudId: o.cloudId,
+      date: o.date,
+      operationType: o.type,
+      account: o.account,
+      category: o.analytic,
+      recAccount: null,
+      sum: o.sum.sum,
+      recSum: 0,
+      synced: false,
+      deleted: o.deleted,
+      currencySent: o.sum.currency,
+      currencyReceived: o.sum.currency,
+    ),
+    transfer: (o) => OperationDB(
+      id: o.id,
+      cloudId: o.cloudId,
+      date: o.date,
+      operationType: o.type,
+      account: o.account,
+      category: null,
+      recAccount: o.analytic,
+      sum: o.sum.sum,
+      recSum: 0,
+      synced: false,
+      deleted: o.deleted,
+      currencySent: o.sum.currency,
+      currencyReceived: o.sum.currency,
+    ),
+    exchange: (o) => OperationDB(
+      id: o.id,
+      cloudId: o.cloudId,
+      date: o.date,
+      operationType: o.type,
+      account: o.account,
+      category: null,
+      sum: o.sum.sum,
+      recSum: o.recSum.sum,
+      synced: false,
+      deleted: o.deleted,
+      currencySent: o.sum.currency,
+      currencyReceived: o.recSum.currency,
+    ),
+  );
 
   @override
   Operation toModel(OperationDB dbo) {
     return dbo.operationType.map(
-      INPUT: () => InputOperation(
+      input: () => InputOperation(
         id: dbo.id,
         cloudId: dbo.cloudId,
         synced: dbo.synced,
@@ -73,7 +87,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         category: dbo.category!,
         sum: Sum(dbo.sum, dbo.currencySent),
       ),
-      OUTPUT: () => OutputOperation(
+      output: () => OutputOperation(
         id: dbo.id,
         cloudId: dbo.cloudId,
         synced: dbo.synced,
@@ -83,7 +97,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         category: dbo.category!,
         sum: Sum(dbo.sum, dbo.currencySent),
       ),
-      TRANSFER: () => TransferOperation(
+      transfer: () => TransferOperation(
         id: dbo.id,
         cloudId: dbo.cloudId,
         synced: dbo.synced,
@@ -91,6 +105,15 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         date: dbo.date,
         account: dbo.account,
         recAccount: dbo.recAccount!,
+        sum: Sum(dbo.sum, dbo.currencySent),
+      ),
+      exchange: () => ExchangeOperation(
+        id: dbo.id,
+        cloudId: dbo.cloudId,
+        synced: dbo.synced,
+        deleted: dbo.deleted,
+        date: dbo.date,
+        account: dbo.account,
         sum: Sum(dbo.sum, dbo.currencySent),
         recSum: Sum(dbo.recSum, dbo.currencyReceived),
       ),
@@ -107,7 +130,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
   OperationView toListItem(OperationDbEntity entity, User? user) {
     final dbo = entity.operationData;
     return dbo.operationType.map(
-      INPUT: () => OperationView(
+      input: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -119,7 +142,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      OUTPUT: () => OperationView(
+      output: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -131,7 +154,7 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      TRANSFER: () => OperationView(
+      transfer: () => OperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
@@ -143,15 +166,32 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
+      exchange: () => OperationView(
+        id: dbo.id,
+        date: dbo.date,
+        synced: dbo.synced,
+        deleted: dbo.deleted,
+        account: entity.account.title,
+        analytic: '',
+        sum: Sum(dbo.sum, dbo.currencySent),
+        type: OperationType.EXCHANGE,
+        userPhotoUrl: user?.photo ?? '',
+        userName: user?.name ?? '',
+      ),
     );
   }
 
   List<OperationView> entityListToItem(
-          List<OperationDbEntity> list, List<User> users) =>
-      list
-          .map((e) => toListItem(
-              e, users.where((u) => u.id == e.account.user).firstOrNull))
-          .toList();
+    List<OperationDbEntity> list,
+    List<User> users,
+  ) => list
+      .map(
+        (e) => toListItem(
+          e,
+          users.where((u) => u.id == e.account.user).firstOrNull,
+        ),
+      )
+      .toList();
 }
 
 class CategoryMapper extends DBMapper<Category, CategoryDB> {
@@ -159,77 +199,85 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
 
   @override
   CategoryDB toDBO(Category model) => model.map(
-        inputItem: (item) => CategoryDB(
-          id: item.id,
-          cloudId: item.cloudId,
-          title: item.title,
-          operationType: OperationType.INPUT,
-          budgetType: item.budgetType,
-          budget: item.budget,
-          synced: false,
-          isGroup: false,
-          parent: item.parentId,
-        ),
-        outputItem: (item) => CategoryDB(
-          id: item.id,
-          cloudId: item.cloudId,
-          title: item.title,
-          operationType: OperationType.OUTPUT,
-          budgetType: item.budgetType,
-          budget: item.budget,
-          synced: false,
-          isGroup: false,
-          parent: item.parentId,
-        ),
-        inputGroup: (group) => CategoryDB(
-          id: group.id,
-          cloudId: group.cloudId,
-          title: group.title,
-          operationType: OperationType.INPUT,
-          budgetType: BudgetType.MONTH,
-          budget: 0,
-          synced: false,
-          isGroup: true,
-        ),
-        outputGroup: (group) => CategoryDB(
-          id: group.id,
-          cloudId: group.cloudId,
-          title: group.title,
-          operationType: OperationType.OUTPUT,
-          budgetType: BudgetType.MONTH,
-          budget: 0,
-          synced: false,
-          isGroup: true,
-        ),
-      );
+    inputItem: (item) => CategoryDB(
+      id: item.id,
+      cloudId: item.cloudId,
+      title: item.title,
+      operationType: OperationType.INPUT,
+      budgetType: item.budgetType,
+      budget: item.budget,
+      synced: false,
+      isGroup: false,
+      parent: item.parentId,
+    ),
+    outputItem: (item) => CategoryDB(
+      id: item.id,
+      cloudId: item.cloudId,
+      title: item.title,
+      operationType: OperationType.OUTPUT,
+      budgetType: item.budgetType,
+      budget: item.budget,
+      synced: false,
+      isGroup: false,
+      parent: item.parentId,
+    ),
+    inputGroup: (group) => CategoryDB(
+      id: group.id,
+      cloudId: group.cloudId,
+      title: group.title,
+      operationType: OperationType.INPUT,
+      budgetType: BudgetType.MONTH,
+      budget: 0,
+      synced: false,
+      isGroup: true,
+    ),
+    outputGroup: (group) => CategoryDB(
+      id: group.id,
+      cloudId: group.cloudId,
+      title: group.title,
+      operationType: OperationType.OUTPUT,
+      budgetType: BudgetType.MONTH,
+      budget: 0,
+      synced: false,
+      isGroup: true,
+    ),
+  );
 
   @override
   Category toModel(CategoryDB dbo) {
     if (dbo.isGroup) {
       if (dbo.operationType == OperationType.INPUT) {
         return InputCategoryGroup(
-            id: dbo.id, title: dbo.title, cloudId: dbo.cloudId);
+          id: dbo.id,
+          title: dbo.title,
+          cloudId: dbo.cloudId,
+        );
       } else {
         return OutputCategoryGroup(
-            id: dbo.id, title: dbo.title, cloudId: dbo.cloudId);
+          id: dbo.id,
+          title: dbo.title,
+          cloudId: dbo.cloudId,
+        );
       }
     } else {
       if (dbo.operationType == OperationType.INPUT) {
         return InputCategoryItem(
-            id: dbo.id,
-            cloudId: dbo.cloudId,
-            title: dbo.title,
-            budget: dbo.budget,
-            budgetType: dbo.budgetType,
-            parentId: dbo.parent);
+          id: dbo.id,
+          cloudId: dbo.cloudId,
+          title: dbo.title,
+          budget: dbo.budget,
+          budgetType: dbo.budgetType,
+          parentId: dbo.parent,
+        );
       } else {
         return OutputCategoryItem(
-            id: dbo.id,
-            cloudId: dbo.cloudId,
-            title: dbo.title,
-            budget: dbo.budget,
-            budgetType: dbo.budgetType,
-            parentId: dbo.parent);
+          id: dbo.id,
+          cloudId: dbo.cloudId,
+          title: dbo.title,
+          budget: dbo.budget,
+          budgetType: dbo.budgetType,
+          parentId: dbo.parent,
+        );
       }
     }
   }
@@ -240,15 +288,19 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
     List<CashflowEntity> yearCashflow,
   ) {
     return categories.map((category) {
-      final month = Balance.fromSums(monthCashflow
-          .where((cashflow) => cashflow.categoryId == category.id)
-          .map((cashflow) => cashflow.sum)
-          .toList());
+      final month = Balance.fromSums(
+        monthCashflow
+            .where((cashflow) => cashflow.categoryId == category.id)
+            .map((cashflow) => cashflow.sum)
+            .toList(),
+      );
 
-      final year = Balance.fromSums(yearCashflow
-          .where((cashflow) => cashflow.categoryId == category.id)
-          .map((cashflow) => cashflow.sum)
-          .toList());
+      final year = Balance.fromSums(
+        yearCashflow
+            .where((cashflow) => cashflow.categoryId == category.id)
+            .map((cashflow) => cashflow.sum)
+            .toList(),
+      );
 
       if (category.operationType == OperationType.INPUT) {
         return InputCategoryCashFlow(
@@ -278,13 +330,13 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
 
   @override
   AccountDB toDBO(BaseAccount model) => AccountDB(
-        id: model.id,
-        cloudId: model.cloudId,
-        title: model.title,
-        isDebt: model is Debt,
-        synced: false,
-        user: model.userId,
-      );
+    id: model.id,
+    cloudId: model.cloudId,
+    title: model.title,
+    isDebt: model is Debt,
+    synced: false,
+    user: model.userId,
+  );
 
   @override
   BaseAccount toModel(AccountDB dbo) {
@@ -305,17 +357,22 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
     }
   }
 
-  List<AccountBalanceView> combineBalances(List<AccountDB> accounts,
-      List<UserDB> users, List<AccountBalanceEntity> balances) {
+  List<AccountBalanceView> combineBalances(
+    List<AccountDB> accounts,
+    List<UserDB> users,
+    List<AccountBalanceEntity> balances,
+  ) {
     try {
       return accounts.map((account) {
         final user = account.user == null
             ? null
             : users.where((e) => e.id == account.user).firstOrNull;
-        final balance = Balance.fromSums(balances
-            .where((balance) => balance.accountId == account.id)
-            .map((balance) => Sum(balance.sum, balance.currency))
-            .toList());
+        final balance = Balance.fromSums(
+          balances
+              .where((balance) => balance.accountId == account.id)
+              .map((balance) => Sum(balance.sum, balance.currency))
+              .toList(),
+        );
 
         return AccountBalanceView(
           accountId: account.id,
@@ -339,19 +396,19 @@ class UserMapper extends DBMapper<User, UserDB> {
 
   @override
   UserDB toDBO(User model) => UserDB(
-        id: model.id,
-        name: model.name,
-        photo: model.photo,
-        googleId: model.googleId,
-      );
+    id: model.id,
+    name: model.name,
+    photo: model.photo,
+    googleId: model.googleId,
+  );
 
   @override
   User toModel(UserDB dbo) => User(
-        id: dbo.id,
-        googleId: dbo.googleId,
-        name: dbo.name,
-        photo: dbo.photo,
-      );
+    id: dbo.id,
+    googleId: dbo.googleId,
+    name: dbo.name,
+    photo: dbo.photo,
+  );
 }
 
 abstract class DBMapper<Model, DBO> {

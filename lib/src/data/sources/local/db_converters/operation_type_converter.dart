@@ -29,6 +29,8 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
         return 2;
       case OperationType.TRANSFER:
         return 3;
+      case OperationType.EXCHANGE:
+        return 4;
     }
   }
 }

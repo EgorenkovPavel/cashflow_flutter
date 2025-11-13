@@ -47,19 +47,20 @@ extension AppLocalizationExtended on AppLocalizations {
   String sumFormat(Sum sum) => numberFormat(sum.sum, sum.currency);
 
   String operationTypeTitle(OperationType type) => switch (type) {
-        OperationType.INPUT => typeInput,
-        OperationType.OUTPUT => typeOutput,
-        OperationType.TRANSFER => typeTransfer,
-      };
+    .INPUT => typeInput,
+    .OUTPUT => typeOutput,
+    .TRANSFER => typeTransfer,
+    .EXCHANGE => typeExchange,
+  };
 
   String budgetTypeTitle(BudgetType type) => switch (type) {
-        BudgetType.MONTH => budgetTypeMonth,
-        BudgetType.YEAR => budgetTypeYear,
-      };
+    .MONTH => budgetTypeMonth,
+    .YEAR => budgetTypeYear,
+  };
 
   String currencyTitle(Currency type) => switch (type) {
-        Currency.RUB => 'RUB',
-        Currency.USD => 'USD',
-        Currency.EUR => 'EUR',
-      };
+    .RUB => 'RUB',
+    .USD => 'USD',
+    .EUR => 'EUR',
+  };
 }

@@ -11,7 +11,7 @@ class AccountListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = context.watchBalances();
+    final items = context.watchAllBalances();
 
     return Scaffold(
       appBar: AppBar(
