@@ -125,7 +125,8 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     onChange: context.onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
-                  Title(text: context.loc.titleAnalytic),
+                  if (context.operationType() != OperationType.EXCHANGE)
+                    Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
                     input: () => DropdownList<CategoryView>(
                       value: context.category(context.watchInCategoryItems()),
