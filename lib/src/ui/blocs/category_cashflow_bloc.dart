@@ -51,29 +51,29 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
       categories.whereType<OutputCategoryGroup>().toList();
 
   int budget(CategoryType type) => switch (type) {
-        CategoryType.INPUT => inputBudget(),
-        CategoryType.OUTPUT => outputBudget(),
-      };
+    CategoryType.INPUT => inputBudget(),
+    CategoryType.OUTPUT => outputBudget(),
+  };
 
   int cashFlow(CategoryType type) => switch (type) {
-        CategoryType.INPUT => inputCashFlow(),
-        CategoryType.OUTPUT => outputCashFlow(),
-      };
+    CategoryType.INPUT => inputCashFlow(),
+    CategoryType.OUTPUT => outputCashFlow(),
+  };
 
   List<CategoryItem> items(CategoryType type) => switch (type) {
-        CategoryType.INPUT => inItems,
-        CategoryType.OUTPUT => outItems,
-      };
+    CategoryType.INPUT => inItems,
+    CategoryType.OUTPUT => outItems,
+  };
 
   List<CategoryGroup> groups(CategoryType type) => switch (type) {
-        CategoryType.INPUT => inGroups,
-        CategoryType.OUTPUT => outGroups,
-      };
+    CategoryType.INPUT => inGroups,
+    CategoryType.OUTPUT => outGroups,
+  };
 
   List<Category> hierarchy(CategoryType type) => switch (type) {
-        CategoryType.INPUT => _sort(inGroups, inItems),
-        CategoryType.OUTPUT => _sort(outGroups, outItems),
-      };
+    CategoryType.INPUT => _sort(inGroups, inItems),
+    CategoryType.OUTPUT => _sort(outGroups, outItems),
+  };
 
   List<Category> _sort(List<CategoryGroup> groups, List<CategoryItem> items) {
     final list = <Category>[];
@@ -122,15 +122,15 @@ class CategoryCashflowBloc
   StreamSubscription? _subCategories;
   StreamSubscription? _subCurrencyRateBloc;
 
-  CategoryCashflowBloc(
-    this._currencyRateBloc,
-    this._categoryInteractor,
-  ) : super(const CategoryCashflowState(
+  CategoryCashflowBloc(this._currencyRateBloc, this._categoryInteractor)
+    : super(
+        const CategoryCashflowState(
           cashflows: [],
           categories: [],
           usd: 1,
           eur: 1,
-        )) {
+        ),
+      ) {
     on<CategoryCashflowEvent>(
       (event, emit) => event.map(
         change: (event) => emit(state.copyWith(cashflows: event.cashflows)),
@@ -186,28 +186,36 @@ extension CategoryCashFlowBlocExt on BuildContext {
   List<OutputCategoryCashFlow> watchOutputCashFlow() =>
       _watch().cashflows.whereType<OutputCategoryCashFlow>().toList();
 
+  String getTitleById(int id) =>
+      _read().categories.where((e) => e.id == id).firstOrNull?.title ?? '';
+
   List<CategoryCashFlow> watchTop(
     CategoryType categoryType,
     BudgetType budgetType,
     int count,
   ) {
-    final list = switch (categoryType) {
-      CategoryType.INPUT =>
-        _watch().cashflows.whereType<InputCategoryCashFlow>().toList(),
-      CategoryType.OUTPUT =>
-        _watch().cashflows.whereType<OutputCategoryCashFlow>().toList(),
-    }
-        .where((e) => switch (budgetType) {
-              BudgetType.MONTH => balanceToRub(e.monthCashFlow) != 0,
-              BudgetType.YEAR => balanceToRub(e.yearCashFlow) != 0,
-            })
-        .toList();
-    list.sort((a, b) => switch (budgetType) {
-          BudgetType.MONTH =>
-            balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),
-          BudgetType.YEAR =>
-            balanceToRub(b.yearCashFlow) - balanceToRub(a.yearCashFlow),
-        });
+    final list =
+        switch (categoryType) {
+              CategoryType.INPUT =>
+                _watch().cashflows.whereType<InputCategoryCashFlow>().toList(),
+              CategoryType.OUTPUT =>
+                _watch().cashflows.whereType<OutputCategoryCashFlow>().toList(),
+            }
+            .where(
+              (e) => switch (budgetType) {
+                BudgetType.MONTH => balanceToRub(e.monthCashFlow) != 0,
+                BudgetType.YEAR => balanceToRub(e.yearCashFlow) != 0,
+              },
+            )
+            .toList();
+    list.sort(
+      (a, b) => switch (budgetType) {
+        BudgetType.MONTH =>
+          balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),
+        BudgetType.YEAR =>
+          balanceToRub(b.yearCashFlow) - balanceToRub(a.yearCashFlow),
+      },
+    );
     return list.take(count).toList();
   }
 
@@ -218,25 +226,31 @@ extension CategoryCashFlowBlocExt on BuildContext {
       _select((state) => state.outItems.map(_mapToListItem).toList());
 
   List<CategoryView> watchCategoryItems(CategoryType type, int? parent) =>
-      select<CategoryCashflowBloc, List<CategoryView>>((bloc) => bloc.state
-          .items(type)
-          .where((e) => e.parentId == parent)
-          .map(_mapToListItem)
-          .toList());
+      select<CategoryCashflowBloc, List<CategoryView>>(
+        (bloc) => bloc.state
+            .items(type)
+            .where((e) => e.parentId == parent)
+            .map(_mapToListItem)
+            .toList(),
+      );
 
-  int watchGroupItemsAmount(int parentId) =>
-      select<CategoryCashflowBloc, int>((bloc) => bloc.state.categories
-          .whereType<CategoryItem>()
-          .where((e) => e.parentId == parentId)
-          .length);
+  int watchGroupItemsAmount(int parentId) => select<CategoryCashflowBloc, int>(
+    (bloc) => bloc.state.categories
+        .whereType<CategoryItem>()
+        .where((e) => e.parentId == parentId)
+        .length,
+  );
 
   int watchItemsAmountNoParent(CategoryType type) =>
-      select<CategoryCashflowBloc, int>((bloc) =>
-          bloc.state.items(type).where((e) => e.parentId == null).length);
+      select<CategoryCashflowBloc, int>(
+        (bloc) =>
+            bloc.state.items(type).where((e) => e.parentId == null).length,
+      );
 
   List<CategoryView> watchCategoryGroups(CategoryType type) =>
       select<CategoryCashflowBloc, List<CategoryView>>(
-          (bloc) => bloc.state.groups(type).map(_mapToListItem).toList());
+        (bloc) => bloc.state.groups(type).map(_mapToListItem).toList(),
+      );
 
   List<CategoryView> readInCategoryItems() =>
       read<CategoryCashflowBloc>().state.inItems.map(_mapToListItem).toList();
@@ -245,20 +259,24 @@ extension CategoryCashFlowBlocExt on BuildContext {
       read<CategoryCashflowBloc>().state.outItems.map(_mapToListItem).toList();
 
   List<CategoryView> readCategoryGroups(CategoryType type) =>
-      read<CategoryCashflowBloc>()
-          .state
+      read<CategoryCashflowBloc>().state
           .groups(type)
           .map(_mapToListItem)
           .toList();
 
   CategoryView _mapToListItem(Category category) => switch (category) {
-        InputCategoryItem() =>
-          CategoryView(id: category.id, title: category.title),
-        OutputCategoryItem() =>
-          CategoryView(id: category.id, title: category.title),
-        InputCategoryGroup() =>
-          CategoryView(id: category.id, title: category.title),
-        OutputCategoryGroup() =>
-          CategoryView(id: category.id, title: category.title),
-      };
+    InputCategoryItem() => CategoryView(id: category.id, title: category.title),
+    OutputCategoryItem() => CategoryView(
+      id: category.id,
+      title: category.title,
+    ),
+    InputCategoryGroup() => CategoryView(
+      id: category.id,
+      title: category.title,
+    ),
+    OutputCategoryGroup() => CategoryView(
+      id: category.id,
+      title: category.title,
+    ),
+  };
 }

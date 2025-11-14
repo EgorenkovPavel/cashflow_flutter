@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/pages/account/list_page/account_list_page.dart';
-import 'package:money_tracker/src/ui/pages/category/list_page/category_list_page.dart';
+import 'package:money_tracker/src/ui/pages/category/list_page/category_groups_list_page.dart';
+import 'package:money_tracker/src/ui/pages/category/list_page/category_items_list_page.dart';
 import 'package:money_tracker/src/ui/pages/operation/input_page/operation_input_page.dart';
 import 'package:money_tracker/src/ui/pages/service/spring/spring_page.dart';
 import 'package:money_tracker/src/ui/pages/service/users/users_page.dart';
@@ -48,7 +49,8 @@ class Pages {
   static final String accountEdit = 'account';
   static final String accountList = 'accounts';
   static final String categoryEdit = 'category';
-  static final String categoryList = 'categories';
+  static final String categoryGroupsList = 'categoryGroups';
+  static final String categoryItemsList = 'categoryItems';
   static final String operationNew = 'operationNew';
   static final String operationEdit = 'operationEdit';
   static final String operationList = 'operations';
@@ -88,9 +90,8 @@ final _router = GoRouter(
         GoRoute(
           name: Pages.operationEdit,
           path: 'operations/:fid',
-          builder: (context, state) => OperationEditPage.edit(
-            int.parse(state.pathParameters['fid']!),
-          ),
+          builder: (context, state) =>
+              OperationEditPage.edit(int.parse(state.pathParameters['fid']!)),
         ),
         GoRoute(
           name: Pages.operationNew,
@@ -112,13 +113,29 @@ final _router = GoRouter(
           builder: (context, state) => const AccountListPage(),
         ),
         GoRoute(
-          name: Pages.categoryList,
-          path: 'categoryList/:fid',
-          builder: (context, state) => CategoryListPage(
+          name: Pages.categoryGroupsList,
+          path: 'category_groups/:fid',
+          builder: (context, state) => CategoryGroupsListPage(
             type: CategoryType.values.firstWhere(
               (element) => element.toString() == state.pathParameters['fid'],
             ),
           ),
+        ),
+        GoRoute(
+          name: Pages.categoryItemsList,
+          path: 'category_items/:ftype/:fid',
+          builder: (context, state) {
+            final fid = state.pathParameters['fid']!;
+            final id = int.tryParse(fid);
+
+            return CategoryItemsListPage(
+              parentId: id,
+              type: CategoryType.values.firstWhere(
+                (element) =>
+                    element.toString() == state.pathParameters['ftype'],
+              ),
+            );
+          },
         ),
         GoRoute(
           name: Pages.settings,
@@ -163,22 +180,28 @@ final _router = GoRouter(
 );
 
 extension PageNavigator on BuildContext {
-  void openAccountPage(int accountId) => push(namedLocation(
-        Pages.accountEdit,
-        pathParameters: <String, String>{'fid': accountId.toString()},
-      ));
+  void openAccountPage(int accountId) => push(
+    namedLocation(
+      Pages.accountEdit,
+      pathParameters: <String, String>{'fid': accountId.toString()},
+    ),
+  );
 
-  void openCategoryPage(int categoryId) => push(namedLocation(
-        Pages.categoryEdit,
-        pathParameters: <String, String>{'fid': categoryId.toString()},
-      ));
+  void openCategoryPage(int categoryId) => push(
+    namedLocation(
+      Pages.categoryEdit,
+      pathParameters: <String, String>{'fid': categoryId.toString()},
+    ),
+  );
 
   void openOperationListPage() => push(namedLocation(Pages.operationList));
 
-  void openOperationEditPage(int operationId) => push(namedLocation(
-        Pages.operationEdit,
-        pathParameters: <String, String>{'fid': operationId.toString()},
-      ));
+  void openOperationEditPage(int operationId) => push(
+    namedLocation(
+      Pages.operationEdit,
+      pathParameters: <String, String>{'fid': operationId.toString()},
+    ),
+  );
 
   void openOperationInputPage() => push(namedLocation(Pages.operationNew));
 
@@ -197,17 +220,31 @@ extension PageNavigator on BuildContext {
 
   void openReportsPage() => push(namedLocation(Pages.reports));
 
-  void openBudgetPage(CategoryType type) => push(namedLocation(
-        Pages.budgetEdit,
-        pathParameters: <String, String>{'fid': type.toString()},
-      ));
+  void openBudgetPage(CategoryType type) => push(
+    namedLocation(
+      Pages.budgetEdit,
+      pathParameters: <String, String>{'fid': type.toString()},
+    ),
+  );
 
   void openAccountListPage() => push(namedLocation(Pages.accountList));
 
-  void openCategoryListPage(CategoryType type) => push(namedLocation(
-        Pages.categoryList,
-        pathParameters: <String, String>{'fid': type.toString()},
-      ));
+  void openCategoryGroupsListPage(CategoryType type) => push(
+    namedLocation(
+      Pages.categoryGroupsList,
+      pathParameters: <String, String>{'fid': type.toString()},
+    ),
+  );
+
+  void openCategoryItemsListPage(CategoryType type, int? parentId) => push(
+    namedLocation(
+      Pages.categoryItemsList,
+      pathParameters: <String, String>{
+        'ftype': type.toString(),
+        'fid': parentId.toString(),
+      },
+    ),
+  );
 
   Future<BaseAccount?> openAccountInputDialog() => const _Card<BaseAccount>()
       .open(this, const AccountInputPage.inputAccount());
@@ -218,20 +255,23 @@ extension PageNavigator on BuildContext {
   Future<BaseAccount?> openAccountEditDialog(int id) =>
       const _Card<BaseAccount>().open(this, AccountInputPage.edit(id));
 
-  Future<Category?> openCategoryInputDialog(
-          {required CategoryType type, required bool isGroup}) =>
-      const _Card<Category>()
-          .open(this, CategoryInputPage.byType(type: type, isGroup: isGroup));
+  Future<Category?> openCategoryInputDialog({
+    required CategoryType type,
+    required bool isGroup,
+  }) => const _Card<Category>().open(
+    this,
+    CategoryInputPage.byType(type: type, isGroup: isGroup),
+  );
 
   Future<Category?> openCategoryEditDialog({required int id}) =>
       const _Card<Category>().open(this, CategoryInputPage.edit(id: id));
 
   Future<OperationListFilter?> openOperationFilterPage(
-          OperationListFilter filter) =>
-      const _Card<OperationListFilter>().open(
-        this,
-        OperationFilterPage(filter: filter),
-      );
+    OperationListFilter filter,
+  ) => const _Card<OperationListFilter>().open(
+    this,
+    OperationFilterPage(filter: filter),
+  );
 
   Future<DriveFile?> chooseFileDialog() =>
       const _Card<DriveFile>().open(this, const DriveDialog.chooseFile());
@@ -250,9 +290,7 @@ class _Card<T> {
       builder: (context) {
         return Dialog(
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
           child: child,
         );

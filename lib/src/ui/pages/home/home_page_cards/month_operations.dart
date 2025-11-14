@@ -38,7 +38,7 @@ class MonthOperations extends StatelessWidget {
             alignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: () => context.openCategoryListPage(type),
+                onPressed: () => context.openCategoryGroupsListPage(type),
                 child: Text(context.loc.categories),
               ),
               TextButton(
