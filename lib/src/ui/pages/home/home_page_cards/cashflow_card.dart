@@ -36,45 +36,8 @@ class CashflowCard extends StatelessWidget {
                 Text(context.loc.numberFormat(context.cashFlow(type), .RUB)),
               ],
             ),
-            Divider(),
-            Text(
-              'Top of month',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            ...context
-                .watchTop(type, BudgetType.MONTH, 3)
-                .map(
-                  (e) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(e.categoryTitle),
-                      Text(
-                        context.loc.numberFormat(
-                          context.balanceToRub(e.monthCashFlow),
-                          .RUB,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            Divider(),
-            Text('Top of year', style: Theme.of(context).textTheme.titleMedium),
-            ...context
-                .watchTop(type, BudgetType.YEAR, 3)
-                .map(
-                  (e) => Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(e.categoryTitle),
-                      Text(
-                        context.loc.numberFormat(
-                          context.balanceToRub(e.yearCashFlow),
-                          .RUB,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            TopCategories(type: type, budgetType: BudgetType.MONTH),
+            TopCategories(type: type, budgetType: BudgetType.YEAR),
             OverflowBar(
               alignment: MainAxisAlignment.end,
               children: [
@@ -91,6 +54,51 @@ class CashflowCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TopCategories extends StatelessWidget {
+  final CategoryType type;
+  final BudgetType budgetType;
+
+  const TopCategories({
+    super.key,
+    required this.type,
+    required this.budgetType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final items = context.watchTop(type, budgetType, 3);
+
+    if (items.isEmpty) {
+      return SizedBox();
+    }
+
+    return Column(
+      crossAxisAlignment: .start,
+      children: [
+        Divider(),
+        Text(switch (budgetType) {
+          BudgetType.MONTH => 'Top of month', // TODO loc
+          BudgetType.YEAR => 'Top of year',
+        }, style: Theme.of(context).textTheme.titleMedium),
+        ...items.map(
+          (e) => Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(e.categoryTitle),
+              Text(
+                context.loc.numberFormat(
+                  context.balanceToRub(e.yearCashFlow),
+                  .RUB,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
