@@ -53,7 +53,8 @@ class AccountBalanceBloc
 
   AccountBalanceBloc(this._accountInteractor)
       : super(const AccountBalanceState(balances: [])) {
-    on<AccountBalanceEvent>((event, emitter) => event.map(
+    on<AccountBalanceEvent>((event, emitter) =>
+        event.map(
           changeBalance: (event) => _changeBalance(event, emitter),
         ));
 
@@ -62,10 +63,8 @@ class AccountBalanceBloc
     });
   }
 
-  void _changeBalance(
-    _ChangeBalanceAccountBalanceEvent event,
-    Emitter<AccountBalanceState> emit,
-  ) {
+  void _changeBalance(_ChangeBalanceAccountBalanceEvent event,
+      Emitter<AccountBalanceState> emit,) {
     emit(AccountBalanceState(balances: event.accounts));
   }
 
@@ -92,6 +91,12 @@ extension AccountBalanceBlocExt on BuildContext {
     sums.sort((a, b) => a.currency.index - b.currency.index,);
     return Balance.fromSums(sums);
   }
+
+  String getTitleById(int accountId) =>
+      read<AccountBalanceBloc>().state.allAccounts
+          .where((e) => e.id == accountId)
+          .map((e) => e.title)
+          .firstOrNull ?? '';
 
   Sum watchTotalSum() => watchTotals().totalInRub(usd(), eur());
 

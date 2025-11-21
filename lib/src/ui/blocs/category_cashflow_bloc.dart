@@ -196,24 +196,24 @@ extension CategoryCashFlowBlocExt on BuildContext {
   ) {
     final list =
         switch (categoryType) {
-              CategoryType.INPUT =>
+              .INPUT =>
                 _watch().cashflows.whereType<InputCategoryCashFlow>().toList(),
-              CategoryType.OUTPUT =>
+              .OUTPUT =>
                 _watch().cashflows.whereType<OutputCategoryCashFlow>().toList(),
             }
             .where(
-              (e) => switch (budgetType) {
-                BudgetType.MONTH => balanceToRub(e.monthCashFlow) != 0,
-                BudgetType.YEAR => balanceToRub(e.yearCashFlow) != 0,
-              },
+              (e) =>
+                  balanceToRub(switch (budgetType) {
+                    .MONTH => e.monthCashFlow,
+                    .YEAR => e.yearCashFlow,
+                  }) !=
+                  0,
             )
             .toList();
     list.sort(
       (a, b) => switch (budgetType) {
-        BudgetType.MONTH =>
-          balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),
-        BudgetType.YEAR =>
-          balanceToRub(b.yearCashFlow) - balanceToRub(a.yearCashFlow),
+        .MONTH => balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),
+        .YEAR => balanceToRub(b.yearCashFlow) - balanceToRub(a.yearCashFlow),
       },
     );
     return list.take(count).toList();
