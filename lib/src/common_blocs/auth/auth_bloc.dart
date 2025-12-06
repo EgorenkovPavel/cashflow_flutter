@@ -58,10 +58,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._authRepository,
   ) : super(const AuthState.notAuthenticated()) {
     on<AuthEvent>((event, emitter) => event.map(
-          changeAuth: (event) => _changeAuth(event, emitter),
-          signInSilently: (event) => _authRepository.signInSilently(),
-          signIn: (event) => _authRepository.signIn(),
-          signOut: (event) => _authRepository.signOut(),
+          changeAuth: (e) => _changeAuth(e, emitter),
+          signInSilently: (_) => _authRepository.signInSilently(),
+          signIn: (_) => _authRepository.signIn(),
+          signOut: (_) => _authRepository.signOut(),
         ));
 
     _sub = _authRepository.userChanges().listen((e) {

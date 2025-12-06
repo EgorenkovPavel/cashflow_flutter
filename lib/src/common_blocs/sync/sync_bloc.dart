@@ -152,20 +152,20 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
 
     try {
-      await for (var event in syncRepo.uploadToCloud()) {
+      await for (final loadingEvent in syncRepo.uploadToCloud()) {
         emit(SyncState.loadingToCloud(
-          accountCount: event.accountCount,
-          categoryCount: event.categoryCount,
-          operationCount: event.operationCount,
+          accountCount: loadingEvent.accountCount,
+          categoryCount: loadingEvent.categoryCount,
+          operationCount: loadingEvent.operationCount,
         ));
       }
 
-      var syncDate = DateTime.now();
-      await for (var event in syncRepo.downloadFromCloud(event.syncDate)) {
+      final syncDate = DateTime.now();
+      await for (final loadingEvent in syncRepo.downloadFromCloud(event.syncDate)) {
         emit(SyncState.loadingFromCloud(
-          accountCount: event.accountCount,
-          categoryCount: event.categoryCount,
-          operationCount: event.operationCount,
+          accountCount: loadingEvent.accountCount,
+          categoryCount: loadingEvent.categoryCount,
+          operationCount: loadingEvent.operationCount,
         ));
       }
       await prefsRepository.setSyncDate(syncDate);
@@ -174,7 +174,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       } else {
         emit(SyncState.synced(syncDate: syncDate, isAdmin: false));
       }
-    } on Object catch (e) {
+    } catch (e) {
       emit(SyncState.notSynced(message: e.toString()));
       rethrow;
     }
@@ -232,8 +232,9 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   FutureOr<void> _addUser(
     _AddUserSyncEvent event,
     Emitter<SyncState> emit,
-  ) =>
-      syncRepo.addToDatabase(event.user);
+  ) async {
+    await syncRepo.addToDatabase(event.user);
+  }
 
   @override
   Future<void> close() {
