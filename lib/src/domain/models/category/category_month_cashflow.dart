@@ -13,5 +13,16 @@ class CategoryMonthCashFlow extends Equatable {
   });
 
   @override
-  List<Object?> get props => [categoryId,month,cashFlow];
+  List<Object?> get props => [categoryId, month, cashFlow];
+
+  CategoryMonthCashFlow copyWith({
+    int? categoryId,
+    int? month,
+    Balance? cashFlow,
+  }) =>
+      CategoryMonthCashFlow(
+        categoryId: categoryId ?? this.categoryId,
+        month: month ?? this.month,
+        cashFlow: cashFlow ?? this.cashFlow,
+      );
 }

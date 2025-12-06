@@ -10,10 +10,10 @@ sealed class Result<T> {
     required P Function(Exception exception) onFailure,
   }) {
     switch (this) {
-      case _Success<T>():
-        return onSuccess((this as _Success).result);
-      case _Failure():
-        return onFailure((this as _Failure).exception);
+      case _Success<T>(:final result):
+        return onSuccess(result);
+      case _Failure(:final exception):
+        return onFailure(exception);
     }
   }
 }

@@ -20,10 +20,10 @@ sealed class Category extends Equatable {
     required T Function(InputCategoryGroup) inputGroup,
     required T Function(OutputCategoryGroup) outputGroup,
   }) => switch(this){
-    InputCategoryItem() => inputItem(this as InputCategoryItem),
-    OutputCategoryItem() => outputItem(this as OutputCategoryItem),
-    InputCategoryGroup() => inputGroup(this as InputCategoryGroup),
-    OutputCategoryGroup() => outputGroup(this as OutputCategoryGroup),
+    final InputCategoryItem item => inputItem(item),
+    final OutputCategoryItem item => outputItem(item),
+    final InputCategoryGroup group => inputGroup(group),
+    final OutputCategoryGroup group => outputGroup(group),
   };
 }
 

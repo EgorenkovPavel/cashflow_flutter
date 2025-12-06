@@ -13,10 +13,10 @@ sealed class BaseAccount extends Equatable {
     required this.userId,
   });
 
-  BaseAccount copyWith({int? id, String? cloudId, String? title}) =>
-      copyWith(id: id, title: title, cloudId: cloudId);
+  // Abstract methods to be implemented by subclasses
+  BaseAccount copyWith({int? id, String? cloudId, String? title});
 
-  BaseAccount setUser(int? userId) => setUser(userId);
+  BaseAccount setUser(int? userId);
 }
 
 class Account extends BaseAccount {
@@ -30,9 +30,11 @@ class Account extends BaseAccount {
   @override
   List<Object?> get props => [id, cloudId, title, userId];
 
+  @override
   Account setUser(int? userId) =>
       Account(id: id, cloudId: cloudId, title: title, userId: userId);
 
+  @override
   Account copyWith({int? id, String? cloudId, String? title}) => Account(
     id: id ?? this.id,
     cloudId: cloudId ?? this.cloudId,
@@ -52,6 +54,7 @@ class Debt extends BaseAccount {
   @override
   List<Object?> get props => [id, cloudId, title, userId];
 
+  @override
   Debt setUser(int? userId) =>
       Debt(id: id, cloudId: cloudId, title: title, userId: userId);
 

@@ -37,6 +37,15 @@ sealed class CategoryCashFlow extends Equatable {
         monthCashFlow,
         yearCashFlow
       ];
+
+  CategoryCashFlow copyWith({
+    int? categoryId,
+    String? categoryTitle,
+    BudgetType? budgetType,
+    int? budget,
+    Balance? monthCashFlow,
+    Balance? yearCashFlow,
+  });
 }
 
 class InputCategoryCashFlow extends CategoryCashFlow {
@@ -47,6 +56,24 @@ class InputCategoryCashFlow extends CategoryCashFlow {
       required super.budget,
       required super.monthCashFlow,
       required super.yearCashFlow});
+
+  @override
+  InputCategoryCashFlow copyWith({
+    int? categoryId,
+    String? categoryTitle,
+    BudgetType? budgetType,
+    int? budget,
+    Balance? monthCashFlow,
+    Balance? yearCashFlow,
+  }) =>
+      InputCategoryCashFlow(
+        categoryId: categoryId ?? this.categoryId,
+        categoryTitle: categoryTitle ?? this.categoryTitle,
+        budgetType: budgetType ?? this.budgetType,
+        budget: budget ?? this.budget,
+        monthCashFlow: monthCashFlow ?? this.monthCashFlow,
+        yearCashFlow: yearCashFlow ?? this.yearCashFlow,
+      );
 }
 
 class OutputCategoryCashFlow extends CategoryCashFlow {
@@ -57,4 +84,22 @@ class OutputCategoryCashFlow extends CategoryCashFlow {
       required super.budget,
       required super.monthCashFlow,
       required super.yearCashFlow});
+
+  @override
+  OutputCategoryCashFlow copyWith({
+    int? categoryId,
+    String? categoryTitle,
+    BudgetType? budgetType,
+    int? budget,
+    Balance? monthCashFlow,
+    Balance? yearCashFlow,
+  }) =>
+      OutputCategoryCashFlow(
+        categoryId: categoryId ?? this.categoryId,
+        categoryTitle: categoryTitle ?? this.categoryTitle,
+        budgetType: budgetType ?? this.budgetType,
+        budget: budget ?? this.budget,
+        monthCashFlow: monthCashFlow ?? this.monthCashFlow,
+        yearCashFlow: yearCashFlow ?? this.yearCashFlow,
+      );
 }

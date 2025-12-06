@@ -36,10 +36,10 @@ sealed class Operation extends Equatable {
     required T Function(TransferOperation operation) transfer,
     required T Function(ExchangeOperation operation) exchange,
   }) => switch (this) {
-    InputOperation() => input(this as InputOperation),
-    OutputOperation() => output(this as OutputOperation),
-    TransferOperation() => transfer(this as TransferOperation),
-    ExchangeOperation() => exchange(this as ExchangeOperation),
+    final InputOperation op => input(op),
+    final OutputOperation op => output(op),
+    final TransferOperation op => transfer(op),
+    final ExchangeOperation op => exchange(op),
   };
 
   Operation copyWith({
