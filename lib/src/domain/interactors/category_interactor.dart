@@ -6,13 +6,16 @@ class CategoryInteractor {
   final CategoryRepository _categoryRepository;
   final CashflowService _cashflowService;
 
-  CategoryInteractor(
-    this._categoryRepository,
-    this._cashflowService,
-  );
+  CategoryInteractor(this._categoryRepository, this._cashflowService);
 
-  Future<Category> getById({required int categoryId}) =>
-      _categoryRepository.getCategoryById(categoryId);
+  Future<Result<Category>> getById(int id) async {
+    try {
+      final category = await _categoryRepository.getCategoryById(id);
+      return Result.success(category);
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
+  }
 
   Stream<Category> watchById(int id) =>
       _categoryRepository.watchCategoryById(id);
@@ -20,116 +23,147 @@ class CategoryInteractor {
   Stream<List<CategoryCashFlow>> watchCashFlows() =>
       _cashflowService.watchCashFlow(DateTime.now());
 
-  Stream<List<Category>> watchAll() =>
-      _categoryRepository.watchAllCategories();
+  Stream<List<Category>> watchAll() => _categoryRepository.watchAllCategories();
 
-  Future<InputCategoryItem> insertInputCategoryItem({
+  Future<Result<InputCategoryItem>> insertInputCategoryItem({
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
-    final category = InputCategoryItem(
-      title: title,
-      budgetType: budgetType,
-      budget: budget,
-      parentId: parent,
-    );
+    try {
+      final category = InputCategoryItem(
+        title: title,
+        budgetType: budgetType,
+        budget: budget,
+        parentId: parent,
+      );
 
-    final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insertCategory(category);
 
-    return category.copyWith(id: id);
+      return Result.success(category.copyWith(id: id));
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<OutputCategoryItem> insertOutputCategoryItem({
+  Future<Result<OutputCategoryItem>> insertOutputCategoryItem({
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
-    final category = OutputCategoryItem(
-      title: title,
-      budgetType: budgetType,
-      budget: budget,
-      parentId: parent,
-    );
+    try {
+      final category = OutputCategoryItem(
+        title: title,
+        budgetType: budgetType,
+        budget: budget,
+        parentId: parent,
+      );
 
-    final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insertCategory(category);
 
-    return category.copyWith(id: id);
+      return Result.success(category.copyWith(id: id));
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<InputCategoryGroup> insertInputCategoryGroup({
+  Future<Result<InputCategoryGroup>> insertInputCategoryGroup({
     required String title,
   }) async {
-    final category = InputCategoryGroup(title: title);
+    try {
+      final category = InputCategoryGroup(title: title);
 
-    final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insertCategory(category);
 
-    return category.copyWith(id: id);
+      return Result.success(category.copyWith(id: id));
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<OutputCategoryGroup> insertOutputCategoryGroup({
+  Future<Result<OutputCategoryGroup>> insertOutputCategoryGroup({
     required String title,
   }) async {
-    final category = OutputCategoryGroup(title: title);
+    try {
+      final category = OutputCategoryGroup(title: title);
 
-    final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insertCategory(category);
 
-    return category.copyWith(id: id);
+      return Result.success(category.copyWith(id: id));
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<InputCategoryItem> updateInputCategoryItem({
+  Future<Result<InputCategoryItem>> updateInputCategoryItem({
     required InputCategoryItem category,
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
-    final newCategory = category
-        .copyWith(title: title, budgetType: budgetType, budget: budget)
-        .setParent(parent);
+    try {
+      final newCategory = category
+          .copyWith(title: title, budgetType: budgetType, budget: budget)
+          .setParent(parent);
 
-    await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.updateCategory(newCategory);
 
-    return newCategory;
+      return Result.success(newCategory);
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<OutputCategoryItem> updateOutputCategoryItem({
+  Future<Result<OutputCategoryItem>> updateOutputCategoryItem({
     required OutputCategoryItem category,
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
-    final newCategory = category
-        .copyWith(title: title, budgetType: budgetType, budget: budget)
-        .setParent(parent);
+    try {
+      final newCategory = category
+          .copyWith(title: title, budgetType: budgetType, budget: budget)
+          .setParent(parent);
 
-    await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.updateCategory(newCategory);
 
-    return newCategory;
+      return Result.success(newCategory);
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<InputCategoryGroup> updateInputCategoryGroup({
+  Future<Result<InputCategoryGroup>> updateInputCategoryGroup({
     required InputCategoryGroup category,
     required String title,
   }) async {
-    final newCategory = category.copyWith(title: title);
+    try {
+      final newCategory = category.copyWith(title: title);
 
-    await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.updateCategory(newCategory);
 
-    return newCategory;
+      return Result.success(newCategory);
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 
-  Future<OutputCategoryGroup> updateOutputCategoryGroup({
+  Future<Result<OutputCategoryGroup>> updateOutputCategoryGroup({
     required OutputCategoryGroup category,
     required String title,
   }) async {
-    final newCategory = category.copyWith(title: title);
+    try {
+      final newCategory = category.copyWith(title: title);
 
-    await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.updateCategory(newCategory);
 
-    return newCategory;
+      return Result.success(newCategory);
+    } catch (e) {
+      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    }
   }
 }

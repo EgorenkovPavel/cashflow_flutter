@@ -143,7 +143,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _StartMasterEvent event,
     Emitter<MasterState> emit,
   ) async {
-    var op = await _operationInteractor.getLast();
+    final result = await _operationInteractor.getLast();
+    final op = await result.getOrNull();
 
     if (op == null) {
       return;
@@ -450,25 +451,30 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       return;
     }
 
-    final operation = await _saveOperation();
-    emit(
-      state.copyWith(
-        operation: operation,
-        action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
-      ),
-    );
+    final result = await _saveOperation();
+    result.fold(onSuccess: (operation){
+      emit(
+        state.copyWith(
+          operation: operation,
+          action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
+        ),
+      );
 
-    emit(
-      state.copyWith(
-        action: MasterStateAction.HIDE_KEYBOARD,
-        sum: state.sum.copyWith(sum: 0),
-        recSum: state.recSum.copyWith(sum: 0),
-        showKeyboard: false,
-      ),
-    );
+      emit(
+        state.copyWith(
+          action: MasterStateAction.HIDE_KEYBOARD,
+          sum: state.sum.copyWith(sum: 0),
+          recSum: state.recSum.copyWith(sum: 0),
+          showKeyboard: false,
+        ),
+      );
+    }, onFailure: (_){
+      //TODO
+    });
+
   }
 
-  Future<Operation> _saveOperation() => switch (state.operationType) {
+  Future<Result<Operation>> _saveOperation() => switch (state.operationType) {
     OperationType.INPUT => _operationInteractor.insertInput(
       date: DateTime.now(),
       accountId: state.accountId!,

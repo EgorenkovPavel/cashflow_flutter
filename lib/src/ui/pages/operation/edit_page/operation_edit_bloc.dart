@@ -156,8 +156,17 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     _FetchOperationEditEvent event,
     Emitter<OperationEditState> emit,
   ) async {
-    final operation = await _operationInteractor.getById(event.operationId);
-    emit(state.fromOperation(operation));
+    final result = await _operationInteractor.getById(event.operationId);
+    result.fold(
+      onSuccess: (operation) => emit(state.fromOperation(operation)),
+      onFailure: (exception) {
+        // TODO Можно добавить состояние ошибки или отдельное поле error в state
+        // emit(state.copyWith(
+        //   // ... можно account: null, users: users,
+        //   // error: exception.toString(),
+        // ));
+      },
+    );
   }
 
   void _changeOperationType(
@@ -172,13 +181,29 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     Emitter<OperationEditState> emit,
   ) async {
     if (state.operation == null) {
-      emit(state.copyWith(operation: await _insertOperation(), isSaved: true));
+      final result = await _insertOperation();
+      result.fold(
+        onSuccess: (operation) {
+          emit(state.copyWith(operation: operation, isSaved: true));
+        },
+        onFailure: (_) {
+          //TODO
+        },
+      );
     } else {
-      emit(state.copyWith(operation: await _updateOperation(), isSaved: true));
+      final result = await _updateOperation();
+      result.fold(
+        onSuccess: (operation) {
+          emit(state.copyWith(operation: operation, isSaved: true));
+        },
+        onFailure: (_) {
+          //TODO
+        },
+      );
     }
   }
 
-  Future<Operation> _insertOperation() async {
+  Future<Result<Operation>> _insertOperation() async {
     final date = DateTime(
       state.date.year,
       state.date.month,
@@ -193,7 +218,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           date: date,
           accountId: state.accountId!,
           sum: state.sum,
-          recSum: state.recSum
+          recSum: state.recSum,
         );
       },
       transfer: () {
@@ -223,7 +248,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
     );
   }
 
-  Future<Operation> _updateOperation() async {
+  Future<Result<Operation>> _updateOperation() async {
     final date = DateTime(
       state.date.year,
       state.date.month,
@@ -239,7 +264,7 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           date: date,
           accountId: state.accountId!,
           sum: state.sum,
-          recSum: state.recSum
+          recSum: state.recSum,
         );
       },
       transfer: () {

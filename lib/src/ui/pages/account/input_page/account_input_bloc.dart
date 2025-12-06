@@ -35,13 +35,13 @@ abstract class AccountInputState with _$AccountInputState {
   }) = _AccountInputState;
 
   static AccountInputState init() => const AccountInputState(
-        title: '',
-        isDebt: false,
-        userId: null,
-        users: [],
-        account: null,
-        isSaved: false,
-      );
+    title: '',
+    isDebt: false,
+    userId: null,
+    users: [],
+    account: null,
+    isSaved: false,
+  );
 
   static AccountInputState byAccount(BaseAccount account, List<User> users) =>
       AccountInputState(
@@ -58,28 +58,36 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
   final AccountInteractor _accountInteractor;
   final UserInteractor _userInteractor;
 
-  AccountInputBloc(
-    this._accountInteractor,
-    this._userInteractor,
-  ) : super(AccountInputState.init()) {
-    on<AccountInputEvent>((event, emitter) => event.map(
-          fetch: (event) => _fetch(event, emitter),
-          input: (event) => _input(event, emitter),
-          changeTitle: (event) => emitter(state.copyWith(title: event.title)),
-          changeUser: (event) =>
-              emitter(state.copyWith(userId: event.user?.id)),
-          save: (event) => _save(event, emitter),
-        ));
+  AccountInputBloc(this._accountInteractor, this._userInteractor)
+    : super(AccountInputState.init()) {
+    on<AccountInputEvent>(
+      (event, emitter) => event.map(
+        fetch: (event) => _fetch(event, emitter),
+        input: (event) => _input(event, emitter),
+        changeTitle: (event) => emitter(state.copyWith(title: event.title)),
+        changeUser: (event) => emitter(state.copyWith(userId: event.user?.id)),
+        save: (event) => _save(event, emitter),
+      ),
+    );
   }
 
   Future<void> _fetch(
     _FetchAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
-    final account = await _accountInteractor.getById(event.accountId);
+    final accountResult = await _accountInteractor.getById(event.accountId);
     final users = await _userInteractor.getAll();
 
-    emit(AccountInputState.byAccount(account, users));
+    accountResult.fold(
+      onSuccess: (account) => emit(AccountInputState.byAccount(account, users)),
+      onFailure: (exception) {
+        // TODO Можно добавить состояние ошибки или отдельное поле error в state
+        // emit(state.copyWith(
+        //   // ... можно account: null, users: users,
+        //   // error: exception.toString(),
+        // ));
+      },
+    );
   }
 
   Future<void> _input(
@@ -95,23 +103,33 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     Emitter<AccountInputState> emit,
   ) async {
     if (state.account == null) {
-      emit(state.copyWith(
-        account: await _accountInteractor.insert(
-          title: state.title,
-          isDebt: state.isDebt,
-          userId: state.userId,
-        ),
-        isSaved: true,
-      ));
+      final result = await _accountInteractor.insert(
+        title: state.title,
+        isDebt: state.isDebt,
+        userId: state.userId,
+      );
+      result.fold(
+        onSuccess: (account) =>
+            emit(state.copyWith(account: account, isSaved: true)),
+        onFailure: (exception) {
+          // TODO emit состояние ошибки или сохранить error в state
+          //emit(state.copyWith(isSaved: false));
+        },
+      );
     } else {
-      emit(state.copyWith(
-        account: await _accountInteractor.update(
-          account: state.account!,
-          title: state.title,
-          userId: state.userId,
-        ),
-        isSaved: true,
-      ));
+      final result = await _accountInteractor.update(
+        account: state.account!,
+        title: state.title,
+        userId: state.userId,
+      );
+      result.fold(
+        onSuccess: (account) =>
+            emit(state.copyWith(account: account, isSaved: true)),
+        onFailure: (exception) {
+          // TODO emit состояние ошибки или сохранить error в state
+          //emit(state.copyWith(isSaved: false));
+        },
+      );
     }
   }
 }
