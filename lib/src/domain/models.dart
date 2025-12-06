@@ -14,5 +14,6 @@ export 'models/enum/operation_type.dart';
 export 'models/enum/category_type.dart';
 export 'models/enum/budget_type.dart';
 export 'models/enum/currency.dart';
+export 'models/result.dart';
 
 Currency baseCurrency = Currency.RUB;
