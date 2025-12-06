@@ -141,7 +141,7 @@ class OperationInteractor {
     required int recAccountId,
     required Sum sum,
   }) async {
-    var newOperation = TransferOperation(
+    final newOperation = TransferOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,
@@ -163,7 +163,7 @@ class OperationInteractor {
     required Sum sum,
     required Sum recSum,
   }) async {
-    var newOperation = ExchangeOperation(
+    final newOperation = ExchangeOperation(
       id: operation.id,
       cloudId: operation.cloudId,
       deleted: operation.deleted,

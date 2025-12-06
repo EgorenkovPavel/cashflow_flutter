@@ -1,7 +1,7 @@
 import '../interfaces/data_repository.dart';
 import '../models.dart';
 
-class UserInteractor{
+class UserInteractor {
   final DataRepository _dataRepository;
 
   UserInteractor(this._dataRepository);
