@@ -1,16 +1,163 @@
-# cashflow
+# Money Tracker
 
-A new Flutter application.
+Приложение для учета личных финансов на Flutter.
 
-## Getting Started
+## Описание
 
-This project is a starting point for a Flutter application.
+Money Tracker - это мобильное приложение для управления личными финансами, которое позволяет:
+- Управлять счетами и долгами
+- Категоризировать доходы и расходы
+- Отслеживать операции (доходы, расходы, переводы, обмен валют)
+- Анализировать денежные потоки и балансы
+- Синхронизировать данные между устройствами через Firebase
+- Создавать резервные копии в Google Drive
 
-A few resources to get you started if this is your first Flutter project:
+## Технологии
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- **Flutter** - фреймворк для разработки
+- **Dart** - язык программирования (SDK >=3.10.0-290.4.beta <4.0.0)
+- **BLoC** (flutter_bloc) - управление состоянием
+- **Drift** - ORM для работы с SQLite
+- **Firebase** - облачная синхронизация и аутентификация:
+  - Firebase Auth - аутентификация
+  - Cloud Firestore - облачная база данных
+  - Firebase Crashlytics - отслеживание ошибок
+- **Google Sign-In** - вход через Google аккаунт
+- **GoRouter** - навигация
+- **GetIt** - dependency injection
+- **Freezed** - генерация кода для моделей
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Структура проекта
+
+```
+lib/src/
+├── common_blocs/      # Общие BLoC (Auth, Sync)
+├── data/              # Слой данных
+│   ├── interfaces/    # Интерфейсы источников данных
+│   ├── repositories/  # Реализация репозиториев
+│   └── sources/       # Источники данных (локальные, удаленные)
+├── domain/            # Слой бизнес-логики
+│   ├── interfaces/    # Интерфейсы репозиториев
+│   ├── interactors/  # Use Cases
+│   └── models/        # Модели данных
+├── ui/                # Слой представления
+│   ├── blocs/         # BLoC для UI
+│   ├── pages/         # Страницы приложения
+│   └── widgets/       # Переиспользуемые виджеты
+├── l10n/              # Локализация (ru, en)
+├── utils/             # Утилиты
+└── injection_container.dart  # Dependency Injection контейнер
+```
+
+## Основные функции
+
+### Управление счетами
+- Создание и редактирование счетов
+- Управление долгами
+- Просмотр баланса по счетам
+- История операций по счету
+
+### Управление категориями
+- Группировка категорий (группы и элементы)
+- Категории доходов и расходов
+- Установка бюджета для категорий
+- Иерархическая структура категорий
+
+### Операции
+- Создание операций:
+  - Доходы (с привязкой к категории)
+  - Расходы (с привязкой к категории)
+  - Переводы между счетами
+  - Обмен валют
+- Редактирование и удаление операций
+- Фильтрация операций
+- Просмотр истории операций
+
+### Аналитика
+- Баланс по счетам
+- Денежные потоки по категориям
+- Отчеты и графики
+- Бюджет по категориям
+
+### Синхронизация
+- Синхронизация с Firebase Firestore
+- Поддержка нескольких пользователей
+- Автоматическая синхронизация при изменении данных
+
+### Резервное копирование
+- Создание резервных копий в Google Drive
+- Восстановление из резервной копии
+- Экспорт/импорт данных
+
+## Установка и запуск
+
+### Требования
+- Flutter SDK >=3.10.0-290.4.beta <4.0.0
+- Dart SDK
+- Android Studio / VS Code с расширениями Flutter
+- Firebase проект (для синхронизации)
+
+### Установка зависимостей
+```bash
+flutter pub get
+```
+
+### Генерация кода
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### Настройка Firebase
+1. Создайте проект в Firebase Console
+2. Добавьте Android/iOS приложения
+3. Скачайте `google-services.json` (Android) и `GoogleService-Info.plist` (iOS)
+4. Поместите файлы в соответствующие директории проекта
+
+### Запуск приложения
+```bash
+flutter run
+```
+
+## Локализация
+
+Приложение поддерживает два языка:
+- Русский (ru)
+- Английский (en)
+
+Файлы локализации находятся в `lib/src/l10n/`.
+
+## Архитектура
+
+Приложение использует **Clean Architecture** с разделением на слои:
+- **UI Layer** - представление и управление состоянием (BLoC)
+- **Domain Layer** - бизнес-логика и модели
+- **Data Layer** - источники данных и репозитории
+
+Подробнее об архитектуре см. файл [ARCH](ARCH).
+
+## Версия
+
+Текущая версия: **1.1.46+56**
+
+## Лицензия
+
+См. файл [LICENSE](LICENSE) (если есть).
+
+## Разработка
+
+### Генерация кода
+После изменения моделей с аннотациями Freezed или Drift таблиц:
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### Тестирование
+```bash
+flutter test
+```
+
+### Анализ кода
+```bash
+flutter analyze
+```
+
