@@ -1,30 +1,33 @@
 import '../../utils/sum.dart';
-import '../interfaces/data_repository.dart';
+import '../interfaces/operation_repository.dart';
 import '../models.dart';
+import '../services/operation_view_service.dart';
 import '../view_models.dart';
 
 class OperationInteractor {
-  final DataRepository _dataRepository;
+  final OperationRepository _operationRepository;
+  final OperationViewService _operationViewService;
 
-  OperationInteractor(this._dataRepository);
+  OperationInteractor(
+    this._operationRepository,
+    this._operationViewService,
+  );
 
-  Future<Operation> getById(int id) => _dataRepository.getOperationById(id);
+  Future<Operation> getById(int id) => _operationRepository.getOperationById(id);
 
-  Future<Operation?> getLast() => _dataRepository.getLastOperation();
+  Future<Operation?> getLast() => _operationRepository.getLastOperation();
 
   Stream<List<OperationView>> watchLast(int count) =>
-      _dataRepository.watchLastOperations(count);
+      _operationViewService.watchLastOperations(count);
 
   Stream<List<OperationView>> watchByAccountId(int id) =>
-      _dataRepository.watchAllOperationsByFilter(
-        OperationListFilter(accountIds: {id}, categoryIds: const {}),
-      );
+      _operationViewService.watchAllOperationsByAccount(id);
 
   Stream<List<OperationView>> watchByCategoryId(int id) =>
-      _dataRepository.watchAllOperationsByCategory(id);
+      _operationViewService.watchAllOperationsByCategory(id);
 
   Stream<List<OperationView>> watchByFilter(OperationListFilter filter) =>
-      _dataRepository.watchAllOperationsByFilter(filter);
+      _operationViewService.watchAllOperationsByFilter(filter);
 
   Future<Operation> insertInput({
     required DateTime date,
@@ -39,7 +42,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    return _dataRepository.insertOperation(newOperation);
+    return _operationRepository.insertOperation(newOperation);
   }
 
   Future<Operation> insertOutput({
@@ -55,7 +58,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    return _dataRepository.insertOperation(newOperation);
+    return _operationRepository.insertOperation(newOperation);
   }
 
   Future<Operation> insertTransfer({
@@ -71,7 +74,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    return _dataRepository.insertOperation(newOperation);
+    return _operationRepository.insertOperation(newOperation);
   }
 
   Future<Operation> insertExchange({
@@ -87,7 +90,7 @@ class OperationInteractor {
       recSum: recSum,
     );
 
-    return _dataRepository.insertOperation(newOperation);
+    return _operationRepository.insertOperation(newOperation);
   }
 
   Future<Operation> updateInput({
@@ -107,7 +110,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    await _dataRepository.updateOperation(newOperation);
+    await _operationRepository.updateOperation(newOperation);
 
     return newOperation;
   }
@@ -129,7 +132,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    await _dataRepository.updateOperation(newOperation);
+    await _operationRepository.updateOperation(newOperation);
 
     return newOperation;
   }
@@ -151,7 +154,7 @@ class OperationInteractor {
       sum: sum,
     );
 
-    await _dataRepository.updateOperation(newOperation);
+    await _operationRepository.updateOperation(newOperation);
 
     return newOperation;
   }
@@ -173,17 +176,19 @@ class OperationInteractor {
       recSum: recSum,
     );
 
-    await _dataRepository.updateOperation(newOperation);
+    await _operationRepository.updateOperation(newOperation);
 
     return newOperation;
   }
 
   Future delete(Operation operation) =>
-      _dataRepository.deleteOperationById(operation.id);
+      _operationRepository.deleteOperationById(operation.id);
 
-  Future<void> deleteById(int id) => _dataRepository.deleteOperationById(id);
+  Future<void> deleteById(int id) =>
+      _operationRepository.deleteOperationById(id);
 
-  Future<void> duplicate(int id) => _dataRepository.duplicateOperation(id);
+  Future<void> duplicate(int id) =>
+      _operationRepository.duplicateOperation(id);
 
-  Future<void> recover(int id) => _dataRepository.recoverOperation(id);
+  Future<void> recover(int id) => _operationRepository.recoverOperation(id);
 }

@@ -1,10 +1,11 @@
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/currency_repository.dart';
 
-class CurrencyInteractor{
-  final DataRepository _dataRepository;
+class CurrencyInteractor {
+  final CurrencyRepository _currencyRepository;
 
-  CurrencyInteractor(this._dataRepository);
+  CurrencyInteractor(this._currencyRepository);
 
-  Future<double> usdRate() => _dataRepository.usdRate();
-  Future<double> eurRate() =>  _dataRepository.eurRate();
+  Future<double> usdRate() => _currencyRepository.usdRate();
+
+  Future<double> eurRate() => _currencyRepository.eurRate();
 }

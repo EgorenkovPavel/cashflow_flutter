@@ -1,10 +1,10 @@
-import '../interfaces/data_repository.dart';
+import '../interfaces/user_repository.dart';
 import '../models.dart';
 
 class UserInteractor {
-  final DataRepository _dataRepository;
+  final UserRepository _userRepository;
 
-  UserInteractor(this._dataRepository);
+  UserInteractor(this._userRepository);
 
-  Future<List<User>> getAll() => _dataRepository.getAllUsers();
+  Future<List<User>> getAll() => _userRepository.getAllUsers();
 }

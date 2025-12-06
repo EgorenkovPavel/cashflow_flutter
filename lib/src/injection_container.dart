@@ -17,10 +17,18 @@ import 'data/interfaces/local_sync_source.dart';
 import 'data/interfaces/network_info.dart';
 import 'data/interfaces/remote_data_source.dart';
 import 'data/interfaces/settings_source.dart';
+import 'data/repositories/account_repository_impl.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'data/repositories/backup_repository_impl.dart';
+import 'data/repositories/category_repository_impl.dart';
+import 'data/repositories/currency_repository_impl.dart';
 import 'data/repositories/data_repository_impl.dart';
+import 'data/repositories/operation_repository_impl.dart';
 import 'data/repositories/sync_repository_impl.dart';
+import 'data/repositories/user_repository_impl.dart';
+import 'data/services/balance_service_impl.dart';
+import 'data/services/cashflow_service_impl.dart';
+import 'data/services/operation_view_service_impl.dart';
 import 'data/sources/auth_source_impl.dart';
 import 'data/sources/currency_rate_source.dart';
 import 'data/sources/local/data/account_dao.dart';
@@ -39,11 +47,19 @@ import 'domain/interactors/account_interactor.dart';
 import 'domain/interactors/category_interactor.dart';
 import 'domain/interactors/operation_interactor.dart';
 import 'domain/interactors/user_interactor.dart';
+import 'domain/interfaces/account_repository.dart';
 import 'domain/interfaces/auth_repository.dart';
 import 'domain/interfaces/backup_repository.dart';
+import 'domain/interfaces/category_repository.dart';
+import 'domain/interfaces/currency_repository.dart';
 import 'domain/interfaces/data_repository.dart';
+import 'domain/interfaces/operation_repository.dart';
 import 'domain/interfaces/sync_repository.dart';
+import 'domain/interfaces/user_repository.dart';
 import 'domain/models.dart';
+import 'domain/services/balance_service.dart';
+import 'domain/services/cashflow_service.dart';
+import 'domain/services/operation_view_service.dart';
 import 'ui/blocs/account_balance_bloc.dart';
 import 'ui/blocs/category_cashflow_bloc.dart';
 import 'ui/blocs/currency_rate_bloc.dart';
@@ -79,6 +95,44 @@ Future<void> init() async {
   sl.registerLazySingleton<OperationDao>(() => OperationDao(sl<Database>()));
   sl.registerLazySingleton<UserDao>(() => UserDao(sl<Database>()));
 
+  // Repositories
+  sl.registerLazySingleton<AccountRepository>(
+      () => AccountRepositoryImpl(sl<AccountDao>()));
+  sl.registerLazySingleton<CategoryRepository>(
+      () => CategoryRepositoryImpl(sl<CategoryDao>()));
+  sl.registerLazySingleton<OperationRepository>(
+      () => OperationRepositoryImpl(sl<OperationDao>()));
+  sl.registerLazySingleton<UserRepository>(
+      () => UserRepositoryImpl(sl<UserDao>()));
+  sl.registerLazySingleton<CurrencyRepository>(
+      () => CurrencyRepositoryImpl(
+            CurrencyRateSource(settingsSource: sl()),
+          ));
+
+  // Services
+  sl.registerLazySingleton<BalanceService>(
+      () => BalanceServiceImpl(
+            accountRepository: sl<AccountRepository>(),
+            userRepository: sl<UserRepository>(),
+            accountDao: sl<AccountDao>(),
+            userDao: sl<UserDao>(),
+          ));
+
+  sl.registerLazySingleton<CashflowService>(
+      () => CashflowServiceImpl(
+            categoryRepository: sl<CategoryRepository>(),
+            categoryDao: sl<CategoryDao>(),
+          ));
+
+  sl.registerLazySingleton<OperationViewService>(
+      () => OperationViewServiceImpl(
+            operationRepository: sl<OperationRepository>(),
+            userRepository: sl<UserRepository>(),
+            operationDao: sl<OperationDao>(),
+            userDao: sl<UserDao>(),
+          ));
+
+  // Legacy DataRepository (deprecated, for backward compatibility)
   sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
         accountDao: sl<AccountDao>(),
         categoryDao: sl<CategoryDao>(),
@@ -151,11 +205,20 @@ Future<void> init() async {
 
   //USE CASES
 
-  sl.registerFactory(() => UserInteractor(sl<DataRepository>()));
-  sl.registerFactory(() => AccountInteractor(sl<DataRepository>()));
-  sl.registerFactory(() => CategoryInteractor(sl<DataRepository>()));
-  sl.registerFactory(() => OperationInteractor(sl<DataRepository>()));
-  sl.registerFactory(() => CurrencyInteractor(sl<DataRepository>()));
+  sl.registerFactory(() => UserInteractor(sl<UserRepository>()));
+  sl.registerFactory(() => AccountInteractor(
+        sl<AccountRepository>(),
+        sl<BalanceService>(),
+      ));
+  sl.registerFactory(() => CategoryInteractor(
+        sl<CategoryRepository>(),
+        sl<CashflowService>(),
+      ));
+  sl.registerFactory(() => OperationInteractor(
+        sl<OperationRepository>(),
+        sl<OperationViewService>(),
+      ));
+  sl.registerFactory(() => CurrencyInteractor(sl<CurrencyRepository>()));
 
   // BLOCs
 

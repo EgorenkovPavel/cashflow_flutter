@@ -1,20 +1,27 @@
-import '../interfaces/data_repository.dart';
+import '../interfaces/category_repository.dart';
 import '../models.dart';
+import '../services/cashflow_service.dart';
 
 class CategoryInteractor {
-  final DataRepository _dataRepository;
+  final CategoryRepository _categoryRepository;
+  final CashflowService _cashflowService;
 
-  CategoryInteractor(this._dataRepository);
+  CategoryInteractor(
+    this._categoryRepository,
+    this._cashflowService,
+  );
 
   Future<Category> getById({required int categoryId}) =>
-      _dataRepository.getCategoryById(categoryId);
+      _categoryRepository.getCategoryById(categoryId);
 
-  Stream<Category> watchById(int id) => _dataRepository.watchCategoryById(id);
+  Stream<Category> watchById(int id) =>
+      _categoryRepository.watchCategoryById(id);
 
   Stream<List<CategoryCashFlow>> watchCashFlows() =>
-      _dataRepository.watchCashFlow(DateTime.now());
+      _cashflowService.watchCashFlow(DateTime.now());
 
-  Stream<List<Category>> watchAll() => _dataRepository.watchAllCategories();
+  Stream<List<Category>> watchAll() =>
+      _categoryRepository.watchAllCategories();
 
   Future<InputCategoryItem> insertInputCategoryItem({
     required String title,
@@ -29,7 +36,7 @@ class CategoryInteractor {
       parentId: parent,
     );
 
-    final id = await _dataRepository.insertCategory(category);
+    final id = await _categoryRepository.insertCategory(category);
 
     return category.copyWith(id: id);
   }
@@ -47,7 +54,7 @@ class CategoryInteractor {
       parentId: parent,
     );
 
-    final id = await _dataRepository.insertCategory(category);
+    final id = await _categoryRepository.insertCategory(category);
 
     return category.copyWith(id: id);
   }
@@ -57,7 +64,7 @@ class CategoryInteractor {
   }) async {
     final category = InputCategoryGroup(title: title);
 
-    final id = await _dataRepository.insertCategory(category);
+    final id = await _categoryRepository.insertCategory(category);
 
     return category.copyWith(id: id);
   }
@@ -67,7 +74,7 @@ class CategoryInteractor {
   }) async {
     final category = OutputCategoryGroup(title: title);
 
-    final id = await _dataRepository.insertCategory(category);
+    final id = await _categoryRepository.insertCategory(category);
 
     return category.copyWith(id: id);
   }
@@ -83,7 +90,7 @@ class CategoryInteractor {
         .copyWith(title: title, budgetType: budgetType, budget: budget)
         .setParent(parent);
 
-    await _dataRepository.updateCategory(newCategory);
+    await _categoryRepository.updateCategory(newCategory);
 
     return newCategory;
   }
@@ -99,7 +106,7 @@ class CategoryInteractor {
         .copyWith(title: title, budgetType: budgetType, budget: budget)
         .setParent(parent);
 
-    await _dataRepository.updateCategory(newCategory);
+    await _categoryRepository.updateCategory(newCategory);
 
     return newCategory;
   }
@@ -110,7 +117,7 @@ class CategoryInteractor {
   }) async {
     final newCategory = category.copyWith(title: title);
 
-    await _dataRepository.updateCategory(newCategory);
+    await _categoryRepository.updateCategory(newCategory);
 
     return newCategory;
   }
@@ -121,7 +128,7 @@ class CategoryInteractor {
   }) async {
     final newCategory = category.copyWith(title: title);
 
-    await _dataRepository.updateCategory(newCategory);
+    await _categoryRepository.updateCategory(newCategory);
 
     return newCategory;
   }

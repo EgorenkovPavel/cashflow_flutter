@@ -1,18 +1,24 @@
-import '../interfaces/data_repository.dart';
+import '../interfaces/account_repository.dart';
 import '../models.dart';
+import '../services/balance_service.dart';
 import '../view_models.dart';
 
 class AccountInteractor {
-  final DataRepository _dataRepository;
+  final AccountRepository _accountRepository;
+  final BalanceService _balanceService;
 
-  AccountInteractor(this._dataRepository);
+  AccountInteractor(
+    this._accountRepository,
+    this._balanceService,
+  );
 
-  Future<BaseAccount> getById(int id) => _dataRepository.getAccountById(id);
+  Future<BaseAccount> getById(int id) => _accountRepository.getAccountById(id);
 
-  Stream<BaseAccount> watchById(int id) => _dataRepository.watchAccountById(id);
+  Stream<BaseAccount> watchById(int id) =>
+      _accountRepository.watchAccountById(id);
 
   Stream<List<AccountBalanceView>> watchBalances() =>
-      _dataRepository.watchAllBalance();
+      _balanceService.watchAllBalance();
 
   Future<BaseAccount> insert({
     required String title,
@@ -24,7 +30,7 @@ class AccountInteractor {
       false => Account(title: title, userId: userId),
     };
 
-    final id = await _dataRepository.insertAccount(account);
+    final id = await _accountRepository.insertAccount(account);
 
     return account.copyWith(id: id);
   }
@@ -35,7 +41,7 @@ class AccountInteractor {
     required int? userId,
   }) async {
     final newAccount = account.copyWith(title: title).setUser(userId);
-    await _dataRepository.updateAccount(newAccount);
+    await _accountRepository.updateAccount(newAccount);
     return newAccount;
   }
 }
