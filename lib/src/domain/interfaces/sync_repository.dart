@@ -1,6 +1,8 @@
 import 'package:money_tracker/src/common_blocs/sync/loading_state.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
 
+import '../../utils/result.dart';
+
 abstract class SyncRepository{
 
   Stream<LoadingState> downloadFromCloud(DateTime date);
@@ -8,8 +10,8 @@ abstract class SyncRepository{
 
   Stream<bool> connectedToInternet();
 
-  bool isCurrentAdmin();
-  Future<List<User>> getAllUsers();
+  Result<bool> isCurrentAdmin();
+  Future<Result<List<User>>> getAllUsers();
   Future<void> logIn(User user);
   Future<void> logOut();
   Future<void> addToDatabase(User user);

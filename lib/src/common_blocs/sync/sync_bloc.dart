@@ -87,21 +87,23 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     required AuthBloc authBloc,
     required this.prefsRepository,
     required this.syncRepo,
-  })  : _authBloc = authBloc,
-        super(const SyncState.notSynced(message: 'Not started yet')) {
-    on<SyncEvent>((event, emitter) => event.map(
-          createCloudDatabase: (event) => _createCloudDatabase(event, emitter),
-          refreshConnection: (event) => _syncNow(event, emitter),
-          syncNow: (event) => _syncNow(event, emitter),
-          syncLastDay: (event) => _syncLastDay(event, emitter),
-          syncLastMonth: (event) => _syncLastMonth(event, emitter),
-          syncAll: (event) => _syncAll(event, emitter),
-          addUser: (event) => _addUser(event, emitter),
-          authProgress: (event) => _authProgress(event, emitter),
-          authAuthenticated: (event) => _authAuthenticated(event, emitter),
-          notAuth: (event) => _notAuth(event, emitter),
-          syncData: (event) => _syncData(event, emitter),
-        ));
+  }) : _authBloc = authBloc,
+       super(const SyncState.notSynced(message: 'Not started yet')) {
+    on<SyncEvent>(
+      (event, emitter) => event.map(
+        createCloudDatabase: (event) => _createCloudDatabase(event, emitter),
+        refreshConnection: (event) => _syncNow(event, emitter),
+        syncNow: (event) => _syncNow(event, emitter),
+        syncLastDay: (event) => _syncLastDay(event, emitter),
+        syncLastMonth: (event) => _syncLastMonth(event, emitter),
+        syncAll: (event) => _syncAll(event, emitter),
+        addUser: (event) => _addUser(event, emitter),
+        authProgress: (event) => _authProgress(event, emitter),
+        authAuthenticated: (event) => _authAuthenticated(event, emitter),
+        notAuth: (event) => _notAuth(event, emitter),
+        syncData: (event) => _syncData(event, emitter),
+      ),
+    );
 
     _syncSub = _authBloc.stream.listen((event) async {
       final user = event.user;
@@ -153,27 +155,36 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
 
     try {
       await for (final loadingEvent in syncRepo.uploadToCloud()) {
-        emit(SyncState.loadingToCloud(
-          accountCount: loadingEvent.accountCount,
-          categoryCount: loadingEvent.categoryCount,
-          operationCount: loadingEvent.operationCount,
-        ));
+        emit(
+          SyncState.loadingToCloud(
+            accountCount: loadingEvent.accountCount,
+            categoryCount: loadingEvent.categoryCount,
+            operationCount: loadingEvent.operationCount,
+          ),
+        );
       }
 
       final syncDate = DateTime.now();
-      await for (final loadingEvent in syncRepo.downloadFromCloud(event.syncDate)) {
-        emit(SyncState.loadingFromCloud(
-          accountCount: loadingEvent.accountCount,
-          categoryCount: loadingEvent.categoryCount,
-          operationCount: loadingEvent.operationCount,
-        ));
+      await for (final loadingEvent in syncRepo.downloadFromCloud(
+        event.syncDate,
+      )) {
+        emit(
+          SyncState.loadingFromCloud(
+            accountCount: loadingEvent.accountCount,
+            categoryCount: loadingEvent.categoryCount,
+            operationCount: loadingEvent.operationCount,
+          ),
+        );
       }
       await prefsRepository.setSyncDate(syncDate);
-      if (syncRepo.isCurrentAdmin()) {
-        emit(SyncState.synced(syncDate: syncDate, isAdmin: true));
-      } else {
-        emit(SyncState.synced(syncDate: syncDate, isAdmin: false));
-      }
+      syncRepo.isCurrentAdmin().fold(
+        onSuccess: (isAdmin) {
+          emit(SyncState.synced(syncDate: syncDate, isAdmin: isAdmin));
+        },
+        onFailure: (e) {
+          emit(SyncState.failure());
+        },
+      );
     } catch (e) {
       emit(SyncState.notSynced(message: e.toString()));
       rethrow;
@@ -199,27 +210,33 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _syncNow(SyncEvent event, Emitter<SyncState> emit) {
-    add(SyncEvent.syncData(
-      syncDate: _beforeLastSyncDate(const Duration(minutes: 30)),
-    ));
+    add(
+      SyncEvent.syncData(
+        syncDate: _beforeLastSyncDate(const Duration(minutes: 30)),
+      ),
+    );
   }
 
   FutureOr<void> _syncLastDay(
     _SyncLastDaySyncEvent event,
     Emitter<SyncState> emit,
   ) {
-    add(SyncEvent.syncData(
-      syncDate: _beforeLastSyncDate(const Duration(days: 1)),
-    ));
+    add(
+      SyncEvent.syncData(
+        syncDate: _beforeLastSyncDate(const Duration(days: 1)),
+      ),
+    );
   }
 
   FutureOr<void> _syncLastMonth(
     _SyncLastMonthSyncEvent event,
     Emitter<SyncState> emit,
   ) {
-    add(SyncEvent.syncData(
-      syncDate: _beforeLastSyncDate(const Duration(days: 30)),
-    ));
+    add(
+      SyncEvent.syncData(
+        syncDate: _beforeLastSyncDate(const Duration(days: 30)),
+      ),
+    );
   }
 
   FutureOr<void> _syncAll(_SyncAllSyncEvent event, Emitter<SyncState> emit) {
@@ -258,6 +275,5 @@ extension SyncBlocExt on BuildContext {
   void createCloudDatabase() =>
       _bloc().add(const SyncEvent.createCloudDatabase());
 
-  void refreshConnection() => _bloc()
-      .add(const SyncEvent.refreshConnection());
+  void refreshConnection() => _bloc().add(const SyncEvent.refreshConnection());
 }

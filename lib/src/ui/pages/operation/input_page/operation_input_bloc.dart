@@ -10,6 +10,8 @@ import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/utils/sum.dart';
 
+import '../../../../utils/result.dart';
+
 part 'operation_input_bloc.freezed.dart';
 
 @freezed

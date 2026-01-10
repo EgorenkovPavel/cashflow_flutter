@@ -80,7 +80,6 @@ sealed class Result<T> {
       onFailure: (_) => null,
     );
   }
-
 }
 
 class _Success<T> extends Result<T> {

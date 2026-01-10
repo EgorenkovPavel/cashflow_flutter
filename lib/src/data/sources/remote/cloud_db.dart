@@ -83,20 +83,20 @@ class CloudDb {
     return querySnapshot.docs.isNotEmpty;
   }
 
-  TableDAO<CloudAccount>? get accounts =>
+  TableDAO<CloudAccount> get accounts =>
       AccountsDAO(
     collection: _db.collection(_ACCOUNTS),
     key_updated: AccountMapper.KEY_UPDATED,
     mapper: const AccountMapper(),
   );
 
-  TableDAO<CloudCategory>? get categories => CategoriesDAO(
+  TableDAO<CloudCategory> get categories => CategoriesDAO(
     collection: _db.collection(_CATEGORIES),
     key_updated: CategoryMapper.KEY_UPDATED,
     mapper: const CategoryMapper(),
   );
 
-  TableDAO<CloudOperation>? get operations => OperationDAO(
+  TableDAO<CloudOperation> get operations => OperationDAO(
     collection: _db.collection(_OPERATIONS),
     key_updated: OperationMapper.KEY_UPDATED,
     mapper: const OperationMapper(),

@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:money_tracker/src/data/services/sync/account_sync_service_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/services/sync_service.dart';
 
 import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
@@ -9,10 +10,13 @@ import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
 import '../../utils/exceptions.dart';
 import '../../utils/logger.dart';
+import '../../utils/result.dart';
 import '../../utils/sum.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
+import '../services/sync/category_sync_service_impl.dart';
+import '../services/sync/operation_sync_service_impl.dart';
 import '../sources/local/db_converters/operation_type_converter.dart';
 import '../sources/remote/cloud_model_extensions.dart';
 import '../sources/remote/daos/table_dao.dart';
@@ -30,10 +34,11 @@ class SyncRepositoryImpl implements SyncRepository {
     required LocalSyncSource localSource,
     required NetworkInfo networkInfo,
     required DataRepository dataRepository,
-  }) : _remoteSource = remoteSource,
-       _localSource = localSource,
-       _networkInfo = networkInfo,
-       _dataRepository = dataRepository;
+  })
+      : _remoteSource = remoteSource,
+        _localSource = localSource,
+        _networkInfo = networkInfo,
+        _dataRepository = dataRepository;
 
   @override
   Future<void> addToDatabase(User user) =>
@@ -48,10 +53,10 @@ class SyncRepositoryImpl implements SyncRepository {
       _remoteSource.databaseExists(admin);
 
   @override
-  Future<List<User>> getAllUsers() => _remoteSource.getAllUsers();
+  Future<Result<List<User>>> getAllUsers() => _remoteSource.getAllUsers();
 
   @override
-  bool isCurrentAdmin() => _remoteSource.isCurrentAdmin();
+  Result<bool> isCurrentAdmin() => _remoteSource.isCurrentAdmin();
 
   @override
   Future<void> logIn(User user) => _remoteSource.connect(user);
@@ -61,17 +66,20 @@ class SyncRepositoryImpl implements SyncRepository {
 
   @override
   Stream<LoadingState> downloadFromCloud(DateTime date) async* {
-    final accountTable = _remoteSource.accounts;
-    final categoryTable = _remoteSource.categories;
-    final operationsTable = _remoteSource.operations;
+    final _accountSyncService = AccountSyncServiceImpl(
+      localSource: _localSource,
+      accountTable: _remoteSource.accounts.getOrThrow(),
+    );
+    final _categorySyncService = CategorySyncServiceImpl(
+      localSource: _localSource,
+      categoryTable: _remoteSource.categories.getOrThrow(),
+    );
+    final _operationSyncService = OperationSyncServiceImpl(
+      localSource: _localSource,
+      operationTable: _remoteSource.operations.getOrThrow(),
+    );
 
-    if (accountTable == null ||
-        categoryTable == null ||
-        operationsTable == null) {
-      return;
-    }
-
-    final cloudUsers = await _remoteSource.getAllUsers();
+    final cloudUsers = (await _remoteSource.getAllUsers()).getOrThrow();
     for (final cloudUser in cloudUsers) {
       final localUser = await _dataRepository.getUserByGoogleId(
         cloudUser.googleId,
@@ -81,13 +89,9 @@ class SyncRepositoryImpl implements SyncRepository {
       }
     }
 
-    final accounts = await accountTable.getAll(date);
-    final categories = await categoryTable.getAll(date);
-    final operations = await operationsTable.getAll(date);
-
-    var accountCount = accounts.length;
-    var categoryCount = categories.length;
-    var operationCount = operations.length;
+    final accountCount = await _accountSyncService.downloadFromCloud(date);
+    final categoryCount = await _categorySyncService.downloadFromCloud(date);
+    final operationCount = await _operationSyncService.downloadFromCloud(date);
 
     yield (LoadingState(
       accountCount: accountCount,
@@ -95,438 +99,32 @@ class SyncRepositoryImpl implements SyncRepository {
       operationCount: operationCount,
     ));
 
-    for (final cloudAccount in accounts) {
-      AppLogger.debug('Load from cloud account ${cloudAccount.title}');
-
-      await _saveCloudAccountToLocal(cloudAccount);
-
-      accountCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-
-    for (final cloudCategory in categories.where((e) => e.parent.isEmpty)) {
-      AppLogger.debug('Load from cloud category ${cloudCategory.title}');
-
-      await _saveCloudCategoryToLocal(cloudCategory);
-
-      categoryCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-
-    for (final cloudCategory in categories.where((e) => e.parent.isNotEmpty)) {
-      AppLogger.debug('Load from cloud category ${cloudCategory.title}');
-
-      await _saveCloudCategoryToLocal(cloudCategory);
-
-      categoryCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-
-    for (final cloudOperation in operations) {
-      AppLogger.debug('Load from cloud operation ${cloudOperation.id}');
-
-      await _saveCloudOperationToLocal(cloudOperation);
-
-      operationCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-  }
-
-  Future<void> _saveCloudAccountToLocal(CloudAccount cloudAccount) async {
-    final account = await _localSource.accounts.getByCloudId(cloudAccount.id);
-    final user = await _localSource.getUserByGoogleId(cloudAccount.user);
-    if (account == null) {
-      await _localSource.accounts.insertFromCloud(
-        AccountModelMapper(user).insertModel(cloudAccount),
-      );
-    } else {
-      await _localSource.accounts.updateFromCloud(
-        AccountModelMapper(user).updateModel(account, cloudAccount),
-      );
-    }
-  }
-
-  Future<void> _saveCloudCategoryToLocal(CloudCategory cloudCategory) async {
-    final category = await _localSource.categories.getByCloudId(
-      cloudCategory.id,
-    );
-
-    final parent = cloudCategory.parent.isEmpty
-        ? null
-        : await _localSource.categories.getByCloudId(cloudCategory.parent)
-              as CategoryGroup;
-
-    if (category == null) {
-      await _localSource.categories.insertFromCloud(
-        CategoryModelMapper(parent).insertModel(cloudCategory),
-      );
-    } else {
-      await _localSource.categories.updateFromCloud(
-        CategoryModelMapper(parent).updateModel(category, cloudCategory),
-      );
-    }
-  }
-
-  Future<BaseAccount> _getAccountByCloudOperation(
-    CloudOperation cloudOperation,
-  ) async {
-    final account = await _localSource.accounts.getByCloudId(
-      cloudOperation.account,
-    );
-    if (account == null) {
-      throw NetworkException(
-        'Can\'t find account by cloudId ${cloudOperation.account} in operation ${cloudOperation.id}',
-      );
-    } else {
-      return account;
-    }
-  }
-
-  Future<model.Category> _getCategoryByCloudOperation(
-    CloudOperation cloudOperation,
-  ) async {
-    if (cloudOperation.category == null) {
-      throw NetworkException(
-        'Try to fetch category on null value in operation ${cloudOperation.id}',
-      );
-    } else {
-      final category = await _localSource.categories.getByCloudId(
-        cloudOperation.category!,
-      );
-      if (category == null) {
-        throw NetworkException(
-          'Can\'t find category by cloudId ${cloudOperation.category} in operation ${cloudOperation.id}',
-        );
-      } else {
-        return category;
-      }
-    }
-  }
-
-  Future<BaseAccount> _getRecAccountByCloudOperation(
-    CloudOperation cloudOperation,
-  ) async {
-    if (cloudOperation.recAccount == null) {
-      throw NetworkException(
-        'Try to fetch rec account on null value in operation ${cloudOperation.id}',
-      );
-    } else {
-      final account = await _localSource.accounts.getByCloudId(
-        cloudOperation.recAccount!,
-      );
-      if (account == null) {
-        throw NetworkException(
-          'Can\'t find rec account by cloudId ${cloudOperation.recAccount} in operation ${cloudOperation.id}',
-        );
-      } else {
-        return account;
-      }
-    }
-  }
-
-  Future<void> _saveCloudOperationToLocal(CloudOperation cloudOperation) async {
-    final operation = await _localSource.operations.getByCloudId(
-      cloudOperation.id,
-    );
-
-    if (operation == null) {
-      final type = const OperationTypeConverter().fromSql(
-        cloudOperation.operationType,
-      );
-
-      final newOperation = await type.map(
-        input: () async => InputOperation(
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        output: () async => OutputOperation(
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        transfer: () async => TransferOperation(
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        exchange: () async => ExchangeOperation(
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-          recSum: Sum(
-            cloudOperation.recSum ?? 0,
-            Currency.byName(cloudOperation.currencyReceived),
-          ),
-        ),
-      );
-
-      await _localSource.operations.insertFromCloud(newOperation);
-    } else {
-      final type = const OperationTypeConverter().fromSql(
-        cloudOperation.operationType,
-      );
-
-      final newOperation = await type.map(
-        input: () async => InputOperation(
-          id: operation.id,
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        output: () async => OutputOperation(
-          id: operation.id,
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        transfer: () async => TransferOperation(
-          id: operation.id,
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-        ),
-        exchange: () async => ExchangeOperation(
-          id: operation.id,
-          cloudId: cloudOperation.id,
-          synced: true,
-          deleted: cloudOperation.deleted,
-          date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sum: Sum(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-          recSum: Sum(
-            cloudOperation.recSum ?? 0,
-            Currency.byName(cloudOperation.currencyReceived),
-          ),
-        ),
-      );
-      await _localSource.operations.updateFromCloud(newOperation);
-    }
   }
 
   @override
   Stream<LoadingState> uploadToCloud() async* {
-    //TODO ошибка возникает когда добавляется новый счет и новая операция. Счет получает свой клауд ид но при выгрузке операции берется старый экземпляр еще до синхронизации
+    final _accountSyncService = AccountSyncServiceImpl(
+      localSource: _localSource,
+      accountTable: _remoteSource.accounts.getOrThrow(),
+    );
+    final _categorySyncService = CategorySyncServiceImpl(
+      localSource: _localSource,
+      categoryTable: _remoteSource.categories.getOrThrow(),
+    );
+    final _operationSyncService = OperationSyncServiceImpl(
+      localSource: _localSource,
+      operationTable: _remoteSource.operations.getOrThrow(),
+    );
 
-    final accountTable = _remoteSource.accounts;
-    final categoryTable = _remoteSource.categories;
-    final operationTable = _remoteSource.operations;
-
-    if (accountTable == null ||
-        categoryTable == null ||
-        operationTable == null) {
-      return;
-    }
-
-    final allUsers = await _dataRepository.getAllUsers();
-    final allAccounts = await _dataRepository.getAllAccounts();
-    final allCategories = await _dataRepository.getAllCategories();
-
-    final accounts = await _localSource.accounts.getAllNotSynced();
-    final categories = await _localSource.categories.getAllNotSynced();
-    final operations = await _localSource.operations.getAllNotSynced();
-
-    var accountCount = accounts.length;
-    var categoryCount = categories.length;
-    var operationCount = operations.length;
+    final accountCount = await _accountSyncService.uploadToCloud();
+    final categoryCount = await _categorySyncService.uploadToCloud();
+    final operationCount = await _operationSyncService.uploadToCloud();
 
     yield (LoadingState(
       accountCount: accountCount,
       categoryCount: categoryCount,
       operationCount: operationCount,
     ));
-
-    for (var account in accounts) {
-      AppLogger.debug('Load to cloud account ${account.title}');
-
-      final user = allUsers.where((e) => e.id == account.userId).firstOrNull;
-
-      await _uploadAccountToCloud(account, user, accountTable);
-
-      accountCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-
-    for (var category in categories) {
-      AppLogger.debug('Load to cloud category ${category.title}');
-
-      final parentId = category.map(
-        inputItem: (c) => c.parentId,
-        outputItem: (c) => c.parentId,
-        inputGroup: (c) => null,
-        outputGroup: (c) => null,
-      );
-
-      final parent = parentId == null
-          ? null
-          : allCategories.where((e) => e.id == parentId).first as CategoryGroup;
-
-      await _uploadCategoryToCloud(category, parent, categoryTable);
-
-      categoryCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-
-    for (var operation in operations) {
-      AppLogger.debug('Load to cloud operation ${operation.id}');
-
-      final accountCloudId = allAccounts
-          .where((e) => e.id == operation.account)
-          .first
-          .cloudId;
-
-      final analyticCloudId = operation.map(
-        input: (op) =>
-            allCategories.where((e) => e.id == op.analytic).first.cloudId,
-        output: (op) =>
-            allCategories.where((e) => e.id == op.analytic).first.cloudId,
-        transfer: (op) =>
-            allAccounts.where((e) => e.id == op.analytic).first.cloudId,
-        exchange: (op) => '', // no analityc
-      );
-
-      await _uploadOperationToCloud(
-        operation,
-        accountCloudId,
-        analyticCloudId,
-        operationTable,
-      );
-
-      operationCount--;
-      yield (LoadingState(
-        accountCount: accountCount,
-        categoryCount: categoryCount,
-        operationCount: operationCount,
-      ));
-    }
-  }
-
-  /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _uploadAccountToCloud(
-    BaseAccount account,
-    User? user,
-    TableDAO<CloudAccount> accounts,
-  ) async {
-    if (account.cloudId.isNotEmpty) {
-      await accounts.update(account.toCloudAccount(user));
-      await _localSource.accounts.markAsSynced(account.id, account.cloudId);
-    } else {
-      var cloudId = await accounts.add(account.toCloudAccount(user));
-      await _localSource.accounts.markAsSynced(account.id, cloudId);
-    }
-  }
-
-  /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _uploadCategoryToCloud(
-    model.Category category,
-    CategoryGroup? parent,
-    TableDAO<CloudCategory> categories,
-  ) async {
-    if (category.cloudId.isNotEmpty) {
-      await categories.update(category.toCloudCategory(parent));
-      await _localSource.categories.markAsSynced(category.id, category.cloudId);
-    } else {
-      var cloudId = await categories.add(category.toCloudCategory(parent));
-      await _localSource.categories.markAsSynced(category.id, cloudId);
-    }
-  }
-
-  /// Throw [NoRemoteDBException] and [NetworkException]
-  Future<void> _uploadOperationToCloud(
-    Operation operation,
-    String accountCloudId,
-    String analyticCloudId,
-    TableDAO<CloudOperation> operations,
-  ) async {
-    if (operation.cloudId.isNotEmpty) {
-      await operations.update(
-        operation.toCloudOperation(accountCloudId, analyticCloudId),
-      );
-      await _localSource.operations.markAsSynced(
-        operation.id,
-        operation.cloudId,
-      );
-    } else {
-      var cloudId = await operations.add(
-        operation.toCloudOperation(accountCloudId, analyticCloudId),
-      );
-      await _localSource.operations.markAsSynced(operation.id, cloudId);
-    }
   }
 
   @override

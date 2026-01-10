@@ -16,6 +16,15 @@ class LocalSyncSourceImpl extends LocalSyncSource {
     required this.dataRepository,
   });
 
+  @override
+  Future<List<User>> getAllUsers() => dataRepository.getAllUsers();
+
+  @override
+  Future<List<BaseAccount>> getAllAccounts() => dataRepository.getAllAccounts();
+
+  @override
+  Future<List<Category>> getAllCategories() => dataRepository.getAllCategories();
+
   Future<User?> getUserByGoogleId(String googleId) => dataRepository.getUserByGoogleId(googleId);
 
   @override
@@ -26,4 +35,8 @@ class LocalSyncSourceImpl extends LocalSyncSource {
 
   @override
   LocalSyncTable<Operation> get operations => operationRepo;
+
+
+
+
 }

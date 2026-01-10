@@ -6,6 +6,9 @@ abstract class LocalSyncSource{
   LocalSyncTable<Category> get categories;
   LocalSyncTable<Operation> get operations;
 
+  Future<List<User>> getAllUsers();
+  Future<List<BaseAccount>> getAllAccounts();
+  Future<List<Category>> getAllCategories();
   Future<User?> getUserByGoogleId(String googleId);
 }
 

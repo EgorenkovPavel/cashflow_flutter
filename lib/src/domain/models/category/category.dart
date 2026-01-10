@@ -25,6 +25,14 @@ sealed class Category extends Equatable {
     final InputCategoryGroup group => inputGroup(group),
     final OutputCategoryGroup group => outputGroup(group),
   };
+
+  int? get parentId => switch (this){
+    InputCategoryItem() => parentId,
+    OutputCategoryItem() => parentId,
+    InputCategoryGroup() => null,
+    OutputCategoryGroup() => null,
+  };
+
 }
 
 sealed class CategoryItem extends Category {

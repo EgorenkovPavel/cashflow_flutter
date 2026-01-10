@@ -8,6 +8,7 @@ import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 import '../../../../domain/view_models.dart';
+import '../../../../utils/result.dart';
 import '../../../../utils/sum.dart';
 
 part 'operation_edit_bloc.freezed.dart';
