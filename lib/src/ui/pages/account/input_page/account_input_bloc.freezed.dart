@@ -506,7 +506,7 @@ String toString() {
 /// @nodoc
 mixin _$AccountInputState {
 
- String get title; bool get isDebt; int? get userId; List<User> get users; BaseAccount? get account; bool get isSaved;
+ String get title; bool get isDebt; int? get userId; List<User> get users; BaseAccount? get account; bool get isSaved; String? get error; bool get isLoading;
 /// Create a copy of AccountInputState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -517,16 +517,16 @@ $AccountInputStateCopyWith<AccountInputState> get copyWith => _$AccountInputStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.users, users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.users, users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(users),account,isSaved);
+int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(users),account,isSaved,error,isLoading);
 
 @override
 String toString() {
-  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved)';
+  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved, error: $error, isLoading: $isLoading)';
 }
 
 
@@ -537,7 +537,7 @@ abstract mixin class $AccountInputStateCopyWith<$Res>  {
   factory $AccountInputStateCopyWith(AccountInputState value, $Res Function(AccountInputState) _then) = _$AccountInputStateCopyWithImpl;
 @useResult
 $Res call({
- String title, bool isDebt, int? userId, List<User> users, BaseAccount? account, bool isSaved
+ String title, bool isDebt, int? userId, List<User> users, BaseAccount? account, bool isSaved, String? error, bool isLoading
 });
 
 
@@ -554,7 +554,7 @@ class _$AccountInputStateCopyWithImpl<$Res>
 
 /// Create a copy of AccountInputState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? isDebt = null,Object? userId = freezed,Object? users = null,Object? account = freezed,Object? isSaved = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? isDebt = null,Object? userId = freezed,Object? users = null,Object? account = freezed,Object? isSaved = null,Object? error = freezed,Object? isLoading = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDebt: null == isDebt ? _self.isDebt : isDebt // ignore: cast_nullable_to_non_nullable
@@ -562,6 +562,8 @@ as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullab
 as int?,users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
 as List<User>,account: freezed == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as BaseAccount?,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -647,10 +649,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved,  String? error,  bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountInputState() when $default != null:
-return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved);case _:
+return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved,_that.error,_that.isLoading);case _:
   return orElse();
 
 }
@@ -668,10 +670,10 @@ return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved,  String? error,  bool isLoading)  $default,) {final _that = this;
 switch (_that) {
 case _AccountInputState():
-return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved);case _:
+return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved,_that.error,_that.isLoading);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -688,10 +690,10 @@ return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  bool isDebt,  int? userId,  List<User> users,  BaseAccount? account,  bool isSaved,  String? error,  bool isLoading)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountInputState() when $default != null:
-return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved);case _:
+return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,_that.isSaved,_that.error,_that.isLoading);case _:
   return null;
 
 }
@@ -703,7 +705,7 @@ return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,
 
 
 class _AccountInputState implements AccountInputState {
-  const _AccountInputState({required this.title, required this.isDebt, required this.userId, required final  List<User> users, this.account, required this.isSaved}): _users = users;
+  const _AccountInputState({required this.title, required this.isDebt, required this.userId, required final  List<User> users, this.account, required this.isSaved, this.error, this.isLoading = false}): _users = users;
   
 
 @override final  String title;
@@ -718,6 +720,8 @@ class _AccountInputState implements AccountInputState {
 
 @override final  BaseAccount? account;
 @override final  bool isSaved;
+@override final  String? error;
+@override@JsonKey() final  bool isLoading;
 
 /// Create a copy of AccountInputState
 /// with the given fields replaced by the non-null parameter values.
@@ -729,16 +733,16 @@ _$AccountInputStateCopyWith<_AccountInputState> get copyWith => __$AccountInputS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other._users, _users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other._users, _users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(_users),account,isSaved);
+int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(_users),account,isSaved,error,isLoading);
 
 @override
 String toString() {
-  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved)';
+  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved, error: $error, isLoading: $isLoading)';
 }
 
 
@@ -749,7 +753,7 @@ abstract mixin class _$AccountInputStateCopyWith<$Res> implements $AccountInputS
   factory _$AccountInputStateCopyWith(_AccountInputState value, $Res Function(_AccountInputState) _then) = __$AccountInputStateCopyWithImpl;
 @override @useResult
 $Res call({
- String title, bool isDebt, int? userId, List<User> users, BaseAccount? account, bool isSaved
+ String title, bool isDebt, int? userId, List<User> users, BaseAccount? account, bool isSaved, String? error, bool isLoading
 });
 
 
@@ -766,7 +770,7 @@ class __$AccountInputStateCopyWithImpl<$Res>
 
 /// Create a copy of AccountInputState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? isDebt = null,Object? userId = freezed,Object? users = null,Object? account = freezed,Object? isSaved = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? isDebt = null,Object? userId = freezed,Object? users = null,Object? account = freezed,Object? isSaved = null,Object? error = freezed,Object? isLoading = null,}) {
   return _then(_AccountInputState(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDebt: null == isDebt ? _self.isDebt : isDebt // ignore: cast_nullable_to_non_nullable
@@ -774,6 +778,8 @@ as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullab
 as int?,users: null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
 as List<User>,account: freezed == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as BaseAccount?,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

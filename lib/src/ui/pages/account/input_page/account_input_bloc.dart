@@ -32,6 +32,8 @@ abstract class AccountInputState with _$AccountInputState {
     required List<User> users,
     BaseAccount? account,
     required bool isSaved,
+    String? error,
+    @Default(false) bool isLoading,
   }) = _AccountInputState;
 
   static AccountInputState init() => const AccountInputState(
@@ -41,6 +43,8 @@ abstract class AccountInputState with _$AccountInputState {
     users: [],
     account: null,
     isSaved: false,
+    error: null,
+    isLoading: false,
   );
 
   static AccountInputState byAccount(BaseAccount account, List<User> users) =>
@@ -51,6 +55,8 @@ abstract class AccountInputState with _$AccountInputState {
         users: users,
         isDebt: account is Debt,
         isSaved: false,
+        error: null,
+        isLoading: false,
       );
 }
 
@@ -75,17 +81,21 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _FetchAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
+    emit(state.copyWith(isLoading: true, error: null));
+    
     final accountResult = await _accountInteractor.getById(event.accountId);
     final users = await _userInteractor.getAll();
 
     accountResult.fold(
-      onSuccess: (account) => emit(AccountInputState.byAccount(account, users)),
+      onSuccess: (account) => emit(
+        AccountInputState.byAccount(account, users).copyWith(isLoading: false),
+      ),
       onFailure: (exception) {
-        // TODO Можно добавить состояние ошибки или отдельное поле error в state
-        // emit(state.copyWith(
-        //   // ... можно account: null, users: users,
-        //   // error: exception.toString(),
-        // ));
+        emit(state.copyWith(
+          error: exception.toString(),
+          isLoading: false,
+          users: users,
+        ));
       },
     );
   }
@@ -102,6 +112,8 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     _SaveAccountInputEvent event,
     Emitter<AccountInputState> emit,
   ) async {
+    emit(state.copyWith(isLoading: true, error: null, isSaved: false));
+    
     if (state.account == null) {
       final result = await _accountInteractor.insert(
         title: state.title,
@@ -109,11 +121,19 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
         userId: state.userId,
       );
       result.fold(
-        onSuccess: (account) =>
-            emit(state.copyWith(account: account, isSaved: true)),
+        onSuccess: (account) => emit(
+          state.copyWith(
+            account: account,
+            isSaved: true,
+            isLoading: false,
+          ),
+        ),
         onFailure: (exception) {
-          // TODO emit состояние ошибки или сохранить error в state
-          //emit(state.copyWith(isSaved: false));
+          emit(state.copyWith(
+            error: exception.toString(),
+            isLoading: false,
+            isSaved: false,
+          ));
         },
       );
     } else {
@@ -123,11 +143,19 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
         userId: state.userId,
       );
       result.fold(
-        onSuccess: (account) =>
-            emit(state.copyWith(account: account, isSaved: true)),
+        onSuccess: (account) => emit(
+          state.copyWith(
+            account: account,
+            isSaved: true,
+            isLoading: false,
+          ),
+        ),
         onFailure: (exception) {
-          // TODO emit состояние ошибки или сохранить error в state
-          //emit(state.copyWith(isSaved: false));
+          emit(state.copyWith(
+            error: exception.toString(),
+            isLoading: false,
+            isSaved: false,
+          ));
         },
       );
     }

@@ -4,6 +4,7 @@ import 'package:money_tracker/src/data/sources/local/entities/cashflow_entity.da
 import '../../../domain/models.dart';
 import '../../../domain/view_models.dart';
 import '../../../utils/balance.dart';
+import '../../../utils/logger.dart';
 import '../../../utils/sum.dart';
 import 'entities/account_balance_entity.dart';
 import 'entities/operation_entity.dart';
@@ -385,7 +386,7 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
         );
       }).toList();
     } catch (e, stacktrace) {
-      print(stacktrace);
+      AppLogger.error('Failed to combine balances', e, stacktrace);
       rethrow;
     }
   }
