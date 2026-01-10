@@ -1,4 +1,6 @@
 import '../../utils/sum.dart';
+import '../../utils/exceptions.dart';
+import '../../utils/logger.dart';
 import '../interfaces/operation_repository.dart';
 import '../models.dart';
 import '../services/operation_view_service.dart';
@@ -14,8 +16,11 @@ class OperationInteractor {
     try {
       final operation = await _operationRepository.getOperationById(id);
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to get operation by id: $id', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to get operation', e),
+      );
     }
   }
 
@@ -23,8 +28,11 @@ class OperationInteractor {
     try {
       final operation = await _operationRepository.getLastOperation();
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to get last operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to get last operation', e),
+      );
     }
   }
 
@@ -58,8 +66,11 @@ class OperationInteractor {
         newOperation,
       );
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert input operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert operation', e),
+      );
     }
   }
 
@@ -81,8 +92,11 @@ class OperationInteractor {
         newOperation,
       );
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert output operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert operation', e),
+      );
     }
   }
 
@@ -104,8 +118,11 @@ class OperationInteractor {
         newOperation,
       );
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert transfer operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert operation', e),
+      );
     }
   }
 
@@ -127,8 +144,11 @@ class OperationInteractor {
         newOperation,
       );
       return Result.success(operation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert exchange operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert operation', e),
+      );
     }
   }
 
@@ -153,8 +173,11 @@ class OperationInteractor {
       await _operationRepository.updateOperation(newOperation);
 
       return Result.success(newOperation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update input operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update operation', e),
+      );
     }
   }
 
@@ -179,8 +202,11 @@ class OperationInteractor {
       await _operationRepository.updateOperation(newOperation);
 
       return Result.success(newOperation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update output operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update operation', e),
+      );
     }
   }
 
@@ -205,8 +231,11 @@ class OperationInteractor {
       await _operationRepository.updateOperation(newOperation);
 
       return Result.success(newOperation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update transfer operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update operation', e),
+      );
     }
   }
 
@@ -231,8 +260,11 @@ class OperationInteractor {
       await _operationRepository.updateOperation(newOperation);
 
       return Result.success(newOperation);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update exchange operation', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update operation', e),
+      );
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../interfaces/settings_source.dart';
 import '../../domain/models.dart';
+import '../../utils/logger.dart';
 
 class CurrencyRateSource {
   final SettingsSource settingsSource;
@@ -41,9 +42,7 @@ class CurrencyRateSource {
       settingsSource.setRateUsd(body['rates']['USD']);
       settingsSource.setRateEur(body['rates']['EUR']);
     } catch (e, stacktrace) {
-      if (kDebugMode) {
-        print(stacktrace);
-      }
+      AppLogger.error('Failed to fetch currency rates', e, stacktrace);
     }
   }
 }

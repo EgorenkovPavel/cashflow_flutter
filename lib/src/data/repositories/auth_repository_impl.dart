@@ -6,6 +6,7 @@ import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/src/domain/models/user.dart' as model;
 
 import '../interfaces/network_info.dart';
+import '../../utils/logger.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthSource _authSource;
@@ -63,9 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
       idToken = await user.getIdToken(true) ?? '';
     } catch (e) {}
 
-    if (kDebugMode) {
-      print('IDTOKEN: $idToken');
-    }
+    AppLogger.debug('IDTOKEN: $idToken');
     return idToken;
   }
 

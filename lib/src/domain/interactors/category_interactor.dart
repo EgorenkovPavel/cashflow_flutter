@@ -1,6 +1,8 @@
 import '../interfaces/category_repository.dart';
 import '../models.dart';
 import '../services/cashflow_service.dart';
+import '../../utils/exceptions.dart';
+import '../../utils/logger.dart';
 
 class CategoryInteractor {
   final CategoryRepository _categoryRepository;
@@ -12,8 +14,11 @@ class CategoryInteractor {
     try {
       final category = await _categoryRepository.getCategoryById(id);
       return Result.success(category);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to get category by id: $id', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to get category', e),
+      );
     }
   }
 
@@ -42,8 +47,11 @@ class CategoryInteractor {
       final id = await _categoryRepository.insertCategory(category);
 
       return Result.success(category.copyWith(id: id));
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert input category item', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert category', e),
+      );
     }
   }
 
@@ -64,8 +72,11 @@ class CategoryInteractor {
       final id = await _categoryRepository.insertCategory(category);
 
       return Result.success(category.copyWith(id: id));
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert output category item', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert category', e),
+      );
     }
   }
 
@@ -78,8 +89,11 @@ class CategoryInteractor {
       final id = await _categoryRepository.insertCategory(category);
 
       return Result.success(category.copyWith(id: id));
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert input category group', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert category', e),
+      );
     }
   }
 
@@ -92,8 +106,11 @@ class CategoryInteractor {
       final id = await _categoryRepository.insertCategory(category);
 
       return Result.success(category.copyWith(id: id));
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to insert output category group', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to insert category', e),
+      );
     }
   }
 
@@ -112,8 +129,11 @@ class CategoryInteractor {
       await _categoryRepository.updateCategory(newCategory);
 
       return Result.success(newCategory);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update input category item', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update category', e),
+      );
     }
   }
 
@@ -132,8 +152,11 @@ class CategoryInteractor {
       await _categoryRepository.updateCategory(newCategory);
 
       return Result.success(newCategory);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update output category item', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update category', e),
+      );
     }
   }
 
@@ -147,8 +170,11 @@ class CategoryInteractor {
       await _categoryRepository.updateCategory(newCategory);
 
       return Result.success(newCategory);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update input category group', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update category', e),
+      );
     }
   }
 
@@ -162,8 +188,11 @@ class CategoryInteractor {
       await _categoryRepository.updateCategory(newCategory);
 
       return Result.success(newCategory);
-    } catch (e) {
-      return Result.failure(e is Exception ? e : Exception(e.toString()));
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('Failed to update output category group', e, stackTrace);
+      return Result.failure(
+        DatabaseException('Failed to update category', e),
+      );
     }
   }
 }

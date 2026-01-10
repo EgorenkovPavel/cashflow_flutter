@@ -8,6 +8,7 @@ import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
 import '../../domain/models/category/category.dart' as model;
 import '../../utils/exceptions.dart';
+import '../../utils/logger.dart';
 import '../../utils/sum.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
@@ -95,9 +96,7 @@ class SyncRepositoryImpl implements SyncRepository {
     ));
 
     for (final cloudAccount in accounts) {
-      if (kDebugMode) {
-        print('Load from cloud account ${cloudAccount.title}');
-      }
+      AppLogger.debug('Load from cloud account ${cloudAccount.title}');
 
       await _saveCloudAccountToLocal(cloudAccount);
 
@@ -110,9 +109,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     for (final cloudCategory in categories.where((e) => e.parent.isEmpty)) {
-      if (kDebugMode) {
-        print('Load from cloud category ${cloudCategory.title}');
-      }
+      AppLogger.debug('Load from cloud category ${cloudCategory.title}');
 
       await _saveCloudCategoryToLocal(cloudCategory);
 
@@ -125,9 +122,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     for (final cloudCategory in categories.where((e) => e.parent.isNotEmpty)) {
-      if (kDebugMode) {
-        print('Load from cloud category ${cloudCategory.title}');
-      }
+      AppLogger.debug('Load from cloud category ${cloudCategory.title}');
 
       await _saveCloudCategoryToLocal(cloudCategory);
 
@@ -140,9 +135,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     for (final cloudOperation in operations) {
-      if (kDebugMode) {
-        print('Load from cloud operation ${cloudOperation.id}');
-      }
+      AppLogger.debug('Load from cloud operation ${cloudOperation.id}');
 
       await _saveCloudOperationToLocal(cloudOperation);
 
@@ -411,9 +404,7 @@ class SyncRepositoryImpl implements SyncRepository {
     ));
 
     for (var account in accounts) {
-      if (kDebugMode) {
-        print('Load to cloud account ${account.title}');
-      }
+      AppLogger.debug('Load to cloud account ${account.title}');
 
       final user = allUsers.where((e) => e.id == account.userId).firstOrNull;
 
@@ -428,9 +419,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     for (var category in categories) {
-      if (kDebugMode) {
-        print('Load to cloud category ${category.title}');
-      }
+      AppLogger.debug('Load to cloud category ${category.title}');
 
       final parentId = category.map(
         inputItem: (c) => c.parentId,
@@ -454,9 +443,7 @@ class SyncRepositoryImpl implements SyncRepository {
     }
 
     for (var operation in operations) {
-      if (kDebugMode) {
-        print('Load to cloud operation ${operation.id}');
-      }
+      AppLogger.debug('Load to cloud operation ${operation.id}');
 
       final accountCloudId = allAccounts
           .where((e) => e.id == operation.account)
