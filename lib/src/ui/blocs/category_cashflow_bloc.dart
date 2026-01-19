@@ -95,17 +95,17 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
     return list;
   }
 
-  int inputCashFlow() => _cashFlow<InputCategoryCashFlow>();
+  int inputCashFlow() => _cashFlow(.INPUT);
 
-  int outputCashFlow() => _cashFlow<OutputCategoryCashFlow>();
+  int outputCashFlow() => _cashFlow(.OUTPUT);
 
   int inputBudget() => _budget(.INPUT);
 
   int outputBudget() => _budget(.OUTPUT);
 
-  int _cashFlow<T extends CategoryCashFlow>() {
+  int _cashFlow(CategoryType type) {
     return cashflows
-        .whereType<T>()
+        .where((e) => e.type == type)
         .map((item) => item.monthCashFlow.toRub(usd, eur))
         .fold(0, (a, b) => a + b);
   }
@@ -192,11 +192,11 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   int budget(CategoryType type) => _select((state) => state.budget(type));
 
-  List<InputCategoryCashFlow> watchInputCashFlow() =>
-      _watch().cashflows.whereType<InputCategoryCashFlow>().toList();
+  List<CategoryCashFlow> watchInputCashFlow() =>
+      _watch().cashflows.where((e) => e.type == .INPUT).toList();
 
-  List<OutputCategoryCashFlow> watchOutputCashFlow() =>
-      _watch().cashflows.whereType<OutputCategoryCashFlow>().toList();
+  List<CategoryCashFlow> watchOutputCashFlow() =>
+      _watch().cashflows.where((e) => e.type == .OUTPUT).toList();
 
   CategoryCashFlow watchCashflowById(int categoryId) =>
       _watch().cashflows.firstWhere((e) => e.categoryId == categoryId);
@@ -212,22 +212,17 @@ extension CategoryCashFlowBlocExt on BuildContext {
     BudgetType budgetType,
     int count,
   ) {
-    final list =
-        switch (categoryType) {
-              .INPUT =>
-                _watch().cashflows.whereType<InputCategoryCashFlow>().toList(),
-              .OUTPUT =>
-                _watch().cashflows.whereType<OutputCategoryCashFlow>().toList(),
-            }
-            .where(
-              (e) =>
-                  balanceToRub(switch (budgetType) {
-                    .MONTH => e.monthCashFlow,
-                    .YEAR => e.yearCashFlow,
-                  }) !=
-                  0,
-            )
-            .toList();
+    final list = _watch().cashflows
+        .where((e) => e.type == categoryType)
+        .where(
+          (e) =>
+              balanceToRub(switch (budgetType) {
+                .MONTH => e.monthCashFlow,
+                .YEAR => e.yearCashFlow,
+              }) !=
+              0,
+        )
+        .toList();
     list.sort(
       (a, b) => switch (budgetType) {
         .MONTH => balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),

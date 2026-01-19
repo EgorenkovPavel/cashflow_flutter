@@ -291,25 +291,20 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
             .toList(),
       );
 
-      if (category.operationType == OperationType.INPUT) {
-        return InputCategoryCashFlow(
-          categoryId: category.id,
-          budgetType: category.budgetType,
-          budget: category.budget,
-          categoryTitle: category.title,
-          monthCashFlow: month,
-          yearCashFlow: year,
-        );
-      } else {
-        return OutputCategoryCashFlow(
-          categoryId: category.id,
-          budgetType: category.budgetType,
-          budget: category.budget,
-          categoryTitle: category.title,
-          monthCashFlow: month,
-          yearCashFlow: year,
-        );
-      }
+      final CategoryType type = switch (category.operationType) {
+        .INPUT => .INPUT,
+        _ => .OUTPUT,
+      };
+
+      return CategoryCashFlow(
+        type: type,
+        categoryId: category.id,
+        budgetType: category.budgetType,
+        budget: category.budget,
+        categoryTitle: category.title,
+        monthCashFlow: month,
+        yearCashFlow: year,
+      );
     }).toList();
   }
 }
