@@ -1,7 +1,5 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../../domain/interfaces/operation_repository.dart';
-import '../../domain/interfaces/user_repository.dart';
 import '../../domain/models/operation/operation_list_filter.dart';
 import '../../domain/services/operation_view_service.dart';
 import '../../domain/view_models/operation_list_item.dart';
@@ -11,19 +9,13 @@ import '../sources/local/db_mapper.dart';
 
 /// Implementation of [OperationViewService] that aggregates operation view data.
 class OperationViewServiceImpl implements OperationViewService {
-  final OperationRepository _operationRepository;
-  final UserRepository _userRepository;
   final OperationDao _operationDao;
   final UserDao _userDao;
 
   OperationViewServiceImpl({
-    required OperationRepository operationRepository,
-    required UserRepository userRepository,
     required OperationDao operationDao,
     required UserDao userDao,
-  })  : _operationRepository = operationRepository,
-        _userRepository = userRepository,
-        _operationDao = operationDao,
+  })  : _operationDao = operationDao,
         _userDao = userDao;
 
   @override

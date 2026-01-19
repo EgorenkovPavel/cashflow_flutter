@@ -176,9 +176,9 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   List<Category> watchHierarchy(CategoryType type) => _watch().hierarchy(type);
 
-  int cashFlow(type) => _select((state) => state.cashFlow(type));
+  int cashFlow(CategoryType type) => _select((state) => state.cashFlow(type));
 
-  int budget(type) => _select((state) => state.budget(type));
+  int budget(CategoryType type) => _select((state) => state.budget(type));
 
   List<InputCategoryCashFlow> watchInputCashFlow() =>
       _watch().cashflows.whereType<InputCategoryCashFlow>().toList();

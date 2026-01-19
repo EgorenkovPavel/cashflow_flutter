@@ -31,7 +31,7 @@ class _AccountsCardState extends State<AccountsCard> {
     }
   }
 
-  _onHide() {
+  void _onHide() {
     setState(() {
       _showAll = !_showAll;
     });

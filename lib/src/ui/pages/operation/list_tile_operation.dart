@@ -160,7 +160,7 @@ class _OperationTile extends StatelessWidget {
           onTap: onTap,
           onLongPress: onLongPress,
         ),
-      ExchangeOperationView(sendSum: final sum, receivedSum: final recSum) =>
+      ExchangeOperationView(receivedSum: final recSum) =>
         ListTile(
           leading: UserAvatar(
             photoUrl: operation.userPhotoUrl,

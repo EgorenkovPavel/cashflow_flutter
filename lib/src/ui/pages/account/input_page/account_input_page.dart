@@ -182,7 +182,7 @@ class _UserChooser extends StatelessWidget {
 }
 
 extension AccountInputBlocExt on BuildContext {
-  onChangeTitle(String title) =>
+  void onChangeTitle(String title) =>
       read<AccountInputBloc>().add(AccountInputEvent.changeTitle(title));
 
   bool isDebt() => select<AccountInputBloc, bool>((bloc) => bloc.state.isDebt);
@@ -192,8 +192,8 @@ extension AccountInputBlocExt on BuildContext {
   List<User> users() =>
       select<AccountInputBloc, List<User>>((bloc) => bloc.state.users);
 
-  onChangeUser(User? user) =>
+  void onChangeUser(User? user) =>
       read<AccountInputBloc>().add(AccountInputEvent.changeUser(user));
 
-  onSave() => read<AccountInputBloc>().add(const AccountInputEvent.save());
+  void onSave() => read<AccountInputBloc>().add(const AccountInputEvent.save());
 }

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../interfaces/settings_source.dart';
 import '../../domain/models.dart';
 import '../../utils/logger.dart';
+import '../interfaces/settings_source.dart';
 
 class CurrencyRateSource {
   final SettingsSource settingsSource;

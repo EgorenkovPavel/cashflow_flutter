@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:googleapis_auth/src/auth_client.dart';
 import 'package:money_tracker/src/data/interfaces/auth_source.dart';
 import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/src/domain/models/user.dart' as model;
 
-import '../interfaces/network_info.dart';
 import '../../utils/logger.dart';
+import '../interfaces/network_info.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthSource _authSource;

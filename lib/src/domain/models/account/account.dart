@@ -58,6 +58,7 @@ class Debt extends BaseAccount {
   Debt setUser(int? userId) =>
       Debt(id: id, cloudId: cloudId, title: title, userId: userId);
 
+  @override
   Debt copyWith({int? id, String? cloudId, String? title}) => Debt(
     id: id ?? this.id,
     cloudId: cloudId ?? this.cloudId,

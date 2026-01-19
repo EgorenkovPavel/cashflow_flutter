@@ -2,26 +2,16 @@ import 'dart:async';
 
 import 'package:money_tracker/src/data/services/sync/account_sync_service_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
-import 'package:money_tracker/src/domain/services/sync_service.dart';
 
 import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/models.dart';
-import '../../domain/models/category/category.dart' as model;
-import '../../utils/exceptions.dart';
-import '../../utils/logger.dart';
 import '../../utils/result.dart';
-import '../../utils/sum.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
 import '../services/sync/category_sync_service_impl.dart';
 import '../services/sync/operation_sync_service_impl.dart';
-import '../sources/local/db_converters/operation_type_converter.dart';
-import '../sources/remote/cloud_model_extensions.dart';
-import '../sources/remote/daos/table_dao.dart';
-import '../sources/remote/model_mapper.dart';
-import '../sources/remote/models/cloud_models.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;

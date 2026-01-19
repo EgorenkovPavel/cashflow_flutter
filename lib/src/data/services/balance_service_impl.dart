@@ -1,7 +1,5 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../../domain/interfaces/account_repository.dart';
-import '../../domain/interfaces/user_repository.dart';
 import '../../domain/services/balance_service.dart';
 import '../../domain/view_models/account_balance_view.dart';
 import '../sources/local/data/account_dao.dart';
@@ -12,19 +10,13 @@ import '../sources/local/entities/account_balance_entity.dart';
 
 /// Implementation of [BalanceService] that aggregates account, user, and balance data.
 class BalanceServiceImpl implements BalanceService {
-  final AccountRepository _accountRepository;
-  final UserRepository _userRepository;
   final AccountDao _accountDao;
   final UserDao _userDao;
 
   BalanceServiceImpl({
-    required AccountRepository accountRepository,
-    required UserRepository userRepository,
     required AccountDao accountDao,
     required UserDao userDao,
-  })  : _accountRepository = accountRepository,
-        _userRepository = userRepository,
-        _accountDao = accountDao,
+  })  : _accountDao = accountDao,
         _userDao = userDao;
 
   @override

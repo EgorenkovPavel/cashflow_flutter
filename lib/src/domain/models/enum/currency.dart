@@ -1,5 +1,4 @@
 
-
 enum Currency {
   RUB('₽'),
   USD('\$'),

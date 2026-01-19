@@ -118,7 +118,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     Emitter<MasterState> emit,
   ) async {
     final result = await _operationInteractor.getLast();
-    final op = await result.getOrNull();
+    final op = result.getOrNull();
 
     if (op == null) {
       return;
@@ -163,15 +163,15 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   FutureOr<void> _changeOperationType(
     _ChangeOperationTypeMasterEvent event,
     Emitter<MasterState> emit,
-  ) async {
+  ) {
     switch (event.operationType) {
-      case OperationType.INPUT:
+      case .INPUT:
         emit(MasterState.input(accountId: state.accountId, sum: state.sum));
-      case OperationType.OUTPUT:
+      case .OUTPUT:
         emit(MasterState.output(accountId: state.accountId, sum: state.sum));
-      case OperationType.TRANSFER:
+      case .TRANSFER:
         emit(MasterState.transfer(accountId: state.accountId, sum: state.sum));
-      case OperationType.EXCHANGE:
+      case .EXCHANGE:
         emit(
           MasterState.exchange(
             accountId: state.accountId,
@@ -180,7 +180,6 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           ),
         );
     }
-    ;
   }
 
   FutureOr<void> _changeAccount(

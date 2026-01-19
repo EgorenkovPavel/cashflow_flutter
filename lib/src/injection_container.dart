@@ -87,7 +87,8 @@ Future<void> init() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   sl.registerLazySingleton<SettingsSource>(
-      () => SettingsSourceImpl(sl<SharedPreferences>()));
+    () => SettingsSourceImpl(sl<SharedPreferences>()),
+  );
 
   sl.registerLazySingleton<Database>(() => Database());
   sl.registerLazySingleton<AccountDao>(() => AccountDao(sl<Database>()));
@@ -97,63 +98,69 @@ Future<void> init() async {
 
   // Repositories
   sl.registerLazySingleton<AccountRepository>(
-      () => AccountRepositoryImpl(sl<AccountDao>()));
+    () => AccountRepositoryImpl(sl<AccountDao>()),
+  );
   sl.registerLazySingleton<CategoryRepository>(
-      () => CategoryRepositoryImpl(sl<CategoryDao>()));
+    () => CategoryRepositoryImpl(sl<CategoryDao>()),
+  );
   sl.registerLazySingleton<OperationRepository>(
-      () => OperationRepositoryImpl(sl<OperationDao>()));
+    () => OperationRepositoryImpl(sl<OperationDao>()),
+  );
   sl.registerLazySingleton<UserRepository>(
-      () => UserRepositoryImpl(sl<UserDao>()));
+    () => UserRepositoryImpl(sl<UserDao>()),
+  );
   sl.registerLazySingleton<CurrencyRepository>(
-      () => CurrencyRepositoryImpl(
-            CurrencyRateSource(settingsSource: sl()),
-          ));
+    () => CurrencyRepositoryImpl(CurrencyRateSource(settingsSource: sl())),
+  );
 
   // Services
   sl.registerLazySingleton<BalanceService>(
-      () => BalanceServiceImpl(
-            accountRepository: sl<AccountRepository>(),
-            userRepository: sl<UserRepository>(),
-            accountDao: sl<AccountDao>(),
-            userDao: sl<UserDao>(),
-          ));
+    () => BalanceServiceImpl(
+      accountDao: sl<AccountDao>(),
+      userDao: sl<UserDao>(),
+    ),
+  );
 
   sl.registerLazySingleton<CashflowService>(
-      () => CashflowServiceImpl(
-            categoryRepository: sl<CategoryRepository>(),
-            categoryDao: sl<CategoryDao>(),
-          ));
+    () => CashflowServiceImpl(categoryDao: sl<CategoryDao>()),
+  );
 
   sl.registerLazySingleton<OperationViewService>(
-      () => OperationViewServiceImpl(
-            operationRepository: sl<OperationRepository>(),
-            userRepository: sl<UserRepository>(),
-            operationDao: sl<OperationDao>(),
-            userDao: sl<UserDao>(),
-          ));
+    () => OperationViewServiceImpl(
+      operationDao: sl<OperationDao>(),
+      userDao: sl<UserDao>(),
+    ),
+  );
 
   // Legacy DataRepository (deprecated, for backward compatibility)
-  sl.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(
-        accountDao: sl<AccountDao>(),
-        categoryDao: sl<CategoryDao>(),
-        operationDao: sl<OperationDao>(),
-        userDao: sl<UserDao>(),
-        currencyRateSource: CurrencyRateSource(settingsSource: sl()),
-      ));
+  sl.registerLazySingleton<DataRepository>(
+    () => DataRepositoryImpl(
+      accountDao: sl<AccountDao>(),
+      categoryDao: sl<CategoryDao>(),
+      operationDao: sl<OperationDao>(),
+      userDao: sl<UserDao>(),
+      currencyRateSource: CurrencyRateSource(settingsSource: sl()),
+    ),
+  );
 
   sl.registerLazySingleton<LocalSyncTable<BaseAccount>>(
-      () => AccountDataRepositoryImpl(sl(), sl()));
+    () => AccountDataRepositoryImpl(sl(), sl()),
+  );
   sl.registerLazySingleton<LocalSyncTable<Category>>(
-      () => CategoryDataRepositoryImpl(sl()));
+    () => CategoryDataRepositoryImpl(sl()),
+  );
   sl.registerLazySingleton<LocalSyncTable<Operation>>(
-      () => OperationDataRepositoryImpl(sl(), sl()));
+    () => OperationDataRepositoryImpl(sl(), sl()),
+  );
 
-  sl.registerLazySingleton<LocalSyncSource>(() => LocalSyncSourceImpl(
-        accountRepo: sl<LocalSyncTable<BaseAccount>>(),
-        categoryRepo: sl<LocalSyncTable<Category>>(),
-        operationRepo: sl<LocalSyncTable<Operation>>(),
-        dataRepository: sl<DataRepository>(),
-      ));
+  sl.registerLazySingleton<LocalSyncSource>(
+    () => LocalSyncSourceImpl(
+      accountRepo: sl<LocalSyncTable<BaseAccount>>(),
+      categoryRepo: sl<LocalSyncTable<Category>>(),
+      operationRepo: sl<LocalSyncTable<Operation>>(),
+      dataRepository: sl<DataRepository>(),
+    ),
+  );
 
   sl.registerLazySingleton<FirebaseFirestore>(() {
     final firestore = FirebaseFirestore.instance;
@@ -162,42 +169,49 @@ Future<void> init() async {
     return firestore;
   });
 
-  sl.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn(
-        scopes: [
-          'email',
-          'https://www.googleapis.com/auth/drive',
-        ],
-      ));
+  sl.registerLazySingleton<GoogleSignIn>(
+    () => GoogleSignIn(
+      scopes: ['email', 'https://www.googleapis.com/auth/drive'],
+    ),
+  );
 
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
   sl.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(sl<Connectivity>()));
+    () => NetworkInfoImpl(sl<Connectivity>()),
+  );
 
-  sl.registerLazySingleton<AuthSource>(() => GoogleAuth(
-        firebaseAuth: sl<FirebaseAuth>(),
-        googleSignIn: sl<GoogleSignIn>(),
-      ));
+  sl.registerLazySingleton<AuthSource>(
+    () => GoogleAuth(
+      firebaseAuth: sl<FirebaseAuth>(),
+      googleSignIn: sl<GoogleSignIn>(),
+    ),
+  );
 
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-        authSource: sl<AuthSource>(),
-        networkInfo: sl<NetworkInfo>(),
-      ));
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      authSource: sl<AuthSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
 
   sl.registerLazySingleton<RemoteDataSource>(
-      () => RemoteSourceImpl(sl<FirebaseFirestore>()));
+    () => RemoteSourceImpl(sl<FirebaseFirestore>()),
+  );
 
   final prefs = await SharedPreferences.getInstance();
 
   sl.registerLazySingleton<SharedPreferences>(() => prefs);
 
-  sl.registerLazySingleton<SyncRepository>(() => SyncRepositoryImpl(
-        localSource: sl<LocalSyncSource>(),
-        remoteSource: sl<RemoteDataSource>(),
-        networkInfo: sl<NetworkInfo>(),
-        dataRepository: sl<DataRepository>(),
-      ));
+  sl.registerLazySingleton<SyncRepository>(
+    () => SyncRepositoryImpl(
+      localSource: sl<LocalSyncSource>(),
+      remoteSource: sl<RemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+      dataRepository: sl<DataRepository>(),
+    ),
+  );
 
   sl.registerLazySingleton<BackupRepository>(
     () => BackupRepositoryImpl(sl<Database>()),
@@ -206,29 +220,31 @@ Future<void> init() async {
   //USE CASES
 
   sl.registerFactory(() => UserInteractor(sl<UserRepository>()));
-  sl.registerFactory(() => AccountInteractor(
-        sl<AccountRepository>(),
-        sl<BalanceService>(),
-      ));
-  sl.registerFactory(() => CategoryInteractor(
-        sl<CategoryRepository>(),
-        sl<CashflowService>(),
-      ));
-  sl.registerFactory(() => OperationInteractor(
-        sl<OperationRepository>(),
-        sl<OperationViewService>(),
-      ));
+  sl.registerFactory(
+    () => AccountInteractor(sl<AccountRepository>(), sl<BalanceService>()),
+  );
+  sl.registerFactory(
+    () => CategoryInteractor(sl<CategoryRepository>(), sl<CashflowService>()),
+  );
+  sl.registerFactory(
+    () => OperationInteractor(
+      sl<OperationRepository>(),
+      sl<OperationViewService>(),
+    ),
+  );
   sl.registerFactory(() => CurrencyInteractor(sl<CurrencyRepository>()));
 
   // BLOCs
 
   sl.registerLazySingleton(() => AuthBloc(sl<AuthRepository>()));
 
-  sl.registerLazySingleton(() => SyncBloc(
-        authBloc: sl<AuthBloc>(),
-        prefsRepository: sl<SettingsSource>(),
-        syncRepo: sl<SyncRepository>(),
-      ));
+  sl.registerLazySingleton(
+    () => SyncBloc(
+      authBloc: sl<AuthBloc>(),
+      prefsRepository: sl<SettingsSource>(),
+      syncRepo: sl<SyncRepository>(),
+    ),
+  );
 
   sl.registerLazySingleton(() => CurrencyRateBloc(sl<CurrencyInteractor>()));
 
@@ -236,39 +252,36 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => AccountBalanceBloc(sl<AccountInteractor>()));
 
-  sl.registerLazySingleton(() => CategoryCashflowBloc(
-        sl<CurrencyRateBloc>(),
-        sl<CategoryInteractor>(),
-      ));
+  sl.registerLazySingleton(
+    () =>
+        CategoryCashflowBloc(sl<CurrencyRateBloc>(), sl<CategoryInteractor>()),
+  );
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(
-    (mode, _) => DriveDialogBloc(
-      repository: sl<AuthRepository>(),
-      mode: mode,
+    (mode, _) => DriveDialogBloc(repository: sl<AuthRepository>(), mode: mode),
+  );
+
+  sl.registerFactory(
+    () => DriveBloc(
+      backupRepository: sl<BackupRepository>(),
+      authBloc: sl<AuthBloc>(),
+      authRepository: sl<AuthRepository>(),
     ),
   );
 
-  sl.registerFactory(() => DriveBloc(
-        backupRepository: sl<BackupRepository>(),
-        authBloc: sl<AuthBloc>(),
-        authRepository: sl<AuthRepository>(),
-      ));
-
-  sl.registerFactory(() => AccountDetailBloc(
-        sl<AccountInteractor>(),
-        sl<OperationInteractor>(),
-      ));
-  sl.registerFactory(() => AccountInputBloc(
-        sl<AccountInteractor>(),
-        sl<UserInteractor>(),
-      ));
+  sl.registerFactory(
+    () => AccountDetailBloc(sl<AccountInteractor>(), sl<OperationInteractor>()),
+  );
+  sl.registerFactory(
+    () => AccountInputBloc(sl<AccountInteractor>(), sl<UserInteractor>()),
+  );
 
   sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));
 
-  sl.registerFactory(() => CategoryDetailBloc(
-        sl<CategoryInteractor>(),
-        sl<OperationInteractor>(),
-      ));
+  sl.registerFactory(
+    () =>
+        CategoryDetailBloc(sl<CategoryInteractor>(), sl<OperationInteractor>()),
+  );
 
   sl.registerFactory(() => CategoryInputBloc(sl<CategoryInteractor>()));
   sl.registerFactory(() => LastOperationsBloc(sl<OperationInteractor>()));

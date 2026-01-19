@@ -1,6 +1,5 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../../domain/interfaces/category_repository.dart';
 import '../../domain/models/category/category_cashflow.dart';
 import '../../domain/models/enum/category_type.dart';
 import '../../domain/models/enum/operation_type.dart';
@@ -11,14 +10,11 @@ import '../sources/local/db_mapper.dart';
 
 /// Implementation of [CashflowService] that aggregates category cashflow data.
 class CashflowServiceImpl implements CashflowService {
-  final CategoryRepository _categoryRepository;
   final CategoryDao _categoryDao;
 
   CashflowServiceImpl({
-    required CategoryRepository categoryRepository,
     required CategoryDao categoryDao,
-  })  : _categoryRepository = categoryRepository,
-        _categoryDao = categoryDao;
+  })  : _categoryDao = categoryDao;
 
   @override
   Stream<List<CategoryCashFlow>> watchCashFlow(DateTime date) {

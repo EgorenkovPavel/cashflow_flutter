@@ -6,7 +6,6 @@ import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/edit_page/operation_edit_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/currency_menu.dart';
 import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
-import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/view_models.dart';

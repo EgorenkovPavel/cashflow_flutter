@@ -167,7 +167,7 @@ class _CategoryPageState extends State<CategoryPage> {
 }
 
 extension CategoryInputBlocExt on BuildContext {
-  onChangeBudgetType(BudgetType? type) {
+  void onChangeBudgetType(BudgetType? type) {
     if (type != null) {
       read<CategoryInputBloc>().add(
         CategoryInputEvent.changeBudgetType(budgetType: type),
@@ -175,19 +175,19 @@ extension CategoryInputBlocExt on BuildContext {
     }
   }
 
-  onChangeBudget(String value) => read<CategoryInputBloc>().add(
+  void onChangeBudget(String value) => read<CategoryInputBloc>().add(
         CategoryInputEvent.changeBudget(
           budget: int.parse(value.isEmpty ? "0" : value),
         ),
       );
 
-  onChangeTitle(String value) => read<CategoryInputBloc>()
+  void onChangeTitle(String value) => read<CategoryInputBloc>()
       .add(CategoryInputEvent.changeTitle(title: value));
 
-  onChangeParent(int? parentId) => read<CategoryInputBloc>()
+  void onChangeParent(int? parentId) => read<CategoryInputBloc>()
       .add(CategoryInputEvent.changeParent(parentId: parentId));
 
-  onSave() => read<CategoryInputBloc>().add(const CategoryInputEvent.save());
+  void onSave() => read<CategoryInputBloc>().add(const CategoryInputEvent.save());
 
   BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
         (bloc) => bloc.state.maybeMap(

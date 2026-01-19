@@ -50,7 +50,7 @@ abstract class OperationFilterState with _$OperationFilterState {
         categoryIds: categoryIds,
       );
 
-  static byFilter(OperationListFilter cfilter) => OperationFilterState(
+  static OperationFilterState byFilter(OperationListFilter cfilter) => OperationFilterState(
         period: cfilter.period,
         accountIds: cfilter.accountIds,
         categoryIds: cfilter.categoryIds,

@@ -295,10 +295,10 @@ extension BlocExt on BuildContext {
     return readOutCategoryItems().where((e) => ids.contains(e.id)).toSet();
   }
 
-  onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
+  void onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.setPeriod(period: date));
 
-  onDeletePeriod() =>
+  void onDeletePeriod() =>
       read<OperationFilterBloc>().add(const OperationFilterEvent.resetPeriod());
 
   void onAddAccount(AccountView account) => read<OperationFilterBloc>()
@@ -307,11 +307,11 @@ extension BlocExt on BuildContext {
   void onAddCategory(CategoryView category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.addCategory(category: category));
 
-  onDeleteAccount(AccountView account) =>
+  void onDeleteAccount(AccountView account) =>
       read<OperationFilterBloc>().add(OperationFilterEvent.removeAccount(
         account: account,
       ));
 
-  onDeleteCategory(CategoryView category) => read<OperationFilterBloc>()
+  void onDeleteCategory(CategoryView category) => read<OperationFilterBloc>()
       .add(OperationFilterEvent.removeCategory(category: category));
 }
