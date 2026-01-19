@@ -414,7 +414,7 @@ $Res call({
 });
 
 
-
+$AccountViewCopyWith<$Res> get account;
 
 }
 /// @nodoc
@@ -434,7 +434,16 @@ as AccountView,
   ));
 }
 
-
+/// Create a copy of OperationFilterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AccountViewCopyWith<$Res> get account {
+  
+  return $AccountViewCopyWith<$Res>(_self.account, (value) {
+    return _then(_self.copyWith(account: value));
+  });
+}
 }
 
 /// @nodoc
@@ -480,7 +489,7 @@ $Res call({
 });
 
 
-
+$AccountViewCopyWith<$Res> get account;
 
 }
 /// @nodoc
@@ -500,7 +509,16 @@ as AccountView,
   ));
 }
 
-
+/// Create a copy of OperationFilterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AccountViewCopyWith<$Res> get account {
+  
+  return $AccountViewCopyWith<$Res>(_self.account, (value) {
+    return _then(_self.copyWith(account: value));
+  });
+}
 }
 
 /// @nodoc

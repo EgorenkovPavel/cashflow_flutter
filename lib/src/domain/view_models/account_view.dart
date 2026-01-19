@@ -1,11 +1,9 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AccountView extends Equatable{
-  final int id;
-  final String title;
+part 'account_view.freezed.dart';
 
-  const AccountView({required this.id, required this.title});
-
-  @override
-  List<Object?> get props => [id, title];
+@freezed
+abstract class AccountView with _$AccountView {
+  const factory AccountView({required int id, required String title}) =
+      _AccountView;
 }
