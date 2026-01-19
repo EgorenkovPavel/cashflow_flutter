@@ -51,7 +51,7 @@ sealed class Operation with _$Operation{
     required Sum recSum,
   }) = ExchangeOperation;
 
-  OperationType get type => switch (this) {
+  OperationType get operationType => switch (this) {
     InputOperation() => OperationType.INPUT,
     OutputOperation() => OperationType.OUTPUT,
     TransferOperation() => OperationType.TRANSFER,

@@ -49,7 +49,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         input: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -60,7 +60,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         output: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -71,7 +71,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         transfer: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           recAccount: Value(o.recAccount),
           sum: Value(o.sum.sum),
@@ -82,7 +82,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         exchange: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           sum: Value(o.sum.sum),
           currencySent: Value(o.sum.currency),
@@ -103,7 +103,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         input: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -114,7 +114,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         output: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -125,7 +125,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         transfer: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           recAccount: Value(o.recAccount),
           sum: Value(o.sum.sum),
@@ -136,7 +136,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
         exchange: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           sum: Value(o.sum.sum),
           currencySent: Value(o.sum.currency),

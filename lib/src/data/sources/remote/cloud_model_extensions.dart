@@ -44,7 +44,7 @@ extension CloudOperationMapper on Operation {
     input: (o) => CloudOperation(
       id: o.cloudId,
       date: o.date,
-      operationType: const OperationTypeConverter().toSql(o.type),
+      operationType: const OperationTypeConverter().toSql(o.operationType),
       account: accountCloudId,
       category: analyticCloudId,
       sum: o.sum.sum,
@@ -55,7 +55,7 @@ extension CloudOperationMapper on Operation {
     output: (o) => CloudOperation(
       id: o.cloudId,
       date: o.date,
-      operationType: const OperationTypeConverter().toSql(o.type),
+      operationType: const OperationTypeConverter().toSql(o.operationType),
       account: accountCloudId,
       category: analyticCloudId,
       sum: o.sum.sum,
@@ -66,7 +66,7 @@ extension CloudOperationMapper on Operation {
     transfer: (o) => CloudOperation(
       id: o.cloudId,
       date: o.date,
-      operationType: const OperationTypeConverter().toSql(o.type),
+      operationType: const OperationTypeConverter().toSql(o.operationType),
       account: accountCloudId,
       recAccount: analyticCloudId,
       sum: o.sum.sum,
@@ -77,7 +77,7 @@ extension CloudOperationMapper on Operation {
     exchange: (o) => CloudOperation(
       id: o.cloudId,
       date: o.date,
-      operationType: const OperationTypeConverter().toSql(o.type),
+      operationType: const OperationTypeConverter().toSql(o.operationType),
       account: accountCloudId,
       sum: o.sum.sum,
       recSum: o.recSum.sum,

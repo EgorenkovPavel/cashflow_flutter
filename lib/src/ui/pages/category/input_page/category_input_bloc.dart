@@ -36,7 +36,7 @@ sealed class CategoryInputState with _$CategoryInputState {
   const CategoryInputState._();
 
   const factory CategoryInputState.item({
-    CategoryItem? category,
+    Category? category,
     required CategoryType type,
     required BudgetType budgetType,
     required String title,
@@ -46,7 +46,7 @@ sealed class CategoryInputState with _$CategoryInputState {
   }) = _ItemCategoryInputState;
 
   const factory CategoryInputState.group({
-    CategoryGroup? category,
+    Category? category,
     required CategoryType type,
     required String title,
     required bool isSaved,
@@ -228,7 +228,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
       await state.map(
         item: (s) async {
           final result = await _interactor.updateCategoryItem(
-            category: s.category!,
+            category: s.category! as CategoryItem,
             title: s.title,
             budget: s.budget,
             budgetType: s.budgetType,
@@ -245,7 +245,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
         },
         group: (s) async {
           final result = await _interactor.updateCategoryGroup(
-            category: s.category!,
+            category: s.category! as CategoryGroup,
             title: s.title,
           );
           result.fold(

@@ -72,7 +72,7 @@ abstract class OperationEditState with _$OperationEditState {
   OperationEditState fromOperation(Operation operation) => switch (operation) {
     InputOperation() => copyWith(
       operation: operation,
-      operationType: operation.type,
+      operationType: operation.operationType,
       date: operation.date,
       accountId: operation.account,
       categoryId: operation.category,
@@ -81,7 +81,7 @@ abstract class OperationEditState with _$OperationEditState {
     ),
     OutputOperation() => copyWith(
       operation: operation,
-      operationType: operation.type,
+      operationType: operation.operationType,
       date: operation.date,
       accountId: operation.account,
       categoryId: operation.category,
@@ -90,7 +90,7 @@ abstract class OperationEditState with _$OperationEditState {
     ),
     TransferOperation() => copyWith(
       operation: operation,
-      operationType: operation.type,
+      operationType: operation.operationType,
       date: operation.date,
       accountId: operation.account,
       recAccountId: operation.recAccount,
@@ -99,7 +99,7 @@ abstract class OperationEditState with _$OperationEditState {
     ),
     ExchangeOperation() => copyWith(
       operation: operation,
-      operationType: operation.type,
+      operationType: operation.operationType,
       date: operation.date,
       accountId: operation.account,
       sum: operation.sum,

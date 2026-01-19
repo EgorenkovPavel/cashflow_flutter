@@ -65,7 +65,7 @@ class OperationRepositoryImpl implements OperationRepository {
         input: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -74,7 +74,7 @@ class OperationRepositoryImpl implements OperationRepository {
         output: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           category: Value(o.category),
           sum: Value(o.sum.sum),
@@ -83,7 +83,7 @@ class OperationRepositoryImpl implements OperationRepository {
         transfer: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           recAccount: Value(o.recAccount),
           sum: Value(o.sum.sum),
@@ -92,7 +92,7 @@ class OperationRepositoryImpl implements OperationRepository {
         exchange: (o) => OperationsCompanion(
           cloudId: Value(o.cloudId),
           date: Value(o.date),
-          operationType: Value(o.type),
+          operationType: Value(o.operationType),
           account: Value(o.account),
           sum: Value(o.sum.sum),
           recSum: Value(o.recSum.sum),
