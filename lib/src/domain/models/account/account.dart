@@ -1,68 +1,20 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class BaseAccount extends Equatable {
-  final int id;
-  final String cloudId;
-  final String title;
-  final int? userId;
+part 'account.freezed.dart';
 
-  const BaseAccount({
-    required this.id,
-    required this.cloudId,
-    required this.title,
-    required this.userId,
-  });
+@freezed
+sealed class BaseAccount with _$BaseAccount {
+  const factory BaseAccount.account({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    required String title,
+    required int? userId,
+  }) = Account;
 
-  // Abstract methods to be implemented by subclasses
-  BaseAccount copyWith({int? id, String? cloudId, String? title});
-
-  BaseAccount setUser(int? userId);
-}
-
-class Account extends BaseAccount {
-  const Account({
-    super.id = 0,
-    super.cloudId = '',
-    required super.title,
-    required super.userId,
-  });
-
-  @override
-  List<Object?> get props => [id, cloudId, title, userId];
-
-  @override
-  Account setUser(int? userId) =>
-      Account(id: id, cloudId: cloudId, title: title, userId: userId);
-
-  @override
-  Account copyWith({int? id, String? cloudId, String? title}) => Account(
-    id: id ?? this.id,
-    cloudId: cloudId ?? this.cloudId,
-    title: title ?? this.title,
-    userId: userId,
-  );
-}
-
-class Debt extends BaseAccount {
-  const Debt({
-    super.id = 0,
-    super.cloudId = '',
-    required super.title,
-    required super.userId,
-  });
-
-  @override
-  List<Object?> get props => [id, cloudId, title, userId];
-
-  @override
-  Debt setUser(int? userId) =>
-      Debt(id: id, cloudId: cloudId, title: title, userId: userId);
-
-  @override
-  Debt copyWith({int? id, String? cloudId, String? title}) => Debt(
-    id: id ?? this.id,
-    cloudId: cloudId ?? this.cloudId,
-    title: title ?? this.title,
-    userId: userId,
-  );
+  const factory BaseAccount.debt({
+    @Default(0) int id,
+    @Default('') String cloudId,
+    required String title,
+    required int? userId,
+  }) = Debt;
 }

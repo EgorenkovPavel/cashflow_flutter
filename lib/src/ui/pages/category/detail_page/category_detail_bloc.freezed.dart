@@ -292,7 +292,7 @@ $Res call({
 });
 
 
-
+$CategoryCopyWith<$Res> get category;
 
 }
 /// @nodoc
@@ -312,7 +312,16 @@ as Category,
   ));
 }
 
-
+/// Create a copy of CategoryDetailEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryCopyWith<$Res> get category {
+  
+  return $CategoryCopyWith<$Res>(_self.category, (value) {
+    return _then(_self.copyWith(category: value));
+  });
+}
 }
 
 /// @nodoc

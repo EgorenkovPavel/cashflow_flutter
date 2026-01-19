@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 import 'package:money_tracker/src/domain/models.dart' as model;
 import 'package:money_tracker/src/injection_container.dart';
 import 'package:spring1/spring.dart';
+
+import '../../../../domain/interfaces/account_repository.dart';
+import '../../../../domain/interfaces/category_repository.dart';
+import '../../../../domain/interfaces/operation_repository.dart';
 
 class SpringPage extends StatelessWidget {
   const SpringPage({super.key});
@@ -19,7 +22,7 @@ class SpringPage extends StatelessWidget {
 
 
     Map<int, BaseAccount> addedAccounts = {};
-    final accounts = await sl<DataRepository>().getAllAccounts();
+    final accounts = await sl<AccountRepository>().getAllAccounts();
     for (final account in accounts) {
       switch (account) {
         case model.Account():
@@ -33,21 +36,21 @@ class SpringPage extends StatelessWidget {
     return;
 
     Map<int, Category> addedCategories = {};
-    final categories = await sl<DataRepository>().getAllCategories();
+    final categories = await sl<CategoryRepository>().getAllCategories();
     for (final category in categories.whereType<model.CategoryGroup>()) {
-      switch (category) {
-        case model.InputCategoryGroup():
+      switch (category.type) {
+        case model.CategoryType.INPUT:
           addedCategories[category.id] = await connector.categories
               .createInputCategoryGroup(category.title);
-        case model.OutputCategoryGroup():
+        case model.CategoryType.OUTPUT:
           addedCategories[category.id] = await connector.categories
               .createOutputCategoryGroup(category.title);
       }
     }
 
     for (final category in categories.whereType<model.CategoryItem>()) {
-      switch (category) {
-        case model.InputCategoryItem():
+      switch (category.type) {
+        case model.CategoryType.INPUT:
           addedCategories[category.id] =
               await connector.categories.createInputCategoryItem(
             category.title,
@@ -56,7 +59,7 @@ class SpringPage extends StatelessWidget {
                 ? null
                 : addedCategories[category.parentId]!.id,
           );
-        case model.OutputCategoryItem():
+        case model.CategoryType.OUTPUT:
           addedCategories[category.id] =
               await connector.categories.createOutputCategoryItem(
             category.title,
@@ -68,7 +71,7 @@ class SpringPage extends StatelessWidget {
       }
     }
 
-    final operations = await sl<DataRepository>().getAllOperations();
+    final operations = await sl<OperationRepository>().getAllOperations();
     for (final operation in operations) {
       switch (operation) {
         case model.InputOperation():

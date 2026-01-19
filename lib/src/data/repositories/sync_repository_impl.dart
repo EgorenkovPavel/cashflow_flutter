@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:money_tracker/src/data/services/sync/account_sync_service_impl.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
 
 import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
+import '../../domain/interfaces/user_repository.dart';
 import '../../domain/models.dart';
 import '../../utils/result.dart';
 import '../interfaces/local_sync_source.dart';
@@ -17,18 +17,18 @@ class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;
   final RemoteDataSource _remoteSource;
   final NetworkInfo _networkInfo;
-  final DataRepository _dataRepository;
+  final UserRepository _userRepository;
 
   SyncRepositoryImpl({
     required RemoteDataSource remoteSource,
     required LocalSyncSource localSource,
     required NetworkInfo networkInfo,
-    required DataRepository dataRepository,
+    required UserRepository userRepository,
   })
       : _remoteSource = remoteSource,
         _localSource = localSource,
         _networkInfo = networkInfo,
-        _dataRepository = dataRepository;
+        _userRepository = userRepository;
 
   @override
   Future<void> addToDatabase(User user) =>
@@ -71,11 +71,11 @@ class SyncRepositoryImpl implements SyncRepository {
 
     final cloudUsers = (await _remoteSource.getAllUsers()).getOrThrow();
     for (final cloudUser in cloudUsers) {
-      final localUser = await _dataRepository.getUserByGoogleId(
+      final localUser = await _userRepository.getUserByGoogleId(
         cloudUser.googleId,
       );
       if (localUser == null) {
-        await _dataRepository.insertUser(cloudUser);
+        await _userRepository.insertUser(cloudUser);
       }
     }
 

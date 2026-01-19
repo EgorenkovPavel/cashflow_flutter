@@ -548,8 +548,6 @@ import '../../domain/interfaces/currency_repository.dart';
 import '../../domain/services/balance_service.dart';
 import '../../domain/services/cashflow_service.dart';
 import '../../domain/services/operation_view_service.dart';
-import '../../domain/interfaces/data_repository.dart';
-import '../../data/repositories/data_repository_impl.dart';
 
 void registerDataModule(GetIt sl) {
   // DAOs

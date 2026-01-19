@@ -640,7 +640,7 @@ String toString() {
 /// @nodoc
 mixin _$CategoryInputState {
 
- Category? get category; String get title; bool get isSaved;
+ InvalidType get category; CategoryType get type; String get title; bool get isSaved;
 /// Create a copy of CategoryInputState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -651,16 +651,16 @@ $CategoryInputStateCopyWith<CategoryInputState> get copyWith => _$CategoryInputS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputState&&const DeepCollectionEquality().equals(other.category, category)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,title,isSaved);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(category),type,title,isSaved);
 
 @override
 String toString() {
-  return 'CategoryInputState(category: $category, title: $title, isSaved: $isSaved)';
+  return 'CategoryInputState(category: $category, type: $type, title: $title, isSaved: $isSaved)';
 }
 
 
@@ -671,7 +671,7 @@ abstract mixin class $CategoryInputStateCopyWith<$Res>  {
   factory $CategoryInputStateCopyWith(CategoryInputState value, $Res Function(CategoryInputState) _then) = _$CategoryInputStateCopyWithImpl;
 @useResult
 $Res call({
- String title, bool isSaved
+ InvalidType category, CategoryType type, String title, bool isSaved
 });
 
 
@@ -688,9 +688,11 @@ class _$CategoryInputStateCopyWithImpl<$Res>
 
 /// Create a copy of CategoryInputState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? isSaved = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? category = freezed,Object? type = null,Object? title = null,Object? isSaved = null,}) {
   return _then(_self.copyWith(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as InvalidType,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -713,14 +715,12 @@ extension CategoryInputStatePatterns on CategoryInputState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InputItemCategoryInputState value)?  inputItem,TResult Function( _OutputItemCategoryInputState value)?  outputItem,TResult Function( _InputGroupCategoryInputState value)?  inputGroup,TResult Function( _OutputGroupCategoryInputState value)?  outputGroup,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ItemCategoryInputState value)?  item,TResult Function( _GroupCategoryInputState value)?  group,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState() when inputItem != null:
-return inputItem(_that);case _OutputItemCategoryInputState() when outputItem != null:
-return outputItem(_that);case _InputGroupCategoryInputState() when inputGroup != null:
-return inputGroup(_that);case _OutputGroupCategoryInputState() when outputGroup != null:
-return outputGroup(_that);case _:
+case _ItemCategoryInputState() when item != null:
+return item(_that);case _GroupCategoryInputState() when group != null:
+return group(_that);case _:
   return orElse();
 
 }
@@ -738,14 +738,12 @@ return outputGroup(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InputItemCategoryInputState value)  inputItem,required TResult Function( _OutputItemCategoryInputState value)  outputItem,required TResult Function( _InputGroupCategoryInputState value)  inputGroup,required TResult Function( _OutputGroupCategoryInputState value)  outputGroup,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ItemCategoryInputState value)  item,required TResult Function( _GroupCategoryInputState value)  group,}){
 final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState():
-return inputItem(_that);case _OutputItemCategoryInputState():
-return outputItem(_that);case _InputGroupCategoryInputState():
-return inputGroup(_that);case _OutputGroupCategoryInputState():
-return outputGroup(_that);}
+case _ItemCategoryInputState():
+return item(_that);case _GroupCategoryInputState():
+return group(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -759,14 +757,12 @@ return outputGroup(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InputItemCategoryInputState value)?  inputItem,TResult? Function( _OutputItemCategoryInputState value)?  outputItem,TResult? Function( _InputGroupCategoryInputState value)?  inputGroup,TResult? Function( _OutputGroupCategoryInputState value)?  outputGroup,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ItemCategoryInputState value)?  item,TResult? Function( _GroupCategoryInputState value)?  group,}){
 final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState() when inputItem != null:
-return inputItem(_that);case _OutputItemCategoryInputState() when outputItem != null:
-return outputItem(_that);case _InputGroupCategoryInputState() when inputGroup != null:
-return inputGroup(_that);case _OutputGroupCategoryInputState() when outputGroup != null:
-return outputGroup(_that);case _:
+case _ItemCategoryInputState() when item != null:
+return item(_that);case _GroupCategoryInputState() when group != null:
+return group(_that);case _:
   return null;
 
 }
@@ -783,13 +779,11 @@ return outputGroup(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( InputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  inputItem,TResult Function( OutputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  outputItem,TResult Function( InputCategoryGroup? category,  String title,  bool isSaved)?  inputGroup,TResult Function( OutputCategoryGroup? category,  String title,  bool isSaved)?  outputGroup,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( CategoryItem? category,  CategoryType type,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  item,TResult Function( CategoryGroup? category,  CategoryType type,  String title,  bool isSaved)?  group,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState() when inputItem != null:
-return inputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _OutputItemCategoryInputState() when outputItem != null:
-return outputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _InputGroupCategoryInputState() when inputGroup != null:
-return inputGroup(_that.category,_that.title,_that.isSaved);case _OutputGroupCategoryInputState() when outputGroup != null:
-return outputGroup(_that.category,_that.title,_that.isSaved);case _:
+case _ItemCategoryInputState() when item != null:
+return item(_that.category,_that.type,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _GroupCategoryInputState() when group != null:
+return group(_that.category,_that.type,_that.title,_that.isSaved);case _:
   return orElse();
 
 }
@@ -807,13 +801,11 @@ return outputGroup(_that.category,_that.title,_that.isSaved);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( InputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)  inputItem,required TResult Function( OutputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)  outputItem,required TResult Function( InputCategoryGroup? category,  String title,  bool isSaved)  inputGroup,required TResult Function( OutputCategoryGroup? category,  String title,  bool isSaved)  outputGroup,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( CategoryItem? category,  CategoryType type,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)  item,required TResult Function( CategoryGroup? category,  CategoryType type,  String title,  bool isSaved)  group,}) {final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState():
-return inputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _OutputItemCategoryInputState():
-return outputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _InputGroupCategoryInputState():
-return inputGroup(_that.category,_that.title,_that.isSaved);case _OutputGroupCategoryInputState():
-return outputGroup(_that.category,_that.title,_that.isSaved);}
+case _ItemCategoryInputState():
+return item(_that.category,_that.type,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _GroupCategoryInputState():
+return group(_that.category,_that.type,_that.title,_that.isSaved);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -827,13 +819,11 @@ return outputGroup(_that.category,_that.title,_that.isSaved);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( InputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  inputItem,TResult? Function( OutputCategoryItem? category,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  outputItem,TResult? Function( InputCategoryGroup? category,  String title,  bool isSaved)?  inputGroup,TResult? Function( OutputCategoryGroup? category,  String title,  bool isSaved)?  outputGroup,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( CategoryItem? category,  CategoryType type,  BudgetType budgetType,  String title,  int budget,  int? parent,  bool isSaved)?  item,TResult? Function( CategoryGroup? category,  CategoryType type,  String title,  bool isSaved)?  group,}) {final _that = this;
 switch (_that) {
-case _InputItemCategoryInputState() when inputItem != null:
-return inputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _OutputItemCategoryInputState() when outputItem != null:
-return outputItem(_that.category,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _InputGroupCategoryInputState() when inputGroup != null:
-return inputGroup(_that.category,_that.title,_that.isSaved);case _OutputGroupCategoryInputState() when outputGroup != null:
-return outputGroup(_that.category,_that.title,_that.isSaved);case _:
+case _ItemCategoryInputState() when item != null:
+return item(_that.category,_that.type,_that.budgetType,_that.title,_that.budget,_that.parent,_that.isSaved);case _GroupCategoryInputState() when group != null:
+return group(_that.category,_that.type,_that.title,_that.isSaved);case _:
   return null;
 
 }
@@ -844,11 +834,12 @@ return outputGroup(_that.category,_that.title,_that.isSaved);case _:
 /// @nodoc
 
 
-class _InputItemCategoryInputState extends CategoryInputState {
-  const _InputItemCategoryInputState({this.category, required this.budgetType, required this.title, required this.budget, required this.parent, required this.isSaved}): super._();
+class _ItemCategoryInputState extends CategoryInputState {
+  const _ItemCategoryInputState({this.category, required this.type, required this.budgetType, required this.title, required this.budget, required this.parent, required this.isSaved}): super._();
   
 
-@override final  InputCategoryItem? category;
+@override final  CategoryItem? category;
+@override final  CategoryType type;
  final  BudgetType budgetType;
 @override final  String title;
  final  int budget;
@@ -859,33 +850,33 @@ class _InputItemCategoryInputState extends CategoryInputState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$InputItemCategoryInputStateCopyWith<_InputItemCategoryInputState> get copyWith => __$InputItemCategoryInputStateCopyWithImpl<_InputItemCategoryInputState>(this, _$identity);
+_$ItemCategoryInputStateCopyWith<_ItemCategoryInputState> get copyWith => __$ItemCategoryInputStateCopyWithImpl<_ItemCategoryInputState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputItemCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemCategoryInputState&&const DeepCollectionEquality().equals(other.category, category)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,budgetType,title,budget,parent,isSaved);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(category),type,budgetType,title,budget,parent,isSaved);
 
 @override
 String toString() {
-  return 'CategoryInputState.inputItem(category: $category, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
+  return 'CategoryInputState.item(category: $category, type: $type, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$InputItemCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
-  factory _$InputItemCategoryInputStateCopyWith(_InputItemCategoryInputState value, $Res Function(_InputItemCategoryInputState) _then) = __$InputItemCategoryInputStateCopyWithImpl;
+abstract mixin class _$ItemCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
+  factory _$ItemCategoryInputStateCopyWith(_ItemCategoryInputState value, $Res Function(_ItemCategoryInputState) _then) = __$ItemCategoryInputStateCopyWithImpl;
 @override @useResult
 $Res call({
- InputCategoryItem? category, BudgetType budgetType, String title, int budget, int? parent, bool isSaved
+ CategoryItem? category, CategoryType type, BudgetType budgetType, String title, int budget, int? parent, bool isSaved
 });
 
 
@@ -893,19 +884,20 @@ $Res call({
 
 }
 /// @nodoc
-class __$InputItemCategoryInputStateCopyWithImpl<$Res>
-    implements _$InputItemCategoryInputStateCopyWith<$Res> {
-  __$InputItemCategoryInputStateCopyWithImpl(this._self, this._then);
+class __$ItemCategoryInputStateCopyWithImpl<$Res>
+    implements _$ItemCategoryInputStateCopyWith<$Res> {
+  __$ItemCategoryInputStateCopyWithImpl(this._self, this._then);
 
-  final _InputItemCategoryInputState _self;
-  final $Res Function(_InputItemCategoryInputState) _then;
+  final _ItemCategoryInputState _self;
+  final $Res Function(_ItemCategoryInputState) _then;
 
 /// Create a copy of CategoryInputState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? budgetType = null,Object? title = null,Object? budget = null,Object? parent = freezed,Object? isSaved = null,}) {
-  return _then(_InputItemCategoryInputState(
+@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? type = null,Object? budgetType = null,Object? title = null,Object? budget = null,Object? parent = freezed,Object? isSaved = null,}) {
+  return _then(_ItemCategoryInputState(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as InputCategoryItem?,budgetType: null == budgetType ? _self.budgetType : budgetType // ignore: cast_nullable_to_non_nullable
+as CategoryItem?,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,budgetType: null == budgetType ? _self.budgetType : budgetType // ignore: cast_nullable_to_non_nullable
 as BudgetType,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,budget: null == budget ? _self.budget : budget // ignore: cast_nullable_to_non_nullable
 as int,parent: freezed == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
@@ -920,87 +912,12 @@ as bool,
 /// @nodoc
 
 
-class _OutputItemCategoryInputState extends CategoryInputState {
-  const _OutputItemCategoryInputState({this.category, required this.budgetType, required this.title, required this.budget, required this.parent, required this.isSaved}): super._();
+class _GroupCategoryInputState extends CategoryInputState {
+  const _GroupCategoryInputState({this.category, required this.type, required this.title, required this.isSaved}): super._();
   
 
-@override final  OutputCategoryItem? category;
- final  BudgetType budgetType;
-@override final  String title;
- final  int budget;
- final  int? parent;
-@override final  bool isSaved;
-
-/// Create a copy of CategoryInputState
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$OutputItemCategoryInputStateCopyWith<_OutputItemCategoryInputState> get copyWith => __$OutputItemCategoryInputStateCopyWithImpl<_OutputItemCategoryInputState>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OutputItemCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,category,budgetType,title,budget,parent,isSaved);
-
-@override
-String toString() {
-  return 'CategoryInputState.outputItem(category: $category, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$OutputItemCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
-  factory _$OutputItemCategoryInputStateCopyWith(_OutputItemCategoryInputState value, $Res Function(_OutputItemCategoryInputState) _then) = __$OutputItemCategoryInputStateCopyWithImpl;
-@override @useResult
-$Res call({
- OutputCategoryItem? category, BudgetType budgetType, String title, int budget, int? parent, bool isSaved
-});
-
-
-
-
-}
-/// @nodoc
-class __$OutputItemCategoryInputStateCopyWithImpl<$Res>
-    implements _$OutputItemCategoryInputStateCopyWith<$Res> {
-  __$OutputItemCategoryInputStateCopyWithImpl(this._self, this._then);
-
-  final _OutputItemCategoryInputState _self;
-  final $Res Function(_OutputItemCategoryInputState) _then;
-
-/// Create a copy of CategoryInputState
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? budgetType = null,Object? title = null,Object? budget = null,Object? parent = freezed,Object? isSaved = null,}) {
-  return _then(_OutputItemCategoryInputState(
-category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as OutputCategoryItem?,budgetType: null == budgetType ? _self.budgetType : budgetType // ignore: cast_nullable_to_non_nullable
-as BudgetType,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,budget: null == budget ? _self.budget : budget // ignore: cast_nullable_to_non_nullable
-as int,parent: freezed == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
-as int?,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
-as bool,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _InputGroupCategoryInputState extends CategoryInputState {
-  const _InputGroupCategoryInputState({this.category, required this.title, required this.isSaved}): super._();
-  
-
-@override final  InputCategoryGroup? category;
+@override final  CategoryGroup? category;
+@override final  CategoryType type;
 @override final  String title;
 @override final  bool isSaved;
 
@@ -1008,33 +925,33 @@ class _InputGroupCategoryInputState extends CategoryInputState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$InputGroupCategoryInputStateCopyWith<_InputGroupCategoryInputState> get copyWith => __$InputGroupCategoryInputStateCopyWithImpl<_InputGroupCategoryInputState>(this, _$identity);
+_$GroupCategoryInputStateCopyWith<_GroupCategoryInputState> get copyWith => __$GroupCategoryInputStateCopyWithImpl<_GroupCategoryInputState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputGroupCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GroupCategoryInputState&&const DeepCollectionEquality().equals(other.category, category)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,title,isSaved);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(category),type,title,isSaved);
 
 @override
 String toString() {
-  return 'CategoryInputState.inputGroup(category: $category, title: $title, isSaved: $isSaved)';
+  return 'CategoryInputState.group(category: $category, type: $type, title: $title, isSaved: $isSaved)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$InputGroupCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
-  factory _$InputGroupCategoryInputStateCopyWith(_InputGroupCategoryInputState value, $Res Function(_InputGroupCategoryInputState) _then) = __$InputGroupCategoryInputStateCopyWithImpl;
+abstract mixin class _$GroupCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
+  factory _$GroupCategoryInputStateCopyWith(_GroupCategoryInputState value, $Res Function(_GroupCategoryInputState) _then) = __$GroupCategoryInputStateCopyWithImpl;
 @override @useResult
 $Res call({
- InputCategoryGroup? category, String title, bool isSaved
+ CategoryGroup? category, CategoryType type, String title, bool isSaved
 });
 
 
@@ -1042,89 +959,20 @@ $Res call({
 
 }
 /// @nodoc
-class __$InputGroupCategoryInputStateCopyWithImpl<$Res>
-    implements _$InputGroupCategoryInputStateCopyWith<$Res> {
-  __$InputGroupCategoryInputStateCopyWithImpl(this._self, this._then);
+class __$GroupCategoryInputStateCopyWithImpl<$Res>
+    implements _$GroupCategoryInputStateCopyWith<$Res> {
+  __$GroupCategoryInputStateCopyWithImpl(this._self, this._then);
 
-  final _InputGroupCategoryInputState _self;
-  final $Res Function(_InputGroupCategoryInputState) _then;
+  final _GroupCategoryInputState _self;
+  final $Res Function(_GroupCategoryInputState) _then;
 
 /// Create a copy of CategoryInputState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? title = null,Object? isSaved = null,}) {
-  return _then(_InputGroupCategoryInputState(
+@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? type = null,Object? title = null,Object? isSaved = null,}) {
+  return _then(_GroupCategoryInputState(
 category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as InputCategoryGroup?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
-as bool,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _OutputGroupCategoryInputState extends CategoryInputState {
-  const _OutputGroupCategoryInputState({this.category, required this.title, required this.isSaved}): super._();
-  
-
-@override final  OutputCategoryGroup? category;
-@override final  String title;
-@override final  bool isSaved;
-
-/// Create a copy of CategoryInputState
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$OutputGroupCategoryInputStateCopyWith<_OutputGroupCategoryInputState> get copyWith => __$OutputGroupCategoryInputStateCopyWithImpl<_OutputGroupCategoryInputState>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OutputGroupCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,category,title,isSaved);
-
-@override
-String toString() {
-  return 'CategoryInputState.outputGroup(category: $category, title: $title, isSaved: $isSaved)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$OutputGroupCategoryInputStateCopyWith<$Res> implements $CategoryInputStateCopyWith<$Res> {
-  factory _$OutputGroupCategoryInputStateCopyWith(_OutputGroupCategoryInputState value, $Res Function(_OutputGroupCategoryInputState) _then) = __$OutputGroupCategoryInputStateCopyWithImpl;
-@override @useResult
-$Res call({
- OutputCategoryGroup? category, String title, bool isSaved
-});
-
-
-
-
-}
-/// @nodoc
-class __$OutputGroupCategoryInputStateCopyWithImpl<$Res>
-    implements _$OutputGroupCategoryInputStateCopyWith<$Res> {
-  __$OutputGroupCategoryInputStateCopyWithImpl(this._self, this._then);
-
-  final _OutputGroupCategoryInputState _self;
-  final $Res Function(_OutputGroupCategoryInputState) _then;
-
-/// Create a copy of CategoryInputState
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? category = freezed,Object? title = null,Object? isSaved = null,}) {
-  return _then(_OutputGroupCategoryInputState(
-category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as OutputCategoryGroup?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as CategoryGroup?,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CategoryType,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
 as bool,
   ));

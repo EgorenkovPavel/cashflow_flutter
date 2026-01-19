@@ -38,41 +38,49 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
     required double eur,
   }) = _CategoryCashflowState;
 
-  List<InputCategoryItem> get inItems =>
-      categories.whereType<InputCategoryItem>().toList();
+  List<CategoryItem> get inItems => categories
+      .whereType<CategoryItem>()
+      .where((e) => e.type == .INPUT)
+      .toList();
 
-  List<OutputCategoryItem> get outItems =>
-      categories.whereType<OutputCategoryItem>().toList();
+  List<CategoryItem> get outItems => categories
+      .whereType<CategoryItem>()
+      .where((e) => e.type == .OUTPUT)
+      .toList();
 
-  List<InputCategoryGroup> get inGroups =>
-      categories.whereType<InputCategoryGroup>().toList();
+  List<CategoryGroup> get inGroups => categories
+      .whereType<CategoryGroup>()
+      .where((e) => e.type == .INPUT)
+      .toList();
 
-  List<OutputCategoryGroup> get outGroups =>
-      categories.whereType<OutputCategoryGroup>().toList();
+  List<CategoryGroup> get outGroups => categories
+      .whereType<CategoryGroup>()
+      .where((e) => e.type == .OUTPUT)
+      .toList();
 
   int budget(CategoryType type) => switch (type) {
-    CategoryType.INPUT => inputBudget(),
-    CategoryType.OUTPUT => outputBudget(),
+    .INPUT => inputBudget(),
+    .OUTPUT => outputBudget(),
   };
 
   int cashFlow(CategoryType type) => switch (type) {
-    CategoryType.INPUT => inputCashFlow(),
-    CategoryType.OUTPUT => outputCashFlow(),
+    .INPUT => inputCashFlow(),
+    .OUTPUT => outputCashFlow(),
   };
 
   List<CategoryItem> items(CategoryType type) => switch (type) {
-    CategoryType.INPUT => inItems,
-    CategoryType.OUTPUT => outItems,
+    .INPUT => inItems,
+    .OUTPUT => outItems,
   };
 
   List<CategoryGroup> groups(CategoryType type) => switch (type) {
-    CategoryType.INPUT => inGroups,
-    CategoryType.OUTPUT => outGroups,
+    .INPUT => inGroups,
+    .OUTPUT => outGroups,
   };
 
   List<Category> hierarchy(CategoryType type) => switch (type) {
-    CategoryType.INPUT => _sort(inGroups, inItems),
-    CategoryType.OUTPUT => _sort(outGroups, outItems),
+    .INPUT => _sort(inGroups, inItems),
+    .OUTPUT => _sort(outGroups, outItems),
   };
 
   List<Category> _sort(List<CategoryGroup> groups, List<CategoryItem> items) {
@@ -91,9 +99,9 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
 
   int outputCashFlow() => _cashFlow<OutputCategoryCashFlow>();
 
-  int inputBudget() => _budget<InputCategoryItem>();
+  int inputBudget() => _budget(.INPUT);
 
-  int outputBudget() => _budget<OutputCategoryItem>();
+  int outputBudget() => _budget(.OUTPUT);
 
   int _cashFlow<T extends CategoryCashFlow>() {
     return cashflows
@@ -102,16 +110,20 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
         .fold(0, (a, b) => a + b);
   }
 
-  int _budget<T extends CategoryItem>() {
-    return categories
-            .whereType<T>()
-            .where((item) => item.budgetType == BudgetType.MONTH)
-            .fold<int>(0, (a, b) => a + b.budget) +
-        categories
-            .whereType<T>()
-            .where((item) => item.budgetType == BudgetType.YEAR)
-            .fold<int>(0, (a, b) => a + (b.budget / 12).floor());
-  }
+  int _budget(CategoryType type) => categories
+      .whereType<CategoryItem>()
+      .where((e) => e.type == type)
+      .fold<int>(
+        0,
+        (a, b) =>
+            a +
+            (b.budget /
+                    switch (b.budgetType) {
+                      BudgetType.MONTH => 1,
+                      BudgetType.YEAR => 12,
+                    })
+                .floor(),
+      );
 }
 
 class CategoryCashflowBloc
@@ -271,18 +283,7 @@ extension CategoryCashFlowBlocExt on BuildContext {
           .toList();
 
   CategoryView _mapToListItem(Category category) => switch (category) {
-    InputCategoryItem() => CategoryView(id: category.id, title: category.title),
-    OutputCategoryItem() => CategoryView(
-      id: category.id,
-      title: category.title,
-    ),
-    InputCategoryGroup() => CategoryView(
-      id: category.id,
-      title: category.title,
-    ),
-    OutputCategoryGroup() => CategoryView(
-      id: category.id,
-      title: category.title,
-    ),
+    CategoryItem() => CategoryView(id: category.id, title: category.title),
+    CategoryGroup() => CategoryView(id: category.id, title: category.title),
   };
 }

@@ -35,51 +35,26 @@ class CategoryInputEvent with _$CategoryInputEvent {
 sealed class CategoryInputState with _$CategoryInputState {
   const CategoryInputState._();
 
-  const factory CategoryInputState.inputItem({
-    InputCategoryItem? category,
+  const factory CategoryInputState.item({
+    CategoryItem? category,
+    required CategoryType type,
     required BudgetType budgetType,
     required String title,
     required int budget,
     required int? parent,
     required bool isSaved,
-  }) = _InputItemCategoryInputState;
+  }) = _ItemCategoryInputState;
 
-  const factory CategoryInputState.outputItem({
-    OutputCategoryItem? category,
-    required BudgetType budgetType,
-    required String title,
-    required int budget,
-    required int? parent,
-    required bool isSaved,
-  }) = _OutputItemCategoryInputState;
-
-  const factory CategoryInputState.inputGroup({
-    InputCategoryGroup? category,
+  const factory CategoryInputState.group({
+    CategoryGroup? category,
+    required CategoryType type,
     required String title,
     required bool isSaved,
-  }) = _InputGroupCategoryInputState;
-
-  const factory CategoryInputState.outputGroup({
-    OutputCategoryGroup? category,
-    required String title,
-    required bool isSaved,
-  }) = _OutputGroupCategoryInputState;
+  }) = _GroupCategoryInputState;
 
   bool get isNew => category == null;
 
-  bool get isGroup => map(
-    inputItem: (_) => false,
-    outputItem: (_) => false,
-    inputGroup: (_) => true,
-    outputGroup: (_) => true,
-  );
-
-  CategoryType get type => map(
-    inputItem: (_) => CategoryType.INPUT,
-    outputItem: (_) => CategoryType.OUTPUT,
-    inputGroup: (_) => CategoryType.INPUT,
-    outputGroup: (_) => CategoryType.OUTPUT,
-  );
+  bool get isGroup => map(item: (_) => false, group: (_) => true);
 }
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
@@ -87,7 +62,8 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
 
   CategoryInputBloc(this._interactor)
     : super(
-        const CategoryInputState.inputItem(
+        const CategoryInputState.item(
+          type: CategoryType.INPUT,
           budgetType: BudgetType.MONTH,
           title: '',
           budget: 0,
@@ -112,37 +88,21 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     _InitByTypeCategoryInputEvent event,
     Emitter<CategoryInputState> emit,
   ) {
-    switch (event.type) {
-      case CategoryType.INPUT:
-        {
-          if (event.isGroup) {
-            emit(CategoryInputState.inputGroup(title: '', isSaved: false));
-          } else {
-            emit(
-              CategoryInputState.inputItem(
-                budgetType: BudgetType.MONTH,
-                title: '',
-                budget: 0,
-                parent: null,
-                isSaved: false,
-              ),
-            );
-          }
-        }
-      case CategoryType.OUTPUT:
-        if (event.isGroup) {
-          emit(CategoryInputState.outputGroup(title: '', isSaved: false));
-        } else {
-          emit(
-            CategoryInputState.outputItem(
-              budgetType: BudgetType.MONTH,
-              title: '',
-              budget: 0,
-              parent: null,
-              isSaved: false,
-            ),
-          );
-        }
+    if (event.isGroup) {
+      emit(
+        CategoryInputState.group(type: event.type, title: '', isSaved: false),
+      );
+    } else {
+      emit(
+        CategoryInputState.item(
+          type: event.type,
+          budgetType: BudgetType.MONTH,
+          title: '',
+          budget: 0,
+          parent: null,
+          isSaved: false,
+        ),
+      );
     }
   }
 
@@ -155,42 +115,25 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     categoryResult.fold(
       onSuccess: (category) {
         switch (category) {
-          case InputCategoryItem():
+          case CategoryItem():
             emit(
-              CategoryInputState.inputItem(
+              CategoryInputState.item(
                 category: category,
                 budgetType: category.budgetType,
                 title: category.title,
                 budget: category.budget,
                 parent: category.parentId,
                 isSaved: false,
+                type: category.type,
               ),
             );
-          case OutputCategoryItem():
+          case CategoryGroup():
             emit(
-              CategoryInputState.outputItem(
-                category: category,
-                budgetType: category.budgetType,
-                title: category.title,
-                budget: category.budget,
-                parent: category.parentId,
-                isSaved: false,
-              ),
-            );
-          case InputCategoryGroup():
-            emit(
-              CategoryInputState.inputGroup(
+              CategoryInputState.group(
                 category: category,
                 title: category.title,
                 isSaved: false,
-              ),
-            );
-          case OutputCategoryGroup():
-            emit(
-              CategoryInputState.outputGroup(
-                category: category,
-                title: category.title,
-                isSaved: false,
+                type: category.type,
               ),
             );
         }
@@ -217,8 +160,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     Emitter<CategoryInputState> emit,
   ) {
     state.maybeMap(
-      inputItem: (s) => emit(s.copyWith(budget: event.budget)),
-      outputItem: (s) => emit(s.copyWith(budget: event.budget)),
+      item: (s) => emit(s.copyWith(budget: event.budget)),
       orElse: () {},
     );
   }
@@ -228,8 +170,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     Emitter<CategoryInputState> emit,
   ) {
     state.maybeMap(
-      inputItem: (s) => emit(s.copyWith(parent: event.parentId)),
-      outputItem: (s) => emit(s.copyWith(parent: event.parentId)),
+      item: (s) => emit(s.copyWith(parent: event.parentId)),
       orElse: () {},
     );
   }
@@ -239,8 +180,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
     Emitter<CategoryInputState> emit,
   ) {
     state.maybeMap(
-      inputItem: (s) => emit(s.copyWith(budgetType: event.budgetType)),
-      outputItem: (s) => emit(s.copyWith(budgetType: event.budgetType)),
+      item: (s) => emit(s.copyWith(budgetType: event.budgetType)),
       orElse: () {},
     );
   }
@@ -251,12 +191,13 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   ) async {
     if (state.isNew) {
       await state.map(
-        inputItem: (s) async {
-          final result = await _interactor.insertInputCategoryItem(
+        item: (s) async {
+          final result = await _interactor.insertCategoryItem(
             title: s.title,
             budget: s.budget,
             budgetType: s.budgetType,
             parent: s.parent,
+            type: s.type,
           );
 
           result.fold(
@@ -268,38 +209,10 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
             },
           );
         },
-        outputItem: (s) async {
-          final result = await _interactor.insertOutputCategoryItem(
+        group: (s) async {
+          final result = await _interactor.insertCategoryGroup(
             title: s.title,
-            budget: s.budget,
-            budgetType: s.budgetType,
-            parent: s.parent,
-          );
-          result.fold(
-            onSuccess: (category) {
-              emit(s.copyWith(isSaved: true, category: category));
-            },
-            onFailure: (_) {
-              //TODO
-            },
-          );
-        },
-        inputGroup: (s) async {
-          final result = await _interactor.insertInputCategoryGroup(
-            title: s.title,
-          );
-          result.fold(
-            onSuccess: (category) {
-              emit(s.copyWith(isSaved: true, category: category));
-            },
-            onFailure: (_) {
-              //TODO
-            },
-          );
-        },
-        outputGroup: (s) async {
-          final result = await _interactor.insertOutputCategoryGroup(
-            title: s.title,
+            type: s.type,
           );
           result.fold(
             onSuccess: (category) {
@@ -313,8 +226,8 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
       );
     } else {
       await state.map(
-        inputItem: (s) async {
-          final result = await _interactor.updateInputCategoryItem(
+        item: (s) async {
+          final result = await _interactor.updateCategoryItem(
             category: s.category!,
             title: s.title,
             budget: s.budget,
@@ -330,39 +243,8 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
             },
           );
         },
-        outputItem: (s) async {
-          final result = await _interactor.updateOutputCategoryItem(
-            category: s.category!,
-            title: s.title,
-            budget: s.budget,
-            budgetType: s.budgetType,
-            parent: s.parent,
-          );
-          result.fold(
-            onSuccess: (category) {
-              emit(s.copyWith(isSaved: true, category: category));
-            },
-            onFailure: (_) {
-              //TODO
-            },
-          );
-        },
-        inputGroup: (s) async {
-          final result = await _interactor.updateInputCategoryGroup(
-            category: s.category!,
-            title: s.title,
-          );
-          result.fold(
-            onSuccess: (category) {
-              emit(s.copyWith(isSaved: true, category: category));
-            },
-            onFailure: (_) {
-              //TODO
-            },
-          );
-        },
-        outputGroup: (s) async {
-          final result = await _interactor.updateOutputCategoryGroup(
+        group: (s) async {
+          final result = await _interactor.updateCategoryGroup(
             category: s.category!,
             title: s.title,
           );

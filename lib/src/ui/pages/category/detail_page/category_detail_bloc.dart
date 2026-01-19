@@ -19,7 +19,8 @@ class CategoryDetailEvent with _$CategoryDetailEvent {
       _ChangeCategoryCategoryDetailEvent;
 
   const factory CategoryDetailEvent.changeOperations(
-      List<OperationView> operations) = _ChangeOperationsCategoryDetailEvent;
+    List<OperationView> operations,
+  ) = _ChangeOperationsCategoryDetailEvent;
 }
 
 @freezed
@@ -40,36 +41,39 @@ class CategoryDetailBloc
   StreamSubscription<Category>? _subCategory;
   StreamSubscription? _subOperations;
 
-  CategoryDetailBloc(
-    this._categoryInteractor,
-    this._operationInteractor,
-  ) : super(const CategoryDetailState(
+  CategoryDetailBloc(this._categoryInteractor, this._operationInteractor)
+    : super(
+        const CategoryDetailState(
           budgetType: BudgetType.MONTH,
           title: '',
           operations: [],
           budget: 0,
-        )) {
-    on<CategoryDetailEvent>((event, emitter) => event.map(
-          fetch: (event) => _fetch(event, emitter),
-          changeCategory: (event) => _changeCategory(event, emitter),
-          changeOperations: (event) => _changeOperations(event, emitter),
-        ));
+        ),
+      ) {
+    on<CategoryDetailEvent>(
+      (event, emitter) => event.map(
+        fetch: (event) => _fetch(event, emitter),
+        changeCategory: (event) => _changeCategory(event, emitter),
+        changeOperations: (event) => _changeOperations(event, emitter),
+      ),
+    );
   }
 
   void _fetch(
     _FetchCategoryDetailEvent event,
     Emitter<CategoryDetailState> emit,
   ) {
-    _subCategory =
-        _categoryInteractor.watchById(event.categoryId).listen((category) {
+    _subCategory = _categoryInteractor.watchById(event.categoryId).listen((
+      category,
+    ) {
       add(CategoryDetailEvent.changeCategory(category));
     });
 
     _subOperations = _operationInteractor
         .watchByCategoryId(event.categoryId)
         .listen((items) {
-      add(CategoryDetailEvent.changeOperations(items));
-    });
+          add(CategoryDetailEvent.changeOperations(items));
+        });
   }
 
   void _changeCategory(
@@ -78,26 +82,16 @@ class CategoryDetailBloc
   ) {
     final category = event.category;
     switch (category) {
-      case InputCategoryItem():
-        emit(state.copyWith(
-          title: category.title,
-          budget: category.budget,
-          budgetType: category.budgetType,
-        ));
-      case OutputCategoryItem():
-        emit(state.copyWith(
-          title: category.title,
-          budget: category.budget,
-          budgetType: category.budgetType,
-        ));
-      case InputCategoryGroup():
-        emit(state.copyWith(
-          title: category.title,
-        ));
-      case OutputCategoryGroup():
-        emit(state.copyWith(
-          title: category.title,
-        ));
+      case CategoryItem():
+        emit(
+          state.copyWith(
+            title: category.title,
+            budget: category.budget,
+            budgetType: category.budgetType,
+          ),
+        );
+      case CategoryGroup():
+        emit(state.copyWith(title: category.title));
     }
   }
 

@@ -3,8 +3,6 @@ import 'package:drift/drift.dart';
 import '../../domain/interfaces/category_repository.dart';
 import '../../domain/models/category/category.dart';
 import '../../domain/models/enum/budget_type.dart';
-import '../../domain/models/enum/operation_type.dart';
-
 import '../sources/local/data/category_dao.dart';
 import '../sources/local/data/database.dart';
 import '../sources/local/db_mapper.dart';
@@ -25,44 +23,33 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<int> insertCategory(Category entity) =>
-      _categoryDao.insertCategory(entity.map(
-        inputItem: (item) => CategoriesCompanion(
-          cloudId: Value(item.cloudId),
-          title: Value(item.title),
-          operationType: Value(OperationType.INPUT),
-          budgetType: Value(item.budgetType),
-          budget: Value(item.budget),
-          isGroup: Value(false),
-          parent: Value(item.parentId),
-        ),
-        outputItem: (item) => CategoriesCompanion(
-          cloudId: Value(item.cloudId),
-          title: Value(item.title),
-          operationType: Value(OperationType.OUTPUT),
-          budgetType: Value(item.budgetType),
-          budget: Value(item.budget),
-          isGroup: Value(false),
-          parent: Value(item.parentId),
-        ),
-        inputGroup: (item) => CategoriesCompanion(
-          cloudId: Value(item.cloudId),
-          title: Value(item.title),
-          operationType: Value(OperationType.INPUT),
+      _categoryDao.insertCategory(switch (entity) {
+        CategoryItem(
+          :final cloudId,
+          :final title,
+          :final budgetType,
+          :final budget,
+          :final parentId,
+        ) =>
+          CategoriesCompanion(
+            cloudId: Value(cloudId),
+            title: Value(title),
+            operationType: Value(entity.operationType),
+            budgetType: Value(budgetType),
+            budget: Value(budget),
+            isGroup: Value(false),
+            parent: Value(parentId),
+          ),
+        CategoryGroup(:var cloudId, :var title) => CategoriesCompanion(
+          cloudId: Value(cloudId),
+          title: Value(title),
+          operationType: Value(entity.operationType),
           budgetType: Value(BudgetType.MONTH),
           budget: Value(0),
           isGroup: Value(true),
           parent: Value(null),
         ),
-        outputGroup: (item) => CategoriesCompanion(
-          cloudId: Value(item.cloudId),
-          title: Value(item.title),
-          operationType: Value(OperationType.OUTPUT),
-          budgetType: Value(BudgetType.MONTH),
-          budget: Value(0),
-          isGroup: Value(true),
-          parent: Value(null),
-        ),
-      ));
+      });
 
   @override
   Future<void> updateCategory(Category entity) =>
@@ -76,4 +63,3 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Stream<Category> watchCategoryById(int id) =>
       _categoryDao.watchCategoryById(id).map(CategoryMapper().toModel);
 }
-

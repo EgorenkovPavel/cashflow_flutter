@@ -22,7 +22,6 @@ import 'data/repositories/auth_repository_impl.dart';
 import 'data/repositories/backup_repository_impl.dart';
 import 'data/repositories/category_repository_impl.dart';
 import 'data/repositories/currency_repository_impl.dart';
-import 'data/repositories/data_repository_impl.dart';
 import 'data/repositories/operation_repository_impl.dart';
 import 'data/repositories/sync_repository_impl.dart';
 import 'data/repositories/user_repository_impl.dart';
@@ -52,7 +51,6 @@ import 'domain/interfaces/auth_repository.dart';
 import 'domain/interfaces/backup_repository.dart';
 import 'domain/interfaces/category_repository.dart';
 import 'domain/interfaces/currency_repository.dart';
-import 'domain/interfaces/data_repository.dart';
 import 'domain/interfaces/operation_repository.dart';
 import 'domain/interfaces/sync_repository.dart';
 import 'domain/interfaces/user_repository.dart';
@@ -65,7 +63,6 @@ import 'ui/blocs/category_cashflow_bloc.dart';
 import 'ui/blocs/currency_rate_bloc.dart';
 import 'ui/pages/account/detail_page/account_detail_bloc.dart';
 import 'ui/pages/account/input_page/account_input_bloc.dart';
-import 'ui/pages/budget_page/budget_bloc.dart';
 import 'ui/pages/category/detail_page/category_detail_bloc.dart';
 import 'ui/pages/category/input_page/category_input_bloc.dart';
 import 'ui/pages/home/home_page_cards/last_operations/last_operations_bloc.dart';
@@ -132,17 +129,6 @@ Future<void> init() async {
     ),
   );
 
-  // Legacy DataRepository (deprecated, for backward compatibility)
-  sl.registerLazySingleton<DataRepository>(
-    () => DataRepositoryImpl(
-      accountDao: sl<AccountDao>(),
-      categoryDao: sl<CategoryDao>(),
-      operationDao: sl<OperationDao>(),
-      userDao: sl<UserDao>(),
-      currencyRateSource: CurrencyRateSource(settingsSource: sl()),
-    ),
-  );
-
   sl.registerLazySingleton<LocalSyncTable<BaseAccount>>(
     () => AccountDataRepositoryImpl(sl(), sl()),
   );
@@ -158,7 +144,9 @@ Future<void> init() async {
       accountRepo: sl<LocalSyncTable<BaseAccount>>(),
       categoryRepo: sl<LocalSyncTable<Category>>(),
       operationRepo: sl<LocalSyncTable<Operation>>(),
-      dataRepository: sl<DataRepository>(),
+      userRepository: sl<UserRepository>(),
+      accountRepository: sl<AccountRepository>(),
+      categoryRepository: sl<CategoryRepository>(),
     ),
   );
 
@@ -209,7 +197,7 @@ Future<void> init() async {
       localSource: sl<LocalSyncSource>(),
       remoteSource: sl<RemoteDataSource>(),
       networkInfo: sl<NetworkInfo>(),
-      dataRepository: sl<DataRepository>(),
+      userRepository: sl<UserRepository>(),
     ),
   );
 
@@ -276,7 +264,7 @@ Future<void> init() async {
     () => AccountInputBloc(sl<AccountInteractor>(), sl<UserInteractor>()),
   );
 
-  sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));
+  // sl.registerFactory(() => BudgetBloc(sl<DataRepository>()));
 
   sl.registerFactory(
     () =>
@@ -289,6 +277,6 @@ Future<void> init() async {
   sl.registerFactory(() => MasterBloc(sl<OperationInteractor>()));
   sl.registerFactory(() => OperationFilterBloc());
   sl.registerFactory(() => OperationListBloc(sl<OperationInteractor>()));
-  sl.registerFactory(() => ReportsBloc(sl<DataRepository>()));
+  sl.registerFactory(() => ReportsBloc());
   sl.registerFactory(() => DataControlBloc(sl<BackupRepository>()));
 }

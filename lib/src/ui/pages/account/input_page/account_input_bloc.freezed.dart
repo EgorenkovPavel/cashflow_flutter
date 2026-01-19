@@ -541,7 +541,7 @@ $Res call({
 });
 
 
-
+$BaseAccountCopyWith<$Res>? get account;
 
 }
 /// @nodoc
@@ -567,7 +567,19 @@ as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore:
 as bool,
   ));
 }
+/// Create a copy of AccountInputState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BaseAccountCopyWith<$Res>? get account {
+    if (_self.account == null) {
+    return null;
+  }
 
+  return $BaseAccountCopyWith<$Res>(_self.account!, (value) {
+    return _then(_self.copyWith(account: value));
+  });
+}
 }
 
 
@@ -757,7 +769,7 @@ $Res call({
 });
 
 
-
+@override $BaseAccountCopyWith<$Res>? get account;
 
 }
 /// @nodoc
@@ -784,7 +796,19 @@ as bool,
   ));
 }
 
+/// Create a copy of AccountInputState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BaseAccountCopyWith<$Res>? get account {
+    if (_self.account == null) {
+    return null;
+  }
 
+  return $BaseAccountCopyWith<$Res>(_self.account!, (value) {
+    return _then(_self.copyWith(account: value));
+  });
+}
 }
 
 // dart format on

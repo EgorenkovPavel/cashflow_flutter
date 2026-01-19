@@ -1,31 +1,41 @@
 import 'package:money_tracker/src/data/interfaces/local_sync_source.dart';
-import 'package:money_tracker/src/domain/interfaces/data_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/account_repository.dart';
+import 'package:money_tracker/src/domain/interfaces/category_repository.dart';
 
+import '../../../domain/interfaces/user_repository.dart';
 import '../../../domain/models.dart';
 
 class LocalSyncSourceImpl extends LocalSyncSource {
   final LocalSyncTable<BaseAccount> accountRepo;
   final LocalSyncTable<Category> categoryRepo;
   final LocalSyncTable<Operation> operationRepo;
-  final DataRepository dataRepository;
+  final UserRepository userRepository;
+  final AccountRepository accountRepository;
+  final CategoryRepository categoryRepository;
 
   LocalSyncSourceImpl({
     required this.accountRepo,
     required this.categoryRepo,
     required this.operationRepo,
-    required this.dataRepository,
+    required this.userRepository,
+    required this.accountRepository,
+    required this.categoryRepository,
   });
 
   @override
-  Future<List<User>> getAllUsers() => dataRepository.getAllUsers();
+  Future<List<User>> getAllUsers() => userRepository.getAllUsers();
 
   @override
-  Future<List<BaseAccount>> getAllAccounts() => dataRepository.getAllAccounts();
+  Future<List<BaseAccount>> getAllAccounts() =>
+      accountRepository.getAllAccounts();
 
   @override
-  Future<List<Category>> getAllCategories() => dataRepository.getAllCategories();
+  Future<List<Category>> getAllCategories() =>
+      categoryRepository.getAllCategories();
 
-  Future<User?> getUserByGoogleId(String googleId) => dataRepository.getUserByGoogleId(googleId);
+  @override
+  Future<User?> getUserByGoogleId(String googleId) =>
+      userRepository.getUserByGoogleId(googleId);
 
   @override
   LocalSyncTable<BaseAccount> get accounts => accountRepo;
@@ -35,8 +45,4 @@ class LocalSyncSourceImpl extends LocalSyncSource {
 
   @override
   LocalSyncTable<Operation> get operations => operationRepo;
-
-
-
-
 }

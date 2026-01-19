@@ -68,12 +68,7 @@ class _CategoryPageState extends State<CategoryPage> {
         titleController.text = state.title;
       }
       state.maybeMap(
-          inputItem: (s) {
-            if (budgetController.text != s.budget.toString()) {
-              budgetController.text = s.budget.toString();
-            }
-          },
-          outputItem: (s) {
+          item: (s) {
             if (budgetController.text != s.budget.toString()) {
               budgetController.text = s.budget.toString();
             }
@@ -191,15 +186,13 @@ extension CategoryInputBlocExt on BuildContext {
 
   BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
         (bloc) => bloc.state.maybeMap(
-            inputItem: (s) => s.budgetType,
-            outputItem: (s) => s.budgetType,
+            item: (s) => s.budgetType,
             orElse: () => BudgetType.MONTH),
       );
 
   int? parent() => select<CategoryInputBloc, int?>(
         (bloc) => bloc.state.maybeMap(
-            inputItem: (s) => s.parent,
-            outputItem: (s) => s.parent,
+            item: (s) => s.parent,
             orElse: () => null),
       );
 

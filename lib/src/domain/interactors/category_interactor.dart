@@ -29,14 +29,16 @@ class CategoryInteractor {
 
   Stream<List<Category>> watchAll() => _categoryRepository.watchAllCategories();
 
-  Future<Result<InputCategoryItem>> insertInputCategoryItem({
+  Future<Result<CategoryItem>> insertCategoryItem({
+    required CategoryType type,
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
     try {
-      final category = InputCategoryItem(
+      final category = CategoryItem(
+        type: type,
         title: title,
         budgetType: budgetType,
         budget: budget,
@@ -52,34 +54,12 @@ class CategoryInteractor {
     }
   }
 
-  Future<Result<OutputCategoryItem>> insertOutputCategoryItem({
-    required String title,
-    required BudgetType budgetType,
-    required int budget,
-    required int? parent,
-  }) async {
-    try {
-      final category = OutputCategoryItem(
-        title: title,
-        budgetType: budgetType,
-        budget: budget,
-        parentId: parent,
-      );
-
-      final id = await _categoryRepository.insertCategory(category);
-
-      return Result.success(category.copyWith(id: id));
-    } on Exception catch (e, stackTrace) {
-      AppLogger.error('Failed to insert output category item', e, stackTrace);
-      return Result.failure(DatabaseException('Failed to insert category', e));
-    }
-  }
-
-  Future<Result<InputCategoryGroup>> insertInputCategoryGroup({
+  Future<Result<CategoryGroup>> insertCategoryGroup({
+    required CategoryType type,
     required String title,
   }) async {
     try {
-      final category = InputCategoryGroup(title: title);
+      final category = CategoryGroup(type: type, title: title);
 
       final id = await _categoryRepository.insertCategory(category);
 
@@ -90,32 +70,20 @@ class CategoryInteractor {
     }
   }
 
-  Future<Result<OutputCategoryGroup>> insertOutputCategoryGroup({
-    required String title,
-  }) async {
-    try {
-      final category = OutputCategoryGroup(title: title);
-
-      final id = await _categoryRepository.insertCategory(category);
-
-      return Result.success(category.copyWith(id: id));
-    } on Exception catch (e, stackTrace) {
-      AppLogger.error('Failed to insert output category group', e, stackTrace);
-      return Result.failure(DatabaseException('Failed to insert category', e));
-    }
-  }
-
-  Future<Result<InputCategoryItem>> updateInputCategoryItem({
-    required InputCategoryItem category,
+  Future<Result<CategoryItem>> updateCategoryItem({
+    required CategoryItem category,
     required String title,
     required BudgetType budgetType,
     required int budget,
     required int? parent,
   }) async {
     try {
-      final newCategory = category
-          .copyWith(title: title, budgetType: budgetType, budget: budget)
-          .setParent(parent);
+      final newCategory = category.copyWith(
+        title: title,
+        budgetType: budgetType,
+        budget: budget,
+        parentId: parent,
+      );
 
       await _categoryRepository.updateCategory(newCategory);
 
@@ -126,29 +94,8 @@ class CategoryInteractor {
     }
   }
 
-  Future<Result<OutputCategoryItem>> updateOutputCategoryItem({
-    required OutputCategoryItem category,
-    required String title,
-    required BudgetType budgetType,
-    required int budget,
-    required int? parent,
-  }) async {
-    try {
-      final newCategory = category
-          .copyWith(title: title, budgetType: budgetType, budget: budget)
-          .setParent(parent);
-
-      await _categoryRepository.updateCategory(newCategory);
-
-      return Result.success(newCategory);
-    } on Exception catch (e, stackTrace) {
-      AppLogger.error('Failed to update output category item', e, stackTrace);
-      return Result.failure(DatabaseException('Failed to update category', e));
-    }
-  }
-
-  Future<Result<InputCategoryGroup>> updateInputCategoryGroup({
-    required InputCategoryGroup category,
+  Future<Result<CategoryGroup>> updateCategoryGroup({
+    required CategoryGroup category,
     required String title,
   }) async {
     try {
@@ -159,22 +106,6 @@ class CategoryInteractor {
       return Result.success(newCategory);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to update input category group', e, stackTrace);
-      return Result.failure(DatabaseException('Failed to update category', e));
-    }
-  }
-
-  Future<Result<OutputCategoryGroup>> updateOutputCategoryGroup({
-    required OutputCategoryGroup category,
-    required String title,
-  }) async {
-    try {
-      final newCategory = category.copyWith(title: title);
-
-      await _categoryRepository.updateCategory(newCategory);
-
-      return Result.success(newCategory);
-    } on Exception catch (e, stackTrace) {
-      AppLogger.error('Failed to update output category group', e, stackTrace);
       return Result.failure(DatabaseException('Failed to update category', e));
     }
   }

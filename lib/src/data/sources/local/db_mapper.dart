@@ -195,85 +195,77 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
   const CategoryMapper();
 
   @override
-  CategoryDB toDBO(Category model) => model.map(
-    inputItem: (item) => CategoryDB(
-      id: item.id,
-      cloudId: item.cloudId,
-      title: item.title,
-      operationType: OperationType.INPUT,
-      budgetType: item.budgetType,
-      budget: item.budget,
-      synced: false,
-      isGroup: false,
-      parent: item.parentId,
-    ),
-    outputItem: (item) => CategoryDB(
-      id: item.id,
-      cloudId: item.cloudId,
-      title: item.title,
-      operationType: OperationType.OUTPUT,
-      budgetType: item.budgetType,
-      budget: item.budget,
-      synced: false,
-      isGroup: false,
-      parent: item.parentId,
-    ),
-    inputGroup: (group) => CategoryDB(
-      id: group.id,
-      cloudId: group.cloudId,
-      title: group.title,
-      operationType: OperationType.INPUT,
+  CategoryDB toDBO(Category model) => switch (model) {
+    CategoryGroup(:final id, :final cloudId, :final title) => CategoryDB(
+      id: id,
+      cloudId: cloudId,
+      title: title,
+      operationType: model.operationType,
       budgetType: BudgetType.MONTH,
       budget: 0,
       synced: false,
       isGroup: true,
     ),
-    outputGroup: (group) => CategoryDB(
-      id: group.id,
-      cloudId: group.cloudId,
-      title: group.title,
-      operationType: OperationType.OUTPUT,
-      budgetType: BudgetType.MONTH,
-      budget: 0,
-      synced: false,
-      isGroup: true,
-    ),
-  );
+
+    CategoryItem(
+      :final id,
+      :final cloudId,
+      :final title,
+      :final budgetType,
+      :final budget,
+      :final parentId,
+    ) =>
+      CategoryDB(
+        id: id,
+        cloudId: cloudId,
+        title: title,
+        operationType: model.operationType,
+        budgetType: budgetType,
+        budget: budget,
+        synced: false,
+        isGroup: false,
+        parent: parentId,
+      ),
+  };
 
   @override
   Category toModel(CategoryDB dbo) {
     if (dbo.isGroup) {
       if (dbo.operationType == OperationType.INPUT) {
-        return InputCategoryGroup(
+        return Category.group(
           id: dbo.id,
+          type: CategoryType.INPUT,
           title: dbo.title,
           cloudId: dbo.cloudId,
         );
       } else {
-        return OutputCategoryGroup(
+        return Category.group(
           id: dbo.id,
+          type: CategoryType.OUTPUT,
           title: dbo.title,
           cloudId: dbo.cloudId,
         );
       }
     } else {
       if (dbo.operationType == OperationType.INPUT) {
-        return InputCategoryItem(
+        return Category.item(
           id: dbo.id,
           cloudId: dbo.cloudId,
           title: dbo.title,
           budget: dbo.budget,
           budgetType: dbo.budgetType,
           parentId: dbo.parent,
+          type: CategoryType.INPUT,
         );
       } else {
-        return OutputCategoryItem(
+        return Category.item(
           id: dbo.id,
           cloudId: dbo.cloudId,
           title: dbo.title,
           budget: dbo.budget,
           budgetType: dbo.budgetType,
           parentId: dbo.parent,
+          type: CategoryType.OUTPUT,
         );
       }
     }

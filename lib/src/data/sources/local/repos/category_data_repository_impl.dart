@@ -34,91 +34,56 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
 
   @override
   Future insertFromCloud(Category category) {
-    return categoryDao.insertCategory(category.map(
-      inputItem: (c) => CategoriesCompanion(
-        cloudId: Value(c.cloudId),
-        title: Value(c.title),
-        operationType: Value(OperationType.INPUT),
-        budgetType: Value(c.budgetType),
-        budget: Value(c.budget),
-        synced: const Value(true),
-        isGroup: Value(false),
-        parent: Value(c.parentId),
+    return categoryDao.insertCategory(
+      category.map(
+        item: (c) => CategoriesCompanion(
+          cloudId: Value(c.cloudId),
+          title: Value(c.title),
+          operationType: Value(c.operationType),
+          budgetType: Value(c.budgetType),
+          budget: Value(c.budget),
+          synced: const Value(true),
+          isGroup: Value(false),
+          parent: Value(c.parentId),
+        ),
+        group: (c) => CategoriesCompanion(
+          cloudId: Value(c.cloudId),
+          title: Value(c.title),
+          operationType: Value(c.operationType),
+          budgetType: Value(BudgetType.MONTH),
+          budget: Value(0),
+          synced: const Value(true),
+          isGroup: Value(true),
+        ),
       ),
-      outputItem: (c) => CategoriesCompanion(
-        cloudId: Value(c.cloudId),
-        title: Value(c.title),
-        operationType: Value(OperationType.OUTPUT),
-        budgetType: Value(c.budgetType),
-        budget: Value(c.budget),
-        synced: const Value(true),
-        isGroup: Value(false),
-        parent: Value(c.parentId),
-      ),
-      inputGroup: (c) => CategoriesCompanion(
-        cloudId: Value(c.cloudId),
-        title: Value(c.title),
-        operationType: Value(OperationType.INPUT),
-        budgetType: Value(BudgetType.MONTH),
-        budget: Value(0),
-        synced: const Value(true),
-        isGroup: Value(true),
-      ),
-      outputGroup: (c) => CategoriesCompanion(
-        cloudId: Value(c.cloudId),
-        title: Value(c.title),
-        operationType: Value(OperationType.OUTPUT),
-        budgetType: Value(BudgetType.MONTH),
-        budget: Value(0),
-        synced: const Value(true),
-        isGroup: Value(true),
-      ),
-    ));
+    );
   }
 
   @override
   Future updateFromCloud(Category category) {
     return categoryDao.updateFields(
-        category.id,
-        category.map(
-          inputItem: (c) => CategoriesCompanion(
-            cloudId: Value(c.cloudId),
-            title: Value(c.title),
-            operationType: Value(OperationType.INPUT),
-            budgetType: Value(c.budgetType),
-            budget: Value(c.budget),
-            synced: const Value(true),
-            isGroup: Value(false),
-            parent: Value(c.parentId),
-          ),
-          outputItem: (c) => CategoriesCompanion(
-            cloudId: Value(c.cloudId),
-            title: Value(c.title),
-            operationType: Value(OperationType.OUTPUT),
-            budgetType: Value(c.budgetType),
-            budget: Value(c.budget),
-            synced: const Value(true),
-            isGroup: Value(false),
-            parent: Value(c.parentId),
-          ),
-          inputGroup: (c) => CategoriesCompanion(
-            cloudId: Value(c.cloudId),
-            title: Value(c.title),
-            operationType: Value(OperationType.INPUT),
-            budgetType: Value(BudgetType.MONTH),
-            budget: Value(0),
-            synced: const Value(true),
-            isGroup: Value(true),
-          ),
-          outputGroup: (c) => CategoriesCompanion(
-            cloudId: Value(c.cloudId),
-            title: Value(c.title),
-            operationType: Value(OperationType.OUTPUT),
-            budgetType: Value(BudgetType.MONTH),
-            budget: Value(0),
-            synced: const Value(true),
-            isGroup: Value(true),
-          ),
-        ));
+      category.id,
+      category.map(
+        item: (c) => CategoriesCompanion(
+          cloudId: Value(c.cloudId),
+          title: Value(c.title),
+          operationType: Value(c.operationType),
+          budgetType: Value(c.budgetType),
+          budget: Value(c.budget),
+          synced: const Value(true),
+          isGroup: Value(false),
+          parent: Value(c.parentId),
+        ),
+        group: (c) => CategoriesCompanion(
+          cloudId: Value(c.cloudId),
+          title: Value(c.title),
+          operationType: Value(c.operationType),
+          budgetType: Value(BudgetType.MONTH),
+          budget: Value(0),
+          synced: const Value(true),
+          isGroup: Value(true),
+        ),
+      ),
+    );
   }
 }

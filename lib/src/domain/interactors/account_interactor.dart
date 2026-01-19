@@ -52,7 +52,7 @@ class AccountInteractor {
     required int? userId,
   }) async {
     try {
-      final newAccount = account.copyWith(title: title).setUser(userId);
+      final newAccount = account.copyWith(title: title, userId: userId);
       await _accountRepository.updateAccount(newAccount);
       return Result.success(newAccount);
     } on Exception catch (e, stackTrace) {
