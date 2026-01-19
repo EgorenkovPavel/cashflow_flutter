@@ -1,19 +1,16 @@
+import '../../utils/exceptions.dart';
+import '../../utils/logger.dart';
 import '../../utils/result.dart';
 import '../interfaces/account_repository.dart';
 import '../models.dart';
 import '../services/balance_service.dart';
 import '../view_models.dart';
-import '../../utils/exceptions.dart';
-import '../../utils/logger.dart';
 
 class AccountInteractor {
   final AccountRepository _accountRepository;
   final BalanceService _balanceService;
 
-  AccountInteractor(
-      this._accountRepository,
-      this._balanceService,
-      );
+  AccountInteractor(this._accountRepository, this._balanceService);
 
   Future<Result<BaseAccount>> getById(int id) async {
     try {
@@ -21,9 +18,7 @@ class AccountInteractor {
       return Result.success(account);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get account by id: $id', e, stackTrace);
-      return Result.failure(
-        DatabaseException('Failed to get account', e),
-      );
+      return Result.failure(DatabaseException('Failed to get account', e));
     }
   }
 
@@ -47,9 +42,7 @@ class AccountInteractor {
       return Result.success(account.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to insert account', e, stackTrace);
-      return Result.failure(
-        DatabaseException('Failed to insert account', e),
-      );
+      return Result.failure(DatabaseException('Failed to insert account', e));
     }
   }
 
@@ -64,9 +57,7 @@ class AccountInteractor {
       return Result.success(newAccount);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to update account', e, stackTrace);
-      return Result.failure(
-        DatabaseException('Failed to update account', e),
-      );
+      return Result.failure(DatabaseException('Failed to update account', e));
     }
   }
 }

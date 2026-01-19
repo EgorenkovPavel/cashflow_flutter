@@ -131,51 +131,47 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
   OperationView toListItem(OperationDbEntity entity, User? user) {
     final dbo = entity.operationData;
     return dbo.operationType.map(
-      input: () => OperationView(
+      input: () => InputOperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
         deleted: dbo.deleted,
         account: entity.account.title,
-        analytic: entity.category!.title,
+        categoryName: entity.category!.title,
         sum: Sum(dbo.sum, dbo.currencySent),
-        type: OperationType.INPUT,
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      output: () => OperationView(
+      output: () => OutputOperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
         deleted: dbo.deleted,
         account: entity.account.title,
-        analytic: entity.category!.title,
+        categoryName: entity.category!.title,
         sum: Sum(dbo.sum, dbo.currencySent),
-        type: OperationType.OUTPUT,
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      transfer: () => OperationView(
+      transfer: () => TransferOperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
         deleted: dbo.deleted,
         account: entity.account.title,
-        analytic: entity.recAccount!.title,
+        recAccount: entity.recAccount!.title,
         sum: Sum(dbo.sum, dbo.currencySent),
-        type: OperationType.TRANSFER,
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),
-      exchange: () => OperationView(
+      exchange: () => ExchangeOperationView(
         id: dbo.id,
         date: dbo.date,
         synced: dbo.synced,
         deleted: dbo.deleted,
         account: entity.account.title,
-        analytic: '',
-        sum: Sum(dbo.sum, dbo.currencySent),
-        type: OperationType.EXCHANGE,
+        sendSum: Sum(dbo.sum, dbo.currencySent),
+        receivedSum: Sum(dbo.recSum, dbo.currencyReceived),
         userPhotoUrl: user?.photo ?? '',
         userName: user?.name ?? '',
       ),

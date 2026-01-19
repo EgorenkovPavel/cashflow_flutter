@@ -2117,7 +2117,7 @@ class $BalancesTable extends Balances
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {operation, account};
+  Set<GeneratedColumn> get $primaryKey => const {};
   @override
   BalanceDB map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';

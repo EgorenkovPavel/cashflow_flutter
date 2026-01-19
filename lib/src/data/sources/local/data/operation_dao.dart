@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:money_tracker/src/utils/logger.dart';
 
 import '../../../../domain/models/enum/currency.dart';
 import '../../../../domain/models/enum/operation_type.dart';
@@ -347,10 +348,11 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
+              recAccount: op.operationType == .TRANSFER
                   ? row.readTable(rec)
                   : null,
             );
@@ -375,23 +377,28 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           ),
           leftOuterJoin(rec, rec.id.equalsExp(operations.recAccount)),
         ])
-        .getSingle()
+        .getSingleOrNull()
         .then(
           (row) {
+            if (row == null){
+              return null;
+            }
             var op = row.readTable(operations);
 
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
-              recAccount: op.operationType == OperationType.TRANSFER
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
+              recAccount: op.operationType == .TRANSFER
                   ? row.readTable(rec)
                   : null,
             );
           },
-          onError: (e) {
+          onError: (e, stacktrace) {
+            AppLogger.error('Error while get last operation', e, stacktrace);
             return null;
           },
         );
@@ -419,9 +426,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           return OperationDbEntity(
             operation: op,
             account: row.readTable(acc),
-            category: op.operationType == OperationType.TRANSFER
-                ? null
-                : row.readTable(categories),
+            category: op.operationType == .INPUT || op.operationType == .OUTPUT
+                ? row.readTable(categories)
+                : null,
             recAccount: op.operationType == OperationType.TRANSFER
                 ? row.readTable(rec)
                 : null,
@@ -454,9 +461,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           return OperationDbEntity(
             operation: op,
             account: row.readTable(acc),
-            category: op.operationType == OperationType.TRANSFER
-                ? null
-                : row.readTable(categories),
+            category: op.operationType == .INPUT || op.operationType == .OUTPUT
+                ? row.readTable(categories)
+                : null,
             recAccount: op.operationType == OperationType.TRANSFER
                 ? row.readTable(rec)
                 : null,

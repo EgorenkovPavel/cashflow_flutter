@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
-import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/utils/logger.dart';
 import 'package:money_tracker/src/utils/sum.dart';
 
 import '../../../../utils/result.dart';
@@ -16,44 +16,22 @@ part 'operation_input_bloc.freezed.dart';
 
 @freezed
 class MasterEvent with _$MasterEvent {
-  const factory MasterEvent.backPressed() = _BackPressedMasterEvent;
-
   const factory MasterEvent.start() = _StartMasterEvent;
-
-  const factory MasterEvent.addNewItem() = _AddNewItemMassterEvent;
-
-  const factory MasterEvent.sumTap() = _SumTapMasterEvent;
-
-  const factory MasterEvent.recSumTap() = _RecSumTapMasterEvent;
 
   const factory MasterEvent.changeOperationType(OperationType operationType) =
       _ChangeOperationTypeMasterEvent;
 
-  const factory MasterEvent.digitTap(int digit) = _DigitTapMasterEvent;
-
-  const factory MasterEvent.backKeyTap() = _BackKeyTapMasterEvent;
-
-  const factory MasterEvent.moreTap() = _MoreTapMasterEvent;
-
   const factory MasterEvent.changeAccount(int id) = _ChangeAccountMasterEvent;
 
-  const factory MasterEvent.changeInCategory(int? id) =
-      _ChangeInCategoryMasterEvent;
-
-  const factory MasterEvent.changeInCategoryGroup(int? id) =
-      _ChangeInCategoryGroupMasterEvent;
-
-  const factory MasterEvent.changeOutCategory(int? id) =
-      _ChangeOutCategoryMasterEvent;
-
-  const factory MasterEvent.changeOutCategoryGroup(int? id) =
-      _ChangeOutCategoryGroupMasterEvent;
+  const factory MasterEvent.changeCategory(int? id) =
+      _ChangeCategoryMasterEvent;
 
   const factory MasterEvent.changeRecAccount(int id) =
       _ChangeRecAccountMasterEvent;
 
-  const factory MasterEvent.changeHighlightCurrency(Currency currency) =
-      _ChangeHighlightCurrencyMasterEvent;
+  const factory MasterEvent.changeSum(Sum sum) = _ChangeSumMasterEvent;
+
+  const factory MasterEvent.changeRecSum(Sum sum) = _ChangeRecSumMasterEvent;
 
   const factory MasterEvent.cancelOperation() = _CancelOperationMasterEvent;
 
@@ -73,68 +51,62 @@ enum MasterStateAction {
   SHOW_EMPTY_CATEGORY_MESSAGE,
   SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
   SHOW_EMPTY_SUM_MESSAGE,
+  SHOW_EMPTY_REC_SUM_MESSAGE,
   SHOW_OPERATION_CREATED_MESSAGE,
   SHOW_OPERATION_CANCELED_MESSAGE,
 }
 
 @freezed
 abstract class MasterState with _$MasterState {
-  const factory MasterState({
-    required MasterStateAction action,
-    required OperationType operationType,
+  const factory MasterState.input({
+    int? accountId,
+    int? categoryId,
+    required Sum sum,
+    Operation? operation,
+    MasterStateAction? action,
+  }) = _InputMasterState;
+
+  const factory MasterState.output({
+    int? accountId,
+    int? categoryId,
+    required Sum sum,
+    Operation? operation,
+    MasterStateAction? action,
+  }) = _OutputMasterState;
+
+  const factory MasterState.transfer({
+    int? accountId,
+    int? recAccountId,
+    required Sum sum,
+    Operation? operation,
+    MasterStateAction? action,
+  }) = _TransferMasterState;
+
+  const factory MasterState.exchange({
+    int? accountId,
     required Sum sum,
     required Sum recSum,
-    required bool showKeyboard,
-    required bool highlightSum,
-    required bool highlightRecSum,
-    int? accountId,
-    int? categoryInId,
-    int? categoryOutId,
-    int? recAccountId,
-    int? categoryInParentId,
-    int? categoryOutParentId,
     Operation? operation,
-  }) = _MasterState;
+    MasterStateAction? action,
+  }) = _ExchangeMasterState;
 }
 
 class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final OperationInteractor _operationInteractor;
 
   MasterBloc(this._operationInteractor)
-    : super(
-        MasterState(
-          action: MasterStateAction.DATA,
-          operationType: OperationType.INPUT,
-          sum: Sum(0, Currency.RUB),
-          recSum: Sum(0, Currency.RUB),
-          showKeyboard: false,
-          highlightSum: false,
-          highlightRecSum: false,
-        ),
-      ) {
+    : super(MasterState.input(sum: Sum(0, Currency.RUB))) {
     on<MasterEvent>(
       (event, emitter) => event.map(
-        backPressed: (event) => _backPressed(event, emitter),
         start: (event) => _start(event, emitter),
-        addNewItem: (event) => _addNewItem(event, emitter),
-        sumTap: (event) => _sumTap(event, emitter),
-        recSumTap: (event) => _recSumTap(event, emitter),
         changeOperationType: (event) => _changeOperationType(event, emitter),
-        digitTap: (event) => _digitTap(event, emitter),
-        backKeyTap: (event) => _backKeyTap(event, emitter),
-        moreTap: (event) => _moreTap(event, emitter),
         changeAccount: (event) => _changeAccount(event, emitter),
-        changeInCategory: (event) => _changeInCategory(event, emitter),
-        changeInCategoryGroup: (event) =>
-            _changeInCategoryGroup(event, emitter),
-        changeOutCategory: (event) => _changeOutCategory(event, emitter),
-        changeOutCategoryGroup: (event) =>
-            _changeOutCategoryGroup(event, emitter),
+        changeCategory: (event) => _changeCategory(event, emitter),
         changeRecAccount: (event) => _changeRecAccount(event, emitter),
-        changeHighlightCurrency: (event) =>
-            _changeHighlightCurrency(event, emitter),
         cancelOperation: (event) => _cancelOperation(event, emitter),
         nextTap: (event) => _nextTap(event, emitter),
+        changeSum: (event) => _changeSum(event, emitter),
+        changeRecSum: (event) => _changeRecSum(event, emitter),
       ),
     );
 
@@ -152,214 +124,97 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       return;
     }
 
-    emit(
-      state.copyWith(
-        accountId: op.account,
-        action: MasterStateAction.SET_ACCOUNT,
-      ),
-    );
-
-    emit(
-      state.copyWith(operationType: op.type, action: MasterStateAction.DATA),
-    );
     switch (op) {
       case InputOperation():
-        {
-          emit(
-            state.copyWith(
-              categoryInId: op.analytic,
-              action: MasterStateAction.SET_IN_CATEGORY,
-            ),
-          );
-        }
+        emit(
+          MasterState.input(
+            accountId: op.account,
+            categoryId: op.analytic,
+            sum: state.sum,
+          ),
+        );
       case OutputOperation():
-        {
-          emit(
-            state.copyWith(
-              categoryOutId: op.analytic,
-              action: MasterStateAction.SET_OUT_CATEGORY,
-            ),
-          );
-        }
+        emit(
+          MasterState.output(
+            accountId: op.account,
+            categoryId: op.analytic,
+            sum: state.sum,
+          ),
+        );
       case TransferOperation():
-        {
-          emit(
-            state.copyWith(
-              recAccountId: op.analytic,
-              action: MasterStateAction.SET_REC_ACCOUNT,
-            ),
-          );
-        }
+        emit(
+          MasterState.transfer(
+            accountId: op.account,
+            recAccountId: op.analytic,
+            sum: state.sum,
+          ),
+        );
       case ExchangeOperation():
-        {
-          // TODO
-        }
+        emit(
+          MasterState.exchange(
+            accountId: op.account,
+            sum: state.sum,
+            recSum: Sum(0, .RUB),
+          ),
+        );
     }
-  }
-
-  FutureOr<void> _backPressed(
-    _BackPressedMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    if (state.showKeyboard) {
-      emit(
-        state.copyWith(
-          action: MasterStateAction.HIDE_KEYBOARD,
-          showKeyboard: false,
-        ),
-      );
-    } else {
-      emit(state.copyWith(action: MasterStateAction.CLOSE));
-    }
-  }
-
-  FutureOr<void> _addNewItem(
-    _AddNewItemMassterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    if (state.showKeyboard) {
-      emit(
-        state.copyWith(
-          action: MasterStateAction.HIDE_KEYBOARD,
-          showKeyboard: false,
-          highlightSum: false,
-          highlightRecSum: false,
-        ),
-      );
-    }
-  }
-
-  FutureOr<void> _sumTap(_SumTapMasterEvent event, Emitter<MasterState> emit) {
-    emit(
-      state.copyWith(
-        action: !state.showKeyboard
-            ? MasterStateAction.SHOW_KEYBOARD
-            : MasterStateAction.DATA,
-        showKeyboard: true,
-        highlightSum: true,
-        highlightRecSum: false,
-      ),
-    );
-  }
-
-  FutureOr<void> _recSumTap(
-    _RecSumTapMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        action: !state.showKeyboard
-            ? MasterStateAction.SHOW_KEYBOARD
-            : MasterStateAction.DATA,
-        showKeyboard: true,
-        highlightSum: false,
-        highlightRecSum: true,
-      ),
-    );
   }
 
   FutureOr<void> _changeOperationType(
     _ChangeOperationTypeMasterEvent event,
     Emitter<MasterState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        operationType: event.operationType,
-        action: MasterStateAction.DATA,
-      ),
-    );
-  }
-
-  FutureOr<void> _digitTap(
-    _DigitTapMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    if (state.highlightSum) {
-      emit(
-        state.copyWith(
-          sum: state.sum * 10 + event.digit,
-          action: MasterStateAction.DATA,
-        ),
-      );
-    } else if (state.highlightRecSum) {
-      emit(
-        state.copyWith(
-          recSum: state.recSum * 10 + event.digit,
-          action: MasterStateAction.DATA,
-        ),
-      );
+  ) async {
+    switch (event.operationType) {
+      case OperationType.INPUT:
+        emit(MasterState.input(accountId: state.accountId, sum: state.sum));
+      case OperationType.OUTPUT:
+        emit(MasterState.output(accountId: state.accountId, sum: state.sum));
+      case OperationType.TRANSFER:
+        emit(MasterState.transfer(accountId: state.accountId, sum: state.sum));
+      case OperationType.EXCHANGE:
+        emit(
+          MasterState.exchange(
+            accountId: state.accountId,
+            sum: state.sum,
+            recSum: Sum(0, .RUB),
+          ),
+        );
     }
-  }
-
-  FutureOr _backKeyTap(
-    _BackKeyTapMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    if (state.highlightSum) {
-      emit(state.copyWith(sum: state.sum / 10, action: MasterStateAction.DATA));
-    } else if (state.highlightRecSum) {
-      emit(
-        state.copyWith(
-          recSum: state.recSum / 10,
-          action: MasterStateAction.DATA,
-        ),
-      );
-    }
-  }
-
-  FutureOr<void> _moreTap(
-    _MoreTapMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    emit(state.copyWith(action: MasterStateAction.CLOSE));
+    ;
   }
 
   FutureOr<void> _changeAccount(
     _ChangeAccountMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(state.copyWith(accountId: event.id, action: MasterStateAction.DATA));
+    emit(state.copyWith(accountId: event.id));
   }
 
-  FutureOr<void> _changeInCategory(
-    _ChangeInCategoryMasterEvent event,
+  FutureOr<void> _changeSum(
+    _ChangeSumMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(
-      state.copyWith(categoryInId: event.id, action: MasterStateAction.DATA),
+    emit(state.copyWith(sum: event.sum));
+  }
+
+  FutureOr<void> _changeRecSum(
+    _ChangeRecSumMasterEvent event,
+    Emitter<MasterState> emit,
+  ) {
+    state.maybeMap(
+      exchange: (s) => emit(s.copyWith(recSum: event.sum)),
+      orElse: () {},
     );
   }
 
-  FutureOr<void> _changeInCategoryGroup(
-    _ChangeInCategoryGroupMasterEvent event,
+  FutureOr<void> _changeCategory(
+    _ChangeCategoryMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(
-      state.copyWith(
-        categoryInParentId: event.id,
-        action: MasterStateAction.DATA,
-      ),
-    );
-  }
-
-  FutureOr<void> _changeOutCategoryGroup(
-    _ChangeOutCategoryGroupMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        categoryOutParentId: event.id,
-        action: MasterStateAction.DATA,
-      ),
-    );
-  }
-
-  FutureOr<void> _changeOutCategory(
-    _ChangeOutCategoryMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    emit(
-      state.copyWith(categoryOutId: event.id, action: MasterStateAction.DATA),
+    state.maybeMap(
+      input: (s) => emit(s.copyWith(categoryId: event.id)),
+      output: (s) => emit(s.copyWith(categoryId: event.id)),
+      orElse: () {},
     );
   }
 
@@ -367,30 +222,10 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _ChangeRecAccountMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(
-      state.copyWith(recAccountId: event.id, action: MasterStateAction.DATA),
+    state.maybeMap(
+      transfer: (s) => emit(s.copyWith(recAccountId: event.id)),
+      orElse: () {},
     );
-  }
-
-  FutureOr<void> _changeHighlightCurrency(
-    _ChangeHighlightCurrencyMasterEvent event,
-    Emitter<MasterState> emit,
-  ) {
-    if (state.highlightSum) {
-      emit(
-        state.copyWith(
-          sum: state.sum.copyWith(currency: event.currency),
-          action: MasterStateAction.DATA,
-        ),
-      );
-    } else {
-      emit(
-        state.copyWith(
-          recSum: state.recSum.copyWith(currency: event.currency),
-          action: MasterStateAction.DATA,
-        ),
-      );
-    }
   }
 
   FutureOr<void> _cancelOperation(
@@ -418,90 +253,106 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
       return;
     }
 
-    if (state.operationType == OperationType.TRANSFER &&
-        state.recAccountId == null) {
-      emit(
-        state.copyWith(
-          action: MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
-        ),
-      );
+    state.map(
+      input: (s) {
+        if (s.categoryId == null) {
+          emit(
+            state.copyWith(
+              action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE,
+            ),
+          );
 
-      return;
-    }
+          return;
+        }
+      },
+      output: (s) {
+        if (s.categoryId == null) {
+          emit(
+            state.copyWith(
+              action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE,
+            ),
+          );
 
-    if (state.operationType == OperationType.INPUT &&
-        state.categoryInId == null) {
-      emit(
-        state.copyWith(action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE),
-      );
+          return;
+        }
+      },
+      transfer: (s) {
+        if (s.recAccountId == null) {
+          emit(
+            state.copyWith(
+              action: MasterStateAction.SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
+            ),
+          );
 
-      return;
-    }
+          return;
+        }
+      },
+      exchange: (s) {
+        if (s.recSum.isEmpty) {
+          emit(
+            state.copyWith(
+              action: MasterStateAction.SHOW_EMPTY_REC_SUM_MESSAGE,
+            ),
+          );
 
-    if (state.operationType == OperationType.OUTPUT &&
-        state.categoryOutId == null) {
-      emit(
-        state.copyWith(action: MasterStateAction.SHOW_EMPTY_CATEGORY_MESSAGE),
-      );
+          return;
+        }
+      },
+    );
 
-      return;
-    }
-
-    if (state.sum.sum == 0) {
+    if (state.sum.isEmpty) {
       emit(state.copyWith(action: MasterStateAction.SHOW_EMPTY_SUM_MESSAGE));
 
       return;
     }
 
-    final result = await _saveOperation();
-    result.fold(onSuccess: (operation){
-      emit(
-        state.copyWith(
-          operation: operation,
-          action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
-        ),
+    try {
+      final result = await _saveOperation();
+      result.fold(
+        onSuccess: (operation) {
+          emit(
+            state.copyWith(
+              operation: operation,
+              sum: Sum(0, state.sum.currency),
+              action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
+            ),
+          );
+        },
+        onFailure: (_) {
+          //TODO
+        },
       );
-
-      emit(
-        state.copyWith(
-          action: MasterStateAction.HIDE_KEYBOARD,
-          sum: state.sum.copyWith(sum: 0),
-          recSum: state.recSum.copyWith(sum: 0),
-          showKeyboard: false,
-        ),
-      );
-    }, onFailure: (_){
-      //TODO
-    });
-
+    } catch (e, stacktrace) {
+      AppLogger.error('Error while saving operation', e, stacktrace);
+    }
   }
 
-  Future<Result<Operation>> _saveOperation() => switch (state.operationType) {
-    OperationType.INPUT => _operationInteractor.insertInput(
+  Future<Result<Operation>> _saveOperation() => state.map(
+    input: (s) => _operationInteractor.insertInput(
       date: DateTime.now(),
-      accountId: state.accountId!,
-      categoryId: state.categoryInId!,
-      sum: state.sum,
+      accountId: s.accountId!,
+      categoryId: s.categoryId!,
+      sum: s.sum,
     ),
-    OperationType.OUTPUT => _operationInteractor.insertOutput(
+    output: (s) => _operationInteractor.insertOutput(
       date: DateTime.now(),
-      accountId: state.accountId!,
-      categoryId: state.categoryOutId!,
-      sum: state.sum,
+      accountId: s.accountId!,
+      categoryId: s.categoryId!,
+      sum: s.sum,
     ),
-    OperationType.TRANSFER => _operationInteractor.insertTransfer(
+    transfer: (s) => _operationInteractor.insertTransfer(
       date: DateTime.now(),
-      accountId: state.accountId!,
-      recAccountId: state.recAccountId!,
-      sum: state.sum,
+      accountId: s.accountId!,
+      recAccountId: s.recAccountId!,
+      sum: s.sum,
     ),
-    OperationType.EXCHANGE => _operationInteractor.insertExchange(
+    exchange: (s) => _operationInteractor.insertExchange(
       date: DateTime.now(),
-      accountId: state.accountId!,
-      sum: state.sum,
-      recSum: state.recSum,
+      accountId: s.accountId!,
+      sum: s.sum,
+      recSum: s.recSum,
     ),
-  };
+  );
 }
 
 extension MasterExt on BuildContext {
@@ -510,16 +361,6 @@ extension MasterExt on BuildContext {
   void _add(MasterEvent event) => _bloc().add(event);
 
   void onNextTap() => _add(const MasterEvent.nextTap());
-
-  void onMoreTap() => _add(const MasterEvent.moreTap());
-
-  void onBackKeyTap() => _add(const MasterEvent.backKeyTap());
-
-  void onDigitKeyTap(int digit) => _add(MasterEvent.digitTap(digit));
-
-  void onSumTap() => _add(const MasterEvent.sumTap());
-
-  void onRecSumTap() => _add(const MasterEvent.recSumTap());
 
   void onCancelOperation() => _add(const MasterEvent.cancelOperation());
 
@@ -530,128 +371,44 @@ extension MasterExt on BuildContext {
 
   void onChangeRecAccount(int id) => _add(MasterEvent.changeRecAccount(id));
 
-  void onAddNewItem() => _add(const MasterEvent.addNewItem());
+  void onChangeCategory(int? id) => _add(MasterEvent.changeCategory(id));
 
-  void onChangeCategory(int? id, CategoryType type) => switch (type) {
-    CategoryType.INPUT => _add(MasterEvent.changeInCategory(id)),
-    CategoryType.OUTPUT => _add(MasterEvent.changeOutCategory(id)),
-  };
+  void onChangeSum(Sum sum) => _add(MasterEvent.changeSum(sum));
 
-  void onChangeCategoryGroup(int? id, CategoryType type) => switch (type) {
-    CategoryType.INPUT => _add(MasterEvent.changeInCategoryGroup(id)),
-    CategoryType.OUTPUT => _add(MasterEvent.changeOutCategoryGroup(id)),
-  };
+  void onChangeRecSum(Sum sum) => _add(MasterEvent.changeRecSum(sum));
 
-  void onChangeHighlightCurrency(Currency currency) =>
-      _add(MasterEvent.changeHighlightCurrency(currency));
-
-  bool showRecSum() => select<MasterBloc, bool>(
-    (bloc) => bloc.state.operationType == OperationType.EXCHANGE,
+  OperationType type() => select<MasterBloc, OperationType>(
+    (bloc) => bloc.state.map(
+      input: (_) => .INPUT,
+      output: (_) => .OUTPUT,
+      transfer: (_) => .TRANSFER,
+      exchange: (_) => .EXCHANGE,
+    ),
   );
-
-  Future<void> addNewAccount() async {
-    onAddNewItem();
-
-    final account = await _inputBaseAccount();
-    if (account != null) {
-      onChangeAccount(account.id);
-    }
-  }
-
-  Future<void> addNewCategoryItem(CategoryType type) async {
-    onAddNewItem();
-    final category = await openCategoryInputDialog(type: type, isGroup: false);
-    if (category != null) {
-      onChangeCategory(category.id, type);
-    }
-  }
-
-  Future<void> addNewCategoryGroup(CategoryType type) async {
-    onAddNewItem();
-    final category = await openCategoryInputDialog(type: type, isGroup: true);
-    if (category != null) {
-      onChangeCategoryGroup(category.id, type);
-    }
-  }
-
-  Future<void> addNewRecAccount() async {
-    onAddNewItem();
-    final account = await _inputBaseAccount();
-    if (account != null) {
-      onChangeRecAccount(account.id);
-    }
-  }
-
-  Future<BaseAccount?> _inputBaseAccount() async {
-    return await showDialog<BaseAccount>(
-      context: this,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('Select assignment'),
-          children: <Widget>[
-            SimpleDialogOption(
-              onPressed: () {
-                Navigator.pop(context);
-                openAccountInputDialog();
-              },
-              child: const Text('Account'),
-            ),
-            SimpleDialogOption(
-              onPressed: () {
-                Navigator.pop(context);
-                openDebtInputDialog();
-              },
-              child: const Text('Debt'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Sum sum() => select<MasterBloc, Sum>((bloc) => bloc.state.sum);
 
-  Sum recSum() => select<MasterBloc, Sum>((bloc) => bloc.state.recSum);
-
-  Currency currencySent() =>
-      select<MasterBloc, Currency>((bloc) => bloc.state.sum.currency);
-
-  Currency currencyReceived() =>
-      select<MasterBloc, Currency>((bloc) => bloc.state.recSum.currency);
-
-  bool highlightSum() =>
-      select<MasterBloc, bool>((bloc) => bloc.state.highlightSum);
-
-  bool highlightRecSum() =>
-      select<MasterBloc, bool>((bloc) => bloc.state.highlightRecSum);
-
-  Currency highlightCurrency() => select<MasterBloc, Currency>(
-    (bloc) => bloc.state.highlightSum
-        ? bloc.state.sum.currency
-        : bloc.state.recSum.currency,
+  Sum recSum() => select<MasterBloc, Sum>(
+    (bloc) => bloc.state.maybeMap(
+      exchange: (s) => s.recSum,
+      orElse: () => Sum(0, .RUB),
+    ),
   );
-
-  OperationType operationType() =>
-      select<MasterBloc, OperationType>((bloc) => bloc.state.operationType);
 
   int? accountId() => select<MasterBloc, int?>((bloc) => bloc.state.accountId);
 
-  int? recAccountId() => _bloc().state.recAccountId;
+  int? recAccountId() => select<MasterBloc, int?>(
+    (bloc) => bloc.state.maybeMap(
+      transfer: (s) => s.recAccountId,
+      orElse: () => null,
+    ),
+  );
 
-  int? categoryId(CategoryType type) => switch (type) {
-    CategoryType.INPUT => _bloc().state.categoryInId,
-    CategoryType.OUTPUT => _bloc().state.categoryOutId,
-  };
-
-  int? readCategoryGroupId(CategoryType type) => switch (type) {
-    CategoryType.INPUT => _bloc().state.categoryInParentId,
-    CategoryType.OUTPUT => _bloc().state.categoryOutParentId,
-  };
-
-  int? watchCategoryGroupId(CategoryType type) => select<MasterBloc, int?>(
-    (bloc) => switch (type) {
-      CategoryType.INPUT => bloc.state.categoryInParentId,
-      CategoryType.OUTPUT => bloc.state.categoryOutParentId,
-    },
+  int? categoryId() => select<MasterBloc, int?>(
+    (bloc) => bloc.state.maybeMap(
+      input: (s) => s.accountId,
+      output: (s) => s.accountId,
+      orElse: () => null,
+    ),
   );
 }

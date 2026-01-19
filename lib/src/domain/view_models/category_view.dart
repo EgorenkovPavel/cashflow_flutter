@@ -10,6 +10,6 @@ class CategoryView extends Equatable{
   @override
   List<Object?> get props => [id, title];
 
-  const CategoryView.groupNoParent(): id = -9999999, title = 'No parent';
+  static const noParent = CategoryView(id : -9999999, title : 'No parent');
 
 }

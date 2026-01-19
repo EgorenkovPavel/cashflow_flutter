@@ -55,26 +55,17 @@ extension MasterEventPatterns on MasterEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _BackPressedMasterEvent value)?  backPressed,TResult Function( _StartMasterEvent value)?  start,TResult Function( _AddNewItemMassterEvent value)?  addNewItem,TResult Function( _SumTapMasterEvent value)?  sumTap,TResult Function( _RecSumTapMasterEvent value)?  recSumTap,TResult Function( _ChangeOperationTypeMasterEvent value)?  changeOperationType,TResult Function( _DigitTapMasterEvent value)?  digitTap,TResult Function( _BackKeyTapMasterEvent value)?  backKeyTap,TResult Function( _MoreTapMasterEvent value)?  moreTap,TResult Function( _ChangeAccountMasterEvent value)?  changeAccount,TResult Function( _ChangeInCategoryMasterEvent value)?  changeInCategory,TResult Function( _ChangeInCategoryGroupMasterEvent value)?  changeInCategoryGroup,TResult Function( _ChangeOutCategoryMasterEvent value)?  changeOutCategory,TResult Function( _ChangeOutCategoryGroupMasterEvent value)?  changeOutCategoryGroup,TResult Function( _ChangeRecAccountMasterEvent value)?  changeRecAccount,TResult Function( _ChangeHighlightCurrencyMasterEvent value)?  changeHighlightCurrency,TResult Function( _CancelOperationMasterEvent value)?  cancelOperation,TResult Function( _NextTapMasterEvent value)?  nextTap,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StartMasterEvent value)?  start,TResult Function( _ChangeOperationTypeMasterEvent value)?  changeOperationType,TResult Function( _ChangeAccountMasterEvent value)?  changeAccount,TResult Function( _ChangeCategoryMasterEvent value)?  changeCategory,TResult Function( _ChangeRecAccountMasterEvent value)?  changeRecAccount,TResult Function( _ChangeSumMasterEvent value)?  changeSum,TResult Function( _ChangeRecSumMasterEvent value)?  changeRecSum,TResult Function( _CancelOperationMasterEvent value)?  cancelOperation,TResult Function( _NextTapMasterEvent value)?  nextTap,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent() when backPressed != null:
-return backPressed(_that);case _StartMasterEvent() when start != null:
-return start(_that);case _AddNewItemMassterEvent() when addNewItem != null:
-return addNewItem(_that);case _SumTapMasterEvent() when sumTap != null:
-return sumTap(_that);case _RecSumTapMasterEvent() when recSumTap != null:
-return recSumTap(_that);case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
-return changeOperationType(_that);case _DigitTapMasterEvent() when digitTap != null:
-return digitTap(_that);case _BackKeyTapMasterEvent() when backKeyTap != null:
-return backKeyTap(_that);case _MoreTapMasterEvent() when moreTap != null:
-return moreTap(_that);case _ChangeAccountMasterEvent() when changeAccount != null:
-return changeAccount(_that);case _ChangeInCategoryMasterEvent() when changeInCategory != null:
-return changeInCategory(_that);case _ChangeInCategoryGroupMasterEvent() when changeInCategoryGroup != null:
-return changeInCategoryGroup(_that);case _ChangeOutCategoryMasterEvent() when changeOutCategory != null:
-return changeOutCategory(_that);case _ChangeOutCategoryGroupMasterEvent() when changeOutCategoryGroup != null:
-return changeOutCategoryGroup(_that);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
-return changeRecAccount(_that);case _ChangeHighlightCurrencyMasterEvent() when changeHighlightCurrency != null:
-return changeHighlightCurrency(_that);case _CancelOperationMasterEvent() when cancelOperation != null:
+case _StartMasterEvent() when start != null:
+return start(_that);case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
+return changeOperationType(_that);case _ChangeAccountMasterEvent() when changeAccount != null:
+return changeAccount(_that);case _ChangeCategoryMasterEvent() when changeCategory != null:
+return changeCategory(_that);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
+return changeRecAccount(_that);case _ChangeSumMasterEvent() when changeSum != null:
+return changeSum(_that);case _ChangeRecSumMasterEvent() when changeRecSum != null:
+return changeRecSum(_that);case _CancelOperationMasterEvent() when cancelOperation != null:
 return cancelOperation(_that);case _NextTapMasterEvent() when nextTap != null:
 return nextTap(_that);case _:
   return orElse();
@@ -94,26 +85,17 @@ return nextTap(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _BackPressedMasterEvent value)  backPressed,required TResult Function( _StartMasterEvent value)  start,required TResult Function( _AddNewItemMassterEvent value)  addNewItem,required TResult Function( _SumTapMasterEvent value)  sumTap,required TResult Function( _RecSumTapMasterEvent value)  recSumTap,required TResult Function( _ChangeOperationTypeMasterEvent value)  changeOperationType,required TResult Function( _DigitTapMasterEvent value)  digitTap,required TResult Function( _BackKeyTapMasterEvent value)  backKeyTap,required TResult Function( _MoreTapMasterEvent value)  moreTap,required TResult Function( _ChangeAccountMasterEvent value)  changeAccount,required TResult Function( _ChangeInCategoryMasterEvent value)  changeInCategory,required TResult Function( _ChangeInCategoryGroupMasterEvent value)  changeInCategoryGroup,required TResult Function( _ChangeOutCategoryMasterEvent value)  changeOutCategory,required TResult Function( _ChangeOutCategoryGroupMasterEvent value)  changeOutCategoryGroup,required TResult Function( _ChangeRecAccountMasterEvent value)  changeRecAccount,required TResult Function( _ChangeHighlightCurrencyMasterEvent value)  changeHighlightCurrency,required TResult Function( _CancelOperationMasterEvent value)  cancelOperation,required TResult Function( _NextTapMasterEvent value)  nextTap,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StartMasterEvent value)  start,required TResult Function( _ChangeOperationTypeMasterEvent value)  changeOperationType,required TResult Function( _ChangeAccountMasterEvent value)  changeAccount,required TResult Function( _ChangeCategoryMasterEvent value)  changeCategory,required TResult Function( _ChangeRecAccountMasterEvent value)  changeRecAccount,required TResult Function( _ChangeSumMasterEvent value)  changeSum,required TResult Function( _ChangeRecSumMasterEvent value)  changeRecSum,required TResult Function( _CancelOperationMasterEvent value)  cancelOperation,required TResult Function( _NextTapMasterEvent value)  nextTap,}){
 final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent():
-return backPressed(_that);case _StartMasterEvent():
-return start(_that);case _AddNewItemMassterEvent():
-return addNewItem(_that);case _SumTapMasterEvent():
-return sumTap(_that);case _RecSumTapMasterEvent():
-return recSumTap(_that);case _ChangeOperationTypeMasterEvent():
-return changeOperationType(_that);case _DigitTapMasterEvent():
-return digitTap(_that);case _BackKeyTapMasterEvent():
-return backKeyTap(_that);case _MoreTapMasterEvent():
-return moreTap(_that);case _ChangeAccountMasterEvent():
-return changeAccount(_that);case _ChangeInCategoryMasterEvent():
-return changeInCategory(_that);case _ChangeInCategoryGroupMasterEvent():
-return changeInCategoryGroup(_that);case _ChangeOutCategoryMasterEvent():
-return changeOutCategory(_that);case _ChangeOutCategoryGroupMasterEvent():
-return changeOutCategoryGroup(_that);case _ChangeRecAccountMasterEvent():
-return changeRecAccount(_that);case _ChangeHighlightCurrencyMasterEvent():
-return changeHighlightCurrency(_that);case _CancelOperationMasterEvent():
+case _StartMasterEvent():
+return start(_that);case _ChangeOperationTypeMasterEvent():
+return changeOperationType(_that);case _ChangeAccountMasterEvent():
+return changeAccount(_that);case _ChangeCategoryMasterEvent():
+return changeCategory(_that);case _ChangeRecAccountMasterEvent():
+return changeRecAccount(_that);case _ChangeSumMasterEvent():
+return changeSum(_that);case _ChangeRecSumMasterEvent():
+return changeRecSum(_that);case _CancelOperationMasterEvent():
 return cancelOperation(_that);case _NextTapMasterEvent():
 return nextTap(_that);case _:
   throw StateError('Unexpected subclass');
@@ -132,26 +114,17 @@ return nextTap(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _BackPressedMasterEvent value)?  backPressed,TResult? Function( _StartMasterEvent value)?  start,TResult? Function( _AddNewItemMassterEvent value)?  addNewItem,TResult? Function( _SumTapMasterEvent value)?  sumTap,TResult? Function( _RecSumTapMasterEvent value)?  recSumTap,TResult? Function( _ChangeOperationTypeMasterEvent value)?  changeOperationType,TResult? Function( _DigitTapMasterEvent value)?  digitTap,TResult? Function( _BackKeyTapMasterEvent value)?  backKeyTap,TResult? Function( _MoreTapMasterEvent value)?  moreTap,TResult? Function( _ChangeAccountMasterEvent value)?  changeAccount,TResult? Function( _ChangeInCategoryMasterEvent value)?  changeInCategory,TResult? Function( _ChangeInCategoryGroupMasterEvent value)?  changeInCategoryGroup,TResult? Function( _ChangeOutCategoryMasterEvent value)?  changeOutCategory,TResult? Function( _ChangeOutCategoryGroupMasterEvent value)?  changeOutCategoryGroup,TResult? Function( _ChangeRecAccountMasterEvent value)?  changeRecAccount,TResult? Function( _ChangeHighlightCurrencyMasterEvent value)?  changeHighlightCurrency,TResult? Function( _CancelOperationMasterEvent value)?  cancelOperation,TResult? Function( _NextTapMasterEvent value)?  nextTap,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StartMasterEvent value)?  start,TResult? Function( _ChangeOperationTypeMasterEvent value)?  changeOperationType,TResult? Function( _ChangeAccountMasterEvent value)?  changeAccount,TResult? Function( _ChangeCategoryMasterEvent value)?  changeCategory,TResult? Function( _ChangeRecAccountMasterEvent value)?  changeRecAccount,TResult? Function( _ChangeSumMasterEvent value)?  changeSum,TResult? Function( _ChangeRecSumMasterEvent value)?  changeRecSum,TResult? Function( _CancelOperationMasterEvent value)?  cancelOperation,TResult? Function( _NextTapMasterEvent value)?  nextTap,}){
 final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent() when backPressed != null:
-return backPressed(_that);case _StartMasterEvent() when start != null:
-return start(_that);case _AddNewItemMassterEvent() when addNewItem != null:
-return addNewItem(_that);case _SumTapMasterEvent() when sumTap != null:
-return sumTap(_that);case _RecSumTapMasterEvent() when recSumTap != null:
-return recSumTap(_that);case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
-return changeOperationType(_that);case _DigitTapMasterEvent() when digitTap != null:
-return digitTap(_that);case _BackKeyTapMasterEvent() when backKeyTap != null:
-return backKeyTap(_that);case _MoreTapMasterEvent() when moreTap != null:
-return moreTap(_that);case _ChangeAccountMasterEvent() when changeAccount != null:
-return changeAccount(_that);case _ChangeInCategoryMasterEvent() when changeInCategory != null:
-return changeInCategory(_that);case _ChangeInCategoryGroupMasterEvent() when changeInCategoryGroup != null:
-return changeInCategoryGroup(_that);case _ChangeOutCategoryMasterEvent() when changeOutCategory != null:
-return changeOutCategory(_that);case _ChangeOutCategoryGroupMasterEvent() when changeOutCategoryGroup != null:
-return changeOutCategoryGroup(_that);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
-return changeRecAccount(_that);case _ChangeHighlightCurrencyMasterEvent() when changeHighlightCurrency != null:
-return changeHighlightCurrency(_that);case _CancelOperationMasterEvent() when cancelOperation != null:
+case _StartMasterEvent() when start != null:
+return start(_that);case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
+return changeOperationType(_that);case _ChangeAccountMasterEvent() when changeAccount != null:
+return changeAccount(_that);case _ChangeCategoryMasterEvent() when changeCategory != null:
+return changeCategory(_that);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
+return changeRecAccount(_that);case _ChangeSumMasterEvent() when changeSum != null:
+return changeSum(_that);case _ChangeRecSumMasterEvent() when changeRecSum != null:
+return changeRecSum(_that);case _CancelOperationMasterEvent() when cancelOperation != null:
 return cancelOperation(_that);case _NextTapMasterEvent() when nextTap != null:
 return nextTap(_that);case _:
   return null;
@@ -170,25 +143,16 @@ return nextTap(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  backPressed,TResult Function()?  start,TResult Function()?  addNewItem,TResult Function()?  sumTap,TResult Function()?  recSumTap,TResult Function( OperationType operationType)?  changeOperationType,TResult Function( int digit)?  digitTap,TResult Function()?  backKeyTap,TResult Function()?  moreTap,TResult Function( int id)?  changeAccount,TResult Function( int? id)?  changeInCategory,TResult Function( int? id)?  changeInCategoryGroup,TResult Function( int? id)?  changeOutCategory,TResult Function( int? id)?  changeOutCategoryGroup,TResult Function( int id)?  changeRecAccount,TResult Function( Currency currency)?  changeHighlightCurrency,TResult Function()?  cancelOperation,TResult Function()?  nextTap,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  start,TResult Function( OperationType operationType)?  changeOperationType,TResult Function( int id)?  changeAccount,TResult Function( int? id)?  changeCategory,TResult Function( int id)?  changeRecAccount,TResult Function( Sum sum)?  changeSum,TResult Function( Sum sum)?  changeRecSum,TResult Function()?  cancelOperation,TResult Function()?  nextTap,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent() when backPressed != null:
-return backPressed();case _StartMasterEvent() when start != null:
-return start();case _AddNewItemMassterEvent() when addNewItem != null:
-return addNewItem();case _SumTapMasterEvent() when sumTap != null:
-return sumTap();case _RecSumTapMasterEvent() when recSumTap != null:
-return recSumTap();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
-return changeOperationType(_that.operationType);case _DigitTapMasterEvent() when digitTap != null:
-return digitTap(_that.digit);case _BackKeyTapMasterEvent() when backKeyTap != null:
-return backKeyTap();case _MoreTapMasterEvent() when moreTap != null:
-return moreTap();case _ChangeAccountMasterEvent() when changeAccount != null:
-return changeAccount(_that.id);case _ChangeInCategoryMasterEvent() when changeInCategory != null:
-return changeInCategory(_that.id);case _ChangeInCategoryGroupMasterEvent() when changeInCategoryGroup != null:
-return changeInCategoryGroup(_that.id);case _ChangeOutCategoryMasterEvent() when changeOutCategory != null:
-return changeOutCategory(_that.id);case _ChangeOutCategoryGroupMasterEvent() when changeOutCategoryGroup != null:
-return changeOutCategoryGroup(_that.id);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
-return changeRecAccount(_that.id);case _ChangeHighlightCurrencyMasterEvent() when changeHighlightCurrency != null:
-return changeHighlightCurrency(_that.currency);case _CancelOperationMasterEvent() when cancelOperation != null:
+case _StartMasterEvent() when start != null:
+return start();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
+return changeOperationType(_that.operationType);case _ChangeAccountMasterEvent() when changeAccount != null:
+return changeAccount(_that.id);case _ChangeCategoryMasterEvent() when changeCategory != null:
+return changeCategory(_that.id);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
+return changeRecAccount(_that.id);case _ChangeSumMasterEvent() when changeSum != null:
+return changeSum(_that.sum);case _ChangeRecSumMasterEvent() when changeRecSum != null:
+return changeRecSum(_that.sum);case _CancelOperationMasterEvent() when cancelOperation != null:
 return cancelOperation();case _NextTapMasterEvent() when nextTap != null:
 return nextTap();case _:
   return orElse();
@@ -208,25 +172,16 @@ return nextTap();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  backPressed,required TResult Function()  start,required TResult Function()  addNewItem,required TResult Function()  sumTap,required TResult Function()  recSumTap,required TResult Function( OperationType operationType)  changeOperationType,required TResult Function( int digit)  digitTap,required TResult Function()  backKeyTap,required TResult Function()  moreTap,required TResult Function( int id)  changeAccount,required TResult Function( int? id)  changeInCategory,required TResult Function( int? id)  changeInCategoryGroup,required TResult Function( int? id)  changeOutCategory,required TResult Function( int? id)  changeOutCategoryGroup,required TResult Function( int id)  changeRecAccount,required TResult Function( Currency currency)  changeHighlightCurrency,required TResult Function()  cancelOperation,required TResult Function()  nextTap,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  start,required TResult Function( OperationType operationType)  changeOperationType,required TResult Function( int id)  changeAccount,required TResult Function( int? id)  changeCategory,required TResult Function( int id)  changeRecAccount,required TResult Function( Sum sum)  changeSum,required TResult Function( Sum sum)  changeRecSum,required TResult Function()  cancelOperation,required TResult Function()  nextTap,}) {final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent():
-return backPressed();case _StartMasterEvent():
-return start();case _AddNewItemMassterEvent():
-return addNewItem();case _SumTapMasterEvent():
-return sumTap();case _RecSumTapMasterEvent():
-return recSumTap();case _ChangeOperationTypeMasterEvent():
-return changeOperationType(_that.operationType);case _DigitTapMasterEvent():
-return digitTap(_that.digit);case _BackKeyTapMasterEvent():
-return backKeyTap();case _MoreTapMasterEvent():
-return moreTap();case _ChangeAccountMasterEvent():
-return changeAccount(_that.id);case _ChangeInCategoryMasterEvent():
-return changeInCategory(_that.id);case _ChangeInCategoryGroupMasterEvent():
-return changeInCategoryGroup(_that.id);case _ChangeOutCategoryMasterEvent():
-return changeOutCategory(_that.id);case _ChangeOutCategoryGroupMasterEvent():
-return changeOutCategoryGroup(_that.id);case _ChangeRecAccountMasterEvent():
-return changeRecAccount(_that.id);case _ChangeHighlightCurrencyMasterEvent():
-return changeHighlightCurrency(_that.currency);case _CancelOperationMasterEvent():
+case _StartMasterEvent():
+return start();case _ChangeOperationTypeMasterEvent():
+return changeOperationType(_that.operationType);case _ChangeAccountMasterEvent():
+return changeAccount(_that.id);case _ChangeCategoryMasterEvent():
+return changeCategory(_that.id);case _ChangeRecAccountMasterEvent():
+return changeRecAccount(_that.id);case _ChangeSumMasterEvent():
+return changeSum(_that.sum);case _ChangeRecSumMasterEvent():
+return changeRecSum(_that.sum);case _CancelOperationMasterEvent():
 return cancelOperation();case _NextTapMasterEvent():
 return nextTap();case _:
   throw StateError('Unexpected subclass');
@@ -245,25 +200,16 @@ return nextTap();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  backPressed,TResult? Function()?  start,TResult? Function()?  addNewItem,TResult? Function()?  sumTap,TResult? Function()?  recSumTap,TResult? Function( OperationType operationType)?  changeOperationType,TResult? Function( int digit)?  digitTap,TResult? Function()?  backKeyTap,TResult? Function()?  moreTap,TResult? Function( int id)?  changeAccount,TResult? Function( int? id)?  changeInCategory,TResult? Function( int? id)?  changeInCategoryGroup,TResult? Function( int? id)?  changeOutCategory,TResult? Function( int? id)?  changeOutCategoryGroup,TResult? Function( int id)?  changeRecAccount,TResult? Function( Currency currency)?  changeHighlightCurrency,TResult? Function()?  cancelOperation,TResult? Function()?  nextTap,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  start,TResult? Function( OperationType operationType)?  changeOperationType,TResult? Function( int id)?  changeAccount,TResult? Function( int? id)?  changeCategory,TResult? Function( int id)?  changeRecAccount,TResult? Function( Sum sum)?  changeSum,TResult? Function( Sum sum)?  changeRecSum,TResult? Function()?  cancelOperation,TResult? Function()?  nextTap,}) {final _that = this;
 switch (_that) {
-case _BackPressedMasterEvent() when backPressed != null:
-return backPressed();case _StartMasterEvent() when start != null:
-return start();case _AddNewItemMassterEvent() when addNewItem != null:
-return addNewItem();case _SumTapMasterEvent() when sumTap != null:
-return sumTap();case _RecSumTapMasterEvent() when recSumTap != null:
-return recSumTap();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
-return changeOperationType(_that.operationType);case _DigitTapMasterEvent() when digitTap != null:
-return digitTap(_that.digit);case _BackKeyTapMasterEvent() when backKeyTap != null:
-return backKeyTap();case _MoreTapMasterEvent() when moreTap != null:
-return moreTap();case _ChangeAccountMasterEvent() when changeAccount != null:
-return changeAccount(_that.id);case _ChangeInCategoryMasterEvent() when changeInCategory != null:
-return changeInCategory(_that.id);case _ChangeInCategoryGroupMasterEvent() when changeInCategoryGroup != null:
-return changeInCategoryGroup(_that.id);case _ChangeOutCategoryMasterEvent() when changeOutCategory != null:
-return changeOutCategory(_that.id);case _ChangeOutCategoryGroupMasterEvent() when changeOutCategoryGroup != null:
-return changeOutCategoryGroup(_that.id);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
-return changeRecAccount(_that.id);case _ChangeHighlightCurrencyMasterEvent() when changeHighlightCurrency != null:
-return changeHighlightCurrency(_that.currency);case _CancelOperationMasterEvent() when cancelOperation != null:
+case _StartMasterEvent() when start != null:
+return start();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
+return changeOperationType(_that.operationType);case _ChangeAccountMasterEvent() when changeAccount != null:
+return changeAccount(_that.id);case _ChangeCategoryMasterEvent() when changeCategory != null:
+return changeCategory(_that.id);case _ChangeRecAccountMasterEvent() when changeRecAccount != null:
+return changeRecAccount(_that.id);case _ChangeSumMasterEvent() when changeSum != null:
+return changeSum(_that.sum);case _ChangeRecSumMasterEvent() when changeRecSum != null:
+return changeRecSum(_that.sum);case _CancelOperationMasterEvent() when cancelOperation != null:
 return cancelOperation();case _NextTapMasterEvent() when nextTap != null:
 return nextTap();case _:
   return null;
@@ -272,38 +218,6 @@ return nextTap();case _:
 }
 
 }
-
-/// @nodoc
-
-
-class _BackPressedMasterEvent implements MasterEvent {
-  const _BackPressedMasterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackPressedMasterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.backPressed()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
 
@@ -329,102 +243,6 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'MasterEvent.start()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _AddNewItemMassterEvent implements MasterEvent {
-  const _AddNewItemMassterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddNewItemMassterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.addNewItem()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _SumTapMasterEvent implements MasterEvent {
-  const _SumTapMasterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SumTapMasterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.sumTap()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _RecSumTapMasterEvent implements MasterEvent {
-  const _RecSumTapMasterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecSumTapMasterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.recSumTap()';
 }
 
 
@@ -502,136 +320,6 @@ as OperationType,
 /// @nodoc
 
 
-class _DigitTapMasterEvent implements MasterEvent {
-  const _DigitTapMasterEvent(this.digit);
-  
-
- final  int digit;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$DigitTapMasterEventCopyWith<_DigitTapMasterEvent> get copyWith => __$DigitTapMasterEventCopyWithImpl<_DigitTapMasterEvent>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DigitTapMasterEvent&&(identical(other.digit, digit) || other.digit == digit));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,digit);
-
-@override
-String toString() {
-  return 'MasterEvent.digitTap(digit: $digit)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$DigitTapMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$DigitTapMasterEventCopyWith(_DigitTapMasterEvent value, $Res Function(_DigitTapMasterEvent) _then) = __$DigitTapMasterEventCopyWithImpl;
-@useResult
-$Res call({
- int digit
-});
-
-
-
-
-}
-/// @nodoc
-class __$DigitTapMasterEventCopyWithImpl<$Res>
-    implements _$DigitTapMasterEventCopyWith<$Res> {
-  __$DigitTapMasterEventCopyWithImpl(this._self, this._then);
-
-  final _DigitTapMasterEvent _self;
-  final $Res Function(_DigitTapMasterEvent) _then;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? digit = null,}) {
-  return _then(_DigitTapMasterEvent(
-null == digit ? _self.digit : digit // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _BackKeyTapMasterEvent implements MasterEvent {
-  const _BackKeyTapMasterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackKeyTapMasterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.backKeyTap()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _MoreTapMasterEvent implements MasterEvent {
-  const _MoreTapMasterEvent();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MoreTapMasterEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MasterEvent.moreTap()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
 class _ChangeAccountMasterEvent implements MasterEvent {
   const _ChangeAccountMasterEvent(this.id);
   
@@ -698,8 +386,8 @@ as int,
 /// @nodoc
 
 
-class _ChangeInCategoryMasterEvent implements MasterEvent {
-  const _ChangeInCategoryMasterEvent(this.id);
+class _ChangeCategoryMasterEvent implements MasterEvent {
+  const _ChangeCategoryMasterEvent(this.id);
   
 
  final  int? id;
@@ -708,13 +396,13 @@ class _ChangeInCategoryMasterEvent implements MasterEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ChangeInCategoryMasterEventCopyWith<_ChangeInCategoryMasterEvent> get copyWith => __$ChangeInCategoryMasterEventCopyWithImpl<_ChangeInCategoryMasterEvent>(this, _$identity);
+_$ChangeCategoryMasterEventCopyWith<_ChangeCategoryMasterEvent> get copyWith => __$ChangeCategoryMasterEventCopyWithImpl<_ChangeCategoryMasterEvent>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeInCategoryMasterEvent&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryMasterEvent&&(identical(other.id, id) || other.id == id));
 }
 
 
@@ -723,15 +411,15 @@ int get hashCode => Object.hash(runtimeType,id);
 
 @override
 String toString() {
-  return 'MasterEvent.changeInCategory(id: $id)';
+  return 'MasterEvent.changeCategory(id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ChangeInCategoryMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$ChangeInCategoryMasterEventCopyWith(_ChangeInCategoryMasterEvent value, $Res Function(_ChangeInCategoryMasterEvent) _then) = __$ChangeInCategoryMasterEventCopyWithImpl;
+abstract mixin class _$ChangeCategoryMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
+  factory _$ChangeCategoryMasterEventCopyWith(_ChangeCategoryMasterEvent value, $Res Function(_ChangeCategoryMasterEvent) _then) = __$ChangeCategoryMasterEventCopyWithImpl;
 @useResult
 $Res call({
  int? id
@@ -742,215 +430,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ChangeInCategoryMasterEventCopyWithImpl<$Res>
-    implements _$ChangeInCategoryMasterEventCopyWith<$Res> {
-  __$ChangeInCategoryMasterEventCopyWithImpl(this._self, this._then);
+class __$ChangeCategoryMasterEventCopyWithImpl<$Res>
+    implements _$ChangeCategoryMasterEventCopyWith<$Res> {
+  __$ChangeCategoryMasterEventCopyWithImpl(this._self, this._then);
 
-  final _ChangeInCategoryMasterEvent _self;
-  final $Res Function(_ChangeInCategoryMasterEvent) _then;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = freezed,}) {
-  return _then(_ChangeInCategoryMasterEvent(
-freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _ChangeInCategoryGroupMasterEvent implements MasterEvent {
-  const _ChangeInCategoryGroupMasterEvent(this.id);
-  
-
- final  int? id;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ChangeInCategoryGroupMasterEventCopyWith<_ChangeInCategoryGroupMasterEvent> get copyWith => __$ChangeInCategoryGroupMasterEventCopyWithImpl<_ChangeInCategoryGroupMasterEvent>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeInCategoryGroupMasterEvent&&(identical(other.id, id) || other.id == id));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,id);
-
-@override
-String toString() {
-  return 'MasterEvent.changeInCategoryGroup(id: $id)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ChangeInCategoryGroupMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$ChangeInCategoryGroupMasterEventCopyWith(_ChangeInCategoryGroupMasterEvent value, $Res Function(_ChangeInCategoryGroupMasterEvent) _then) = __$ChangeInCategoryGroupMasterEventCopyWithImpl;
-@useResult
-$Res call({
- int? id
-});
-
-
-
-
-}
-/// @nodoc
-class __$ChangeInCategoryGroupMasterEventCopyWithImpl<$Res>
-    implements _$ChangeInCategoryGroupMasterEventCopyWith<$Res> {
-  __$ChangeInCategoryGroupMasterEventCopyWithImpl(this._self, this._then);
-
-  final _ChangeInCategoryGroupMasterEvent _self;
-  final $Res Function(_ChangeInCategoryGroupMasterEvent) _then;
+  final _ChangeCategoryMasterEvent _self;
+  final $Res Function(_ChangeCategoryMasterEvent) _then;
 
 /// Create a copy of MasterEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? id = freezed,}) {
-  return _then(_ChangeInCategoryGroupMasterEvent(
-freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _ChangeOutCategoryMasterEvent implements MasterEvent {
-  const _ChangeOutCategoryMasterEvent(this.id);
-  
-
- final  int? id;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ChangeOutCategoryMasterEventCopyWith<_ChangeOutCategoryMasterEvent> get copyWith => __$ChangeOutCategoryMasterEventCopyWithImpl<_ChangeOutCategoryMasterEvent>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOutCategoryMasterEvent&&(identical(other.id, id) || other.id == id));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,id);
-
-@override
-String toString() {
-  return 'MasterEvent.changeOutCategory(id: $id)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ChangeOutCategoryMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$ChangeOutCategoryMasterEventCopyWith(_ChangeOutCategoryMasterEvent value, $Res Function(_ChangeOutCategoryMasterEvent) _then) = __$ChangeOutCategoryMasterEventCopyWithImpl;
-@useResult
-$Res call({
- int? id
-});
-
-
-
-
-}
-/// @nodoc
-class __$ChangeOutCategoryMasterEventCopyWithImpl<$Res>
-    implements _$ChangeOutCategoryMasterEventCopyWith<$Res> {
-  __$ChangeOutCategoryMasterEventCopyWithImpl(this._self, this._then);
-
-  final _ChangeOutCategoryMasterEvent _self;
-  final $Res Function(_ChangeOutCategoryMasterEvent) _then;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = freezed,}) {
-  return _then(_ChangeOutCategoryMasterEvent(
-freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _ChangeOutCategoryGroupMasterEvent implements MasterEvent {
-  const _ChangeOutCategoryGroupMasterEvent(this.id);
-  
-
- final  int? id;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ChangeOutCategoryGroupMasterEventCopyWith<_ChangeOutCategoryGroupMasterEvent> get copyWith => __$ChangeOutCategoryGroupMasterEventCopyWithImpl<_ChangeOutCategoryGroupMasterEvent>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOutCategoryGroupMasterEvent&&(identical(other.id, id) || other.id == id));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,id);
-
-@override
-String toString() {
-  return 'MasterEvent.changeOutCategoryGroup(id: $id)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ChangeOutCategoryGroupMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$ChangeOutCategoryGroupMasterEventCopyWith(_ChangeOutCategoryGroupMasterEvent value, $Res Function(_ChangeOutCategoryGroupMasterEvent) _then) = __$ChangeOutCategoryGroupMasterEventCopyWithImpl;
-@useResult
-$Res call({
- int? id
-});
-
-
-
-
-}
-/// @nodoc
-class __$ChangeOutCategoryGroupMasterEventCopyWithImpl<$Res>
-    implements _$ChangeOutCategoryGroupMasterEventCopyWith<$Res> {
-  __$ChangeOutCategoryGroupMasterEventCopyWithImpl(this._self, this._then);
-
-  final _ChangeOutCategoryGroupMasterEvent _self;
-  final $Res Function(_ChangeOutCategoryGroupMasterEvent) _then;
-
-/// Create a copy of MasterEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = freezed,}) {
-  return _then(_ChangeOutCategoryGroupMasterEvent(
+  return _then(_ChangeCategoryMasterEvent(
 freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
@@ -1028,43 +518,43 @@ as int,
 /// @nodoc
 
 
-class _ChangeHighlightCurrencyMasterEvent implements MasterEvent {
-  const _ChangeHighlightCurrencyMasterEvent(this.currency);
+class _ChangeSumMasterEvent implements MasterEvent {
+  const _ChangeSumMasterEvent(this.sum);
   
 
- final  Currency currency;
+ final  Sum sum;
 
 /// Create a copy of MasterEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ChangeHighlightCurrencyMasterEventCopyWith<_ChangeHighlightCurrencyMasterEvent> get copyWith => __$ChangeHighlightCurrencyMasterEventCopyWithImpl<_ChangeHighlightCurrencyMasterEvent>(this, _$identity);
+_$ChangeSumMasterEventCopyWith<_ChangeSumMasterEvent> get copyWith => __$ChangeSumMasterEventCopyWithImpl<_ChangeSumMasterEvent>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeHighlightCurrencyMasterEvent&&(identical(other.currency, currency) || other.currency == currency));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currency);
+int get hashCode => Object.hash(runtimeType,sum);
 
 @override
 String toString() {
-  return 'MasterEvent.changeHighlightCurrency(currency: $currency)';
+  return 'MasterEvent.changeSum(sum: $sum)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ChangeHighlightCurrencyMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
-  factory _$ChangeHighlightCurrencyMasterEventCopyWith(_ChangeHighlightCurrencyMasterEvent value, $Res Function(_ChangeHighlightCurrencyMasterEvent) _then) = __$ChangeHighlightCurrencyMasterEventCopyWithImpl;
+abstract mixin class _$ChangeSumMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
+  factory _$ChangeSumMasterEventCopyWith(_ChangeSumMasterEvent value, $Res Function(_ChangeSumMasterEvent) _then) = __$ChangeSumMasterEventCopyWithImpl;
 @useResult
 $Res call({
- Currency currency
+ Sum sum
 });
 
 
@@ -1072,19 +562,85 @@ $Res call({
 
 }
 /// @nodoc
-class __$ChangeHighlightCurrencyMasterEventCopyWithImpl<$Res>
-    implements _$ChangeHighlightCurrencyMasterEventCopyWith<$Res> {
-  __$ChangeHighlightCurrencyMasterEventCopyWithImpl(this._self, this._then);
+class __$ChangeSumMasterEventCopyWithImpl<$Res>
+    implements _$ChangeSumMasterEventCopyWith<$Res> {
+  __$ChangeSumMasterEventCopyWithImpl(this._self, this._then);
 
-  final _ChangeHighlightCurrencyMasterEvent _self;
-  final $Res Function(_ChangeHighlightCurrencyMasterEvent) _then;
+  final _ChangeSumMasterEvent _self;
+  final $Res Function(_ChangeSumMasterEvent) _then;
 
 /// Create a copy of MasterEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? currency = null,}) {
-  return _then(_ChangeHighlightCurrencyMasterEvent(
-null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as Currency,
+@pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
+  return _then(_ChangeSumMasterEvent(
+null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _ChangeRecSumMasterEvent implements MasterEvent {
+  const _ChangeRecSumMasterEvent(this.sum);
+  
+
+ final  Sum sum;
+
+/// Create a copy of MasterEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChangeRecSumMasterEventCopyWith<_ChangeRecSumMasterEvent> get copyWith => __$ChangeRecSumMasterEventCopyWithImpl<_ChangeRecSumMasterEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,sum);
+
+@override
+String toString() {
+  return 'MasterEvent.changeRecSum(sum: $sum)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ChangeRecSumMasterEventCopyWith<$Res> implements $MasterEventCopyWith<$Res> {
+  factory _$ChangeRecSumMasterEventCopyWith(_ChangeRecSumMasterEvent value, $Res Function(_ChangeRecSumMasterEvent) _then) = __$ChangeRecSumMasterEventCopyWithImpl;
+@useResult
+$Res call({
+ Sum sum
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChangeRecSumMasterEventCopyWithImpl<$Res>
+    implements _$ChangeRecSumMasterEventCopyWith<$Res> {
+  __$ChangeRecSumMasterEventCopyWithImpl(this._self, this._then);
+
+  final _ChangeRecSumMasterEvent _self;
+  final $Res Function(_ChangeRecSumMasterEvent) _then;
+
+/// Create a copy of MasterEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
+  return _then(_ChangeRecSumMasterEvent(
+null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,
   ));
 }
 
@@ -1158,7 +714,7 @@ String toString() {
 /// @nodoc
 mixin _$MasterState {
 
- MasterStateAction get action; OperationType get operationType; Sum get sum; Sum get recSum; bool get showKeyboard; bool get highlightSum; bool get highlightRecSum; int? get accountId; int? get categoryInId; int? get categoryOutId; int? get recAccountId; int? get categoryInParentId; int? get categoryOutParentId; Operation? get operation;
+ int? get accountId; Sum get sum; Operation? get operation; MasterStateAction? get action;
 /// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1169,16 +725,16 @@ $MasterStateCopyWith<MasterState> get copyWith => _$MasterStateCopyWithImpl<Mast
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterState&&(identical(other.action, action) || other.action == action)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.showKeyboard, showKeyboard) || other.showKeyboard == showKeyboard)&&(identical(other.highlightSum, highlightSum) || other.highlightSum == highlightSum)&&(identical(other.highlightRecSum, highlightRecSum) || other.highlightRecSum == highlightRecSum)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryInId, categoryInId) || other.categoryInId == categoryInId)&&(identical(other.categoryOutId, categoryOutId) || other.categoryOutId == categoryOutId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.categoryInParentId, categoryInParentId) || other.categoryInParentId == categoryInParentId)&&(identical(other.categoryOutParentId, categoryOutParentId) || other.categoryOutParentId == categoryOutParentId)&&(identical(other.operation, operation) || other.operation == operation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,action,operationType,sum,recSum,showKeyboard,highlightSum,highlightRecSum,accountId,categoryInId,categoryOutId,recAccountId,categoryInParentId,categoryOutParentId,operation);
+int get hashCode => Object.hash(runtimeType,accountId,sum,operation,action);
 
 @override
 String toString() {
-  return 'MasterState(action: $action, operationType: $operationType, sum: $sum, recSum: $recSum, showKeyboard: $showKeyboard, highlightSum: $highlightSum, highlightRecSum: $highlightRecSum, accountId: $accountId, categoryInId: $categoryInId, categoryOutId: $categoryOutId, recAccountId: $recAccountId, categoryInParentId: $categoryInParentId, categoryOutParentId: $categoryOutParentId, operation: $operation)';
+  return 'MasterState(accountId: $accountId, sum: $sum, operation: $operation, action: $action)';
 }
 
 
@@ -1189,7 +745,7 @@ abstract mixin class $MasterStateCopyWith<$Res>  {
   factory $MasterStateCopyWith(MasterState value, $Res Function(MasterState) _then) = _$MasterStateCopyWithImpl;
 @useResult
 $Res call({
- MasterStateAction action, OperationType operationType, Sum sum, Sum recSum, bool showKeyboard, bool highlightSum, bool highlightRecSum, int? accountId, int? categoryInId, int? categoryOutId, int? recAccountId, int? categoryInParentId, int? categoryOutParentId, Operation? operation
+ int? accountId, Sum sum, Operation? operation, MasterStateAction? action
 });
 
 
@@ -1206,23 +762,13 @@ class _$MasterStateCopyWithImpl<$Res>
 
 /// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? action = null,Object? operationType = null,Object? sum = null,Object? recSum = null,Object? showKeyboard = null,Object? highlightSum = null,Object? highlightRecSum = null,Object? accountId = freezed,Object? categoryInId = freezed,Object? categoryOutId = freezed,Object? recAccountId = freezed,Object? categoryInParentId = freezed,Object? categoryOutParentId = freezed,Object? operation = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accountId = freezed,Object? sum = null,Object? operation = freezed,Object? action = freezed,}) {
   return _then(_self.copyWith(
-action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
-as MasterStateAction,operationType: null == operationType ? _self.operationType : operationType // ignore: cast_nullable_to_non_nullable
-as OperationType,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,showKeyboard: null == showKeyboard ? _self.showKeyboard : showKeyboard // ignore: cast_nullable_to_non_nullable
-as bool,highlightSum: null == highlightSum ? _self.highlightSum : highlightSum // ignore: cast_nullable_to_non_nullable
-as bool,highlightRecSum: null == highlightRecSum ? _self.highlightRecSum : highlightRecSum // ignore: cast_nullable_to_non_nullable
-as bool,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
-as int?,categoryInId: freezed == categoryInId ? _self.categoryInId : categoryInId // ignore: cast_nullable_to_non_nullable
-as int?,categoryOutId: freezed == categoryOutId ? _self.categoryOutId : categoryOutId // ignore: cast_nullable_to_non_nullable
-as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
-as int?,categoryInParentId: freezed == categoryInParentId ? _self.categoryInParentId : categoryInParentId // ignore: cast_nullable_to_non_nullable
-as int?,categoryOutParentId: freezed == categoryOutParentId ? _self.categoryOutParentId : categoryOutParentId // ignore: cast_nullable_to_non_nullable
-as int?,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
-as Operation?,
+accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as MasterStateAction?,
   ));
 }
 
@@ -1243,11 +789,14 @@ extension MasterStatePatterns on MasterState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MasterState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InputMasterState value)?  input,TResult Function( _OutputMasterState value)?  output,TResult Function( _TransferMasterState value)?  transfer,TResult Function( _ExchangeMasterState value)?  exchange,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _MasterState() when $default != null:
-return $default(_that);case _:
+case _InputMasterState() when input != null:
+return input(_that);case _OutputMasterState() when output != null:
+return output(_that);case _TransferMasterState() when transfer != null:
+return transfer(_that);case _ExchangeMasterState() when exchange != null:
+return exchange(_that);case _:
   return orElse();
 
 }
@@ -1265,11 +814,14 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MasterState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InputMasterState value)  input,required TResult Function( _OutputMasterState value)  output,required TResult Function( _TransferMasterState value)  transfer,required TResult Function( _ExchangeMasterState value)  exchange,}){
 final _that = this;
 switch (_that) {
-case _MasterState():
-return $default(_that);case _:
+case _InputMasterState():
+return input(_that);case _OutputMasterState():
+return output(_that);case _TransferMasterState():
+return transfer(_that);case _ExchangeMasterState():
+return exchange(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1286,11 +838,14 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MasterState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InputMasterState value)?  input,TResult? Function( _OutputMasterState value)?  output,TResult? Function( _TransferMasterState value)?  transfer,TResult? Function( _ExchangeMasterState value)?  exchange,}){
 final _that = this;
 switch (_that) {
-case _MasterState() when $default != null:
-return $default(_that);case _:
+case _InputMasterState() when input != null:
+return input(_that);case _OutputMasterState() when output != null:
+return output(_that);case _TransferMasterState() when transfer != null:
+return transfer(_that);case _ExchangeMasterState() when exchange != null:
+return exchange(_that);case _:
   return null;
 
 }
@@ -1307,10 +862,13 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MasterStateAction action,  OperationType operationType,  Sum sum,  Sum recSum,  bool showKeyboard,  bool highlightSum,  bool highlightRecSum,  int? accountId,  int? categoryInId,  int? categoryOutId,  int? recAccountId,  int? categoryInParentId,  int? categoryOutParentId,  Operation? operation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  input,TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  output,TResult Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)?  exchange,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _MasterState() when $default != null:
-return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.showKeyboard,_that.highlightSum,_that.highlightRecSum,_that.accountId,_that.categoryInId,_that.categoryOutId,_that.recAccountId,_that.categoryInParentId,_that.categoryOutParentId,_that.operation);case _:
+case _InputMasterState() when input != null:
+return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState() when output != null:
+return output(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _TransferMasterState() when transfer != null:
+return transfer(_that.accountId,_that.recAccountId,_that.sum,_that.operation,_that.action);case _ExchangeMasterState() when exchange != null:
+return exchange(_that.accountId,_that.sum,_that.recSum,_that.operation,_that.action);case _:
   return orElse();
 
 }
@@ -1328,10 +886,13 @@ return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.sh
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MasterStateAction action,  OperationType operationType,  Sum sum,  Sum recSum,  bool showKeyboard,  bool highlightSum,  bool highlightRecSum,  int? accountId,  int? categoryInId,  int? categoryOutId,  int? recAccountId,  int? categoryInParentId,  int? categoryOutParentId,  Operation? operation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)  input,required TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)  output,required TResult Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)  transfer,required TResult Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)  exchange,}) {final _that = this;
 switch (_that) {
-case _MasterState():
-return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.showKeyboard,_that.highlightSum,_that.highlightRecSum,_that.accountId,_that.categoryInId,_that.categoryOutId,_that.recAccountId,_that.categoryInParentId,_that.categoryOutParentId,_that.operation);case _:
+case _InputMasterState():
+return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState():
+return output(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _TransferMasterState():
+return transfer(_that.accountId,_that.recAccountId,_that.sum,_that.operation,_that.action);case _ExchangeMasterState():
+return exchange(_that.accountId,_that.sum,_that.recSum,_that.operation,_that.action);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1348,10 +909,13 @@ return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.sh
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MasterStateAction action,  OperationType operationType,  Sum sum,  Sum recSum,  bool showKeyboard,  bool highlightSum,  bool highlightRecSum,  int? accountId,  int? categoryInId,  int? categoryOutId,  int? recAccountId,  int? categoryInParentId,  int? categoryOutParentId,  Operation? operation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  input,TResult? Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  output,TResult? Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult? Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)?  exchange,}) {final _that = this;
 switch (_that) {
-case _MasterState() when $default != null:
-return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.showKeyboard,_that.highlightSum,_that.highlightRecSum,_that.accountId,_that.categoryInId,_that.categoryOutId,_that.recAccountId,_that.categoryInParentId,_that.categoryOutParentId,_that.operation);case _:
+case _InputMasterState() when input != null:
+return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState() when output != null:
+return output(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _TransferMasterState() when transfer != null:
+return transfer(_that.accountId,_that.recAccountId,_that.sum,_that.operation,_that.action);case _ExchangeMasterState() when exchange != null:
+return exchange(_that.accountId,_that.sum,_that.recSum,_that.operation,_that.action);case _:
   return null;
 
 }
@@ -1362,56 +926,47 @@ return $default(_that.action,_that.operationType,_that.sum,_that.recSum,_that.sh
 /// @nodoc
 
 
-class _MasterState implements MasterState {
-  const _MasterState({required this.action, required this.operationType, required this.sum, required this.recSum, required this.showKeyboard, required this.highlightSum, required this.highlightRecSum, this.accountId, this.categoryInId, this.categoryOutId, this.recAccountId, this.categoryInParentId, this.categoryOutParentId, this.operation});
+class _InputMasterState implements MasterState {
+  const _InputMasterState({this.accountId, this.categoryId, required this.sum, this.operation, this.action});
   
 
-@override final  MasterStateAction action;
-@override final  OperationType operationType;
-@override final  Sum sum;
-@override final  Sum recSum;
-@override final  bool showKeyboard;
-@override final  bool highlightSum;
-@override final  bool highlightRecSum;
 @override final  int? accountId;
-@override final  int? categoryInId;
-@override final  int? categoryOutId;
-@override final  int? recAccountId;
-@override final  int? categoryInParentId;
-@override final  int? categoryOutParentId;
+ final  int? categoryId;
+@override final  Sum sum;
 @override final  Operation? operation;
+@override final  MasterStateAction? action;
 
 /// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$MasterStateCopyWith<_MasterState> get copyWith => __$MasterStateCopyWithImpl<_MasterState>(this, _$identity);
+_$InputMasterStateCopyWith<_InputMasterState> get copyWith => __$InputMasterStateCopyWithImpl<_InputMasterState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MasterState&&(identical(other.action, action) || other.action == action)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.showKeyboard, showKeyboard) || other.showKeyboard == showKeyboard)&&(identical(other.highlightSum, highlightSum) || other.highlightSum == highlightSum)&&(identical(other.highlightRecSum, highlightRecSum) || other.highlightRecSum == highlightRecSum)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryInId, categoryInId) || other.categoryInId == categoryInId)&&(identical(other.categoryOutId, categoryOutId) || other.categoryOutId == categoryOutId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.categoryInParentId, categoryInParentId) || other.categoryInParentId == categoryInParentId)&&(identical(other.categoryOutParentId, categoryOutParentId) || other.categoryOutParentId == categoryOutParentId)&&(identical(other.operation, operation) || other.operation == operation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,action,operationType,sum,recSum,showKeyboard,highlightSum,highlightRecSum,accountId,categoryInId,categoryOutId,recAccountId,categoryInParentId,categoryOutParentId,operation);
+int get hashCode => Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
 
 @override
 String toString() {
-  return 'MasterState(action: $action, operationType: $operationType, sum: $sum, recSum: $recSum, showKeyboard: $showKeyboard, highlightSum: $highlightSum, highlightRecSum: $highlightRecSum, accountId: $accountId, categoryInId: $categoryInId, categoryOutId: $categoryOutId, recAccountId: $recAccountId, categoryInParentId: $categoryInParentId, categoryOutParentId: $categoryOutParentId, operation: $operation)';
+  return 'MasterState.input(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$MasterStateCopyWith<$Res> implements $MasterStateCopyWith<$Res> {
-  factory _$MasterStateCopyWith(_MasterState value, $Res Function(_MasterState) _then) = __$MasterStateCopyWithImpl;
+abstract mixin class _$InputMasterStateCopyWith<$Res> implements $MasterStateCopyWith<$Res> {
+  factory _$InputMasterStateCopyWith(_InputMasterState value, $Res Function(_InputMasterState) _then) = __$InputMasterStateCopyWithImpl;
 @override @useResult
 $Res call({
- MasterStateAction action, OperationType operationType, Sum sum, Sum recSum, bool showKeyboard, bool highlightSum, bool highlightRecSum, int? accountId, int? categoryInId, int? categoryOutId, int? recAccountId, int? categoryInParentId, int? categoryOutParentId, Operation? operation
+ int? accountId, int? categoryId, Sum sum, Operation? operation, MasterStateAction? action
 });
 
 
@@ -1419,32 +974,245 @@ $Res call({
 
 }
 /// @nodoc
-class __$MasterStateCopyWithImpl<$Res>
-    implements _$MasterStateCopyWith<$Res> {
-  __$MasterStateCopyWithImpl(this._self, this._then);
+class __$InputMasterStateCopyWithImpl<$Res>
+    implements _$InputMasterStateCopyWith<$Res> {
+  __$InputMasterStateCopyWithImpl(this._self, this._then);
 
-  final _MasterState _self;
-  final $Res Function(_MasterState) _then;
+  final _InputMasterState _self;
+  final $Res Function(_InputMasterState) _then;
 
 /// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? action = null,Object? operationType = null,Object? sum = null,Object? recSum = null,Object? showKeyboard = null,Object? highlightSum = null,Object? highlightRecSum = null,Object? accountId = freezed,Object? categoryInId = freezed,Object? categoryOutId = freezed,Object? recAccountId = freezed,Object? categoryInParentId = freezed,Object? categoryOutParentId = freezed,Object? operation = freezed,}) {
-  return _then(_MasterState(
-action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
-as MasterStateAction,operationType: null == operationType ? _self.operationType : operationType // ignore: cast_nullable_to_non_nullable
-as OperationType,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,showKeyboard: null == showKeyboard ? _self.showKeyboard : showKeyboard // ignore: cast_nullable_to_non_nullable
-as bool,highlightSum: null == highlightSum ? _self.highlightSum : highlightSum // ignore: cast_nullable_to_non_nullable
-as bool,highlightRecSum: null == highlightRecSum ? _self.highlightRecSum : highlightRecSum // ignore: cast_nullable_to_non_nullable
-as bool,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
-as int?,categoryInId: freezed == categoryInId ? _self.categoryInId : categoryInId // ignore: cast_nullable_to_non_nullable
-as int?,categoryOutId: freezed == categoryOutId ? _self.categoryOutId : categoryOutId // ignore: cast_nullable_to_non_nullable
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = freezed,Object? categoryId = freezed,Object? sum = null,Object? operation = freezed,Object? action = freezed,}) {
+  return _then(_InputMasterState(
+accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as MasterStateAction?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _OutputMasterState implements MasterState {
+  const _OutputMasterState({this.accountId, this.categoryId, required this.sum, this.operation, this.action});
+  
+
+@override final  int? accountId;
+ final  int? categoryId;
+@override final  Sum sum;
+@override final  Operation? operation;
+@override final  MasterStateAction? action;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OutputMasterStateCopyWith<_OutputMasterState> get copyWith => __$OutputMasterStateCopyWithImpl<_OutputMasterState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OutputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
+
+@override
+String toString() {
+  return 'MasterState.output(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OutputMasterStateCopyWith<$Res> implements $MasterStateCopyWith<$Res> {
+  factory _$OutputMasterStateCopyWith(_OutputMasterState value, $Res Function(_OutputMasterState) _then) = __$OutputMasterStateCopyWithImpl;
+@override @useResult
+$Res call({
+ int? accountId, int? categoryId, Sum sum, Operation? operation, MasterStateAction? action
+});
+
+
+
+
+}
+/// @nodoc
+class __$OutputMasterStateCopyWithImpl<$Res>
+    implements _$OutputMasterStateCopyWith<$Res> {
+  __$OutputMasterStateCopyWithImpl(this._self, this._then);
+
+  final _OutputMasterState _self;
+  final $Res Function(_OutputMasterState) _then;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = freezed,Object? categoryId = freezed,Object? sum = null,Object? operation = freezed,Object? action = freezed,}) {
+  return _then(_OutputMasterState(
+accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as MasterStateAction?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _TransferMasterState implements MasterState {
+  const _TransferMasterState({this.accountId, this.recAccountId, required this.sum, this.operation, this.action});
+  
+
+@override final  int? accountId;
+ final  int? recAccountId;
+@override final  Sum sum;
+@override final  Operation? operation;
+@override final  MasterStateAction? action;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TransferMasterStateCopyWith<_TransferMasterState> get copyWith => __$TransferMasterStateCopyWithImpl<_TransferMasterState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransferMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,accountId,recAccountId,sum,operation,action);
+
+@override
+String toString() {
+  return 'MasterState.transfer(accountId: $accountId, recAccountId: $recAccountId, sum: $sum, operation: $operation, action: $action)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TransferMasterStateCopyWith<$Res> implements $MasterStateCopyWith<$Res> {
+  factory _$TransferMasterStateCopyWith(_TransferMasterState value, $Res Function(_TransferMasterState) _then) = __$TransferMasterStateCopyWithImpl;
+@override @useResult
+$Res call({
+ int? accountId, int? recAccountId, Sum sum, Operation? operation, MasterStateAction? action
+});
+
+
+
+
+}
+/// @nodoc
+class __$TransferMasterStateCopyWithImpl<$Res>
+    implements _$TransferMasterStateCopyWith<$Res> {
+  __$TransferMasterStateCopyWithImpl(this._self, this._then);
+
+  final _TransferMasterState _self;
+  final $Res Function(_TransferMasterState) _then;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = freezed,Object? recAccountId = freezed,Object? sum = null,Object? operation = freezed,Object? action = freezed,}) {
+  return _then(_TransferMasterState(
+accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
-as int?,categoryInParentId: freezed == categoryInParentId ? _self.categoryInParentId : categoryInParentId // ignore: cast_nullable_to_non_nullable
-as int?,categoryOutParentId: freezed == categoryOutParentId ? _self.categoryOutParentId : categoryOutParentId // ignore: cast_nullable_to_non_nullable
-as int?,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
-as Operation?,
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as MasterStateAction?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _ExchangeMasterState implements MasterState {
+  const _ExchangeMasterState({this.accountId, required this.sum, required this.recSum, this.operation, this.action});
+  
+
+@override final  int? accountId;
+@override final  Sum sum;
+ final  Sum recSum;
+@override final  Operation? operation;
+@override final  MasterStateAction? action;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ExchangeMasterStateCopyWith<_ExchangeMasterState> get copyWith => __$ExchangeMasterStateCopyWithImpl<_ExchangeMasterState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExchangeMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,accountId,sum,recSum,operation,action);
+
+@override
+String toString() {
+  return 'MasterState.exchange(accountId: $accountId, sum: $sum, recSum: $recSum, operation: $operation, action: $action)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ExchangeMasterStateCopyWith<$Res> implements $MasterStateCopyWith<$Res> {
+  factory _$ExchangeMasterStateCopyWith(_ExchangeMasterState value, $Res Function(_ExchangeMasterState) _then) = __$ExchangeMasterStateCopyWithImpl;
+@override @useResult
+$Res call({
+ int? accountId, Sum sum, Sum recSum, Operation? operation, MasterStateAction? action
+});
+
+
+
+
+}
+/// @nodoc
+class __$ExchangeMasterStateCopyWithImpl<$Res>
+    implements _$ExchangeMasterStateCopyWith<$Res> {
+  __$ExchangeMasterStateCopyWithImpl(this._self, this._then);
+
+  final _ExchangeMasterState _self;
+  final $Res Function(_ExchangeMasterState) _then;
+
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = freezed,Object? sum = null,Object? recSum = null,Object? operation = freezed,Object? action = freezed,}) {
+  return _then(_ExchangeMasterState(
+accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as MasterStateAction?,
   ));
 }
 

@@ -59,28 +59,12 @@ class ListTileOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = ListTile(
-      leading: UserAvatar(
-        photoUrl: _operation.userPhotoUrl,
-        name: _operation.userName,
-      ),
-      title: Text(_operation.analytic),
-      subtitle: Row(
-        children: [
-          Text(_operation.account),
-          const SizedBox(width: 8),
-          if (_operation.synced) const Icon(Icons.check),
-        ],
-      ),
-      trailing: Text(
-        context.loc.sumFormat(_operation.sum),
-        style: Theme.of(
-          context,
-        ).textTheme.headlineSmall?.copyWith(color: _operation.type.color),
-      ),
+    final child = _OperationTile(
+      operation: _operation,
       onTap: onTap,
       onLongPress: () => _onLongPress(context),
     );
+
     if (_operation.deleted) {
       return CustomPaint(
         painter: StrikeThroughPainter(),
@@ -89,6 +73,114 @@ class ListTileOperation extends StatelessWidget {
     } else {
       return child;
     }
+  }
+}
+
+class _OperationTile extends StatelessWidget {
+  const _OperationTile({
+    super.key,
+    required this.operation,
+    required this.onTap,
+    required this.onLongPress,
+  });
+
+  final OperationView operation;
+  final void Function() onTap;
+  final void Function() onLongPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (operation) {
+      InputOperationView(categoryName: final analytic, sum: final sum) =>
+        ListTile(
+          leading: UserAvatar(
+            photoUrl: operation.userPhotoUrl,
+            name: operation.userName,
+          ),
+          title: Text(analytic),
+          subtitle: Row(
+            children: [
+              Text(operation.account),
+              const SizedBox(width: 8),
+              if (operation.synced) const Icon(Icons.check),
+            ],
+          ),
+          trailing: Text(
+            context.loc.sumFormat(sum),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: operation.type.color),
+          ),
+          onTap: onTap,
+          onLongPress: onLongPress,
+        ),
+      OutputOperationView(categoryName: final analytic, sum: final sum) =>
+        ListTile(
+          leading: UserAvatar(
+            photoUrl: operation.userPhotoUrl,
+            name: operation.userName,
+          ),
+          title: Text(analytic),
+          subtitle: Row(
+            children: [
+              Text(operation.account),
+              const SizedBox(width: 8),
+              if (operation.synced) const Icon(Icons.check),
+            ],
+          ),
+          trailing: Text(
+            context.loc.sumFormat(sum),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: operation.type.color),
+          ),
+          onTap: onTap,
+          onLongPress: onLongPress,
+        ),
+      TransferOperationView(recAccount: final analytic, sum: final sum) =>
+        ListTile(
+          leading: UserAvatar(
+            photoUrl: operation.userPhotoUrl,
+            name: operation.userName,
+          ),
+          title: Text(analytic),
+          subtitle: Row(
+            children: [
+              Text(operation.account),
+              const SizedBox(width: 8),
+              if (operation.synced) const Icon(Icons.check),
+            ],
+          ),
+          trailing: Text(
+            context.loc.sumFormat(sum),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: operation.type.color),
+          ),
+          onTap: onTap,
+          onLongPress: onLongPress,
+        ),
+      ExchangeOperationView(sendSum: final sum, receivedSum: final recSum) =>
+        ListTile(
+          leading: UserAvatar(
+            photoUrl: operation.userPhotoUrl,
+            name: operation.userName,
+          ),
+          title: Text(operation.account),
+          subtitle: Row(
+            children: [if (operation.synced) const Icon(Icons.check)],
+          ),
+          trailing: Text(
+            context.loc.sumFormat(recSum),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: operation.type.color),
+          ),
+
+          onTap: onTap,
+          onLongPress: onLongPress,
+        ),
+    };
   }
 }
 

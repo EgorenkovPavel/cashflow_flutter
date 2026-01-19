@@ -10,6 +10,7 @@ import 'package:money_tracker/src/ui/widgets/type_radio_button.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/view_models.dart';
+import '../input_page/widgets/operation_type_toggle.dart';
 
 class OperationEditPage extends StatelessWidget {
   final int? id;
@@ -112,10 +113,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     ],
                   ),
                   Title(text: context.loc.titleType),
-                  TypeRadioButton<OperationType>(
+                  OperationTypeToggle(
                     type: context.operationType(),
                     onChange: context.onChangeOperationType,
-                    items: OperationType.values,
                   ),
                   Title(text: context.loc.titleAccount),
                   DropdownList<AccountView>(

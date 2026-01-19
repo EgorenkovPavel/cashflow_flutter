@@ -226,6 +226,32 @@ class Database extends _$Database {
             await m.addColumn(categories, categories.isGroup);
             await m.addColumn(categories, categories.parent);
           }
+
+          // if (from < 13) {
+          //   // 1. Отключаем проверку внешних ключей, чтобы SQLite не ругался при удалении таблицы
+          //   await customStatement('PRAGMA foreign_keys = OFF;');
+          //
+          //   // 2. Переименовываем старую таблицу 'balance' во временную
+          //   await m.renameTable(balances, 'temp_balance');
+          //
+          //   // 3. Создаем новую таблицу 'balance' (уже без составного первичного ключа)
+          //   // Drift создаст её на основе текущего определения класса Balances
+          //   await m.createTable(balances);
+          //
+          //   // 4. Копируем данные из временной таблицы в новую
+          //   // Перечисляем все колонки через запятую
+          //   await customStatement('''
+          //     INSERT INTO balance (date, operation, account, sum, currency)
+          //     SELECT date, operation, account, sum, currency
+          //     FROM temp_balance;
+          //   ''');
+          //
+          //   // 5. Удаляем временную таблицу
+          //   await customStatement('DROP TABLE temp_balance;');
+          //
+          //   // 6. Включаем проверку внешних ключей обратно
+          //   await customStatement('PRAGMA foreign_keys = ON;');
+          // }
         },
       );
 

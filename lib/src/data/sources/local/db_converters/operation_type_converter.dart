@@ -15,8 +15,10 @@ class OperationTypeConverter extends TypeConverter<OperationType, int> {
         return OperationType.OUTPUT;
       case 3:
         return OperationType.TRANSFER;
+      case 4:
+        return OperationType.EXCHANGE;
       default:
-        return OperationType.INPUT; //TODO
+        throw Exception('No such type');
     }
   }
 

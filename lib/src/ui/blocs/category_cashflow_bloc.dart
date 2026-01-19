@@ -186,6 +186,12 @@ extension CategoryCashFlowBlocExt on BuildContext {
   List<OutputCategoryCashFlow> watchOutputCashFlow() =>
       _watch().cashflows.whereType<OutputCategoryCashFlow>().toList();
 
+  CategoryCashFlow watchCashflowById(int categoryId) =>
+      _watch().cashflows.firstWhere((e) => e.categoryId == categoryId);
+
+  int? getCategoryParentById(int categoryId) =>
+      _read().categories.firstWhere((e) => e.id == categoryId).parentId;
+
   String getTitleById(int id) =>
       _read().categories.where((e) => e.id == id).firstOrNull?.title ?? '';
 

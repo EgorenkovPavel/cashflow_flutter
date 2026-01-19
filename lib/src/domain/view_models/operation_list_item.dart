@@ -1,33 +1,151 @@
 import 'package:equatable/equatable.dart';
-import '../../utils/sum.dart';
-import '../models/enum/operation_type.dart';
 
-class OperationView extends Equatable {
+import '../../utils/sum.dart';
+import '../models.dart';
+
+sealed class OperationView extends Equatable {
   final int id;
   final DateTime date;
   final bool deleted;
   final bool synced;
   final String account;
-  final String analytic;
   final String userPhotoUrl;
   final String userName;
-  final Sum sum;
-  final OperationType type;
+
+  OperationType get type => switch(this){
+    InputOperationView() => .INPUT,
+    OutputOperationView() => .OUTPUT,
+    TransferOperationView() => .TRANSFER,
+    ExchangeOperationView() => .EXCHANGE,
+  };
 
   const OperationView({
     required this.id,
     required this.date,
     required this.account,
-    required this.analytic,
     required this.deleted,
     required this.synced,
-    required this.sum,
-    required this.type,
     required this.userPhotoUrl,
     required this.userName,
   });
+}
+
+class InputOperationView extends OperationView {
+  final String categoryName;
+  final Sum sum;
+
+  const InputOperationView({
+    required super.id,
+    required super.date,
+    required super.account,
+    required super.deleted,
+    required super.synced,
+    required super.userPhotoUrl,
+    required super.userName,
+    required this.categoryName,
+    required this.sum,
+  });
 
   @override
-  List<Object?> get props =>
-      [id, date, deleted, synced, account, analytic, sum, type, userPhotoUrl, userName];
+  List<Object?> get props => [
+    id,
+    date,
+    account,
+    categoryName,
+    deleted,
+    synced,
+    userPhotoUrl,
+    userName,
+    sum,
+  ];
+}
+
+class OutputOperationView extends OperationView {
+  final String categoryName;
+  final Sum sum;
+
+  const OutputOperationView({
+    required super.id,
+    required super.date,
+    required super.account,
+    required super.deleted,
+    required super.synced,
+    required super.userPhotoUrl,
+    required super.userName,
+    required this.categoryName,
+    required this.sum,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    date,
+    account,
+    categoryName,
+    deleted,
+    synced,
+    userPhotoUrl,
+    userName,
+    sum,
+  ];
+}
+
+class TransferOperationView extends OperationView {
+  final String recAccount;
+  final Sum sum;
+
+  const TransferOperationView({
+    required super.id,
+    required super.date,
+    required super.account,
+    required super.deleted,
+    required super.synced,
+    required super.userPhotoUrl,
+    required super.userName,
+    required this.recAccount,
+    required this.sum,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    date,
+    account,
+    recAccount,
+    deleted,
+    synced,
+    userPhotoUrl,
+    userName,
+    sum,
+  ];
+}
+
+class ExchangeOperationView extends OperationView {
+  final Sum sendSum;
+  final Sum receivedSum;
+
+  const ExchangeOperationView({
+    required super.id,
+    required super.date,
+    required super.account,
+    required super.deleted,
+    required super.synced,
+    required super.userPhotoUrl,
+    required super.userName,
+    required this.sendSum,
+    required this.receivedSum,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    date,
+    account,
+    sendSum,
+    deleted,
+    synced,
+    userPhotoUrl,
+    userName,
+    receivedSum,
+  ];
 }
