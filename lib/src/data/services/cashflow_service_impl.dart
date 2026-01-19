@@ -3,7 +3,6 @@ import 'package:rxdart/rxdart.dart';
 import '../../domain/models/category/category_cashflow.dart';
 import '../../domain/models/enum/category_type.dart';
 import '../../domain/models/enum/operation_type.dart';
-import '../../domain/models/sum_on_date.dart';
 import '../../domain/services/cashflow_service.dart';
 import '../sources/local/data/category_dao.dart';
 import '../sources/local/db_mapper.dart';
@@ -42,12 +41,5 @@ class CashflowServiceImpl implements CashflowService {
         CategoryMapper().combineCashFlow);
   }
 
-  @override
-  Stream<List<SumOnDate>> watchCashFlowByCategoryByMonth(int categoryId) =>
-      _categoryDao.watchCashflowByCategoryByMonth(categoryId);
-
-  @override
-  Stream<List<SumOnDate>> watchCashFlowByCategoryByYear(int categoryId) =>
-      _categoryDao.watchCashflowByCategoryByYear(categoryId);
 }
 

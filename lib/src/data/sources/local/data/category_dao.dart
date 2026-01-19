@@ -2,7 +2,6 @@ import 'package:drift/drift.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
 
 import '../../../../domain/models/enum/operation_type.dart';
-import '../../../../domain/models/sum_on_date.dart';
 import '../../../../utils/sum.dart';
 import '../db_converters/currency_converter.dart';
 import '../db_converters/operation_type_converter.dart';
@@ -178,42 +177,6 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
               )
               .toList(),
         );
-  }
-
-  Stream<List<SumOnDate>> watchCashflowByCategoryByMonth(int id) {
-    final sum = cashflows.sum.sum();
-    final month = cashflows.date.month;
-    final year = cashflows.date.year;
-
-    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id)))
-        .addColumns([sum, month, year]);
-    query.groupBy([month, year]);
-
-    return query.watch().map((rows) => rows
-        .map((row) => SumOnDate(
-              date: DateTime(
-                row.read(year) ?? 0,
-                row.read(month) ?? 0,
-              ),
-              sum: row.read(sum) ?? 0,
-            ))
-        .toList());
-  }
-
-  Stream<List<SumOnDate>> watchCashflowByCategoryByYear(int id) {
-    final sum = cashflows.sum.sum();
-    final year = cashflows.date.year;
-
-    final query = (select(cashflows)..where((tbl) => tbl.category.equals(id)))
-        .addColumns([sum, year]);
-    query.groupBy([year]);
-
-    return query.watch().map((rows) => rows
-        .map((row) => SumOnDate(
-              date: DateTime(row.read(year) ?? 0),
-              sum: row.read(sum) ?? 0,
-            ))
-        .toList());
   }
 
   Future<List<CategoryMonthCashflowEntity>> getCashflowByYear(int year) {

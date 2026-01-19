@@ -1,6 +1,5 @@
 import '../models/category/category_cashflow.dart';
 import '../models/enum/category_type.dart';
-import '../models/sum_on_date.dart';
 
 /// Service for aggregating category cashflow data.
 /// Combines categories with their cashflow information.
@@ -14,10 +13,5 @@ abstract class CashflowService {
     CategoryType type,
   );
 
-  /// Watch monthly cashflow for a specific category.
-  Stream<List<SumOnDate>> watchCashFlowByCategoryByMonth(int categoryId);
-
-  /// Watch yearly cashflow for a specific category.
-  Stream<List<SumOnDate>> watchCashFlowByCategoryByYear(int categoryId);
 }
 
