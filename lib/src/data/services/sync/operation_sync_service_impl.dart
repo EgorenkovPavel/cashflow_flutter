@@ -36,11 +36,11 @@ class OperationSyncServiceImpl implements SyncService {
 
         final analyticCloudId = operation.map(
           input: (op) =>
-              allCategories.where((e) => e.id == op.analytic).first.cloudId,
+              allCategories.where((e) => e.id == op.category).first.cloudId,
           output: (op) =>
-              allCategories.where((e) => e.id == op.analytic).first.cloudId,
+              allCategories.where((e) => e.id == op.category).first.cloudId,
           transfer: (op) =>
-              allAccounts.where((e) => e.id == op.analytic).first.cloudId,
+              allAccounts.where((e) => e.id == op.recAccount).first.cloudId,
           exchange: (op) => '', // no analytic
         );
 

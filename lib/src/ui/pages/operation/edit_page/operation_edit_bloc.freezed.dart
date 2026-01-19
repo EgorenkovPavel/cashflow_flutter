@@ -1033,7 +1033,7 @@ $Res call({
 });
 
 
-
+$OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1061,7 +1061,19 @@ as Sum,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullab
 as bool,
   ));
 }
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 
@@ -1247,7 +1259,7 @@ $Res call({
 });
 
 
-
+@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1276,7 +1288,19 @@ as bool,
   ));
 }
 
+/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 // dart format on

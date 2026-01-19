@@ -211,8 +211,8 @@ return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType
 /// @nodoc
 
 
-class _CategoryCashFlow implements CategoryCashFlow {
-  const _CategoryCashFlow({required this.categoryId, required this.type, required this.categoryTitle, required this.budgetType, required this.budget, required this.monthCashFlow, required this.yearCashFlow});
+class _CategoryCashFlow extends CategoryCashFlow {
+  const _CategoryCashFlow({required this.categoryId, required this.type, required this.categoryTitle, required this.budgetType, required this.budget, required this.monthCashFlow, required this.yearCashFlow}): super._();
   
 
 @override final  int categoryId;

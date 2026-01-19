@@ -78,7 +78,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createInputOperation(
             operation.date,
             addedAccounts[operation.account] as Account,
-            addedCategories[operation.analytic] as InputCategoryItem,
+            addedCategories[operation.category] as InputCategoryItem,
             operation.sum.sum,
             _mapCurrency(operation.sum.currency),
           );
@@ -86,7 +86,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createOutputOperation(
             operation.date,
             addedAccounts[operation.account] as Account,
-            addedCategories[operation.analytic] as OutputCategoryItem,
+            addedCategories[operation.category] as OutputCategoryItem,
             operation.sum.sum,
             _mapCurrency(operation.sum.currency),
           );
@@ -94,7 +94,7 @@ class SpringPage extends StatelessWidget {
           await connector.operations.createTransferOperation(
             operation.date,
             addedAccounts[operation.account] as BaseAccount,
-            addedAccounts[operation.analytic] as BaseAccount,
+            addedAccounts[operation.recAccount] as BaseAccount,
             operation.sum.sum,
             _mapCurrency(operation.sum.currency),
           );

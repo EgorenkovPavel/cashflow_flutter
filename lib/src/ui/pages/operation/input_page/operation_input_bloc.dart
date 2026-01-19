@@ -125,27 +125,27 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     }
 
     switch (op) {
-      case InputOperation():
+      case InputOperation(:final category):
         emit(
           MasterState.input(
             accountId: op.account,
-            categoryId: op.analytic,
+            categoryId: category,
             sum: state.sum,
           ),
         );
-      case OutputOperation():
+      case OutputOperation(:final category):
         emit(
           MasterState.output(
             accountId: op.account,
-            categoryId: op.analytic,
+            categoryId: category,
             sum: state.sum,
           ),
         );
-      case TransferOperation():
+      case TransferOperation(:final recAccount):
         emit(
           MasterState.transfer(
             accountId: op.account,
-            recAccountId: op.analytic,
+            recAccountId: recAccount,
             sum: state.sum,
           ),
         );

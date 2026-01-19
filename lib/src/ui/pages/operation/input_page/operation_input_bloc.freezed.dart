@@ -749,7 +749,7 @@ $Res call({
 });
 
 
-
+$OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -771,7 +771,19 @@ as Operation?,action: freezed == action ? _self.action : action // ignore: cast_
 as MasterStateAction?,
   ));
 }
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 
@@ -970,7 +982,7 @@ $Res call({
 });
 
 
-
+@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -994,7 +1006,19 @@ as MasterStateAction?,
   ));
 }
 
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 /// @nodoc
@@ -1044,7 +1068,7 @@ $Res call({
 });
 
 
-
+@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1068,7 +1092,19 @@ as MasterStateAction?,
   ));
 }
 
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 /// @nodoc
@@ -1118,7 +1154,7 @@ $Res call({
 });
 
 
-
+@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1142,7 +1178,19 @@ as MasterStateAction?,
   ));
 }
 
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 /// @nodoc
@@ -1192,7 +1240,7 @@ $Res call({
 });
 
 
-
+@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1216,7 +1264,19 @@ as MasterStateAction?,
   ));
 }
 
+/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationCopyWith<$Res>? get operation {
+    if (_self.operation == null) {
+    return null;
+  }
 
+  return $OperationCopyWith<$Res>(_self.operation!, (value) {
+    return _then(_self.copyWith(operation: value));
+  });
+}
 }
 
 // dart format on
