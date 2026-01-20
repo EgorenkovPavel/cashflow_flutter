@@ -1,54 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../utils/balance.dart';
 import '../models.dart';
 import '../view_models.dart';
 
-class AccountBalanceView extends Equatable {
-  //TODO to freezed
-  final int accountId;
-  final int? userId;
-  final String accountTitle;
-  final String userName;
-  final String userPhoto;
-  final Balance balance;
-  final bool isDebt;
+part 'account_balance_view.freezed.dart';
 
-  const AccountBalanceView({
-    required this.accountId,
-    required this.userId,
-    required this.accountTitle,
-    required this.userName,
-    required this.userPhoto,
-    required this.balance,
-    required this.isDebt,
-  });
+@freezed
+abstract class AccountBalanceView with _$AccountBalanceView{
+  const AccountBalanceView._();
 
-  static AccountBalanceView fromAccount(BaseAccount account, User user) =>
-      switch (account) {
-        Account() => AccountBalanceView(
-            accountId: account.id,
-            userId: account.userId,
-            accountTitle: account.title,
-            userName: user.name,
-            userPhoto: user.photo,
-            balance: Balance(),
-            isDebt: false,
-          ),
-        Debt() => AccountBalanceView(
-            accountId: account.id,
-            userId: account.userId,
-            accountTitle: account.title,
-            userName: user.name,
-            userPhoto: user.photo,
-            balance: Balance(),
-            isDebt: true,
-          ),
-      };
+  const factory AccountBalanceView({
+    required int accountId,
+    required int? userId,
+    required String accountTitle,
+    required String userName,
+    required String userPhoto,
+    required Balance balance,
+    required bool isDebt,
+}) = _AccountBalanceView;
 
   AccountView get account => AccountView(id: accountId, title: accountTitle);
-
-  @override
-  List<Object?> get props =>
-      [accountId, userId, accountTitle, userName, userPhoto, balance, isDebt];
 }
