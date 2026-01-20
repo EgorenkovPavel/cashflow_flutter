@@ -31,7 +31,7 @@ class CategoryItemsListPage extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: context
-              .watchCategoryItems(type, parentId)
+              .watchCategoryItemsByParent(type, parentId)
               .map(
                 (e) => InkWell(
                   onTap: () => context.openCategoryPage(e.id),

@@ -14,8 +14,8 @@ part 'category_cashflow_bloc.freezed.dart';
 @freezed
 class CategoryCashflowEvent with _$CategoryCashflowEvent {
   const factory CategoryCashflowEvent.change({
-    required List<CategoryCashFlow> cashflows,
-  }) = _ChangeCategoryCashflowEvent;
+    required List<CategoryCashFlow> cashFlows,
+  }) = _ChangeCategoryCashFlowEvent;
 
   const factory CategoryCashflowEvent.changeCategories({
     required List<Category> categories,
@@ -38,50 +38,18 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
     required double eur,
   }) = _CategoryCashflowState;
 
-  List<CategoryItem> get inItems => categories
-      .whereType<CategoryItem>()
-      .where((e) => e.type == .INPUT)
-      .toList();
+  Iterable<CategoryItem> get items => categories.whereType<CategoryItem>();
 
-  List<CategoryItem> get outItems => categories
-      .whereType<CategoryItem>()
-      .where((e) => e.type == .OUTPUT)
-      .toList();
+  Iterable<CategoryGroup> get groups => categories.whereType<CategoryGroup>();
 
-  List<CategoryGroup> get inGroups => categories
-      .whereType<CategoryGroup>()
-      .where((e) => e.type == .INPUT)
-      .toList();
+  List<CategoryItem> itemsByType(CategoryType type) =>
+      items.where((e) => e.type == type).toList();
 
-  List<CategoryGroup> get outGroups => categories
-      .whereType<CategoryGroup>()
-      .where((e) => e.type == .OUTPUT)
-      .toList();
+  List<CategoryGroup> groupsByType(CategoryType type) =>
+      groups.where((e) => e.type == type).toList();
 
-  int budget(CategoryType type) => switch (type) {
-    .INPUT => inputBudget(),
-    .OUTPUT => outputBudget(),
-  };
-
-  int cashFlow(CategoryType type) => switch (type) {
-    .INPUT => inputCashFlow(),
-    .OUTPUT => outputCashFlow(),
-  };
-
-  List<CategoryItem> items(CategoryType type) => switch (type) {
-    .INPUT => inItems,
-    .OUTPUT => outItems,
-  };
-
-  List<CategoryGroup> groups(CategoryType type) => switch (type) {
-    .INPUT => inGroups,
-    .OUTPUT => outGroups,
-  };
-
-  List<Category> hierarchy(CategoryType type) => switch (type) {
-    .INPUT => _sort(inGroups, inItems),
-    .OUTPUT => _sort(outGroups, outItems),
-  };
+  List<Category> hierarchy(CategoryType type) =>
+      _sort(groupsByType(type), itemsByType(type));
 
   List<Category> _sort(List<CategoryGroup> groups, List<CategoryItem> items) {
     final list = <Category>[];
@@ -95,22 +63,14 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
     return list;
   }
 
-  int inputCashFlow() => _cashFlow(.INPUT);
-
-  int outputCashFlow() => _cashFlow(.OUTPUT);
-
-  int inputBudget() => _budget(.INPUT);
-
-  int outputBudget() => _budget(.OUTPUT);
-
-  int _cashFlow(CategoryType type) {
+  int cashFlow(CategoryType type) {
     return cashflows
         .where((e) => e.type == type)
         .map((item) => item.monthCashFlow.toRub(usd, eur))
         .fold(0, (a, b) => a + b);
   }
 
-  int _budget(CategoryType type) => categories
+  int budget(CategoryType type) => categories
       .whereType<CategoryItem>()
       .where((e) => e.type == type)
       .fold<int>(
@@ -145,7 +105,7 @@ class CategoryCashflowBloc
       ) {
     on<CategoryCashflowEvent>(
       (event, emit) => event.map(
-        change: (event) => emit(state.copyWith(cashflows: event.cashflows)),
+        change: (event) => emit(state.copyWith(cashflows: event.cashFlows)),
         changeCategories: (event) =>
             emit(state.copyWith(categories: event.categories)),
         changeCurrencyRate: (event) =>
@@ -158,7 +118,7 @@ class CategoryCashflowBloc
     });
 
     _subCashFlows = _categoryInteractor.watchCashFlows().listen((list) {
-      add(CategoryCashflowEvent.change(cashflows: list));
+      add(CategoryCashflowEvent.change(cashFlows: list));
     });
 
     _subCurrencyRateBloc = _currencyRateBloc.stream.listen((s) {
@@ -192,17 +152,14 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   int budget(CategoryType type) => _select((state) => state.budget(type));
 
-  List<CategoryCashFlow> watchInputCashFlow() =>
-      _watch().cashflows.where((e) => e.type == .INPUT).toList();
-
-  List<CategoryCashFlow> watchOutputCashFlow() =>
-      _watch().cashflows.where((e) => e.type == .OUTPUT).toList();
+  List<CategoryCashFlow> watchCashFlow(CategoryType type) =>
+      _watch().cashflows.where((e) => e.type == type).toList();
 
   CategoryCashFlow watchCashflowById(int categoryId) =>
       _watch().cashflows.firstWhere((e) => e.categoryId == categoryId);
 
-  int? getCategoryParentById(int categoryId) =>
-      _read().categories.firstWhere((e) => e.id == categoryId).parentId;
+  int? getCategoryParentById(int id) =>
+      _read().categories.where((e) => e.id == id).firstOrNull?.parentId;
 
   String getTitleById(int id) =>
       _read().categories.where((e) => e.id == id).firstOrNull?.title ?? '';
@@ -212,8 +169,7 @@ extension CategoryCashFlowBlocExt on BuildContext {
     BudgetType budgetType,
     int count,
   ) {
-    final list = _watch().cashflows
-        .where((e) => e.type == categoryType)
+    final list = watchCashFlow(categoryType)
         .where(
           (e) =>
               balanceToRub(switch (budgetType) {
@@ -232,53 +188,40 @@ extension CategoryCashFlowBlocExt on BuildContext {
     return list.take(count).toList();
   }
 
-  List<CategoryView> watchInCategoryItems() =>
-      _select((state) => state.inItems.map(_mapToListItem).toList());
+  List<CategoryView> watchCategoryItems(CategoryType type) =>
+      _select((state) => state.itemsByType(type).map(_mapToListItem).toList());
 
-  List<CategoryView> watchOutCategoryItems() =>
-      _select((state) => state.outItems.map(_mapToListItem).toList());
-
-  List<CategoryView> watchCategoryItems(CategoryType type, int? parent) =>
-      select<CategoryCashflowBloc, List<CategoryView>>(
-        (bloc) => bloc.state
-            .items(type)
-            .where((e) => e.parentId == parent)
-            .map(_mapToListItem)
-            .toList(),
-      );
-
-  int watchGroupItemsAmount(int parentId) => select<CategoryCashflowBloc, int>(
-    (bloc) => bloc.state.categories
-        .whereType<CategoryItem>()
-        .where((e) => e.parentId == parentId)
-        .length,
+  List<CategoryView> watchCategoryItemsByParent(
+    CategoryType type,
+    int? parent,
+  ) => _select(
+    (state) => state
+        .itemsByType(type)
+        .where((e) => e.parentId == parent)
+        .map(_mapToListItem)
+        .toList(),
   );
 
-  int watchItemsAmountNoParent(CategoryType type) =>
-      select<CategoryCashflowBloc, int>(
-        (bloc) =>
-            bloc.state.items(type).where((e) => e.parentId == null).length,
-      );
+  int watchGroupItemsAmount(int parentId) => _select(
+    (state) => state.items.where((e) => e.parentId == parentId).length,
+  );
+
+  int watchItemsAmountNoParent(CategoryType type) => _select(
+    (state) => state.itemsByType(type).where((e) => e.parentId == null).length,
+  );
 
   List<CategoryView> watchCategoryGroups(CategoryType type) =>
-      select<CategoryCashflowBloc, List<CategoryView>>(
-        (bloc) => bloc.state.groups(type).map(_mapToListItem).toList(),
-      );
+      _select((state) => state.groupsByType(type).map(_mapToListItem).toList());
 
-  List<CategoryView> readInCategoryItems() =>
-      read<CategoryCashflowBloc>().state.inItems.map(_mapToListItem).toList();
-
-  List<CategoryView> readOutCategoryItems() =>
-      read<CategoryCashflowBloc>().state.outItems.map(_mapToListItem).toList();
-
-  List<CategoryView> readCategoryGroups(CategoryType type) =>
+  List<CategoryView> readCategoryItems(CategoryType type) =>
       read<CategoryCashflowBloc>().state
-          .groups(type)
+          .itemsByType(type)
           .map(_mapToListItem)
           .toList();
 
-  CategoryView _mapToListItem(Category category) => switch (category) {
-    CategoryItem() => CategoryView(id: category.id, title: category.title),
-    CategoryGroup() => CategoryView(id: category.id, title: category.title),
-  };
+  List<CategoryView> readCategoryGroups(CategoryType type) =>
+      _read().groupsByType(type).map(_mapToListItem).toList();
+
+  CategoryView _mapToListItem(Category category) =>
+      CategoryView(id: category.id, title: category.title);
 }

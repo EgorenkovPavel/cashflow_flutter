@@ -55,10 +55,10 @@ extension CategoryCashflowEventPatterns on CategoryCashflowEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ChangeCategoryCashflowEvent value)?  change,TResult Function( _ChangeCategoriesCategoryCashflowEvent value)?  changeCategories,TResult Function( _ChangeCurrencyRateCategoryCashflowEvent value)?  changeCurrencyRate,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ChangeCategoryCashFlowEvent value)?  change,TResult Function( _ChangeCategoriesCategoryCashflowEvent value)?  changeCategories,TResult Function( _ChangeCurrencyRateCategoryCashflowEvent value)?  changeCurrencyRate,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent() when change != null:
+case _ChangeCategoryCashFlowEvent() when change != null:
 return change(_that);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
 return changeCategories(_that);case _ChangeCurrencyRateCategoryCashflowEvent() when changeCurrencyRate != null:
 return changeCurrencyRate(_that);case _:
@@ -79,10 +79,10 @@ return changeCurrencyRate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ChangeCategoryCashflowEvent value)  change,required TResult Function( _ChangeCategoriesCategoryCashflowEvent value)  changeCategories,required TResult Function( _ChangeCurrencyRateCategoryCashflowEvent value)  changeCurrencyRate,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ChangeCategoryCashFlowEvent value)  change,required TResult Function( _ChangeCategoriesCategoryCashflowEvent value)  changeCategories,required TResult Function( _ChangeCurrencyRateCategoryCashflowEvent value)  changeCurrencyRate,}){
 final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent():
+case _ChangeCategoryCashFlowEvent():
 return change(_that);case _ChangeCategoriesCategoryCashflowEvent():
 return changeCategories(_that);case _ChangeCurrencyRateCategoryCashflowEvent():
 return changeCurrencyRate(_that);case _:
@@ -102,10 +102,10 @@ return changeCurrencyRate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ChangeCategoryCashflowEvent value)?  change,TResult? Function( _ChangeCategoriesCategoryCashflowEvent value)?  changeCategories,TResult? Function( _ChangeCurrencyRateCategoryCashflowEvent value)?  changeCurrencyRate,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ChangeCategoryCashFlowEvent value)?  change,TResult? Function( _ChangeCategoriesCategoryCashflowEvent value)?  changeCategories,TResult? Function( _ChangeCurrencyRateCategoryCashflowEvent value)?  changeCurrencyRate,}){
 final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent() when change != null:
+case _ChangeCategoryCashFlowEvent() when change != null:
 return change(_that);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
 return changeCategories(_that);case _ChangeCurrencyRateCategoryCashflowEvent() when changeCurrencyRate != null:
 return changeCurrencyRate(_that);case _:
@@ -125,10 +125,10 @@ return changeCurrencyRate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<CategoryCashFlow> cashflows)?  change,TResult Function( List<Category> categories)?  changeCategories,TResult Function( double usd,  double eur)?  changeCurrencyRate,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<CategoryCashFlow> cashFlows)?  change,TResult Function( List<Category> categories)?  changeCategories,TResult Function( double usd,  double eur)?  changeCurrencyRate,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent() when change != null:
-return change(_that.cashflows);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
+case _ChangeCategoryCashFlowEvent() when change != null:
+return change(_that.cashFlows);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
 return changeCategories(_that.categories);case _ChangeCurrencyRateCategoryCashflowEvent() when changeCurrencyRate != null:
 return changeCurrencyRate(_that.usd,_that.eur);case _:
   return orElse();
@@ -148,10 +148,10 @@ return changeCurrencyRate(_that.usd,_that.eur);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<CategoryCashFlow> cashflows)  change,required TResult Function( List<Category> categories)  changeCategories,required TResult Function( double usd,  double eur)  changeCurrencyRate,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<CategoryCashFlow> cashFlows)  change,required TResult Function( List<Category> categories)  changeCategories,required TResult Function( double usd,  double eur)  changeCurrencyRate,}) {final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent():
-return change(_that.cashflows);case _ChangeCategoriesCategoryCashflowEvent():
+case _ChangeCategoryCashFlowEvent():
+return change(_that.cashFlows);case _ChangeCategoriesCategoryCashflowEvent():
 return changeCategories(_that.categories);case _ChangeCurrencyRateCategoryCashflowEvent():
 return changeCurrencyRate(_that.usd,_that.eur);case _:
   throw StateError('Unexpected subclass');
@@ -170,10 +170,10 @@ return changeCurrencyRate(_that.usd,_that.eur);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<CategoryCashFlow> cashflows)?  change,TResult? Function( List<Category> categories)?  changeCategories,TResult? Function( double usd,  double eur)?  changeCurrencyRate,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<CategoryCashFlow> cashFlows)?  change,TResult? Function( List<Category> categories)?  changeCategories,TResult? Function( double usd,  double eur)?  changeCurrencyRate,}) {final _that = this;
 switch (_that) {
-case _ChangeCategoryCashflowEvent() when change != null:
-return change(_that.cashflows);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
+case _ChangeCategoryCashFlowEvent() when change != null:
+return change(_that.cashFlows);case _ChangeCategoriesCategoryCashflowEvent() when changeCategories != null:
 return changeCategories(_that.categories);case _ChangeCurrencyRateCategoryCashflowEvent() when changeCurrencyRate != null:
 return changeCurrencyRate(_that.usd,_that.eur);case _:
   return null;
@@ -186,15 +186,15 @@ return changeCurrencyRate(_that.usd,_that.eur);case _:
 /// @nodoc
 
 
-class _ChangeCategoryCashflowEvent implements CategoryCashflowEvent {
-  const _ChangeCategoryCashflowEvent({required final  List<CategoryCashFlow> cashflows}): _cashflows = cashflows;
+class _ChangeCategoryCashFlowEvent implements CategoryCashflowEvent {
+  const _ChangeCategoryCashFlowEvent({required final  List<CategoryCashFlow> cashFlows}): _cashFlows = cashFlows;
   
 
- final  List<CategoryCashFlow> _cashflows;
- List<CategoryCashFlow> get cashflows {
-  if (_cashflows is EqualUnmodifiableListView) return _cashflows;
+ final  List<CategoryCashFlow> _cashFlows;
+ List<CategoryCashFlow> get cashFlows {
+  if (_cashFlows is EqualUnmodifiableListView) return _cashFlows;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_cashflows);
+  return EqualUnmodifiableListView(_cashFlows);
 }
 
 
@@ -202,33 +202,33 @@ class _ChangeCategoryCashflowEvent implements CategoryCashflowEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ChangeCategoryCashflowEventCopyWith<_ChangeCategoryCashflowEvent> get copyWith => __$ChangeCategoryCashflowEventCopyWithImpl<_ChangeCategoryCashflowEvent>(this, _$identity);
+_$ChangeCategoryCashFlowEventCopyWith<_ChangeCategoryCashFlowEvent> get copyWith => __$ChangeCategoryCashFlowEventCopyWithImpl<_ChangeCategoryCashFlowEvent>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCashflowEvent&&const DeepCollectionEquality().equals(other._cashflows, _cashflows));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCashFlowEvent&&const DeepCollectionEquality().equals(other._cashFlows, _cashFlows));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashflows));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashFlows));
 
 @override
 String toString() {
-  return 'CategoryCashflowEvent.change(cashflows: $cashflows)';
+  return 'CategoryCashflowEvent.change(cashFlows: $cashFlows)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ChangeCategoryCashflowEventCopyWith<$Res> implements $CategoryCashflowEventCopyWith<$Res> {
-  factory _$ChangeCategoryCashflowEventCopyWith(_ChangeCategoryCashflowEvent value, $Res Function(_ChangeCategoryCashflowEvent) _then) = __$ChangeCategoryCashflowEventCopyWithImpl;
+abstract mixin class _$ChangeCategoryCashFlowEventCopyWith<$Res> implements $CategoryCashflowEventCopyWith<$Res> {
+  factory _$ChangeCategoryCashFlowEventCopyWith(_ChangeCategoryCashFlowEvent value, $Res Function(_ChangeCategoryCashFlowEvent) _then) = __$ChangeCategoryCashFlowEventCopyWithImpl;
 @useResult
 $Res call({
- List<CategoryCashFlow> cashflows
+ List<CategoryCashFlow> cashFlows
 });
 
 
@@ -236,18 +236,18 @@ $Res call({
 
 }
 /// @nodoc
-class __$ChangeCategoryCashflowEventCopyWithImpl<$Res>
-    implements _$ChangeCategoryCashflowEventCopyWith<$Res> {
-  __$ChangeCategoryCashflowEventCopyWithImpl(this._self, this._then);
+class __$ChangeCategoryCashFlowEventCopyWithImpl<$Res>
+    implements _$ChangeCategoryCashFlowEventCopyWith<$Res> {
+  __$ChangeCategoryCashFlowEventCopyWithImpl(this._self, this._then);
 
-  final _ChangeCategoryCashflowEvent _self;
-  final $Res Function(_ChangeCategoryCashflowEvent) _then;
+  final _ChangeCategoryCashFlowEvent _self;
+  final $Res Function(_ChangeCategoryCashFlowEvent) _then;
 
 /// Create a copy of CategoryCashflowEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? cashflows = null,}) {
-  return _then(_ChangeCategoryCashflowEvent(
-cashflows: null == cashflows ? _self._cashflows : cashflows // ignore: cast_nullable_to_non_nullable
+@pragma('vm:prefer-inline') $Res call({Object? cashFlows = null,}) {
+  return _then(_ChangeCategoryCashFlowEvent(
+cashFlows: null == cashFlows ? _self._cashFlows : cashFlows // ignore: cast_nullable_to_non_nullable
 as List<CategoryCashFlow>,
   ));
 }

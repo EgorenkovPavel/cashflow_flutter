@@ -7,8 +7,8 @@ import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/view_models.dart';
-import '../../utils/sum.dart';
 import '../../utils/balance.dart';
+import '../../utils/sum.dart';
 
 part 'account_balance_bloc.freezed.dart';
 
@@ -36,14 +36,8 @@ abstract class AccountBalanceState with _$AccountBalanceState {
   List<AccountBalanceView> get debtBalances =>
       balances.where((e) => e.isDebt).toList();
 
-  Balance get totals {
-    var res = const Balance();
-    for (var item in balances) {
-      res = res + item.balance;
-    }
-
-    return res;
-  }
+  Balance get totalBalance =>
+      balances.fold(Balance(), (res, item) => res + item.balance);
 }
 
 class AccountBalanceBloc
@@ -52,19 +46,21 @@ class AccountBalanceBloc
   StreamSubscription? _sub;
 
   AccountBalanceBloc(this._accountInteractor)
-      : super(const AccountBalanceState(balances: [])) {
-    on<AccountBalanceEvent>((event, emitter) =>
-        event.map(
-          changeBalance: (event) => _changeBalance(event, emitter),
-        ));
+    : super(const AccountBalanceState(balances: [])) {
+    on<AccountBalanceEvent>(
+      (event, emitter) =>
+          event.map(changeBalance: (event) => _changeBalance(event, emitter)),
+    );
 
     _sub = _accountInteractor.watchBalances().listen((items) {
       add(AccountBalanceEvent.changeBalance(accounts: items));
     });
   }
 
-  void _changeBalance(_ChangeBalanceAccountBalanceEvent event,
-      Emitter<AccountBalanceState> emit,) {
+  void _changeBalance(
+    _ChangeBalanceAccountBalanceEvent event,
+    Emitter<AccountBalanceState> emit,
+  ) {
     emit(AccountBalanceState(balances: event.accounts));
   }
 
@@ -86,9 +82,9 @@ extension AccountBalanceBlocExt on BuildContext {
   List<AccountBalanceView> watchDebtBalances() =>
       watch<AccountBalanceBloc>().state.debtBalances;
 
-  Balance watchTotals() {
-    var sums = List.of(watch<AccountBalanceBloc>().state.totals.sums);
-    sums.sort((a, b) => a.currency.index - b.currency.index,);
+  Balance watchTotalBalance() {
+    var sums = List.of(watch<AccountBalanceBloc>().state.totalBalance.sums);
+    sums.sort((a, b) => a.currency.index - b.currency.index);
     return Balance.fromSums(sums);
   }
 
@@ -96,13 +92,14 @@ extension AccountBalanceBlocExt on BuildContext {
       read<AccountBalanceBloc>().state.allAccounts
           .where((e) => e.id == accountId)
           .map((e) => e.title)
-          .firstOrNull ?? '';
+          .firstOrNull ??
+      '';
 
-  Sum watchTotalSum() => watchTotals().totalInRub(usd(), eur());
+  Sum watchTotalSum() => watchTotalBalance().totalInRub(usd(), eur());
 
-  List<AccountView> watchListItems() =>
-      watchAllBalances().map((a) => a.account).toList();
+  List<AccountView> watchAccounts() =>
+      watch<AccountBalanceBloc>().state.allAccounts;
 
-  List<AccountView> readListItems() =>
+  List<AccountView> readAccounts() =>
       read<AccountBalanceBloc>().state.allAccounts;
 }

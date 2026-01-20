@@ -27,7 +27,7 @@ class TotalsCard extends StatelessWidget {
                 2: FlexColumnWidth(),
               },
               children: context
-                  .watchTotals()
+                  .watchTotalBalance()
                   .sums
                   .map(
                     (sum) => TableRow(

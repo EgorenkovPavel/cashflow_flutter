@@ -118,9 +118,9 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                   ),
                   Title(text: context.loc.titleAccount),
                   DropdownList<AccountView>(
-                    value: context.account(context.watchListItems()),
+                    value: context.account(context.watchAccounts()),
                     hint: context.loc.hintAccount,
-                    items: context.watchListItems(),
+                    items: context.watchAccounts(),
                     onChange: context.onChangeAccount,
                     getListItem: (data) => ListTile(title: Text(data.title)),
                   ),
@@ -128,24 +128,24 @@ class _OperationEditPageState extends State<_OperationEditPage> {
                     Title(text: context.loc.titleAnalytic),
                   context.operationType().map(
                     input: () => DropdownList<CategoryView>(
-                      value: context.category(context.watchInCategoryItems()),
+                      value: context.category(context.watchCategoryItems(.INPUT)),
                       hint: context.loc.hintCategory,
                       onChange: context.onCategoryChange,
-                      items: context.watchInCategoryItems(),
+                      items: context.watchCategoryItems(.INPUT),
                       getListItem: (item) => ListTile(title: Text(item.title)),
                     ),
                     output: () => DropdownList<CategoryView>(
-                      value: context.category(context.watchOutCategoryItems()),
+                      value: context.category(context.watchCategoryItems(.OUTPUT)),
                       hint: context.loc.hintCategory,
                       onChange: context.onCategoryChange,
-                      items: context.watchOutCategoryItems(),
+                      items: context.watchCategoryItems(.OUTPUT),
                       getListItem: (item) => ListTile(title: Text(item.title)),
                     ),
                     transfer: () => DropdownList<AccountView>(
-                      value: context.recAccount(context.watchListItems()),
+                      value: context.recAccount(context.watchAccounts()),
                       hint: context.loc.hintAccount,
                       onChange: context.onRecAccountChange,
-                      items: context.watchListItems(),
+                      items: context.watchAccounts(),
                       getListItem: (item) => ListTile(title: Text(item.title)),
                     ),
                     exchange: () => SizedBox(), // TODO

@@ -24,10 +24,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final list = switch (widget.type) {
-      .INPUT => context.watchInputCashFlow(),
-      .OUTPUT => context.watchOutputCashFlow(),
-    };
+    final list = context.watchCashFlow(widget.type);
 
     switch (_budgetType) {
       case BudgetType.MONTH:

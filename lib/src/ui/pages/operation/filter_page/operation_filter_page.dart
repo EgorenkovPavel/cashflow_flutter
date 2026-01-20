@@ -56,7 +56,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_accountKey.currentContext!),
       items: context
-          .readListItems()
+          .readAccounts()
           .map((a) => PopupMenuItem<AccountView>(
                 value: a,
                 child: Text(a.title),
@@ -74,7 +74,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryInKey.currentContext!),
       items: context
-          .readInCategoryItems()
+          .readCategoryItems(.INPUT)
           .map(
             (c) => PopupMenuItem<CategoryView>(
               value: c,
@@ -94,7 +94,7 @@ class _OperationFilterPageState extends State<_OperationFilterPage> {
       context: context,
       position: buttonMenuPosition(_categoryOutKey.currentContext!),
       items: context
-          .readOutCategoryItems()
+          .readCategoryItems(.OUTPUT)
           .map((c) => PopupMenuItem<CategoryView>(
                 value: c,
                 child: Text(c.title),
@@ -278,21 +278,21 @@ extension BlocExt on BuildContext {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.accountIds,
     );
-    return readListItems().where((e) => ids.contains(e.id)).toSet();
+    return readAccounts().where((e) => ids.contains(e.id)).toSet();
   }
 
   Set<CategoryView> inCategories() {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
-    return readInCategoryItems().where((e) => ids.contains(e.id)).toSet();
+    return readCategoryItems(.INPUT).where((e) => ids.contains(e.id)).toSet();
   }
 
   Set<CategoryView> outCategories() {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
-    return readOutCategoryItems().where((e) => ids.contains(e.id)).toSet();
+    return readCategoryItems(.OUTPUT).where((e) => ids.contains(e.id)).toSet();
   }
 
   void onSetPeriod(DateTimeRange date) => read<OperationFilterBloc>()

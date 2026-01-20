@@ -136,7 +136,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
         Expanded(
           child: ListView(
             children: context
-                .watchCategoryItems(widget.type, _parentId)
+                .watchCategoryItemsByParent(widget.type, _parentId)
                 .map(
                   (e) => _CategoryItem(
                     category: e,
