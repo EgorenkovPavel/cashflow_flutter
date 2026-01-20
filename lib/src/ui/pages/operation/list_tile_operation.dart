@@ -91,7 +91,7 @@ class _OperationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return switch (operation) {
-      InputOperationView(categoryName: final analytic, sum: final sum) =>
+      InputOperationView(category: final analytic, sum: final sum) =>
         ListTile(
           leading: UserAvatar(
             photoUrl: operation.userPhotoUrl,
@@ -114,7 +114,7 @@ class _OperationTile extends StatelessWidget {
           onTap: onTap,
           onLongPress: onLongPress,
         ),
-      OutputOperationView(categoryName: final analytic, sum: final sum) =>
+      OutputOperationView(category: final analytic, sum: final sum) =>
         ListTile(
           leading: UserAvatar(
             photoUrl: operation.userPhotoUrl,

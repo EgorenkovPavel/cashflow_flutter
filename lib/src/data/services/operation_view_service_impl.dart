@@ -2,7 +2,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../domain/models/operation/operation_list_filter.dart';
 import '../../domain/services/operation_view_service.dart';
-import '../../domain/view_models/operation_list_item.dart';
+import '../../domain/view_models/operation_view.dart';
 import '../sources/local/data/operation_dao.dart';
 import '../sources/local/data/user_dao.dart';
 import '../sources/local/db_mapper.dart';

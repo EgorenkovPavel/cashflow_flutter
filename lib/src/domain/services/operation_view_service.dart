@@ -1,5 +1,5 @@
 import '../models/operation/operation_list_filter.dart';
-import '../view_models/operation_list_item.dart';
+import '../view_models/operation_view.dart';
 
 /// Service for aggregating operation view data.
 /// Combines operations with account and user information for display.

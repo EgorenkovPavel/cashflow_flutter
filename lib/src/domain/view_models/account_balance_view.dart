@@ -5,6 +5,7 @@ import '../models.dart';
 import '../view_models.dart';
 
 class AccountBalanceView extends Equatable {
+  //TODO to freezed
   final int accountId;
   final int? userId;
   final String accountTitle;

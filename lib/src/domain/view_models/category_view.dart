@@ -1,15 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CategoryView extends Equatable{
+part 'category_view.freezed.dart';
 
-  final int id;
-  final String title;
-
-  const CategoryView({required this.id, required this.title});
-
-  @override
-  List<Object?> get props => [id, title];
-
-  static const noParent = CategoryView(id : -9999999, title : 'No parent');
-
+@freezed
+abstract class CategoryView with _$CategoryView {
+  const factory CategoryView(
+      {required int id, required String title}) = _CategoryView;
 }

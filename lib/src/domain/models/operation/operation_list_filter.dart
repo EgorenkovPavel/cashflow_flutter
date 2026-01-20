@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class OperationListFilter extends Equatable {
+  //TODO to freezed
   final DateTimeRange? period;
   final Set<int> accountIds;
   final Set<int> categoryIds;

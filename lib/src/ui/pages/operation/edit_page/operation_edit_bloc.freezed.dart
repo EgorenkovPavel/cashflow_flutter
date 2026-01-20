@@ -619,7 +619,7 @@ $Res call({
 });
 
 
-
+$CategoryViewCopyWith<$Res> get category;
 
 }
 /// @nodoc
@@ -639,7 +639,16 @@ as CategoryView,
   ));
 }
 
-
+/// Create a copy of OperationEditEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryViewCopyWith<$Res> get category {
+  
+  return $CategoryViewCopyWith<$Res>(_self.category, (value) {
+    return _then(_self.copyWith(category: value));
+  });
+}
 }
 
 /// @nodoc
