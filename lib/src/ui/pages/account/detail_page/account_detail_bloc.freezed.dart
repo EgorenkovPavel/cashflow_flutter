@@ -85,10 +85,7 @@ switch (_that) {
 case _FetchAccountDetailEvent():
 return fetch(_that);case _TitleChangedAccountDetailEvent():
 return titleChanged(_that);case _OperationsChangedAccountDetailEvent():
-return operationsChanged(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return operationsChanged(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -153,10 +150,7 @@ switch (_that) {
 case _FetchAccountDetailEvent():
 return fetch(_that.accountId);case _TitleChangedAccountDetailEvent():
 return titleChanged(_that.title);case _OperationsChangedAccountDetailEvent():
-return operationsChanged(_that.operations);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return operationsChanged(_that.operations);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

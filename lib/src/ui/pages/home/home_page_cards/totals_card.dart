@@ -108,7 +108,7 @@ class _UserAccounts extends StatelessWidget {
     final balances = context
         .watchAccountBalances()
         .where((e) => e.userId == user?.id)
-        .where((balance) => context.balanceToRub(balance.balance) != 0);
+        .where((balance) => context.balanceToRub(balance.balance).sum != 0);
 
     if (user == null && balances.isEmpty) {
       return SizedBox();
@@ -142,7 +142,7 @@ class _Debts extends StatelessWidget {
     );
 
     final balances = context.watchDebtBalances().where(
-      (balance) => context.balanceToRub(balance.balance) != 0,
+      (balance) => context.balanceToRub(balance.balance).sum != 0,
     );
 
     if (balances.isEmpty) {

@@ -10,7 +10,7 @@ import 'package:money_tracker/src/utils/sum.dart';
 part 'currency_rate_bloc.freezed.dart';
 
 @freezed
-class CurrencyRateEvent with _$CurrencyRateEvent {
+sealed class CurrencyRateEvent with _$CurrencyRateEvent {
   const factory CurrencyRateEvent.fetch() = _FetchCurrencyRateEvent;
 
   const factory CurrencyRateEvent.change({

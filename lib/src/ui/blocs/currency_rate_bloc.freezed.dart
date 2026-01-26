@@ -83,10 +83,7 @@ final _that = this;
 switch (_that) {
 case _FetchCurrencyRateEvent():
 return fetch(_that);case _ChangeCurrencyRateEvent():
-return change(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return change(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -148,10 +145,7 @@ return change(_that.usd,_that.eur);case _:
 switch (_that) {
 case _FetchCurrencyRateEvent():
 return fetch();case _ChangeCurrencyRateEvent():
-return change(_that.usd,_that.eur);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return change(_that.usd,_that.eur);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

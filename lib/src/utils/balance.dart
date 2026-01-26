@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../domain/models/enum/currency.dart';
 import 'sum.dart';
 
 part 'balance.freezed.dart';

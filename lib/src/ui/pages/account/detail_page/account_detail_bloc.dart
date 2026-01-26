@@ -10,7 +10,7 @@ import '../../../../domain/view_models.dart';
 part 'account_detail_bloc.freezed.dart';
 
 @freezed
-class AccountDetailEvent with _$AccountDetailEvent {
+sealed class AccountDetailEvent with _$AccountDetailEvent {
   const factory AccountDetailEvent.fetch({required int accountId}) =
       _FetchAccountDetailEvent;
 

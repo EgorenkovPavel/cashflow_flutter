@@ -135,7 +135,7 @@ extension CategoryCashFlowBlocExt on BuildContext {
   ) {
     final list = watchCashFlow(
       categoryType,
-    ).where((e) => balanceToRub(e.cashflowByType(budgetType)) != 0).toList();
+    ).where((e) => balanceToRub(e.cashflowByType(budgetType)).sum != 0).toList();
     list.sort(
       (a, b) =>
           balanceToRub(b.cashflowByType(budgetType)).sum -

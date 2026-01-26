@@ -82,7 +82,7 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     Emitter<AccountInputState> emit,
   ) async {
     emit(state.copyWith(isLoading: true, error: null));
-    
+
     final accountResult = await _accountInteractor.getById(event.accountId);
     final users = await _userInteractor.getAll();
 
@@ -91,11 +91,13 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
         AccountInputState.byAccount(account, users).copyWith(isLoading: false),
       ),
       onFailure: (exception) {
-        emit(state.copyWith(
-          error: exception.toString(),
-          isLoading: false,
-          users: users,
-        ));
+        emit(
+          state.copyWith(
+            error: exception.toString(),
+            isLoading: false,
+            users: users,
+          ),
+        );
       },
     );
   }
@@ -113,51 +115,33 @@ class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
     Emitter<AccountInputState> emit,
   ) async {
     emit(state.copyWith(isLoading: true, error: null, isSaved: false));
-    
-    if (state.account == null) {
-      final result = await _accountInteractor.insert(
+
+    final result = switch (state.account) {
+      null => await _accountInteractor.insert(
         title: state.title,
         isDebt: state.isDebt,
         userId: state.userId,
-      );
-      result.fold(
-        onSuccess: (account) => emit(
-          state.copyWith(
-            account: account,
-            isSaved: true,
-            isLoading: false,
-          ),
-        ),
-        onFailure: (exception) {
-          emit(state.copyWith(
-            error: exception.toString(),
-            isLoading: false,
-            isSaved: false,
-          ));
-        },
-      );
-    } else {
-      final result = await _accountInteractor.update(
+      ),
+      _ => await _accountInteractor.update(
         account: state.account!,
         title: state.title,
         userId: state.userId,
-      );
-      result.fold(
-        onSuccess: (account) => emit(
+      ),
+    };
+
+    result.fold(
+      onSuccess: (account) => emit(
+        state.copyWith(account: account, isSaved: true, isLoading: false),
+      ),
+      onFailure: (exception) {
+        emit(
           state.copyWith(
-            account: account,
-            isSaved: true,
-            isLoading: false,
-          ),
-        ),
-        onFailure: (exception) {
-          emit(state.copyWith(
             error: exception.toString(),
             isLoading: false,
             isSaved: false,
-          ));
-        },
-      );
-    }
+          ),
+        );
+      },
+    );
   }
 }
