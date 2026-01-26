@@ -59,7 +59,8 @@ class Categories extends Table {
 
   BoolColumn get synced => boolean().withDefault(const Constant(false))();
 
-  BoolColumn get isGroup => boolean().named('is_group').withDefault(const Constant(false))();
+  BoolColumn get isGroup =>
+      boolean().named('is_group').withDefault(const Constant(false))();
 
   IntColumn get parent => integer().nullable().references(Categories, #id)();
 }
@@ -92,9 +93,13 @@ class Operations extends Table {
 
   BoolColumn get deleted => boolean().withDefault(const Constant(false))();
 
-  TextColumn get currencySent => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+  TextColumn get currencySent => text()
+      .withDefault(const Constant('RUB'))
+      .map(const CurrencyConverter())();
 
-  TextColumn get currencyReceived => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+  TextColumn get currencyReceived => text()
+      .withDefault(const Constant('RUB'))
+      .map(const CurrencyConverter())();
 }
 
 @DataClassName('BalanceDB')
@@ -110,10 +115,12 @@ class Balances extends Table {
 
   IntColumn get sum => integer()();
 
-  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+  TextColumn get currency => text()
+      .withDefault(const Constant('RUB'))
+      .map(const CurrencyConverter())();
 
-  @override
-  Set<Column> get primaryKey => {operation, account};
+  // @override
+  // Set<Column> get primaryKey => {operation, account};
 }
 
 @DataClassName('CashflowDB')
@@ -129,7 +136,9 @@ class Cashflows extends Table {
 
   IntColumn get sum => integer()();
 
-  TextColumn get currency => text().withDefault(const Constant('RUB')).map(const CurrencyConverter())();
+  TextColumn get currency => text()
+      .withDefault(const Constant('RUB'))
+      .map(const CurrencyConverter())();
 
   @override
   Set<Column> get primaryKey => {operation, category};
@@ -147,7 +156,6 @@ class Users extends Table {
   TextColumn get name => text()();
 
   TextColumn get photo => text()();
-
 }
 
 LazyDatabase _openConnection() {
@@ -170,90 +178,86 @@ class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
-  MigrationStrategy get migration =>
-      MigrationStrategy(
-        onCreate: (Migrator m) {
-          return m.createAll();
-        },
-        onUpgrade: (Migrator m, int from, int to) async {
-          if (from == 1) {
-            // we added the dueDate property in the change from version 1
-            await m.addColumn(accounts, accounts.isDebt);
-          }
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (Migrator m) {
+      return m.createAll();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from == 1) {
+        // we added the dueDate property in the change from version 1
+        await m.addColumn(accounts, accounts.isDebt);
+      }
 
-          if (from == 2) {
-            await m.addColumn(accounts, accounts.cloudId);
-            await m.addColumn(categories, categories.cloudId);
-            await m.addColumn(operations, operations.cloudId);
+      if (from == 2) {
+        await m.addColumn(accounts, accounts.cloudId);
+        await m.addColumn(categories, categories.cloudId);
+        await m.addColumn(operations, operations.cloudId);
 
-            await m.addColumn(accounts, accounts.synced);
-            await m.addColumn(categories, categories.synced);
-            await m.addColumn(operations, operations.synced);
-          }
+        await m.addColumn(accounts, accounts.synced);
+        await m.addColumn(categories, categories.synced);
+        await m.addColumn(operations, operations.synced);
+      }
 
-          if (from < 6) {
-            await m.addColumn(operations, operations.deleted);
-          }
+      if (from < 6) {
+        await m.addColumn(operations, operations.deleted);
+      }
 
-          // if (from < 7) {
-          //   await m.addColumn(accounts, accounts.currency);
-          // }
+      // if (from < 7) {
+      //   await m.addColumn(accounts, accounts.currency);
+      // }
 
-          if (from < 8) {
-            // await m.addColumn(categories, categories.currency);
-            await m.addColumn(operations, operations.recSum);
-          }
+      if (from < 8) {
+        // await m.addColumn(categories, categories.currency);
+        await m.addColumn(operations, operations.recSum);
+      }
 
-          if (from < 9){
-            await m.addColumn(operations, operations.currencySent);
-            await m.addColumn(operations, operations.currencyReceived);
-            await m.addColumn(balances, balances.currency);
-            await m.addColumn(cashflows, cashflows.currency);
-          }
+      if (from < 9) {
+        await m.addColumn(operations, operations.currencySent);
+        await m.addColumn(operations, operations.currencyReceived);
+        await m.addColumn(balances, balances.currency);
+        await m.addColumn(cashflows, cashflows.currency);
+      }
 
-          if (from < 10){
-            await m.createTable(users);
-          }
+      if (from < 10) {
+        await m.createTable(users);
+      }
 
-          if (from < 11) {
-            await m.addColumn(accounts, accounts.user);
-          }
+      if (from < 11) {
+        await m.addColumn(accounts, accounts.user);
+      }
 
-          if (from < 12){
-            await m.addColumn(categories, categories.isGroup);
-            await m.addColumn(categories, categories.parent);
-          }
+      if (from < 12) {
+        await m.addColumn(categories, categories.isGroup);
+        await m.addColumn(categories, categories.parent);
+      }
 
-          // if (from < 13) {
-          //   // 1. Отключаем проверку внешних ключей, чтобы SQLite не ругался при удалении таблицы
-          //   await customStatement('PRAGMA foreign_keys = OFF;');
-          //
-          //   // 2. Переименовываем старую таблицу 'balance' во временную
-          //   await m.renameTable(balances, 'temp_balance');
-          //
-          //   // 3. Создаем новую таблицу 'balance' (уже без составного первичного ключа)
-          //   // Drift создаст её на основе текущего определения класса Balances
-          //   await m.createTable(balances);
-          //
-          //   // 4. Копируем данные из временной таблицы в новую
-          //   // Перечисляем все колонки через запятую
-          //   await customStatement('''
-          //     INSERT INTO balance (date, operation, account, sum, currency)
-          //     SELECT date, operation, account, sum, currency
-          //     FROM temp_balance;
-          //   ''');
-          //
-          //   // 5. Удаляем временную таблицу
-          //   await customStatement('DROP TABLE temp_balance;');
-          //
-          //   // 6. Включаем проверку внешних ключей обратно
-          //   await customStatement('PRAGMA foreign_keys = ON;');
-          // }
-        },
-      );
+      if (from < 13) {
+        await customStatement('''
+          CREATE TABLE balance_new (
+            date INTEGER NOT NULL,
+            operation INTEGER NOT NULL,
+            account INTEGER NOT NULL,
+            sum INTEGER NOT NULL,
+            currency TEXT NOT NULL
+          );
+        ''');
+
+        await customStatement('''
+          INSERT INTO balance_new
+          SELECT date, operation, account, sum, currency
+          FROM balance
+          GROUP BY operation, account
+          HAVING MIN(rowid);
+        ''');
+
+        await customStatement('DROP TABLE balance;');
+        await customStatement('ALTER TABLE balance_new RENAME TO balance;');
+      }
+    },
+  );
 
   Future deleteAll() {
     return transaction(() async {
@@ -274,26 +278,23 @@ class Database extends _$Database {
 
     data.putIfAbsent(
       'account',
-          () =>
-          accounts
-              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-              .toList(),
+      () => accounts
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
     );
 
     data.putIfAbsent(
       'category',
-          () =>
-          categories
-              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-              .toList(),
+      () => categories
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
     );
 
     data.putIfAbsent(
       'operation',
-          () =>
-          operations
-              .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
-              .toList(),
+      () => operations
+          .map((p) => p.toJson(serializer: const _DefaultValueSerializer()))
+          .toList(),
     );
 
     return data;
@@ -308,19 +309,23 @@ class Database extends _$Database {
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('account_title')) {
-              accounts.add(AccountDB(
-                id: int.parse(d['_id']),
-                cloudId: '',
-                title: d['account_title'],
-                isDebt: false,
-                synced: false,
-                user: null,
-              ));
+              accounts.add(
+                AccountDB(
+                  id: int.parse(d['_id']),
+                  cloudId: '',
+                  title: d['account_title'],
+                  isDebt: false,
+                  synced: false,
+                  user: null,
+                ),
+              );
             } else {
-              accounts.add(AccountDB.fromJson(
-                d,
-                serializer: const _DefaultValueSerializer(),
-              ));
+              accounts.add(
+                AccountDB.fromJson(
+                  d,
+                  serializer: const _DefaultValueSerializer(),
+                ),
+              );
             }
           }
         });
@@ -330,25 +335,29 @@ class Database extends _$Database {
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('category_title')) {
-              categories.add(CategoryDB(
-                id: int.parse(d['_id']),
-                cloudId: '',
-                title: d['category_title'],
-                operationType: converter.fromSql(
-                  int.parse(d['category_type']),
+              categories.add(
+                CategoryDB(
+                  id: int.parse(d['_id']),
+                  cloudId: '',
+                  title: d['category_title'],
+                  operationType: converter.fromSql(
+                    int.parse(d['category_type']),
+                  ),
+                  budget: int.parse(d['category_budget']),
+                  budgetType: const BudgetTypeConverter().fromSql(
+                    int.parse(d['category_budget_type']),
+                  ),
+                  synced: false,
+                  isGroup: false,
                 ),
-                budget: int.parse(d['category_budget']),
-                budgetType: const BudgetTypeConverter().fromSql(
-                  int.parse(d['category_budget_type']),
-                ),
-                synced: false,
-                isGroup: false,
-              ));
+              );
             } else {
-              categories.add(CategoryDB.fromJson(
-                d,
-                serializer: const _DefaultValueSerializer(),
-              ));
+              categories.add(
+                CategoryDB.fromJson(
+                  d,
+                  serializer: const _DefaultValueSerializer(),
+                ),
+              );
             }
           }
         });
@@ -358,29 +367,34 @@ class Database extends _$Database {
         value.forEach((dynamic d) async {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('operation_date')) {
-              operations.add(OperationDB(
-                id: int.parse(d['_id']),
-                cloudId: '',
-                date: DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(d['operation_date']),
+              operations.add(
+                OperationDB(
+                  id: int.parse(d['_id']),
+                  cloudId: '',
+                  date: DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(d['operation_date']),
+                  ),
+                  operationType: converter.fromSql(
+                    int.parse(d['operation_type']),
+                  ),
+                  account: int.parse(d['operation_account_id']),
+                  category: _getId(d['operation_category_id']),
+                  recAccount: _getId(d['operation_recipient_account_id']),
+                  sum: int.parse(d['operation_sum']),
+                  recSum: 0,
+                  synced: false,
+                  deleted: false,
+                  currencySent: Currency.RUB,
+                  currencyReceived: Currency.RUB,
                 ),
-                operationType:
-                converter.fromSql(int.parse(d['operation_type'])),
-                account: int.parse(d['operation_account_id']),
-                category: _getId(d['operation_category_id']),
-                recAccount: _getId(d['operation_recipient_account_id']),
-                sum: int.parse(d['operation_sum']),
-                recSum: 0,
-                synced: false,
-                deleted: false,
-                currencySent: Currency.RUB,
-                currencyReceived: Currency.RUB,
-              ));
+              );
             } else {
-              operations.add(OperationDB.fromJson(
-                d,
-                serializer: const _DefaultValueSerializer(),
-              ));
+              operations.add(
+                OperationDB.fromJson(
+                  d,
+                  serializer: const _DefaultValueSerializer(),
+                ),
+              );
             }
           }
         });
