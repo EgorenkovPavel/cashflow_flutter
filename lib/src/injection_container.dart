@@ -241,8 +241,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AccountBalanceBloc(sl<AccountInteractor>()));
 
   sl.registerLazySingleton(
-    () =>
-        CategoryCashflowBloc(sl<CurrencyRateBloc>(), sl<CategoryInteractor>()),
+    () => CategoryCashflowBloc(sl<CategoryInteractor>()),
   );
 
   sl.registerFactoryParam<DriveDialogBloc, DialogMode, void>(

@@ -4,7 +4,7 @@ import 'package:money_tracker/src/domain/models.dart';
 part 'category.freezed.dart';
 
 @freezed
-sealed class Category with _$Category{
+sealed class Category with _$Category {
   const Category._();
 
   const factory Category.group({
@@ -24,12 +24,23 @@ sealed class Category with _$Category{
     required int? parentId,
   }) = CategoryItem;
 
-  OperationType get operationType => switch(type){
+  OperationType get operationType => switch (type) {
     CategoryType.INPUT => OperationType.INPUT,
     CategoryType.OUTPUT => OperationType.OUTPUT,
   };
 
-  int? get parentId => switch(this){
+  int get monthBudget => switch (this) {
+    CategoryGroup() => 0,
+    CategoryItem(:final budget, :final budgetType) =>
+      (budget /
+              switch (budgetType) {
+                BudgetType.MONTH => 1,
+                BudgetType.YEAR => 12,
+              })
+          .floor(),
+  };
+
+  int? get parentId => switch (this) {
     CategoryGroup() => null,
     CategoryItem(:final parentId) => parentId,
   };

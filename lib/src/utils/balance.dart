@@ -13,9 +13,6 @@ abstract class Balance with _$Balance {
 
   bool get isEmpty => sums.isEmpty || sums.every((e) => e.isEmpty);
 
-  Sum totalInRub(double usdRate, double eurRate) =>
-      Sum(toRub(usdRate, eurRate), Currency.RUB); //TODO delete
-
   Balance operator +(Balance balance) {
     var res = Balance(sums);
 
@@ -24,19 +21,6 @@ abstract class Balance with _$Balance {
     }
 
     return res;
-  }
-
-  int toRub(double usd, double eur) {
-    //TODO delete method
-    return sums
-        .map<int>(
-          (e) => switch (e.currency) {
-            Currency.RUB => e.sum,
-            Currency.USD => (e.sum / usd).floor(),
-            Currency.EUR => (e.sum / eur).floor(),
-          },
-        )
-        .fold<int>(0, (a, b) => a + b);
   }
 
   Balance addSum(Sum sum) {

@@ -20,11 +20,6 @@ class CategoryCashflowEvent with _$CategoryCashflowEvent {
   const factory CategoryCashflowEvent.changeCategories({
     required List<Category> categories,
   }) = _ChangeCategoriesCategoryCashflowEvent;
-
-  const factory CategoryCashflowEvent.changeCurrencyRate({
-    required double usd,
-    required double eur,
-  }) = _ChangeCurrencyRateCategoryCashflowEvent;
 }
 
 @freezed
@@ -34,8 +29,6 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
   const factory CategoryCashflowState({
     required List<CategoryCashFlow> cashflows,
     required List<Category> categories,
-    required double usd,
-    required double eur,
   }) = _CategoryCashflowState;
 
   Iterable<CategoryItem> get items => categories.whereType<CategoryItem>();
@@ -62,54 +55,21 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
 
     return list;
   }
-
-  int cashFlow(CategoryType type) {
-    return cashflows
-        .where((e) => e.type == type)
-        .map((item) => item.monthCashFlow.toRub(usd, eur))
-        .fold(0, (a, b) => a + b);
-  }
-
-  int budget(CategoryType type) => categories
-      .whereType<CategoryItem>()
-      .where((e) => e.type == type)
-      .fold<int>(
-        0,
-        (a, b) =>
-            a +
-            (b.budget /
-                    switch (b.budgetType) {
-                      BudgetType.MONTH => 1,
-                      BudgetType.YEAR => 12,
-                    })
-                .floor(),
-      );
 }
 
 class CategoryCashflowBloc
     extends Bloc<CategoryCashflowEvent, CategoryCashflowState> {
   final CategoryInteractor _categoryInteractor;
-  final CurrencyRateBloc _currencyRateBloc;
   StreamSubscription? _subCashFlows;
   StreamSubscription? _subCategories;
-  StreamSubscription? _subCurrencyRateBloc;
 
-  CategoryCashflowBloc(this._currencyRateBloc, this._categoryInteractor)
-    : super(
-        const CategoryCashflowState(
-          cashflows: [],
-          categories: [],
-          usd: 1,
-          eur: 1,
-        ),
-      ) {
+  CategoryCashflowBloc(this._categoryInteractor)
+    : super(const CategoryCashflowState(cashflows: [], categories: [])) {
     on<CategoryCashflowEvent>(
       (event, emit) => event.map(
         change: (event) => emit(state.copyWith(cashflows: event.cashFlows)),
         changeCategories: (event) =>
             emit(state.copyWith(categories: event.categories)),
-        changeCurrencyRate: (event) =>
-            emit(state.copyWith(usd: event.usd, eur: event.eur)),
       ),
     );
 
@@ -121,16 +81,12 @@ class CategoryCashflowBloc
       add(CategoryCashflowEvent.change(cashFlows: list));
     });
 
-    _subCurrencyRateBloc = _currencyRateBloc.stream.listen((s) {
-      add(CategoryCashflowEvent.changeCurrencyRate(usd: s.usd, eur: s.eur));
-    });
   }
 
   @override
   Future<void> close() {
     _subCashFlows?.cancel();
     _subCategories?.cancel();
-    _subCurrencyRateBloc?.cancel();
 
     return super.close();
   }
@@ -148,9 +104,17 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   List<Category> watchHierarchy(CategoryType type) => _watch().hierarchy(type);
 
-  int cashFlow(CategoryType type) => _select((state) => state.cashFlow(type));
+  int cashFlow(CategoryType type) {
+    return _select((state) => state.cashflows)
+        .where((e) => e.type == type)
+        .map((item) => balanceToRub(item.monthCashFlow).sum)
+        .fold(0, (a, b) => a + b);
+  }
 
-  int budget(CategoryType type) => _select((state) => state.budget(type));
+  int budget(CategoryType type) => _select((state) => state.categories)
+      .whereType<CategoryItem>()
+      .where((e) => e.type == type)
+      .fold<int>(0, (a, b) => a + b.monthBudget);
 
   List<CategoryCashFlow> watchCashFlow(CategoryType type) =>
       _watch().cashflows.where((e) => e.type == type).toList();
@@ -169,21 +133,13 @@ extension CategoryCashFlowBlocExt on BuildContext {
     BudgetType budgetType,
     int count,
   ) {
-    final list = watchCashFlow(categoryType)
-        .where(
-          (e) =>
-              balanceToRub(switch (budgetType) {
-                .MONTH => e.monthCashFlow,
-                .YEAR => e.yearCashFlow,
-              }) !=
-              0,
-        )
-        .toList();
+    final list = watchCashFlow(
+      categoryType,
+    ).where((e) => balanceToRub(e.cashflowByType(budgetType)) != 0).toList();
     list.sort(
-      (a, b) => switch (budgetType) {
-        .MONTH => balanceToRub(b.monthCashFlow).sum - balanceToRub(a.monthCashFlow).sum,
-        .YEAR => balanceToRub(b.yearCashFlow).sum - balanceToRub(a.yearCashFlow).sum,
-      },
+      (a, b) =>
+          balanceToRub(b.cashflowByType(budgetType)).sum -
+          balanceToRub(a.cashflowByType(budgetType)).sum,
     );
     return list.take(count).toList();
   }

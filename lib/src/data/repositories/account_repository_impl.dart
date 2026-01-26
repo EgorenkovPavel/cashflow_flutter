@@ -1,4 +1,3 @@
-
 import 'package:drift/drift.dart';
 
 import '../../domain/interfaces/account_repository.dart';
@@ -18,7 +17,7 @@ class AccountRepositoryImpl implements AccountRepository {
   Future<BaseAccount> getAccountById(int id) async {
     final account = await _accountDao.getAccountById(id);
     return AccountMapper().toModel(account);
-}
+  }
 
   @override
   Future<List<BaseAccount>> getAllAccounts() async {
@@ -27,25 +26,24 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<int> insertAccount(BaseAccount account) =>
-      _accountDao.insertAccount(AccountsCompanion(
-        cloudId: Value(account.cloudId),
-        title: Value(account.title),
-        isDebt: Value(account is Debt),
-        user: Value(account.userId),
-      ));
+  Future<int> insertAccount(BaseAccount account) => _accountDao.insertAccount(
+    AccountsCompanion(
+      cloudId: Value(account.cloudId),
+      title: Value(account.title),
+      isDebt: Value(account is Debt),
+      user: Value(account.userId),
+    ),
+  );
 
   @override
   Future<void> updateAccount(BaseAccount account) =>
       _accountDao.updateAccount(AccountMapper().toDBO(account));
 
   @override
-  Stream<BaseAccount> watchAccountById(int id) {
-    return _accountDao.watchAccountById(id).map(AccountMapper().toModel);
-  }
+  Stream<BaseAccount> watchAccountById(int id) =>
+      _accountDao.watchAccountById(id).map(AccountMapper().toModel);
 
   @override
   Stream<List<BaseAccount>> watchAllAccounts() =>
       _accountDao.watchAllAccounts().map(AccountMapper().listToModel);
 }
-
