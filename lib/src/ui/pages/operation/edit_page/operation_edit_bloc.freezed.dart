@@ -1060,7 +1060,7 @@ $Res call({
 });
 
 
-$OperationCopyWith<$Res>? get operation;
+$OperationCopyWith<$Res>? get operation;$SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -1099,6 +1099,24 @@ $OperationCopyWith<$Res>? get operation {
 
   return $OperationCopyWith<$Res>(_self.operation!, (value) {
     return _then(_self.copyWith(operation: value));
+  });
+}/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get recSum {
+  
+  return $SumCopyWith<$Res>(_self.recSum, (value) {
+    return _then(_self.copyWith(recSum: value));
   });
 }
 }
@@ -1286,7 +1304,7 @@ $Res call({
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;
+@override $OperationCopyWith<$Res>? get operation;@override $SumCopyWith<$Res> get sum;@override $SumCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -1326,6 +1344,24 @@ $OperationCopyWith<$Res>? get operation {
 
   return $OperationCopyWith<$Res>(_self.operation!, (value) {
     return _then(_self.copyWith(operation: value));
+  });
+}/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of OperationEditState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get recSum {
+  
+  return $SumCopyWith<$Res>(_self.recSum, (value) {
+    return _then(_self.copyWith(recSum: value));
   });
 }
 }

@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -69,7 +69,16 @@ as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullab
 as Sum,
   ));
 }
-
+/// Create a copy of CashflowEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 
@@ -247,7 +256,7 @@ $Res call({
 });
 
 
-
+@override $SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -268,7 +277,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of CashflowEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 // dart format on

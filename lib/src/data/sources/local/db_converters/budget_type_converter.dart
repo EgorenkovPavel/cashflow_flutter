@@ -5,24 +5,15 @@ class BudgetTypeConverter extends TypeConverter<BudgetType, int> {
   const BudgetTypeConverter();
 
   @override
-  BudgetType fromSql(int fromDb) {
-    switch (fromDb) {
-      case 1:
-        return BudgetType.MONTH;
-      case 2:
-        return BudgetType.YEAR;
-      default:
-        return BudgetType.MONTH; // TODO
-    }
-  }
+  BudgetType fromSql(int fromDb) => switch (fromDb) {
+    1 => BudgetType.MONTH,
+    2 => BudgetType.YEAR,
+    _ => throw Exception('No such budget type'),
+  };
 
   @override
-  int toSql(BudgetType value) {
-    switch (value) {
-      case BudgetType.MONTH:
-        return 1;
-      case BudgetType.YEAR:
-        return 2;
-    }
-  }
+  int toSql(BudgetType value) => switch (value) {
+    BudgetType.MONTH => 1,
+    BudgetType.YEAR => 2,
+  };
 }

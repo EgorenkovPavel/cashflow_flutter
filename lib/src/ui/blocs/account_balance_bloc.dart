@@ -85,7 +85,7 @@ extension AccountBalanceBlocExt on BuildContext {
   Balance watchTotalBalance() {
     var sums = List.of(watch<AccountBalanceBloc>().state.totalBalance.sums);
     sums.sort((a, b) => a.currency.index - b.currency.index);
-    return Balance.fromSums(sums);
+    return Balance(sums);
   }
 
   String getTitleById(int accountId) =>

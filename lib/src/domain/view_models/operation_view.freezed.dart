@@ -271,7 +271,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -299,7 +299,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of OperationView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -353,7 +362,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -381,7 +390,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of OperationView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -435,7 +453,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -463,7 +481,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of OperationView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -517,7 +544,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sendSum;$SumCopyWith<$Res> get receivedSum;
 
 }
 /// @nodoc
@@ -545,7 +572,25 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of OperationView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sendSum {
+  
+  return $SumCopyWith<$Res>(_self.sendSum, (value) {
+    return _then(_self.copyWith(sendSum: value));
+  });
+}/// Create a copy of OperationView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get receivedSum {
+  
+  return $SumCopyWith<$Res>(_self.receivedSum, (value) {
+    return _then(_self.copyWith(receivedSum: value));
+  });
+}
 }
 
 // dart format on

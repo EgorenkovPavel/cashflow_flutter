@@ -1,56 +1,54 @@
-import 'dart:collection';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:equatable/equatable.dart';
-import 'sum.dart';
 import '../domain/models/enum/currency.dart';
+import 'sum.dart';
 
-class Balance extends Equatable {
-  final List<Sum> _sums;
+part 'balance.freezed.dart';
 
-  const Balance() : _sums = const [];
+@freezed
+abstract class Balance with _$Balance {
+  const Balance._();
 
-  UnmodifiableListView<Sum> get sums => UnmodifiableListView(_sums);
+  const factory Balance([@Default([]) List<Sum> sums]) = _Balance;
 
-  const Balance.fromSums(this._sums);
+  bool get isEmpty => sums.isEmpty || sums.every((e) => e.isEmpty);
 
   Sum totalInRub(double usdRate, double eurRate) =>
-      Sum(toRub(usdRate, eurRate), Currency.RUB);
+      Sum(toRub(usdRate, eurRate), Currency.RUB); //TODO delete
 
   Balance operator +(Balance balance) {
-    var res = Balance.fromSums(_sums);
+    var res = Balance(sums);
 
-    for (var sum in balance._sums) {
+    for (var sum in balance.sums) {
       res = res.addSum(sum);
     }
 
     return res;
   }
 
+  int toRub(double usd, double eur) {
+    //TODO delete method
+    return sums
+        .map<int>((e) {
+          return switch (e.currency) {
+            Currency.RUB => e.sum,
+            Currency.USD => (e.sum / usd).floor(),
+            Currency.EUR => (e.sum / eur).floor(),
+          };
+        })
+        .fold<int>(0, (a, b) => a + b);
+  }
+
   Balance addSum(Sum sum) {
-    var items = _sums.toList();
-    if (_sums.where((e) => e.currency == sum.currency).isEmpty) {
+    var items = sums.toList();
+    if (sums.where((e) => e.currency == sum.currency).isEmpty) {
       items.add(sum);
     } else {
-      items = _sums
+      items = sums
           .map((e) => e.currency == sum.currency ? e + sum.sum : e)
           .toList();
     }
 
-    return Balance.fromSums(items);
-  }
-
-  bool get isEmpty => _sums.isEmpty || _sums.every((e) => e.isEmpty);
-
-  @override
-  List<Object?> get props => [_sums];
-
-  int toRub(double usd, double eur) { //TODO delete method
-    return _sums.map<int>((e) {
-      return switch (e.currency) {
-        Currency.RUB => e.sum,
-        Currency.USD => (e.sum / usd).floor(),
-        Currency.EUR => (e.sum / eur).floor(),
-      };
-    }).fold<int>(0, (a, b) => a + b);
+    return Balance(items);
   }
 }

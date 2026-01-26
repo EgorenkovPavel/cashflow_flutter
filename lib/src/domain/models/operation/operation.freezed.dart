@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -74,7 +74,16 @@ as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullab
 as Sum,
   ));
 }
-
+/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 
@@ -270,7 +279,7 @@ $Res call({
 });
 
 
-
+@override $SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -297,7 +306,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -350,7 +368,7 @@ $Res call({
 });
 
 
-
+@override $SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -377,7 +395,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -430,7 +457,7 @@ $Res call({
 });
 
 
-
+@override $SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -457,7 +484,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -510,7 +546,7 @@ $Res call({
 });
 
 
-
+@override $SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -537,7 +573,25 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of Operation
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get recSum {
+  
+  return $SumCopyWith<$Res>(_self.recSum, (value) {
+    return _then(_self.copyWith(recSum: value));
+  });
+}
 }
 
 // dart format on

@@ -1,14 +1,12 @@
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../utils/balance.dart';
-import '../models.dart';
 import '../view_models.dart';
 
 part 'account_balance_view.freezed.dart';
 
 @freezed
-abstract class AccountBalanceView with _$AccountBalanceView{
+abstract class AccountBalanceView with _$AccountBalanceView {
   const AccountBalanceView._();
 
   const factory AccountBalanceView({
@@ -19,7 +17,7 @@ abstract class AccountBalanceView with _$AccountBalanceView{
     required String userPhoto,
     required Balance balance,
     required bool isDebt,
-}) = _AccountBalanceView;
+  }) = _AccountBalanceView;
 
   AccountView get account => AccountView(id: accountId, title: accountTitle);
 }

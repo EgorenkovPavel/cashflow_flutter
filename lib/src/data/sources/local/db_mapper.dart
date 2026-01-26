@@ -277,14 +277,14 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
     List<CashflowEntity> yearCashflow,
   ) {
     return categories.map((category) {
-      final month = Balance.fromSums(
+      final month = Balance(
         monthCashflow
             .where((cashflow) => cashflow.categoryId == category.id)
             .map((cashflow) => cashflow.sum)
             .toList(),
       );
 
-      final year = Balance.fromSums(
+      final year = Balance(
         yearCashflow
             .where((cashflow) => cashflow.categoryId == category.id)
             .map((cashflow) => cashflow.sum)
@@ -351,7 +351,7 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
         final user = account.user == null
             ? null
             : users.where((e) => e.id == account.user).firstOrNull;
-        final balance = Balance.fromSums(
+        final balance = Balance(
           balances
               .where((balance) => balance.accountId == account.id)
               .map((balance) => Sum(balance.sum, balance.currency))

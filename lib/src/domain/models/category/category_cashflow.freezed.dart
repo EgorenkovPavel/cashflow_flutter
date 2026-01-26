@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-
+$BalanceCopyWith<$Res> get monthCashFlow;$BalanceCopyWith<$Res> get yearCashFlow;
 
 }
 /// @nodoc
@@ -74,7 +74,25 @@ as Balance,yearCashFlow: null == yearCashFlow ? _self.yearCashFlow : yearCashFlo
 as Balance,
   ));
 }
-
+/// Create a copy of CategoryCashFlow
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get monthCashFlow {
+  
+  return $BalanceCopyWith<$Res>(_self.monthCashFlow, (value) {
+    return _then(_self.copyWith(monthCashFlow: value));
+  });
+}/// Create a copy of CategoryCashFlow
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get yearCashFlow {
+  
+  return $BalanceCopyWith<$Res>(_self.yearCashFlow, (value) {
+    return _then(_self.copyWith(yearCashFlow: value));
+  });
+}
 }
 
 
@@ -257,7 +275,7 @@ $Res call({
 });
 
 
-
+@override $BalanceCopyWith<$Res> get monthCashFlow;@override $BalanceCopyWith<$Res> get yearCashFlow;
 
 }
 /// @nodoc
@@ -283,7 +301,25 @@ as Balance,
   ));
 }
 
-
+/// Create a copy of CategoryCashFlow
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get monthCashFlow {
+  
+  return $BalanceCopyWith<$Res>(_self.monthCashFlow, (value) {
+    return _then(_self.copyWith(monthCashFlow: value));
+  });
+}/// Create a copy of CategoryCashFlow
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get yearCashFlow {
+  
+  return $BalanceCopyWith<$Res>(_self.yearCashFlow, (value) {
+    return _then(_self.copyWith(yearCashFlow: value));
+  });
+}
 }
 
 // dart format on

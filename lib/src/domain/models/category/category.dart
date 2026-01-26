@@ -1,9 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/models.dart';
-
-import '../enum/budget_type.dart';
-import '../enum/category_type.dart';
 
 part 'category.freezed.dart';
 

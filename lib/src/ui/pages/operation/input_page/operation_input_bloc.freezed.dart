@@ -558,7 +558,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -578,7 +578,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of MasterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -624,7 +633,7 @@ $Res call({
 });
 
 
-
+$SumCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -644,7 +653,16 @@ as Sum,
   ));
 }
 
-
+/// Create a copy of MasterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}
 }
 
 /// @nodoc
@@ -749,7 +767,7 @@ $Res call({
 });
 
 
-$OperationCopyWith<$Res>? get operation;
+$SumCopyWith<$Res> get sum;$OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -772,6 +790,15 @@ as MasterStateAction?,
   ));
 }
 /// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -982,7 +1009,7 @@ $Res call({
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;
+@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1007,6 +1034,15 @@ as MasterStateAction?,
 }
 
 /// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -1068,7 +1104,7 @@ $Res call({
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;
+@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1093,6 +1129,15 @@ as MasterStateAction?,
 }
 
 /// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -1154,7 +1199,7 @@ $Res call({
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;
+@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1179,6 +1224,15 @@ as MasterStateAction?,
 }
 
 /// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -1240,7 +1294,7 @@ $Res call({
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;
+@override $SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1265,6 +1319,24 @@ as MasterStateAction?,
 }
 
 /// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get sum {
+  
+  return $SumCopyWith<$Res>(_self.sum, (value) {
+    return _then(_self.copyWith(sum: value));
+  });
+}/// Create a copy of MasterState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SumCopyWith<$Res> get recSum {
+  
+  return $SumCopyWith<$Res>(_self.recSum, (value) {
+    return _then(_self.copyWith(recSum: value));
+  });
+}/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

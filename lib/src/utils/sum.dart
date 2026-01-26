@@ -1,12 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../domain/models/enum/currency.dart';
 
-class Sum extends Equatable {
-  final int sum;
-  final Currency currency;
+part 'sum.freezed.dart';
 
-  const Sum(this.sum, this.currency);
+@freezed
+abstract class Sum with _$Sum{
+  const Sum._();
+  const factory Sum(int sum, Currency currency) = _Sum;
 
   Sum operator +(int sum) => Sum(this.sum + sum, currency);
 
@@ -15,12 +16,7 @@ class Sum extends Equatable {
   Sum operator /(int sum) => Sum((this.sum / sum).floor(), currency);
 
   bool get isEmpty => sum == 0;
-
-  @override
-  List<Object?> get props => [sum, currency];
-
-  Sum copyWith({int? sum, Currency? currency}) =>
-      Sum(sum ?? this.sum, currency ?? this.currency);
 }
+
 
 

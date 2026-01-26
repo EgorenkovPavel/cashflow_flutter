@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-
+$BalanceCopyWith<$Res> get balance;
 
 }
 /// @nodoc
@@ -74,7 +74,16 @@ as Balance,isDebt: null == isDebt ? _self.isDebt : isDebt // ignore: cast_nullab
 as bool,
   ));
 }
-
+/// Create a copy of AccountBalanceView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get balance {
+  
+  return $BalanceCopyWith<$Res>(_self.balance, (value) {
+    return _then(_self.copyWith(balance: value));
+  });
+}
 }
 
 
@@ -257,7 +266,7 @@ $Res call({
 });
 
 
-
+@override $BalanceCopyWith<$Res> get balance;
 
 }
 /// @nodoc
@@ -283,7 +292,16 @@ as bool,
   ));
 }
 
-
+/// Create a copy of AccountBalanceView
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get balance {
+  
+  return $BalanceCopyWith<$Res>(_self.balance, (value) {
+    return _then(_self.copyWith(balance: value));
+  });
+}
 }
 
 // dart format on

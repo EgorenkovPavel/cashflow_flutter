@@ -250,7 +250,7 @@ $Res call({
 });
 
 
-
+$OperationListFilterCopyWith<$Res> get filter;
 
 }
 /// @nodoc
@@ -270,7 +270,16 @@ as OperationListFilter,
   ));
 }
 
-
+/// Create a copy of OperationFilterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OperationListFilterCopyWith<$Res> get filter {
+  
+  return $OperationListFilterCopyWith<$Res>(_self.filter, (value) {
+    return _then(_self.copyWith(filter: value));
+  });
+}
 }
 
 /// @nodoc
