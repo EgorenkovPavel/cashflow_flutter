@@ -29,13 +29,13 @@ abstract class Balance with _$Balance {
   int toRub(double usd, double eur) {
     //TODO delete method
     return sums
-        .map<int>((e) {
-          return switch (e.currency) {
+        .map<int>(
+          (e) => switch (e.currency) {
             Currency.RUB => e.sum,
             Currency.USD => (e.sum / usd).floor(),
             Currency.EUR => (e.sum / eur).floor(),
-          };
-        })
+          },
+        )
         .fold<int>(0, (a, b) => a + b);
   }
 

@@ -95,7 +95,7 @@ extension AccountBalanceBlocExt on BuildContext {
           .firstOrNull ??
       '';
 
-  Sum watchTotalSum() => watchTotalBalance().totalInRub(usd(), eur());
+  Sum watchTotalSum() => balanceToRub(watchTotalBalance());
 
   List<AccountView> watchAccounts() =>
       watch<AccountBalanceBloc>().state.allAccounts;

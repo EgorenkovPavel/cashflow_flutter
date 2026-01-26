@@ -18,6 +18,7 @@ abstract class CategoryCashFlow with _$CategoryCashFlow {
     required Balance yearCashFlow,
   }) = _CategoryCashFlow;
 
+
   int get monthBudget => switch (budgetType) {
     BudgetType.MONTH => budget,
     BudgetType.YEAR => (budget / 12).toInt(),

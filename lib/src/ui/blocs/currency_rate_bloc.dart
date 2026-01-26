@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_tracker/src/domain/interfaces/currency_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/currency_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/utils/balance.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
@@ -54,36 +54,23 @@ class CurrencyRateBloc extends Bloc<CurrencyRateEvent, CurrencyRateState> {
 }
 
 extension CurrencyRateBlocExt on BuildContext {
-  double usd() => watch<CurrencyRateBloc>().state.usd;
+  double _usd() => watch<CurrencyRateBloc>().state.usd;
 
-  double eur() => watch<CurrencyRateBloc>().state.eur;
+  double _eur() => watch<CurrencyRateBloc>().state.eur;
 
-  Sum fromUsd(int sum) => Sum((sum / usd()).toInt(), Currency.RUB);
-
-  Sum fromEur(int sum) => Sum((sum / eur()).toInt(), Currency.RUB);
-
-  String usdRateFormat() => loc.rateFormat(_rate(usd()));
-
-  String eurRateFormat() => loc.rateFormat(_rate(eur()));
-
-  Sum sumToRub(Sum sum) => switch (sum.currency) {
-    .RUB => sum,
-    .USD => fromUsd(sum.sum),
-    .EUR => fromEur(sum.sum),
+  double _rate(Currency currency) => switch (currency) {
+    Currency.RUB => 1,
+    Currency.USD => _usd(),
+    Currency.EUR => _eur(),
   };
 
-  int balanceToRub(Balance balance) => balance.sums
-      .map<num>(
-        (e) => switch (e.currency) {
-          .RUB => e.sum,
-          .USD => (e.sum / usd()),
-          .EUR => (e.sum / eur()),
-        },
-      )
-      .fold<double>(0, (a, b) => a + b)
-      .toInt();
-
-  double _rate(double rate) {
-    return ((1 / rate) * 100).floor() / 100;
+  String formatedRate(Currency currency) {
+    return loc.rateFormat(((1 / _rate(currency)) * 100).floor() / 100);
   }
+
+  Sum sumToRub(Sum sum) => Sum((sum.sum / _rate(sum.currency)).toInt(), .RUB);
+
+  Sum balanceToRub(Balance balance) => balance.sums
+      .map((e) => sumToRub(e).sum)
+      .fold<Sum>(Sum(0, .RUB), (a, b) => a + b);
 }

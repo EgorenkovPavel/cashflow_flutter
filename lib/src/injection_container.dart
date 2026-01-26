@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:money_tracker/src/domain/interfaces/currency_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/currency_interactor.dart';
 import 'package:money_tracker/src/ui/blocs/user_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -181,8 +181,8 @@ extension CategoryCashFlowBlocExt on BuildContext {
         .toList();
     list.sort(
       (a, b) => switch (budgetType) {
-        .MONTH => balanceToRub(b.monthCashFlow) - balanceToRub(a.monthCashFlow),
-        .YEAR => balanceToRub(b.yearCashFlow) - balanceToRub(a.yearCashFlow),
+        .MONTH => balanceToRub(b.monthCashFlow).sum - balanceToRub(a.monthCashFlow).sum,
+        .YEAR => balanceToRub(b.yearCashFlow).sum - balanceToRub(a.yearCashFlow).sum,
       },
     );
     return list.take(count).toList();

@@ -34,8 +34,8 @@ class TotalsCard extends StatelessWidget {
                       children: [
                         Text(switch (sum.currency) {
                           .RUB => Currency.RUB.toString(),
-                          .USD => 'USD (${context.usdRateFormat()})',
-                          .EUR => 'EUR (${context.eurRateFormat()})',
+                          .USD => 'USD (${context.formatedRate(.USD)})',
+                          .EUR => 'EUR (${context.formatedRate(.EUR)})',
                         }),
                         SumText(sum, textAlign: .end),
                         SumText(context.sumToRub(sum), textAlign: .end),
@@ -97,15 +97,12 @@ class _UserAccounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final total = Sum(
-      context.balanceToRub(
-        context
-            .watchAccountBalances()
-            .where((e) => e.userId == user?.id)
-            .map((e) => e.balance)
-            .fold(Balance(), (a, b) => a + b),
-      ),
-      .RUB,
+    final total = context.balanceToRub(
+      context
+          .watchAccountBalances()
+          .where((e) => e.userId == user?.id)
+          .map((e) => e.balance)
+          .fold(Balance(), (a, b) => a + b),
     );
 
     final balances = context
@@ -124,7 +121,7 @@ class _UserAccounts extends StatelessWidget {
         ...balances.map(
           (balance) => _SubTitle(
             balance.accountTitle,
-            Sum(context.balanceToRub(balance.balance), .RUB),
+            context.balanceToRub(balance.balance),
           ),
         ),
       ],
@@ -137,14 +134,11 @@ class _Debts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final total = Sum(
-      context.balanceToRub(
-        context
-            .watchDebtBalances()
-            .map((e) => e.balance)
-            .fold(Balance(), (a, b) => a + b),
-      ),
-      .RUB,
+    final total = context.balanceToRub(
+      context
+          .watchDebtBalances()
+          .map((e) => e.balance)
+          .fold(Balance(), (a, b) => a + b),
     );
 
     final balances = context.watchDebtBalances().where(
@@ -162,7 +156,7 @@ class _Debts extends StatelessWidget {
         ...balances.map(
           (balance) => _SubTitle(
             balance.accountTitle,
-            Sum(context.balanceToRub(balance.balance), .RUB),
+            context.balanceToRub(balance.balance),
           ),
         ),
       ],

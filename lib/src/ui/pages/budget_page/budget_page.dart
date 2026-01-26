@@ -30,18 +30,18 @@ class _BudgetPageState extends State<BudgetPage> {
       case BudgetType.MONTH:
         list.sort(
           (a, b) =>
-              context.balanceToRub(b.monthCashFlow) -
-              context.balanceToRub(a.monthCashFlow),
+              context.balanceToRub(b.monthCashFlow).sum -
+              context.balanceToRub(a.monthCashFlow).sum,
         );
       case BudgetType.YEAR:
         list.sort(
           (a, b) =>
-              context.balanceToRub(b.yearCashFlow) -
-              context.balanceToRub(a.yearCashFlow),
+              context.balanceToRub(b.yearCashFlow).sum -
+              context.balanceToRub(a.yearCashFlow).sum,
         );
     }
 
-    final budget = switch (_budgetType) {
+    final budget = Sum(switch (_budgetType) {
       BudgetType.MONTH => list.fold(
         0,
         (prev, cashflow) => prev + cashflow.monthBudget,
@@ -50,7 +50,7 @@ class _BudgetPageState extends State<BudgetPage> {
         0,
         (prev, cashflow) => prev + cashflow.yearBudget,
       ),
-    };
+    }, .RUB);
 
     final cashflow = context.balanceToRub(switch (_budgetType) {
       BudgetType.MONTH => list.fold(
@@ -110,8 +110,8 @@ class _BudgetPageState extends State<BudgetPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(context.loc.sumFormat(Sum(budget, Currency.RUB))),
-                    Text(context.loc.sumFormat(Sum(cashflow, Currency.RUB))),
+                    Text(context.loc.sumFormat(budget)),
+                    Text(context.loc.sumFormat(cashflow)),
                   ],
                 ),
                 switch (_budgetType) {
@@ -170,7 +170,7 @@ class CashflowColumn extends StatelessWidget {
     final cashflow = context.balanceToRub(switch (budgetType) {
       BudgetType.MONTH => categoryCashFlow.monthCashFlow,
       BudgetType.YEAR => categoryCashFlow.yearCashFlow,
-    });
+    }).sum;
 
     final alignment = switch (budgetType) {
       BudgetType.MONTH => getMonthAlign(),

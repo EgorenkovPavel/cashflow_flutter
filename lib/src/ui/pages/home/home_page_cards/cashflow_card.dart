@@ -89,12 +89,7 @@ class TopCategories extends StatelessWidget {
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(e.categoryTitle),
-              Text(
-                context.loc.numberFormat(
-                  context.balanceToRub(e.yearCashFlow),
-                  .RUB,
-                ),
-              ),
+              Text(context.loc.sumFormat(context.balanceToRub(e.yearCashFlow))),
             ],
           ),
         ),
