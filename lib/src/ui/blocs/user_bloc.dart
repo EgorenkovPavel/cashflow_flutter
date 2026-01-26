@@ -9,18 +9,15 @@ part 'user_bloc.freezed.dart';
 
 @freezed
 sealed class UserEvent with _$UserEvent {
-  const factory UserEvent.changeUsers({
-    required List<User> users,
-  }) = _ChangeUsersUserEvent;
+  const factory UserEvent.changeUsers({required List<User> users}) =
+      _ChangeUsersUserEvent;
 }
 
 @freezed
 abstract class UserState with _$UserState {
   const UserState._();
 
-  const factory UserState({
-    required List<User> users,
-  }) = _UserState;
+  const factory UserState({required List<User> users}) = _UserState;
 }
 
 class UserBloc extends Bloc<UserEvent, UserState> {
@@ -33,16 +30,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ),
     );
 
-    _userInteractor
-        .getAll()
-        .then((users) => add(UserEvent.changeUsers(users: users)));
+    _userInteractor.getAll().then(
+      (users) => add(UserEvent.changeUsers(users: users)),
+    );
   }
-
 }
 
 extension UserBlocExt on BuildContext {
-
-  List<User> watchUsers() =>
-      watch<UserBloc>().state.users;
-
+  List<User> watchUsers() => watch<UserBloc>().state.users;
 }

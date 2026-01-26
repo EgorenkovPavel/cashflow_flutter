@@ -80,7 +80,6 @@ class CategoryCashflowBloc
     _subCashFlows = _categoryInteractor.watchCashFlows().listen((list) {
       add(CategoryCashflowEvent.change(cashFlows: list));
     });
-
   }
 
   @override
@@ -114,7 +113,8 @@ extension CategoryCashFlowBlocExt on BuildContext {
   int budget(CategoryType type) => _select((state) => state.categories)
       .whereType<CategoryItem>()
       .where((e) => e.type == type)
-      .fold<int>(0, (a, b) => a + b.monthBudget);
+      .map((e) => e.monthBudget)
+      .fold<int>(0, (a, b) => a + b);
 
   List<CategoryCashFlow> watchCashFlow(CategoryType type) =>
       _watch().cashflows.where((e) => e.type == type).toList();
