@@ -8,7 +8,6 @@ import '../../../../domain/view_models.dart';
 
 class AccountListPage extends StatefulWidget {
   const AccountListPage({super.key});
-
   @override
   State<AccountListPage> createState() => _AccountListPageState();
 }

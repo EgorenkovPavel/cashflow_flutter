@@ -45,7 +45,7 @@ class OperationInputPage extends StatelessWidget {
                           .watch<MasterBloc>()
                           .state
                           .map(
-                            input: (_) => ['Account', 'Category'],
+                            input: (_) => ['Account', 'Category'],//TODO
                             output: (_) => ['Account', 'Category'],
                             transfer: (_) => ['Source', 'Recipient'],
                             exchange: (_) => ['Account'],

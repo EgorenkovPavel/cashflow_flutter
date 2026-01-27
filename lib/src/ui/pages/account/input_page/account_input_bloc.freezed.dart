@@ -89,10 +89,7 @@ return fetch(_that);case _InputAccountInputEvent():
 return input(_that);case _ChangeTitleAccountInputEvent():
 return changeTitle(_that);case _ChangeUserAccountInputEvent():
 return changeUser(_that);case _SaveAccountInputEvent():
-return save(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return save(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -163,10 +160,7 @@ return fetch(_that.accountId);case _InputAccountInputEvent():
 return input(_that.isDebt);case _ChangeTitleAccountInputEvent():
 return changeTitle(_that.title);case _ChangeUserAccountInputEvent():
 return changeUser(_that.user);case _SaveAccountInputEvent():
-return save();case _:
-  throw StateError('Unexpected subclass');
-
-}
+return save();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

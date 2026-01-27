@@ -7,7 +7,7 @@ import 'package:money_tracker/src/domain/models.dart';
 part 'account_input_bloc.freezed.dart';
 
 @freezed
-class AccountInputEvent with _$AccountInputEvent {
+sealed class AccountInputEvent with _$AccountInputEvent {
   const factory AccountInputEvent.fetch({required int accountId}) =
       _FetchAccountInputEvent;
 

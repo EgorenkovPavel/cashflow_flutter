@@ -26,42 +26,22 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget build(BuildContext context) {
     final list = context.watchCashFlow(widget.type);
 
-    switch (_budgetType) {
-      case BudgetType.MONTH:
-        list.sort(
-          (a, b) =>
-              context.balanceToRub(b.monthCashFlow).sum -
-              context.balanceToRub(a.monthCashFlow).sum,
-        );
-      case BudgetType.YEAR:
-        list.sort(
-          (a, b) =>
-              context.balanceToRub(b.yearCashFlow).sum -
-              context.balanceToRub(a.yearCashFlow).sum,
-        );
-    }
+    list.sort(
+      (a, b) =>
+          context.balanceToRub(b.cashflowByType(_budgetType)).sum -
+          context.balanceToRub(a.cashflowByType(_budgetType)).sum,
+    );
 
-    final budget = Sum(switch (_budgetType) {
-      BudgetType.MONTH => list.fold(
-        0,
-        (prev, cashflow) => prev + cashflow.monthBudget,
-      ),
-      BudgetType.YEAR => list.fold(
-        0,
-        (prev, cashflow) => prev + cashflow.yearBudget,
-      ),
-    }, .RUB);
+    final budget = Sum(
+      list.map((e) => e.budgetByType(_budgetType)).fold(0, (a, b) => a + b),
+      .RUB,
+    );
 
-    final cashflow = context.balanceToRub(switch (_budgetType) {
-      BudgetType.MONTH => list.fold(
-        Balance(),
-        (prev, cashflow) => prev + cashflow.monthCashFlow,
-      ),
-      BudgetType.YEAR => list.fold(
-        Balance(),
-        (prev, cashflow) => prev + cashflow.yearCashFlow,
-      ),
-    });
+    final cashflow = context.balanceToRub(
+      list
+          .map((e) => e.cashflowByType(_budgetType))
+          .fold(Balance(), (a, b) => a + b),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -162,15 +142,11 @@ class CashflowColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final budget = switch (budgetType) {
-      BudgetType.MONTH => categoryCashFlow.monthBudget,
-      BudgetType.YEAR => categoryCashFlow.yearBudget,
-    };
+    final budget = categoryCashFlow.budgetByType(budgetType);
 
-    final cashflow = context.balanceToRub(switch (budgetType) {
-      BudgetType.MONTH => categoryCashFlow.monthCashFlow,
-      BudgetType.YEAR => categoryCashFlow.yearCashFlow,
-    }).sum;
+    final cashflow = context
+        .balanceToRub(categoryCashFlow.cashflowByType(budgetType))
+        .sum;
 
     final alignment = switch (budgetType) {
       BudgetType.MONTH => getMonthAlign(),

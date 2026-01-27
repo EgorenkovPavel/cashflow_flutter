@@ -11,7 +11,7 @@ import '../../../../domain/view_models.dart';
 part 'category_detail_bloc.freezed.dart';
 
 @freezed
-class CategoryDetailEvent with _$CategoryDetailEvent {
+sealed class CategoryDetailEvent with _$CategoryDetailEvent {
   const factory CategoryDetailEvent.fetch({required int categoryId}) =
       _FetchCategoryDetailEvent;
 

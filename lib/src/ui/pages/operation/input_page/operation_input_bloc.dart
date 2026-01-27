@@ -312,7 +312,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           emit(
             state.copyWith(
               operation: operation,
-              sum: Sum(0, state.sum.currency),
+              sum: state.sum.copyWith(sum: 0),
               action: MasterStateAction.SHOW_OPERATION_CREATED_MESSAGE,
             ),
           );
