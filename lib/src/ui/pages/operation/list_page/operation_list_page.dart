@@ -16,7 +16,7 @@ class OperationListPage extends StatelessWidget {
     );
     if (newFilter != null) {
       if (!context.mounted) return;
-      context.read<OperationListBloc>().add(Fetch(newFilter));
+      context.read<OperationListBloc>().add(OperationListEvent.fetch(filter: newFilter));
     }
   }
 
@@ -24,7 +24,7 @@ class OperationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<OperationListBloc>()
-        ..add(Fetch(const OperationListFilter())),
+        ..add(OperationListEvent.fetch(filter: const OperationListFilter())),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(

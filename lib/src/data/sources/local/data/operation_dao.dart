@@ -36,9 +36,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -72,9 +73,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -108,9 +110,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -143,9 +146,9 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           return OperationDbEntity(
             operation: op,
             account: row.readTable(acc),
-            category: op.operationType == OperationType.TRANSFER
-                ? null
-                : row.readTable(categories),
+            category: op.operationType == .INPUT || op.operationType == .OUTPUT
+                ? row.readTable(categories)
+                : null,
             recAccount: op.operationType == OperationType.TRANSFER
                 ? row.readTable(rec)
                 : null,
@@ -176,9 +179,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -234,9 +238,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -272,9 +277,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -312,9 +318,10 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             return OperationDbEntity(
               operation: op,
               account: row.readTable(acc),
-              category: op.operationType == OperationType.TRANSFER
-                  ? null
-                  : row.readTable(categories),
+              category:
+                  op.operationType == .INPUT || op.operationType == .OUTPUT
+                  ? row.readTable(categories)
+                  : null,
               recAccount: op.operationType == OperationType.TRANSFER
                   ? row.readTable(rec)
                   : null,
@@ -380,7 +387,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
         .getSingleOrNull()
         .then(
           (row) {
-            if (row == null){
+            if (row == null) {
               return null;
             }
             var op = row.readTable(operations);

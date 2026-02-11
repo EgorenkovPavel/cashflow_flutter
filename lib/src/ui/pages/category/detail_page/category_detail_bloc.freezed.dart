@@ -85,10 +85,7 @@ switch (_that) {
 case _FetchCategoryDetailEvent():
 return fetch(_that);case _ChangeCategoryCategoryDetailEvent():
 return changeCategory(_that);case _ChangeOperationsCategoryDetailEvent():
-return changeOperations(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return changeOperations(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -153,10 +150,7 @@ switch (_that) {
 case _FetchCategoryDetailEvent():
 return fetch(_that.categoryId);case _ChangeCategoryCategoryDetailEvent():
 return changeCategory(_that.category);case _ChangeOperationsCategoryDetailEvent():
-return changeOperations(_that.operations);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return changeOperations(_that.operations);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

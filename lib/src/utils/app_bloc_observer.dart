@@ -1,6 +1,6 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'logger.dart';
 
 class AppBlocObserver extends BlocObserver {
 
@@ -9,16 +9,16 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    debugPrint('onCreate -- ${bloc.runtimeType}');
+    AppLogger.debug('onCreate -- ${bloc.runtimeType}');
   }
 
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     if (fullStacktrace) {
-      debugPrint('onEvent -- ${bloc.runtimeType}, $event');
+      AppLogger.debug('onEvent -- ${bloc.runtimeType}, $event');
     }else{
-      debugPrint('onEvent -- ${bloc.runtimeType}, ${event.runtimeType}');
+      AppLogger.debug('onEvent -- ${bloc.runtimeType}, ${event.runtimeType}');
     }
   }
 
@@ -26,9 +26,9 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     if (fullStacktrace) {
-      debugPrint('onChange -- ${bloc.runtimeType}, $change');
+      AppLogger.debug('onChange -- ${bloc.runtimeType}, $change');
     }else{
-      debugPrint('onChange -- ${bloc.runtimeType}');
+      AppLogger.debug('onChange -- ${bloc.runtimeType}');
     }
   }
 
@@ -36,29 +36,21 @@ class AppBlocObserver extends BlocObserver {
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
     if (fullStacktrace) {
-      debugPrint('onTransition -- ${bloc.runtimeType}, $transition');
+      AppLogger.debug('onTransition -- ${bloc.runtimeType}, $transition');
     }else{
-      debugPrint('onTransition -- ${bloc.runtimeType}');
+      AppLogger.debug('onTransition -- ${bloc.runtimeType}');
     }
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    debugPrint('onError -- ${bloc.runtimeType}, $error, $stackTrace');
-    if (!kDebugMode) {
-      FirebaseCrashlytics.instance.recordError(
-          error,
-          stackTrace,
-          reason: 'onError -- ${bloc.runtimeType}, $error',
-          fatal: true,
-      );
-    }
+    AppLogger.error('onError -- ${bloc.runtimeType}', error, stackTrace);
     super.onError(bloc, error, stackTrace);
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    debugPrint('onClose -- ${bloc.runtimeType}');
+    AppLogger.debug('onClose -- ${bloc.runtimeType}');
   }
 }

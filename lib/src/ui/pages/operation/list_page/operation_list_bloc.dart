@@ -1,37 +1,34 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
 import '../../../../domain/view_models.dart';
 
-abstract class OperationListEvent {}
+part 'operation_list_bloc.freezed.dart';
 
-class Fetch extends OperationListEvent {
-  final OperationListFilter filter;
+@freezed
+sealed class OperationListEvent with _$OperationListEvent {
+  const factory OperationListEvent.fetch({
+    required OperationListFilter filter,
+  }) = _FetchOperationListEvent;
 
-  Fetch(this.filter);
-}
-
-class ChangeOperations extends OperationListEvent {
-  final List<OperationView> operations;
-
-  ChangeOperations(this.operations);
+  const factory OperationListEvent.changeOperations({
+    required List<OperationView> operations,
+  }) = _ChangeOperationsOperationListEvent;
 }
 
 class OperationListState {
   final List<OperationView> operations;
   final OperationListFilter filter;
 
-  OperationListState({
-    required this.operations,
-    required this.filter,
-  });
+  OperationListState({required this.operations, required this.filter});
 
   OperationListState.initial()
-      : operations = [],
-        filter = const OperationListFilter();
+    : operations = [],
+      filter = const OperationListFilter();
 }
 
 class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
@@ -39,23 +36,27 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
   StreamSubscription? _sub;
 
   OperationListBloc(this._operationInteractor)
-      : super(OperationListState.initial()) {
-    on<Fetch>(_fetch);
-    on<ChangeOperations>(_changeOperations);
+    : super(OperationListState.initial()) {
+    on<OperationListEvent>(
+      (event, emitter) => event.map(
+        fetch: (event) => _fetch(event, emitter),
+        changeOperations: (event) => _changeOperations(event, emitter),
+      ),
+    );
   }
 
-  void _fetch(Fetch event, Emitter<OperationListState> emit) {
+  void _fetch(_FetchOperationListEvent event, Emitter<OperationListState> emit) {
     emit(
       OperationListState(operations: state.operations, filter: event.filter),
     );
     _sub?.cancel();
     _sub = _operationInteractor.watchByFilter(event.filter).listen((items) {
-      add(ChangeOperations(items));
+      add(OperationListEvent.changeOperations(operations: items));
     });
   }
 
   void _changeOperations(
-    ChangeOperations event,
+      _ChangeOperationsOperationListEvent event,
     Emitter<OperationListState> emit,
   ) {
     emit(
