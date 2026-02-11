@@ -112,7 +112,7 @@ class OperationInputPage extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                         context.onNextTap();
                       },
-                      child: Text('Save and continue'),
+                      child: Text('Save and continue'), // TODO loc
                     ),
                   ],
                 ),
