@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:money_tracker/src/domain/models/google_drive_file.dart';
 
-abstract class BackupSource {
+abstract interface class BackupSource {
   Future<void> backup(
     Map<String, List<Map<String, dynamic>>> data,
     String catalogId,

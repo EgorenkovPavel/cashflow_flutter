@@ -1,6 +1,5 @@
 
-
-abstract class NetworkInfo {
+abstract interface class NetworkInfo {
   Stream<bool> connected();
 }
 

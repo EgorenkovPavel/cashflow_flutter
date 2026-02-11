@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../domain/models/google_drive_file.dart';
 import '../interfaces/backup_source.dart';
 
-class GoogleDrive extends BackupSource {
+class GoogleDrive implements BackupSource {
   final http.Client _client;
 
   GoogleDrive(this._client);

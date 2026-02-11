@@ -1,5 +1,5 @@
 
-abstract class SettingsSource{
+abstract interface class SettingsSource{
 
   DateTime get rateDate;
   Future<void> setRateDate(DateTime date);

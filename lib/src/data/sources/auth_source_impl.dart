@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:money_tracker/src/data/interfaces/auth_source.dart';
 
-class GoogleAuth extends AuthSource {
+class GoogleAuth implements AuthSource {
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
 

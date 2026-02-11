@@ -5,7 +5,7 @@ import 'package:money_tracker/src/domain/models/user.dart';
 import '../../utils/result.dart';
 import '../sources/remote/models/cloud_models.dart';
 
-abstract class RemoteDataSource{
+abstract interface class RemoteDataSource{
 
   Result<TableDAO<CloudAccount>> get accounts;
   Result<TableDAO<CloudCategory>> get categories;

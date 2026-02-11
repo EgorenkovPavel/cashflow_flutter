@@ -1,7 +1,7 @@
 import '../models/category/category.dart';
 
 /// Repository for managing categories (items and groups).
-abstract class CategoryRepository {
+abstract interface class CategoryRepository {
   /// Watch all categories as a stream.
   Stream<List<Category>> watchAllCategories();
 

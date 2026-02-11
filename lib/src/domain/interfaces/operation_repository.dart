@@ -1,7 +1,7 @@
 import '../models/operation/operation.dart';
 
 /// Repository for managing operations (transactions).
-abstract class OperationRepository {
+abstract interface class OperationRepository {
   /// Get all operations.
   Future<List<Operation>> getAllOperations();
 

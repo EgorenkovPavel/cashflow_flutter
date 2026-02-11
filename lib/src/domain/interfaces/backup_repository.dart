@@ -1,5 +1,5 @@
 
-abstract class BackupRepository {
+abstract interface class BackupRepository {
 
   Future<void> deleteAll();
 

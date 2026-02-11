@@ -12,7 +12,7 @@ import '../../../utils/result.dart';
 import 'cloud_db.dart';
 import 'models/cloud_models.dart';
 
-class RemoteSourceImpl extends RemoteDataSource {
+class RemoteSourceImpl implements RemoteDataSource {
   final FirebaseFirestore _firestore;
 
   CloudDb? _cloudDb;

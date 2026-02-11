@@ -8,13 +8,8 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   CurrencyRepositoryImpl(this._currencyRateSource);
 
   @override
-  Future<double> eurRate() {
-    return _currencyRateSource.getEUR();
-  }
+  Future<double> eurRate() => _currencyRateSource.getEUR();
 
   @override
-  Future<double> usdRate() {
-    return _currencyRateSource.getUSD();
-  }
+  Future<double> usdRate() => _currencyRateSource.getUSD();
 }
-

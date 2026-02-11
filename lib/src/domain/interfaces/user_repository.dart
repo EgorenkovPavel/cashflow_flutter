@@ -1,7 +1,7 @@
 import '../models/user.dart';
 
 /// Repository for managing users.
-abstract class UserRepository {
+abstract interface class UserRepository {
   /// Get a user by Google ID.
   Future<User?> getUserByGoogleId(String googleId);
 

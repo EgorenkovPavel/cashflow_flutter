@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 
-abstract class AuthSource{
+abstract interface class AuthSource{
 
   Future<bool> isAuthenticated();
   Future<void> signInSilently();

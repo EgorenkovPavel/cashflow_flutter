@@ -2,7 +2,7 @@
 import '../models/user.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 
-abstract class AuthRepository{
+abstract interface class AuthRepository{
 
   Future<bool> isAuthenticated();
   Future<void> signInSilently();

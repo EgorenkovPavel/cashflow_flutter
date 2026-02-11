@@ -1,5 +1,5 @@
 /// Repository for managing currency exchange rates.
-abstract class CurrencyRepository {
+abstract interface class CurrencyRepository {
   /// Get USD exchange rate.
   Future<double> usdRate();
 

@@ -1,7 +1,7 @@
 import '../models/account/account.dart';
 
 /// Repository for managing accounts (regular accounts and debts).
-abstract class AccountRepository {
+abstract interface class AccountRepository {
   /// Watch all accounts as a stream.
   Stream<List<BaseAccount>> watchAllAccounts();
 

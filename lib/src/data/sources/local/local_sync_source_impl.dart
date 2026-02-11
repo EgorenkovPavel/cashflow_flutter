@@ -5,7 +5,7 @@ import 'package:money_tracker/src/domain/interfaces/category_repository.dart';
 import '../../../domain/interfaces/user_repository.dart';
 import '../../../domain/models.dart';
 
-class LocalSyncSourceImpl extends LocalSyncSource {
+class LocalSyncSourceImpl implements LocalSyncSource {
   final LocalSyncTable<BaseAccount> accountRepo;
   final LocalSyncTable<Category> categoryRepo;
   final LocalSyncTable<Operation> operationRepo;

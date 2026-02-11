@@ -1,6 +1,6 @@
 import '../../domain/models.dart';
 
-abstract class LocalSyncSource{
+abstract interface class LocalSyncSource{
 
   LocalSyncTable<BaseAccount> get accounts;
   LocalSyncTable<Category> get categories;
@@ -12,7 +12,7 @@ abstract class LocalSyncSource{
   Future<User?> getUserByGoogleId(String googleId);
 }
 
-abstract class LocalSyncTable<T>{
+abstract interface class LocalSyncTable<T>{
 
   Future<List<T>> getAllWithEmptyCloudId();
 
