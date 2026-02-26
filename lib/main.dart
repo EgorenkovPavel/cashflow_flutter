@@ -43,7 +43,3 @@ Future<void> main() async {
   );
 }
 
-// TODO
-// 1. Add OperationType = exchange => choose account, and 2 sums with different currencies
-// 2. Redesign operation input page (maybe operation edit page)
-
