@@ -102,7 +102,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
   Widget build(BuildContext context) {
     final noParentsItemsCount = context.watchItemsAmountNoParent(widget.type);
 
-    final List<CategoryView?> groups = context.watchCategoryGroups(widget.type);
+    final List<CategoryView?> groups = <CategoryView?>[...context.watchCategoryGroups(widget.type)];
     if (noParentsItemsCount > 0) {
       groups.add(null);
     }
