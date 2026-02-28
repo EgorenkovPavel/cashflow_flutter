@@ -43,3 +43,7 @@ Future<void> main() async {
   );
 }
 
+//TODO
+// Sync after input or editing operation
+// Сверка операций с сервером. Показать различия
+//
