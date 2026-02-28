@@ -1,4 +1,4 @@
-import 'package:money_tracker/src/domain/interfaces/currency_repository.dart';
+import '../interfaces/currency_repository.dart';
 import '../models.dart';
 
 class CurrencyInteractor {
