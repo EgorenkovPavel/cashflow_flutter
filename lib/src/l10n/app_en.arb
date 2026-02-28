@@ -62,6 +62,8 @@
   "mesCategoryArchived": "Category archived",
   "mesAreYouSure": "Are you sure?",
 
+  "owner": "Owner",
+  "noOwner": "No owner",
   "details": "Details",
   "accounts": "Accounts",
   "account": "Account",
@@ -69,6 +71,7 @@
   "noItems": "No items",
   "noAccounts": "No accounts",
   "categories": "Categories",
+  "category": "Category",
   "noCategories": "No categories",
   "operations": "Operations",
   "operationsIn": "Operations in",
@@ -86,6 +89,8 @@
   "outputCategory": "Output category",
   "earning": "Earning",
   "spending": "Spending",
+  "topOfMonth": "Top of month",
+  "topOfYear": "Top of year",
 
   "earningIn": "Earning in {date}",
   "@earningIn": {
@@ -105,6 +110,13 @@
       }
      }
   },
+
+ "itemsCount": "{count} items",
+ "@itemsCount": {
+   "placeholders": {
+     "count": { "type": "int" }
+   }
+ },
 
   "budgetType": "Budget type",
   "source": "Source",
@@ -134,9 +146,11 @@
   "btnShowReports": "Show reports",
   "btnDeleteAll": "Delete all",
   "btnSync": "Sync",
+  "btnSaveAndContinue": "Save and continue",
   "item": "Item",
   "group": "Group",
   "users": "Users",
+  "other": "Other",
 
   "syncStateInProgress": "In progress",
   "syncStateSynced": "Synced",

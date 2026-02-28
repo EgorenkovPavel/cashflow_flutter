@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../domain/view_models.dart';
+import '../../../../../utils/extensions.dart';
 import '../../../../blocs/category_cashflow_bloc.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -110,7 +111,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text('Choose category'), // TODO loc
+          child: Text(context.loc.hintCategory),
         ),
         SingleChildScrollView(
           scrollDirection: .horizontal,

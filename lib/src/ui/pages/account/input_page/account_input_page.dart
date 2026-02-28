@@ -133,7 +133,7 @@ class _UserChooser extends StatelessWidget {
     return Column(
       crossAxisAlignment: .start,
       children: [
-        Text('User'), // TODO loc
+        Text(context.loc.owner),
         Row(
           children: [
             ...users.map(
@@ -174,7 +174,7 @@ class _UserChooser extends StatelessWidget {
         ),
         Text(switch (initialId) {
           int() => users.firstWhere((e) => e.id == initialId).name,
-          null => 'No user', // TODO loc
+          null => context.loc.noOwner,
         }),
       ],
     );

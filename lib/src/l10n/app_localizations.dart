@@ -452,6 +452,18 @@ abstract class AppLocalizations {
   /// **'Are you sure?'**
   String get mesAreYouSure;
 
+  /// No description provided for @owner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get owner;
+
+  /// No description provided for @noOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'No owner'**
+  String get noOwner;
+
   /// No description provided for @details.
   ///
   /// In en, this message translates to:
@@ -493,6 +505,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Categories'**
   String get categories;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
 
   /// No description provided for @noCategories.
   ///
@@ -596,6 +614,18 @@ abstract class AppLocalizations {
   /// **'Spending'**
   String get spending;
 
+  /// No description provided for @topOfMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Top of month'**
+  String get topOfMonth;
+
+  /// No description provided for @topOfYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Top of year'**
+  String get topOfYear;
+
   /// No description provided for @earningIn.
   ///
   /// In en, this message translates to:
@@ -607,6 +637,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spending in {date}'**
   String spendingIn(DateTime date);
+
+  /// No description provided for @itemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String itemsCount(int count);
 
   /// No description provided for @budgetType.
   ///
@@ -776,6 +812,12 @@ abstract class AppLocalizations {
   /// **'Sync'**
   String get btnSync;
 
+  /// No description provided for @btnSaveAndContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Save and continue'**
+  String get btnSaveAndContinue;
+
   /// No description provided for @item.
   ///
   /// In en, this message translates to:
@@ -793,6 +835,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Users'**
   String get users;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
 
   /// No description provided for @syncStateInProgress.
   ///

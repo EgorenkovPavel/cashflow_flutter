@@ -46,8 +46,8 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
       appBar: AppBar(
         title: switch (widget.type) {
-          CategoryType.INPUT => Text('Earning'), // TODO
-          CategoryType.OUTPUT => Text('Spending'),
+          CategoryType.INPUT => Text(context.loc.earning),
+          CategoryType.OUTPUT => Text(context.loc.spending),
         },
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(100),
@@ -59,11 +59,11 @@ class _BudgetPageState extends State<BudgetPage> {
                   segments: [
                     ButtonSegment<BudgetType>(
                       value: BudgetType.MONTH,
-                      label: Text('Month'), // TODO loc
+                      label: Text(context.loc.budgetTypeMonth),
                     ),
                     ButtonSegment<BudgetType>(
                       value: BudgetType.YEAR,
-                      label: Text('Year'), //TODO loc
+                      label: Text(context.loc.budgetTypeYear),
                     ),
                   ],
                   selected: {_budgetType},
@@ -78,11 +78,11 @@ class _BudgetPageState extends State<BudgetPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Budget',
+                      context.loc.titleBudget,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Cashflow',
+                      context.loc.titleCashflow,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],

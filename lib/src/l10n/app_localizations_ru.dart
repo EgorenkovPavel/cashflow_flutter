@@ -186,6 +186,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mesAreYouSure => 'Вы уверены?';
 
   @override
+  String get owner => 'Владелец';
+
+  @override
+  String get noOwner => 'Нет владельца';
+
+  @override
   String get details => 'Подробнее';
 
   @override
@@ -205,6 +211,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get categories => 'Категории';
+
+  @override
+  String get category => 'Категория';
 
   @override
   String get noCategories => 'Нет категорий';
@@ -258,6 +267,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get spending => 'Потрачено';
 
   @override
+  String get topOfMonth => 'Топ месяца';
+
+  @override
+  String get topOfYear => 'Топ года';
+
+  @override
   String earningIn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMM(localeName);
     final String dateString = dateDateFormat.format(date);
@@ -271,6 +286,11 @@ class AppLocalizationsRu extends AppLocalizations {
     final String dateString = dateDateFormat.format(date);
 
     return 'Потрачено за $dateString';
+  }
+
+  @override
+  String itemsCount(int count) {
+    return '$count элементов';
   }
 
   @override
@@ -358,6 +378,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get btnSync => 'Синхр';
 
   @override
+  String get btnSaveAndContinue => 'Сохранить и продолжить';
+
+  @override
   String get item => 'Элемент';
 
   @override
@@ -365,6 +388,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get users => 'Пользователи';
+
+  @override
+  String get other => 'Другое';
 
   @override
   String get syncStateInProgress => 'В процессе';

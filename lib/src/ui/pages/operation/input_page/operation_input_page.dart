@@ -45,10 +45,10 @@ class OperationInputPage extends StatelessWidget {
                           .watch<MasterBloc>()
                           .state
                           .map(
-                            input: (_) => ['Account', 'Category'],//TODO
-                            output: (_) => ['Account', 'Category'],
-                            transfer: (_) => ['Source', 'Recipient'],
-                            exchange: (_) => ['Account'],
+                            input: (_) => [context.loc.account, context.loc.category],
+                            output: (_) => [context.loc.account, context.loc.category],
+                            transfer: (_) => [context.loc.source, context.loc.receiver],
+                            exchange: (_) => [context.loc.account],
                           )
                           .map((e) => Text(e))
                           .toList(),
@@ -112,7 +112,7 @@ class OperationInputPage extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                         context.onNextTap();
                       },
-                      child: Text('Save and continue'), // TODO loc
+                      child: Text(context.loc.btnSaveAndContinue),
                     ),
                   ],
                 ),

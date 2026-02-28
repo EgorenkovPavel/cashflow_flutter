@@ -25,14 +25,14 @@ class CashflowCard extends StatelessWidget {
             Row(
               mainAxisAlignment: .spaceBetween,
               children: [
-                Text('Budget'), //TODO loc
+                Text(context.loc.titleBudget),
                 Text(context.loc.numberFormat(context.budget(type), .RUB)),
               ],
             ),
             Row(
               mainAxisAlignment: .spaceBetween,
               children: [
-                Text('Cashflow'), //TODO loc
+                Text(context.loc.titleCashflow),
                 Text(context.loc.numberFormat(context.cashFlow(type), .RUB)),
               ],
             ),
@@ -47,7 +47,7 @@ class CashflowCard extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () => context.openBudgetPage(type),
-                  child: Text('Details'), //TODO
+                  child: Text(context.loc.details),
                 ),
               ],
             ),
@@ -81,8 +81,8 @@ class TopCategories extends StatelessWidget {
       children: [
         Divider(),
         Text(switch (budgetType) {
-          BudgetType.MONTH => 'Top of month', // TODO loc
-          BudgetType.YEAR => 'Top of year',
+          BudgetType.MONTH => context.loc.topOfMonth,
+          BudgetType.YEAR => context.loc.topOfYear,
         }, style: Theme.of(context).textTheme.titleMedium),
         ...items.map(
           (e) => Row(

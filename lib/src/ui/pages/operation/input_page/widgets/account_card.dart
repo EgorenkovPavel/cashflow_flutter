@@ -51,7 +51,7 @@ class _EmptyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Center(
-        child: Text('Choose account'), // TODO loc
+        child: Text(context.loc.hintAccount),
       ),
     );
   }
@@ -101,8 +101,8 @@ class _AccountDialog extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text('Choose account'),
-        ), //TODO loc
+          child: Text(context.loc.hintAccount),
+        ),
         Expanded(
           child: ListView(
             children: context

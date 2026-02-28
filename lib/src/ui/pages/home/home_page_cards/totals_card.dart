@@ -52,7 +52,7 @@ class TotalsCard extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => context.openAccountListPage(),
-                  child: Text('Accounts'), // TODO loc
+                  child: Text(context.loc.accounts),
                 ),
               ],
             ),
@@ -117,7 +117,7 @@ class _UserAccounts extends StatelessWidget {
     return Column(
       children: [
         Divider(),
-        _Title(user?.name ?? 'Other', total), //TODO loc
+        _Title(user?.name ?? context.loc.other, total),
         ...balances.map(
           (balance) => _SubTitle(
             balance.accountTitle,
@@ -152,7 +152,7 @@ class _Debts extends StatelessWidget {
     return Column(
       children: [
         Divider(),
-        _Title('Debts', total), //TODO loc
+        _Title(context.loc.debts, total),
         ...balances.map(
           (balance) => _SubTitle(
             balance.accountTitle,

@@ -30,14 +30,14 @@ class _AccountListPageState extends State<AccountListPage> {
               ButtonSegment<bool>(
                 value: false,
                 label: Text(
-                  'Accounts (${items.where((e) => !e.isDebt).length})',
-                ), // TODO loc
+                  '${context.loc.accounts} (${items.where((e) => !e.isDebt).length})',
+                ),
               ),
               ButtonSegment<bool>(
                 value: true,
                 label: Text(
-                  'Debts (${items.where((e) => e.isDebt).length})',
-                ), //TODO loc
+                  '${context.loc.debts} (${items.where((e) => e.isDebt).length})',
+                ),
               ),
             ],
             selected: {_isDebt},

@@ -59,6 +59,8 @@
   "mesCategoryArchived": "Категория добавлена в архив",
   "mesAreYouSure": "Вы уверены?",
 
+  "owner": "Владелец",
+  "noOwner": "Нет владельца",
   "details": "Подробнее",
   "accounts": "Счета",
   "account": "Счет",
@@ -66,6 +68,7 @@
   "noItems": "Нет элементов",
   "noAccounts": "Нет счетов",
   "categories": "Категории",
+  "category": "Категория",
   "noCategories": "Нет категорий",
   "operations": "Операции",
   "operationsIn": "Операции за",
@@ -83,6 +86,8 @@
   "outputCategory": "Категория расхода",
   "earning": "Получено",
   "spending": "Потрачено",
+  "topOfMonth": "Топ месяца",
+  "topOfYear": "Топ года",
 
   "earningIn": "Получено за {date}",
   "@earningIn": {
@@ -102,6 +107,13 @@
       }
      }
   },
+
+    "itemsCount": "{count} элементов",
+     "@itemsCount": {
+       "placeholders": {
+         "count": { "type": "int" }
+       }
+     },
 
   "budgetType": "Тип бюджета",
   "source": "Источник",
@@ -131,9 +143,11 @@
   "btnShowReports": "Показать отчеты",
   "btnDeleteAll": "Удалить все",
   "btnSync": "Синхр",
+  "btnSaveAndContinue": "Сохранить и продолжить",
   "item": "Элемент",
   "group": "Группа",
   "users": "Пользователи",
+  "other": "Другое",
 
   "syncStateInProgress": "В процессе",
   "syncStateSynced": "Синхронизировано",

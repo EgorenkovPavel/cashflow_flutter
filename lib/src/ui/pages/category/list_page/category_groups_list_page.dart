@@ -77,9 +77,9 @@ class GroupCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '$count items',
+                context.loc.itemsCount(count),
                 style: Theme.of(context).textTheme.labelSmall,
-              ), // TODO loc
+              ),
             ],
           ),
         ),

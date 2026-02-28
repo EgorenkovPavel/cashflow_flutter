@@ -186,6 +186,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mesAreYouSure => 'Are you sure?';
 
   @override
+  String get owner => 'Owner';
+
+  @override
+  String get noOwner => 'No owner';
+
+  @override
   String get details => 'Details';
 
   @override
@@ -205,6 +211,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categories => 'Categories';
+
+  @override
+  String get category => 'Category';
 
   @override
   String get noCategories => 'No categories';
@@ -258,6 +267,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spending => 'Spending';
 
   @override
+  String get topOfMonth => 'Top of month';
+
+  @override
+  String get topOfYear => 'Top of year';
+
+  @override
   String earningIn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMM(localeName);
     final String dateString = dateDateFormat.format(date);
@@ -271,6 +286,11 @@ class AppLocalizationsEn extends AppLocalizations {
     final String dateString = dateDateFormat.format(date);
 
     return 'Spending in $dateString';
+  }
+
+  @override
+  String itemsCount(int count) {
+    return '$count items';
   }
 
   @override
@@ -358,6 +378,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnSync => 'Sync';
 
   @override
+  String get btnSaveAndContinue => 'Save and continue';
+
+  @override
   String get item => 'Item';
 
   @override
@@ -365,6 +388,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get users => 'Users';
+
+  @override
+  String get other => 'Other';
 
   @override
   String get syncStateInProgress => 'In progress';
