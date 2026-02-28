@@ -48,7 +48,7 @@ class _EmptyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Center(child: Text('Choose category')));
+    return Card(child: Center(child: Text(context.loc.hintAccount)));
   }
 }
 
