@@ -254,6 +254,12 @@ abstract class AppLocalizations {
   /// **'Enter sum'**
   String get emptySumError;
 
+  /// No description provided for @emptyRecSumError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter recipient sum'**
+  String get emptyRecSumError;
+
   /// No description provided for @errorNoGpServices.
   ///
   /// In en, this message translates to:

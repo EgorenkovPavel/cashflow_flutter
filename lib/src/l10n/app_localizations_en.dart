@@ -87,6 +87,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptySumError => 'Enter sum';
 
   @override
+  String get emptyRecSumError => 'Enter recipient sum';
+
+  @override
   String get errorNoGpServices => 'No google play services';
 
   @override

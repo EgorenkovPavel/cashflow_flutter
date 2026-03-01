@@ -28,6 +28,7 @@
   "emptyCategoryError": "Choose category",
   "emptyRecAccountError": "Choose recipient account",
   "emptySumError": "Enter sum",
+  "emptyRecSumError": "Enter recipient sum",
   "errorNoGpServices": "No google play services",
   "typeInput": "Input",
   "typeOutput": "Output",

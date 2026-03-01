@@ -25,6 +25,7 @@
   "emptyCategoryError": "Выберите категорию",
   "emptyRecAccountError": "Выберите счет-приемник",
   "emptySumError": "Введите сумму",
+  "emptyRecSumError": "Введите сумму-приемник",
   "errorNoGpServices": "Нет google play сервисов",
   "typeInput": "Приход",
   "typeOutput": "Расход",

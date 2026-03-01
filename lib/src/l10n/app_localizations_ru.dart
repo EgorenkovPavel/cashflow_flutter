@@ -87,6 +87,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get emptySumError => 'Введите сумму';
 
   @override
+  String get emptyRecSumError => 'Введите сумму-приемник';
+
+  @override
   String get errorNoGpServices => 'Нет google play сервисов';
 
   @override

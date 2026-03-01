@@ -39,14 +39,6 @@ class MasterEvent with _$MasterEvent {
 }
 
 enum MasterStateAction {
-  DATA,
-  CLOSE,
-  SHOW_KEYBOARD,
-  HIDE_KEYBOARD,
-  SET_ACCOUNT,
-  SET_IN_CATEGORY,
-  SET_OUT_CATEGORY,
-  SET_REC_ACCOUNT,
   SHOW_EMPTY_ACCOUNT_MESSAGE,
   SHOW_EMPTY_CATEGORY_MESSAGE,
   SHOW_EMPTY_REC_ACCOUNT_MESSAGE,
@@ -186,14 +178,14 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     _ChangeAccountMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(state.copyWith(accountId: event.id));
+    emit(state.copyWith(accountId: event.id, action: null));
   }
 
   FutureOr<void> _changeSum(
     _ChangeSumMasterEvent event,
     Emitter<MasterState> emit,
   ) {
-    emit(state.copyWith(sum: event.sum));
+    emit(state.copyWith(sum: event.sum, action: null));
   }
 
   FutureOr<void> _changeRecSum(
@@ -201,7 +193,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     Emitter<MasterState> emit,
   ) {
     state.maybeMap(
-      exchange: (s) => emit(s.copyWith(recSum: event.sum)),
+      exchange: (s) => emit(s.copyWith(recSum: event.sum, action: null)),
       orElse: () {},
     );
   }
@@ -211,8 +203,8 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     Emitter<MasterState> emit,
   ) {
     state.maybeMap(
-      input: (s) => emit(s.copyWith(categoryId: event.id)),
-      output: (s) => emit(s.copyWith(categoryId: event.id)),
+      input: (s) => emit(s.copyWith(categoryId: event.id, action: null)),
+      output: (s) => emit(s.copyWith(categoryId: event.id, action: null)),
       orElse: () {},
     );
   }
@@ -222,7 +214,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
     Emitter<MasterState> emit,
   ) {
     state.maybeMap(
-      transfer: (s) => emit(s.copyWith(recAccountId: event.id)),
+      transfer: (s) => emit(s.copyWith(recAccountId: event.id, action: null)),
       orElse: () {},
     );
   }
