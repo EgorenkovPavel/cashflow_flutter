@@ -21,6 +21,18 @@ class _SumFieldState extends State<SumField> {
   final FocusNode _focusNode = FocusNode();
 
   @override
+  void didUpdateWidget(covariant SumField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Если новая сумма пришла извне (отличается от текущего значения в контроллере)
+    // и это не тот же самый объект Sum, обновляем текст.
+    if (widget.initialSum != null &&
+        widget.initialSum!.sum.toString() != _controller.text) {
+      _controller.text = widget.initialSum!.sum.toString();
+      _currency = widget.initialSum!.currency;
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     if (widget.initialSum != null) {
