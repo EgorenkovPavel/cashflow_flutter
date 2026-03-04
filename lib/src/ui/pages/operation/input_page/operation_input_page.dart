@@ -174,16 +174,6 @@ class OperationInputPage extends StatelessWidget {
                   )
                 ),
               ),
-              // bottomNavigationBar: Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       FocusScope.of(context).unfocus();
-              //       context.onNextTap();
-              //     },
-              //     child: Text(context.loc.btnSaveAndContinue),
-              //   ),
-              // ),
             );
           },
         ),

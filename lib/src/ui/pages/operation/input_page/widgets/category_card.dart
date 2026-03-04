@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../../../../domain/view_models.dart';
 import '../../../../../utils/extensions.dart';
+import '../../../../../utils/sum.dart';
 import '../../../../blocs/category_cashflow_bloc.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -48,7 +50,7 @@ class _EmptyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Center(child: Text(context.loc.hintAccount)));
+    return Card(child: Center(child: Text(context.loc.hintCategory)));
   }
 }
 
@@ -59,9 +61,64 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final category = context.watchCashflowById(categoryId);
+
     return Card(
       child: Center(
-        child: Text(context.watchCashflowById(categoryId).categoryTitle),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                category.categoryTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(context.loc.budgetType,
+                    style: Theme.of(context).textTheme.labelMedium,),
+                  Text(context.loc.budgetTypeTitle(category.budgetType)),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    context.loc.titlePlan,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    context.loc.sumFormat(
+                      Sum(switch (category.budgetType) {
+                        BudgetType.MONTH => category.monthBudget,
+                        BudgetType.YEAR => category.yearBudget,
+                      }, .RUB),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    context.loc.titleFact,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    context.loc.sumFormat(
+                      context.balanceToRub(switch (category.budgetType) {
+                        BudgetType.MONTH => category.monthCashFlow,
+                        BudgetType.YEAR => category.yearCashFlow,
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -102,7 +159,9 @@ class _CategoryDialogState extends State<CategoryDialog> {
   Widget build(BuildContext context) {
     final noParentsItemsCount = context.watchItemsAmountNoParent(widget.type);
 
-    final List<CategoryView?> groups = <CategoryView?>[...context.watchCategoryGroups(widget.type)];
+    final List<CategoryView?> groups = <CategoryView?>[
+      ...context.watchCategoryGroups(widget.type),
+    ];
     if (noParentsItemsCount > 0) {
       groups.add(null);
     }

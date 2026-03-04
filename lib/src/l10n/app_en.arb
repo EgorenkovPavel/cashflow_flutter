@@ -6,6 +6,7 @@
   "title": "Title",
   "titleType": "Type",
   "titleBudget": "Budget",
+  "titlePlan": "Plan",
   "titleFact": "Fact",
   "titleDate": "Date",
   "titleAccount": "Account",

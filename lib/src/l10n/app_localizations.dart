@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Budget'**
   String get titleBudget;
 
+  /// No description provided for @titlePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get titlePlan;
+
   /// No description provided for @titleFact.
   ///
   /// In en, this message translates to:

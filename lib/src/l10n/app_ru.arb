@@ -3,6 +3,7 @@
   "title": "Имя",
   "titleType": "Тип",
   "titleBudget": "Бюджет",
+  "titlePlan": "План",
   "titleFact": "Факт",
   "titleDate": "Дата",
   "titleAccount": "Счет",

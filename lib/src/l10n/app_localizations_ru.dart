@@ -21,6 +21,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get titleBudget => 'Бюджет';
 
   @override
+  String get titlePlan => 'План';
+
+  @override
   String get titleFact => 'Факт';
 
   @override

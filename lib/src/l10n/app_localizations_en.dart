@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get titleBudget => 'Budget';
 
   @override
+  String get titlePlan => 'Plan';
+
+  @override
   String get titleFact => 'Fact';
 
   @override
