@@ -63,6 +63,7 @@
   "mesCategoryArchived": "Category archived",
   "mesAreYouSure": "Are you sure?",
 
+  "limit": "Limit",
   "owner": "Owner",
   "noOwner": "No owner",
   "details": "Details",
@@ -92,6 +93,10 @@
   "spending": "Spending",
   "topOfMonth": "Top of month",
   "topOfYear": "Top of year",
+  "average": "Average",
+  "median": "Median",
+  "monthBudget": "Month budget",
+  "yearBudget": "Year budget",
 
   "earningIn": "Earning in {date}",
   "@earningIn": {

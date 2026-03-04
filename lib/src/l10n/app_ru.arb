@@ -60,6 +60,7 @@
   "mesCategoryArchived": "Категория добавлена в архив",
   "mesAreYouSure": "Вы уверены?",
 
+  "limit": "Лимит",
   "owner": "Владелец",
   "noOwner": "Нет владельца",
   "details": "Подробнее",
@@ -89,6 +90,10 @@
   "spending": "Потрачено",
   "topOfMonth": "Топ месяца",
   "topOfYear": "Топ года",
+  "average": "Среднее",
+  "median": "Медиана",
+  "monthBudget": "Бюджет на месяц",
+  "yearBudget": "Бюджет на год",
 
   "earningIn": "Получено за {date}",
   "@earningIn": {

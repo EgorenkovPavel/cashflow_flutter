@@ -4,6 +4,7 @@ import '../../utils/result.dart';
 import '../interfaces/category_repository.dart';
 import '../models.dart';
 import '../services/cashflow_service.dart';
+import '../../utils/balance.dart';
 
 class CategoryInteractor {
   final CategoryRepository _categoryRepository;
@@ -109,4 +110,9 @@ class CategoryInteractor {
       return Result.failure(DatabaseException('Failed to update category', e));
     }
   }
+
+  Future<Map<DateTime, Balance>> getMonthlyExpenses(
+      int categoryId,
+      int monthCount,
+      ) => _cashflowService.getMonthlyExpenses(categoryId, monthCount);
 }

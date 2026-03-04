@@ -19,5 +19,6 @@ abstract interface class CategoryRepository {
 
   /// Update an existing category.
   Future<void> updateCategory(Category entity);
+
 }
 

@@ -189,6 +189,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mesAreYouSure => 'Are you sure?';
 
   @override
+  String get limit => 'Limit';
+
+  @override
   String get owner => 'Owner';
 
   @override
@@ -274,6 +277,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get topOfYear => 'Top of year';
+
+  @override
+  String get average => 'Average';
+
+  @override
+  String get median => 'Median';
+
+  @override
+  String get monthBudget => 'Month budget';
+
+  @override
+  String get yearBudget => 'Year budget';
 
   @override
   String earningIn(DateTime date) {

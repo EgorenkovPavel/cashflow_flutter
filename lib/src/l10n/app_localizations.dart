@@ -458,6 +458,12 @@ abstract class AppLocalizations {
   /// **'Are you sure?'**
   String get mesAreYouSure;
 
+  /// No description provided for @limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
+  String get limit;
+
   /// No description provided for @owner.
   ///
   /// In en, this message translates to:
@@ -631,6 +637,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Top of year'**
   String get topOfYear;
+
+  /// No description provided for @average.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get average;
+
+  /// No description provided for @median.
+  ///
+  /// In en, this message translates to:
+  /// **'Median'**
+  String get median;
+
+  /// No description provided for @monthBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Month budget'**
+  String get monthBudget;
+
+  /// No description provided for @yearBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Year budget'**
+  String get yearBudget;
 
   /// No description provided for @earningIn.
   ///

@@ -8,6 +8,7 @@ import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/models.dart';
 import '../../domain/view_models.dart';
+import '../../utils/sum_on_date.dart';
 
 part 'category_cashflow_bloc.freezed.dart';
 

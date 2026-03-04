@@ -6,6 +6,7 @@ import '../../domain/models/enum/operation_type.dart';
 import '../../domain/services/cashflow_service.dart';
 import '../sources/local/data/category_dao.dart';
 import '../sources/local/db_mapper.dart';
+import '../../utils/balance.dart';
 
 /// Implementation of [CashflowService] that aggregates category cashflow data.
 class CashflowServiceImpl implements CashflowService {
@@ -41,5 +42,10 @@ class CashflowServiceImpl implements CashflowService {
         CategoryMapper().combineCashFlow);
   }
 
+  @override
+  Future<Map<DateTime, Balance>> getMonthlyExpenses(
+      int categoryId,
+      int monthCount,
+      ) => _categoryDao.getMonthlyExpenses(categoryId, monthCount);
 }
 

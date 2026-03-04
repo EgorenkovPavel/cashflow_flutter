@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
+import 'package:money_tracker/src/utils/balance.dart';
 
 import '../../../../domain/models/enum/operation_type.dart';
 import '../../../../utils/sum.dart';
@@ -18,51 +19,36 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   // Called by the AppDatabase class
   CategoryDao(super.db);
 
-  Stream<List<CategoryDB>> watchAllCategories() => (select(categories)
-        ..orderBy(
-          [(t) => OrderingTerm(expression: t.title)],
-        ))
-      .watch();
+  Stream<List<CategoryDB>> watchAllCategories() => (select(
+    categories,
+  )..orderBy([(t) => OrderingTerm(expression: t.title)])).watch();
 
-  Future<List<CategoryDB>> getAllCategories() => (select(categories)
-        ..orderBy(
-          [(t) => OrderingTerm(expression: t.title)],
-        ))
-      .get();
+  Future<List<CategoryDB>> getAllCategories() => (select(
+    categories,
+  )..orderBy([(t) => OrderingTerm(expression: t.title)])).get();
 
   Future<List<CategoryDB>> getAllCategoriesWithEmptyCloudId() =>
       (select(categories)
-            ..orderBy(
-              [(t) => OrderingTerm(expression: t.title)],
-            )
+            ..orderBy([(t) => OrderingTerm(expression: t.title)])
             ..where((tbl) => tbl.cloudId.equals('')))
           .get();
 
-  Future<CategoryDB> getCategoryById(int id) => (select(categories)
-        ..where(
-          (c) => c.id.equals(id),
-        ))
-      .getSingle();
+  Future<CategoryDB> getCategoryById(int id) =>
+      (select(categories)..where((c) => c.id.equals(id))).getSingle();
 
-  Future<CategoryDB?> getCategoryByCloudId(String cloudId) =>
-      (select(categories)
-            ..where(
-              (c) => c.cloudId.equals(cloudId),
-            ))
-          .getSingleOrNull();
+  Future<CategoryDB?> getCategoryByCloudId(String cloudId) => (select(
+    categories,
+  )..where((c) => c.cloudId.equals(cloudId))).getSingleOrNull();
 
   Future<List<CategoryDB>> getAllNotSynced() =>
       (select(categories)..where((tbl) => tbl.synced.equals(false))).get();
 
-  Stream<CategoryDB> watchNotSynced() =>
-      (select(categories)..where((tbl) => tbl.synced.equals(false)))
-          .watchSingle();
+  Stream<CategoryDB> watchNotSynced() => (select(
+    categories,
+  )..where((tbl) => tbl.synced.equals(false))).watchSingle();
 
-  Stream<CategoryDB> watchCategoryById(int id) => (select(categories)
-        ..where(
-          (c) => c.id.equals(id),
-        ))
-      .watchSingle();
+  Stream<CategoryDB> watchCategoryById(int id) =>
+      (select(categories)..where((c) => c.id.equals(id))).watchSingle();
 
   Stream<List<CategoryDB>> watchAllCategoriesByType(OperationType type) =>
       (select(categories)
@@ -71,11 +57,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                 const OperationTypeConverter().toSql(type),
               ),
             )
-            ..orderBy(
-              [
-                (t) => OrderingTerm(expression: t.title),
-              ],
-            ))
+            ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
   Future<List<CategoryDB>> getAllCategoriesByType(OperationType type) =>
@@ -85,11 +67,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
                 const OperationTypeConverter().toSql(type),
               ),
             )
-            ..orderBy(
-              [
-                (t) => OrderingTerm(expression: t.title),
-              ],
-            ))
+            ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .get();
 
   Stream<List<CategoryCashflowEntity>> watchAllCategoryCashflowBudget(
@@ -115,31 +93,31 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
-          (rows) => rows
-              .map(
-                (row) => CategoryCashflowEntity(
-                  category: _categoryDBFromRow(row),
-                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
-                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
-                ),
-              )
-              .toList(),
-        );
+      (rows) => rows
+          .map(
+            (row) => CategoryCashflowEntity(
+              category: _categoryDBFromRow(row),
+              monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+              yearCashflow: row.read<int?>('yearCashflow') ?? 0,
+            ),
+          )
+          .toList(),
+    );
   }
 
   CategoryDB _categoryDBFromRow(QueryRow row) => CategoryDB(
-        id: row.read<int>('id'),
-        title: row.read<String>('title'),
-        operationType: const OperationTypeConverter()
-            .fromSql(row.read<int>('operation_type')),
-        budget: row.read<int>('budget'),
-        budgetType:
-            const BudgetTypeConverter().fromSql(row.read('budget_type')),
-        synced: row.read<bool>('synced'),
-        cloudId: row.read<String>('cloud_id'),
-        isGroup: row.read<bool>('is_group'),
-        parent: row.read<int>('parent'),
-      );
+    id: row.read<int>('id'),
+    title: row.read<String>('title'),
+    operationType: const OperationTypeConverter().fromSql(
+      row.read<int>('operation_type'),
+    ),
+    budget: row.read<int>('budget'),
+    budgetType: const BudgetTypeConverter().fromSql(row.read('budget_type')),
+    synced: row.read<bool>('synced'),
+    cloudId: row.read<String>('cloud_id'),
+    isGroup: row.read<bool>('is_group'),
+    parent: row.read<int>('parent'),
+  );
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
     DateTime date,
@@ -167,16 +145,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
-          (rows) => rows
-              .map(
-                (row) => CategoryCashflowEntity(
-                  category: _categoryDBFromRow(row),
-                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
-                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
-                ),
-              )
-              .toList(),
-        );
+      (rows) => rows
+          .map(
+            (row) => CategoryCashflowEntity(
+              category: _categoryDBFromRow(row),
+              monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+              yearCashflow: row.read<int?>('yearCashflow') ?? 0,
+            ),
+          )
+          .toList(),
+    );
   }
 
   Future<List<CategoryMonthCashflowEntity>> getCashflowByYear(int year) {
@@ -195,20 +173,22 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ],
       readsFrom: {categories, cashflows},
     ).get().then(
-          (rows) => rows
-              .map(
-                (row) => CategoryMonthCashflowEntity(
-                  category: _categoryDBFromRow(row),
-                  month: row.read<int?>('month') ?? 0,
-                  cashflow: row.read<int?>('sum') ?? 0,
-                ),
-              )
-              .toList(),
-        );
+      (rows) => rows
+          .map(
+            (row) => CategoryMonthCashflowEntity(
+              category: _categoryDBFromRow(row),
+              month: row.read<int?>('month') ?? 0,
+              cashflow: row.read<int?>('sum') ?? 0,
+            ),
+          )
+          .toList(),
+    );
   }
 
   Future<List<CashflowEntity>> getMonthCashFlow(
-      DateTime date, Set<int> categoryIds) async {
+    DateTime date,
+    Set<int> categoryIds,
+  ) async {
     final monthStart = DateTime(date.year, date.month);
     final monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -217,8 +197,63 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     return _getCashFlow(monthStart, monthEnd, categoryIds);
   }
 
+  Future<Map<DateTime, Balance>> getMonthlyExpenses(
+    int categoryId,
+    int monthCount,
+  ) async {
+    final sumBalance = cashflows.sum.sum().cast<int>();
+    final currency = cashflows.currency.cast<String>();
+    final startMonth = cashflows.date.month;
+    final startYear = cashflows.date.year;
+
+    final pastDate = DateTime.now()
+        .copyWith(month: DateTime.now().month - monthCount)
+        .copyWith(day: 1, hour: 0, minute: 0, second: 0);
+
+    final query =
+        select(
+            cashflows,
+          ).addColumns([sumBalance, currency, startMonth, startYear])
+          ..where(cashflows.category.equals(categoryId))
+          ..where(cashflows.date.isBiggerOrEqualValue(pastDate))
+          ..groupBy([startMonth, startYear, currency]);
+
+    final List<TypedResult> rows = await query.get();
+
+    final Map<DateTime, Balance> result = {};
+
+    for (final row in rows) {
+      final month = row.read(startMonth);
+      final year = row.read(startYear);
+      final totalSum = row.read(sumBalance) ?? 0;
+      final cur = const CurrencyConverter().fromSql(row.read(currency)!);
+
+      if (year != null && month != null) {
+        final date = DateTime(year, month);
+        final sum = Sum(totalSum, cur);
+        if(result.containsKey(date)){
+          result[date]!.addSum(sum);
+        }else {
+          result[date] = Balance([sum]);
+        }
+      }
+    }
+
+    // Дозаполняем нулями
+    final now = DateTime.now();
+
+    for (int i = 0; i < monthCount; i++) {
+      final monthDate = DateTime(now.year, now.month - i, 1);
+      result.putIfAbsent(monthDate, () => Balance());
+    }
+
+    return result;
+  }
+
   Stream<List<CashflowEntity>> watchMonthCashFlow(
-      DateTime date, Set<int> categoryIds) {
+    DateTime date,
+    Set<int> categoryIds,
+  ) {
     final monthStart = DateTime(date.year, date.month);
     final monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -228,7 +263,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Future<List<CashflowEntity>> getYearCashFlow(
-      DateTime date, Set<int> categoryIds) async {
+    DateTime date,
+    Set<int> categoryIds,
+  ) async {
     final yearStart = DateTime(date.year);
     final monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -238,7 +275,9 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Stream<List<CashflowEntity>> watchYearCashFlow(
-      DateTime date, Set<int> categoryIds) {
+    DateTime date,
+    Set<int> categoryIds,
+  ) {
     final yearStart = DateTime(date.year);
     final monthEnd = date.month < 12
         ? DateTime(date.year, date.month + 1)
@@ -248,7 +287,10 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Future<List<CashflowEntity>> _getCashFlow(
-      DateTime lower, DateTime higher, Set<int> categoryIds) async {
+    DateTime lower,
+    DateTime higher,
+    Set<int> categoryIds,
+  ) async {
     final sumBalance = cashflows.sum.sum().cast<int>();
     final currency = cashflows.currency.cast<String>();
     final categoryId = cashflows.category.cast<int>();
@@ -256,7 +298,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     final where = categoryIds.isEmpty
         ? cashflows.date.isBetweenValues(lower, higher)
         : cashflows.date.isBetweenValues(lower, higher) &
-            (cashflows.category.isIn(categoryIds));
+              (cashflows.category.isIn(categoryIds));
 
     final query = db.selectOnly(cashflows);
     query
@@ -267,16 +309,23 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     final result = await query.get();
 
     return result
-        .map((c) => CashflowEntity(
-              categoryId: c.read(categoryId)!,
-              sum: Sum(c.read(sumBalance)!,
-                  const CurrencyConverter().fromSql(c.read(currency)!)),
-            ))
+        .map(
+          (c) => CashflowEntity(
+            categoryId: c.read(categoryId)!,
+            sum: Sum(
+              c.read(sumBalance)!,
+              const CurrencyConverter().fromSql(c.read(currency)!),
+            ),
+          ),
+        )
         .toList();
   }
 
   Stream<List<CashflowEntity>> _watchCashFlow(
-      DateTime lower, DateTime higher, Set<int> categoryIds) {
+    DateTime lower,
+    DateTime higher,
+    Set<int> categoryIds,
+  ) {
     final sumBalance = cashflows.sum.sum().cast<int>();
     final currency = cashflows.currency.cast<String>();
     final categoryId = cashflows.category.cast<int>();
@@ -284,7 +333,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     final where = categoryIds.isEmpty
         ? cashflows.date.isBetweenValues(lower, higher)
         : cashflows.date.isBetweenValues(lower, higher) &
-            (cashflows.category.isIn(categoryIds));
+              (cashflows.category.isIn(categoryIds));
 
     final query = db.selectOnly(cashflows);
     query
@@ -292,13 +341,19 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ..where(where)
       ..groupBy([categoryId, currency]);
 
-    return query.watch().map((rows) => rows
-        .map((c) => CashflowEntity(
+    return query.watch().map(
+      (rows) => rows
+          .map(
+            (c) => CashflowEntity(
               categoryId: c.read(categoryId)!,
-              sum: Sum(c.read(sumBalance)!,
-                  const CurrencyConverter().fromSql(c.read(currency)!)),
-            ))
-        .toList());
+              sum: Sum(
+                c.read(sumBalance)!,
+                const CurrencyConverter().fromSql(c.read(currency)!),
+              ),
+            ),
+          )
+          .toList(),
+    );
   }
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
@@ -327,16 +382,16 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ],
       readsFrom: {categories, cashflows},
     ).get().then(
-          (rows) => rows
-              .map(
-                (row) => CategoryCashflowEntity(
-                  category: _categoryDBFromRow(row),
-                  monthCashflow: row.read<int?>('monthCashflow') ?? 0,
-                  yearCashflow: row.read<int?>('yearCashflow') ?? 0,
-                ),
-              )
-              .toList(),
-        );
+      (rows) => rows
+          .map(
+            (row) => CategoryCashflowEntity(
+              category: _categoryDBFromRow(row),
+              monthCashflow: row.read<int?>('monthCashflow') ?? 0,
+              yearCashflow: row.read<int?>('yearCashflow') ?? 0,
+            ),
+          )
+          .toList(),
+    );
   }
 
   Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
@@ -354,15 +409,15 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       ],
       readsFrom: {categories},
     ).watch().map(
-          (rows) => rows
-              .map(
-                (row) => CategoryBudgetEntity(
-                  category: _categoryDBFromRow(row),
-                  budget: row.read<int>('budget'),
-                ),
-              )
-              .toList(),
-        );
+      (rows) => rows
+          .map(
+            (row) => CategoryBudgetEntity(
+              category: _categoryDBFromRow(row),
+              budget: row.read<int>('budget'),
+            ),
+          )
+          .toList(),
+    );
   }
 
   Future<int> insertCategory(CategoriesCompanion entity) =>
@@ -373,10 +428,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future<int> markAsSynced(int categoryId, String cloudId) {
     return (update(categories)..where((t) => t.id.equals(categoryId))).write(
-      CategoriesCompanion(
-        cloudId: Value(cloudId),
-        synced: const Value(true),
-      ),
+      CategoriesCompanion(cloudId: Value(cloudId), synced: const Value(true)),
     );
   }
 
@@ -388,43 +440,40 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       'SELECT c.operation_type, '
       '(SELECT sum as sum FROM budgets WHERE category = c.id AND date <= ? ORDER BY date LIMIT 1) AS "budget" '
       'FROM categories c;',
-      variables: [
-        Variable.withDateTime(date),
-      ],
+      variables: [Variable.withDateTime(date)],
       readsFrom: {categories},
     ).watch().map(
-          (rows) => rows
-              .map(
-                (row) => const OperationTypeConverter().fromSql(
-                          row.read<int>('operation_type'),
-                        ) ==
-                        OperationType.INPUT
-                    ? row.read<int>('budget')
-                    : -(row.read<int>('budget')),
-              )
-              .fold(0, (a, b) => a + b),
-        );
+      (rows) => rows
+          .map(
+            (row) =>
+                const OperationTypeConverter().fromSql(
+                      row.read<int>('operation_type'),
+                    ) ==
+                    OperationType.INPUT
+                ? row.read<int>('budget')
+                : -(row.read<int>('budget')),
+          )
+          .fold(0, (a, b) => a + b),
+    );
   }
 
   Future<void> batchInsert(List<CategoryDB> categoryList) {
-    return batch(
-      (batch) {
-        batch.insertAll(
-          categories,
-          categoryList
-              .map(
-                (p) => CategoriesCompanion.insert(
-                  id: Value(p.id),
-                  cloudId: p.cloudId,
-                  title: p.title,
-                  operationType: p.operationType,
-                  budgetType: p.budgetType,
-                  budget: p.budget,
-                ),
-              )
-              .toList(),
-        );
-      },
-    );
+    return batch((batch) {
+      batch.insertAll(
+        categories,
+        categoryList
+            .map(
+              (p) => CategoriesCompanion.insert(
+                id: Value(p.id),
+                cloudId: p.cloudId,
+                title: p.title,
+                operationType: p.operationType,
+                budgetType: p.budgetType,
+                budget: p.budget,
+              ),
+            )
+            .toList(),
+      );
+    });
   }
 }

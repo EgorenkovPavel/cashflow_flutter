@@ -62,4 +62,5 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Stream<Category> watchCategoryById(int id) =>
       _categoryDao.watchCategoryById(id).map(CategoryMapper().toModel);
+
 }
