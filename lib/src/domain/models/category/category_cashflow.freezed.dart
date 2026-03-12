@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CategoryCashFlow {
 
- int get categoryId; CategoryType get type; String get categoryTitle; BudgetType get budgetType; int get budget; Balance get monthCashFlow; Balance get yearCashFlow;
+ int get categoryId; CategoryType get type; String get categoryTitle; BudgetType get budgetType; int get budget; Balance get monthCashFlow; Balance get yearCashFlow; int? get parentId;
 /// Create a copy of CategoryCashFlow
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CategoryCashFlowCopyWith<CategoryCashFlow> get copyWith => _$CategoryCashFlowCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow);
+int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow,parentId);
 
 @override
 String toString() {
-  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow)';
+  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow, parentId: $parentId)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CategoryCashFlowCopyWith<$Res>  {
   factory $CategoryCashFlowCopyWith(CategoryCashFlow value, $Res Function(CategoryCashFlow) _then) = _$CategoryCashFlowCopyWithImpl;
 @useResult
 $Res call({
- int categoryId, CategoryType type, String categoryTitle, BudgetType budgetType, int budget, Balance monthCashFlow, Balance yearCashFlow
+ int categoryId, CategoryType type, String categoryTitle, BudgetType budgetType, int budget, Balance monthCashFlow, Balance yearCashFlow, int? parentId
 });
 
 
@@ -62,7 +62,7 @@ class _$CategoryCashFlowCopyWithImpl<$Res>
 
 /// Create a copy of CategoryCashFlow
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? categoryId = null,Object? type = null,Object? categoryTitle = null,Object? budgetType = null,Object? budget = null,Object? monthCashFlow = null,Object? yearCashFlow = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? categoryId = null,Object? type = null,Object? categoryTitle = null,Object? budgetType = null,Object? budget = null,Object? monthCashFlow = null,Object? yearCashFlow = null,Object? parentId = freezed,}) {
   return _then(_self.copyWith(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,8 @@ as String,budgetType: null == budgetType ? _self.budgetType : budgetType // igno
 as BudgetType,budget: null == budget ? _self.budget : budget // ignore: cast_nullable_to_non_nullable
 as int,monthCashFlow: null == monthCashFlow ? _self.monthCashFlow : monthCashFlow // ignore: cast_nullable_to_non_nullable
 as Balance,yearCashFlow: null == yearCashFlow ? _self.yearCashFlow : yearCashFlow // ignore: cast_nullable_to_non_nullable
-as Balance,
+as Balance,parentId: freezed == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 /// Create a copy of CategoryCashFlow
@@ -174,10 +175,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow,  int? parentId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoryCashFlow() when $default != null:
-return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow);case _:
+return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow,_that.parentId);case _:
   return orElse();
 
 }
@@ -195,10 +196,10 @@ return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow,  int? parentId)  $default,) {final _that = this;
 switch (_that) {
 case _CategoryCashFlow():
-return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow);case _:
+return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow,_that.parentId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -215,10 +216,10 @@ return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int categoryId,  CategoryType type,  String categoryTitle,  BudgetType budgetType,  int budget,  Balance monthCashFlow,  Balance yearCashFlow,  int? parentId)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoryCashFlow() when $default != null:
-return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow);case _:
+return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType,_that.budget,_that.monthCashFlow,_that.yearCashFlow,_that.parentId);case _:
   return null;
 
 }
@@ -230,7 +231,7 @@ return $default(_that.categoryId,_that.type,_that.categoryTitle,_that.budgetType
 
 
 class _CategoryCashFlow extends CategoryCashFlow {
-  const _CategoryCashFlow({required this.categoryId, required this.type, required this.categoryTitle, required this.budgetType, required this.budget, required this.monthCashFlow, required this.yearCashFlow}): super._();
+  const _CategoryCashFlow({required this.categoryId, required this.type, required this.categoryTitle, required this.budgetType, required this.budget, required this.monthCashFlow, required this.yearCashFlow, required this.parentId}): super._();
   
 
 @override final  int categoryId;
@@ -240,6 +241,7 @@ class _CategoryCashFlow extends CategoryCashFlow {
 @override final  int budget;
 @override final  Balance monthCashFlow;
 @override final  Balance yearCashFlow;
+@override final  int? parentId;
 
 /// Create a copy of CategoryCashFlow
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +253,16 @@ _$CategoryCashFlowCopyWith<_CategoryCashFlow> get copyWith => __$CategoryCashFlo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow);
+int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow,parentId);
 
 @override
 String toString() {
-  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow)';
+  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow, parentId: $parentId)';
 }
 
 
@@ -271,7 +273,7 @@ abstract mixin class _$CategoryCashFlowCopyWith<$Res> implements $CategoryCashFl
   factory _$CategoryCashFlowCopyWith(_CategoryCashFlow value, $Res Function(_CategoryCashFlow) _then) = __$CategoryCashFlowCopyWithImpl;
 @override @useResult
 $Res call({
- int categoryId, CategoryType type, String categoryTitle, BudgetType budgetType, int budget, Balance monthCashFlow, Balance yearCashFlow
+ int categoryId, CategoryType type, String categoryTitle, BudgetType budgetType, int budget, Balance monthCashFlow, Balance yearCashFlow, int? parentId
 });
 
 
@@ -288,7 +290,7 @@ class __$CategoryCashFlowCopyWithImpl<$Res>
 
 /// Create a copy of CategoryCashFlow
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? categoryId = null,Object? type = null,Object? categoryTitle = null,Object? budgetType = null,Object? budget = null,Object? monthCashFlow = null,Object? yearCashFlow = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? categoryId = null,Object? type = null,Object? categoryTitle = null,Object? budgetType = null,Object? budget = null,Object? monthCashFlow = null,Object? yearCashFlow = null,Object? parentId = freezed,}) {
   return _then(_CategoryCashFlow(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -297,7 +299,8 @@ as String,budgetType: null == budgetType ? _self.budgetType : budgetType // igno
 as BudgetType,budget: null == budget ? _self.budget : budget // ignore: cast_nullable_to_non_nullable
 as int,monthCashFlow: null == monthCashFlow ? _self.monthCashFlow : monthCashFlow // ignore: cast_nullable_to_non_nullable
 as Balance,yearCashFlow: null == yearCashFlow ? _self.yearCashFlow : yearCashFlow // ignore: cast_nullable_to_non_nullable
-as Balance,
+as Balance,parentId: freezed == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

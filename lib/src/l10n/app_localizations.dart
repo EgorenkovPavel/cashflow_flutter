@@ -686,6 +686,12 @@ abstract class AppLocalizations {
   /// **'{count} items'**
   String itemsCount(int count);
 
+  /// No description provided for @budgetDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget {amount} per {type, select, month{month} year{year} other{???}}'**
+  String budgetDisplay(String amount, String type);
+
   /// No description provided for @budgetType.
   ///
   /// In en, this message translates to:

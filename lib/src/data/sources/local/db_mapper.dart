@@ -304,6 +304,7 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
         categoryTitle: category.title,
         monthCashFlow: month,
         yearCashFlow: year,
+        parentId: category.parent,
       );
     }).toList();
   }

@@ -146,15 +146,36 @@ class BudgetBarChart extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.0),
-              Text(
-                '${context.loc.average} ${calculateAverage(data.map((e) => e.sum).toList())}',
+              Text(context.loc.titleFact, style: Theme.of(context).textTheme.titleSmall,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(context.loc.average),
+                  Text('${calculateAverage(data.map((e) => e.sum).toList())}'),
+                ],
               ),
-              // TODO loc
-              Text(
-                '${context.loc.median} ${calculateMedian(data.map((e) => e.sum).toList())}',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(context.loc.median),
+                  Text('${calculateMedian(data.map((e) => e.sum).toList())}'),
+                ],
               ),
-              Text('${context.loc.monthBudget} ${cashFlow.monthBudget}'),
-              Text('${context.loc.yearBudget} ${cashFlow.yearBudget}'),
+              Text(context.loc.titlePlan, style: Theme.of(context).textTheme.titleSmall,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(context.loc.monthBudget),
+                  Text('${cashFlow.monthBudget}'),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('${context.loc.yearBudget}'),
+                  Text('${cashFlow.yearBudget}'),
+                ],
+              ),
             ],
           );
         },

@@ -29,6 +29,7 @@ abstract class BudgetBarChartState with _$BudgetBarChartState {
 class BudgetBarChartBloc
     extends Bloc<BudgetBarChartEvent, BudgetBarChartState> {
   final CategoryInteractor _categoryInteractor;
+  StreamSubscription? _sub;
 
   BudgetBarChartBloc(CategoryInteractor categoryInteractor)
     : _categoryInteractor = categoryInteractor,
@@ -51,5 +52,11 @@ class BudgetBarChartBloc
     );
 
     emit(BudgetBarChartState(data: data));
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
   }
 }

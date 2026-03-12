@@ -125,6 +125,19 @@
    }
  },
 
+    "budgetDisplay": "Budget {amount} per {type, select, month{month} year{year} other{???}}",
+      "@budgetDisplay": {
+        "placeholders": {
+          "amount": {
+            "type": "String",
+            "example": "15 000 ₽"
+          },
+          "type": {
+            "type": "String"
+          }
+        }
+      },
+
   "budgetType": "Budget type",
   "source": "Source",
   "receiver": "Receiver",

@@ -8,7 +8,6 @@ import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/models.dart';
 import '../../domain/view_models.dart';
-import '../../utils/sum_on_date.dart';
 
 part 'category_cashflow_bloc.freezed.dart';
 
@@ -134,9 +133,9 @@ extension CategoryCashFlowBlocExt on BuildContext {
     BudgetType budgetType,
     int count,
   ) {
-    final list = watchCashFlow(
-      categoryType,
-    ).where((e) => balanceToRub(e.cashflowByType(budgetType)).sum != 0).toList();
+    final list = watchCashFlow(categoryType)
+        .where((e) => balanceToRub(e.cashflowByType(budgetType)).sum != 0)
+        .toList();
     list.sort(
       (a, b) =>
           balanceToRub(b.cashflowByType(budgetType)).sum -
@@ -158,6 +157,14 @@ extension CategoryCashFlowBlocExt on BuildContext {
         .map(_mapToListItem)
         .toList(),
   );
+
+  List<CategoryCashFlow> watchCategoryCashFlowsByParent(
+    CategoryType type,
+    int? parent,
+  ) => _watch().cashflows
+      .where((e) => e.type == type)
+      .where((e) => e.parentId == parent)
+      .toList();
 
   int watchGroupItemsAmount(int parentId) => _select(
     (state) => state.items.where((e) => e.parentId == parentId).length,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/ui/app.dart';
 
+import '../../../../utils/extensions.dart';
 import '../../../blocs/category_cashflow_bloc.dart';
 
 class CategoryItemsListPage extends StatelessWidget {
@@ -18,27 +19,36 @@ class CategoryItemsListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = parentId == null ? '...' : context.getTitleById(parentId!);
 
+    final items = context.watchCategoryCashFlowsByParent(type, parentId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
         actions: [
-          if (parentId != null) IconButton(
-            onPressed: () => context.openCategoryEditDialog(id: parentId!),
-            icon: const Icon(Icons.edit, color: Colors.black),
-          ),
+          if (parentId != null)
+            IconButton(
+              onPressed: () => context.openCategoryEditDialog(id: parentId!),
+              icon: const Icon(Icons.edit, color: Colors.black),
+            ),
         ],
       ),
       body: SafeArea(
-        child: ListView(
-          children: context
-              .watchCategoryItemsByParent(type, parentId)
-              .map(
-                (e) => InkWell(
-                  onTap: () => context.openCategoryPage(e.id),
-                  child: ListTile(title: Text(e.title)),
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return ListTile(
+              onTap: () => context.openCategoryPage(item.categoryId),
+              title: Text(item.categoryTitle),
+              subtitle: Text(
+                context.loc.budgetDisplay(
+                  '${item.budget}',
+                  item.budgetType.toLocaleKey(),
                 ),
-              )
-              .toList(),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: items.length,
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -23,6 +23,13 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
     categories,
   )..orderBy([(t) => OrderingTerm(expression: t.title)])).watch();
 
+  Stream<List<CategoryDB>> watchAllCategoriesItems() => (select(
+    categories,
+  )..orderBy([(t) => OrderingTerm(expression: t.title)])
+    ..where((tbl) => tbl.isGroup.equals(false))
+  ).watch();
+
+
   Future<List<CategoryDB>> getAllCategories() => (select(
     categories,
   )..orderBy([(t) => OrderingTerm(expression: t.title)])).get();

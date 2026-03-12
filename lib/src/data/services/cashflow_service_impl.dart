@@ -19,7 +19,7 @@ class CashflowServiceImpl implements CashflowService {
   @override
   Stream<List<CategoryCashFlow>> watchCashFlow(DateTime date) {
     return Rx.combineLatest3(
-        _categoryDao.watchAllCategories(),
+        _categoryDao.watchAllCategoriesItems(),
         _categoryDao.watchMonthCashFlow(date, {}),
         _categoryDao.watchYearCashFlow(date, {}),
         CategoryMapper().combineCashFlow);

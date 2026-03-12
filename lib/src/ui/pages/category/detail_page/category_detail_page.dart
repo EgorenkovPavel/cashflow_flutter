@@ -5,6 +5,7 @@ import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/category/detail_page/budget_bar_chart.dart';
 import 'package:money_tracker/src/ui/pages/category/detail_page/category_detail_bloc.dart';
 
+import '../../../../utils/extensions.dart';
 import '../../operation/list_divider_operation.dart';
 import '../../operation/list_tile_operation.dart';
 
@@ -23,7 +24,19 @@ class CategoryDetailPage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(state.title),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(state.title),
+                  Text(
+                    context.loc.budgetDisplay(
+                      '${state.budget}',
+                      state.budgetType.toLocaleKey(),
+                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
               actions: [
                 IconButton(
                   onPressed: () => context.openCategoryEditDialog(id: id),
@@ -35,7 +48,7 @@ class CategoryDetailPage extends StatelessWidget {
               slivers: [
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: BudgetBarChart(categoryId: id),
                   ),
                 ),

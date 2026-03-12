@@ -315,6 +315,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String budgetDisplay(String amount, String type) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'month': 'month',
+      'year': 'year',
+      'other': '???',
+    });
+    return 'Budget $amount per $_temp0';
+  }
+
+  @override
   String get budgetType => 'Budget type';
 
   @override

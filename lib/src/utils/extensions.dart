@@ -64,3 +64,13 @@ extension AppLocalizationExtended on AppLocalizations {
     .EUR => 'EUR',
   };
 }
+
+extension BudgetTypeLocale on BudgetType {
+  String toLocaleKey() {
+    return switch (this) {
+      BudgetType.MONTH => 'month',
+      BudgetType.YEAR => 'year',
+    };
+  }
+}
+

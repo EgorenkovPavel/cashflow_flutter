@@ -16,6 +16,7 @@ abstract class CategoryCashFlow with _$CategoryCashFlow {
     required int budget,
     required Balance monthCashFlow,
     required Balance yearCashFlow,
+    required int? parentId,
   }) = _CategoryCashFlow;
 
   int budgetByType(BudgetType type) => switch (type) {
