@@ -13,6 +13,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../domain/models/enum/currency.dart';
+import '../db_converters/category_type_converter.dart';
 import '../db_converters/currency_converter.dart';
 import 'user_dao.dart';
 
@@ -48,7 +49,7 @@ class Categories extends Table {
   TextColumn get title => text()();
 
   IntColumn get operationType =>
-      integer().named('operation_type').map(const OperationTypeConverter())();
+      integer().named('operation_type').map(const CategoryTypeConverter())();
 
   IntColumn get budgetType =>
       integer().named('budget_type').map(const BudgetTypeConverter())();

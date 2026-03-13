@@ -291,13 +291,8 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
             .toList(),
       );
 
-      final CategoryType type = switch (category.operationType) {
-        .INPUT => .INPUT,
-        _ => .OUTPUT,
-      };
-
       return CategoryCashFlow(
-        type: type,
+        type: category.operationType,
         categoryId: category.id,
         budgetType: category.budgetType,
         budget: category.budget,

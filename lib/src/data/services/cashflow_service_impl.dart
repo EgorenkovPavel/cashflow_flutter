@@ -2,11 +2,10 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../domain/models/category/category_cashflow.dart';
 import '../../domain/models/enum/category_type.dart';
-import '../../domain/models/enum/operation_type.dart';
 import '../../domain/services/cashflow_service.dart';
+import '../../utils/balance.dart';
 import '../sources/local/data/category_dao.dart';
 import '../sources/local/db_mapper.dart';
-import '../../utils/balance.dart';
 
 /// Implementation of [CashflowService] that aggregates category cashflow data.
 class CashflowServiceImpl implements CashflowService {
@@ -30,13 +29,8 @@ class CashflowServiceImpl implements CashflowService {
     DateTime date,
     CategoryType type,
   ) {
-    final operationType = switch (type) {
-      CategoryType.INPUT => OperationType.INPUT,
-      CategoryType.OUTPUT => OperationType.OUTPUT,
-    };
-
     return Rx.combineLatest3(
-        _categoryDao.watchAllCategoriesByType(operationType),
+        _categoryDao.watchAllCategoriesByType(type),
         _categoryDao.watchMonthCashFlow(date, {}),
         _categoryDao.watchYearCashFlow(date, {}),
         CategoryMapper().combineCashFlow);

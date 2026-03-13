@@ -932,7 +932,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
   final int id;
   final String cloudId;
   final String title;
-  final OperationType operationType;
+  final CategoryType operationType;
   final BudgetType budgetType;
   final int budget;
   final bool synced;

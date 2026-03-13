@@ -2,10 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_converter.dart';
 import 'package:money_tracker/src/utils/balance.dart';
 
-import '../../../../domain/models/enum/operation_type.dart';
+import '../../../../domain/models/enum/category_type.dart';
 import '../../../../utils/sum.dart';
+import '../db_converters/category_type_converter.dart';
 import '../db_converters/currency_converter.dart';
-import '../db_converters/operation_type_converter.dart';
 import '../entities/cashflow_entity.dart';
 import '../entities/category_budget_entity.dart';
 import '../entities/category_cashflow_entity.dart';
@@ -57,21 +57,21 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   Stream<CategoryDB> watchCategoryById(int id) =>
       (select(categories)..where((c) => c.id.equals(id))).watchSingle();
 
-  Stream<List<CategoryDB>> watchAllCategoriesByType(OperationType type) =>
+  Stream<List<CategoryDB>> watchAllCategoriesByType(CategoryType type) =>
       (select(categories)
             ..where(
               (cat) => cat.operationType.equals(
-                const OperationTypeConverter().toSql(type),
+                const CategoryTypeConverter().toSql(type),
               ),
             )
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
           .watch();
 
-  Future<List<CategoryDB>> getAllCategoriesByType(OperationType type) =>
+  Future<List<CategoryDB>> getAllCategoriesByType(CategoryType type) =>
       (select(categories)
             ..where(
               (cat) => cat.operationType.equals(
-                const OperationTypeConverter().toSql(type),
+                const CategoryTypeConverter().toSql(type),
               ),
             )
             ..orderBy([(t) => OrderingTerm(expression: t.title)]))
@@ -115,7 +115,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   CategoryDB _categoryDBFromRow(QueryRow row) => CategoryDB(
     id: row.read<int>('id'),
     title: row.read<String>('title'),
-    operationType: const OperationTypeConverter().fromSql(
+    operationType: const CategoryTypeConverter().fromSql(
       row.read<int>('operation_type'),
     ),
     budget: row.read<int>('budget'),
@@ -128,7 +128,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Stream<List<CategoryCashflowEntity>> watchCategoryCashflowByType(
     DateTime date,
-    OperationType type,
+    CategoryType type,
   ) {
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
@@ -148,7 +148,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(const OperationTypeConverter().toSql(type)),
+        Variable.withInt(const CategoryTypeConverter().toSql(type)),
       ],
       readsFrom: {categories, cashflows},
     ).watch().map(
@@ -365,7 +365,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   Future<List<CategoryCashflowEntity>> getCategoryCashflowByType(
     DateTime date,
-    OperationType type,
+    CategoryType type,
   ) {
     var yearStart = DateTime(date.year);
     var monthStart = DateTime(date.year, date.month);
@@ -385,7 +385,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
         Variable.withDateTime(monthEnd),
         Variable.withDateTime(yearStart),
         Variable.withDateTime(monthEnd),
-        Variable.withInt(const OperationTypeConverter().toSql(type)),
+        Variable.withInt(const CategoryTypeConverter().toSql(type)),
       ],
       readsFrom: {categories, cashflows},
     ).get().then(
@@ -402,7 +402,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
   }
 
   Stream<List<CategoryBudgetEntity>> watchCategoryBudgetByType(
-    OperationType type,
+    CategoryType type,
   ) {
     return customSelect(
       'SELECT *, '
@@ -412,7 +412,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       'ORDER BY title;',
       variables: [
         Variable.withDateTime(DateTime.now()),
-        Variable.withInt(const OperationTypeConverter().toSql(type)),
+        Variable.withInt(const CategoryTypeConverter().toSql(type)),
       ],
       readsFrom: {categories},
     ).watch().map(
@@ -453,10 +453,10 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
       (rows) => rows
           .map(
             (row) =>
-                const OperationTypeConverter().fromSql(
+                const CategoryTypeConverter().fromSql(
                       row.read<int>('operation_type'),
                     ) ==
-                    OperationType.INPUT
+                    CategoryType.INPUT
                 ? row.read<int>('budget')
                 : -(row.read<int>('budget')),
           )
