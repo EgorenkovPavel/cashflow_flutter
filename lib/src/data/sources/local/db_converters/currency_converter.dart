@@ -2,25 +2,21 @@ import 'package:drift/drift.dart';
 
 import '../../../../domain/models/enum/currency.dart';
 
-class CurrencyConverter extends TypeConverter<Currency, String>{
+class CurrencyConverter extends TypeConverter<Currency, String> {
   const CurrencyConverter();
 
   @override
-  Currency fromSql(String fromDb) {
-    switch (fromDb){
-      case 'RUB': return Currency.RUB;
-      case 'USD': return Currency.USD;
-      case 'EUR': return Currency.EUR;
-        default: return Currency.RUB;
-    }
-  }
+  Currency fromSql(String fromDb) => switch (fromDb) {
+    'RUB' => Currency.RUB,
+    'USD' => Currency.USD,
+    'EUR' => Currency.EUR,
+    _ => Currency.RUB,
+  };
 
   @override
-  String toSql(Currency value) {
-    switch (value){
-      case Currency.RUB: return 'RUB';
-      case Currency.EUR: return 'EUR';
-      case Currency.USD: return 'USD';
-    }
-  }
+  String toSql(Currency value) => switch (value) {
+    Currency.RUB => 'RUB',
+    Currency.EUR => 'EUR',
+    Currency.USD => 'USD',
+  };
 }
