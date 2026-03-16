@@ -24,11 +24,6 @@ sealed class Category with _$Category {
     required int? parentId,
   }) = CategoryItem;
 
-  OperationType get operationType => switch (type) {
-    CategoryType.INPUT => OperationType.INPUT,
-    CategoryType.OUTPUT => OperationType.OUTPUT,
-  };
-
   int get monthBudget => switch (this) {
     CategoryGroup() => 0,
     CategoryItem(:final budget, :final budgetType) =>

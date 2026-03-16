@@ -3,6 +3,8 @@ import 'package:money_tracker/src/data/sources/local/db_converters/operation_typ
 import 'package:money_tracker/src/data/sources/remote/models/cloud_models.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
+import '../local/db_converters/category_type_converter.dart';
+
 extension CloudAccountMapper on BaseAccount {
   CloudAccount toCloudAccount(User? user) => CloudAccount(
     id: cloudId,
@@ -18,7 +20,7 @@ extension CloudCategoryMapper on Category {
     item: (c) => CloudCategory(
       id: cloudId,
       title: title,
-      operationType: const OperationTypeConverter().toSql(c.operationType),
+      operationType: const CategoryTypeConverter().toSql(c.type),
       budgetType: const BudgetTypeConverter().toSql(c.budgetType),
       budget: c.budget,
       isGroup: false,
@@ -27,7 +29,7 @@ extension CloudCategoryMapper on Category {
     group: (c) => CloudCategory(
       id: cloudId,
       title: title,
-      operationType: const OperationTypeConverter().toSql(c.operationType),
+      operationType: const CategoryTypeConverter().toSql(c.type),
       budgetType: const BudgetTypeConverter().toSql(BudgetType.MONTH),
       budget: 0,
       isGroup: true,

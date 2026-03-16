@@ -34,7 +34,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
           CategoriesCompanion(
             cloudId: Value(cloudId),
             title: Value(title),
-            operationType: Value(entity.operationType),
+            operationType: Value(entity.type),
             budgetType: Value(budgetType),
             budget: Value(budget),
             isGroup: Value(false),
@@ -43,7 +43,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         CategoryGroup(:var cloudId, :var title) => CategoriesCompanion(
           cloudId: Value(cloudId),
           title: Value(title),
-          operationType: Value(entity.operationType),
+          operationType: Value(entity.type),
           budgetType: Value(BudgetType.MONTH),
           budget: Value(0),
           isGroup: Value(true),

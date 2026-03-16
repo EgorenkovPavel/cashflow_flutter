@@ -200,7 +200,7 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
       id: id,
       cloudId: cloudId,
       title: title,
-      operationType: model.operationType,
+      operationType: model.type,
       budgetType: BudgetType.MONTH,
       budget: 0,
       synced: false,
@@ -219,7 +219,7 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
         id: id,
         cloudId: cloudId,
         title: title,
-        operationType: model.operationType,
+        operationType: model.type,
         budgetType: budgetType,
         budget: budget,
         synced: false,
@@ -231,43 +231,22 @@ class CategoryMapper extends DBMapper<Category, CategoryDB> {
   @override
   Category toModel(CategoryDB dbo) {
     if (dbo.isGroup) {
-      if (dbo.operationType == OperationType.INPUT) {
-        return Category.group(
-          id: dbo.id,
-          type: CategoryType.INPUT,
-          title: dbo.title,
-          cloudId: dbo.cloudId,
-        );
-      } else {
-        return Category.group(
-          id: dbo.id,
-          type: CategoryType.OUTPUT,
-          title: dbo.title,
-          cloudId: dbo.cloudId,
-        );
-      }
+      return Category.group(
+        id: dbo.id,
+        type: dbo.operationType,
+        title: dbo.title,
+        cloudId: dbo.cloudId,
+      );
     } else {
-      if (dbo.operationType == OperationType.INPUT) {
-        return Category.item(
-          id: dbo.id,
-          cloudId: dbo.cloudId,
-          title: dbo.title,
-          budget: dbo.budget,
-          budgetType: dbo.budgetType,
-          parentId: dbo.parent,
-          type: CategoryType.INPUT,
-        );
-      } else {
-        return Category.item(
-          id: dbo.id,
-          cloudId: dbo.cloudId,
-          title: dbo.title,
-          budget: dbo.budget,
-          budgetType: dbo.budgetType,
-          parentId: dbo.parent,
-          type: CategoryType.OUTPUT,
-        );
-      }
+      return Category.item(
+        id: dbo.id,
+        cloudId: dbo.cloudId,
+        title: dbo.title,
+        budget: dbo.budget,
+        budgetType: dbo.budgetType,
+        parentId: dbo.parent,
+        type: dbo.operationType,
+      );
     }
   }
 

@@ -39,7 +39,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
         item: (c) => CategoriesCompanion(
           cloudId: Value(c.cloudId),
           title: Value(c.title),
-          operationType: Value(c.operationType),
+          operationType: Value(c.type),
           budgetType: Value(c.budgetType),
           budget: Value(c.budget),
           synced: const Value(true),
@@ -49,7 +49,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
         group: (c) => CategoriesCompanion(
           cloudId: Value(c.cloudId),
           title: Value(c.title),
-          operationType: Value(c.operationType),
+          operationType: Value(c.type),
           budgetType: Value(BudgetType.MONTH),
           budget: Value(0),
           synced: const Value(true),
@@ -67,7 +67,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
         item: (c) => CategoriesCompanion(
           cloudId: Value(c.cloudId),
           title: Value(c.title),
-          operationType: Value(c.operationType),
+          operationType: Value(c.type),
           budgetType: Value(c.budgetType),
           budget: Value(c.budget),
           synced: const Value(true),
@@ -77,7 +77,7 @@ class CategoryDataRepositoryImpl implements LocalSyncTable<Category> {
         group: (c) => CategoriesCompanion(
           cloudId: Value(c.cloudId),
           title: Value(c.title),
-          operationType: Value(c.operationType),
+          operationType: Value(c.type),
           budgetType: Value(BudgetType.MONTH),
           budget: Value(0),
           synced: const Value(true),

@@ -9,6 +9,7 @@ import 'package:money_tracker/src/data/sources/local/db_converters/budget_type_c
 import 'package:money_tracker/src/data/sources/local/db_converters/operation_type_converter.dart';
 import 'package:money_tracker/src/domain/models/enum/budget_type.dart';
 import 'package:money_tracker/src/domain/models/enum/operation_type.dart';
+import 'package:money_tracker/src/domain/models/enum/category_type.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -302,7 +303,6 @@ class Database extends _$Database {
   }
 
   Future loadData(Map<String, dynamic> data) async {
-    var converter = const OperationTypeConverter();
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
@@ -341,7 +341,7 @@ class Database extends _$Database {
                   id: int.parse(d['_id']),
                   cloudId: '',
                   title: d['category_title'],
-                  operationType: converter.fromSql(
+                  operationType: const CategoryTypeConverter().fromSql(
                     int.parse(d['category_type']),
                   ),
                   budget: int.parse(d['category_budget']),
@@ -375,7 +375,7 @@ class Database extends _$Database {
                   date: DateTime.fromMillisecondsSinceEpoch(
                     int.parse(d['operation_date']),
                   ),
-                  operationType: converter.fromSql(
+                  operationType: const OperationTypeConverter().fromSql(
                     int.parse(d['operation_type']),
                   ),
                   account: int.parse(d['operation_account_id']),

@@ -730,14 +730,14 @@ class $CategoriesTable extends Categories
     requiredDuringInsert: true,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<OperationType, int>
-  operationType = GeneratedColumn<int>(
-    'operation_type',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  ).withConverter<OperationType>($CategoriesTable.$converteroperationType);
+  late final GeneratedColumnWithTypeConverter<CategoryType, int> operationType =
+      GeneratedColumn<int>(
+        'operation_type',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      ).withConverter<CategoryType>($CategoriesTable.$converteroperationType);
   @override
   late final GeneratedColumnWithTypeConverter<BudgetType, int> budgetType =
       GeneratedColumn<int>(
@@ -922,8 +922,8 @@ class $CategoriesTable extends Categories
     return $CategoriesTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<OperationType, int> $converteroperationType =
-      const OperationTypeConverter();
+  static TypeConverter<CategoryType, int> $converteroperationType =
+      const CategoryTypeConverter();
   static TypeConverter<BudgetType, int> $converterbudgetType =
       const BudgetTypeConverter();
 }
@@ -999,7 +999,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       id: serializer.fromJson<int>(json['id']),
       cloudId: serializer.fromJson<String>(json['cloudId']),
       title: serializer.fromJson<String>(json['title']),
-      operationType: serializer.fromJson<OperationType>(json['operationType']),
+      operationType: serializer.fromJson<CategoryType>(json['operationType']),
       budgetType: serializer.fromJson<BudgetType>(json['budgetType']),
       budget: serializer.fromJson<int>(json['budget']),
       synced: serializer.fromJson<bool>(json['synced']),
@@ -1014,7 +1014,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
       'id': serializer.toJson<int>(id),
       'cloudId': serializer.toJson<String>(cloudId),
       'title': serializer.toJson<String>(title),
-      'operationType': serializer.toJson<OperationType>(operationType),
+      'operationType': serializer.toJson<CategoryType>(operationType),
       'budgetType': serializer.toJson<BudgetType>(budgetType),
       'budget': serializer.toJson<int>(budget),
       'synced': serializer.toJson<bool>(synced),
@@ -1027,7 +1027,7 @@ class CategoryDB extends DataClass implements Insertable<CategoryDB> {
     int? id,
     String? cloudId,
     String? title,
-    OperationType? operationType,
+    CategoryType? operationType,
     BudgetType? budgetType,
     int? budget,
     bool? synced,
@@ -1109,7 +1109,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
   final Value<int> id;
   final Value<String> cloudId;
   final Value<String> title;
-  final Value<OperationType> operationType;
+  final Value<CategoryType> operationType;
   final Value<BudgetType> budgetType;
   final Value<int> budget;
   final Value<bool> synced;
@@ -1130,7 +1130,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     this.id = const Value.absent(),
     required String cloudId,
     required String title,
-    required OperationType operationType,
+    required CategoryType operationType,
     required BudgetType budgetType,
     required int budget,
     this.synced = const Value.absent(),
@@ -1169,7 +1169,7 @@ class CategoriesCompanion extends UpdateCompanion<CategoryDB> {
     Value<int>? id,
     Value<String>? cloudId,
     Value<String>? title,
-    Value<OperationType>? operationType,
+    Value<CategoryType>? operationType,
     Value<BudgetType>? budgetType,
     Value<int>? budget,
     Value<bool>? synced,
@@ -3448,7 +3448,7 @@ typedef $$CategoriesTableCreateCompanionBuilder =
       Value<int> id,
       required String cloudId,
       required String title,
-      required OperationType operationType,
+      required CategoryType operationType,
       required BudgetType budgetType,
       required int budget,
       Value<bool> synced,
@@ -3460,7 +3460,7 @@ typedef $$CategoriesTableUpdateCompanionBuilder =
       Value<int> id,
       Value<String> cloudId,
       Value<String> title,
-      Value<OperationType> operationType,
+      Value<CategoryType> operationType,
       Value<BudgetType> budgetType,
       Value<int> budget,
       Value<bool> synced,
@@ -3552,7 +3552,7 @@ class $$CategoriesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<OperationType, OperationType, int>
+  ColumnWithTypeConverterFilters<CategoryType, CategoryType, int>
   get operationType => $composableBuilder(
     column: $table.operationType,
     builder: (column) => ColumnWithTypeConverterFilters(column),
@@ -3744,7 +3744,7 @@ class $$CategoriesTableAnnotationComposer
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<OperationType, int> get operationType =>
+  GeneratedColumnWithTypeConverter<CategoryType, int> get operationType =>
       $composableBuilder(
         column: $table.operationType,
         builder: (column) => column,
@@ -3874,7 +3874,7 @@ class $$CategoriesTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> cloudId = const Value.absent(),
                 Value<String> title = const Value.absent(),
-                Value<OperationType> operationType = const Value.absent(),
+                Value<CategoryType> operationType = const Value.absent(),
                 Value<BudgetType> budgetType = const Value.absent(),
                 Value<int> budget = const Value.absent(),
                 Value<bool> synced = const Value.absent(),
@@ -3896,7 +3896,7 @@ class $$CategoriesTableTableManager
                 Value<int> id = const Value.absent(),
                 required String cloudId,
                 required String title,
-                required OperationType operationType,
+                required CategoryType operationType,
                 required BudgetType budgetType,
                 required int budget,
                 Value<bool> synced = const Value.absent(),
