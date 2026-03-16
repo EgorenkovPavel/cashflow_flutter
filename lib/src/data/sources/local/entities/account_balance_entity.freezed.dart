@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountBalanceEntity {
 
- int get accountId; Currency get currency; int get sum;
+ int get accountId; Balance get balance;
 /// Create a copy of AccountBalanceEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AccountBalanceEntityCopyWith<AccountBalanceEntity> get copyWith => _$AccountBal
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.sum, sum) || other.sum == sum));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.balance, balance) || other.balance == balance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,currency,sum);
+int get hashCode => Object.hash(runtimeType,accountId,balance);
 
 @override
 String toString() {
-  return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
+  return 'AccountBalanceEntity(accountId: $accountId, balance: $balance)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $AccountBalanceEntityCopyWith<$Res>  {
   factory $AccountBalanceEntityCopyWith(AccountBalanceEntity value, $Res Function(AccountBalanceEntity) _then) = _$AccountBalanceEntityCopyWithImpl;
 @useResult
 $Res call({
- int accountId, Currency currency, int sum
+ int accountId, Balance balance
 });
 
 
-
+$BalanceCopyWith<$Res> get balance;
 
 }
 /// @nodoc
@@ -62,15 +62,23 @@ class _$AccountBalanceEntityCopyWithImpl<$Res>
 
 /// Create a copy of AccountBalanceEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? currency = null,Object? sum = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? balance = null,}) {
   return _then(_self.copyWith(
 accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
-as int,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as Currency,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as int,
+as int,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as Balance,
   ));
 }
-
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get balance {
+  
+  return $BalanceCopyWith<$Res>(_self.balance, (value) {
+    return _then(_self.copyWith(balance: value));
+  });
+}
 }
 
 
@@ -152,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int accountId,  Currency currency,  int sum)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int accountId,  Balance balance)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountBalanceEntity() when $default != null:
-return $default(_that.accountId,_that.currency,_that.sum);case _:
+return $default(_that.accountId,_that.balance);case _:
   return orElse();
 
 }
@@ -173,10 +181,10 @@ return $default(_that.accountId,_that.currency,_that.sum);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int accountId,  Currency currency,  int sum)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int accountId,  Balance balance)  $default,) {final _that = this;
 switch (_that) {
 case _AccountBalanceEntity():
-return $default(_that.accountId,_that.currency,_that.sum);case _:
+return $default(_that.accountId,_that.balance);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +201,10 @@ return $default(_that.accountId,_that.currency,_that.sum);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int accountId,  Currency currency,  int sum)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int accountId,  Balance balance)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountBalanceEntity() when $default != null:
-return $default(_that.accountId,_that.currency,_that.sum);case _:
+return $default(_that.accountId,_that.balance);case _:
   return null;
 
 }
@@ -208,12 +216,11 @@ return $default(_that.accountId,_that.currency,_that.sum);case _:
 
 
 class _AccountBalanceEntity implements AccountBalanceEntity {
-  const _AccountBalanceEntity({required this.accountId, required this.currency, required this.sum});
+  const _AccountBalanceEntity({required this.accountId, required this.balance});
   
 
 @override final  int accountId;
-@override final  Currency currency;
-@override final  int sum;
+@override final  Balance balance;
 
 /// Create a copy of AccountBalanceEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +232,16 @@ _$AccountBalanceEntityCopyWith<_AccountBalanceEntity> get copyWith => __$Account
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.sum, sum) || other.sum == sum));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.balance, balance) || other.balance == balance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,currency,sum);
+int get hashCode => Object.hash(runtimeType,accountId,balance);
 
 @override
 String toString() {
-  return 'AccountBalanceEntity(accountId: $accountId, currency: $currency, sum: $sum)';
+  return 'AccountBalanceEntity(accountId: $accountId, balance: $balance)';
 }
 
 
@@ -245,11 +252,11 @@ abstract mixin class _$AccountBalanceEntityCopyWith<$Res> implements $AccountBal
   factory _$AccountBalanceEntityCopyWith(_AccountBalanceEntity value, $Res Function(_AccountBalanceEntity) _then) = __$AccountBalanceEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int accountId, Currency currency, int sum
+ int accountId, Balance balance
 });
 
 
-
+@override $BalanceCopyWith<$Res> get balance;
 
 }
 /// @nodoc
@@ -262,16 +269,24 @@ class __$AccountBalanceEntityCopyWithImpl<$Res>
 
 /// Create a copy of AccountBalanceEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? accountId = null,Object? currency = null,Object? sum = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = null,Object? balance = null,}) {
   return _then(_AccountBalanceEntity(
 accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
-as int,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as Currency,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as int,
+as int,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as Balance,
   ));
 }
 
-
+/// Create a copy of AccountBalanceEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BalanceCopyWith<$Res> get balance {
+  
+  return $BalanceCopyWith<$Res>(_self.balance, (value) {
+    return _then(_self.copyWith(balance: value));
+  });
+}
 }
 
 // dart format on

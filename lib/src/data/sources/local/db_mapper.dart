@@ -326,12 +326,10 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
         final user = account.user == null
             ? null
             : users.where((e) => e.id == account.user).firstOrNull;
-        final balance = Balance(
+        final balance =
           balances
               .where((balance) => balance.accountId == account.id)
-              .map((balance) => Sum(balance.sum, balance.currency))
-              .toList(),
-        );
+              .map((balance) => balance.balance).firstOrNull ?? Balance();
 
         return AccountBalanceView(
           accountId: account.id,

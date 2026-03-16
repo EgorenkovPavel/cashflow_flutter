@@ -22,16 +22,16 @@ abstract class OperationDbEntity with _$OperationDbEntity {
       case OperationType.INPUT:
       case OperationType.OUTPUT:
         return operation.copyWith(
-            account: account.id, category: drift.Value(category!.id));
+          account: account.id,
+          category: drift.Value(category!.id),
+        );
       case OperationType.TRANSFER:
         return operation.copyWith(
           account: account.id,
           recAccount: drift.Value(recAccount!.id),
         );
       case OperationType.EXCHANGE:
-        return operation.copyWith(
-          account: account.id,
-        );
+        return operation.copyWith(account: account.id);
     }
   }
 
