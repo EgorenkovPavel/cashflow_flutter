@@ -12,9 +12,6 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
 
   Stream<List<UserDB>> watchAllUsers() => select(users).watch();
 
-  Future<UserDB?> getById(int id) =>
-      (select(users)..where((c) => c.id.equals(id))).getSingleOrNull();
-
   Future<UserDB?> getByGoogleId(String googleId) =>
       (select(users)..where((c) => c.googleId.equals(googleId))).getSingleOrNull();
 

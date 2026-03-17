@@ -40,21 +40,6 @@ sealed class CategoryCashflowState with _$CategoryCashflowState {
 
   List<CategoryGroup> groupsByType(CategoryType type) =>
       groups.where((e) => e.type == type).toList();
-
-  List<Category> hierarchy(CategoryType type) =>
-      _sort(groupsByType(type), itemsByType(type));
-
-  List<Category> _sort(List<CategoryGroup> groups, List<CategoryItem> items) {
-    final list = <Category>[];
-
-    groups.forEach((group) {
-      list.add(group);
-      list.addAll(items.where((e) => e.parentId == group.id));
-    });
-    list.addAll(items.where((e) => e.parentId == null));
-
-    return list;
-  }
 }
 
 class CategoryCashflowBloc
@@ -98,10 +83,6 @@ extension CategoryCashFlowBlocExt on BuildContext {
 
   T _select<T>(T Function(CategoryCashflowState) selector) =>
       select<CategoryCashflowBloc, T>((bloc) => selector(bloc.state));
-
-  List<Category> readHierarchy(CategoryType type) => _read().hierarchy(type);
-
-  List<Category> watchHierarchy(CategoryType type) => _watch().hierarchy(type);
 
   int cashFlow(CategoryType type) {
     return _select((state) => state.cashflows)
@@ -178,10 +159,7 @@ extension CategoryCashFlowBlocExt on BuildContext {
       _select((state) => state.groupsByType(type).map(_mapToListItem).toList());
 
   List<CategoryView> readCategoryItems(CategoryType type) =>
-      read<CategoryCashflowBloc>().state
-          .itemsByType(type)
-          .map(_mapToListItem)
-          .toList();
+      _read().itemsByType(type).map(_mapToListItem).toList();
 
   List<CategoryView> readCategoryGroups(CategoryType type) =>
       _read().groupsByType(type).map(_mapToListItem).toList();

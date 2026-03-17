@@ -13,41 +13,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
   // Called by the AppDatabase class
   OperationDao(super.db);
 
-  Future<List<OperationDbEntity>> getAllOperationItems() {
-    final acc = alias(accounts, 'a');
-    final rec = alias(accounts, 'rec');
-
-    return (select(operations)..orderBy([
-          (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
-        ]))
-        .join([
-          innerJoin(acc, acc.id.equalsExp(operations.account)),
-          leftOuterJoin(
-            categories,
-            categories.id.equalsExp(operations.category),
-          ),
-          leftOuterJoin(rec, rec.id.equalsExp(operations.recAccount)),
-        ])
-        .get()
-        .then(
-          (rows) => rows.map((row) {
-            var op = row.readTable(operations);
-
-            return OperationDbEntity(
-              operation: op,
-              account: row.readTable(acc),
-              category:
-                  op.operationType == .INPUT || op.operationType == .OUTPUT
-                  ? row.readTable(categories)
-                  : null,
-              recAccount: op.operationType == OperationType.TRANSFER
-                  ? row.readTable(rec)
-                  : null,
-            );
-          }).toList(),
-        );
-  }
-
   Future<List<OperationDbEntity>> getAllOperationItemsWithEmptyCloudId() {
     final acc = alias(accounts, 'a');
     final rec = alias(accounts, 'rec');
@@ -120,40 +85,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
             );
           }).toList(),
         );
-  }
-
-  Stream<OperationDbEntity> watchOperationItemsNotSynced() {
-    final acc = alias(accounts, 'a');
-    final rec = alias(accounts, 'rec');
-
-    return (select(operations)
-          ..where((tbl) => tbl.synced.equals(false))
-          ..orderBy([
-            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
-          ]))
-        .join([
-          innerJoin(acc, acc.id.equalsExp(operations.account)),
-          leftOuterJoin(
-            categories,
-            categories.id.equalsExp(operations.category),
-          ),
-          leftOuterJoin(rec, rec.id.equalsExp(operations.recAccount)),
-        ])
-        .watchSingle()
-        .map((row) {
-          var op = row.readTable(operations);
-
-          return OperationDbEntity(
-            operation: op,
-            account: row.readTable(acc),
-            category: op.operationType == .INPUT || op.operationType == .OUTPUT
-                ? row.readTable(categories)
-                : null,
-            recAccount: op.operationType == OperationType.TRANSFER
-                ? row.readTable(rec)
-                : null,
-          );
-        });
   }
 
   Stream<List<OperationDbEntity>> watchAllOperationItems() {
@@ -554,17 +485,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
     // });
   }
 
-  Future deleteOperation(OperationDB entity) {
-    return transaction(() async {
-      await (update(
-        operations,
-      )..where((tbl) => tbl.id.equals(entity.id))).write(
-        const OperationsCompanion(deleted: Value(true), synced: Value(false)),
-      );
-      await _deleteAnalytic(entity);
-    });
-  }
-
   Future deleteOperationById(int operationId) async {
     return transaction(() async {
       await (update(
@@ -897,10 +817,6 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           break;
         }
     }
-  }
-
-  Future _deleteAnalytic(OperationDB operation) async {
-    await _deleteAnalyticByOperationId(operation.id);
   }
 
   Future _deleteAnalyticByOperationId(int operationId) async {

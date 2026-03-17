@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:money_tracker/src/utils/balance.dart';
 import 'package:money_tracker/src/utils/logger.dart';
@@ -5,9 +6,7 @@ import 'package:money_tracker/src/utils/sum.dart';
 
 import '../db_converters/currency_converter.dart';
 import '../entities/account_balance_entity.dart';
-import '../entities/balance_on_date_entity.dart';
 import 'database.dart';
-import 'package:collection/collection.dart';
 
 part 'account_dao.g.dart';
 
@@ -27,10 +26,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
 
   Future<List<AccountDB>> getAllAccountsNotSynced() =>
       (select(accounts)..where((tbl) => tbl.synced.equals(false))).get();
-
-  Stream<AccountDB> watchNotSynced() => (select(
-    accounts,
-  )..where((tbl) => tbl.synced.equals(false))).watchSingle();
 
   Stream<AccountDB> watchAccountById(int id) =>
       (select(accounts)..where((c) => c.id.equals(id))).watchSingle();
@@ -55,12 +50,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
     return (update(accounts)..where((t) => t.id.equals(accountId))).write(
       AccountsCompanion(cloudId: Value(cloudId), synced: const Value(true)),
     );
-  }
-
-  Stream<int> getTotalBalance() {
-    return customSelect(
-      'SELECT SUM(sum) as sum FROM balance',
-    ).watchSingle().map((row) => row.read<int>('sum'));
   }
 
   Stream<List<AccountBalanceEntity>> watchAllBalances() {
@@ -129,35 +118,6 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
         .toList();
   }
 
-  Future<Balance> getAccountBalance(AccountDB accountDB) async {
-    final sumBalance = balances.sum.sum().cast<int>();
-    final currency = balances.currency.cast<String>();
-
-    final query = db.selectOnly(balances)
-      ..where(balances.account.equals(accountDB.id));
-    query
-      ..addColumns([currency, sumBalance])
-      ..groupBy([currency]);
-
-    var balance = const Balance();
-
-    try {
-      final result = await query.get();
-      for (var item in result) {
-        balance = balance.addSum(
-          Sum(
-            item.read(sumBalance)!,
-            const CurrencyConverter().fromSql(item.read(currency)!),
-          ),
-        );
-      }
-    } catch (e, stacktrace) {
-      AppLogger.error('Failed to get account balance', e, stacktrace);
-    }
-
-    return balance;
-  }
-
   Future<void> batchInsert(List<AccountDB> accountList) async {
     await batch((batch) {
       batch.insertAll(
@@ -175,55 +135,5 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
             .toList(),
       );
     });
-  }
-
-  Stream<List<BalanceOnDate>> watchBalanceOnPeriod(
-    DateTime start,
-    DateTime end,
-  ) {
-    final sumBalance = balances.sum.sum().cast<int>();
-    //final date = CustomExpression<DateTime>("DATE(balance.date, 'start of day')");
-
-    final day = balances.date.day.cast<int>();
-    final month = balances.date.month.cast<int>();
-    final year = balances.date.year.cast<int>();
-
-    final query = db.selectOnly(balances)
-      ..where(
-        balances.date.isBiggerOrEqualValue(start) &
-            balances.date.isSmallerOrEqualValue(end),
-      );
-
-    query
-      ..addColumns([day, month, year, sumBalance])
-      ..groupBy([day, month, year])
-      ..orderBy([
-        OrderingTerm(expression: year),
-        OrderingTerm(expression: month),
-        OrderingTerm(expression: day),
-      ]);
-
-    return query.watch().map((list) {
-      return list
-          .map(
-            (c) => BalanceOnDate(
-              date: DateTime(c.read(year)!, c.read(month)!, c.read(day)!),
-              sum: c.read(sumBalance)!,
-            ),
-          )
-          .toList();
-    });
-  }
-
-  Stream<BalanceOnDate> watchBalance(DateTime date) {
-    final sumBalance = balances.sum.sum();
-
-    final query = db.selectOnly(balances)
-      ..where(balances.date.isSmallerOrEqualValue(date))
-      ..addColumns([sumBalance]);
-
-    return query.watchSingle().map(
-      (c) => BalanceOnDate(date: date, sum: c.read(sumBalance) ?? 0),
-    );
   }
 }

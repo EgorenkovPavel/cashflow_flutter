@@ -34,4 +34,10 @@ abstract class Balance with _$Balance {
 
     return Balance(items);
   }
+
+  Balance sortByCurrency(){
+    final preSum = List.of(sums);
+    preSum.sort((a, b) => a.currency.index - b.currency.index);
+    return Balance(preSum);
+  }
 }

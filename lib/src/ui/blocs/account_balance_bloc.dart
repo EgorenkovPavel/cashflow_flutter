@@ -73,33 +73,21 @@ class AccountBalanceBloc
 }
 
 extension AccountBalanceBlocExt on BuildContext {
-  List<AccountBalanceView> watchAllBalances() =>
-      watch<AccountBalanceBloc>().state.balances;
+  AccountBalanceState _read() => read<AccountBalanceBloc>().state;
 
-  List<AccountBalanceView> watchAccountBalances() =>
-      watch<AccountBalanceBloc>().state.accountBalances;
+  AccountBalanceState _watch() => watch<AccountBalanceBloc>().state;
 
-  List<AccountBalanceView> watchDebtBalances() =>
-      watch<AccountBalanceBloc>().state.debtBalances;
+  List<AccountBalanceView> watchAllBalances() => _watch().balances;
 
-  Balance watchTotalBalance() {
-    var sums = List.of(watch<AccountBalanceBloc>().state.totalBalance.sums);
-    sums.sort((a, b) => a.currency.index - b.currency.index);
-    return Balance(sums);
-  }
+  List<AccountBalanceView> watchAccountBalances() => _watch().accountBalances;
 
-  String getTitleById(int accountId) =>
-      read<AccountBalanceBloc>().state.allAccounts
-          .where((e) => e.id == accountId)
-          .map((e) => e.title)
-          .firstOrNull ??
-      '';
+  List<AccountBalanceView> watchDebtBalances() => _watch().debtBalances;
+
+  Balance watchTotalBalance() => _watch().totalBalance.sortByCurrency();
 
   Sum watchTotalSum() => balanceToRub(watchTotalBalance());
 
-  List<AccountView> watchAccounts() =>
-      watch<AccountBalanceBloc>().state.allAccounts;
+  List<AccountView> watchAccounts() => _watch().allAccounts;
 
-  List<AccountView> readAccounts() =>
-      read<AccountBalanceBloc>().state.allAccounts;
+  List<AccountView> readAccounts() => _read().allAccounts;
 }
