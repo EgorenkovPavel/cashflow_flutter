@@ -25,3 +25,11 @@ scripts:
   server:dir:
     run: cd apps/server && dart_frog dev
     description: "Запуск через переход в директорию"
+
+  db:start:
+    run: docker-compose up -d
+    description: "Запустить базу данных Postgres"
+
+  db:stop:
+    run: docker-compose down
+    description: "Остановить базу данных"

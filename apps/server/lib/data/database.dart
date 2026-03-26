@@ -69,9 +69,9 @@ class AppDatabase extends _$AppDatabase {
     return PgDatabase(
       endpoint: pg.Endpoint(
         host: 'localhost',
-        database: 'mydatabase',
-        username: 'myuser',
-        password: 'mysecretpassword',
+        database: 'my_finance_db',
+        username: 'postgres',
+        password: 'your_password',  //TODO переписать пароли на пакет dotenv
       ),
       settings: const pg.ConnectionSettings(
         // If you expect to talk to a Postgres database over a public connection,
