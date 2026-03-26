@@ -1,0 +1,23 @@
+name: money_tracker
+
+# Пути, где Melos будет искать пакеты и приложения
+packages:
+  - apps/**
+  - packages/**
+
+# Команды для автоматизации
+scripts:
+  # Установка всех зависимостей во всех пакетах одной командой
+  get:
+    run: melos bootstrap
+    description: "Install all dependencies and link packages"
+
+  # Очистка всех проектов (аналог flutter clean для всего репо)
+  clean:
+    run: melos exec -- "flutter clean"
+    description: "Run flutter clean in all apps"
+
+  # Запуск генерации кода (Drift, JSON) во всех пакетах сразу
+  build:
+    run: melos exec -- "dart run build_runner build --delete-conflicting-outputs"
+    description: "Run build_runner in all packages"
