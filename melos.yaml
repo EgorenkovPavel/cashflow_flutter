@@ -21,3 +21,7 @@ scripts:
   build:
     run: melos exec -- "dart run build_runner build --delete-conflicting-outputs"
     description: "Run build_runner in all packages"
+
+  server:dir:
+    run: cd apps/server && dart_frog dev
+    description: "Запуск через переход в директорию"
