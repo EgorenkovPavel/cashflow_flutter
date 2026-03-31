@@ -33,3 +33,16 @@ scripts:
   db:stop:
     run: docker-compose down
     description: "Остановить базу данных"
+
+  server:start:
+    run: |
+      melos run db:start
+      melos bootstrap
+      melos server:dir
+    description: "Запуск Postgres, привязка пакетов и старт сервера с Hot Reload"
+
+  server:stop:
+    run: |
+      melos run db:stop
+      melos exec --scope="backend" -- "pkill -f dart_frog" || true
+    description: "Остановка Docker-контейнеров и завершение процессов Dart Frog"

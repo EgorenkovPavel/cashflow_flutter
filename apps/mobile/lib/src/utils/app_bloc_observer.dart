@@ -4,7 +4,7 @@ import 'logger.dart';
 
 class AppBlocObserver extends BlocObserver {
 
-  final fullStacktrace = true;
+  final fullStacktrace = false;
 
   @override
   void onCreate(BlocBase bloc) {
@@ -35,11 +35,11 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    if (fullStacktrace) {
-      AppLogger.debug('onTransition -- ${bloc.runtimeType}, $transition');
-    }else{
-      AppLogger.debug('onTransition -- ${bloc.runtimeType}');
-    }
+    // if (fullStacktrace) {
+    //   AppLogger.debug('onTransition -- ${bloc.runtimeType}, $transition');
+    // }else{
+    //   AppLogger.debug('onTransition -- ${bloc.runtimeType}');
+    // }
   }
 
   @override

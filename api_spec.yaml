@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: My Finance API
+  version: 1.0.0
+paths:
+  /v1/summary:
+    get:
+      summary: Получить сводный отчет по месяцам
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryReport'
+
+components:
+  schemas:
+    SummaryReport:
+      type: object
+      properties:
+        totalInflow:
+          type: integer
+        totalOutflow:
+          type: integer
