@@ -2,7 +2,7 @@ name: money_tracker
 publish_to: none
 
 environment:
-  sdk: '>=3.10.0-290.4.beta <4.0.0'
+  sdk: ^3.11.0
 
 dev_dependencies:
   melos: ^6.0.0

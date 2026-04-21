@@ -9,8 +9,6 @@ import 'package:money_tracker/src/ui/pages/operation/input_page/widgets/sum_fiel
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/models.dart';
-import '../../../../domain/view_models.dart';
-import '../../../../utils/logger.dart';
 
 class OperationInputPage extends StatelessWidget {
   const OperationInputPage({super.key});

@@ -84,7 +84,7 @@ extension AccountBalanceBlocExt on BuildContext {
 
   Balance watchTotalBalance() => _watch().totalBalance.sortByCurrency();
 
-  Sum watchTotalSum() => balanceToRub(watchTotalBalance());
+  Money watchTotalSum() => balanceToRub(watchTotalBalance());
 
   List<AccountView> watchAccounts() => _watch().allAccounts;
 

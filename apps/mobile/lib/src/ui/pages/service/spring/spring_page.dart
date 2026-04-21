@@ -1,10 +1,9 @@
-import 'package:finance_api_client/spring.dart' hide BaseAccount;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
 import 'package:money_tracker/src/domain/models.dart' as model;
 import 'package:money_tracker/src/injection_container.dart';
-// import 'package:spring1/spring.dart';
+// import 'package:spring1/finance_api_client.dart';
 
 import '../../../../domain/interfaces/account_repository.dart';
 import '../../../../domain/interfaces/category_repository.dart';

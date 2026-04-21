@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CashflowEntity {
 
- int get categoryId; Sum get sum;
+ int get categoryId; Money get sum;
 /// Create a copy of CashflowEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $CashflowEntityCopyWith<$Res>  {
   factory $CashflowEntityCopyWith(CashflowEntity value, $Res Function(CashflowEntity) _then) = _$CashflowEntityCopyWithImpl;
 @useResult
 $Res call({
- int categoryId, Sum sum
+ int categoryId, Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -66,16 +66,16 @@ class _$CashflowEntityCopyWithImpl<$Res>
   return _then(_self.copyWith(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 /// Create a copy of CashflowEntity
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int categoryId,  Sum sum)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int categoryId,  Money sum)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CashflowEntity() when $default != null:
 return $default(_that.categoryId,_that.sum);case _:
@@ -181,7 +181,7 @@ return $default(_that.categoryId,_that.sum);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int categoryId,  Sum sum)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int categoryId,  Money sum)  $default,) {final _that = this;
 switch (_that) {
 case _CashflowEntity():
 return $default(_that.categoryId,_that.sum);case _:
@@ -201,7 +201,7 @@ return $default(_that.categoryId,_that.sum);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int categoryId,  Sum sum)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int categoryId,  Money sum)?  $default,) {final _that = this;
 switch (_that) {
 case _CashflowEntity() when $default != null:
 return $default(_that.categoryId,_that.sum);case _:
@@ -220,7 +220,7 @@ class _CashflowEntity implements CashflowEntity {
   
 
 @override final  int categoryId;
-@override final  Sum sum;
+@override final  Money sum;
 
 /// Create a copy of CashflowEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -252,11 +252,11 @@ abstract mixin class _$CashflowEntityCopyWith<$Res> implements $CashflowEntityCo
   factory _$CashflowEntityCopyWith(_CashflowEntity value, $Res Function(_CashflowEntity) _then) = __$CashflowEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int categoryId, Sum sum
+ int categoryId, Money sum
 });
 
 
-@override $SumCopyWith<$Res> get sum;
+@override $MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -273,7 +273,7 @@ class __$CashflowEntityCopyWithImpl<$Res>
   return _then(_CashflowEntity(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -281,9 +281,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }

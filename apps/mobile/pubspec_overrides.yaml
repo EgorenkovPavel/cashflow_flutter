@@ -1,5 +1,7 @@
-# melos_managed_dependency_overrides: finance_models,finance_api_client
+# melos_managed_dependency_overrides: dto_models,finance_api_client,finance_models
 dependency_overrides:
+  dto_models:
+    path: ..\\..\\packages\\dto_models
   finance_api_client:
     path: ..\\..\\packages\\finance_api_client
   finance_models:

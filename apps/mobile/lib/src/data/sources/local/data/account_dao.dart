@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
-import 'package:money_tracker/src/utils/logger.dart';
 
 import '../../../../domain/models.dart';
 import '../db_converters/currency_converter.dart';
@@ -71,7 +70,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
               balance: Balance(
                 c.value
                     .map(
-                      (s) => Sum(
+                      (s) => Money(
                         s.read(sumBalance)!,
                         const CurrencyConverter().fromSql(s.read(currency)!),
                       ),
@@ -105,7 +104,7 @@ class AccountDao extends DatabaseAccessor<Database> with _$AccountDaoMixin {
             balance: Balance(
               c.value
                   .map(
-                    (s) => Sum(
+                    (s) => Money(
                       s.read(sumBalance)!,
                       const CurrencyConverter().fromSql(s.read(currency)!),
                     ),

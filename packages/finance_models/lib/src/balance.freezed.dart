@@ -11,16 +11,19 @@ part of 'balance.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$Balance {
 
- List<Sum> get sums;
+ List<Money> get sums;
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $BalanceCopyWith<Balance> get copyWith => _$BalanceCopyWithImpl<Balance>(this as Balance, _$identity);
 
+  /// Serializes this Balance to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is Balance&&const DeepCollectionEquality().equals(other.sums, sums));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(sums));
 
@@ -45,7 +48,7 @@ abstract mixin class $BalanceCopyWith<$Res>  {
   factory $BalanceCopyWith(Balance value, $Res Function(Balance) _then) = _$BalanceCopyWithImpl;
 @useResult
 $Res call({
- List<Sum> sums
+ List<Money> sums
 });
 
 
@@ -65,7 +68,7 @@ class _$BalanceCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? sums = null,}) {
   return _then(_self.copyWith(
 sums: null == sums ? _self.sums : sums // ignore: cast_nullable_to_non_nullable
-as List<Sum>,
+as List<Money>,
   ));
 }
 
@@ -150,7 +153,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Sum> sums)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Money> sums)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
 return $default(_that.sums);case _:
@@ -171,7 +174,7 @@ return $default(_that.sums);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Sum> sums)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Money> sums)  $default,) {final _that = this;
 switch (_that) {
 case _Balance():
 return $default(_that.sums);case _:
@@ -191,7 +194,7 @@ return $default(_that.sums);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Sum> sums)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Money> sums)?  $default,) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
 return $default(_that.sums);case _:
@@ -203,14 +206,14 @@ return $default(_that.sums);case _:
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _Balance extends Balance {
-  const _Balance([final  List<Sum> sums = const []]): _sums = sums,super._();
-  
+  const _Balance([final  List<Money> sums = const []]): _sums = sums,super._();
+  factory _Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);
 
- final  List<Sum> _sums;
-@override@JsonKey() List<Sum> get sums {
+ final  List<Money> _sums;
+@override@JsonKey() List<Money> get sums {
   if (_sums is EqualUnmodifiableListView) return _sums;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_sums);
@@ -223,14 +226,17 @@ class _Balance extends Balance {
 @pragma('vm:prefer-inline')
 _$BalanceCopyWith<_Balance> get copyWith => __$BalanceCopyWithImpl<_Balance>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$BalanceToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _Balance&&const DeepCollectionEquality().equals(other._sums, _sums));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_sums));
 
@@ -247,7 +253,7 @@ abstract mixin class _$BalanceCopyWith<$Res> implements $BalanceCopyWith<$Res> {
   factory _$BalanceCopyWith(_Balance value, $Res Function(_Balance) _then) = __$BalanceCopyWithImpl;
 @override @useResult
 $Res call({
- List<Sum> sums
+ List<Money> sums
 });
 
 
@@ -267,7 +273,7 @@ class __$BalanceCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? sums = null,}) {
   return _then(_Balance(
 null == sums ? _self._sums : sums // ignore: cast_nullable_to_non_nullable
-as List<Sum>,
+as List<Money>,
   ));
 }
 

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../finance_models.dart';
+import '../../models.dart';
 
 part 'operation.freezed.dart';
 
@@ -16,7 +16,7 @@ sealed class Operation with _$Operation{
     required DateTime date,
     required int account,
     required int category,
-    required Sum sum,
+    required Money sum,
   }) = InputOperation;
   const factory Operation.output({
     @Default(0) int id,
@@ -26,7 +26,7 @@ sealed class Operation with _$Operation{
     required DateTime date,
     required int account,
     required int category,
-    required Sum sum,
+    required Money sum,
   }) = OutputOperation;
   const factory Operation.transfer({
     @Default(0) int id,
@@ -36,7 +36,7 @@ sealed class Operation with _$Operation{
     required DateTime date,
     required int account,
     required int recAccount,
-    required Sum sum,
+    required Money sum,
   }) = TransferOperation;
   const factory Operation.exchange({
     @Default(0) int id,
@@ -45,8 +45,8 @@ sealed class Operation with _$Operation{
     @Default(false) bool deleted,
     required DateTime date,
     required int account,
-    required Sum sum,
-    required Sum recSum,
+    required Money sum,
+    required Money recSum,
   }) = ExchangeOperation;
 
   OperationType get operationType => switch (this) {

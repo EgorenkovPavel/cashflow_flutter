@@ -143,7 +143,7 @@ class _AccountItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final sum = account.balance.sums.firstWhere(
       (s) => s.currency == balanceCurrency,
-      orElse: () => Sum(0, balanceCurrency),
+      orElse: () => Money(0, balanceCurrency),
     );
 
     return ListTile(

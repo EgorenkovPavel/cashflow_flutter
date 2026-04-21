@@ -91,7 +91,7 @@ class _InfoCard extends StatelessWidget {
                   ),
                   Text(
                     context.loc.sumFormat(
-                      Sum(switch (category.budgetType) {
+                      Money(switch (category.budgetType) {
                         BudgetType.MONTH => category.monthBudget,
                         BudgetType.YEAR => category.yearBudget,
                       }, .RUB),

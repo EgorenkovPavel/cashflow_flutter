@@ -28,9 +28,9 @@ class MasterEvent with _$MasterEvent {
   const factory MasterEvent.changeRecAccount(int id) =
       _ChangeRecAccountMasterEvent;
 
-  const factory MasterEvent.changeSum(Sum sum) = _ChangeSumMasterEvent;
+  const factory MasterEvent.changeSum(Money sum) = _ChangeSumMasterEvent;
 
-  const factory MasterEvent.changeRecSum(Sum sum) = _ChangeRecSumMasterEvent;
+  const factory MasterEvent.changeRecSum(Money sum) = _ChangeRecSumMasterEvent;
 
   const factory MasterEvent.cancelOperation() = _CancelOperationMasterEvent;
 
@@ -52,7 +52,7 @@ abstract class MasterState with _$MasterState {
   const factory MasterState.input({
     int? accountId,
     int? categoryId,
-    required Sum sum,
+    required Money sum,
     Operation? operation,
     MasterStateAction? action,
   }) = _InputMasterState;
@@ -60,7 +60,7 @@ abstract class MasterState with _$MasterState {
   const factory MasterState.output({
     int? accountId,
     int? categoryId,
-    required Sum sum,
+    required Money sum,
     Operation? operation,
     MasterStateAction? action,
   }) = _OutputMasterState;
@@ -68,15 +68,15 @@ abstract class MasterState with _$MasterState {
   const factory MasterState.transfer({
     int? accountId,
     int? recAccountId,
-    required Sum sum,
+    required Money sum,
     Operation? operation,
     MasterStateAction? action,
   }) = _TransferMasterState;
 
   const factory MasterState.exchange({
     int? accountId,
-    required Sum sum,
-    required Sum recSum,
+    required Money sum,
+    required Money recSum,
     Operation? operation,
     MasterStateAction? action,
   }) = _ExchangeMasterState;
@@ -86,7 +86,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final OperationInteractor _operationInteractor;
 
   MasterBloc(this._operationInteractor)
-    : super(MasterState.input(sum: Sum(0, Currency.RUB))) {
+    : super(MasterState.input(sum: Money(0, Currency.RUB))) {
     on<MasterEvent>(
       (event, emitter) => event.map(
         start: (event) => _start(event, emitter),
@@ -145,7 +145,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           MasterState.exchange(
             accountId: op.account,
             sum: state.sum,
-            recSum: Sum(0, .RUB),
+            recSum: Money(0, .RUB),
           ),
         );
     }
@@ -167,7 +167,7 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
           MasterState.exchange(
             accountId: state.accountId,
             sum: state.sum,
-            recSum: Sum(0, .RUB),
+            recSum: Money(0, .RUB),
           ),
         );
     }
@@ -363,9 +363,9 @@ extension MasterExt on BuildContext {
 
   void onChangeCategory(int? id) => _add(MasterEvent.changeCategory(id));
 
-  void onChangeSum(Sum sum) => _add(MasterEvent.changeSum(sum));
+  void onChangeSum(Money sum) => _add(MasterEvent.changeSum(sum));
 
-  void onChangeRecSum(Sum sum) => _add(MasterEvent.changeRecSum(sum));
+  void onChangeRecSum(Money sum) => _add(MasterEvent.changeRecSum(sum));
 
   OperationType type() => select<MasterBloc, OperationType>(
     (bloc) => bloc.state.map(
@@ -376,12 +376,12 @@ extension MasterExt on BuildContext {
     ),
   );
 
-  Sum sum() => select<MasterBloc, Sum>((bloc) => bloc.state.sum);
+  Money sum() => select<MasterBloc, Money>((bloc) => bloc.state.sum);
 
-  Sum recSum() => select<MasterBloc, Sum>(
+  Money recSum() => select<MasterBloc, Money>(
     (bloc) => bloc.state.maybeMap(
       exchange: (s) => s.recSum,
-      orElse: () => Sum(0, .RUB),
+      orElse: () => Money(0, .RUB),
     ),
   );
 

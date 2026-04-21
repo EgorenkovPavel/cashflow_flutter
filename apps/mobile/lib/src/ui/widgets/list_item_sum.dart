@@ -4,7 +4,7 @@ import 'package:money_tracker/src/utils/extensions.dart';
 import '../../domain/models.dart';
 
 class ListItemSum extends StatelessWidget {
-  final Sum sum;
+  final Money sum;
   const ListItemSum({
     super.key, required this.sum,
   });

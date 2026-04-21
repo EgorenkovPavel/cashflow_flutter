@@ -8,5 +8,5 @@ export 'src/enum/category_type.dart';
 export 'src/enum/currency.dart';
 export 'src/enum/operation_type.dart';
 export 'src/balance.dart';
-export 'src/sum.dart';
+export 'src/money.dart';
 

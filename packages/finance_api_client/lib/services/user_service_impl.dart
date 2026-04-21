@@ -8,15 +8,9 @@ class UserServiceImpl implements UserService {
   UserServiceImpl(this._connector);
 
   @override
-  Future<List<UserGroup>> getAllGroups() {
-    return _connector.get<List<UserGroup>>('user-groups',
-        (data) => data.map<UserGroup>((e) => UserGroup.fromJson(e)).toList());
-  }
-
-  @override
-  Future<List<User>> getUsersByGroup() {
-    return _connector.get<List<User>>(
+  Future<List<UserResponce>> getUsersByGroup() {
+    return _connector.get<List<UserResponce>>(
         'user-groups/${_connector.user!.userGroup}/users',
-        (data) => data.map<User>((e) => User.fromJson(e)).toList());
+        (data) => data.map<UserResponce>((e) => UserResponce.fromJson(e)).toList());
   }
 }

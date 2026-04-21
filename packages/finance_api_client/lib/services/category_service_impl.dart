@@ -1,6 +1,7 @@
-import 'category_service.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/models.dart';
+import 'category_service.dart';
 import 'network_client.dart';
 
 class CategoryServiceImpl implements CategoryService {
@@ -11,98 +12,28 @@ class CategoryServiceImpl implements CategoryService {
   String get _path => 'user-groups/${_connector.user!.userGroup}/categories';
 
   @override
-  Future<Category> getById(CategoryId id) => _connector.get<Category>(
-        '$_path/$id',
-        (e) => Category.fromJson(e),
-      );
+  Future<CategoryResponse> getById(UuidValue id) => _connector
+      .get<CategoryResponse>('$_path/$id', (e) => CategoryResponse.fromJson(e));
 
   @override
-  Future<List<Category>> getAll() => _connector.get<List<Category>>(
+  Future<List<CategoryResponse>> getAll() =>
+      _connector.get<List<CategoryResponse>>(
         _path,
-        (data) => data.map<Category>((e) => Category.fromJson(e)).toList(),
+        (data) => data
+            .map<CategoryResponse>((e) => CategoryResponse.fromJson(e))
+            .toList(),
       );
 
   @override
-  Future<InputCategoryItem> createInputCategoryItem(
-    String name,
-    int budget,
-    CategoryId? parent,
-  ) async {
-    InputCategoryItem category = InputCategoryItem(
-      name: name,
-      budget: budget,
-      parent: parent,
-    );
-    final id = await _postCategory(category);
-    return category.copyWithId(id);
+  Future<CategoryResponse> create(CreateCategoryRequest req) {
+    return _postCategory(req);
   }
 
   @override
-  Future<OutputCategoryItem> createOutputCategoryItem(
-    String name,
-    int budget,
-    CategoryId? parent,
-  ) async {
-    OutputCategoryItem category = OutputCategoryItem(
-      name: name,
-      budget: budget,
-      parent: parent,
-    );
-    final id = await _postCategory(category);
-    return category.copyWithId(id);
-  }
+  Future<CategoryResponse> update(UpdateCategoryRequest req) =>
+      _connector.update(path: '$_path/${req.id}', body: req.toJson());
 
-  @override
-  Future<InputCategoryGroup> createInputCategoryGroup(String name) async {
-    InputCategoryGroup category = InputCategoryGroup(
-      name: name,
-    );
-    final id = await _postCategory(category);
-    return category.copyWithId(id);
-  }
-
-  @override
-  Future<OutputCategoryGroup> createOutputCategoryGroup(String name) async {
-    OutputCategoryGroup category = OutputCategoryGroup(
-      name: name,
-    );
-    final id = await _postCategory(category);
-    return category.copyWithId(id);
-  }
-
-  @override
-  Future<CategoryItem> updateCategoryItem(
-    CategoryItem category,
-    String name,
-    int budget,
-    CategoryId? parent,
-  ) =>
-      _connector.update(
-        path: '$_path/${category.id}',
-        body: {
-          'name': name,
-          'budget': budget,
-          'parent': parent,
-        },
-        mapper: (e) => Category.fromJson(e) as CategoryItem,
-      );
-
-  @override
-  Future<CategoryGroup> updateCategoryGroup(
-    CategoryGroup category,
-    String name,
-  ) =>
-      _connector.update(
-        path: '$_path/${category.id}',
-        body: {
-          'name': name,
-          'budget': 0,
-          'parent': null,
-        },
-        mapper: (e) => Category.fromJson(e) as CategoryGroup,
-      );
-
-  Future<CategoryId> _postCategory(Category category) async {
-    return await _connector.post(_path, category.toJson());
+  Future<CategoryResponse> _postCategory(CreateCategoryRequest req) async {
+    return await _connector.post(_path, req.toJson());
   }
 }

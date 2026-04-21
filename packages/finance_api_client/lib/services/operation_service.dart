@@ -1,69 +1,17 @@
+import 'package:uuid/uuid.dart';
+
 import '../models/models.dart';
 
 abstract interface class OperationService {
-  Future<Operation> getById(OperationId id);
+  Future<OperationResponse> getById(UuidValue id);
 
-  Future<List<Operation>> getAll();
+  Future<List<OperationResponse>> getAll();
 
-  Future<InputOperation> createInputOperation(
-    DateTime date,
-    Account account,
-    InputCategoryItem category,
-    int sum,
-    Currency currency,
-  );
+  Future<OperationResponse> create(CreateOperationRequest req);
 
-  Future<OutputOperation> createOutputOperation(
-    DateTime date,
-    Account account,
-    OutputCategoryItem category,
-    int sum,
-    Currency currency,
-  );
+  Future<OperationResponse> update(UpdateOperationRequest req);
 
-  Future<TransferOperation> createTransferOperation(
-    DateTime date,
-    BaseAccount account,
-    BaseAccount accountRec,
-    int sum,
-    Currency currency,
-  );
+  Future<OperationResponse> delete(UuidValue id);
 
-  Future<ExchangeOperation> createExchangeOperation(
-      DateTime date,
-      BaseAccount account,
-      int sum,
-      Currency currency,
-      int recSum,
-      Currency recCurrency,
-);
-
-  Future<InputOperation> swapToInputOperation(
-    Operation operation,
-    DateTime date,
-    Account account,
-    InputCategoryItem category,
-    int sum,
-    Currency currency,
-  );
-
-  Future<OutputOperation> swapToOutputOperation(
-    Operation operation,
-    DateTime date,
-    Account account,
-    OutputCategoryItem category,
-    int sum,
-    Currency currency,
-  );
-
-  Future<TransferOperation> swapToTransferOperation(
-    Operation operation,
-    DateTime date,
-    BaseAccount account,
-    BaseAccount accountRec,
-    int sum,
-    Currency currency,
-  );
-
-  Future<void> deleteOperation(OperationId id);
+  Future<OperationResponse> recover(UuidValue id);
 }

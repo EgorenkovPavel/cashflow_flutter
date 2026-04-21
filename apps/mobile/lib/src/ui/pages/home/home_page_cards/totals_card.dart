@@ -62,7 +62,7 @@ class TotalsCard extends StatelessWidget {
 }
 
 class SumText extends StatelessWidget {
-  final Sum sum;
+  final Money sum;
   final TextStyle? style;
   final TextAlign? textAlign;
 
@@ -164,7 +164,7 @@ class _Debts extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   final String title;
-  final Sum sum;
+  final Money sum;
 
   const _Header(this.title, this.sum, {super.key});
 
@@ -182,7 +182,7 @@ class _Header extends StatelessWidget {
 
 class _Title extends StatelessWidget {
   final String title;
-  final Sum sum;
+  final Money sum;
 
   const _Title(this.title, this.sum, {super.key});
 
@@ -200,7 +200,7 @@ class _Title extends StatelessWidget {
 
 class _SubTitle extends StatelessWidget {
   final String title;
-  final Sum sum;
+  final Money sum;
 
   const _SubTitle(this.title, this.sum, {super.key});
 

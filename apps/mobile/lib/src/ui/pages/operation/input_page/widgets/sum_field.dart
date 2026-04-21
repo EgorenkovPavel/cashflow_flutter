@@ -5,8 +5,8 @@ import '../../../../../domain/models.dart';
 import '../../../../widgets/currency_menu.dart';
 
 class SumField extends StatefulWidget {
-  final void Function(Sum) onChange;
-  final Sum? initialSum;
+  final void Function(Money) onChange;
+  final Money? initialSum;
 
   const SumField({super.key, required this.onChange, this.initialSum});
 
@@ -65,7 +65,7 @@ class _SumFieldState extends State<SumField> {
   }
 
   void _notifyChange() {
-    widget.onChange(Sum(int.tryParse(_controller.text) ?? 0, _currency));
+    widget.onChange(Money(int.tryParse(_controller.text) ?? 0, _currency));
   }
 
   @override

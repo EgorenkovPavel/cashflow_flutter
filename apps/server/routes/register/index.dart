@@ -7,7 +7,7 @@ Future<Response> onRequest(RequestContext context) async {
   
   final auth = context.request.headers['Authorization'];
   if (auth == null || !auth.startsWith('Bearer ')){
-    return Response(statusCode: 400);
+    return Response(statusCode: 400, body: 'No Authorization Bearer header');
   }
   
   final token = auth.substring(7);

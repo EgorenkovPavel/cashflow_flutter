@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'sum.dart';
+part of 'money.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -11,38 +11,41 @@ part of 'sum.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
-mixin _$Sum {
+mixin _$Money {
 
  int get sum; Currency get currency;
-/// Create a copy of Sum
+/// Create a copy of Money
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SumCopyWith<Sum> get copyWith => _$SumCopyWithImpl<Sum>(this as Sum, _$identity);
+$MoneyCopyWith<Money> get copyWith => _$MoneyCopyWithImpl<Money>(this as Money, _$identity);
 
+  /// Serializes this Money to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Sum&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Money&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,sum,currency);
 
 @override
 String toString() {
-  return 'Sum(sum: $sum, currency: $currency)';
+  return 'Money(sum: $sum, currency: $currency)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SumCopyWith<$Res>  {
-  factory $SumCopyWith(Sum value, $Res Function(Sum) _then) = _$SumCopyWithImpl;
+abstract mixin class $MoneyCopyWith<$Res>  {
+  factory $MoneyCopyWith(Money value, $Res Function(Money) _then) = _$MoneyCopyWithImpl;
 @useResult
 $Res call({
  int sum, Currency currency
@@ -53,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$SumCopyWithImpl<$Res>
-    implements $SumCopyWith<$Res> {
-  _$SumCopyWithImpl(this._self, this._then);
+class _$MoneyCopyWithImpl<$Res>
+    implements $MoneyCopyWith<$Res> {
+  _$MoneyCopyWithImpl(this._self, this._then);
 
-  final Sum _self;
-  final $Res Function(Sum) _then;
+  final Money _self;
+  final $Res Function(Money) _then;
 
-/// Create a copy of Sum
+/// Create a copy of Money
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sum = null,Object? currency = null,}) {
   return _then(_self.copyWith(
@@ -73,8 +76,8 @@ as Currency,
 }
 
 
-/// Adds pattern-matching-related methods to [Sum].
-extension SumPatterns on Sum {
+/// Adds pattern-matching-related methods to [Money].
+extension MoneyPatterns on Money {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -87,10 +90,10 @@ extension SumPatterns on Sum {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Sum value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Money value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Sum() when $default != null:
+case _Money() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -109,10 +112,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Sum value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Money value)  $default,){
 final _that = this;
 switch (_that) {
-case _Sum():
+case _Money():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -130,10 +133,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Sum value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Money value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Sum() when $default != null:
+case _Money() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -153,7 +156,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int sum,  Currency currency)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Sum() when $default != null:
+case _Money() when $default != null:
 return $default(_that.sum,_that.currency);case _:
   return orElse();
 
@@ -174,7 +177,7 @@ return $default(_that.sum,_that.currency);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int sum,  Currency currency)  $default,) {final _that = this;
 switch (_that) {
-case _Sum():
+case _Money():
 return $default(_that.sum,_that.currency);case _:
   throw StateError('Unexpected subclass');
 
@@ -194,7 +197,7 @@ return $default(_that.sum,_that.currency);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int sum,  Currency currency)?  $default,) {final _that = this;
 switch (_that) {
-case _Sum() when $default != null:
+case _Money() when $default != null:
 return $default(_that.sum,_that.currency);case _:
   return null;
 
@@ -204,43 +207,46 @@ return $default(_that.sum,_that.currency);case _:
 }
 
 /// @nodoc
+@JsonSerializable()
 
-
-class _Sum extends Sum {
-  const _Sum(this.sum, this.currency): super._();
-  
+class _Money extends Money {
+  const _Money(this.sum, this.currency): super._();
+  factory _Money.fromJson(Map<String, dynamic> json) => _$MoneyFromJson(json);
 
 @override final  int sum;
 @override final  Currency currency;
 
-/// Create a copy of Sum
+/// Create a copy of Money
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SumCopyWith<_Sum> get copyWith => __$SumCopyWithImpl<_Sum>(this, _$identity);
+_$MoneyCopyWith<_Money> get copyWith => __$MoneyCopyWithImpl<_Money>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$MoneyToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Sum&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Money&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,sum,currency);
 
 @override
 String toString() {
-  return 'Sum(sum: $sum, currency: $currency)';
+  return 'Money(sum: $sum, currency: $currency)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SumCopyWith<$Res> implements $SumCopyWith<$Res> {
-  factory _$SumCopyWith(_Sum value, $Res Function(_Sum) _then) = __$SumCopyWithImpl;
+abstract mixin class _$MoneyCopyWith<$Res> implements $MoneyCopyWith<$Res> {
+  factory _$MoneyCopyWith(_Money value, $Res Function(_Money) _then) = __$MoneyCopyWithImpl;
 @override @useResult
 $Res call({
  int sum, Currency currency
@@ -251,17 +257,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SumCopyWithImpl<$Res>
-    implements _$SumCopyWith<$Res> {
-  __$SumCopyWithImpl(this._self, this._then);
+class __$MoneyCopyWithImpl<$Res>
+    implements _$MoneyCopyWith<$Res> {
+  __$MoneyCopyWithImpl(this._self, this._then);
 
-  final _Sum _self;
-  final $Res Function(_Sum) _then;
+  final _Money _self;
+  final $Res Function(_Money) _then;
 
-/// Create a copy of Sum
+/// Create a copy of Money
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? sum = null,Object? currency = null,}) {
-  return _then(_Sum(
+  return _then(_Money(
 null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
 as int,null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
 as Currency,

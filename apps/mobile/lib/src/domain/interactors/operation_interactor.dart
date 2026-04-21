@@ -52,7 +52,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int categoryId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = InputOperation(
@@ -78,7 +78,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int categoryId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = OutputOperation(
@@ -104,7 +104,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int recAccountId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = TransferOperation(
@@ -129,8 +129,8 @@ class OperationInteractor {
   Future<Result<Operation>> insertExchange({
     required DateTime date,
     required int accountId,
-    required Sum sum,
-    required Sum recSum,
+    required Money sum,
+    required Money recSum,
   }) async {
     try {
       final newOperation = ExchangeOperation(
@@ -157,7 +157,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int categoryId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = InputOperation(
@@ -186,7 +186,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int categoryId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = OutputOperation(
@@ -215,7 +215,7 @@ class OperationInteractor {
     required DateTime date,
     required int accountId,
     required int recAccountId,
-    required Sum sum,
+    required Money sum,
   }) async {
     try {
       final newOperation = TransferOperation(
@@ -243,8 +243,8 @@ class OperationInteractor {
     required Operation operation,
     required DateTime date,
     required int accountId,
-    required Sum sum,
-    required Sum recSum,
+    required Money sum,
+    required Money recSum,
   }) async {
     try {
       final newOperation = ExchangeOperation(

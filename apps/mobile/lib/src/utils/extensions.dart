@@ -43,7 +43,7 @@ extension AppLocalizationExtended on AppLocalizations {
     decimalDigits: 2,
   ).format(rate);
 
-  String sumFormat(Sum sum) => numberFormat(sum.sum, sum.currency);
+  String sumFormat(Money sum) => numberFormat(sum.sum, sum.currency);
 
   String operationTypeTitle(OperationType type) => switch (type) {
     .INPUT => typeInput,

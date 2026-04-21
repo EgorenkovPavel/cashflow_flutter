@@ -2,23 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/models.dart';
 
 class NetworkClient {
   String _token;
-  User? _user;
+  UserResponce? _user;
 
   NetworkClient(this._token);
 
-  User? get user => _user;
+  UserResponce? get user => _user;
 
   set token(String token) {
     _token = token;
   }
 
   Future<bool> connect() async {
-    _user = await get<User>('register', (data) => User.fromJson(data));
+    _user = await get<UserResponce>('register', (data) => UserResponce.fromJson(data));
     return true;
   }
 
@@ -92,7 +91,6 @@ class NetworkClient {
   Future<T> update<T>({
     required String path,
     required Map<String, dynamic> body,
-    required T Function(dynamic) mapper,
   }) async {
     final encodedString = jsonEncode(body, toEncodable: (item) {
       if (item is DateTime) {
@@ -120,10 +118,10 @@ class NetworkClient {
       print('UPDATE response ${response.statusCode}: ${response.body}');
     }
 
-    return mapper(jsonDecode(response.body));
+    return jsonDecode(response.body) as T;
   }
 
-  Future<void> delete<T>(String path) async {
+  Future<T> delete<T>(String path) async {
     if (kDebugMode) {
       print('DELETE request: ${_url(path)}');
     }
@@ -136,5 +134,7 @@ class NetworkClient {
     if (kDebugMode) {
       print('DELETE response ${response.statusCode}: ${response.body}');
     }
+
+    return jsonDecode(response.body) as T;
   }
 }

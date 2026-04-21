@@ -66,9 +66,9 @@ extension CurrencyRateBlocExt on BuildContext {
     return loc.rateFormat(((1 / _rate(currency)) * 100).floor() / 100);
   }
 
-  Sum sumToRub(Sum sum) => Sum((sum.sum / _rate(sum.currency)).toInt(), .RUB);
+  Money sumToRub(Money sum) => Money((sum.sum / _rate(sum.currency)).toInt(), .RUB);
 
-  Sum balanceToRub(Balance balance) => balance.sums
+  Money balanceToRub(Balance balance) => balance.sums
       .map((e) => sumToRub(e).sum)
-      .fold<Sum>(Sum(0, .RUB), (a, b) => a + b);
+      .fold<Money>(Money(0, .RUB), (a, b) => a + b);
 }

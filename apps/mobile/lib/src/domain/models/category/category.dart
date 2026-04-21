@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../enum/budget_type.dart';
-import '../enum/category_type.dart';
+import '../../models.dart';
 
 
 part 'category.freezed.dart';

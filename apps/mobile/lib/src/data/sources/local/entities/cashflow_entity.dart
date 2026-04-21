@@ -8,6 +8,6 @@ part 'cashflow_entity.freezed.dart';
 abstract class CashflowEntity with _$CashflowEntity{
   const factory CashflowEntity({
     required int categoryId,
-    required Sum sum,
+    required Money sum,
   }) = _CashflowEntity;
 }

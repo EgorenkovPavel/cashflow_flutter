@@ -30,7 +30,7 @@ class _BudgetPageState extends State<BudgetPage> {
           context.balanceToRub(a.cashflowByType(_budgetType)).sum,
     );
 
-    final budget = Sum(
+    final budget = Money(
       list.map((e) => e.budgetByType(_budgetType)).fold(0, (a, b) => a + b),
       .RUB,
     );

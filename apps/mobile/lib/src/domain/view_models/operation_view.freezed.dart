@@ -162,7 +162,7 @@ return exchange(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)?  input,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)?  output,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Sum sum)?  transfer,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Sum sendSum,  Sum receivedSum)?  exchange,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)?  input,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)?  output,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Money sum)?  transfer,TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Money sendSum,  Money receivedSum)?  exchange,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case InputOperationView() when input != null:
 return input(_that.id,_that.date,_that.deleted,_that.synced,_that.userPhotoUrl,_that.userName,_that.account,_that.category,_that.sum);case OutputOperationView() when output != null:
@@ -186,7 +186,7 @@ return exchange(_that.id,_that.date,_that.deleted,_that.synced,_that.userPhotoUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)  input,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)  output,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Sum sum)  transfer,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Sum sendSum,  Sum receivedSum)  exchange,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)  input,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)  output,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Money sum)  transfer,required TResult Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Money sendSum,  Money receivedSum)  exchange,}) {final _that = this;
 switch (_that) {
 case InputOperationView():
 return input(_that.id,_that.date,_that.deleted,_that.synced,_that.userPhotoUrl,_that.userName,_that.account,_that.category,_that.sum);case OutputOperationView():
@@ -206,7 +206,7 @@ return exchange(_that.id,_that.date,_that.deleted,_that.synced,_that.userPhotoUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)?  input,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Sum sum)?  output,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Sum sum)?  transfer,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Sum sendSum,  Sum receivedSum)?  exchange,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)?  input,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String category,  Money sum)?  output,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  String recAccount,  Money sum)?  transfer,TResult? Function( int id,  DateTime date,  bool deleted,  bool synced,  String userPhotoUrl,  String userName,  String account,  Money sendSum,  Money receivedSum)?  exchange,}) {final _that = this;
 switch (_that) {
 case InputOperationView() when input != null:
 return input(_that.id,_that.date,_that.deleted,_that.synced,_that.userPhotoUrl,_that.userName,_that.account,_that.category,_that.sum);case OutputOperationView() when output != null:
@@ -235,7 +235,7 @@ class InputOperationView extends OperationView {
 @override final  String userName;
 @override final  String account;
  final  String category;
- final  Sum sum;
+ final  Money sum;
 
 /// Create a copy of OperationView
 /// with the given fields replaced by the non-null parameter values.
@@ -267,11 +267,11 @@ abstract mixin class $InputOperationViewCopyWith<$Res> implements $OperationView
   factory $InputOperationViewCopyWith(InputOperationView value, $Res Function(InputOperationView) _then) = _$InputOperationViewCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String category, Sum sum
+ int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String category, Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -295,7 +295,7 @@ as String,userName: null == userName ? _self.userName : userName // ignore: cast
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -303,9 +303,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -326,7 +326,7 @@ class OutputOperationView extends OperationView {
 @override final  String userName;
 @override final  String account;
  final  String category;
- final  Sum sum;
+ final  Money sum;
 
 /// Create a copy of OperationView
 /// with the given fields replaced by the non-null parameter values.
@@ -358,11 +358,11 @@ abstract mixin class $OutputOperationViewCopyWith<$Res> implements $OperationVie
   factory $OutputOperationViewCopyWith(OutputOperationView value, $Res Function(OutputOperationView) _then) = _$OutputOperationViewCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String category, Sum sum
+ int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String category, Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -386,7 +386,7 @@ as String,userName: null == userName ? _self.userName : userName // ignore: cast
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -394,9 +394,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -417,7 +417,7 @@ class TransferOperationView extends OperationView {
 @override final  String userName;
 @override final  String account;
  final  String recAccount;
- final  Sum sum;
+ final  Money sum;
 
 /// Create a copy of OperationView
 /// with the given fields replaced by the non-null parameter values.
@@ -449,11 +449,11 @@ abstract mixin class $TransferOperationViewCopyWith<$Res> implements $OperationV
   factory $TransferOperationViewCopyWith(TransferOperationView value, $Res Function(TransferOperationView) _then) = _$TransferOperationViewCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String recAccount, Sum sum
+ int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, String recAccount, Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -477,7 +477,7 @@ as String,userName: null == userName ? _self.userName : userName // ignore: cast
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as String,recAccount: null == recAccount ? _self.recAccount : recAccount // ignore: cast_nullable_to_non_nullable
 as String,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -485,9 +485,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -507,8 +507,8 @@ class ExchangeOperationView extends OperationView {
 @override final  String userPhotoUrl;
 @override final  String userName;
 @override final  String account;
- final  Sum sendSum;
- final  Sum receivedSum;
+ final  Money sendSum;
+ final  Money receivedSum;
 
 /// Create a copy of OperationView
 /// with the given fields replaced by the non-null parameter values.
@@ -540,11 +540,11 @@ abstract mixin class $ExchangeOperationViewCopyWith<$Res> implements $OperationV
   factory $ExchangeOperationViewCopyWith(ExchangeOperationView value, $Res Function(ExchangeOperationView) _then) = _$ExchangeOperationViewCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, Sum sendSum, Sum receivedSum
+ int id, DateTime date, bool deleted, bool synced, String userPhotoUrl, String userName, String account, Money sendSum, Money receivedSum
 });
 
 
-$SumCopyWith<$Res> get sendSum;$SumCopyWith<$Res> get receivedSum;
+$MoneyCopyWith<$Res> get sendSum;$MoneyCopyWith<$Res> get receivedSum;
 
 }
 /// @nodoc
@@ -567,8 +567,8 @@ as bool,userPhotoUrl: null == userPhotoUrl ? _self.userPhotoUrl : userPhotoUrl /
 as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as String,sendSum: null == sendSum ? _self.sendSum : sendSum // ignore: cast_nullable_to_non_nullable
-as Sum,receivedSum: null == receivedSum ? _self.receivedSum : receivedSum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,receivedSum: null == receivedSum ? _self.receivedSum : receivedSum // ignore: cast_nullable_to_non_nullable
+as Money,
   ));
 }
 
@@ -576,18 +576,18 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sendSum {
+$MoneyCopyWith<$Res> get sendSum {
   
-  return $SumCopyWith<$Res>(_self.sendSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sendSum, (value) {
     return _then(_self.copyWith(sendSum: value));
   });
 }/// Create a copy of OperationView
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get receivedSum {
+$MoneyCopyWith<$Res> get receivedSum {
   
-  return $SumCopyWith<$Res>(_self.receivedSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.receivedSum, (value) {
     return _then(_self.copyWith(receivedSum: value));
   });
 }

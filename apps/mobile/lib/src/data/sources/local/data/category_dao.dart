@@ -88,7 +88,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
       if (year != null && month != null) {
         final date = DateTime(year, month);
-        final sum = Sum(totalSum, cur);
+        final sum = Money(totalSum, cur);
         if(result.containsKey(date)){
           result[date]!.addSum(sum);
         }else {
@@ -157,7 +157,7 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
           .map(
             (c) => CashflowEntity(
               categoryId: c.read(categoryId)!,
-              sum: Sum(
+              sum: Money(
                 c.read(sumBalance)!,
                 const CurrencyConverter().fromSql(c.read(currency)!),
               ),

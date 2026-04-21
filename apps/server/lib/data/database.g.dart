@@ -4,7 +4,7 @@ part of 'database.dart';
 
 // ignore_for_file: type=lint
 class $UserGroupsTable extends UserGroups
-    with TableInfo<$UserGroupsTable, UserGroupDBO> {
+    with TableInfo<$UserGroupsTable, user_groups> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -12,11 +12,14 @@ class $UserGroupsTable extends UserGroups
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<UuidValue> id = GeneratedColumn<UuidValue>(
-      'id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-      defaultValue: genRandomUuid());
+    'id',
+    aliasedName,
+    false,
+    type: PgTypes.uuid,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+    defaultValue: genRandomUuid(),
+  );
   @override
   List<GeneratedColumn> get $columns => [id];
   @override
@@ -25,8 +28,10 @@ class $UserGroupsTable extends UserGroups
   String get actualTableName => $name;
   static const String $name = 'user_groups';
   @override
-  VerificationContext validateIntegrity(Insertable<UserGroupDBO> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<user_groups> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -38,11 +43,13 @@ class $UserGroupsTable extends UserGroups
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  UserGroupDBO map(Map<String, dynamic> data, {String? tablePrefix}) {
+  user_groups map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return UserGroupDBO(
-      id: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}id'])!,
+    return user_groups(
+      id: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}id'],
+      )!,
     );
   }
 
@@ -52,9 +59,9 @@ class $UserGroupsTable extends UserGroups
   }
 }
 
-class UserGroupDBO extends DataClass implements Insertable<UserGroupDBO> {
+class user_groups extends DataClass implements Insertable<user_groups> {
   final UuidValue id;
-  const UserGroupDBO({required this.id});
+  const user_groups({required this.id});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -63,38 +70,30 @@ class UserGroupDBO extends DataClass implements Insertable<UserGroupDBO> {
   }
 
   UserGroupsCompanion toCompanion(bool nullToAbsent) {
-    return UserGroupsCompanion(
-      id: Value(id),
-    );
+    return UserGroupsCompanion(id: Value(id));
   }
 
-  factory UserGroupDBO.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory user_groups.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return UserGroupDBO(
-      id: serializer.fromJson<UuidValue>(json['id']),
-    );
+    return user_groups(id: serializer.fromJson<UuidValue>(json['id']));
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<UuidValue>(id),
-    };
+    return <String, dynamic>{'id': serializer.toJson<UuidValue>(id)};
   }
 
-  UserGroupDBO copyWith({UuidValue? id}) => UserGroupDBO(
-        id: id ?? this.id,
-      );
-  UserGroupDBO copyWithCompanion(UserGroupsCompanion data) {
-    return UserGroupDBO(
-      id: data.id.present ? data.id.value : this.id,
-    );
+  user_groups copyWith({UuidValue? id}) => user_groups(id: id ?? this.id);
+  user_groups copyWithCompanion(UserGroupsCompanion data) {
+    return user_groups(id: data.id.present ? data.id.value : this.id);
   }
 
   @override
   String toString() {
-    return (StringBuffer('UserGroupDBO(')
+    return (StringBuffer('user_groups(')
           ..write('id: $id')
           ..write(')'))
         .toString();
@@ -104,10 +103,10 @@ class UserGroupDBO extends DataClass implements Insertable<UserGroupDBO> {
   int get hashCode => id.hashCode;
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || (other is UserGroupDBO && other.id == this.id);
+      identical(this, other) || (other is user_groups && other.id == this.id);
 }
 
-class UserGroupsCompanion extends UpdateCompanion<UserGroupDBO> {
+class UserGroupsCompanion extends UpdateCompanion<user_groups> {
   final Value<UuidValue> id;
   final Value<int> rowid;
   const UserGroupsCompanion({
@@ -118,7 +117,7 @@ class UserGroupsCompanion extends UpdateCompanion<UserGroupDBO> {
     this.id = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  static Insertable<UserGroupDBO> custom({
+  static Insertable<user_groups> custom({
     Expression<UuidValue>? id,
     Expression<int>? rowid,
   }) {
@@ -129,10 +128,7 @@ class UserGroupsCompanion extends UpdateCompanion<UserGroupDBO> {
   }
 
   UserGroupsCompanion copyWith({Value<UuidValue>? id, Value<int>? rowid}) {
-    return UserGroupsCompanion(
-      id: id ?? this.id,
-      rowid: rowid ?? this.rowid,
-    );
+    return UserGroupsCompanion(id: id ?? this.id, rowid: rowid ?? this.rowid);
   }
 
   @override
@@ -157,7 +153,7 @@ class UserGroupsCompanion extends UpdateCompanion<UserGroupDBO> {
   }
 }
 
-class $UsersTable extends Users with TableInfo<$UsersTable, UserDBO> {
+class $UsersTable extends Users with TableInfo<$UsersTable, users> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -165,53 +161,85 @@ class $UsersTable extends Users with TableInfo<$UsersTable, UserDBO> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<UuidValue> id = GeneratedColumn<UuidValue>(
-      'id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: false,
-      defaultValue: genRandomUuid());
+    'id',
+    aliasedName,
+    false,
+    type: PgTypes.uuid,
+    requiredDuringInsert: false,
+    defaultValue: genRandomUuid(),
+  );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _googleIdMeta =
-      const VerificationMeta('googleId');
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _googleIdMeta = const VerificationMeta(
+    'googleId',
+  );
   @override
   late final GeneratedColumn<String> googleId = GeneratedColumn<String>(
-      'google_id', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+    'google_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _emailMeta = const VerificationMeta('email');
   @override
   late final GeneratedColumn<String> email = GeneratedColumn<String>(
-      'email', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'email',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _photoMeta = const VerificationMeta('photo');
   @override
   late final GeneratedColumn<String> photo = GeneratedColumn<String>(
-      'photo', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _groupIdMeta =
-      const VerificationMeta('groupId');
+    'photo',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userGroupIdMeta = const VerificationMeta(
+    'userGroupId',
+  );
   @override
-  late final GeneratedColumn<UuidValue> groupId = GeneratedColumn<UuidValue>(
-      'group_id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES user_groups (id)'));
+  late final GeneratedColumn<UuidValue> userGroupId =
+      GeneratedColumn<UuidValue>(
+        'user_group_id',
+        aliasedName,
+        false,
+        type: PgTypes.uuid,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES user_groups (id)',
+        ),
+      );
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, googleId, email, photo, groupId];
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    googleId,
+    email,
+    photo,
+    userGroupId,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'users';
   @override
-  VerificationContext validateIntegrity(Insertable<UserDBO> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<users> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -219,33 +247,46 @@ class $UsersTable extends Users with TableInfo<$UsersTable, UserDBO> {
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
     if (data.containsKey('google_id')) {
-      context.handle(_googleIdMeta,
-          googleId.isAcceptableOrUnknown(data['google_id']!, _googleIdMeta));
+      context.handle(
+        _googleIdMeta,
+        googleId.isAcceptableOrUnknown(data['google_id']!, _googleIdMeta),
+      );
     } else if (isInserting) {
       context.missing(_googleIdMeta);
     }
     if (data.containsKey('email')) {
       context.handle(
-          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
     } else if (isInserting) {
       context.missing(_emailMeta);
     }
     if (data.containsKey('photo')) {
       context.handle(
-          _photoMeta, photo.isAcceptableOrUnknown(data['photo']!, _photoMeta));
+        _photoMeta,
+        photo.isAcceptableOrUnknown(data['photo']!, _photoMeta),
+      );
     } else if (isInserting) {
       context.missing(_photoMeta);
     }
-    if (data.containsKey('group_id')) {
-      context.handle(_groupIdMeta,
-          groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta));
+    if (data.containsKey('user_group_id')) {
+      context.handle(
+        _userGroupIdMeta,
+        userGroupId.isAcceptableOrUnknown(
+          data['user_group_id']!,
+          _userGroupIdMeta,
+        ),
+      );
     } else if (isInserting) {
-      context.missing(_groupIdMeta);
+      context.missing(_userGroupIdMeta);
     }
     return context;
   }
@@ -253,21 +294,33 @@ class $UsersTable extends Users with TableInfo<$UsersTable, UserDBO> {
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  UserDBO map(Map<String, dynamic> data, {String? tablePrefix}) {
+  users map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return UserDBO(
-      id: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      googleId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}google_id'])!,
-      email: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
-      photo: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}photo'])!,
-      groupId: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}group_id'])!,
+    return users(
+      id: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      googleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}google_id'],
+      )!,
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      )!,
+      photo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo'],
+      )!,
+      userGroupId: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}user_group_id'],
+      )!,
     );
   }
 
@@ -277,20 +330,21 @@ class $UsersTable extends Users with TableInfo<$UsersTable, UserDBO> {
   }
 }
 
-class UserDBO extends DataClass implements Insertable<UserDBO> {
+class users extends DataClass implements Insertable<users> {
   final UuidValue id;
   final String name;
   final String googleId;
   final String email;
   final String photo;
-  final UuidValue groupId;
-  const UserDBO(
-      {required this.id,
-      required this.name,
-      required this.googleId,
-      required this.email,
-      required this.photo,
-      required this.groupId});
+  final UuidValue userGroupId;
+  const users({
+    required this.id,
+    required this.name,
+    required this.googleId,
+    required this.email,
+    required this.photo,
+    required this.userGroupId,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -299,7 +353,7 @@ class UserDBO extends DataClass implements Insertable<UserDBO> {
     map['google_id'] = Variable<String>(googleId);
     map['email'] = Variable<String>(email);
     map['photo'] = Variable<String>(photo);
-    map['group_id'] = Variable<UuidValue>(groupId, PgTypes.uuid);
+    map['user_group_id'] = Variable<UuidValue>(userGroupId, PgTypes.uuid);
     return map;
   }
 
@@ -310,20 +364,22 @@ class UserDBO extends DataClass implements Insertable<UserDBO> {
       googleId: Value(googleId),
       email: Value(email),
       photo: Value(photo),
-      groupId: Value(groupId),
+      userGroupId: Value(userGroupId),
     );
   }
 
-  factory UserDBO.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory users.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return UserDBO(
+    return users(
       id: serializer.fromJson<UuidValue>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       googleId: serializer.fromJson<String>(json['googleId']),
       email: serializer.fromJson<String>(json['email']),
       photo: serializer.fromJson<String>(json['photo']),
-      groupId: serializer.fromJson<UuidValue>(json['groupId']),
+      userGroupId: serializer.fromJson<UuidValue>(json['userGroupId']),
     );
   }
   @override
@@ -335,70 +391,73 @@ class UserDBO extends DataClass implements Insertable<UserDBO> {
       'googleId': serializer.toJson<String>(googleId),
       'email': serializer.toJson<String>(email),
       'photo': serializer.toJson<String>(photo),
-      'groupId': serializer.toJson<UuidValue>(groupId),
+      'userGroupId': serializer.toJson<UuidValue>(userGroupId),
     };
   }
 
-  UserDBO copyWith(
-          {UuidValue? id,
-          String? name,
-          String? googleId,
-          String? email,
-          String? photo,
-          UuidValue? groupId}) =>
-      UserDBO(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        googleId: googleId ?? this.googleId,
-        email: email ?? this.email,
-        photo: photo ?? this.photo,
-        groupId: groupId ?? this.groupId,
-      );
-  UserDBO copyWithCompanion(UsersCompanion data) {
-    return UserDBO(
+  users copyWith({
+    UuidValue? id,
+    String? name,
+    String? googleId,
+    String? email,
+    String? photo,
+    UuidValue? userGroupId,
+  }) => users(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    googleId: googleId ?? this.googleId,
+    email: email ?? this.email,
+    photo: photo ?? this.photo,
+    userGroupId: userGroupId ?? this.userGroupId,
+  );
+  users copyWithCompanion(UsersCompanion data) {
+    return users(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       googleId: data.googleId.present ? data.googleId.value : this.googleId,
       email: data.email.present ? data.email.value : this.email,
       photo: data.photo.present ? data.photo.value : this.photo,
-      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      userGroupId: data.userGroupId.present
+          ? data.userGroupId.value
+          : this.userGroupId,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('UserDBO(')
+    return (StringBuffer('users(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('googleId: $googleId, ')
           ..write('email: $email, ')
           ..write('photo: $photo, ')
-          ..write('groupId: $groupId')
+          ..write('userGroupId: $userGroupId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, googleId, email, photo, groupId);
+  int get hashCode =>
+      Object.hash(id, name, googleId, email, photo, userGroupId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is UserDBO &&
+      (other is users &&
           other.id == this.id &&
           other.name == this.name &&
           other.googleId == this.googleId &&
           other.email == this.email &&
           other.photo == this.photo &&
-          other.groupId == this.groupId);
+          other.userGroupId == this.userGroupId);
 }
 
-class UsersCompanion extends UpdateCompanion<UserDBO> {
+class UsersCompanion extends UpdateCompanion<users> {
   final Value<UuidValue> id;
   final Value<String> name;
   final Value<String> googleId;
   final Value<String> email;
   final Value<String> photo;
-  final Value<UuidValue> groupId;
+  final Value<UuidValue> userGroupId;
   final Value<int> rowid;
   const UsersCompanion({
     this.id = const Value.absent(),
@@ -406,7 +465,7 @@ class UsersCompanion extends UpdateCompanion<UserDBO> {
     this.googleId = const Value.absent(),
     this.email = const Value.absent(),
     this.photo = const Value.absent(),
-    this.groupId = const Value.absent(),
+    this.userGroupId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   UsersCompanion.insert({
@@ -415,20 +474,20 @@ class UsersCompanion extends UpdateCompanion<UserDBO> {
     required String googleId,
     required String email,
     required String photo,
-    required UuidValue groupId,
+    required UuidValue userGroupId,
     this.rowid = const Value.absent(),
-  })  : name = Value(name),
-        googleId = Value(googleId),
-        email = Value(email),
-        photo = Value(photo),
-        groupId = Value(groupId);
-  static Insertable<UserDBO> custom({
+  }) : name = Value(name),
+       googleId = Value(googleId),
+       email = Value(email),
+       photo = Value(photo),
+       userGroupId = Value(userGroupId);
+  static Insertable<users> custom({
     Expression<UuidValue>? id,
     Expression<String>? name,
     Expression<String>? googleId,
     Expression<String>? email,
     Expression<String>? photo,
-    Expression<UuidValue>? groupId,
+    Expression<UuidValue>? userGroupId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -437,26 +496,27 @@ class UsersCompanion extends UpdateCompanion<UserDBO> {
       if (googleId != null) 'google_id': googleId,
       if (email != null) 'email': email,
       if (photo != null) 'photo': photo,
-      if (groupId != null) 'group_id': groupId,
+      if (userGroupId != null) 'user_group_id': userGroupId,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  UsersCompanion copyWith(
-      {Value<UuidValue>? id,
-      Value<String>? name,
-      Value<String>? googleId,
-      Value<String>? email,
-      Value<String>? photo,
-      Value<UuidValue>? groupId,
-      Value<int>? rowid}) {
+  UsersCompanion copyWith({
+    Value<UuidValue>? id,
+    Value<String>? name,
+    Value<String>? googleId,
+    Value<String>? email,
+    Value<String>? photo,
+    Value<UuidValue>? userGroupId,
+    Value<int>? rowid,
+  }) {
     return UsersCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       googleId: googleId ?? this.googleId,
       email: email ?? this.email,
       photo: photo ?? this.photo,
-      groupId: groupId ?? this.groupId,
+      userGroupId: userGroupId ?? this.userGroupId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -479,8 +539,11 @@ class UsersCompanion extends UpdateCompanion<UserDBO> {
     if (photo.present) {
       map['photo'] = Variable<String>(photo.value);
     }
-    if (groupId.present) {
-      map['group_id'] = Variable<UuidValue>(groupId.value, PgTypes.uuid);
+    if (userGroupId.present) {
+      map['user_group_id'] = Variable<UuidValue>(
+        userGroupId.value,
+        PgTypes.uuid,
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -496,15 +559,14 @@ class UsersCompanion extends UpdateCompanion<UserDBO> {
           ..write('googleId: $googleId, ')
           ..write('email: $email, ')
           ..write('photo: $photo, ')
-          ..write('groupId: $groupId, ')
+          ..write('userGroupId: $userGroupId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
 }
 
-class $AccountsTable extends Accounts
-    with TableInfo<$AccountsTable, AccountDBO> {
+class $AccountsTable extends Accounts with TableInfo<$AccountsTable, accounts> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -512,48 +574,90 @@ class $AccountsTable extends Accounts
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<UuidValue> id = GeneratedColumn<UuidValue>(
-      'id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-      defaultValue: genRandomUuid());
+    'id',
+    aliasedName,
+    false,
+    type: PgTypes.uuid,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+    defaultValue: genRandomUuid(),
+  );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<UuidValue> userId = GeneratedColumn<UuidValue>(
-      'user_id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES users (id)'));
+    'user_id',
+    aliasedName,
+    false,
+    type: PgTypes.uuid,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (id)',
+    ),
+  );
   static const VerificationMeta _isDebtMeta = const VerificationMeta('isDebt');
   @override
   late final GeneratedColumn<bool> isDebt = GeneratedColumn<bool>(
-      'is_debt', aliasedName, false,
-      type: DriftSqlType.bool, requiredDuringInsert: true);
-  static const VerificationMeta _groupIdMeta =
-      const VerificationMeta('groupId');
+    'is_debt',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userGroupIdMeta = const VerificationMeta(
+    'userGroupId',
+  );
   @override
-  late final GeneratedColumn<UuidValue> groupId = GeneratedColumn<UuidValue>(
-      'group_id', aliasedName, false,
-      type: PgTypes.uuid,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES user_groups (id)'));
+  late final GeneratedColumn<UuidValue> userGroupId =
+      GeneratedColumn<UuidValue>(
+        'user_group_id',
+        aliasedName,
+        false,
+        type: PgTypes.uuid,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES user_groups (id)',
+        ),
+      );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name, userId, isDebt, groupId];
+  late final GeneratedColumn<PgDateTime> updatedAt =
+      GeneratedColumn<PgDateTime>(
+        'updated_at',
+        aliasedName,
+        false,
+        type: PgTypes.timestampNoTimezone,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    userId,
+    isDebt,
+    userGroupId,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'accounts';
   @override
-  VerificationContext validateIntegrity(Insertable<AccountDBO> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<accounts> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -561,27 +665,46 @@ class $AccountsTable extends Accounts
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
     if (data.containsKey('user_id')) {
-      context.handle(_userIdMeta,
-          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
     if (data.containsKey('is_debt')) {
-      context.handle(_isDebtMeta,
-          isDebt.isAcceptableOrUnknown(data['is_debt']!, _isDebtMeta));
+      context.handle(
+        _isDebtMeta,
+        isDebt.isAcceptableOrUnknown(data['is_debt']!, _isDebtMeta),
+      );
     } else if (isInserting) {
       context.missing(_isDebtMeta);
     }
-    if (data.containsKey('group_id')) {
-      context.handle(_groupIdMeta,
-          groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta));
+    if (data.containsKey('user_group_id')) {
+      context.handle(
+        _userGroupIdMeta,
+        userGroupId.isAcceptableOrUnknown(
+          data['user_group_id']!,
+          _userGroupIdMeta,
+        ),
+      );
     } else if (isInserting) {
-      context.missing(_groupIdMeta);
+      context.missing(_userGroupIdMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
     }
     return context;
   }
@@ -589,19 +712,33 @@ class $AccountsTable extends Accounts
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  AccountDBO map(Map<String, dynamic> data, {String? tablePrefix}) {
+  accounts map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AccountDBO(
-      id: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      userId: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}user_id'])!,
-      isDebt: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_debt'])!,
-      groupId: attachedDatabase.typeMapping
-          .read(PgTypes.uuid, data['${effectivePrefix}group_id'])!,
+    return accounts(
+      id: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}user_id'],
+      )!,
+      isDebt: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_debt'],
+      )!,
+      userGroupId: attachedDatabase.typeMapping.read(
+        PgTypes.uuid,
+        data['${effectivePrefix}user_group_id'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        PgTypes.timestampNoTimezone,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -611,18 +748,21 @@ class $AccountsTable extends Accounts
   }
 }
 
-class AccountDBO extends DataClass implements Insertable<AccountDBO> {
+class accounts extends DataClass implements Insertable<accounts> {
   final UuidValue id;
   final String name;
   final UuidValue userId;
   final bool isDebt;
-  final UuidValue groupId;
-  const AccountDBO(
-      {required this.id,
-      required this.name,
-      required this.userId,
-      required this.isDebt,
-      required this.groupId});
+  final UuidValue userGroupId;
+  final PgDateTime updatedAt;
+  const accounts({
+    required this.id,
+    required this.name,
+    required this.userId,
+    required this.isDebt,
+    required this.userGroupId,
+    required this.updatedAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -630,7 +770,11 @@ class AccountDBO extends DataClass implements Insertable<AccountDBO> {
     map['name'] = Variable<String>(name);
     map['user_id'] = Variable<UuidValue>(userId, PgTypes.uuid);
     map['is_debt'] = Variable<bool>(isDebt);
-    map['group_id'] = Variable<UuidValue>(groupId, PgTypes.uuid);
+    map['user_group_id'] = Variable<UuidValue>(userGroupId, PgTypes.uuid);
+    map['updated_at'] = Variable<PgDateTime>(
+      updatedAt,
+      PgTypes.timestampNoTimezone,
+    );
     return map;
   }
 
@@ -640,19 +784,23 @@ class AccountDBO extends DataClass implements Insertable<AccountDBO> {
       name: Value(name),
       userId: Value(userId),
       isDebt: Value(isDebt),
-      groupId: Value(groupId),
+      userGroupId: Value(userGroupId),
+      updatedAt: Value(updatedAt),
     );
   }
 
-  factory AccountDBO.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory accounts.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AccountDBO(
+    return accounts(
       id: serializer.fromJson<UuidValue>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       userId: serializer.fromJson<UuidValue>(json['userId']),
       isDebt: serializer.fromJson<bool>(json['isDebt']),
-      groupId: serializer.fromJson<UuidValue>(json['groupId']),
+      userGroupId: serializer.fromJson<UuidValue>(json['userGroupId']),
+      updatedAt: serializer.fromJson<PgDateTime>(json['updatedAt']),
     );
   }
   @override
@@ -663,71 +811,82 @@ class AccountDBO extends DataClass implements Insertable<AccountDBO> {
       'name': serializer.toJson<String>(name),
       'userId': serializer.toJson<UuidValue>(userId),
       'isDebt': serializer.toJson<bool>(isDebt),
-      'groupId': serializer.toJson<UuidValue>(groupId),
+      'userGroupId': serializer.toJson<UuidValue>(userGroupId),
+      'updatedAt': serializer.toJson<PgDateTime>(updatedAt),
     };
   }
 
-  AccountDBO copyWith(
-          {UuidValue? id,
-          String? name,
-          UuidValue? userId,
-          bool? isDebt,
-          UuidValue? groupId}) =>
-      AccountDBO(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        userId: userId ?? this.userId,
-        isDebt: isDebt ?? this.isDebt,
-        groupId: groupId ?? this.groupId,
-      );
-  AccountDBO copyWithCompanion(AccountsCompanion data) {
-    return AccountDBO(
+  accounts copyWith({
+    UuidValue? id,
+    String? name,
+    UuidValue? userId,
+    bool? isDebt,
+    UuidValue? userGroupId,
+    PgDateTime? updatedAt,
+  }) => accounts(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    userId: userId ?? this.userId,
+    isDebt: isDebt ?? this.isDebt,
+    userGroupId: userGroupId ?? this.userGroupId,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  accounts copyWithCompanion(AccountsCompanion data) {
+    return accounts(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       userId: data.userId.present ? data.userId.value : this.userId,
       isDebt: data.isDebt.present ? data.isDebt.value : this.isDebt,
-      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      userGroupId: data.userGroupId.present
+          ? data.userGroupId.value
+          : this.userGroupId,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('AccountDBO(')
+    return (StringBuffer('accounts(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('userId: $userId, ')
           ..write('isDebt: $isDebt, ')
-          ..write('groupId: $groupId')
+          ..write('userGroupId: $userGroupId, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, userId, isDebt, groupId);
+  int get hashCode =>
+      Object.hash(id, name, userId, isDebt, userGroupId, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AccountDBO &&
+      (other is accounts &&
           other.id == this.id &&
           other.name == this.name &&
           other.userId == this.userId &&
           other.isDebt == this.isDebt &&
-          other.groupId == this.groupId);
+          other.userGroupId == this.userGroupId &&
+          other.updatedAt == this.updatedAt);
 }
 
-class AccountsCompanion extends UpdateCompanion<AccountDBO> {
+class AccountsCompanion extends UpdateCompanion<accounts> {
   final Value<UuidValue> id;
   final Value<String> name;
   final Value<UuidValue> userId;
   final Value<bool> isDebt;
-  final Value<UuidValue> groupId;
+  final Value<UuidValue> userGroupId;
+  final Value<PgDateTime> updatedAt;
   final Value<int> rowid;
   const AccountsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.userId = const Value.absent(),
     this.isDebt = const Value.absent(),
-    this.groupId = const Value.absent(),
+    this.userGroupId = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AccountsCompanion.insert({
@@ -735,18 +894,21 @@ class AccountsCompanion extends UpdateCompanion<AccountDBO> {
     required String name,
     required UuidValue userId,
     required bool isDebt,
-    required UuidValue groupId,
+    required UuidValue userGroupId,
+    required PgDateTime updatedAt,
     this.rowid = const Value.absent(),
-  })  : name = Value(name),
-        userId = Value(userId),
-        isDebt = Value(isDebt),
-        groupId = Value(groupId);
-  static Insertable<AccountDBO> custom({
+  }) : name = Value(name),
+       userId = Value(userId),
+       isDebt = Value(isDebt),
+       userGroupId = Value(userGroupId),
+       updatedAt = Value(updatedAt);
+  static Insertable<accounts> custom({
     Expression<UuidValue>? id,
     Expression<String>? name,
     Expression<UuidValue>? userId,
     Expression<bool>? isDebt,
-    Expression<UuidValue>? groupId,
+    Expression<UuidValue>? userGroupId,
+    Expression<PgDateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -754,24 +916,28 @@ class AccountsCompanion extends UpdateCompanion<AccountDBO> {
       if (name != null) 'name': name,
       if (userId != null) 'user_id': userId,
       if (isDebt != null) 'is_debt': isDebt,
-      if (groupId != null) 'group_id': groupId,
+      if (userGroupId != null) 'user_group_id': userGroupId,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  AccountsCompanion copyWith(
-      {Value<UuidValue>? id,
-      Value<String>? name,
-      Value<UuidValue>? userId,
-      Value<bool>? isDebt,
-      Value<UuidValue>? groupId,
-      Value<int>? rowid}) {
+  AccountsCompanion copyWith({
+    Value<UuidValue>? id,
+    Value<String>? name,
+    Value<UuidValue>? userId,
+    Value<bool>? isDebt,
+    Value<UuidValue>? userGroupId,
+    Value<PgDateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
     return AccountsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       userId: userId ?? this.userId,
       isDebt: isDebt ?? this.isDebt,
-      groupId: groupId ?? this.groupId,
+      userGroupId: userGroupId ?? this.userGroupId,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -791,8 +957,17 @@ class AccountsCompanion extends UpdateCompanion<AccountDBO> {
     if (isDebt.present) {
       map['is_debt'] = Variable<bool>(isDebt.value);
     }
-    if (groupId.present) {
-      map['group_id'] = Variable<UuidValue>(groupId.value, PgTypes.uuid);
+    if (userGroupId.present) {
+      map['user_group_id'] = Variable<UuidValue>(
+        userGroupId.value,
+        PgTypes.uuid,
+      );
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<PgDateTime>(
+        updatedAt.value,
+        PgTypes.timestampNoTimezone,
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -807,7 +982,8 @@ class AccountsCompanion extends UpdateCompanion<AccountDBO> {
           ..write('name: $name, ')
           ..write('userId: $userId, ')
           ..write('isDebt: $isDebt, ')
-          ..write('groupId: $groupId, ')
+          ..write('userGroupId: $userGroupId, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -824,50 +1000,58 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [userGroups, users, accounts];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    userGroups,
+    users,
+    accounts,
+  ];
 }
 
-typedef $$UserGroupsTableCreateCompanionBuilder = UserGroupsCompanion Function({
-  Value<UuidValue> id,
-  Value<int> rowid,
-});
-typedef $$UserGroupsTableUpdateCompanionBuilder = UserGroupsCompanion Function({
-  Value<UuidValue> id,
-  Value<int> rowid,
-});
+typedef $$UserGroupsTableCreateCompanionBuilder =
+    UserGroupsCompanion Function({Value<UuidValue> id, Value<int> rowid});
+typedef $$UserGroupsTableUpdateCompanionBuilder =
+    UserGroupsCompanion Function({Value<UuidValue> id, Value<int> rowid});
 
 final class $$UserGroupsTableReferences
-    extends BaseReferences<_$AppDatabase, $UserGroupsTable, UserGroupDBO> {
+    extends BaseReferences<_$AppDatabase, $UserGroupsTable, user_groups> {
   $$UserGroupsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$UsersTable, List<UserDBO>> _usersRefsTable(
-          _$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(db.users,
-          aliasName: $_aliasNameGenerator(db.userGroups.id, db.users.groupId));
+  static MultiTypedResultKey<$UsersTable, List<users>> _usersRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.users,
+    aliasName: $_aliasNameGenerator(db.userGroups.id, db.users.userGroupId),
+  );
 
   $$UsersTableProcessedTableManager get usersRefs {
-    final manager = $$UsersTableTableManager($_db, $_db.users)
-        .filter((f) => f.groupId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.userGroupId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_usersRefsTable($_db));
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
+      manager.$state.copyWith(prefetchedData: cache),
+    );
   }
 
-  static MultiTypedResultKey<$AccountsTable, List<AccountDBO>>
-      _accountsRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.accounts,
-              aliasName:
-                  $_aliasNameGenerator(db.userGroups.id, db.accounts.groupId));
+  static MultiTypedResultKey<$AccountsTable, List<accounts>> _accountsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.accounts,
+    aliasName: $_aliasNameGenerator(db.userGroups.id, db.accounts.userGroupId),
+  );
 
   $$AccountsTableProcessedTableManager get accountsRefs {
-    final manager = $$AccountsTableTableManager($_db, $_db.accounts)
-        .filter((f) => f.groupId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.userGroupId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_accountsRefsTable($_db));
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
+      manager.$state.copyWith(prefetchedData: cache),
+    );
   }
 }
 
@@ -881,47 +1065,57 @@ class $$UserGroupsTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   Expression<bool> usersRefs(
-      Expression<bool> Function($$UsersTableFilterComposer f) f) {
+    Expression<bool> Function($$UsersTableFilterComposer f) f,
+  ) {
     final $$UsersTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.users,
-        getReferencedColumn: (t) => t.groupId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UsersTableFilterComposer(
-              $db: $db,
-              $table: $db.users,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
   Expression<bool> accountsRefs(
-      Expression<bool> Function($$AccountsTableFilterComposer f) f) {
+    Expression<bool> Function($$AccountsTableFilterComposer f) f,
+  ) {
     final $$AccountsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.accounts,
-        getReferencedColumn: (t) => t.groupId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AccountsTableFilterComposer(
-              $db: $db,
-              $table: $db.accounts,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.userGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -936,7 +1130,9 @@ class $$UserGroupsTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$UserGroupsTableAnnotationComposer
@@ -952,62 +1148,74 @@ class $$UserGroupsTableAnnotationComposer
       $composableBuilder(column: $table.id, builder: (column) => column);
 
   Expression<T> usersRefs<T extends Object>(
-      Expression<T> Function($$UsersTableAnnotationComposer a) f) {
+    Expression<T> Function($$UsersTableAnnotationComposer a) f,
+  ) {
     final $$UsersTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.users,
-        getReferencedColumn: (t) => t.groupId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UsersTableAnnotationComposer(
-              $db: $db,
-              $table: $db.users,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.userGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
   Expression<T> accountsRefs<T extends Object>(
-      Expression<T> Function($$AccountsTableAnnotationComposer a) f) {
+    Expression<T> Function($$AccountsTableAnnotationComposer a) f,
+  ) {
     final $$AccountsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.accounts,
-        getReferencedColumn: (t) => t.groupId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AccountsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.accounts,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.userGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
 
-class $$UserGroupsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $UserGroupsTable,
-    UserGroupDBO,
-    $$UserGroupsTableFilterComposer,
-    $$UserGroupsTableOrderingComposer,
-    $$UserGroupsTableAnnotationComposer,
-    $$UserGroupsTableCreateCompanionBuilder,
-    $$UserGroupsTableUpdateCompanionBuilder,
-    (UserGroupDBO, $$UserGroupsTableReferences),
-    UserGroupDBO,
-    PrefetchHooks Function({bool usersRefs, bool accountsRefs})> {
+class $$UserGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UserGroupsTable,
+          user_groups,
+          $$UserGroupsTableFilterComposer,
+          $$UserGroupsTableOrderingComposer,
+          $$UserGroupsTableAnnotationComposer,
+          $$UserGroupsTableCreateCompanionBuilder,
+          $$UserGroupsTableUpdateCompanionBuilder,
+          (user_groups, $$UserGroupsTableReferences),
+          user_groups,
+          PrefetchHooks Function({bool usersRefs, bool accountsRefs})
+        > {
   $$UserGroupsTableTableManager(_$AppDatabase db, $UserGroupsTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -1016,132 +1224,155 @@ class $$UserGroupsTableTableManager extends RootTableManager<
               $$UserGroupsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$UserGroupsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UserGroupsCompanion(
-            id: id,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UserGroupsCompanion.insert(
-            id: id,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UserGroupsCompanion(id: id, rowid: rowid),
+          createCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UserGroupsCompanion.insert(id: id, rowid: rowid),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$UserGroupsTableReferences(db, table, e)
-                  ))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$UserGroupsTableReferences(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: ({usersRefs = false, accountsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (usersRefs) db.users,
-                if (accountsRefs) db.accounts
+                if (accountsRefs) db.accounts,
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (usersRefs)
-                    await $_getPrefetchedData<UserGroupDBO, $UserGroupsTable,
-                            UserDBO>(
-                        currentTable: table,
-                        referencedTable:
-                            $$UserGroupsTableReferences._usersRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$UserGroupsTableReferences(db, table, p0)
-                                .usersRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.groupId == item.id),
-                        typedResults: items),
+                    await $_getPrefetchedData<
+                      user_groups,
+                      $UserGroupsTable,
+                      users
+                    >(
+                      currentTable: table,
+                      referencedTable: $$UserGroupsTableReferences
+                          ._usersRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$UserGroupsTableReferences(db, table, p0).usersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.userGroupId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
                   if (accountsRefs)
-                    await $_getPrefetchedData<UserGroupDBO, $UserGroupsTable,
-                            AccountDBO>(
-                        currentTable: table,
-                        referencedTable:
-                            $$UserGroupsTableReferences._accountsRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$UserGroupsTableReferences(db, table, p0)
-                                .accountsRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.groupId == item.id),
-                        typedResults: items)
+                    await $_getPrefetchedData<
+                      user_groups,
+                      $UserGroupsTable,
+                      accounts
+                    >(
+                      currentTable: table,
+                      referencedTable: $$UserGroupsTableReferences
+                          ._accountsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$UserGroupsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).accountsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.userGroupId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
                 ];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$UserGroupsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $UserGroupsTable,
-    UserGroupDBO,
-    $$UserGroupsTableFilterComposer,
-    $$UserGroupsTableOrderingComposer,
-    $$UserGroupsTableAnnotationComposer,
-    $$UserGroupsTableCreateCompanionBuilder,
-    $$UserGroupsTableUpdateCompanionBuilder,
-    (UserGroupDBO, $$UserGroupsTableReferences),
-    UserGroupDBO,
-    PrefetchHooks Function({bool usersRefs, bool accountsRefs})>;
-typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
-  Value<UuidValue> id,
-  required String name,
-  required String googleId,
-  required String email,
-  required String photo,
-  required UuidValue groupId,
-  Value<int> rowid,
-});
-typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
-  Value<UuidValue> id,
-  Value<String> name,
-  Value<String> googleId,
-  Value<String> email,
-  Value<String> photo,
-  Value<UuidValue> groupId,
-  Value<int> rowid,
-});
+typedef $$UserGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UserGroupsTable,
+      user_groups,
+      $$UserGroupsTableFilterComposer,
+      $$UserGroupsTableOrderingComposer,
+      $$UserGroupsTableAnnotationComposer,
+      $$UserGroupsTableCreateCompanionBuilder,
+      $$UserGroupsTableUpdateCompanionBuilder,
+      (user_groups, $$UserGroupsTableReferences),
+      user_groups,
+      PrefetchHooks Function({bool usersRefs, bool accountsRefs})
+    >;
+typedef $$UsersTableCreateCompanionBuilder =
+    UsersCompanion Function({
+      Value<UuidValue> id,
+      required String name,
+      required String googleId,
+      required String email,
+      required String photo,
+      required UuidValue userGroupId,
+      Value<int> rowid,
+    });
+typedef $$UsersTableUpdateCompanionBuilder =
+    UsersCompanion Function({
+      Value<UuidValue> id,
+      Value<String> name,
+      Value<String> googleId,
+      Value<String> email,
+      Value<String> photo,
+      Value<UuidValue> userGroupId,
+      Value<int> rowid,
+    });
 
 final class $$UsersTableReferences
-    extends BaseReferences<_$AppDatabase, $UsersTable, UserDBO> {
+    extends BaseReferences<_$AppDatabase, $UsersTable, users> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UserGroupsTable _groupIdTable(_$AppDatabase db) => db.userGroups
-      .createAlias($_aliasNameGenerator(db.users.groupId, db.userGroups.id));
+  static $UserGroupsTable _userGroupIdTable(_$AppDatabase db) =>
+      db.userGroups.createAlias(
+        $_aliasNameGenerator(db.users.userGroupId, db.userGroups.id),
+      );
 
-  $$UserGroupsTableProcessedTableManager get groupId {
-    final $_column = $_itemColumn<UuidValue>('group_id')!;
+  $$UserGroupsTableProcessedTableManager get userGroupId {
+    final $_column = $_itemColumn<UuidValue>('user_group_id')!;
 
-    final manager = $$UserGroupsTableTableManager($_db, $_db.userGroups)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_groupIdTable($_db));
+    final manager = $$UserGroupsTableTableManager(
+      $_db,
+      $_db.userGroups,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userGroupIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 
-  static MultiTypedResultKey<$AccountsTable, List<AccountDBO>>
-      _accountsRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.accounts,
-              aliasName: $_aliasNameGenerator(db.users.id, db.accounts.userId));
+  static MultiTypedResultKey<$AccountsTable, List<accounts>> _accountsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.accounts,
+    aliasName: $_aliasNameGenerator(db.users.id, db.accounts.userId),
+  );
 
   $$AccountsTableProcessedTableManager get accountsRefs {
-    final manager = $$AccountsTableTableManager($_db, $_db.accounts)
-        .filter((f) => f.userId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.userId.id.sqlEquals($_itemColumn<UuidValue>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_accountsRefsTable($_db));
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
+      manager.$state.copyWith(prefetchedData: cache),
+    );
   }
 }
 
@@ -1154,58 +1385,75 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get googleId => $composableBuilder(
-      column: $table.googleId, builder: (column) => ColumnFilters(column));
+    column: $table.googleId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get email => $composableBuilder(
-      column: $table.email, builder: (column) => ColumnFilters(column));
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get photo => $composableBuilder(
-      column: $table.photo, builder: (column) => ColumnFilters(column));
+    column: $table.photo,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  $$UserGroupsTableFilterComposer get groupId {
+  $$UserGroupsTableFilterComposer get userGroupId {
     final $$UserGroupsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableFilterComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableFilterComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
   Expression<bool> accountsRefs(
-      Expression<bool> Function($$AccountsTableFilterComposer f) f) {
+    Expression<bool> Function($$AccountsTableFilterComposer f) f,
+  ) {
     final $$AccountsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.accounts,
-        getReferencedColumn: (t) => t.userId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AccountsTableFilterComposer(
-              $db: $db,
-              $table: $db.accounts,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -1220,37 +1468,50 @@ class $$UsersTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get googleId => $composableBuilder(
-      column: $table.googleId, builder: (column) => ColumnOrderings(column));
+    column: $table.googleId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get email => $composableBuilder(
-      column: $table.email, builder: (column) => ColumnOrderings(column));
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get photo => $composableBuilder(
-      column: $table.photo, builder: (column) => ColumnOrderings(column));
+    column: $table.photo,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  $$UserGroupsTableOrderingComposer get groupId {
+  $$UserGroupsTableOrderingComposer get userGroupId {
     final $$UserGroupsTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableOrderingComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableOrderingComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
@@ -1279,62 +1540,73 @@ class $$UsersTableAnnotationComposer
   GeneratedColumn<String> get photo =>
       $composableBuilder(column: $table.photo, builder: (column) => column);
 
-  $$UserGroupsTableAnnotationComposer get groupId {
+  $$UserGroupsTableAnnotationComposer get userGroupId {
     final $$UserGroupsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
   Expression<T> accountsRefs<T extends Object>(
-      Expression<T> Function($$AccountsTableAnnotationComposer a) f) {
+    Expression<T> Function($$AccountsTableAnnotationComposer a) f,
+  ) {
     final $$AccountsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.accounts,
-        getReferencedColumn: (t) => t.userId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AccountsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.accounts,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
 
-class $$UsersTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $UsersTable,
-    UserDBO,
-    $$UsersTableFilterComposer,
-    $$UsersTableOrderingComposer,
-    $$UsersTableAnnotationComposer,
-    $$UsersTableCreateCompanionBuilder,
-    $$UsersTableUpdateCompanionBuilder,
-    (UserDBO, $$UsersTableReferences),
-    UserDBO,
-    PrefetchHooks Function({bool groupId, bool accountsRefs})> {
+class $$UsersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UsersTable,
+          users,
+          $$UsersTableFilterComposer,
+          $$UsersTableOrderingComposer,
+          $$UsersTableAnnotationComposer,
+          $$UsersTableCreateCompanionBuilder,
+          $$UsersTableUpdateCompanionBuilder,
+          (users, $$UsersTableReferences),
+          users,
+          PrefetchHooks Function({bool userGroupId, bool accountsRefs})
+        > {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -1343,52 +1615,55 @@ class $$UsersTableTableManager extends RootTableManager<
               $$UsersTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$UsersTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> googleId = const Value.absent(),
-            Value<String> email = const Value.absent(),
-            Value<String> photo = const Value.absent(),
-            Value<UuidValue> groupId = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UsersCompanion(
-            id: id,
-            name: name,
-            googleId: googleId,
-            email: email,
-            photo: photo,
-            groupId: groupId,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            required String name,
-            required String googleId,
-            required String email,
-            required String photo,
-            required UuidValue groupId,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UsersCompanion.insert(
-            id: id,
-            name: name,
-            googleId: googleId,
-            email: email,
-            photo: photo,
-            groupId: groupId,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> googleId = const Value.absent(),
+                Value<String> email = const Value.absent(),
+                Value<String> photo = const Value.absent(),
+                Value<UuidValue> userGroupId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion(
+                id: id,
+                name: name,
+                googleId: googleId,
+                email: email,
+                photo: photo,
+                userGroupId: userGroupId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                required String name,
+                required String googleId,
+                required String email,
+                required String photo,
+                required UuidValue userGroupId,
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion.insert(
+                id: id,
+                name: name,
+                googleId: googleId,
+                email: email,
+                photo: photo,
+                userGroupId: userGroupId,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$UsersTableReferences(db, table, e)))
+              .map(
+                (e) =>
+                    (e.readTable(table), $$UsersTableReferences(db, table, e)),
+              )
               .toList(),
-          prefetchHooksCallback: ({groupId = false, accountsRefs = false}) {
+          prefetchHooksCallback: ({userGroupId = false, accountsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [if (accountsRefs) db.accounts],
-              addJoins: <
-                  T extends TableManagerState<
+              addJoins:
+                  <
+                    T extends TableManagerState<
                       dynamic,
                       dynamic,
                       dynamic,
@@ -1399,98 +1674,120 @@ class $$UsersTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
-                      dynamic>>(state) {
-                if (groupId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.groupId,
-                    referencedTable: $$UsersTableReferences._groupIdTable(db),
-                    referencedColumn:
-                        $$UsersTableReferences._groupIdTable(db).id,
-                  ) as T;
-                }
+                      dynamic
+                    >
+                  >(state) {
+                    if (userGroupId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userGroupId,
+                                referencedTable: $$UsersTableReferences
+                                    ._userGroupIdTable(db),
+                                referencedColumn: $$UsersTableReferences
+                                    ._userGroupIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (accountsRefs)
-                    await $_getPrefetchedData<UserDBO, $UsersTable, AccountDBO>(
-                        currentTable: table,
-                        referencedTable:
-                            $$UsersTableReferences._accountsRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$UsersTableReferences(db, table, p0).accountsRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.userId == item.id),
-                        typedResults: items)
+                    await $_getPrefetchedData<users, $UsersTable, accounts>(
+                      currentTable: table,
+                      referencedTable: $$UsersTableReferences
+                          ._accountsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$UsersTableReferences(db, table, p0).accountsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.userId == item.id),
+                      typedResults: items,
+                    ),
                 ];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $UsersTable,
-    UserDBO,
-    $$UsersTableFilterComposer,
-    $$UsersTableOrderingComposer,
-    $$UsersTableAnnotationComposer,
-    $$UsersTableCreateCompanionBuilder,
-    $$UsersTableUpdateCompanionBuilder,
-    (UserDBO, $$UsersTableReferences),
-    UserDBO,
-    PrefetchHooks Function({bool groupId, bool accountsRefs})>;
-typedef $$AccountsTableCreateCompanionBuilder = AccountsCompanion Function({
-  Value<UuidValue> id,
-  required String name,
-  required UuidValue userId,
-  required bool isDebt,
-  required UuidValue groupId,
-  Value<int> rowid,
-});
-typedef $$AccountsTableUpdateCompanionBuilder = AccountsCompanion Function({
-  Value<UuidValue> id,
-  Value<String> name,
-  Value<UuidValue> userId,
-  Value<bool> isDebt,
-  Value<UuidValue> groupId,
-  Value<int> rowid,
-});
+typedef $$UsersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UsersTable,
+      users,
+      $$UsersTableFilterComposer,
+      $$UsersTableOrderingComposer,
+      $$UsersTableAnnotationComposer,
+      $$UsersTableCreateCompanionBuilder,
+      $$UsersTableUpdateCompanionBuilder,
+      (users, $$UsersTableReferences),
+      users,
+      PrefetchHooks Function({bool userGroupId, bool accountsRefs})
+    >;
+typedef $$AccountsTableCreateCompanionBuilder =
+    AccountsCompanion Function({
+      Value<UuidValue> id,
+      required String name,
+      required UuidValue userId,
+      required bool isDebt,
+      required UuidValue userGroupId,
+      required PgDateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$AccountsTableUpdateCompanionBuilder =
+    AccountsCompanion Function({
+      Value<UuidValue> id,
+      Value<String> name,
+      Value<UuidValue> userId,
+      Value<bool> isDebt,
+      Value<UuidValue> userGroupId,
+      Value<PgDateTime> updatedAt,
+      Value<int> rowid,
+    });
 
 final class $$AccountsTableReferences
-    extends BaseReferences<_$AppDatabase, $AccountsTable, AccountDBO> {
+    extends BaseReferences<_$AppDatabase, $AccountsTable, accounts> {
   $$AccountsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$AppDatabase db) => db.users
-      .createAlias($_aliasNameGenerator(db.accounts.userId, db.users.id));
+  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
+    $_aliasNameGenerator(db.accounts.userId, db.users.id),
+  );
 
   $$UsersTableProcessedTableManager get userId {
     final $_column = $_itemColumn<UuidValue>('user_id')!;
 
-    final manager = $$UsersTableTableManager($_db, $_db.users)
-        .filter((f) => f.id.sqlEquals($_column));
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_userIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 
-  static $UserGroupsTable _groupIdTable(_$AppDatabase db) => db.userGroups
-      .createAlias($_aliasNameGenerator(db.accounts.groupId, db.userGroups.id));
+  static $UserGroupsTable _userGroupIdTable(_$AppDatabase db) =>
+      db.userGroups.createAlias(
+        $_aliasNameGenerator(db.accounts.userGroupId, db.userGroups.id),
+      );
 
-  $$UserGroupsTableProcessedTableManager get groupId {
-    final $_column = $_itemColumn<UuidValue>('group_id')!;
+  $$UserGroupsTableProcessedTableManager get userGroupId {
+    final $_column = $_itemColumn<UuidValue>('user_group_id')!;
 
-    final manager = $$UserGroupsTableTableManager($_db, $_db.userGroups)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_groupIdTable($_db));
+    final manager = $$UserGroupsTableTableManager(
+      $_db,
+      $_db.userGroups,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userGroupIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 }
 
@@ -1504,51 +1801,68 @@ class $$AccountsTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<bool> get isDebt => $composableBuilder(
-      column: $table.isDebt, builder: (column) => ColumnFilters(column));
+    column: $table.isDebt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<PgDateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   $$UsersTableFilterComposer get userId {
     final $$UsersTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.userId,
-        referencedTable: $db.users,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UsersTableFilterComposer(
-              $db: $db,
-              $table: $db.users,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
-  $$UserGroupsTableFilterComposer get groupId {
+  $$UserGroupsTableFilterComposer get userGroupId {
     final $$UserGroupsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableFilterComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableFilterComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
@@ -1563,51 +1877,68 @@ class $$AccountsTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<UuidValue> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get isDebt => $composableBuilder(
-      column: $table.isDebt, builder: (column) => ColumnOrderings(column));
+    column: $table.isDebt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<PgDateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   $$UsersTableOrderingComposer get userId {
     final $$UsersTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.userId,
-        referencedTable: $db.users,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UsersTableOrderingComposer(
-              $db: $db,
-              $table: $db.users,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
-  $$UserGroupsTableOrderingComposer get groupId {
+  $$UserGroupsTableOrderingComposer get userGroupId {
     final $$UserGroupsTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableOrderingComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableOrderingComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
@@ -1630,61 +1961,74 @@ class $$AccountsTableAnnotationComposer
   GeneratedColumn<bool> get isDebt =>
       $composableBuilder(column: $table.isDebt, builder: (column) => column);
 
+  GeneratedColumn<PgDateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
   $$UsersTableAnnotationComposer get userId {
     final $$UsersTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.userId,
-        referencedTable: $db.users,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UsersTableAnnotationComposer(
-              $db: $db,
-              $table: $db.users,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
-  $$UserGroupsTableAnnotationComposer get groupId {
+  $$UserGroupsTableAnnotationComposer get userGroupId {
     final $$UserGroupsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.groupId,
-        referencedTable: $db.userGroups,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$UserGroupsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.userGroups,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.userGroupId,
+      referencedTable: $db.userGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserGroupsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.userGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
-class $$AccountsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $AccountsTable,
-    AccountDBO,
-    $$AccountsTableFilterComposer,
-    $$AccountsTableOrderingComposer,
-    $$AccountsTableAnnotationComposer,
-    $$AccountsTableCreateCompanionBuilder,
-    $$AccountsTableUpdateCompanionBuilder,
-    (AccountDBO, $$AccountsTableReferences),
-    AccountDBO,
-    PrefetchHooks Function({bool userId, bool groupId})> {
+class $$AccountsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AccountsTable,
+          accounts,
+          $$AccountsTableFilterComposer,
+          $$AccountsTableOrderingComposer,
+          $$AccountsTableAnnotationComposer,
+          $$AccountsTableCreateCompanionBuilder,
+          $$AccountsTableUpdateCompanionBuilder,
+          (accounts, $$AccountsTableReferences),
+          accounts,
+          PrefetchHooks Function({bool userId, bool userGroupId})
+        > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -1693,48 +2037,57 @@ class $$AccountsTableTableManager extends RootTableManager<
               $$AccountsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$AccountsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<UuidValue> userId = const Value.absent(),
-            Value<bool> isDebt = const Value.absent(),
-            Value<UuidValue> groupId = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AccountsCompanion(
-            id: id,
-            name: name,
-            userId: userId,
-            isDebt: isDebt,
-            groupId: groupId,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<UuidValue> id = const Value.absent(),
-            required String name,
-            required UuidValue userId,
-            required bool isDebt,
-            required UuidValue groupId,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AccountsCompanion.insert(
-            id: id,
-            name: name,
-            userId: userId,
-            isDebt: isDebt,
-            groupId: groupId,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<UuidValue> userId = const Value.absent(),
+                Value<bool> isDebt = const Value.absent(),
+                Value<UuidValue> userGroupId = const Value.absent(),
+                Value<PgDateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AccountsCompanion(
+                id: id,
+                name: name,
+                userId: userId,
+                isDebt: isDebt,
+                userGroupId: userGroupId,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<UuidValue> id = const Value.absent(),
+                required String name,
+                required UuidValue userId,
+                required bool isDebt,
+                required UuidValue userGroupId,
+                required PgDateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AccountsCompanion.insert(
+                id: id,
+                name: name,
+                userId: userId,
+                isDebt: isDebt,
+                userGroupId: userGroupId,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$AccountsTableReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$AccountsTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: ({userId = false, groupId = false}) {
+          prefetchHooksCallback: ({userId = false, userGroupId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
+              addJoins:
+                  <
+                    T extends TableManagerState<
                       dynamic,
                       dynamic,
                       dynamic,
@@ -1745,49 +2098,61 @@ class $$AccountsTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
-                      dynamic>>(state) {
-                if (userId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.userId,
-                    referencedTable: $$AccountsTableReferences._userIdTable(db),
-                    referencedColumn:
-                        $$AccountsTableReferences._userIdTable(db).id,
-                  ) as T;
-                }
-                if (groupId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.groupId,
-                    referencedTable:
-                        $$AccountsTableReferences._groupIdTable(db),
-                    referencedColumn:
-                        $$AccountsTableReferences._groupIdTable(db).id,
-                  ) as T;
-                }
+                      dynamic
+                    >
+                  >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$AccountsTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$AccountsTableReferences
+                                    ._userIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (userGroupId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userGroupId,
+                                referencedTable: $$AccountsTableReferences
+                                    ._userGroupIdTable(db),
+                                referencedColumn: $$AccountsTableReferences
+                                    ._userGroupIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$AccountsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $AccountsTable,
-    AccountDBO,
-    $$AccountsTableFilterComposer,
-    $$AccountsTableOrderingComposer,
-    $$AccountsTableAnnotationComposer,
-    $$AccountsTableCreateCompanionBuilder,
-    $$AccountsTableUpdateCompanionBuilder,
-    (AccountDBO, $$AccountsTableReferences),
-    AccountDBO,
-    PrefetchHooks Function({bool userId, bool groupId})>;
+typedef $$AccountsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AccountsTable,
+      accounts,
+      $$AccountsTableFilterComposer,
+      $$AccountsTableOrderingComposer,
+      $$AccountsTableAnnotationComposer,
+      $$AccountsTableCreateCompanionBuilder,
+      $$AccountsTableUpdateCompanionBuilder,
+      (accounts, $$AccountsTableReferences),
+      accounts,
+      PrefetchHooks Function({bool userId, bool userGroupId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

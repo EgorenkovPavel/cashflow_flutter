@@ -97,7 +97,7 @@ class BudgetBarChart extends StatelessWidget {
                             show: true,
                             alignment: Alignment.topRight,
                             labelResolver: (line) =>
-                                '${context.loc.limit}: ${context.loc.sumFormat(Sum(budgetLimit.toInt(), Currency.RUB))}',
+                                '${context.loc.limit}: ${context.loc.sumFormat(Money(budgetLimit.toInt(), Currency.RUB))}',
                             style: const TextStyle(
                               fontSize: 10,
                               color: Color(0xFFD16666),

@@ -1,36 +1,13 @@
+import 'package:uuid/uuid.dart';
+
 import '../models/models.dart';
 
 abstract interface class CategoryService {
+  Future<CategoryResponse> getById(UuidValue id);
 
-  Future<Category> getById(CategoryId id);
+  Future<List<CategoryResponse>> getAll();
 
-  Future<List<Category>> getAll();
+  Future<CategoryResponse> create(CreateCategoryRequest req);
 
-  Future<InputCategoryItem> createInputCategoryItem(
-    String name,
-    int budget,
-    CategoryId? parent,
-  );
-
-  Future<OutputCategoryItem> createOutputCategoryItem(
-    String name,
-    int budget,
-    CategoryId? parent,
-  );
-
-  Future<CategoryItem> updateCategoryItem(
-    CategoryItem category,
-    String name,
-    int budget,
-    CategoryId? parent,
-  );
-
-  Future<InputCategoryGroup> createInputCategoryGroup(String name);
-
-  Future<OutputCategoryGroup> createOutputCategoryGroup(String name);
-
-  Future<CategoryGroup> updateCategoryGroup(
-    CategoryGroup category,
-    String name,
-  );
+  Future<CategoryResponse> update(UpdateCategoryRequest req);
 }

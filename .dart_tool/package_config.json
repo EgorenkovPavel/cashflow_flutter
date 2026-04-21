@@ -215,7 +215,7 @@
       "name": "money_tracker",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.10"
+      "languageVersion": "3.11"
     }
   ],
   "generator": "pub",

@@ -1,14 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'sum.dart';
+import 'money.dart';
 
 part 'balance.freezed.dart';
+part 'balance.g.dart';
 
 @freezed
 abstract class Balance with _$Balance {
   const Balance._();
 
-  const factory Balance([@Default([]) List<Sum> sums]) = _Balance;
+  const factory Balance([@Default([]) List<Money> sums]) = _Balance;
+
+  factory Balance.fromJson(Map<String, Object?> json) => _$BalanceFromJson(json);
 
   bool get isEmpty => sums.isEmpty || sums.every((e) => e.isEmpty);
 
@@ -22,7 +25,7 @@ abstract class Balance with _$Balance {
     return res;
   }
 
-  Balance addSum(Sum sum) {
+  Balance addSum(Money sum) {
     var items = sums.toList();
     if (sums.where((e) => e.currency == sum.currency).isEmpty) {
       items.add(sum);

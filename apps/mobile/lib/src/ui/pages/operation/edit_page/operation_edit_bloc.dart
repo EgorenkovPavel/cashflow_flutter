@@ -63,8 +63,8 @@ abstract class OperationEditState with _$OperationEditState {
     int? accountId,
     int? categoryId,
     int? recAccountId,
-    required Sum sum,
-    required Sum recSum,
+    required Money sum,
+    required Money recSum,
     required bool isSaved,
   }) = _OperationEditState;
 
@@ -117,8 +117,8 @@ class OperationEditBloc extends Bloc<OperationEditEvent, OperationEditState> {
           date: DateTime.now(),
           time: TimeOfDay.now(),
           operationType: OperationType.INPUT,
-          sum: Sum(0, Currency.RUB),
-          recSum: Sum(0, Currency.RUB),
+          sum: Money(0, Currency.RUB),
+          recSum: Money(0, Currency.RUB),
           isSaved: false,
         ),
       ) {

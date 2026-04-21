@@ -1,4 +1,5 @@
+
 enum CategoryType{
   INPUT,
-  OUTPUT
+  OUTPUT;
 }

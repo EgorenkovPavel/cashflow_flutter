@@ -7,7 +7,7 @@ analyzer:
     - '**.freezed.dart'
     - 'test/**'
   plugins:
-    - dart_code_metrics
+    - custom_lint
 
 dart_code_metrics:
   metrics:

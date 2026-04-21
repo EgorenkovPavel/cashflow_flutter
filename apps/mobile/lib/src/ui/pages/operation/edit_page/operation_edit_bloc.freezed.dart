@@ -1025,7 +1025,7 @@ String toString() {
 /// @nodoc
 mixin _$OperationEditState {
 
- Operation? get operation; DateTime get date; TimeOfDay get time; OperationType get operationType; int? get accountId; int? get categoryId; int? get recAccountId; Sum get sum; Sum get recSum; bool get isSaved;
+ Operation? get operation; DateTime get date; TimeOfDay get time; OperationType get operationType; int? get accountId; int? get categoryId; int? get recAccountId; Money get sum; Money get recSum; bool get isSaved;
 /// Create a copy of OperationEditState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1056,11 +1056,11 @@ abstract mixin class $OperationEditStateCopyWith<$Res>  {
   factory $OperationEditStateCopyWith(OperationEditState value, $Res Function(OperationEditState) _then) = _$OperationEditStateCopyWithImpl;
 @useResult
 $Res call({
- Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Sum sum, Sum recSum, bool isSaved
+ Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Money sum, Money recSum, bool isSaved
 });
 
 
-$OperationCopyWith<$Res>? get operation;$SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;
+$OperationCopyWith<$Res>? get operation;$MoneyCopyWith<$Res> get sum;$MoneyCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -1083,8 +1083,8 @@ as OperationType,accountId: freezed == accountId ? _self.accountId : accountId /
 as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as Money,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Money,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -1104,18 +1104,18 @@ $OperationCopyWith<$Res>? get operation {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of OperationEditState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get recSum {
+$MoneyCopyWith<$Res> get recSum {
   
-  return $SumCopyWith<$Res>(_self.recSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.recSum, (value) {
     return _then(_self.copyWith(recSum: value));
   });
 }
@@ -1200,7 +1200,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Money sum,  Money recSum,  bool isSaved)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OperationEditState() when $default != null:
 return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
@@ -1221,7 +1221,7 @@ return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Money sum,  Money recSum,  bool isSaved)  $default,) {final _that = this;
 switch (_that) {
 case _OperationEditState():
 return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
@@ -1241,7 +1241,7 @@ return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Sum sum,  Sum recSum,  bool isSaved)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Operation? operation,  DateTime date,  TimeOfDay time,  OperationType operationType,  int? accountId,  int? categoryId,  int? recAccountId,  Money sum,  Money recSum,  bool isSaved)?  $default,) {final _that = this;
 switch (_that) {
 case _OperationEditState() when $default != null:
 return $default(_that.operation,_that.date,_that.time,_that.operationType,_that.accountId,_that.categoryId,_that.recAccountId,_that.sum,_that.recSum,_that.isSaved);case _:
@@ -1266,8 +1266,8 @@ class _OperationEditState extends OperationEditState {
 @override final  int? accountId;
 @override final  int? categoryId;
 @override final  int? recAccountId;
-@override final  Sum sum;
-@override final  Sum recSum;
+@override final  Money sum;
+@override final  Money recSum;
 @override final  bool isSaved;
 
 /// Create a copy of OperationEditState
@@ -1300,11 +1300,11 @@ abstract mixin class _$OperationEditStateCopyWith<$Res> implements $OperationEdi
   factory _$OperationEditStateCopyWith(_OperationEditState value, $Res Function(_OperationEditState) _then) = __$OperationEditStateCopyWithImpl;
 @override @useResult
 $Res call({
- Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Sum sum, Sum recSum, bool isSaved
+ Operation? operation, DateTime date, TimeOfDay time, OperationType operationType, int? accountId, int? categoryId, int? recAccountId, Money sum, Money recSum, bool isSaved
 });
 
 
-@override $OperationCopyWith<$Res>? get operation;@override $SumCopyWith<$Res> get sum;@override $SumCopyWith<$Res> get recSum;
+@override $OperationCopyWith<$Res>? get operation;@override $MoneyCopyWith<$Res> get sum;@override $MoneyCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -1327,8 +1327,8 @@ as OperationType,accountId: freezed == accountId ? _self.accountId : accountId /
 as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
+as Money,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Money,isSaved: null == isSaved ? _self.isSaved : isSaved // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -1349,18 +1349,18 @@ $OperationCopyWith<$Res>? get operation {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of OperationEditState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get recSum {
+$MoneyCopyWith<$Res> get recSum {
   
-  return $SumCopyWith<$Res>(_self.recSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.recSum, (value) {
     return _then(_self.copyWith(recSum: value));
   });
 }

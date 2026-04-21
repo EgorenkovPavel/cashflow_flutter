@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../models/models.dart';
 import 'network_client.dart';
 import 'operation_service.dart';
@@ -10,178 +12,38 @@ class OperationServiceImpl implements OperationService {
   String get _path => 'user-groups/${_connector.user!.userGroup}/operations';
 
   @override
-  Future<Operation> getById(OperationId id) => _connector.get<Operation>(
+  Future<OperationResponse> getById(UuidValue id) => _connector.get<OperationResponse>(
         '$_path/$id',
-        (e) => Operation.fromJson(e),
+        (e) => OperationResponse.fromJson(e),
       );
 
   @override
-  Future<List<Operation>> getAll() => _connector.get<List<Operation>>(
+  Future<List<OperationResponse>> getAll() => _connector.get<List<OperationResponse>>(
         _path,
-        (data) => data.map<Operation>((e) => Operation.fromJson(e)).toList(),
+        (data) => data.map<OperationResponse>((e) => OperationResponse.fromJson(e)).toList(),
       );
 
   @override
-  Future<InputOperation> createInputOperation(
-    DateTime date,
-    Account account,
-    InputCategoryItem category,
-    int sum,
-    Currency currency,
-  ) async {
-    InputOperation operation = InputOperation(
-      date: date,
-      account: account.id!,
-      analytic: category.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    final id = await _postOperation(operation);
-    return operation.copyWithId(id);
+  Future<OperationResponse> create(CreateOperationRequest req){
+    return _postOperation(req);
   }
 
   @override
-  Future<OutputOperation> createOutputOperation(
-    DateTime date,
-    Account account,
-    OutputCategoryItem category,
-    int sum,
-    Currency currency,
-  ) async {
-    OutputOperation operation = OutputOperation(
-      date: date,
-      account: account.id!,
-      analytic: category.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    final id = await _postOperation(operation);
-    return operation.copyWithId(id);
-  }
-
-  @override
-  Future<TransferOperation> createTransferOperation(
-    DateTime date,
-    BaseAccount account,
-    BaseAccount accountRec,
-    int sum,
-    Currency currency,
-  ) async {
-    TransferOperation operation = TransferOperation(
-      date: date,
-      account: account.id!,
-      analytic: accountRec.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    final id = await _postOperation(operation);
-    return operation.copyWithId(id);
-  }
-
-  @override
-  Future<ExchangeOperation> createExchangeOperation(
-    DateTime date,
-    BaseAccount account,
-    int sum,
-    Currency currency,
-    int recSum,
-    Currency recCurrency,
-  ) async {
-    final operation = ExchangeOperation(
-      date: date,
-      account: account.id!,
-      sum: sum,
-      currency: currency,
-      recSum: recSum,
-      recCurrency: recCurrency,
-      user: _connector.user!.id,
-    );
-    final id = await _postOperation(operation);
-    return operation.copyWithId(id);
-  }
-
-  @override
-  Future<void> deleteOperation(OperationId id) =>
-      _connector.delete('$_path/$id');
-
-  Future<OperationId> _postOperation(Operation operation) =>
-      _connector.post(_path, operation.toJson());
-
-  @override
-  Future<InputOperation> swapToInputOperation(
-    Operation operation,
-    DateTime date,
-    Account account,
-    InputCategoryItem category,
-    int sum,
-    Currency currency,
-  ) async {
-    InputOperation newOperation = InputOperation(
-      id: operation.id,
-      date: date,
-      account: account.id!,
-      analytic: category.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    return await _connector.update(
-      path: '$_path/${operation.id}',
-      body: newOperation.toJson(),
-      mapper: (e) => Operation.fromJson(e) as InputOperation,
+  Future<OperationResponse> update(UpdateOperationRequest req) {
+    return _connector.update(
+      path: '$_path/${req.id}',
+      body: req.toJson(),
     );
   }
+  @override
+  Future<OperationResponse> delete(UuidValue id) =>
+      _connector.delete<OperationResponse>('$_path/$id');
 
   @override
-  Future<OutputOperation> swapToOutputOperation(
-    Operation operation,
-    DateTime date,
-    Account account,
-    OutputCategoryItem category,
-    int sum,
-    Currency currency,
-  ) async {
-    OutputOperation newOperation = OutputOperation(
-      id: operation.id,
-      date: date,
-      account: account.id!,
-      analytic: category.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    return await _connector.update(
-      path: '$_path/${operation.id}',
-      body: newOperation.toJson(),
-      mapper: (e) => Operation.fromJson(e) as OutputOperation,
-    );
-  }
+  Future<OperationResponse> recover(UuidValue id) =>
+      _connector.delete<OperationResponse>('$_path/$id');
 
-  @override
-  Future<TransferOperation> swapToTransferOperation(
-    Operation operation,
-    DateTime date,
-    BaseAccount account,
-    BaseAccount accountRec,
-    int sum,
-    Currency currency,
-  ) async {
-    TransferOperation newOperation = TransferOperation(
-      id: operation.id,
-      date: date,
-      account: account.id!,
-      analytic: accountRec.id!,
-      sum: sum,
-      currency: currency,
-      user: _connector.user!.id,
-    );
-    return await _connector.update(
-      path: '$_path/${operation.id}',
-      body: newOperation.toJson(),
-      mapper: (e) => Operation.fromJson(e) as TransferOperation,
-    );
-  }
+  Future<OperationResponse> _postOperation(CreateOperationRequest req) =>
+      _connector.post(_path, req.toJson());
+
 }

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Operation {
 
- int get id; String get cloudId; bool get synced; bool get deleted; DateTime get date; int get account; Sum get sum;
+ int get id; String get cloudId; bool get synced; bool get deleted; DateTime get date; int get account; Money get sum;
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $OperationCopyWith<$Res>  {
   factory $OperationCopyWith(Operation value, $Res Function(Operation) _then) = _$OperationCopyWithImpl;
 @useResult
 $Res call({
- int id, String cloudId, bool synced, bool deleted, DateTime date, int account, Sum sum
+ int id, String cloudId, bool synced, bool deleted, DateTime date, int account, Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -71,16 +71,16 @@ as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nulla
 as bool,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -171,7 +171,7 @@ return exchange(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)?  input,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)?  output,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Sum sum)?  transfer,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Sum sum,  Sum recSum)?  exchange,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)?  input,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)?  output,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Money sum)?  transfer,TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Money sum,  Money recSum)?  exchange,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case InputOperation() when input != null:
 return input(_that.id,_that.cloudId,_that.synced,_that.deleted,_that.date,_that.account,_that.category,_that.sum);case OutputOperation() when output != null:
@@ -195,7 +195,7 @@ return exchange(_that.id,_that.cloudId,_that.synced,_that.deleted,_that.date,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)  input,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)  output,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Sum sum)  transfer,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Sum sum,  Sum recSum)  exchange,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)  input,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)  output,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Money sum)  transfer,required TResult Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Money sum,  Money recSum)  exchange,}) {final _that = this;
 switch (_that) {
 case InputOperation():
 return input(_that.id,_that.cloudId,_that.synced,_that.deleted,_that.date,_that.account,_that.category,_that.sum);case OutputOperation():
@@ -215,7 +215,7 @@ return exchange(_that.id,_that.cloudId,_that.synced,_that.deleted,_that.date,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)?  input,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Sum sum)?  output,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Sum sum)?  transfer,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Sum sum,  Sum recSum)?  exchange,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)?  input,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int category,  Money sum)?  output,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  int recAccount,  Money sum)?  transfer,TResult? Function( int id,  String cloudId,  bool synced,  bool deleted,  DateTime date,  int account,  Money sum,  Money recSum)?  exchange,}) {final _that = this;
 switch (_that) {
 case InputOperation() when input != null:
 return input(_that.id,_that.cloudId,_that.synced,_that.deleted,_that.date,_that.account,_that.category,_that.sum);case OutputOperation() when output != null:
@@ -243,7 +243,7 @@ class InputOperation extends Operation {
 @override final  DateTime date;
 @override final  int account;
  final  int category;
-@override final  Sum sum;
+@override final  Money sum;
 
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
@@ -275,11 +275,11 @@ abstract mixin class $InputOperationCopyWith<$Res> implements $OperationCopyWith
   factory $InputOperationCopyWith(InputOperation value, $Res Function(InputOperation) _then) = _$InputOperationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int category, Sum sum
+ int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int category, Money sum
 });
 
 
-@override $SumCopyWith<$Res> get sum;
+@override $MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -302,7 +302,7 @@ as bool,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_n
 as DateTime,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as int,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -310,9 +310,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -332,7 +332,7 @@ class OutputOperation extends Operation {
 @override final  DateTime date;
 @override final  int account;
  final  int category;
-@override final  Sum sum;
+@override final  Money sum;
 
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
@@ -364,11 +364,11 @@ abstract mixin class $OutputOperationCopyWith<$Res> implements $OperationCopyWit
   factory $OutputOperationCopyWith(OutputOperation value, $Res Function(OutputOperation) _then) = _$OutputOperationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int category, Sum sum
+ int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int category, Money sum
 });
 
 
-@override $SumCopyWith<$Res> get sum;
+@override $MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -391,7 +391,7 @@ as bool,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_n
 as DateTime,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as int,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -399,9 +399,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -421,7 +421,7 @@ class TransferOperation extends Operation {
 @override final  DateTime date;
 @override final  int account;
  final  int recAccount;
-@override final  Sum sum;
+@override final  Money sum;
 
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
@@ -453,11 +453,11 @@ abstract mixin class $TransferOperationCopyWith<$Res> implements $OperationCopyW
   factory $TransferOperationCopyWith(TransferOperation value, $Res Function(TransferOperation) _then) = _$TransferOperationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int recAccount, Sum sum
+ int id, String cloudId, bool synced, bool deleted, DateTime date, int account, int recAccount, Money sum
 });
 
 
-@override $SumCopyWith<$Res> get sum;
+@override $MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -480,7 +480,7 @@ as bool,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_n
 as DateTime,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as int,recAccount: null == recAccount ? _self.recAccount : recAccount // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -488,9 +488,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -509,8 +509,8 @@ class ExchangeOperation extends Operation {
 @override@JsonKey() final  bool deleted;
 @override final  DateTime date;
 @override final  int account;
-@override final  Sum sum;
- final  Sum recSum;
+@override final  Money sum;
+ final  Money recSum;
 
 /// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
@@ -542,11 +542,11 @@ abstract mixin class $ExchangeOperationCopyWith<$Res> implements $OperationCopyW
   factory $ExchangeOperationCopyWith(ExchangeOperation value, $Res Function(ExchangeOperation) _then) = _$ExchangeOperationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String cloudId, bool synced, bool deleted, DateTime date, int account, Sum sum, Sum recSum
+ int id, String cloudId, bool synced, bool deleted, DateTime date, int account, Money sum, Money recSum
 });
 
 
-@override $SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;
+@override $MoneyCopyWith<$Res> get sum;$MoneyCopyWith<$Res> get recSum;
 
 }
 /// @nodoc
@@ -568,8 +568,8 @@ as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nulla
 as bool,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Money,
   ));
 }
 
@@ -577,18 +577,18 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of Operation
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get recSum {
+$MoneyCopyWith<$Res> get recSum {
   
-  return $SumCopyWith<$Res>(_self.recSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.recSum, (value) {
     return _then(_self.copyWith(recSum: value));
   });
 }

@@ -17,7 +17,7 @@ sealed class OperationView with _$OperationView{
     required String userName,
     required String account,
     required String category,
-    required Sum sum,
+    required Money sum,
 }) = InputOperationView;
 
   const factory OperationView.output({
@@ -29,7 +29,7 @@ sealed class OperationView with _$OperationView{
     required String userName,
     required String account,
     required String category,
-    required Sum sum,
+    required Money sum,
   }) = OutputOperationView;
 
   const factory OperationView.transfer({
@@ -41,7 +41,7 @@ sealed class OperationView with _$OperationView{
     required String userName,
     required String account,
     required String recAccount,
-    required Sum sum,
+    required Money sum,
   }) = TransferOperationView;
 
   const factory OperationView.exchange({
@@ -52,8 +52,8 @@ sealed class OperationView with _$OperationView{
     required String userPhotoUrl,
     required String userName,
     required String account,
-    required Sum sendSum,
-    required Sum receivedSum,
+    required Money sendSum,
+    required Money receivedSum,
   }) = ExchangeOperationView;
 
   OperationType get type => switch(this) {

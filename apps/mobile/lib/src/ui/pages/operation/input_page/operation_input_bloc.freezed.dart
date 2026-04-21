@@ -143,7 +143,7 @@ return nextTap(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  start,TResult Function( OperationType operationType)?  changeOperationType,TResult Function( int id)?  changeAccount,TResult Function( int? id)?  changeCategory,TResult Function( int id)?  changeRecAccount,TResult Function( Sum sum)?  changeSum,TResult Function( Sum sum)?  changeRecSum,TResult Function()?  cancelOperation,TResult Function()?  nextTap,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  start,TResult Function( OperationType operationType)?  changeOperationType,TResult Function( int id)?  changeAccount,TResult Function( int? id)?  changeCategory,TResult Function( int id)?  changeRecAccount,TResult Function( Money sum)?  changeSum,TResult Function( Money sum)?  changeRecSum,TResult Function()?  cancelOperation,TResult Function()?  nextTap,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StartMasterEvent() when start != null:
 return start();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
@@ -172,7 +172,7 @@ return nextTap();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  start,required TResult Function( OperationType operationType)  changeOperationType,required TResult Function( int id)  changeAccount,required TResult Function( int? id)  changeCategory,required TResult Function( int id)  changeRecAccount,required TResult Function( Sum sum)  changeSum,required TResult Function( Sum sum)  changeRecSum,required TResult Function()  cancelOperation,required TResult Function()  nextTap,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  start,required TResult Function( OperationType operationType)  changeOperationType,required TResult Function( int id)  changeAccount,required TResult Function( int? id)  changeCategory,required TResult Function( int id)  changeRecAccount,required TResult Function( Money sum)  changeSum,required TResult Function( Money sum)  changeRecSum,required TResult Function()  cancelOperation,required TResult Function()  nextTap,}) {final _that = this;
 switch (_that) {
 case _StartMasterEvent():
 return start();case _ChangeOperationTypeMasterEvent():
@@ -200,7 +200,7 @@ return nextTap();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  start,TResult? Function( OperationType operationType)?  changeOperationType,TResult? Function( int id)?  changeAccount,TResult? Function( int? id)?  changeCategory,TResult? Function( int id)?  changeRecAccount,TResult? Function( Sum sum)?  changeSum,TResult? Function( Sum sum)?  changeRecSum,TResult? Function()?  cancelOperation,TResult? Function()?  nextTap,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  start,TResult? Function( OperationType operationType)?  changeOperationType,TResult? Function( int id)?  changeAccount,TResult? Function( int? id)?  changeCategory,TResult? Function( int id)?  changeRecAccount,TResult? Function( Money sum)?  changeSum,TResult? Function( Money sum)?  changeRecSum,TResult? Function()?  cancelOperation,TResult? Function()?  nextTap,}) {final _that = this;
 switch (_that) {
 case _StartMasterEvent() when start != null:
 return start();case _ChangeOperationTypeMasterEvent() when changeOperationType != null:
@@ -522,7 +522,7 @@ class _ChangeSumMasterEvent implements MasterEvent {
   const _ChangeSumMasterEvent(this.sum);
   
 
- final  Sum sum;
+ final  Money sum;
 
 /// Create a copy of MasterEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -554,11 +554,11 @@ abstract mixin class _$ChangeSumMasterEventCopyWith<$Res> implements $MasterEven
   factory _$ChangeSumMasterEventCopyWith(_ChangeSumMasterEvent value, $Res Function(_ChangeSumMasterEvent) _then) = __$ChangeSumMasterEventCopyWithImpl;
 @useResult
 $Res call({
- Sum sum
+ Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -574,7 +574,7 @@ class __$ChangeSumMasterEventCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
   return _then(_ChangeSumMasterEvent(
 null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -582,9 +582,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -597,7 +597,7 @@ class _ChangeRecSumMasterEvent implements MasterEvent {
   const _ChangeRecSumMasterEvent(this.sum);
   
 
- final  Sum sum;
+ final  Money sum;
 
 /// Create a copy of MasterEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -629,11 +629,11 @@ abstract mixin class _$ChangeRecSumMasterEventCopyWith<$Res> implements $MasterE
   factory _$ChangeRecSumMasterEventCopyWith(_ChangeRecSumMasterEvent value, $Res Function(_ChangeRecSumMasterEvent) _then) = __$ChangeRecSumMasterEventCopyWithImpl;
 @useResult
 $Res call({
- Sum sum
+ Money sum
 });
 
 
-$SumCopyWith<$Res> get sum;
+$MoneyCopyWith<$Res> get sum;
 
 }
 /// @nodoc
@@ -649,7 +649,7 @@ class __$ChangeRecSumMasterEventCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? sum = null,}) {
   return _then(_ChangeRecSumMasterEvent(
 null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,
+as Money,
   ));
 }
 
@@ -657,9 +657,9 @@ as Sum,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }
@@ -732,7 +732,7 @@ String toString() {
 /// @nodoc
 mixin _$MasterState {
 
- int? get accountId; Sum get sum; Operation? get operation; MasterStateAction? get action;
+ int? get accountId; Money get sum; Operation? get operation; MasterStateAction? get action;
 /// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -763,11 +763,11 @@ abstract mixin class $MasterStateCopyWith<$Res>  {
   factory $MasterStateCopyWith(MasterState value, $Res Function(MasterState) _then) = _$MasterStateCopyWithImpl;
 @useResult
 $Res call({
- int? accountId, Sum sum, Operation? operation, MasterStateAction? action
+ int? accountId, Money sum, Operation? operation, MasterStateAction? action
 });
 
 
-$SumCopyWith<$Res> get sum;$OperationCopyWith<$Res>? get operation;
+$MoneyCopyWith<$Res> get sum;$OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -784,7 +784,7 @@ class _$MasterStateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Money,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as MasterStateAction?,
   ));
@@ -793,9 +793,9 @@ as MasterStateAction?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of MasterState
@@ -901,7 +901,7 @@ return exchange(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  input,TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  output,TResult Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)?  exchange,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)?  input,TResult Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)?  output,TResult Function( int? accountId,  int? recAccountId,  Money sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult Function( int? accountId,  Money sum,  Money recSum,  Operation? operation,  MasterStateAction? action)?  exchange,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InputMasterState() when input != null:
 return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState() when output != null:
@@ -925,7 +925,7 @@ return exchange(_that.accountId,_that.sum,_that.recSum,_that.operation,_that.act
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)  input,required TResult Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)  output,required TResult Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)  transfer,required TResult Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)  exchange,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)  input,required TResult Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)  output,required TResult Function( int? accountId,  int? recAccountId,  Money sum,  Operation? operation,  MasterStateAction? action)  transfer,required TResult Function( int? accountId,  Money sum,  Money recSum,  Operation? operation,  MasterStateAction? action)  exchange,}) {final _that = this;
 switch (_that) {
 case _InputMasterState():
 return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState():
@@ -948,7 +948,7 @@ return exchange(_that.accountId,_that.sum,_that.recSum,_that.operation,_that.act
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  input,TResult? Function( int? accountId,  int? categoryId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  output,TResult? Function( int? accountId,  int? recAccountId,  Sum sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult? Function( int? accountId,  Sum sum,  Sum recSum,  Operation? operation,  MasterStateAction? action)?  exchange,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)?  input,TResult? Function( int? accountId,  int? categoryId,  Money sum,  Operation? operation,  MasterStateAction? action)?  output,TResult? Function( int? accountId,  int? recAccountId,  Money sum,  Operation? operation,  MasterStateAction? action)?  transfer,TResult? Function( int? accountId,  Money sum,  Money recSum,  Operation? operation,  MasterStateAction? action)?  exchange,}) {final _that = this;
 switch (_that) {
 case _InputMasterState() when input != null:
 return input(_that.accountId,_that.categoryId,_that.sum,_that.operation,_that.action);case _OutputMasterState() when output != null:
@@ -971,7 +971,7 @@ class _InputMasterState implements MasterState {
 
 @override final  int? accountId;
  final  int? categoryId;
-@override final  Sum sum;
+@override final  Money sum;
 @override final  Operation? operation;
 @override final  MasterStateAction? action;
 
@@ -1005,11 +1005,11 @@ abstract mixin class _$InputMasterStateCopyWith<$Res> implements $MasterStateCop
   factory _$InputMasterStateCopyWith(_InputMasterState value, $Res Function(_InputMasterState) _then) = __$InputMasterStateCopyWithImpl;
 @override @useResult
 $Res call({
- int? accountId, int? categoryId, Sum sum, Operation? operation, MasterStateAction? action
+ int? accountId, int? categoryId, Money sum, Operation? operation, MasterStateAction? action
 });
 
 
-@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
+@override $MoneyCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1027,7 +1027,7 @@ class __$InputMasterStateCopyWithImpl<$Res>
 accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Money,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as MasterStateAction?,
   ));
@@ -1037,9 +1037,9 @@ as MasterStateAction?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of MasterState
@@ -1066,7 +1066,7 @@ class _OutputMasterState implements MasterState {
 
 @override final  int? accountId;
  final  int? categoryId;
-@override final  Sum sum;
+@override final  Money sum;
 @override final  Operation? operation;
 @override final  MasterStateAction? action;
 
@@ -1100,11 +1100,11 @@ abstract mixin class _$OutputMasterStateCopyWith<$Res> implements $MasterStateCo
   factory _$OutputMasterStateCopyWith(_OutputMasterState value, $Res Function(_OutputMasterState) _then) = __$OutputMasterStateCopyWithImpl;
 @override @useResult
 $Res call({
- int? accountId, int? categoryId, Sum sum, Operation? operation, MasterStateAction? action
+ int? accountId, int? categoryId, Money sum, Operation? operation, MasterStateAction? action
 });
 
 
-@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
+@override $MoneyCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1122,7 +1122,7 @@ class __$OutputMasterStateCopyWithImpl<$Res>
 accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Money,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as MasterStateAction?,
   ));
@@ -1132,9 +1132,9 @@ as MasterStateAction?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of MasterState
@@ -1161,7 +1161,7 @@ class _TransferMasterState implements MasterState {
 
 @override final  int? accountId;
  final  int? recAccountId;
-@override final  Sum sum;
+@override final  Money sum;
 @override final  Operation? operation;
 @override final  MasterStateAction? action;
 
@@ -1195,11 +1195,11 @@ abstract mixin class _$TransferMasterStateCopyWith<$Res> implements $MasterState
   factory _$TransferMasterStateCopyWith(_TransferMasterState value, $Res Function(_TransferMasterState) _then) = __$TransferMasterStateCopyWithImpl;
 @override @useResult
 $Res call({
- int? accountId, int? recAccountId, Sum sum, Operation? operation, MasterStateAction? action
+ int? accountId, int? recAccountId, Money sum, Operation? operation, MasterStateAction? action
 });
 
 
-@override $SumCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
+@override $MoneyCopyWith<$Res> get sum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1217,7 +1217,7 @@ class __$TransferMasterStateCopyWithImpl<$Res>
 accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,recAccountId: freezed == recAccountId ? _self.recAccountId : recAccountId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Money,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as MasterStateAction?,
   ));
@@ -1227,9 +1227,9 @@ as MasterStateAction?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of MasterState
@@ -1255,8 +1255,8 @@ class _ExchangeMasterState implements MasterState {
   
 
 @override final  int? accountId;
-@override final  Sum sum;
- final  Sum recSum;
+@override final  Money sum;
+ final  Money recSum;
 @override final  Operation? operation;
 @override final  MasterStateAction? action;
 
@@ -1290,11 +1290,11 @@ abstract mixin class _$ExchangeMasterStateCopyWith<$Res> implements $MasterState
   factory _$ExchangeMasterStateCopyWith(_ExchangeMasterState value, $Res Function(_ExchangeMasterState) _then) = __$ExchangeMasterStateCopyWithImpl;
 @override @useResult
 $Res call({
- int? accountId, Sum sum, Sum recSum, Operation? operation, MasterStateAction? action
+ int? accountId, Money sum, Money recSum, Operation? operation, MasterStateAction? action
 });
 
 
-@override $SumCopyWith<$Res> get sum;$SumCopyWith<$Res> get recSum;@override $OperationCopyWith<$Res>? get operation;
+@override $MoneyCopyWith<$Res> get sum;$MoneyCopyWith<$Res> get recSum;@override $OperationCopyWith<$Res>? get operation;
 
 }
 /// @nodoc
@@ -1311,8 +1311,8 @@ class __$ExchangeMasterStateCopyWithImpl<$Res>
   return _then(_ExchangeMasterState(
 accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int?,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as Sum,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
-as Sum,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
+as Money,recSum: null == recSum ? _self.recSum : recSum // ignore: cast_nullable_to_non_nullable
+as Money,operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as MasterStateAction?,
   ));
@@ -1322,18 +1322,18 @@ as MasterStateAction?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get sum {
+$MoneyCopyWith<$Res> get sum {
   
-  return $SumCopyWith<$Res>(_self.sum, (value) {
+  return $MoneyCopyWith<$Res>(_self.sum, (value) {
     return _then(_self.copyWith(sum: value));
   });
 }/// Create a copy of MasterState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SumCopyWith<$Res> get recSum {
+$MoneyCopyWith<$Res> get recSum {
   
-  return $SumCopyWith<$Res>(_self.recSum, (value) {
+  return $MoneyCopyWith<$Res>(_self.recSum, (value) {
     return _then(_self.copyWith(recSum: value));
   });
 }/// Create a copy of MasterState

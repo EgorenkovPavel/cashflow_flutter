@@ -1,6 +1,8 @@
-import 'account_service.dart';
+import 'package:finance_models/finance_models.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/models.dart';
+import 'account_service.dart';
 import 'network_client.dart';
 
 class AccountServiceImpl implements AccountService {
@@ -11,65 +13,45 @@ class AccountServiceImpl implements AccountService {
   String get _path => 'user-groups/${_connector.user!.userGroup}/accounts';
 
   @override
-  Future<BaseAccount> getById(AccountId id) => _connector.get<BaseAccount>(
+  Future<BaseAccountResponse> getById(UuidValue id) =>
+      _connector.get<BaseAccountResponse>(
         '$_path/$id',
-        (e) => BaseAccount.fromJson(e),
+        (e) => BaseAccountResponse.fromJson(e),
       );
 
   @override
-  Future<List<BaseAccount>> getAll() => _connector.get<List<BaseAccount>>(
+  Future<List<BaseAccountResponse>> getAll() =>
+      _connector.get<List<BaseAccountResponse>>(
         _path,
-        (data) =>
-            data.map<BaseAccount>((e) => BaseAccount.fromJson(e)).toList(),
+        (data) => data
+            .map<BaseAccountResponse>((e) => BaseAccountResponse.fromJson(e))
+            .toList(),
       );
 
   @override
-  Future<Account> createAccount(String name) async {
-    final Account account = Account(
-      name: name,
-      user: _connector.user!.id,
-    );
-    final id = await _postAccount(account);
-    return account.copyWith(id: id);
+  Future<BaseAccountResponse> create(CreateAccountRequest req) {
+    return _postAccount<BaseAccountResponse>(req);
   }
 
   @override
-  Future<Debt> createDebt(String name) async {
-    final Debt account = Debt(
-      name: name,
-      user: _connector.user!.id,
-    );
-    final id = await _postAccount(account);
-    return account.copyWith(id: id);
-  }
+  Future<BaseAccountResponse> update(UpdateBaseAccountRequest req) =>
+      _connector.update(path: '$_path/${req.id}', body: req.toJson());
+
+  Future<T> _postAccount<T extends BaseAccountResponse>(
+    CreateBaseAccountRequest account,
+  ) =>
+      _connector.post<BaseAccountResponse>(_path, account.toJson())
+          as Future<T>;
 
   @override
-  Future<BaseAccount> update(BaseAccount account, String name) =>
-      _connector.update(
-        path: '$_path/${account.id}',
-        body: {'name': name},
-        mapper: (e) => BaseAccount.fromJson(e),
-      );
-
-  Future<AccountId> _postAccount(BaseAccount account) =>
-      _connector.post<AccountId>(_path, account.toJson());
-
-  @override
-  Future<List<Balance>> getAccountBalance(AccountId id) =>
-      _connector.get<List<Balance>>(
-        '$_path/$id/balance',
-        (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
-      );
-
-  @override
-  Future<List<Balance>> getTotalBalance() => _connector.get<List<Balance>>(
-        'user-groups/${_connector.user!.userGroup}/balance',
-        (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
-      );
+  Future<Balance> getTotalBalance() => _connector.get<Balance>(
+    'user-groups/${_connector.user!.userGroup}/balance',
+    (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
+  );
 
   @override
   Future<int> getTotalBalanceInBaseCurrency() => _connector.get<int>(
-        'user-groups/${_connector.user!.userGroup}/balanceInBaseCurrency',
-        (data) => data,
-      );
+    'user-groups/${_connector.user!.userGroup}/balanceInBaseCurrency',
+    (data) => data,
+  );
 }
