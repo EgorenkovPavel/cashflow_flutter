@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../../../../domain/models.dart';
-import '../../../../../domain/view_models.dart';
 import '../../../../../utils/extensions.dart';
 import '../../../../blocs/category_cashflow_bloc.dart';
+import '../../../../models/category_view.dart';
 
 class CategoryCard extends StatelessWidget {
   final int? categoryId;

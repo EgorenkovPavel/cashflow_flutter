@@ -13,15 +13,15 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl(this._categoryDao);
 
   @override
-  Future<List<Category>> getAllCategories() async =>
+  Future<List<Category>> getAll() async =>
       CategoryMapper().listToModel(await _categoryDao.getAllCategories());
 
   @override
-  Future<Category> getCategoryById(int id) async =>
+  Future<Category> getById(int id) async =>
       CategoryMapper().toModel(await _categoryDao.getCategoryById(id));
 
   @override
-  Future<int> insertCategory(Category entity) =>
+  Future<int> insert(Category entity) =>
       _categoryDao.insertCategory(switch (entity) {
         CategoryItem(
           :final cloudId,
@@ -51,15 +51,15 @@ class CategoryRepositoryImpl implements CategoryRepository {
       });
 
   @override
-  Future<void> updateCategory(Category entity) =>
+  Future<void> update(Category entity) =>
       _categoryDao.updateCategory(CategoryMapper().toDBO(entity));
 
   @override
-  Stream<List<Category>> watchAllCategories() =>
+  Stream<List<Category>> watchAll() =>
       _categoryDao.watchAllCategories().map(CategoryMapper().listToModel);
 
   @override
-  Stream<Category> watchCategoryById(int id) =>
+  Stream<Category> watchById(int id) =>
       _categoryDao.watchCategoryById(id).map(CategoryMapper().toModel);
 
 }

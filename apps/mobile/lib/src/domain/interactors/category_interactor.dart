@@ -13,7 +13,7 @@ class CategoryInteractor {
 
   Future<Result<Category>> getById(int id) async {
     try {
-      final category = await _categoryRepository.getCategoryById(id);
+      final category = await _categoryRepository.getById(id);
       return Result.success(category);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get category by id: $id', e, stackTrace);
@@ -22,12 +22,12 @@ class CategoryInteractor {
   }
 
   Stream<Category> watchById(int id) =>
-      _categoryRepository.watchCategoryById(id);
+      _categoryRepository.watchById(id);
 
   Stream<List<CategoryCashFlow>> watchCashFlows() =>
       _cashflowService.watchCashFlow(DateTime.now());
 
-  Stream<List<Category>> watchAll() => _categoryRepository.watchAllCategories();
+  Stream<List<Category>> watchAll() => _categoryRepository.watchAll();
 
   Future<Result<CategoryItem>> insertCategoryItem({
     required CategoryType type,
@@ -45,7 +45,7 @@ class CategoryInteractor {
         parentId: parent,
       );
 
-      final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insert(category);
 
       return Result.success(category.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
@@ -61,7 +61,7 @@ class CategoryInteractor {
     try {
       final category = CategoryGroup(type: type, title: title);
 
-      final id = await _categoryRepository.insertCategory(category);
+      final id = await _categoryRepository.insert(category);
 
       return Result.success(category.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
@@ -85,7 +85,7 @@ class CategoryInteractor {
         parentId: parent,
       );
 
-      await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.update(newCategory);
 
       return Result.success(newCategory);
     } on Exception catch (e, stackTrace) {
@@ -101,7 +101,7 @@ class CategoryInteractor {
     try {
       final newCategory = category.copyWith(title: title);
 
-      await _categoryRepository.updateCategory(newCategory);
+      await _categoryRepository.update(newCategory);
 
       return Result.success(newCategory);
     } on Exception catch (e, stackTrace) {

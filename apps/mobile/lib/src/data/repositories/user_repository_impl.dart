@@ -13,7 +13,7 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this._userDao);
 
   @override
-  Future<User?> getUserByGoogleId(String googleId) async {
+  Future<User?> getByGoogleId(String googleId) async {
     if (googleId.isEmpty) {
       return null;
     }
@@ -22,7 +22,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<int> insertUser(User user) {
+  Future<int> insert(User user) {
     return _userDao.insert(UsersCompanion(
       googleId: Value(user.googleId),
       name: Value(user.name),
@@ -31,7 +31,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<List<User>> getAllUsers() async {
+  Future<List<User>> getAll() async {
     final users = await _userDao.getAllUsers();
     return UserMapper().listToModel(users);
   }

@@ -1,35 +1,25 @@
 import '../models.dart';
 
-/// Repository for managing operations (transactions).
 abstract interface class OperationRepository {
-  /// Get all operations.
-  Future<List<Operation>> getAllOperations();
 
-  /// Watch all operations as a stream.
-  Stream<List<Operation>> watchAllOperations();
+  Future<List<Operation>> getAll();
 
-  /// Get all operations that don't have a cloud id (not synced).
-  Future<List<Operation>> getAllOperationsWithEmptyCloudId();
+  Stream<List<Operation>> watchAll();
 
-  /// Get a specific operation by id.
-  Future<Operation> getOperationById(int id);
+  Future<List<Operation>> getAllWithEmptyCloudId();
 
-  /// Get the last operation.
-  Future<Operation?> getLastOperation();
+  Future<Operation> getById(int id);
 
-  /// Insert a new operation and return it with the generated id.
-  Future<Operation> insertOperation(Operation entity);
+  Future<Operation?> getLast();
 
-  /// Duplicate an operation by creating a copy with a new id and current date.
-  Future<Operation> duplicateOperation(int operationId);
+  Future<Operation> insert(Operation entity);
 
-  /// Update an existing operation.
-  Future<void> updateOperation(Operation operation);
+  Future<Operation> duplicate(int operationId);
 
-  /// Recover a deleted operation.
-  Future<void> recoverOperation(int operationId);
+  Future<void> update(Operation operation);
 
-  /// Delete an operation by id.
-  Future<void> deleteOperationById(int operationId);
+  Future<void> recover(int operationId);
+
+  Future<void> deleteById(int operationId);
 }
 

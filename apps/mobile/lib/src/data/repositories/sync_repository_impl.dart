@@ -71,11 +71,11 @@ class SyncRepositoryImpl implements SyncRepository {
 
     final cloudUsers = (await _remoteSource.getAllUsers()).getOrThrow();
     for (final cloudUser in cloudUsers) {
-      final localUser = await _userRepository.getUserByGoogleId(
+      final localUser = await _userRepository.getByGoogleId(
         cloudUser.googleId,
       );
       if (localUser == null) {
-        await _userRepository.insertUser(cloudUser);
+        await _userRepository.insert(cloudUser);
       }
     }
 

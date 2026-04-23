@@ -6,7 +6,7 @@ import 'package:money_tracker/src/domain/interactors/category_interactor.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/operation_view.dart';
 
 part 'category_detail_bloc.freezed.dart';
 
@@ -72,7 +72,7 @@ class CategoryDetailBloc
     _subOperations = _operationInteractor
         .watchByCategoryId(event.categoryId)
         .listen((items) {
-          add(CategoryDetailEvent.changeOperations(items));
+          add(CategoryDetailEvent.changeOperations(items.map((e) => OperationView.fromDomain(e)).toList()));
         });
   }
 

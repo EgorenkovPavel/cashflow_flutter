@@ -7,8 +7,9 @@ import 'package:money_tracker/src/ui/blocs/category_cashflow_bloc.dart';
 import 'package:money_tracker/src/ui/pages/operation/filter_page/operation_filter_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/view_models.dart';
 import '../../../blocs/account_balance_bloc.dart';
+import '../../../models/account_view.dart';
+import '../../../models/category_view.dart';
 
 class OperationFilterPage extends StatelessWidget {
   const OperationFilterPage({super.key, this.filter});

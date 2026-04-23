@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: dto_models,finance_models
+dependency_overrides:
+  dto_models:
+    path: ..\\dto_models
+  finance_models:
+    path: ..\\finance_models

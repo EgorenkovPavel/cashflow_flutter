@@ -7,7 +7,8 @@ import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/models.dart';
-import '../../domain/view_models.dart';
+import '../models/account_balance_view.dart';
+import '../models/account_view.dart';
 
 part 'account_balance_bloc.freezed.dart';
 
@@ -52,7 +53,10 @@ class AccountBalanceBloc
     );
 
     _sub = _accountInteractor.watchBalances().listen((items) {
-      add(AccountBalanceEvent.changeBalance(accounts: items));
+      add(AccountBalanceEvent.changeBalance(
+        accounts: items
+            .map((e) => AccountBalanceView.fromDomain(e))
+            .toList(),));
     });
   }
 

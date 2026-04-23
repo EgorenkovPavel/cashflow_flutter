@@ -3,8 +3,8 @@ import '../../utils/logger.dart';
 import '../../utils/result.dart';
 import '../interfaces/account_repository.dart';
 import '../models.dart';
+import '../models/account/account_balance_item.dart';
 import '../services/balance_service.dart';
-import '../view_models.dart';
 
 class AccountInteractor {
   final AccountRepository _accountRepository;
@@ -14,7 +14,7 @@ class AccountInteractor {
 
   Future<Result<BaseAccount>> getById(int id) async {
     try {
-      final account = await _accountRepository.getAccountById(id);
+      final account = await _accountRepository.getById(id);
       return Result.success(account);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get account by id: $id', e, stackTrace);
@@ -23,9 +23,9 @@ class AccountInteractor {
   }
 
   Stream<BaseAccount> watchById(int id) =>
-      _accountRepository.watchAccountById(id);
+      _accountRepository.watchById(id);
 
-  Stream<List<AccountBalanceView>> watchBalances() =>
+  Stream<List<AccountBalanceItem>> watchBalances() =>
       _balanceService.watchAllBalance();
 
   Future<Result<BaseAccount>> insert({
@@ -38,7 +38,7 @@ class AccountInteractor {
         true => Debt(title: title, userId: userId),
         false => Account(title: title, userId: userId),
       };
-      final id = await _accountRepository.insertAccount(account);
+      final id = await _accountRepository.insert(account);
       return Result.success(account.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to insert account', e, stackTrace);
@@ -53,7 +53,7 @@ class AccountInteractor {
   }) async {
     try {
       final newAccount = account.copyWith(title: title, userId: userId);
-      await _accountRepository.updateAccount(newAccount);
+      await _accountRepository.update(newAccount);
       return Result.success(newAccount);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to update account', e, stackTrace);

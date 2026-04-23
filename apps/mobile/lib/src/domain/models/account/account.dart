@@ -4,6 +4,8 @@ part 'account.freezed.dart';
 
 @freezed
 sealed class BaseAccount with _$BaseAccount {
+  const BaseAccount._();
+
   const factory BaseAccount.account({
     @Default(0) int id,
     @Default('') String cloudId,
@@ -17,4 +19,9 @@ sealed class BaseAccount with _$BaseAccount {
     required String title,
     required int? userId,
   }) = Debt;
+
+  bool get isDebt => switch(this){
+    Account() => false,
+    Debt() => true,
+  };
 }

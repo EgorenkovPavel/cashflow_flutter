@@ -4,7 +4,8 @@ import 'package:money_tracker/src/injection_container.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../domain/view_models.dart';
+import '../../models/operation_view.dart';
+
 
 class ListTileOperation extends StatelessWidget {
   final OperationView _operation;

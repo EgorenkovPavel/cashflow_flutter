@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/operation_view.dart';
 
 part 'operation_list_bloc.freezed.dart';
 
@@ -51,7 +51,8 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
     );
     _sub?.cancel();
     _sub = _operationInteractor.watchByFilter(event.filter).listen((items) {
-      add(OperationListEvent.changeOperations(operations: items));
+      add(OperationListEvent.changeOperations(
+          operations: items.map((e) => OperationView.fromDomain(e)).toList()));
     });
   }
 

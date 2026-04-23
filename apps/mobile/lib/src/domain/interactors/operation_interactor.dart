@@ -4,7 +4,6 @@ import '../../utils/logger.dart';
 import '../interfaces/operation_repository.dart';
 import '../models.dart';
 import '../services/operation_view_service.dart';
-import '../view_models.dart';
 
 class OperationInteractor {
   final OperationRepository _operationRepository;
@@ -14,7 +13,7 @@ class OperationInteractor {
 
   Future<Result<Operation>> getById(int id) async {
     try {
-      final operation = await _operationRepository.getOperationById(id);
+      final operation = await _operationRepository.getById(id);
       return Result.success(operation);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get operation by id: $id', e, stackTrace);
@@ -26,26 +25,27 @@ class OperationInteractor {
 
   Future<Result<Operation?>> getLast() async {
     try {
-      final operation = await _operationRepository.getLastOperation();
+      final operation = await _operationRepository.getLast();
       return Result.success(operation);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get last operation', e, stackTrace);
+
       return Result.failure(
         DatabaseException('Failed to get last operation', e),
       );
     }
   }
 
-  Stream<List<OperationView>> watchLast(int count) =>
+  Stream<List<OperationListItem>> watchLast(int count) =>
       _operationViewService.watchLastOperations(count);
 
-  Stream<List<OperationView>> watchByAccountId(int id) =>
+  Stream<List<OperationListItem>> watchByAccountId(int id) =>
       _operationViewService.watchAllOperationsByAccount(id);
 
-  Stream<List<OperationView>> watchByCategoryId(int id) =>
+  Stream<List<OperationListItem>> watchByCategoryId(int id) =>
       _operationViewService.watchAllOperationsByCategory(id);
 
-  Stream<List<OperationView>> watchByFilter(OperationListFilter filter) =>
+  Stream<List<OperationListItem>> watchByFilter(OperationListFilter filter) =>
       _operationViewService.watchAllOperationsByFilter(filter);
 
   Future<Result<Operation>> insertInput({
@@ -62,7 +62,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      final operation = await _operationRepository.insertOperation(
+      final operation = await _operationRepository.insert(
         newOperation,
       );
       return Result.success(operation);
@@ -88,7 +88,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      final operation = await _operationRepository.insertOperation(
+      final operation = await _operationRepository.insert(
         newOperation,
       );
       return Result.success(operation);
@@ -114,7 +114,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      final operation = await _operationRepository.insertOperation(
+      final operation = await _operationRepository.insert(
         newOperation,
       );
       return Result.success(operation);
@@ -140,7 +140,7 @@ class OperationInteractor {
         recSum: recSum,
       );
 
-      final operation = await _operationRepository.insertOperation(
+      final operation = await _operationRepository.insert(
         newOperation,
       );
       return Result.success(operation);
@@ -170,7 +170,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      await _operationRepository.updateOperation(newOperation);
+      await _operationRepository.update(newOperation);
 
       return Result.success(newOperation);
     } on Exception catch (e, stackTrace) {
@@ -199,7 +199,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      await _operationRepository.updateOperation(newOperation);
+      await _operationRepository.update(newOperation);
 
       return Result.success(newOperation);
     } on Exception catch (e, stackTrace) {
@@ -228,7 +228,7 @@ class OperationInteractor {
         sum: sum,
       );
 
-      await _operationRepository.updateOperation(newOperation);
+      await _operationRepository.update(newOperation);
 
       return Result.success(newOperation);
     } on Exception catch (e, stackTrace) {
@@ -257,7 +257,7 @@ class OperationInteractor {
         recSum: recSum,
       );
 
-      await _operationRepository.updateOperation(newOperation);
+      await _operationRepository.update(newOperation);
 
       return Result.success(newOperation);
     } on Exception catch (e, stackTrace) {
@@ -269,12 +269,12 @@ class OperationInteractor {
   }
 
   Future delete(Operation operation) =>
-      _operationRepository.deleteOperationById(operation.id);
+      _operationRepository.deleteById(operation.id);
 
   Future<void> deleteById(int id) =>
-      _operationRepository.deleteOperationById(id);
+      _operationRepository.deleteById(id);
 
-  Future<void> duplicate(int id) => _operationRepository.duplicateOperation(id);
+  Future<void> duplicate(int id) => _operationRepository.duplicate(id);
 
-  Future<void> recover(int id) => _operationRepository.recoverOperation(id);
+  Future<void> recover(int id) => _operationRepository.recover(id);
 }

@@ -1,23 +1,17 @@
 import '../models.dart';
 
-/// Repository for managing accounts (regular accounts and debts).
 abstract interface class AccountRepository {
-  /// Watch all accounts as a stream.
-  Stream<List<BaseAccount>> watchAllAccounts();
 
-  /// Get all accounts.
-  Future<List<BaseAccount>> getAllAccounts();
+  Stream<List<BaseAccount>> watchAll();
 
-  /// Watch a specific account by id as a stream.
-  Stream<BaseAccount> watchAccountById(int id);
+  Future<List<BaseAccount>> getAll();
 
-  /// Get a specific account by id.
-  Future<BaseAccount> getAccountById(int id);
+  Stream<BaseAccount> watchById(int id);
 
-  /// Insert a new account and return its id.
-  Future<int> insertAccount(BaseAccount account);
+  Future<BaseAccount> getById(int id);
 
-  /// Update an existing account.
-  Future<void> updateAccount(BaseAccount account);
+  Future<int> insert(BaseAccount account);
+
+  Future<void> update(BaseAccount account);
 }
 

@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../models.dart';
-import '../view_models.dart';
+import '../../domain/models.dart';
+import 'account_view.dart';
 
 part 'account_balance_view.freezed.dart';
 
@@ -20,4 +20,15 @@ abstract class AccountBalanceView with _$AccountBalanceView {
   }) = _AccountBalanceView;
 
   AccountView get account => AccountView(id: accountId, title: accountTitle);
+
+  static AccountBalanceView fromDomain(AccountBalanceItem model) =>
+      AccountBalanceView(
+        accountId: model.account.id,
+        userId: model.user?.id,
+        accountTitle: model.account.title,
+        userName: model.user?.name ?? '',
+        userPhoto: model.user?.photo ?? '',
+        balance: model.balance,
+        isDebt: model.account.isDebt,
+      );
 }

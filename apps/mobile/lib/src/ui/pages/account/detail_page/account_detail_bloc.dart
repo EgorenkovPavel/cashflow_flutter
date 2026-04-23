@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/operation_view.dart';
 
 part 'account_detail_bloc.freezed.dart';
 
@@ -48,17 +48,17 @@ class AccountDetailBloc extends Bloc<AccountDetailEvent, AccountDetailState> {
         ));
   }
 
-  Future<void> _fetch(
+  void _fetch(
     _FetchAccountDetailEvent event,
     Emitter<AccountDetailState> emit,
-  ) async {
+  ) {
     _subTitle = _accountInteractor.watchById(event.accountId).listen((account) {
       add(AccountDetailEvent.titleChanged(account.title));
     });
 
     _subOperations =
         _operationInteractor.watchByAccountId(event.accountId).listen((list) {
-      add(AccountDetailEvent.operationsChanged(list));
+      add(AccountDetailEvent.operationsChanged(list.map((e) => OperationView.fromDomain(e)).toList()));
     });
   }
 

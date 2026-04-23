@@ -6,5 +6,5 @@ class UserInteractor {
 
   UserInteractor(this._userRepository);
 
-  Future<List<User>> getAll() => _userRepository.getAllUsers();
+  Future<List<User>> getAll() => _userRepository.getAll();
 }

@@ -2,7 +2,6 @@ import 'package:money_tracker/src/data/sources/local/data/database.dart';
 import 'package:money_tracker/src/data/sources/local/entities/cashflow_entity.dart';
 
 import '../../../domain/models.dart';
-import '../../../domain/view_models.dart';
 import '../../../utils/logger.dart';
 import 'entities/account_balance_entity.dart';
 import 'entities/operation_entity.dart';
@@ -126,57 +125,38 @@ class OperationMapper extends DBMapper<Operation, OperationDB> {
   List<Operation> entityListToModel(List<OperationDbEntity> list) =>
       list.map((e) => entityToModel(e)).toList();
 
-  OperationView toListItem(OperationDbEntity entity, User? user) {
+  OperationListItem toListItem(OperationDbEntity entity, User? user) {
     final dbo = entity.operationData;
+
     return dbo.operationType.map(
-      input: () => InputOperationView(
-        id: dbo.id,
-        date: dbo.date,
-        synced: dbo.synced,
-        deleted: dbo.deleted,
-        account: entity.account.title,
-        category: entity.category!.title,
-        sum: Money(dbo.sum, dbo.currencySent),
-        userPhotoUrl: user?.photo ?? '',
-        userName: user?.name ?? '',
+      input: () => OperationListItem(
+        operation: toModel(entity.operationData),
+        user: user,
+        accountTitle: entity.account.title,
+        analyticTitle: entity.category!.title,
       ),
-      output: () => OutputOperationView(
-        id: dbo.id,
-        date: dbo.date,
-        synced: dbo.synced,
-        deleted: dbo.deleted,
-        account: entity.account.title,
-        category: entity.category!.title,
-        sum: Money(dbo.sum, dbo.currencySent),
-        userPhotoUrl: user?.photo ?? '',
-        userName: user?.name ?? '',
+      output: () => OperationListItem(
+        operation: toModel(entity.operationData),
+        user: user,
+        accountTitle: entity.account.title,
+        analyticTitle: entity.category!.title,
       ),
-      transfer: () => TransferOperationView(
-        id: dbo.id,
-        date: dbo.date,
-        synced: dbo.synced,
-        deleted: dbo.deleted,
-        account: entity.account.title,
-        recAccount: entity.recAccount!.title,
-        sum: Money(dbo.sum, dbo.currencySent),
-        userPhotoUrl: user?.photo ?? '',
-        userName: user?.name ?? '',
+      transfer: () => OperationListItem(
+        operation: toModel(entity.operationData),
+        user: user,
+        accountTitle: entity.account.title,
+        analyticTitle: entity.recAccount!.title,
       ),
-      exchange: () => ExchangeOperationView(
-        id: dbo.id,
-        date: dbo.date,
-        synced: dbo.synced,
-        deleted: dbo.deleted,
-        account: entity.account.title,
-        sendSum: Money(dbo.sum, dbo.currencySent),
-        receivedSum: Money(dbo.recSum, dbo.currencyReceived),
-        userPhotoUrl: user?.photo ?? '',
-        userName: user?.name ?? '',
+      exchange: () => OperationListItem(
+        operation: toModel(entity.operationData),
+        user: user,
+        accountTitle: entity.account.title,
+        analyticTitle: '',
       ),
     );
   }
 
-  List<OperationView> entityListToItem(
+  List<OperationListItem> entityListToItem(
     List<OperationDbEntity> list,
     List<User> users,
   ) => list
@@ -314,7 +294,7 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
     }
   }
 
-  List<AccountBalanceView> combineBalances(
+  List<AccountBalanceItem> combineBalances(
     List<AccountDB> accounts,
     List<UserDB> users,
     List<AccountBalanceEntity> balances,
@@ -329,14 +309,10 @@ class AccountMapper extends DBMapper<BaseAccount, AccountDB> {
               .where((balance) => balance.accountId == account.id)
               .map((balance) => balance.balance).firstOrNull ?? Balance();
 
-        return AccountBalanceView(
-          accountId: account.id,
-          userId: account.user,
-          accountTitle: account.title,
-          userName: user?.name ?? '',
-          userPhoto: user?.photo ?? '',
+        return AccountBalanceItem(
+          account: AccountMapper().toModel(account),
+          user: user == null ? null : UserMapper().toModel(user),
           balance: balance,
-          isDebt: account.isDebt,
         );
       }).toList();
     } catch (e, stacktrace) {

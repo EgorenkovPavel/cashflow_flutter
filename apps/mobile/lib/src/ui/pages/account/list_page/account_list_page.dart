@@ -4,7 +4,7 @@ import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/account_balance_view.dart';
 
 class AccountListPage extends StatefulWidget {
   const AccountListPage({super.key});

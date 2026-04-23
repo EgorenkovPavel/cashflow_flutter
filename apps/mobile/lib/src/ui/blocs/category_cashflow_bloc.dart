@@ -7,7 +7,7 @@ import 'package:money_tracker/src/domain/interactors/category_interactor.dart';
 import 'package:money_tracker/src/ui/blocs/currency_rate_bloc.dart';
 
 import '../../domain/models.dart';
-import '../../domain/view_models.dart';
+import '../models/category_view.dart';
 
 part 'category_cashflow_bloc.freezed.dart';
 

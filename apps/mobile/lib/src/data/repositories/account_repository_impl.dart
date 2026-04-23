@@ -14,19 +14,19 @@ class AccountRepositoryImpl implements AccountRepository {
   AccountRepositoryImpl(this._accountDao);
 
   @override
-  Future<BaseAccount> getAccountById(int id) async {
+  Future<BaseAccount> getById(int id) async {
     final account = await _accountDao.getAccountById(id);
     return AccountMapper().toModel(account);
   }
 
   @override
-  Future<List<BaseAccount>> getAllAccounts() async {
+  Future<List<BaseAccount>> getAll() async {
     final accounts = await _accountDao.getAllAccounts();
     return AccountMapper().listToModel(accounts);
   }
 
   @override
-  Future<int> insertAccount(BaseAccount account) => _accountDao.insertAccount(
+  Future<int> insert(BaseAccount account) => _accountDao.insertAccount(
     AccountsCompanion(
       cloudId: Value(account.cloudId),
       title: Value(account.title),
@@ -36,14 +36,14 @@ class AccountRepositoryImpl implements AccountRepository {
   );
 
   @override
-  Future<void> updateAccount(BaseAccount account) =>
+  Future<void> update(BaseAccount account) =>
       _accountDao.updateAccount(AccountMapper().toDBO(account));
 
   @override
-  Stream<BaseAccount> watchAccountById(int id) =>
+  Stream<BaseAccount> watchById(int id) =>
       _accountDao.watchAccountById(id).map(AccountMapper().toModel);
 
   @override
-  Stream<List<BaseAccount>> watchAllAccounts() =>
+  Stream<List<BaseAccount>> watchAll() =>
       _accountDao.watchAllAccounts().map(AccountMapper().listToModel);
 }

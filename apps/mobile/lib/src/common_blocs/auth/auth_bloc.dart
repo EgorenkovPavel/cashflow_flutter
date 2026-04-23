@@ -85,10 +85,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     return super.close();
   }
 
-  Future<void> _changeAuth(
+  void _changeAuth(
     _ChangeAuthAuthEvent event,
     Emitter<AuthState> emit,
-  ) async {
+  ) {
     final user = event.user;
     if (user != null) {
       emit(AuthState.authenticated(user: user, idToken: event.idToken));

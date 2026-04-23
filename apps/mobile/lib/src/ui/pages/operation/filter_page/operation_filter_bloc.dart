@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/account_view.dart';
+import '../../../models/category_view.dart';
 
 part 'operation_filter_bloc.freezed.dart';
 

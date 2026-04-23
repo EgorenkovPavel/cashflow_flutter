@@ -10,7 +10,8 @@ import 'package:money_tracker/src/ui/widgets/dropdown_list.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
 import '../../../../domain/models.dart';
-import '../../../../domain/view_models.dart';
+import '../../../models/account_view.dart';
+import '../../../models/category_view.dart';
 import '../input_page/widgets/operation_type_toggle.dart';
 
 class OperationEditPage extends StatelessWidget {

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../domain/view_models.dart';
+import '../../models/operation_view.dart';
 
 class ListDividerOperation extends StatelessWidget {
   final OperationView? operation1;

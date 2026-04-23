@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 
-import '../../../../../domain/view_models.dart';
+import '../../../../models/operation_view.dart';
 
 part 'last_operations_bloc.freezed.dart';
 
@@ -44,7 +44,7 @@ class LastOperationsBloc
     Emitter<LastOperationsState> emit,
   ) {
     _sub = _operationInteractor.watchLast(_operationCount).listen((items) {
-      add(LastOperationsEvent.changeOperations(items));
+      add(LastOperationsEvent.changeOperations(items.map((e) => OperationView.fromDomain(e)).toList()));
     });
   }
 

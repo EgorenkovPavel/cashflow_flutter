@@ -23,19 +23,19 @@ class LocalSyncSourceImpl implements LocalSyncSource {
   });
 
   @override
-  Future<List<User>> getAllUsers() => userRepository.getAllUsers();
+  Future<List<User>> getAllUsers() => userRepository.getAll();
 
   @override
   Future<List<BaseAccount>> getAllAccounts() =>
-      accountRepository.getAllAccounts();
+      accountRepository.getAll();
 
   @override
   Future<List<Category>> getAllCategories() =>
-      categoryRepository.getAllCategories();
+      categoryRepository.getAll();
 
   @override
   Future<User?> getUserByGoogleId(String googleId) =>
-      userRepository.getUserByGoogleId(googleId);
+      userRepository.getByGoogleId(googleId);
 
   @override
   LocalSyncTable<BaseAccount> get accounts => accountRepo;

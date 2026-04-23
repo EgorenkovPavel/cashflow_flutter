@@ -7,7 +7,7 @@ import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../../domain/view_models.dart';
+import '../../../../models/operation_view.dart';
 import 'last_operations_bloc.dart';
 
 class LastOperations extends StatelessWidget {

@@ -105,7 +105,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
       ),
     );
 
-    _syncSub = _authBloc.stream.listen((event) async {
+    _syncSub = _authBloc.stream.listen((event) {
       final user = event.user;
       if (user != null) {
         add(SyncEvent.authAuthenticated(user: user));

@@ -4,7 +4,7 @@ import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
 import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 
-import '../../../../domain/view_models.dart';
+import '../../../models/account_balance_view.dart';
 import 'card_title.dart';
 
 class AccountsCard extends StatefulWidget {

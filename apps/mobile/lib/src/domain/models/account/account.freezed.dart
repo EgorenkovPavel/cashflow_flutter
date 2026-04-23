@@ -208,8 +208,8 @@ return debt(_that.id,_that.cloudId,_that.title,_that.userId);case _:
 /// @nodoc
 
 
-class Account implements BaseAccount {
-  const Account({this.id = 0, this.cloudId = '', required this.title, required this.userId});
+class Account extends BaseAccount {
+  const Account({this.id = 0, this.cloudId = '', required this.title, required this.userId}): super._();
   
 
 @override@JsonKey() final  int id;
@@ -280,8 +280,8 @@ as int?,
 /// @nodoc
 
 
-class Debt implements BaseAccount {
-  const Debt({this.id = 0, this.cloudId = '', required this.title, required this.userId});
+class Debt extends BaseAccount {
+  const Debt({this.id = 0, this.cloudId = '', required this.title, required this.userId}): super._();
   
 
 @override@JsonKey() final  int id;

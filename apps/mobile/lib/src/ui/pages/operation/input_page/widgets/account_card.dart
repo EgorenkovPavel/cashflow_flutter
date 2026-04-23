@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/blocs/account_balance_bloc.dart';
 
 import '../../../../../domain/models.dart';
-import '../../../../../domain/view_models.dart';
 import '../../../../../utils/extensions.dart';
+import '../../../../models/account_balance_view.dart';
 import '../../../../widgets/user_avatar.dart';
 
 class AccountCard extends StatelessWidget {

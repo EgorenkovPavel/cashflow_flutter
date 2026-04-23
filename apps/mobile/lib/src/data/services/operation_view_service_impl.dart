@@ -1,8 +1,8 @@
+import 'package:money_tracker/src/domain/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../domain/models/operation/operation_list_filter.dart';
 import '../../domain/services/operation_view_service.dart';
-import '../../domain/view_models/operation_view.dart';
 import '../sources/local/data/operation_dao.dart';
 import '../sources/local/data/user_dao.dart';
 import '../sources/local/db_mapper.dart';
@@ -20,15 +20,15 @@ class OperationViewServiceImpl implements OperationViewService {
        _userDao = userDao;
 
   @override
-  Stream<List<OperationView>> watchAllOperationsByAccount(int accountId) =>
+  Stream<List<OperationListItem>> watchAllOperationsByAccount(int accountId) =>
       _combine(_operationDao.watchAllOperationItemsByAccount(accountId));
 
   @override
-  Stream<List<OperationView>> watchAllOperationsByCategory(int categoryId) =>
+  Stream<List<OperationListItem>> watchAllOperationsByCategory(int categoryId) =>
       _combine(_operationDao.watchAllOperationItemsByCategory(categoryId));
 
   @override
-  Stream<List<OperationView>> watchAllOperationsByFilter(
+  Stream<List<OperationListItem>> watchAllOperationsByFilter(
     OperationListFilter filter,
   ) => _combine(
     _operationDao.watchAllOperationItemsByFilter(
@@ -40,10 +40,10 @@ class OperationViewServiceImpl implements OperationViewService {
   );
 
   @override
-  Stream<List<OperationView>> watchLastOperations(int limit) =>
+  Stream<List<OperationListItem>> watchLastOperations(int limit) =>
       _combine(_operationDao.watchLastOperationItems(limit));
 
-  Stream<List<OperationView>> _combine(
+  Stream<List<OperationListItem>> _combine(
     Stream<List<OperationDbEntity>> operations,
   ) => Rx.combineLatest2(
     operations,
