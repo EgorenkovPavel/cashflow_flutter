@@ -29,7 +29,11 @@ class OperationSyncServiceImpl implements SyncService {
 
       try {
         final accountCloudId = allAccounts
-            .where((e) => e.id == operation.account)
+            .where((e) =>
+        e.id == operation.map(input: (op) => op.account,
+            output: (op) => op.account,
+            transfer: (op) => op.accountSend,
+            exchange: (op) => op.account))
             .first
             .cloudId;
 
@@ -39,7 +43,7 @@ class OperationSyncServiceImpl implements SyncService {
           output: (op) =>
               allCategories.where((e) => e.id == op.category).first.cloudId,
           transfer: (op) =>
-              allAccounts.where((e) => e.id == op.recAccount).first.cloudId,
+              allAccounts.where((e) => e.id == op.accountReceived).first.cloudId,
           exchange: (op) => '', // no analytic
         );
 
@@ -142,8 +146,8 @@ class OperationSyncServiceImpl implements SyncService {
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
+          accountSend: (await _getAccountByCloudOperation(cloudOperation)).id,
+          accountReceived: (await _getRecAccountByCloudOperation(cloudOperation)).id,
           sum: Money(
             cloudOperation.sum,
             Currency.byName(cloudOperation.currencySent),
@@ -155,11 +159,11 @@ class OperationSyncServiceImpl implements SyncService {
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sum: Money(
+          sumSend: Money(
             cloudOperation.sum,
             Currency.byName(cloudOperation.currencySent),
           ),
-          recSum: Money(
+          sumReceived: Money(
             cloudOperation.recSum ?? 0,
             Currency.byName(cloudOperation.currencyReceived),
           ),
@@ -205,8 +209,8 @@ class OperationSyncServiceImpl implements SyncService {
           synced: true,
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
-          account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          recAccount: (await _getRecAccountByCloudOperation(cloudOperation)).id,
+          accountSend: (await _getAccountByCloudOperation(cloudOperation)).id,
+          accountReceived: (await _getRecAccountByCloudOperation(cloudOperation)).id,
           sum: Money(
             cloudOperation.sum,
             Currency.byName(cloudOperation.currencySent),
@@ -219,11 +223,11 @@ class OperationSyncServiceImpl implements SyncService {
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sum: Money(
+          sumSend: Money(
             cloudOperation.sum,
             Currency.byName(cloudOperation.currencySent),
           ),
-          recSum: Money(
+          sumReceived: Money(
             cloudOperation.recSum ?? 0,
             Currency.byName(cloudOperation.currencyReceived),
           ),

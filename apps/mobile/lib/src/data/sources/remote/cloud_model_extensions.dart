@@ -81,11 +81,11 @@ extension CloudOperationMapper on Operation {
       date: o.date,
       operationType: const OperationTypeConverter().toSql(o.operationType),
       account: accountCloudId,
-      sum: o.sum.sum,
-      recSum: o.recSum.sum,
+      sum: o.sumSend.sum,
+      recSum: o.sumReceived.sum,
       deleted: o.deleted,
-      currencySent: o.sum.currency.toString(),
-      currencyReceived: o.recSum.currency.toString(),
+      currencySent: o.sumSend.currency.toString(),
+      currencyReceived: o.sumReceived.currency.toString(),
     ),
   );
 }

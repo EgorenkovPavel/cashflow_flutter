@@ -115,12 +115,12 @@ extension CategoryCashFlowBlocExt on BuildContext {
     int count,
   ) {
     final list = watchCashFlow(categoryType)
-        .where((e) => balanceToRub(e.cashflowByType(budgetType)).sum != 0)
+        .where((e) => balanceToRub(e.cashFlowByType(budgetType)).sum != 0)
         .toList();
     list.sort(
       (a, b) =>
-          balanceToRub(b.cashflowByType(budgetType)).sum -
-          balanceToRub(a.cashflowByType(budgetType)).sum,
+          balanceToRub(b.cashFlowByType(budgetType)).sum -
+          balanceToRub(a.cashFlowByType(budgetType)).sum,
     );
     return list.take(count).toList();
   }

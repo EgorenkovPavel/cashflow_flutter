@@ -107,8 +107,8 @@ sealed class OperationView with _$OperationView{
         userName: model.user?.name ?? '',
         userPhotoUrl: model.user?.photo ?? '',
         account: model.accountTitle,
-        sendSum: operation.sum,
-        receivedSum: operation.recSum,
+        sendSum: operation.sumSend,
+        receivedSum: operation.sumReceived,
       ),
     };
   }

@@ -22,6 +22,25 @@ scripts:
     run: melos exec -- "dart run build_runner build --delete-conflicting-outputs"
     description: "Run build_runner in all packages"
 
+  test:
+    run: melos exec --dir-exists=test -- "flutter test"
+    description: "Run all tests"
+
+  test:coverage:
+    run: melos exec --scope="money_tracker" --dir-exists=test -- "flutter test --coverage"
+    description: "Run coverage for mobile app"
+
+  coverage:report:
+    run: powershell -ExecutionPolicy Bypass -File tool/generate_coverage_report.ps1 -LcovPath "apps/mobile/coverage/lcov.info" -OutputDir "apps/mobile/coverage/html"
+    description: "Generate HTML coverage report"
+
+  test:coverage:report:
+    run: |
+      melos exec --scope="money_tracker" --dir-exists=test -- "flutter test --coverage"
+      powershell -ExecutionPolicy Bypass -File tool/generate_coverage_report.ps1 -LcovPath "apps/mobile/coverage/lcov.info" -OutputDir "apps/mobile/coverage/html"
+    description: "Run coverage and generate HTML report for mobile app"
+
+
   server:dir:
     run: cd apps/server && dart_frog dev
     description: "Запуск через переход в директорию"

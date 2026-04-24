@@ -24,7 +24,7 @@ abstract class CategoryCashFlow with _$CategoryCashFlow {
     BudgetType.YEAR => yearBudget,
   };
 
-  Balance cashflowByType(BudgetType type) => switch (type) {
+  Balance cashFlowByType(BudgetType type) => switch (type) {
     BudgetType.MONTH => monthCashFlow,
     BudgetType.YEAR => yearCashFlow,
   };

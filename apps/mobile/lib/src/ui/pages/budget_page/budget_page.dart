@@ -26,8 +26,8 @@ class _BudgetPageState extends State<BudgetPage> {
 
     list.sort(
       (a, b) =>
-          context.balanceToRub(b.cashflowByType(_budgetType)).sum -
-          context.balanceToRub(a.cashflowByType(_budgetType)).sum,
+          context.balanceToRub(b.cashFlowByType(_budgetType)).sum -
+          context.balanceToRub(a.cashFlowByType(_budgetType)).sum,
     );
 
     final budget = Money(
@@ -37,7 +37,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
     final cashflow = context.balanceToRub(
       list
-          .map((e) => e.cashflowByType(_budgetType))
+          .map((e) => e.cashFlowByType(_budgetType))
           .fold(Balance(), (a, b) => a + b),
     );
 
@@ -143,7 +143,7 @@ class CashflowColumn extends StatelessWidget {
     final budget = categoryCashFlow.budgetByType(budgetType);
 
     final cashflow = context
-        .balanceToRub(categoryCashFlow.cashflowByType(budgetType))
+        .balanceToRub(categoryCashFlow.cashFlowByType(budgetType))
         .sum;
 
     final alignment = switch (budgetType) {

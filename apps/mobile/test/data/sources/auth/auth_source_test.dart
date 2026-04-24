@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:money_tracker/data/sources/auth/auth_source.dart';
-import 'package:money_tracker/data/sources/auth/auth_source_impl.dart';
+import 'package:money_tracker/src/data/interfaces/auth_source.dart';
+import 'package:money_tracker/src/data/sources/auth_source_impl.dart';
 
 import 'auth_source_test.mocks.dart';
 

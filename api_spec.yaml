@@ -1,31 +1,144 @@
 openapi: 3.0.3
 info:
-  title: My Finance API
+  title: Finance API
   version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/v1
+
 paths:
-  /v1/summary:
-    get:
-      summary: Получить сводный отчет по месяцам
+  /register:
+    post:
+      summary: Register user by Google token
       parameters:
-        - name: year
-          in: query
+        - name: Authorization
+          in: header
           required: true
           schema:
-            type: integer
+            type: string
+          description: Bearer Firebase ID token
       responses:
         '200':
-          description: Успешный ответ
+          description: Registered user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SummaryReport'
+                $ref: '#/components/schemas/UserResponse'
+
+  /user-groups/{userGroup}/accounts:
+    post:
+      summary: Create account
+      parameters:
+        - name: userGroup
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '200':
+          description: Created account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAccountResponse'
+
+    get:
+      summary: Get all accounts
+      parameters:
+        - name: userGroup
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Accounts list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseAccountResponse'
+
+  /user-groups/{userGroup}/accounts/{id}:
+    get:
+      summary: Get account by id
+      parameters:
+        - name: userGroup
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAccountResponse'
 
 components:
   schemas:
-    SummaryReport:
+    CreateAccountRequest:
       type: object
       properties:
-        totalInflow:
-          type: integer
-        totalOutflow:
-          type: integer
+        name:
+          type: string
+        isDebt:
+          type: boolean
+      required:
+        - name
+        - isDebt
+
+    BaseAccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        isDebt:
+          type: boolean
+        userId:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - id
+        - name
+        - isDebt
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        googleId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        photo:
+          type: string
+      required:
+        - id
+        - googleId
+        - name

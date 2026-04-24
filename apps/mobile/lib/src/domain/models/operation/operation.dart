@@ -34,8 +34,8 @@ sealed class Operation with _$Operation{
     @Default(false) bool synced,
     @Default(false) bool deleted,
     required DateTime date,
-    required int account,
-    required int recAccount,
+    required int accountSend,
+    required int accountReceived,
     required Money sum,
   }) = TransferOperation;
   const factory Operation.exchange({
@@ -45,8 +45,8 @@ sealed class Operation with _$Operation{
     @Default(false) bool deleted,
     required DateTime date,
     required int account,
-    required Money sum,
-    required Money recSum,
+    required Money sumSend,
+    required Money sumReceived,
   }) = ExchangeOperation;
 
   OperationType get operationType => switch (this) {

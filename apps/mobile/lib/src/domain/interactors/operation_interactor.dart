@@ -109,8 +109,8 @@ class OperationInteractor {
     try {
       final newOperation = TransferOperation(
         date: date,
-        account: accountId,
-        recAccount: recAccountId,
+        accountSend: accountId,
+        accountReceived: recAccountId,
         sum: sum,
       );
 
@@ -136,8 +136,8 @@ class OperationInteractor {
       final newOperation = ExchangeOperation(
         date: date,
         account: accountId,
-        sum: sum,
-        recSum: recSum,
+        sumSend: sum,
+        sumReceived: recSum,
       );
 
       final operation = await _operationRepository.insert(
@@ -223,8 +223,8 @@ class OperationInteractor {
         cloudId: operation.cloudId,
         deleted: operation.deleted,
         date: date,
-        account: accountId,
-        recAccount: recAccountId,
+        accountSend: accountId,
+        accountReceived: recAccountId,
         sum: sum,
       );
 
@@ -253,8 +253,8 @@ class OperationInteractor {
         deleted: operation.deleted,
         date: date,
         account: accountId,
-        sum: sum,
-        recSum: recSum,
+        sumSend: sum,
+        sumReceived: recSum,
       );
 
       await _operationRepository.update(newOperation);

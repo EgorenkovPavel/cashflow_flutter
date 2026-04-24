@@ -132,11 +132,11 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
             sum: state.sum,
           ),
         );
-      case TransferOperation(:final recAccount):
+      case TransferOperation(:final accountReceived):
         emit(
           MasterState.transfer(
-            accountId: op.account,
-            recAccountId: recAccount,
+            accountId: op.accountSend,
+            recAccountId: accountReceived,
             sum: state.sum,
           ),
         );

@@ -173,7 +173,7 @@ LazyDatabase _openConnection() {
   daos: [AccountDao, CategoryDao, OperationDao, UserDao],
 )
 class Database extends _$Database {
-  Database() : super(_openConnection());
+  Database([QueryExecutor? connection]) : super(connection ?? _openConnection());
 
   @override
   int get schemaVersion => 13;
@@ -298,12 +298,12 @@ class Database extends _$Database {
     return data;
   }
 
-  Future loadData(Map<String, dynamic> data) async {
+  Future loadData(Map<String, dynamic> data) async{
 
     data.forEach((String key, dynamic value) async {
       if (key == 'account') {
         var accounts = <AccountDB>[];
-        value.forEach((dynamic d) async {
+        value.forEach((dynamic d) {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('account_title')) {
               accounts.add(
@@ -329,7 +329,7 @@ class Database extends _$Database {
         await AccountDao(this).batchInsert(accounts);
       } else if (key == 'category') {
         var categories = <CategoryDB>[];
-        value.forEach((dynamic d) async {
+        value.forEach((dynamic d) {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('category_title')) {
               categories.add(
@@ -361,7 +361,7 @@ class Database extends _$Database {
         await CategoryDao(this).batchInsert(categories);
       } else if (key == 'operation') {
         var operations = <OperationDB>[];
-        value.forEach((dynamic d) async {
+        value.forEach((dynamic d) {
           if (d is Map<String, dynamic>) {
             if (d.containsKey('operation_date')) {
               operations.add(

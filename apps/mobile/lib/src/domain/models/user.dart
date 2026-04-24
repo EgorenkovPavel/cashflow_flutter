@@ -11,16 +11,4 @@ abstract class User with _$User {
     required String photo,
   }) = _User;
 
-  static User fromJson(Map<String, dynamic> json) => User(
-        googleId: json['id'],
-        name: json['name'],
-        photo: json['photo'],
-      );
-
-  static Map<String, dynamic> toJson(User user) => {
-        'id': user.googleId,
-        'name': user.name,
-        'photo': user.photo,
-      };
-
 }
