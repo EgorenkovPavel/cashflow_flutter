@@ -1,0 +1,23 @@
+name: firebase_api_client
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.11.0
+
+# Add regular dependencies here.
+dependencies:
+  # path: ^1.9.0
+  freezed_annotation: ^3.1.0
+  cloud_firestore: ^6.3.0
+
+  finance_models:
+    path: ../../packages/finance_models
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6
+  build_runner:
+  flutter_lints: ^6.0.0
+  freezed: ^3.2.5
