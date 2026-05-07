@@ -1,4 +1,3 @@
-import '../../utils/result.dart';
 import '../../utils/exceptions.dart';
 import '../../utils/logger.dart';
 import '../interfaces/operation_repository.dart';

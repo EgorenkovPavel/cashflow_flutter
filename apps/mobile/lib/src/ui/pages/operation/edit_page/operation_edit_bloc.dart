@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 
-import '../../../../utils/result.dart';
 import '../../../models/account_view.dart';
 import '../../../models/category_view.dart';
 

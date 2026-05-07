@@ -1,6 +1,5 @@
 import '../../utils/exceptions.dart';
 import '../../utils/logger.dart';
-import '../../utils/result.dart';
 import '../interfaces/category_repository.dart';
 import '../models.dart';
 import '../services/cashflow_service.dart';

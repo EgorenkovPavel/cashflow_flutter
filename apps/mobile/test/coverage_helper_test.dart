@@ -159,7 +159,7 @@ import 'package:money_tracker/src/utils/date_util.dart';
 import 'package:money_tracker/src/utils/exceptions.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:money_tracker/src/utils/logger.dart';
-import 'package:money_tracker/src/utils/result.dart';
+import 'package:finance_models/src/result.dart';
 import 'package:money_tracker/src/utils/sum_on_date.dart';
 
 void main() {}

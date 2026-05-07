@@ -9,4 +9,5 @@ export 'src/enum/currency.dart';
 export 'src/enum/operation_type.dart';
 export 'src/balance.dart';
 export 'src/money.dart';
+export 'src/result.dart';
 

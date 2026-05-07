@@ -1,8 +1,7 @@
 
 import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
-
-import '../../utils/result.dart';
+import '../../domain/models.dart';
 
 abstract interface class RemoteDataSource{
 

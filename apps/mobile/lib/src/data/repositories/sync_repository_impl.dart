@@ -6,7 +6,6 @@ import '../../common_blocs/sync/loading_state.dart';
 import '../../domain/interfaces/sync_repository.dart';
 import '../../domain/interfaces/user_repository.dart';
 import '../../domain/models.dart';
-import '../../utils/result.dart';
 import '../interfaces/local_sync_source.dart';
 import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';

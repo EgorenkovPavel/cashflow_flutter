@@ -3,99 +3,62 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_models/finance_models.dart';
 import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/src/data/sources/remote/cloud_model_extensions.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
 
 import '../../../utils/exceptions.dart';
-import '../../../utils/result.dart';
 
 class RemoteSourceImpl implements RemoteDataSource {
-  final FirebaseFirestore _firestore;
+  final CloudSource _source;
 
-  CloudDb? _cloudDb;
-
-  RemoteSourceImpl(this._firestore);
-
-  @override
-  Result<TableDAO<CloudAccount>> get accounts => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.accounts);
+  RemoteSourceImpl(FirebaseFirestore firestore)
+      : _source = CloudSource(firestore);
 
   @override
-  Result<TableDAO<CloudCategory>> get categories => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.categories);
+  Result<TableDAO<CloudAccount>> get accounts => _source.accounts;
 
   @override
-  Result<TableDAO<CloudOperation>> get operations => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.operations);
+  Result<TableDAO<CloudCategory>> get categories => _source.categories;
 
   @override
-  Future<Result<bool>> deleteAll() async {
-    try {
-      await operations.getOrThrow().deleteAll();
-      await categories.getOrThrow().deleteAll();
-      await accounts.getOrThrow().deleteAll();
-
-      return Result.success(true);
-    } catch (e) {
-      return Result.failure(e as Exception);
-    }
-  }
+  Result<TableDAO<CloudOperation>> get operations => _source.operations;
 
   @override
-  Future<Result<bool>> addUserToDatabase(User user) async {
-    if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
-    }
-    final cloudUser =
-    await _cloudDb!.addUserToDatabase(user.toCloudUser());
+  Future<Result<bool>> deleteAll() => _source.deleteAll();
 
-    return Result.success(true);
-  }
+  @override
+  Future<Result<bool>> addUserToDatabase(User user) =>
+      _source.addUserToDatabase(user.toCloudUser());
 
   @override
   Future<Result<List<User>>> getAllUsers() async {
-    if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
-    }
+    final result = await _source.getAllUsers();
 
-    final cloudUsers = await _cloudDb!.getAllUsers();
-
-    return Result.success(cloudUsers.map((e) => User(
+    return result.map(onSuccess: (cloudUsers) =>
+        Result.success(cloudUsers.map((e) =>
+            User(
       googleId: e.googleId,
       name: e.name,
       photo: e.photo,
-    )).toList());
+            )).toList()), onFailure: (e) => Result.failure(e));
   }
 
   @override
-  Future<void> createDatabase(User user) async {
-    _cloudDb = await CloudDb.create(_firestore, user.toCloudUser());
-  }
+  Future<void> createDatabase(User user) => _source.createDatabase(user.toCloudUser());
 
   @override
-  Future<bool> databaseExists(User user) =>
-      CloudDb.databaseExists(_firestore, user.toCloudUser());
+  Future<bool> databaseExists(User user) => _source.databaseExists(user.toCloudUser());
 
   @override
-  Future<void> connect(User user) async {
-    _cloudDb = await CloudDb.findByUserId(_firestore, user.googleId);
-  }
+  Future<void> connect(User user) => _source.connect(user.toCloudUser());
 
   @override
-  Future<void> disconnect() async {
-    _cloudDb = null;
-  }
+  Future<void> disconnect() => _source.disconnect();
 
   @override
-  Result<bool> isCurrentAdmin() {
-    if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
-    }
-    return Result.success(_cloudDb!.isCurrentUserAdmin);
-  }
+  Result<bool> isCurrentAdmin() => _source.isCurrentAdmin();
+
 }
