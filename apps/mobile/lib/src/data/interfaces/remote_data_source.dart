@@ -1,9 +1,8 @@
 
-import 'package:money_tracker/src/data/sources/remote/daos/table_dao.dart';
+import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
 
 import '../../utils/result.dart';
-import '../sources/remote/models/cloud_models.dart';
 
 abstract interface class RemoteDataSource{
 

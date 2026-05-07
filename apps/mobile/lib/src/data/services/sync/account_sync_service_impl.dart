@@ -1,11 +1,11 @@
+import 'package:firebase_api_client/firebase_api_client.dart';
+
 import '../../../domain/models.dart';
 import '../../../domain/services/sync_service.dart';
 import '../../../utils/logger.dart';
 import '../../interfaces/local_sync_source.dart';
 import '../../sources/remote/cloud_model_extensions.dart';
-import '../../sources/remote/daos/table_dao.dart';
 import '../../sources/remote/model_mapper.dart';
-import '../../sources/remote/models/cloud_models.dart';
 
 class AccountSyncServiceImpl implements SyncService {
   final LocalSyncSource _localSource;
@@ -81,7 +81,9 @@ class AccountSyncServiceImpl implements SyncService {
 
   Future<void> _saveFromCloud(CloudAccount cloudAccount) async {
     final account = await _localSource.accounts.getByCloudId(cloudAccount.id);
-    final user = await _localSource.getUserByGoogleId(cloudAccount.user);
+    final user = cloudAccount.userGoogleId == null
+        ? null
+        : await _localSource.getUserByGoogleId(cloudAccount.userGoogleId!);
     if (account == null) {
       await _localSource.accounts.insertFromCloud(
         AccountModelMapper(user).insertModel(cloudAccount),

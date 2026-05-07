@@ -1,12 +1,11 @@
+import 'package:firebase_api_client/firebase_api_client.dart';
+
 import '../../../domain/models.dart';
 import '../../../domain/services/sync_service.dart';
 import '../../../utils/exceptions.dart';
 import '../../../utils/logger.dart';
 import '../../interfaces/local_sync_source.dart';
-import '../../sources/local/db_converters/operation_type_converter.dart';
 import '../../sources/remote/cloud_model_extensions.dart';
-import '../../sources/remote/daos/table_dao.dart';
-import '../../sources/remote/models/cloud_models.dart';
 
 class OperationSyncServiceImpl implements SyncService {
   final LocalSyncSource _localSource;
@@ -33,7 +32,7 @@ class OperationSyncServiceImpl implements SyncService {
         e.id == operation.map(input: (op) => op.account,
             output: (op) => op.account,
             transfer: (op) => op.accountSend,
-            exchange: (op) => op.account))
+          exchange: (op) => op.account,))
             .first
             .cloudId;
 
@@ -112,11 +111,7 @@ class OperationSyncServiceImpl implements SyncService {
     );
 
     if (operation == null) {
-      final type = const OperationTypeConverter().fromSql(
-        cloudOperation.operationType,
-      );
-
-      final newOperation = await type.map(
+      final newOperation = await cloudOperation.operationType.map(
         input: () async => InputOperation(
           cloudId: cloudOperation.id,
           synced: true,
@@ -124,10 +119,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
           category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         output: () async => OutputOperation(
           cloudId: cloudOperation.id,
@@ -136,10 +128,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
           category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         transfer: () async => TransferOperation(
           cloudId: cloudOperation.id,
@@ -148,10 +137,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           accountSend: (await _getAccountByCloudOperation(cloudOperation)).id,
           accountReceived: (await _getRecAccountByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         exchange: () async => ExchangeOperation(
           cloudId: cloudOperation.id,
@@ -159,24 +145,14 @@ class OperationSyncServiceImpl implements SyncService {
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sumSend: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-          sumReceived: Money(
-            cloudOperation.recSum ?? 0,
-            Currency.byName(cloudOperation.currencyReceived),
-          ),
+          sumSend: cloudOperation.sum,
+          sumReceived: cloudOperation.recSum ?? Money(0, .RUB),
         ),
       );
 
       await _localSource.operations.insertFromCloud(newOperation);
     } else {
-      final type = const OperationTypeConverter().fromSql(
-        cloudOperation.operationType,
-      );
-
-      final newOperation = await type.map(
+      final newOperation = await cloudOperation.operationType.map(
         input: () async => InputOperation(
           id: operation.id,
           cloudId: cloudOperation.id,
@@ -185,10 +161,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
           category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         output: () async => OutputOperation(
           id: operation.id,
@@ -198,10 +171,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
           category: (await _getCategoryByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         transfer: () async => TransferOperation(
           id: operation.id,
@@ -211,10 +181,7 @@ class OperationSyncServiceImpl implements SyncService {
           date: cloudOperation.date,
           accountSend: (await _getAccountByCloudOperation(cloudOperation)).id,
           accountReceived: (await _getRecAccountByCloudOperation(cloudOperation)).id,
-          sum: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
+          sum: cloudOperation.sum,
         ),
         exchange: () async => ExchangeOperation(
           id: operation.id,
@@ -223,14 +190,8 @@ class OperationSyncServiceImpl implements SyncService {
           deleted: cloudOperation.deleted,
           date: cloudOperation.date,
           account: (await _getAccountByCloudOperation(cloudOperation)).id,
-          sumSend: Money(
-            cloudOperation.sum,
-            Currency.byName(cloudOperation.currencySent),
-          ),
-          sumReceived: Money(
-            cloudOperation.recSum ?? 0,
-            Currency.byName(cloudOperation.currencyReceived),
-          ),
+          sumSend: cloudOperation.sum,
+          sumReceived: cloudOperation.recSum ?? Money(0, .RUB),
         ),
       );
       await _localSource.operations.updateFromCloud(newOperation);

@@ -1,11 +1,11 @@
+import 'package:firebase_api_client/firebase_api_client.dart';
+
 import '../../../domain/models.dart';
 import '../../../domain/services/sync_service.dart';
 import '../../../utils/logger.dart';
 import '../../interfaces/local_sync_source.dart';
 import '../../sources/remote/cloud_model_extensions.dart';
-import '../../sources/remote/daos/table_dao.dart';
 import '../../sources/remote/model_mapper.dart';
-import '../../sources/remote/models/cloud_category.dart';
 
 class CategorySyncServiceImpl implements SyncService {
   final LocalSyncSource _localSource;
@@ -63,7 +63,7 @@ class CategorySyncServiceImpl implements SyncService {
     final cloudCategories = await _categoryTable.getAll(date);
 
     for (final cloudCategory in cloudCategories.where(
-      (e) => e.parent.isEmpty,
+      (e) => e.parentId?.isEmpty ?? true,
     )) {
       AppLogger.debug('Load from cloud category ${cloudCategory.title}');
       try {
@@ -78,7 +78,7 @@ class CategorySyncServiceImpl implements SyncService {
     }
 
     for (final cloudCategory in cloudCategories.where(
-      (e) => e.parent.isNotEmpty,
+      (e) => e.parentId?.isNotEmpty ?? false,
     )) {
       AppLogger.debug('Load from cloud category ${cloudCategory.title}');
       try {
@@ -100,9 +100,9 @@ class CategorySyncServiceImpl implements SyncService {
       cloudCategory.id,
     );
 
-    final parent = cloudCategory.parent.isEmpty
+    final parent = cloudCategory.parentId?.isEmpty ?? true
         ? null
-        : await _localSource.categories.getByCloudId(cloudCategory.parent)
+        : await _localSource.categories.getByCloudId(cloudCategory.parentId!)
               as CategoryGroup;
 
     if (category == null) {

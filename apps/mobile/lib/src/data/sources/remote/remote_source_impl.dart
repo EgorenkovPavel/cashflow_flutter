@@ -3,14 +3,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
-import 'package:money_tracker/src/data/sources/remote/daos/table_dao.dart';
+import 'package:money_tracker/src/data/sources/remote/cloud_model_extensions.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
 
 import '../../../utils/exceptions.dart';
 import '../../../utils/result.dart';
-import 'cloud_db.dart';
-import 'models/cloud_models.dart';
 
 class RemoteSourceImpl implements RemoteDataSource {
   final FirebaseFirestore _firestore;
@@ -52,7 +51,8 @@ class RemoteSourceImpl implements RemoteDataSource {
     if (_cloudDb == null) {
       return Result.failure(NoRemoteDBException());
     }
-    await _cloudDb!.addUserToDatabase(user);
+    final cloudUser =
+    await _cloudDb!.addUserToDatabase(user.toCloudUser());
 
     return Result.success(true);
   }
@@ -63,17 +63,23 @@ class RemoteSourceImpl implements RemoteDataSource {
       return Result.failure(NoRemoteDBException());
     }
 
-    return Result.success(await _cloudDb!.getAllUsers());
+    final cloudUsers = await _cloudDb!.getAllUsers();
+
+    return Result.success(cloudUsers.map((e) => User(
+      googleId: e.googleId,
+      name: e.name,
+      photo: e.photo,
+    )).toList());
   }
 
   @override
   Future<void> createDatabase(User user) async {
-    _cloudDb = await CloudDb.create(_firestore, user);
+    _cloudDb = await CloudDb.create(_firestore, user.toCloudUser());
   }
 
   @override
   Future<bool> databaseExists(User user) =>
-      CloudDb.databaseExists(_firestore, user);
+      CloudDb.databaseExists(_firestore, user.toCloudUser());
 
   @override
   Future<void> connect(User user) async {

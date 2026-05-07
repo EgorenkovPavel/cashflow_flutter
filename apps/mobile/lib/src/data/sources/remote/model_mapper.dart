@@ -1,8 +1,6 @@
+import 'package:firebase_api_client/firebase_api_client.dart';
+
 import '../../../domain/models.dart';
-import '../local/db_converters/budget_type_converter.dart';
-import '../local/db_converters/operation_type_converter.dart';
-import 'models/cloud_account.dart';
-import 'models/cloud_category.dart';
 
 abstract class ModelMapper<C, M> {
   const ModelMapper();
@@ -61,21 +59,10 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
 
   @override
   Category insertModel(CloudCategory cloudCategory) {
-    final operationType = const OperationTypeConverter().fromSql(
-      cloudCategory.operationType,
-    );
-    final budgetType = const BudgetTypeConverter().fromSql(
-      cloudCategory.budgetType,
-    );
-
-    final CategoryType type = switch (operationType) {
-      OperationType.INPUT => .INPUT,
-      _ => .OUTPUT,
-    };
 
     if (cloudCategory.isGroup) {
       return Category.group(
-        type: type,
+        type: cloudCategory.type,
         cloudId: cloudCategory.id,
         title: cloudCategory.title,
       );
@@ -84,33 +71,22 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         cloudId: cloudCategory.id,
         title: cloudCategory.title,
         budget: cloudCategory.budget,
-        budgetType: budgetType,
+        budgetType: cloudCategory.budgetType,
         parentId: parent?.id,
-        type: type,
+        type: cloudCategory.type,
       );
     }
   }
 
   @override
   Category updateModel(Category category, CloudCategory cloudCategory) {
-    final operationType = const OperationTypeConverter().fromSql(
-      cloudCategory.operationType,
-    );
-    final budgetType = const BudgetTypeConverter().fromSql(
-      cloudCategory.budgetType,
-    );
-
-    final CategoryType type = switch (operationType) {
-      OperationType.INPUT => .INPUT,
-      _ => .OUTPUT,
-    };
 
     if (cloudCategory.isGroup) {
       return Category.group(
         id: category.id,
         cloudId: cloudCategory.id,
         title: cloudCategory.title,
-        type: type,
+        type: cloudCategory.type,
       );
     } else {
       return Category.item(
@@ -118,9 +94,9 @@ class CategoryModelMapper extends ModelMapper<CloudCategory, Category> {
         cloudId: cloudCategory.id,
         title: cloudCategory.title,
         budget: cloudCategory.budget,
-        budgetType: budgetType,
+        budgetType: cloudCategory.budgetType,
         parentId: parent?.id,
-        type: type,
+        type: cloudCategory.type,
       );
     }
   }

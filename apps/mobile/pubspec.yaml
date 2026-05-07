@@ -64,6 +64,8 @@ dependencies:
     path: ../../packages/finance_models
   finance_api_client:
     path: ../../packages/finance_api_client
+  firebase_api_client:
+    path: ../../packages/firebase_api_client
 
 dev_dependencies:
   flutter_test:
