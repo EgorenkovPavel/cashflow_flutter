@@ -10,6 +10,9 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/finance_models/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/packages/finance_models/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/packages/finance_models/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
