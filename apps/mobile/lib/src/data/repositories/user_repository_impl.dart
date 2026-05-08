@@ -18,6 +18,7 @@ class UserRepositoryImpl implements UserRepository {
       return null;
     }
     final user = await _userDao.getByGoogleId(googleId);
+
     return user == null ? null : UserMapper().toModel(user);
   }
 
@@ -33,6 +34,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<List<User>> getAll() async {
     final users = await _userDao.getAllUsers();
+
     return UserMapper().listToModel(users);
   }
 }

@@ -9,6 +9,7 @@ import 'package:money_tracker/src/domain/models.dart';
 
 import '../../../models/account_view.dart';
 import '../../../models/category_view.dart';
+import '../../../../utils/result.dart';
 
 part 'operation_edit_bloc.freezed.dart';
 
@@ -317,6 +318,7 @@ extension OperationEditBlocExt on BuildContext {
     final categoryId = select<OperationEditBloc, int?>(
       (bloc) => bloc.state.categoryId,
     );
+
     return categories.where((e) => e.id == categoryId).firstOrNull;
   }
 
@@ -324,6 +326,7 @@ extension OperationEditBlocExt on BuildContext {
     final accountId = select<OperationEditBloc, int?>(
       (bloc) => bloc.state.recAccountId,
     );
+
     return accounts.where((e) => e.id == accountId).firstOrNull;
   }
 
@@ -331,6 +334,7 @@ extension OperationEditBlocExt on BuildContext {
     final accountId = select<OperationEditBloc, int?>(
       (bloc) => bloc.state.accountId,
     );
+
     return accounts.where((e) => e.id == accountId).firstOrNull;
   }
 

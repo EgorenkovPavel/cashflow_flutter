@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/src/domain/interactors/operation_interactor.dart';
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:money_tracker/src/utils/logger.dart';
+import 'package:money_tracker/src/utils/result.dart';
 
 part 'operation_input_bloc.freezed.dart';
 

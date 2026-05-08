@@ -36,6 +36,7 @@ class CategoryItemsListPage extends StatelessWidget {
         child: ListView.separated(
           itemBuilder: (context, index) {
             final item = items[index];
+
             return ListTile(
               onTap: () => context.openCategoryPage(item.categoryId),
               title: Text(item.categoryTitle),

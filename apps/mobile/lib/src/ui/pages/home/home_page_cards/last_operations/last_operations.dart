@@ -25,7 +25,10 @@ class LastOperations extends StatelessWidget {
             children: [
               CardTitle(title: context.loc.titleLastOperations),
               _OperationsList(
-                  items: context.watch<LastOperationsBloc>().state.operations),
+                items: context
+                    .watch<LastOperationsBloc>()
+                    .state
+                    .operations,),
             ],
           ),
         );

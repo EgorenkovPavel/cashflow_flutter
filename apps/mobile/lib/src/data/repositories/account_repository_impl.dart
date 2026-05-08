@@ -16,12 +16,14 @@ class AccountRepositoryImpl implements AccountRepository {
   @override
   Future<BaseAccount> getById(int id) async {
     final account = await _accountDao.getAccountById(id);
+
     return AccountMapper().toModel(account);
   }
 
   @override
   Future<List<BaseAccount>> getAll() async {
     final accounts = await _accountDao.getAllAccounts();
+
     return AccountMapper().listToModel(accounts);
   }
 

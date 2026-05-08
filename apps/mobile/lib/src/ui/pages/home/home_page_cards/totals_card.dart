@@ -80,6 +80,7 @@ class SumText extends StatelessWidget {
     } else {
       newStyle = style;
     }
+
     return Text(
       context.loc.sumFormat(sum),
       style: newStyle,

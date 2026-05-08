@@ -31,6 +31,7 @@ class OperationRepositoryImpl implements OperationRepository {
   @override
   Future<List<Operation>> getAll() async {
     final operations = await _operationDao.getAllOperations();
+
     return OperationMapper().listToModel(operations);
   }
 
@@ -38,6 +39,7 @@ class OperationRepositoryImpl implements OperationRepository {
   Future<List<Operation>> getAllWithEmptyCloudId() async {
     final operations =
         await _operationDao.getAllOperationItemsWithEmptyCloudId();
+
     return OperationMapper().entityListToModel(operations);
   }
 
@@ -55,6 +57,7 @@ class OperationRepositoryImpl implements OperationRepository {
   @override
   Future<Operation> getById(int id) async {
     final operation = await _operationDao.getOperationById(id);
+
     return OperationMapper().entityToModel(operation);
   }
 

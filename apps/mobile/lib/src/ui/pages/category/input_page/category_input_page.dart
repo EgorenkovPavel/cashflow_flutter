@@ -14,7 +14,7 @@ class CategoryInputPage extends StatelessWidget {
   final int? id;
 
   const CategoryInputPage.byType(
-      {super.key, required this.type, required this.isGroup})
+      {super.key, required this.type, required this.isGroup,})
       : id = null;
 
   const CategoryInputPage.edit({super.key, required this.id})
@@ -73,7 +73,7 @@ class _CategoryPageState extends State<CategoryPage> {
               budgetController.text = s.budget.toString();
             }
           },
-          orElse: () {});
+          orElse: () {},);
     }
   }
 
@@ -143,7 +143,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           .toList(),
                       onChanged: (value) {
                         context.onChangeBudgetType(value);
-                      })
+                      },),
                 ],
               ),
             const SizedBox(height: 16.0),
@@ -187,13 +187,13 @@ extension CategoryInputBlocExt on BuildContext {
   BudgetType budgetType() => select<CategoryInputBloc, BudgetType>(
         (bloc) => bloc.state.maybeMap(
             item: (s) => s.budgetType,
-            orElse: () => BudgetType.MONTH),
+            orElse: () => BudgetType.MONTH,),
       );
 
   int? parent() => select<CategoryInputBloc, int?>(
         (bloc) => bloc.state.maybeMap(
             item: (s) => s.parent,
-            orElse: () => null),
+            orElse: () => null,),
       );
 
   bool isGroup() =>

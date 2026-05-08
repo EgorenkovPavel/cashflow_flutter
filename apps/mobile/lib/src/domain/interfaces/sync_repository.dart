@@ -1,5 +1,6 @@
 import 'package:money_tracker/src/common_blocs/sync/loading_state.dart';
 import 'package:money_tracker/src/domain/models.dart';
+import '../../utils/result.dart';
 
 abstract interface class SyncRepository{
 

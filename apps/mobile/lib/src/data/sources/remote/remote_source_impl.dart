@@ -10,6 +10,7 @@ import 'package:money_tracker/src/data/sources/remote/cloud_model_extensions.dar
 import 'package:money_tracker/src/domain/models/user.dart';
 
 import '../../../utils/exceptions.dart';
+import '../../../utils/result.dart';
 
 class RemoteSourceImpl implements RemoteDataSource {
   final CloudSource _source;
@@ -18,32 +19,41 @@ class RemoteSourceImpl implements RemoteDataSource {
       : _source = CloudSource(firestore);
 
   @override
-  Result<TableDAO<CloudAccount>> get accounts => _source.accounts;
+  Result<TableDAO<CloudAccount>> get accounts =>
+      Result.maybe(() => _source.accounts);
 
   @override
-  Result<TableDAO<CloudCategory>> get categories => _source.categories;
+  Result<TableDAO<CloudCategory>> get categories =>
+      Result.maybe(() => _source.categories);
 
   @override
-  Result<TableDAO<CloudOperation>> get operations => _source.operations;
+  Result<TableDAO<CloudOperation>> get operations =>
+      Result.maybe(() => _source.operations);
 
   @override
-  Future<Result<bool>> deleteAll() => _source.deleteAll();
+  Future<Result<bool>> deleteAll() =>
+      Result.maybeAsync(() => _source.deleteAll());
 
   @override
   Future<Result<bool>> addUserToDatabase(User user) =>
-      _source.addUserToDatabase(user.toCloudUser());
+      Result.maybeAsync(() => _source.addUserToDatabase(user.toCloudUser()));
 
   @override
   Future<Result<List<User>>> getAllUsers() async {
-    final result = await _source.getAllUsers();
+    try {
+      final cloudUsers = await _source.getAllUsers();
 
-    return result.map(onSuccess: (cloudUsers) =>
+      return
         Result.success(cloudUsers.map((e) =>
             User(
-      googleId: e.googleId,
-      name: e.name,
-      photo: e.photo,
-            )).toList()), onFailure: (e) => Result.failure(e));
+              googleId: e.googleId,
+              name: e.name,
+              photo: e.photo,
+            )).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+
   }
 
   @override
@@ -59,6 +69,6 @@ class RemoteSourceImpl implements RemoteDataSource {
   Future<void> disconnect() => _source.disconnect();
 
   @override
-  Result<bool> isCurrentAdmin() => _source.isCurrentAdmin();
+  Result<bool> isCurrentAdmin() => Result.maybe(() => _source.isCurrentAdmin());
 
 }

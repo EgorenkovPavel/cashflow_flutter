@@ -3,6 +3,7 @@ import '../../utils/logger.dart';
 import '../interfaces/account_repository.dart';
 import '../models.dart';
 import '../services/balance_service.dart';
+import '../../utils/result.dart';
 
 class AccountInteractor {
   final AccountRepository _accountRepository;

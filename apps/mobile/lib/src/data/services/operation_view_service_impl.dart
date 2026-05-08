@@ -1,7 +1,6 @@
 import 'package:money_tracker/src/domain/models.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../domain/models/operation/operation_list_filter.dart';
 import '../../domain/services/operation_view_service.dart';
 import '../sources/local/data/operation_dao.dart';
 import '../sources/local/data/user_dao.dart';

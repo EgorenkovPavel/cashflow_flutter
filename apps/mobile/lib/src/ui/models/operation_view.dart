@@ -65,6 +65,7 @@ sealed class OperationView with _$OperationView{
 
   static OperationView fromDomain(OperationListItem model) {
     final operation = model.operation;
+
     return switch (operation) {
       InputOperation() => OperationView.input(
         id: operation.id,

@@ -94,7 +94,7 @@ class _InfoCard extends StatelessWidget {
                       Money(switch (category.budgetType) {
                         BudgetType.MONTH => category.monthBudget,
                         BudgetType.YEAR => category.yearBudget,
-                      }, .RUB),
+                      }, .RUB,),
                     ),
                   ),
                 ],

@@ -55,3 +55,7 @@ class ConflictException extends SyncException {
 class SyncFailedException extends SyncException {
   SyncFailedException([Object? originalError]) : super('Synchronization failed', originalError);
 }
+
+class CloudException extends AppException{
+  CloudException(super.message, [super.originalError]);
+}

@@ -12,6 +12,7 @@ class UserAvatar extends StatelessWidget {
     if (photoUrl.isEmpty) {
       return SizedBox();
     }
+
     return CircleAvatar(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18.0),

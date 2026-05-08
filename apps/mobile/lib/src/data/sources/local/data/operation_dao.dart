@@ -335,6 +335,7 @@ class OperationDao extends DatabaseAccessor<Database> with _$OperationDaoMixin {
           },
           onError: (e, stacktrace) {
             AppLogger.error('Error while get last operation', e, stacktrace);
+
             return null;
           },
         );

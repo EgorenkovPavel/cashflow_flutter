@@ -18,18 +18,21 @@ class AccountDataRepositoryImpl
   @override
   Future<List<BaseAccount>> getAllWithEmptyCloudId() async {
     final accounts = await accountDao.getAllAccountsWithEmptyCloudId();
+
     return AccountMapper().listToModel(accounts);
   }
 
   @override
   Future<BaseAccount?> getByCloudId(String cloudId) async {
     final account = await accountDao.getAccountByCloudId(cloudId);
+
     return account == null ? null : AccountMapper().toModel(account);
   }
 
   @override
   Future<List<BaseAccount>> getAllNotSynced() async {
     final accounts = await accountDao.getAllAccountsNotSynced();
+
     return AccountMapper().listToModel(accounts);
   }
 

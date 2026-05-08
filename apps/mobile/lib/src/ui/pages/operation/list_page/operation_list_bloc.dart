@@ -52,7 +52,7 @@ class OperationListBloc extends Bloc<OperationListEvent, OperationListState> {
     _sub?.cancel();
     _sub = _operationInteractor.watchByFilter(event.filter).listen((items) {
       add(OperationListEvent.changeOperations(
-          operations: items.map((e) => OperationView.fromDomain(e)).toList()));
+          operations: items.map((e) => OperationView.fromDomain(e)).toList(),));
     });
   }
 

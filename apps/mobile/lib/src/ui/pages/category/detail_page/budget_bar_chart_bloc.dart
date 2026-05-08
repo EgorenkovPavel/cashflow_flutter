@@ -57,6 +57,7 @@ class BudgetBarChartBloc
   @override
   Future<void> close() {
     _sub?.cancel();
+
     return super.close();
   }
 }

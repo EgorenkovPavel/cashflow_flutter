@@ -129,7 +129,7 @@ class SpringPage extends StatelessWidget {
                 }
                 await _upload(context.read<AuthBloc>().state.idToken);
               },
-              child: const Text('Upload')),
+            child: const Text('Upload'),),
         ],
       ),
     );

@@ -18,7 +18,7 @@ sealed class AccountDetailEvent with _$AccountDetailEvent {
       _TitleChangedAccountDetailEvent;
 
   const factory AccountDetailEvent.operationsChanged(
-          List<OperationView> operations) =
+          List<OperationView> operations,) =
       _OperationsChangedAccountDetailEvent;
 }
 

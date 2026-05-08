@@ -279,6 +279,7 @@ extension BlocExt on BuildContext {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.accountIds,
     );
+
     return readAccounts().where((e) => ids.contains(e.id)).toSet();
   }
 
@@ -286,6 +287,7 @@ extension BlocExt on BuildContext {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
+
     return readCategoryItems(.INPUT).where((e) => ids.contains(e.id)).toSet();
   }
 
@@ -293,6 +295,7 @@ extension BlocExt on BuildContext {
     final ids = select<OperationFilterBloc, Set<int>>(
       (bloc) => bloc.state.filter.categoryIds,
     );
+
     return readCategoryItems(.OUTPUT).where((e) => ids.contains(e.id)).toSet();
   }
 

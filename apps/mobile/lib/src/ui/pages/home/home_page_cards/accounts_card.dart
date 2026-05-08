@@ -62,11 +62,11 @@ class _AccountsCardState extends State<AccountsCard> {
               TextButton(
                 onPressed: _onHide,
                 child: Text(
-                    _showAll ? context.loc.btnShowAll : context.loc.btnHide),
+                    _showAll ? context.loc.btnShowAll : context.loc.btnHide,),
               ),
             TextButton(
               onPressed: widget.onAdd,
-              child: Text(context.loc.btnAdd)
+              child: Text(context.loc.btnAdd),
             ),
           ],
         ),

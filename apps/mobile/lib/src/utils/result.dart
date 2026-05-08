@@ -5,6 +5,22 @@ sealed class Result<T> {
 
   factory Result.failure(Exception exception) => _Failure<T>(exception);
 
+  factory Result.maybe(T Function() getValue) {
+    try {
+      return Result.success(getValue());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  static Future<Result<T>> maybeAsync<T>(Future<T> Function() getValue) async {
+    try {
+      return Result.success(await getValue());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
   /// Returns true if this is a success result.
   bool get isSuccess => this is _Success<T>;
 

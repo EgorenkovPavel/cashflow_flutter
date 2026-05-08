@@ -23,6 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<model.User?> getUser() async {
     final res = await _mapUser(_authSource.getUser());
+
     return res.user;
   }
 
@@ -64,6 +65,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {}
 
     AppLogger.debug('IDTOKEN: $idToken');
+
     return idToken;
   }
 

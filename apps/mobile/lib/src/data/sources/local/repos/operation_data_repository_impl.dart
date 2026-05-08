@@ -17,6 +17,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
   Future<List<Operation>> getAllWithEmptyCloudId() async {
     final operations =
         await operationDao.getAllOperationItemsWithEmptyCloudId();
+
     return OperationMapper().entityListToModel(operations);
   }
 
@@ -34,6 +35,7 @@ class OperationDataRepositoryImpl implements LocalSyncTable<Operation> {
   @override
   Future<List<Operation>> getAllNotSynced() async {
     final operations = await operationDao.getAllOperationItemsNotSynced();
+
     return OperationMapper().entityListToModel(operations);
   }
 

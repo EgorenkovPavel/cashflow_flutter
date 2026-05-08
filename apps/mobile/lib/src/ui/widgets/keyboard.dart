@@ -93,8 +93,8 @@ class Keyboard extends StatelessWidget {
                           return;
                         }
                         onChangeCurrency(value);
-                      }),
-                )),
+                      },),
+                ),),
             _DigitButton(
               onDigitPressed: onDigitPressed,
               digit: 0,

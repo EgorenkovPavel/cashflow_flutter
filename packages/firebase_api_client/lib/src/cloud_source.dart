@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_models/finance_models.dart';
 
 import 'exceptions.dart';
 import 'table_dao.dart';
@@ -19,47 +18,43 @@ class CloudSource{
 
   CloudSource(this._firestore);
 
-  Result<TableDAO<CloudAccount>> get accounts => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.accounts);
+  TableDAO<CloudAccount> get accounts => _cloudDb == null
+      ? throw NoRemoteDBException()
+      : _cloudDb!.accounts;
 
-  Result<TableDAO<CloudCategory>> get categories => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.categories);
+  TableDAO<CloudCategory> get categories => _cloudDb == null
+      ? throw NoRemoteDBException()
+      : _cloudDb!.categories;
 
-  Result<TableDAO<CloudOperation>> get operations => _cloudDb == null
-      ? Result.failure(NoRemoteDBException())
-      : Result.success(_cloudDb!.operations);
+  TableDAO<CloudOperation> get operations => _cloudDb == null
+      ? throw NoRemoteDBException()
+      : _cloudDb!.operations;
 
-  Future<Result<bool>> deleteAll() async {
-    try {
-      await operations.getOrThrow().deleteAll();
-      await categories.getOrThrow().deleteAll();
-      await accounts.getOrThrow().deleteAll();
+  Future<bool> deleteAll() async {
+      await operations.deleteAll();
+      await categories.deleteAll();
+      await accounts.deleteAll();
 
-      return Result.success(true);
-    } catch (e) {
-      return Result.failure(e as Exception);
-    }
+      return true;
   }
 
-  Future<Result<bool>> addUserToDatabase(CloudUser user) async {
+  Future<bool> addUserToDatabase(CloudUser user) async {
     if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
+      throw NoRemoteDBException();
     }
     await _cloudDb!.addUserToDatabase(user);
 
-    return Result.success(true);
+    return true;
   }
 
-  Future<Result<List<CloudUser>>> getAllUsers() async {
+  Future<List<CloudUser>> getAllUsers() async {
     if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
+      throw NoRemoteDBException();
     }
 
     final cloudUsers = await _cloudDb!.getAllUsers();
 
-    return Result.success(cloudUsers);
+    return cloudUsers;
   }
 
   Future<void> createDatabase(CloudUser user) async {
@@ -77,11 +72,11 @@ class CloudSource{
     _cloudDb = null;
   }
 
-  Result<bool> isCurrentAdmin() {
+  bool isCurrentAdmin() {
     if (_cloudDb == null) {
-      return Result.failure(NoRemoteDBException());
+      throw NoRemoteDBException();
     }
 
-    return Result.success(_cloudDb!.isCurrentUserAdmin);
+    return _cloudDb!.isCurrentUserAdmin;
   }
 }

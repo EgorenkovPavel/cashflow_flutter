@@ -21,7 +21,10 @@ class CashflowCard extends StatelessWidget {
             Text(switch (type) {
               .INPUT => context.loc.earningIn(DateTime.now()),
               .OUTPUT => context.loc.spendingIn(DateTime.now()),
-            }, style: Theme.of(context).textTheme.titleLarge),
+            }, style: Theme
+                .of(context)
+                .textTheme
+                .titleLarge,),
             Row(
               mainAxisAlignment: .spaceBetween,
               children: [
@@ -83,7 +86,10 @@ class TopCategories extends StatelessWidget {
         Text(switch (budgetType) {
           BudgetType.MONTH => context.loc.topOfMonth,
           BudgetType.YEAR => context.loc.topOfYear,
-        }, style: Theme.of(context).textTheme.titleMedium),
+        }, style: Theme
+            .of(context)
+            .textTheme
+            .titleMedium,),
         ...items.map(
           (e) => Row(
             mainAxisAlignment: .spaceBetween,

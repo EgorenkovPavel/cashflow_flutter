@@ -3,6 +3,7 @@ import '../../utils/logger.dart';
 import '../interfaces/category_repository.dart';
 import '../models.dart';
 import '../services/cashflow_service.dart';
+import '../../utils/result.dart';
 
 class CategoryInteractor {
   final CategoryRepository _categoryRepository;
@@ -13,9 +14,11 @@ class CategoryInteractor {
   Future<Result<Category>> getById(int id) async {
     try {
       final category = await _categoryRepository.getById(id);
+
       return Result.success(category);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to get category by id: $id', e, stackTrace);
+
       return Result.failure(DatabaseException('Failed to get category', e));
     }
   }
@@ -49,6 +52,7 @@ class CategoryInteractor {
       return Result.success(category.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to insert input category item', e, stackTrace);
+
       return Result.failure(DatabaseException('Failed to insert category', e));
     }
   }
@@ -65,6 +69,7 @@ class CategoryInteractor {
       return Result.success(category.copyWith(id: id));
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to insert input category group', e, stackTrace);
+
       return Result.failure(DatabaseException('Failed to insert category', e));
     }
   }
@@ -89,6 +94,7 @@ class CategoryInteractor {
       return Result.success(newCategory);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to update input category item', e, stackTrace);
+
       return Result.failure(DatabaseException('Failed to update category', e));
     }
   }
@@ -105,6 +111,7 @@ class CategoryInteractor {
       return Result.success(newCategory);
     } on Exception catch (e, stackTrace) {
       AppLogger.error('Failed to update input category group', e, stackTrace);
+
       return Result.failure(DatabaseException('Failed to update category', e));
     }
   }

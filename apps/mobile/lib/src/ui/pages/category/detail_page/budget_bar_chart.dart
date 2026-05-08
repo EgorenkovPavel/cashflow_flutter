@@ -16,7 +16,7 @@ import 'budget_bar_chart_bloc.dart';
 class BudgetBarChart extends StatelessWidget {
   final int categoryId;
 
-  BudgetBarChart({super.key, required this.categoryId});
+  const BudgetBarChart({super.key, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,7 @@ class BudgetBarChart extends StatelessWidget {
           };
 
           final maxY = data.map((e) => e.sum).fold(0, math.max) * 1.3;
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -171,7 +172,7 @@ class BudgetBarChart extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${context.loc.yearBudget}'),
+                  Text(context.loc.yearBudget),
                   Text('${cashFlow.yearBudget}'),
                 ],
               ),
@@ -217,6 +218,7 @@ class BudgetBarChart extends StatelessWidget {
   static int calculateAverage(List<int> values) {
     if (values.isEmpty) return 0;
     final sum = values.reduce((a, b) => a + b);
+
     return (sum / values.length).round();
   }
 

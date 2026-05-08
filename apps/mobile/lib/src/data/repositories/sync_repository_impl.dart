@@ -11,6 +11,7 @@ import '../interfaces/network_info.dart';
 import '../interfaces/remote_data_source.dart';
 import '../services/sync/category_sync_service_impl.dart';
 import '../services/sync/operation_sync_service_impl.dart';
+import '../../utils/result.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
   final LocalSyncSource _localSource;

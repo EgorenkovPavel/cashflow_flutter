@@ -122,6 +122,7 @@ extension CategoryCashFlowBlocExt on BuildContext {
           balanceToRub(b.cashFlowByType(budgetType)).sum -
           balanceToRub(a.cashFlowByType(budgetType)).sum,
     );
+
     return list.take(count).toList();
   }
 

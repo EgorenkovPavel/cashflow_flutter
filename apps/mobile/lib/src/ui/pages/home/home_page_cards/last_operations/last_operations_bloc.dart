@@ -13,14 +13,14 @@ class LastOperationsEvent with _$LastOperationsEvent {
   const factory LastOperationsEvent.fetch() = _FetchLastOperationsEvent;
 
   const factory LastOperationsEvent.changeOperations(
-          List<OperationView> operations) =
+          List<OperationView> operations,) =
       _ChangeOperationsLastOperationsEvent;
 }
 
 @freezed
 abstract class LastOperationsState with _$LastOperationsState {
   const factory LastOperationsState(
-      {required List<OperationView> operations}) = _LastOperationsState;
+      {required List<OperationView> operations,}) = _LastOperationsState;
 }
 
 class LastOperationsBloc

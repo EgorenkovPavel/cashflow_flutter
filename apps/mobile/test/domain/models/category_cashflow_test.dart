@@ -15,7 +15,7 @@ void main() {
           budget: 1200,
           monthCashFlow: Balance([Money(10, Currency.RUB)]),
           yearCashFlow: Balance([Money(20, Currency.RUB)]),
-          parentId: null);
+        parentId: null,);
       yearCashflow = CategoryCashFlow(
           categoryId: 1,
           type: CategoryType.INPUT,
@@ -24,7 +24,7 @@ void main() {
           budget: 1200,
           monthCashFlow: Balance([Money(10, Currency.RUB)]),
           yearCashFlow: Balance([Money(20, Currency.RUB)]),
-          parentId: null);
+        parentId: null,);
     });
 
     test('Budget should return budget', () {

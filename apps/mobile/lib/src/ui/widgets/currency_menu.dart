@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../../domain/models.dart';
 
 class CurrencyMenu extends StatelessWidget {
   final Currency currency;
   final void Function(Currency) onChange;
 
-  const CurrencyMenu(
-      {super.key, required this.currency, required this.onChange});
+  const CurrencyMenu({
+    super.key,
+    required this.currency,
+    required this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class CurrencyMenu extends StatelessWidget {
             return;
           }
           onChange(value);
-        });
+      },
+    );
   }
 }

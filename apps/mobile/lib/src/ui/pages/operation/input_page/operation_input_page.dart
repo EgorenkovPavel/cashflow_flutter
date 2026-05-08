@@ -170,7 +170,7 @@ class OperationInputPage extends StatelessWidget {
                       context.onNextTap();
                     },
                     child: Text(context.loc.btnSaveAndContinue),
-                  )
+                  ),
                 ),
               ),
             );

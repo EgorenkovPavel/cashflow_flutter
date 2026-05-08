@@ -19,7 +19,7 @@ class CashflowServiceImpl implements CashflowService {
         _categoryDao.watchAllCategoriesItems(),
         _categoryDao.watchMonthCashFlow(date, {}),
         _categoryDao.watchYearCashFlow(date, {}),
-        CategoryMapper().combineCashFlow);
+        CategoryMapper().combineCashFlow,);
   }
 
   @override
@@ -31,7 +31,7 @@ class CashflowServiceImpl implements CashflowService {
         _categoryDao.watchAllCategoriesByType(type),
         _categoryDao.watchMonthCashFlow(date, {}),
         _categoryDao.watchYearCashFlow(date, {}),
-        CategoryMapper().combineCashFlow);
+        CategoryMapper().combineCashFlow,);
   }
 
   @override
