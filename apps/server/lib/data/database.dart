@@ -4,7 +4,7 @@ import 'package:postgres/postgres.dart' as pg;
 
 part 'database.g.dart';
 
-@DataClassName('users')
+@DataClassName('user')
 class Users extends Table {
   UuidColumn get id => customType(PgTypes.uuid).withDefault(genRandomUuid())();
 
@@ -24,7 +24,7 @@ class Users extends Table {
 
 }
 
-@DataClassName('user_groups')
+@DataClassName('user_group')
 class UserGroups extends Table {
   UuidColumn get id =>
       customType(PgTypes.uuid).withDefault(genRandomUuid()).unique()();
@@ -33,7 +33,7 @@ class UserGroups extends Table {
   String get tableName => 'user_groups';
 }
 
-@DataClassName('accounts')
+@DataClassName('account')
 class Accounts extends Table {
   UuidColumn get id =>
       customType(PgTypes.uuid).withDefault(genRandomUuid()).unique()();

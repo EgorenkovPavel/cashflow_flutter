@@ -13,6 +13,9 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/apps/web_analytic/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />

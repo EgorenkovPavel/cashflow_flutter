@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: dto_models,finance_api_client,finance_models
+# melos_managed_dependency_overrides: dto_models,finance_api_client,finance_models,firebase_api_client
 dependency_overrides:
   dto_models:
     path: ..\\..\\packages\\dto_models
@@ -6,3 +6,5 @@ dependency_overrides:
     path: ..\\..\\packages\\finance_api_client
   finance_models:
     path: ..\\..\\packages\\finance_models
+  firebase_api_client:
+    path: ..\\..\\packages\\firebase_api_client

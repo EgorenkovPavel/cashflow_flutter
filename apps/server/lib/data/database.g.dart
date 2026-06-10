@@ -4,7 +4,7 @@ part of 'database.dart';
 
 // ignore_for_file: type=lint
 class $UserGroupsTable extends UserGroups
-    with TableInfo<$UserGroupsTable, user_groups> {
+    with TableInfo<$UserGroupsTable, user_group> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -29,7 +29,7 @@ class $UserGroupsTable extends UserGroups
   static const String $name = 'user_groups';
   @override
   VerificationContext validateIntegrity(
-    Insertable<user_groups> instance, {
+    Insertable<user_group> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -43,9 +43,9 @@ class $UserGroupsTable extends UserGroups
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  user_groups map(Map<String, dynamic> data, {String? tablePrefix}) {
+  user_group map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return user_groups(
+    return user_group(
       id: attachedDatabase.typeMapping.read(
         PgTypes.uuid,
         data['${effectivePrefix}id'],
@@ -59,9 +59,9 @@ class $UserGroupsTable extends UserGroups
   }
 }
 
-class user_groups extends DataClass implements Insertable<user_groups> {
+class user_group extends DataClass implements Insertable<user_group> {
   final UuidValue id;
-  const user_groups({required this.id});
+  const user_group({required this.id});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -73,12 +73,12 @@ class user_groups extends DataClass implements Insertable<user_groups> {
     return UserGroupsCompanion(id: Value(id));
   }
 
-  factory user_groups.fromJson(
+  factory user_group.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return user_groups(id: serializer.fromJson<UuidValue>(json['id']));
+    return user_group(id: serializer.fromJson<UuidValue>(json['id']));
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
@@ -86,14 +86,14 @@ class user_groups extends DataClass implements Insertable<user_groups> {
     return <String, dynamic>{'id': serializer.toJson<UuidValue>(id)};
   }
 
-  user_groups copyWith({UuidValue? id}) => user_groups(id: id ?? this.id);
-  user_groups copyWithCompanion(UserGroupsCompanion data) {
-    return user_groups(id: data.id.present ? data.id.value : this.id);
+  user_group copyWith({UuidValue? id}) => user_group(id: id ?? this.id);
+  user_group copyWithCompanion(UserGroupsCompanion data) {
+    return user_group(id: data.id.present ? data.id.value : this.id);
   }
 
   @override
   String toString() {
-    return (StringBuffer('user_groups(')
+    return (StringBuffer('user_group(')
           ..write('id: $id')
           ..write(')'))
         .toString();
@@ -103,10 +103,10 @@ class user_groups extends DataClass implements Insertable<user_groups> {
   int get hashCode => id.hashCode;
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || (other is user_groups && other.id == this.id);
+      identical(this, other) || (other is user_group && other.id == this.id);
 }
 
-class UserGroupsCompanion extends UpdateCompanion<user_groups> {
+class UserGroupsCompanion extends UpdateCompanion<user_group> {
   final Value<UuidValue> id;
   final Value<int> rowid;
   const UserGroupsCompanion({
@@ -117,7 +117,7 @@ class UserGroupsCompanion extends UpdateCompanion<user_groups> {
     this.id = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  static Insertable<user_groups> custom({
+  static Insertable<user_group> custom({
     Expression<UuidValue>? id,
     Expression<int>? rowid,
   }) {
@@ -153,7 +153,7 @@ class UserGroupsCompanion extends UpdateCompanion<user_groups> {
   }
 }
 
-class $UsersTable extends Users with TableInfo<$UsersTable, users> {
+class $UsersTable extends Users with TableInfo<$UsersTable, user> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -237,7 +237,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, users> {
   static const String $name = 'users';
   @override
   VerificationContext validateIntegrity(
-    Insertable<users> instance, {
+    Insertable<user> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -294,9 +294,9 @@ class $UsersTable extends Users with TableInfo<$UsersTable, users> {
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  users map(Map<String, dynamic> data, {String? tablePrefix}) {
+  user map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return users(
+    return user(
       id: attachedDatabase.typeMapping.read(
         PgTypes.uuid,
         data['${effectivePrefix}id'],
@@ -330,14 +330,14 @@ class $UsersTable extends Users with TableInfo<$UsersTable, users> {
   }
 }
 
-class users extends DataClass implements Insertable<users> {
+class user extends DataClass implements Insertable<user> {
   final UuidValue id;
   final String name;
   final String googleId;
   final String email;
   final String photo;
   final UuidValue userGroupId;
-  const users({
+  const user({
     required this.id,
     required this.name,
     required this.googleId,
@@ -368,12 +368,12 @@ class users extends DataClass implements Insertable<users> {
     );
   }
 
-  factory users.fromJson(
+  factory user.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return users(
+    return user(
       id: serializer.fromJson<UuidValue>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       googleId: serializer.fromJson<String>(json['googleId']),
@@ -395,14 +395,14 @@ class users extends DataClass implements Insertable<users> {
     };
   }
 
-  users copyWith({
+  user copyWith({
     UuidValue? id,
     String? name,
     String? googleId,
     String? email,
     String? photo,
     UuidValue? userGroupId,
-  }) => users(
+  }) => user(
     id: id ?? this.id,
     name: name ?? this.name,
     googleId: googleId ?? this.googleId,
@@ -410,8 +410,8 @@ class users extends DataClass implements Insertable<users> {
     photo: photo ?? this.photo,
     userGroupId: userGroupId ?? this.userGroupId,
   );
-  users copyWithCompanion(UsersCompanion data) {
-    return users(
+  user copyWithCompanion(UsersCompanion data) {
+    return user(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       googleId: data.googleId.present ? data.googleId.value : this.googleId,
@@ -425,7 +425,7 @@ class users extends DataClass implements Insertable<users> {
 
   @override
   String toString() {
-    return (StringBuffer('users(')
+    return (StringBuffer('user(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('googleId: $googleId, ')
@@ -442,7 +442,7 @@ class users extends DataClass implements Insertable<users> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is users &&
+      (other is user &&
           other.id == this.id &&
           other.name == this.name &&
           other.googleId == this.googleId &&
@@ -451,7 +451,7 @@ class users extends DataClass implements Insertable<users> {
           other.userGroupId == this.userGroupId);
 }
 
-class UsersCompanion extends UpdateCompanion<users> {
+class UsersCompanion extends UpdateCompanion<user> {
   final Value<UuidValue> id;
   final Value<String> name;
   final Value<String> googleId;
@@ -481,7 +481,7 @@ class UsersCompanion extends UpdateCompanion<users> {
        email = Value(email),
        photo = Value(photo),
        userGroupId = Value(userGroupId);
-  static Insertable<users> custom({
+  static Insertable<user> custom({
     Expression<UuidValue>? id,
     Expression<String>? name,
     Expression<String>? googleId,
@@ -566,7 +566,7 @@ class UsersCompanion extends UpdateCompanion<users> {
   }
 }
 
-class $AccountsTable extends Accounts with TableInfo<$AccountsTable, accounts> {
+class $AccountsTable extends Accounts with TableInfo<$AccountsTable, account> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -655,7 +655,7 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, accounts> {
   static const String $name = 'accounts';
   @override
   VerificationContext validateIntegrity(
-    Insertable<accounts> instance, {
+    Insertable<account> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -712,9 +712,9 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, accounts> {
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  accounts map(Map<String, dynamic> data, {String? tablePrefix}) {
+  account map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return accounts(
+    return account(
       id: attachedDatabase.typeMapping.read(
         PgTypes.uuid,
         data['${effectivePrefix}id'],
@@ -748,14 +748,14 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, accounts> {
   }
 }
 
-class accounts extends DataClass implements Insertable<accounts> {
+class account extends DataClass implements Insertable<account> {
   final UuidValue id;
   final String name;
   final UuidValue userId;
   final bool isDebt;
   final UuidValue userGroupId;
   final PgDateTime updatedAt;
-  const accounts({
+  const account({
     required this.id,
     required this.name,
     required this.userId,
@@ -789,12 +789,12 @@ class accounts extends DataClass implements Insertable<accounts> {
     );
   }
 
-  factory accounts.fromJson(
+  factory account.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return accounts(
+    return account(
       id: serializer.fromJson<UuidValue>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       userId: serializer.fromJson<UuidValue>(json['userId']),
@@ -816,14 +816,14 @@ class accounts extends DataClass implements Insertable<accounts> {
     };
   }
 
-  accounts copyWith({
+  account copyWith({
     UuidValue? id,
     String? name,
     UuidValue? userId,
     bool? isDebt,
     UuidValue? userGroupId,
     PgDateTime? updatedAt,
-  }) => accounts(
+  }) => account(
     id: id ?? this.id,
     name: name ?? this.name,
     userId: userId ?? this.userId,
@@ -831,8 +831,8 @@ class accounts extends DataClass implements Insertable<accounts> {
     userGroupId: userGroupId ?? this.userGroupId,
     updatedAt: updatedAt ?? this.updatedAt,
   );
-  accounts copyWithCompanion(AccountsCompanion data) {
-    return accounts(
+  account copyWithCompanion(AccountsCompanion data) {
+    return account(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       userId: data.userId.present ? data.userId.value : this.userId,
@@ -846,7 +846,7 @@ class accounts extends DataClass implements Insertable<accounts> {
 
   @override
   String toString() {
-    return (StringBuffer('accounts(')
+    return (StringBuffer('account(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('userId: $userId, ')
@@ -863,7 +863,7 @@ class accounts extends DataClass implements Insertable<accounts> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is accounts &&
+      (other is account &&
           other.id == this.id &&
           other.name == this.name &&
           other.userId == this.userId &&
@@ -872,7 +872,7 @@ class accounts extends DataClass implements Insertable<accounts> {
           other.updatedAt == this.updatedAt);
 }
 
-class AccountsCompanion extends UpdateCompanion<accounts> {
+class AccountsCompanion extends UpdateCompanion<account> {
   final Value<UuidValue> id;
   final Value<String> name;
   final Value<UuidValue> userId;
@@ -902,7 +902,7 @@ class AccountsCompanion extends UpdateCompanion<accounts> {
        isDebt = Value(isDebt),
        userGroupId = Value(userGroupId),
        updatedAt = Value(updatedAt);
-  static Insertable<accounts> custom({
+  static Insertable<account> custom({
     Expression<UuidValue>? id,
     Expression<String>? name,
     Expression<UuidValue>? userId,
@@ -1013,10 +1013,10 @@ typedef $$UserGroupsTableUpdateCompanionBuilder =
     UserGroupsCompanion Function({Value<UuidValue> id, Value<int> rowid});
 
 final class $$UserGroupsTableReferences
-    extends BaseReferences<_$AppDatabase, $UserGroupsTable, user_groups> {
+    extends BaseReferences<_$AppDatabase, $UserGroupsTable, user_group> {
   $$UserGroupsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$UsersTable, List<users>> _usersRefsTable(
+  static MultiTypedResultKey<$UsersTable, List<user>> _usersRefsTable(
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.users,
@@ -1035,7 +1035,7 @@ final class $$UserGroupsTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AccountsTable, List<accounts>> _accountsRefsTable(
+  static MultiTypedResultKey<$AccountsTable, List<account>> _accountsRefsTable(
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.accounts,
@@ -1203,14 +1203,14 @@ class $$UserGroupsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $UserGroupsTable,
-          user_groups,
+          user_group,
           $$UserGroupsTableFilterComposer,
           $$UserGroupsTableOrderingComposer,
           $$UserGroupsTableAnnotationComposer,
           $$UserGroupsTableCreateCompanionBuilder,
           $$UserGroupsTableUpdateCompanionBuilder,
-          (user_groups, $$UserGroupsTableReferences),
-          user_groups,
+          (user_group, $$UserGroupsTableReferences),
+          user_group,
           PrefetchHooks Function({bool usersRefs, bool accountsRefs})
         > {
   $$UserGroupsTableTableManager(_$AppDatabase db, $UserGroupsTable table)
@@ -1254,9 +1254,9 @@ class $$UserGroupsTableTableManager
                 return [
                   if (usersRefs)
                     await $_getPrefetchedData<
-                      user_groups,
+                      user_group,
                       $UserGroupsTable,
-                      users
+                      user
                     >(
                       currentTable: table,
                       referencedTable: $$UserGroupsTableReferences
@@ -1271,9 +1271,9 @@ class $$UserGroupsTableTableManager
                     ),
                   if (accountsRefs)
                     await $_getPrefetchedData<
-                      user_groups,
+                      user_group,
                       $UserGroupsTable,
-                      accounts
+                      account
                     >(
                       currentTable: table,
                       referencedTable: $$UserGroupsTableReferences
@@ -1302,14 +1302,14 @@ typedef $$UserGroupsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $UserGroupsTable,
-      user_groups,
+      user_group,
       $$UserGroupsTableFilterComposer,
       $$UserGroupsTableOrderingComposer,
       $$UserGroupsTableAnnotationComposer,
       $$UserGroupsTableCreateCompanionBuilder,
       $$UserGroupsTableUpdateCompanionBuilder,
-      (user_groups, $$UserGroupsTableReferences),
-      user_groups,
+      (user_group, $$UserGroupsTableReferences),
+      user_group,
       PrefetchHooks Function({bool usersRefs, bool accountsRefs})
     >;
 typedef $$UsersTableCreateCompanionBuilder =
@@ -1334,7 +1334,7 @@ typedef $$UsersTableUpdateCompanionBuilder =
     });
 
 final class $$UsersTableReferences
-    extends BaseReferences<_$AppDatabase, $UsersTable, users> {
+    extends BaseReferences<_$AppDatabase, $UsersTable, user> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $UserGroupsTable _userGroupIdTable(_$AppDatabase db) =>
@@ -1356,7 +1356,7 @@ final class $$UsersTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AccountsTable, List<accounts>> _accountsRefsTable(
+  static MultiTypedResultKey<$AccountsTable, List<account>> _accountsRefsTable(
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.accounts,
@@ -1594,14 +1594,14 @@ class $$UsersTableTableManager
         RootTableManager<
           _$AppDatabase,
           $UsersTable,
-          users,
+          user,
           $$UsersTableFilterComposer,
           $$UsersTableOrderingComposer,
           $$UsersTableAnnotationComposer,
           $$UsersTableCreateCompanionBuilder,
           $$UsersTableUpdateCompanionBuilder,
-          (users, $$UsersTableReferences),
-          users,
+          (user, $$UsersTableReferences),
+          user,
           PrefetchHooks Function({bool userGroupId, bool accountsRefs})
         > {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
@@ -1696,7 +1696,7 @@ class $$UsersTableTableManager
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (accountsRefs)
-                    await $_getPrefetchedData<users, $UsersTable, accounts>(
+                    await $_getPrefetchedData<user, $UsersTable, account>(
                       currentTable: table,
                       referencedTable: $$UsersTableReferences
                           ._accountsRefsTable(db),
@@ -1718,14 +1718,14 @@ typedef $$UsersTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $UsersTable,
-      users,
+      user,
       $$UsersTableFilterComposer,
       $$UsersTableOrderingComposer,
       $$UsersTableAnnotationComposer,
       $$UsersTableCreateCompanionBuilder,
       $$UsersTableUpdateCompanionBuilder,
-      (users, $$UsersTableReferences),
-      users,
+      (user, $$UsersTableReferences),
+      user,
       PrefetchHooks Function({bool userGroupId, bool accountsRefs})
     >;
 typedef $$AccountsTableCreateCompanionBuilder =
@@ -1750,7 +1750,7 @@ typedef $$AccountsTableUpdateCompanionBuilder =
     });
 
 final class $$AccountsTableReferences
-    extends BaseReferences<_$AppDatabase, $AccountsTable, accounts> {
+    extends BaseReferences<_$AppDatabase, $AccountsTable, account> {
   $$AccountsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
@@ -2016,14 +2016,14 @@ class $$AccountsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $AccountsTable,
-          accounts,
+          account,
           $$AccountsTableFilterComposer,
           $$AccountsTableOrderingComposer,
           $$AccountsTableAnnotationComposer,
           $$AccountsTableCreateCompanionBuilder,
           $$AccountsTableUpdateCompanionBuilder,
-          (accounts, $$AccountsTableReferences),
-          accounts,
+          (account, $$AccountsTableReferences),
+          account,
           PrefetchHooks Function({bool userId, bool userGroupId})
         > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
@@ -2143,14 +2143,14 @@ typedef $$AccountsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $AccountsTable,
-      accounts,
+      account,
       $$AccountsTableFilterComposer,
       $$AccountsTableOrderingComposer,
       $$AccountsTableAnnotationComposer,
       $$AccountsTableCreateCompanionBuilder,
       $$AccountsTableUpdateCompanionBuilder,
-      (accounts, $$AccountsTableReferences),
-      accounts,
+      (account, $$AccountsTableReferences),
+      account,
       PrefetchHooks Function({bool userId, bool userGroupId})
     >;
 

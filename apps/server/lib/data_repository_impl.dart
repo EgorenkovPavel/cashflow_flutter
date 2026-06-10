@@ -12,27 +12,38 @@ class DataRepositoryImpl extends DataRepository {
 
   @override
   List<Group> getGroups() {
-    return [Group(id: '43')];
+    return [Group(id: '43')]; // TODO
   }
 
   @override
   Future<User> createUser(UsersCompanion user) async {
-    final userDBO = await database.transaction<UserDBO>(() async {
+    final userDBO = await database.transaction(() async {
       final userGroup = await database.userGroups
           .insertReturning(UserGroupsCompanion.insert());
-      return await database.users
-          .insertReturning(user.copyWith(groupId: Value(userGroup.id)));
+      return database.users
+          .insertReturning(user.copyWith(userGroupId: Value(userGroup.id)));
     });
 
-    return User.fromDBO(userDBO);
+    return _userFromDBO(userDBO);
+  }
+
+  User _userFromDBO(user userDBO) {
+    return User(
+      id: userDBO.id.toString(),
+      name: userDBO.name,
+      photo: userDBO.photo,
+      googleId: userDBO.googleId,
+      email: userDBO.email,
+      groupId: userDBO.userGroupId.toString(),
+    );
   }
 
   @override
   Future<List<User>> getAllUsersByGroup(String groupId) async {
     final list = await (database.users.select()
-          ..where((r) => r.groupId.equals(UuidValue.fromString(groupId))))
+      ..where((r) => r.userGroupId.equals(UuidValue.fromString(groupId))))
         .get();
-    return list.map(User.fromDBO).toList();
+    return list.map(_userFromDBO).toList();
   }
 
   @override
@@ -43,7 +54,7 @@ class DataRepositoryImpl extends DataRepository {
     if (userDBO == null) {
       return null;
     } else {
-      return User.fromDBO(userDBO);
+      return _userFromDBO(userDBO);
     }
   }
 
