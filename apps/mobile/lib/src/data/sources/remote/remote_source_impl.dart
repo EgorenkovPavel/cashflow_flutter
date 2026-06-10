@@ -3,13 +3,11 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_models/finance_models.dart';
 import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:money_tracker/src/data/interfaces/remote_data_source.dart';
 import 'package:money_tracker/src/data/sources/remote/cloud_model_extensions.dart';
 import 'package:money_tracker/src/domain/models/user.dart';
 
-import '../../../utils/exceptions.dart';
 import '../../../utils/result.dart';
 
 class RemoteSourceImpl implements RemoteDataSource {
