@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../injection_container.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -15,13 +17,13 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _login() async {
     setState(() => _isLoading = true);
     try {
-      await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+      await sl<FirebaseAuth>().setPersistence(Persistence.LOCAL);
 
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
       // Используем Popup для Web (отдельное окно)
       // Если хотите в этой же вкладке, замените на signInWithRedirect
-      await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      await sl<FirebaseAuth>().signInWithPopup(googleProvider);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Ошибка входа: $e")),

@@ -1,20 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_api_client/firebase_api_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../injection_container.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = sl<FirebaseAuth>().currentUser;
+
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Личный кабинет"),
         actions: [
           IconButton(
-            onPressed: () => FirebaseAuth.instance.signOut(),
+            onPressed: () => sl<FirebaseAuth>().signOut(),
             icon: const Icon(Icons.exit_to_app),
             tooltip: "Выйти",
           )
@@ -42,6 +46,29 @@ class HomeScreen extends StatelessWidget {
             Text("${user?.email}"),
             const SizedBox(height: 10),
             Text("UID: ${user?.uid}", style: const TextStyle(color: Colors.grey, fontSize: 12)),
+            if (user != null)
+              FutureBuilder(future: sl<CloudSource>().connect(CloudUser(
+                  googleId: user.uid,
+                  name: user.displayName ?? 'Noname',
+                  photo: user.photoURL ?? '')),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Auth error');
+                  }
+
+                  return FutureBuilder(
+                    future: sl<CloudSource>().accounts.getAll(DateTime(2000)),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Iterable<CloudAccount>> snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(child: Column(
+                          children: snapshot.data!.map((e) =>
+                              ListTile(title: Text(e.title),)).toList(),),);
+                      }
+
+                      return Text('NO DATA');
+                    },);
+                },),
           ],
         ),
       ),
