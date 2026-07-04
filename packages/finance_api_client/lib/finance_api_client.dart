@@ -7,11 +7,11 @@ import 'package:uuid/uuid.dart';
 
 part 'finance_api_client.g.dart';
 
-@RestApi(baseUrl: "http://localhost:8080/v1")
+@RestApi(baseUrl: "http://localhost:8080")
 abstract class FinanceApiClient {
   factory FinanceApiClient(Dio dio, {String baseUrl}) = _FinanceApiClient;
 
-  @POST("/register")
+  @GET("/register")
   Future<UserResponce> register(@Header("Authorization") String idToken);
 
   @POST("user-groups/{userGroup}/accounts")

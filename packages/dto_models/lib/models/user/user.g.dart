@@ -12,9 +12,8 @@ _UserResponce _$UserResponceFromJson(Map<String, dynamic> json) =>
       googleId: json['googleId'] as String,
       name: json['name'] as String,
       photo: json['photo'] as String,
-      userGroup: const UuidValueConverter().fromJson(
-        json['userGroup'] as String,
-      ),
+      email: json['email'] as String,
+      groupId: const UuidValueConverter().fromJson(json['groupId'] as String),
     );
 
 Map<String, dynamic> _$UserResponceToJson(_UserResponce instance) =>
@@ -23,5 +22,6 @@ Map<String, dynamic> _$UserResponceToJson(_UserResponce instance) =>
       'googleId': instance.googleId,
       'name': instance.name,
       'photo': instance.photo,
-      'userGroup': const UuidValueConverter().toJson(instance.userGroup),
+      'email': instance.email,
+      'groupId': const UuidValueConverter().toJson(instance.groupId),
     };

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserResponce {
 
-@UuidValueConverter() UuidValue get id; String get googleId; String get name; String get photo;@UuidValueConverter() UuidValue get userGroup;
+@UuidValueConverter() UuidValue get id; String get googleId; String get name; String get photo; String get email;@UuidValueConverter() UuidValue get groupId;
 /// Create a copy of UserResponce
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserResponceCopyWith<UserResponce> get copyWith => _$UserResponceCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.userGroup, userGroup) || other.userGroup == userGroup));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.email, email) || other.email == email)&&(identical(other.groupId, groupId) || other.groupId == groupId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,userGroup);
+int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,email,groupId);
 
 @override
 String toString() {
-  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, userGroup: $userGroup)';
+  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, email: $email, groupId: $groupId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserResponceCopyWith<$Res>  {
   factory $UserResponceCopyWith(UserResponce value, $Res Function(UserResponce) _then) = _$UserResponceCopyWithImpl;
 @useResult
 $Res call({
-@UuidValueConverter() UuidValue id, String googleId, String name, String photo,@UuidValueConverter() UuidValue userGroup
+@UuidValueConverter() UuidValue id, String googleId, String name, String photo, String email,@UuidValueConverter() UuidValue groupId
 });
 
 
@@ -65,13 +65,14 @@ class _$UserResponceCopyWithImpl<$Res>
 
 /// Create a copy of UserResponce
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? googleId = null,Object? name = null,Object? photo = null,Object? userGroup = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? googleId = null,Object? name = null,Object? photo = null,Object? email = null,Object? groupId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as UuidValue,googleId: null == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
-as String,userGroup: null == userGroup ? _self.userGroup : userGroup // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as UuidValue,
   ));
 }
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo, @UuidValueConverter()  UuidValue userGroup)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo,  String email, @UuidValueConverter()  UuidValue groupId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserResponce() when $default != null:
-return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);case _:
+return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.email,_that.groupId);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo, @UuidValueConverter()  UuidValue userGroup)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo,  String email, @UuidValueConverter()  UuidValue groupId)  $default,) {final _that = this;
 switch (_that) {
 case _UserResponce():
-return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);case _:
+return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.email,_that.groupId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo, @UuidValueConverter()  UuidValue userGroup)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidValueConverter()  UuidValue id,  String googleId,  String name,  String photo,  String email, @UuidValueConverter()  UuidValue groupId)?  $default,) {final _that = this;
 switch (_that) {
 case _UserResponce() when $default != null:
-return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);case _:
+return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.email,_that.groupId);case _:
   return null;
 
 }
@@ -213,14 +214,15 @@ return $default(_that.id,_that.googleId,_that.name,_that.photo,_that.userGroup);
 @JsonSerializable()
 
 class _UserResponce implements UserResponce {
-  const _UserResponce({@UuidValueConverter() required this.id, required this.googleId, required this.name, required this.photo, @UuidValueConverter() required this.userGroup});
+  const _UserResponce({@UuidValueConverter() required this.id, required this.googleId, required this.name, required this.photo, required this.email, @UuidValueConverter() required this.groupId});
   factory _UserResponce.fromJson(Map<String, dynamic> json) => _$UserResponceFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
 @override final  String googleId;
 @override final  String name;
 @override final  String photo;
-@override@UuidValueConverter() final  UuidValue userGroup;
+@override final  String email;
+@override@UuidValueConverter() final  UuidValue groupId;
 
 /// Create a copy of UserResponce
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.userGroup, userGroup) || other.userGroup == userGroup));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.email, email) || other.email == email)&&(identical(other.groupId, groupId) || other.groupId == groupId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,userGroup);
+int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,email,groupId);
 
 @override
 String toString() {
-  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, userGroup: $userGroup)';
+  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, email: $email, groupId: $groupId)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$UserResponceCopyWith<$Res> implements $UserResponceCopyWi
   factory _$UserResponceCopyWith(_UserResponce value, $Res Function(_UserResponce) _then) = __$UserResponceCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidValueConverter() UuidValue id, String googleId, String name, String photo,@UuidValueConverter() UuidValue userGroup
+@UuidValueConverter() UuidValue id, String googleId, String name, String photo, String email,@UuidValueConverter() UuidValue groupId
 });
 
 
@@ -272,13 +274,14 @@ class __$UserResponceCopyWithImpl<$Res>
 
 /// Create a copy of UserResponce
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? googleId = null,Object? name = null,Object? photo = null,Object? userGroup = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? googleId = null,Object? name = null,Object? photo = null,Object? email = null,Object? groupId = null,}) {
   return _then(_UserResponce(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as UuidValue,googleId: null == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
-as String,userGroup: null == userGroup ? _self.userGroup : userGroup // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as UuidValue,
   ));
 }

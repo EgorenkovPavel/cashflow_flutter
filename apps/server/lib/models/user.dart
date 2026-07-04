@@ -1,8 +1,8 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:drift_postgres/drift_postgres.dart';
+import 'package:dto_models/dto_models.dart';
 
 part 'user.g.dart';
 
-@JsonSerializable()
 class User {
 
   User({
@@ -21,7 +21,12 @@ class User {
   final String email;
   final String groupId;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  UserResponce toResponce() =>
+      UserResponce(id: UuidValue.fromString(id),
+          googleId: googleId,
+          name: name,
+          photo: photo,
+          email: email,
+          groupId: UuidValue.fromString(groupId));
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

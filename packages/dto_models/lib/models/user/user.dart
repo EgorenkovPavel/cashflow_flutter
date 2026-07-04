@@ -14,7 +14,8 @@ abstract class UserResponce with _$UserResponce {
     required String googleId,
     required String name,
     required String photo,
-    @UuidValueConverter() required UuidValue userGroup,
+    required String email,
+    @UuidValueConverter() required UuidValue groupId,
   }) = _UserResponce;
 
   factory UserResponce.fromJson(Map<String, Object?> json) =>

@@ -17,6 +17,8 @@ dependencies:
   firebase_admin: ^0.3.1+4
   uuid: ^4.5.3
 
+  dto_models:
+    path: ../../packages/dto_models
 
 dev_dependencies:
   drift_dev: ^2.33.0

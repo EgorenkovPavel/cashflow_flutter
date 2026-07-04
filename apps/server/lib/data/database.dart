@@ -6,7 +6,7 @@ part 'database.g.dart';
 
 @DataClassName('user')
 class Users extends Table {
-  UuidColumn get id => customType(PgTypes.uuid).withDefault(genRandomUuid())();
+  UuidColumn get id => customType(PgTypes.uuid).withDefault(genRandomUuid()).unique()();
 
   TextColumn get name => text()();
 
@@ -22,6 +22,8 @@ class Users extends Table {
   @override
   String get tableName => 'users';
 
+  @override
+  Set<Column> get primaryKey => {id};
 }
 
 @DataClassName('user_group')
@@ -31,6 +33,9 @@ class UserGroups extends Table {
 
   @override
   String get tableName => 'user_groups';
+
+  @override
+  Set<Column> get primaryKey => {id};
 }
 
 @DataClassName('account')
@@ -51,6 +56,9 @@ class Accounts extends Table {
 
   @override
   String get tableName => 'accounts';
+
+  @override
+  Set<Column> get primaryKey => {id};
 }
 
 @DriftDatabase(tables: [Users, UserGroups, Accounts])
@@ -80,7 +88,7 @@ class AppDatabase extends _$AppDatabase {
     return PgDatabase(
       endpoint: pg.Endpoint(
         host: 'localhost',
-        database: 'my_finance_db',
+        database: 'finance_app',
         username: 'postgres',
         password: 'your_password', //TODO переписать пароли на пакет dotenv
       ),

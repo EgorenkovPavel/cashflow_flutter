@@ -41,7 +41,7 @@ class $UserGroupsTable extends UserGroups
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   user_group map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -166,6 +166,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, user> {
     false,
     type: PgTypes.uuid,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
     defaultValue: genRandomUuid(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -292,7 +293,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, user> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   user map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -710,7 +711,7 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, account> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   account map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';

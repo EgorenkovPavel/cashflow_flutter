@@ -12,7 +12,7 @@ part of 'finance_api_client.dart';
 
 class _FinanceApiClient implements FinanceApiClient {
   _FinanceApiClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://localhost:8080/v1';
+    baseUrl ??= 'http://localhost:8080';
   }
 
   final Dio _dio;
@@ -29,7 +29,7 @@ class _FinanceApiClient implements FinanceApiClient {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<UserResponce>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             '/register',

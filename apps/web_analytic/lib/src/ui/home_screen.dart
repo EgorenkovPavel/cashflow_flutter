@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_api_client/firebase_api_client.dart';
+import 'package:dio/dio.dart';
+import 'package:finance_api_client/finance_api_client.dart';
+import 'package:finance_api_client/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = sl<FirebaseAuth>().currentUser;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -46,29 +47,46 @@ class HomeScreen extends StatelessWidget {
             Text("${user?.email}"),
             const SizedBox(height: 10),
             Text("UID: ${user?.uid}", style: const TextStyle(color: Colors.grey, fontSize: 12)),
+            // if (user != null)
+            //   FutureBuilder(future: sl<CloudSource>().connect(CloudUser(
+            //       googleId: user.uid,
+            //       name: user.displayName ?? 'Noname',
+            //       photo: user.photoURL ?? '')),
+            //     builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            //       if (snapshot.hasError) {
+            //         return Text('Auth error');
+            //       }
+            //
+            //       return FutureBuilder(
+            //         future: sl<CloudSource>().accounts.getAll(DateTime(2000)),
+            //         builder: (BuildContext context,
+            //             AsyncSnapshot<Iterable<CloudAccount>> snapshot) {
+            //           if (snapshot.hasData) {
+            //             return Expanded(child: Column(
+            //               children: snapshot.data!.map((e) =>
+            //                   ListTile(title: Text(e.title),)).toList(),),);
+            //           }
+            //
+            //           return Text('NO DATA');
+            //         },);
+            //     },),
             if (user != null)
-              FutureBuilder(future: sl<CloudSource>().connect(CloudUser(
-                  googleId: user.uid,
-                  name: user.displayName ?? 'Noname',
-                  photo: user.photoURL ?? '')),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              FutureBuilder(future: _register(user),
+                builder: (BuildContext context,
+                    AsyncSnapshot<String> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Auth error');
+                    return Text(
+                        'Registration failed: ${snapshot.error.toString()} ');
                   }
 
-                  return FutureBuilder(
-                    future: sl<CloudSource>().accounts.getAll(DateTime(2000)),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Iterable<CloudAccount>> snapshot) {
-                      if (snapshot.hasData) {
-                        return Expanded(child: Column(
-                          children: snapshot.data!.map((e) =>
-                              ListTile(title: Text(e.title),)).toList(),),);
-                      }
+                  if (snapshot.hasData){
+                    return Text(snapshot.data!);
+                  }
 
-                      return Text('NO DATA');
-                    },);
+                  return Text('UNKNOWN');
+
                 },),
+
           ],
         ),
       ),
@@ -76,4 +94,25 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+Future<String> _register(User user) async {
+  final idToken = await _getIdToken(user);
+  if (idToken.isEmpty) {
+    return 'NO TOKEN';
+  }
+  final dio = Dio();
+  final client = FinanceApiClient(dio);
+  final userResponce =  await client.register('Bearer $idToken');
+  return userResponce.name;
+}
+
+Future<String> _getIdToken(User user) async {
+  var idToken = '';
+  try {
+    idToken = await user.getIdToken(true) ?? '';
+  } catch (e) {}
+
+  print('IDTOKEN: $idToken');
+
+  return idToken;
+}
 

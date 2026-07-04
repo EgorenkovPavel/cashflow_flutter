@@ -12,11 +12,13 @@ Future<Response> onRequest(RequestContext context) async {
   
   final token = auth.substring(7);
 
+  print('TOKEN ON SERVER $token');
+
   final user = await userService.register(token);
   if (user == null){
     return Response(statusCode: 500);
   }else{
-    return Response.json(body: user);
+    return Response.json(body: user.toResponce());
   }
 
 }
