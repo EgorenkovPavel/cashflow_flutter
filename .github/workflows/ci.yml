@@ -71,6 +71,11 @@ jobs:
       - name: Get root dependencies
         run: dart pub get
 
+      - name: Install Melos
+        run: |
+          dart pub global activate melos
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
       - name: Bootstrap workspace
         run: dart run melos bootstrap
 
@@ -97,6 +102,11 @@ jobs:
 
       - name: Get root dependencies
         run: dart pub get
+
+      - name: Install Melos
+        run: |
+          dart pub global activate melos
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       - name: Bootstrap workspace
         run: dart run melos bootstrap
