@@ -1,8 +1,75 @@
-name: money_tracker
+name: cashflow_workspace
 publish_to: none
 
 environment:
   sdk: ^3.11.0
 
+workspace:
+  - apps/mobile
+  - apps/server
+  - apps/web_analytic
+  - packages/dto_models
+  - packages/finance_api_client
+  - packages/finance_models
+  - packages/firebase_api_client
+
 dev_dependencies:
-  melos: ^6.0.0
+  melos: ^8.5.0
+
+melos:
+  scripts:
+
+    get:
+      run: melos bootstrap
+      description: Install all dependencies and link packages
+
+    clean:
+      run: melos exec -- "flutter clean"
+      description: Run flutter clean in all Flutter packages
+
+    build_runner:
+      run: melos exec --dir-exists=lib -- "dart run build_runner build --delete-conflicting-outputs"
+      description: Run build_runner in all packages that have a lib directory
+
+    test:
+      run: melos exec --dir-exists=test -- "flutter test"
+      description: Run all tests
+
+    test:coverage:
+      run: melos exec --scope="money_tracker" --dir-exists=test -- "flutter test --coverage"
+      description: Run coverage for mobile app
+
+    coverage:report:
+      run: powershell -ExecutionPolicy Bypass -File tool/generate_coverage_report.ps1 -LcovPath "apps/mobile/coverage/lcov.info" -OutputDir "apps/mobile/coverage/html"
+      description: Generate HTML coverage report
+
+    test:coverage:report:
+      run: |
+        melos exec --scope="money_tracker" --dir-exists=test -- "flutter test --coverage"
+        powershell -ExecutionPolicy Bypass -File tool/generate_coverage_report.ps1 -LcovPath "apps/mobile/coverage/lcov.info" -OutputDir "apps/mobile/coverage/html"
+      description: Run coverage and generate HTML coverage report
+
+    server:dir:
+      run: cd apps/server && dart_frog dev
+      description: Start Dart Frog development server
+
+    db:start:
+      run: docker-compose up -d
+      description: Start PostgreSQL database
+
+    db:stop:
+      run: docker-compose down
+      description: Stop PostgreSQL database
+
+    server:start:
+      run: |
+        melos run db:start
+        melos run get
+        melos run server:dir
+      description: Start PostgreSQL, bootstrap packages and run Dart Frog with hot reload
+
+    server:stop:
+      run: |
+        melos run db:stop
+        melos exec --scope="cashflow_server" -- "pkill -f dart_frog" || true
+      description: Stop PostgreSQL and Dart Frog

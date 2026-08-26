@@ -1,4 +1,6 @@
 name: money_tracker
+resolution: workspace
+
 description: A new Flutter application.
 
 version: 1.1.51+61
@@ -60,12 +62,9 @@ dependencies:
 #  flutter_randomcolor: ^1.0.18
   cached_network_image: ^3.4.1
 
-  finance_models:
-    path: ../../packages/finance_models
-  finance_api_client:
-    path: ../../packages/finance_api_client
-  firebase_api_client:
-    path: ../../packages/firebase_api_client
+  finance_models: any
+  finance_api_client: any
+  firebase_api_client: any
 
 dev_dependencies:
   flutter_test:

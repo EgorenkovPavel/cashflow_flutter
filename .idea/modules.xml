@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/apps/server/melos_cashflow_server.iml" filepath="$PROJECT_DIR$/apps/server/melos_cashflow_server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/dto_models/melos_dto_models.iml" filepath="$PROJECT_DIR$/packages/dto_models/melos_dto_models.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/finance_api_client/melos_finance_api_client.iml" filepath="$PROJECT_DIR$/packages/finance_api_client/melos_finance_api_client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/finance_models/melos_finance_models.iml" filepath="$PROJECT_DIR$/packages/finance_models/melos_finance_models.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/firebase_api_client/melos_firebase_api_client.iml" filepath="$PROJECT_DIR$/packages/firebase_api_client/melos_firebase_api_client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/apps/mobile/melos_money_tracker.iml" filepath="$PROJECT_DIR$/apps/mobile/melos_money_tracker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/apps/web_analytic/melos_web_analytic.iml" filepath="$PROJECT_DIR$/apps/web_analytic/melos_web_analytic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/melos_money_tracker.iml" filepath="$PROJECT_DIR$/melos_money_tracker.iml" />
+<module fileurl="file://$PROJECT_DIR$/melos_money_tracker.iml" filepath="$PROJECT_DIR$/melos_money_tracker.iml"/>
+<module fileurl="file://$PROJECT_DIR$/apps/server/melos_cashflow_server.iml" filepath="$PROJECT_DIR$/apps/server/melos_cashflow_server.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/dto_models/melos_dto_models.iml" filepath="$PROJECT_DIR$/packages/dto_models/melos_dto_models.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/finance_api_client/melos_finance_api_client.iml" filepath="$PROJECT_DIR$/packages/finance_api_client/melos_finance_api_client.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/finance_models/melos_finance_models.iml" filepath="$PROJECT_DIR$/packages/finance_models/melos_finance_models.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/firebase_api_client/melos_firebase_api_client.iml" filepath="$PROJECT_DIR$/packages/firebase_api_client/melos_firebase_api_client.iml"/>
+<module fileurl="file://$PROJECT_DIR$/apps/mobile/melos_money_tracker.iml" filepath="$PROJECT_DIR$/apps/mobile/melos_money_tracker.iml"/>
+<module fileurl="file://$PROJECT_DIR$/apps/web_analytic/melos_web_analytic.iml" filepath="$PROJECT_DIR$/apps/web_analytic/melos_web_analytic.iml"/>
     </modules>
   </component>
 </project>

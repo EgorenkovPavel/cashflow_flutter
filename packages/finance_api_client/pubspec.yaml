@@ -1,4 +1,6 @@
 name: finance_api_client
+resolution: workspace
+
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
@@ -15,10 +17,9 @@ dependencies:
 
   http: ^1.6.0
 
-  finance_models:
-    path: ../finance_models
-  dto_models:
-    path: ../dto_models
+  finance_models: any
+  dto_models: any
+
   freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0
   uuid: ^4.5.3

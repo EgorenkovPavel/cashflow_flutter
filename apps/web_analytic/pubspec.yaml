@@ -1,4 +1,7 @@
 name: web_analytic
+
+resolution: workspace
+
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,10 +44,8 @@ dependencies:
   get_it: ^9.0.5
   dio: ^5.10.0
 
-  firebase_api_client:
-    path: ../../packages/firebase_api_client
-  finance_api_client:
-    path: ../../packages/finance_api_client
+  firebase_api_client: any
+  finance_api_client: any
 
 dev_dependencies:
   flutter_test:

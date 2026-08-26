@@ -1,4 +1,6 @@
 name: dto_models
+resolution: workspace
+
 description: "A new Flutter package project."
 version: 1.0.0
 
@@ -9,8 +11,8 @@ environment:
 
 dependencies:
 
-  finance_models:
-    path: ../finance_models
+  finance_models: any
+
   freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0
   uuid: ^4.5.3
