@@ -1,0 +1,1 @@
+C:\Users\Pavel\StudioProjects\cashflow_flutter\build\app\intermediates\cxx\Debug\51d5522t\obj\arm64-v8a

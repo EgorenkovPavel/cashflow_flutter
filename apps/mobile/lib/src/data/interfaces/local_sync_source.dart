@@ -1,0 +1,26 @@
+import '../../domain/models.dart';
+
+abstract interface class LocalSyncSource{
+
+  LocalSyncTable<BaseAccount> get accounts;
+  LocalSyncTable<Category> get categories;
+  LocalSyncTable<Operation> get operations;
+
+  Future<List<User>> getAllUsers();
+  Future<List<BaseAccount>> getAllAccounts();
+  Future<List<Category>> getAllCategories();
+  Future<User?> getUserByGoogleId(String googleId);
+}
+
+abstract interface class LocalSyncTable<T>{
+
+  Future<List<T>> getAllWithEmptyCloudId();
+
+  Future<T?> getByCloudId(String cloudId);
+  Future<List<T>> getAllNotSynced();
+  Future<void> markAsSynced(int entityId, String cloudId);
+
+  Future<void> insertFromCloud(T entity);
+  Future<void> updateFromCloud(T entity);
+
+}

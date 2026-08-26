@@ -1,0 +1,147 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:money_tracker/src/domain/interactors/account_interactor.dart';
+import 'package:money_tracker/src/domain/interactors/user_interactor.dart';
+import 'package:money_tracker/src/domain/models.dart';
+
+part 'account_input_bloc.freezed.dart';
+
+@freezed
+sealed class AccountInputEvent with _$AccountInputEvent {
+  const factory AccountInputEvent.fetch({required int accountId}) =
+      _FetchAccountInputEvent;
+
+  const factory AccountInputEvent.input({required bool isDebt}) =
+      _InputAccountInputEvent;
+
+  const factory AccountInputEvent.changeTitle(String title) =
+      _ChangeTitleAccountInputEvent;
+
+  const factory AccountInputEvent.changeUser(User? user) =
+      _ChangeUserAccountInputEvent;
+
+  const factory AccountInputEvent.save() = _SaveAccountInputEvent;
+}
+
+@freezed
+abstract class AccountInputState with _$AccountInputState {
+  const factory AccountInputState({
+    required String title,
+    required bool isDebt,
+    required int? userId,
+    required List<User> users,
+    BaseAccount? account,
+    required bool isSaved,
+    String? error,
+    @Default(false) bool isLoading,
+  }) = _AccountInputState;
+
+  static AccountInputState init() => const AccountInputState(
+    title: '',
+    isDebt: false,
+    userId: null,
+    users: [],
+    account: null,
+    isSaved: false,
+    error: null,
+    isLoading: false,
+  );
+
+  static AccountInputState byAccount(BaseAccount account, List<User> users) =>
+      AccountInputState(
+        account: account,
+        title: account.title,
+        userId: account.userId,
+        users: users,
+        isDebt: account is Debt,
+        isSaved: false,
+        error: null,
+        isLoading: false,
+      );
+}
+
+class AccountInputBloc extends Bloc<AccountInputEvent, AccountInputState> {
+  final AccountInteractor _accountInteractor;
+  final UserInteractor _userInteractor;
+
+  AccountInputBloc(this._accountInteractor, this._userInteractor)
+    : super(AccountInputState.init()) {
+    on<AccountInputEvent>(
+      (event, emitter) => event.map(
+        fetch: (event) => _fetch(event, emitter),
+        input: (event) => _input(event, emitter),
+        changeTitle: (event) => emitter(state.copyWith(title: event.title)),
+        changeUser: (event) => emitter(state.copyWith(userId: event.user?.id)),
+        save: (event) => _save(event, emitter),
+      ),
+    );
+  }
+
+  Future<void> _fetch(
+    _FetchAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, error: null));
+
+    final accountResult = await _accountInteractor.getById(event.accountId);
+    final users = await _userInteractor.getAll();
+
+    accountResult.fold(
+      onSuccess: (account) => emit(
+        AccountInputState.byAccount(account, users).copyWith(isLoading: false),
+      ),
+      onFailure: (exception) {
+        emit(
+          state.copyWith(
+            error: exception.toString(),
+            isLoading: false,
+            users: users,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _input(
+    _InputAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
+    final users = await _userInteractor.getAll();
+    emit(state.copyWith(isDebt: event.isDebt, users: users));
+  }
+
+  Future<void> _save(
+    _SaveAccountInputEvent event,
+    Emitter<AccountInputState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, error: null, isSaved: false));
+
+    final result = switch (state.account) {
+      null => await _accountInteractor.insert(
+        title: state.title,
+        isDebt: state.isDebt,
+        userId: state.userId,
+      ),
+      _ => await _accountInteractor.update(
+        account: state.account!,
+        title: state.title,
+        userId: state.userId,
+      ),
+    };
+
+    result.fold(
+      onSuccess: (account) => emit(
+        state.copyWith(account: account, isSaved: true, isLoading: false),
+      ),
+      onFailure: (exception) {
+        emit(
+          state.copyWith(
+            error: exception.toString(),
+            isLoading: false,
+            isSaved: false,
+          ),
+        );
+      },
+    );
+  }
+}

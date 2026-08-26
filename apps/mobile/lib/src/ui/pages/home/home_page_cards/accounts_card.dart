@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:money_tracker/src/ui/app.dart';
+import 'package:money_tracker/src/ui/widgets/list_item_sum.dart';
+import 'package:money_tracker/src/ui/widgets/user_avatar.dart';
+import 'package:money_tracker/src/utils/extensions.dart';
+
+import '../../../models/account_balance_view.dart';
+import 'card_title.dart';
+
+class AccountsCard extends StatefulWidget {
+  final String title;
+  final List<AccountBalanceView> accounts;
+  final void Function() onAdd;
+
+  const AccountsCard({super.key, required this.title, required this.accounts, required this.onAdd});
+
+  @override
+  State<AccountsCard> createState() => _AccountsCardState();
+}
+
+class _AccountsCardState extends State<AccountsCard> {
+  bool _showAll = true;
+
+  List<AccountBalanceView> _visibleAccounts() {
+    if (widget.accounts.where((account) => !account.balance.isEmpty).isEmpty) {
+      return widget.accounts;
+    } else {
+      return widget.accounts
+          .where((account) => !_showAll || !account.balance.isEmpty)
+          .toList();
+    }
+  }
+
+  void _onHide() {
+    setState(() {
+      _showAll = !_showAll;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        CardTitle(title: widget.title),
+        if (widget.accounts.isEmpty) Text(context.loc.noItems),
+        GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 2,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: _visibleAccounts().map((e) => _AccountListTile(e)).toList(),
+        ),
+        OverflowBar(
+          alignment: MainAxisAlignment.end,
+          children: [
+            if (widget.accounts
+                .where((account) => !account.balance.isEmpty)
+                .isNotEmpty)
+              TextButton(
+                onPressed: _onHide,
+                child: Text(
+                    _showAll ? context.loc.btnShowAll : context.loc.btnHide,),
+              ),
+            TextButton(
+              onPressed: widget.onAdd,
+              child: Text(context.loc.btnAdd),
+            ),
+          ],
+        ),
+      ]),
+    );
+  }
+}
+
+class _AccountListTile extends StatelessWidget {
+  final AccountBalanceView _account;
+
+  const _AccountListTile(AccountBalanceView account) : _account = account;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => context.openAccountPage(_account.account.id),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Theme.of(context).primaryColor),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Text(
+                _account.account.title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: _account.balance.sums
+                    .map((e) => ListItemSum(sum: e))
+                    .toList(),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: UserAvatar(photoUrl: _account.userPhoto, name: _account.userName,),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

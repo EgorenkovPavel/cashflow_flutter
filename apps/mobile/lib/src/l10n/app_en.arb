@@ -1,0 +1,182 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "title": "Title",
+  "titleType": "Type",
+  "titleBudget": "Budget",
+  "titlePlan": "Plan",
+  "titleFact": "Fact",
+  "titleDate": "Date",
+  "titleAccount": "Account",
+  "titleCategory": "Category",
+  "titleAnalytic": "Analytic",
+  "titleSum": "Sum",
+  "titleTotalSum": "Total sum",
+  "titleMaster": "Operation master",
+  "titleTotalBalance": "Total balance",
+  "titleCashflow": "Cashflow",
+  "titleLastOperations": "Last operations",
+  "titleDataControl": "Data control",
+  "titleReports": "Reports",
+  "titleFilters": "Filters",
+  "titleMonthBudgets": "Month budgets",
+  "titleYearBudgets": "Year budgets",
+  "emptyTitleError": "Enter title",
+  "emptyBudgetError": "Enter budget",
+  "emptyAccountError": "Choose account",
+  "emptyCategoryError": "Choose category",
+  "emptyRecAccountError": "Choose recipient account",
+  "emptySumError": "Enter sum",
+  "emptyRecSumError": "Enter recipient sum",
+  "errorNoGpServices": "No google play services",
+  "typeInput": "Input",
+  "typeOutput": "Output",
+  "typeTransfer": "Transfer",
+  "typeExchange": "Exchange",
+  "budgetTypeMonth": "Month",
+  "budgetTypeYear": "Year",
+  "accountCardTitle": "Account",
+  "debtCardTitle": "Debt",
+  "categoryCardTitle": "Category",
+  "categoryGroupCardTitle": "Group",
+  "operationCardTitle": "Operation",
+  "newAccountCardTitle": "New account",
+  "newDebtCardTitle": "New debt",
+  "newCategoryCardTitle": "New category",
+  "newCategoryGroupCardTitle": "New group",
+  "newOperationCardTitle": "New operation",
+  "hintAccount": "Choose account",
+  "hintCategory": "Choose category",
+  "hintEmptyList": "Press button to add first one",
+  "emptyListAccounts": "List of accounts is empty",
+  "emptyListCategories": "List of categories is empty",
+  "emptyListOperations": "List of operations is empty",
+  "emptyListBudgets": "List of budgets is empty",
+  "mesOperationDeleted": "Operation deleted",
+  "mesOperationCreated": "Operation created",
+  "mesOperationCanceled": "Operation canceled",
+  "mesDatabaseBackuped": "Database backuped",
+  "mesDatabaseRestored": "Database restored",
+  "mesDatabaseDeleted": "Database deleted",
+  "mesAccountArchived": "Account archived",
+  "mesCategoryArchived": "Category archived",
+  "mesAreYouSure": "Are you sure?",
+
+  "limit": "Limit",
+  "owner": "Owner",
+  "noOwner": "No owner",
+  "details": "Details",
+  "accounts": "Accounts",
+  "account": "Account",
+  "debts": "Debts",
+  "noItems": "No items",
+  "noAccounts": "No accounts",
+  "categories": "Categories",
+  "category": "Category",
+  "noCategories": "No categories",
+  "operations": "Operations",
+  "operationsIn": "Operations in",
+  "noOperations": "No operations",
+  "budget": "Budget",
+  "budgets": "Budgets",
+  "itemMenuService": "Service",
+  "itemBarMain": "Main",
+  "period": "Period",
+  "lastChanges": "Last changes",
+  "choosePeriod": "Choose period",
+  "chooseAccount": "Choose account",
+  "chooseCategory": "Choose category",
+  "inputCategory": "Input category",
+  "outputCategory": "Output category",
+  "earning": "Earning",
+  "spending": "Spending",
+  "topOfMonth": "Top of month",
+  "topOfYear": "Top of year",
+  "average": "Average",
+  "median": "Median",
+  "monthBudget": "Month budget",
+  "yearBudget": "Year budget",
+
+  "earningIn": "Earning in {date}",
+  "@earningIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+    }
+  },
+  "spendingIn": "Spending in {date}",
+  "@spendingIn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+     }
+  },
+
+ "itemsCount": "{count} items",
+ "@itemsCount": {
+   "placeholders": {
+     "count": { "type": "int" }
+   }
+ },
+
+    "budgetDisplay": "Budget {amount} per {type, select, month{month} year{year} other{???}}",
+      "@budgetDisplay": {
+        "placeholders": {
+          "amount": {
+            "type": "String",
+            "example": "15 000 ₽"
+          },
+          "type": {
+            "type": "String"
+          }
+        }
+      },
+
+  "budgetType": "Budget type",
+  "source": "Source",
+  "receiver": "Receiver",
+  "yes": "Yes",
+  "cancel": "Cancel",
+  "create": "Create",
+  "save": "Save",
+  "delete": "Delete",
+  "recover": "Recover",
+  "duplicate": "Duplicate",
+  "next": "Next",
+  "more": "More",
+  "backup": "Backup",
+  "restore": "Restore",
+  "choose": "Choose",
+  "archive": "Archive",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "apply": "Apply",
+  "reset": "Reset",
+  "inPeriod": "in",
+  "btnAdd": "Add",
+  "btnAddAccount": "Add account",
+  "btnShowAll": "Show all",
+  "btnHide": "Hide",
+  "btnShowReports": "Show reports",
+  "btnDeleteAll": "Delete all",
+  "btnSync": "Sync",
+  "btnSaveAndContinue": "Save and continue",
+  "item": "Item",
+  "group": "Group",
+  "users": "Users",
+  "other": "Other",
+
+  "syncStateInProgress": "In progress",
+  "syncStateSynced": "Synced",
+  "syncStateLoadingToCloud": "Loading to remote",
+  "syncStateLoadingFromCloud": "Loading from remote",
+  "syncStateNoDB": "No local",
+  "syncStateNotSynced": "Not synced",
+  "syncStateFailure": "Failed"
+}

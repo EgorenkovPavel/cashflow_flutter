@@ -1,0 +1,74 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:googleapis_auth/src/auth_client.dart';
+import 'package:money_tracker/src/data/interfaces/auth_source.dart';
+import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
+import 'package:money_tracker/src/domain/models/user.dart' as model;
+
+import '../../utils/logger.dart';
+import '../interfaces/network_info.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthSource _authSource;
+  final NetworkInfo _networkInfo;
+
+  AuthRepositoryImpl({
+    required AuthSource authSource,
+    required NetworkInfo networkInfo,
+  })  : _authSource = authSource,
+        _networkInfo = networkInfo;
+
+  @override
+  Future<AuthClient?> getClient() => _authSource.getClient();
+
+  @override
+  Future<model.User?> getUser() async {
+    final res = await _mapUser(_authSource.getUser());
+
+    return res.user;
+  }
+
+  @override
+  Future<bool> isAuthenticated() => _authSource.isAuthenticated();
+
+  @override
+  Future<void> signIn() => _authSource.signIn();
+
+  @override
+  Future<void> signInSilently() => _authSource.signInSilently();
+
+  @override
+  Future<void> signOut() => _authSource.signOut();
+
+  @override
+  Stream<({model.User? user, String idToken})> userChanges() =>
+      _authSource.userChanges().asyncMap((user) => _mapUser(user));
+
+  Future<({model.User? user, String idToken})> _mapUser(User? user) async {
+    if (user == null) {
+      return (user: null, idToken: '');
+    }
+
+    return (
+      user: model.User(
+        googleId: user.uid,
+        name: user.displayName ?? '',
+        photo: user.photoURL ?? '',
+      ),
+      idToken: await _getIdToken(user)
+    );
+  }
+
+  Future<String> _getIdToken(User user) async {
+    var idToken = '';
+    try {
+      idToken = await user.getIdToken(true) ?? '';
+    } catch (e) {}
+
+    AppLogger.debug('IDTOKEN: $idToken');
+
+    return idToken;
+  }
+
+  @override
+  Stream<bool> isConnectedToInternet() => _networkInfo.connected();
+}

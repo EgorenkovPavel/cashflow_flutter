@@ -1,0 +1,29 @@
+name: cashflow_server
+description: A new Dart Frog application
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  dart_frog: ^1.2.6
+  drift: ^2.33.0
+  drift_postgres: ^1.3.1
+
+  postgres: ^3.5.11
+  json_annotation: ^4.12.0
+  dart_frog_auth: ^1.2.2
+  firebase_admin: ^0.3.1+4
+  uuid: ^4.5.3
+
+  dto_models:
+    path: ../../packages/dto_models
+
+dev_dependencies:
+  drift_dev: ^2.33.0
+  build_runner: ^2.15.0
+  json_serializable: ^6.14.0
+  mocktail: ^1.0.5
+  test: ^1.31.1
+  very_good_analysis: ^10.2.0
