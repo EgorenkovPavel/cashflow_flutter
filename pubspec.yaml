@@ -13,6 +13,10 @@ workspace:
   - packages/finance_models
   - packages/firebase_api_client
 
+dependency_overrides:
+  freezed: ^4.0.0
+  freezed_annotation: ^3.1.0
+
 dev_dependencies:
   melos: ^8.5.0
 

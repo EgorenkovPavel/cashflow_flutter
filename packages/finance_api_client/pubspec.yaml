@@ -31,7 +31,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.13.1
-  freezed: ^3.2.5
+  freezed: ^4.0.0
   json_serializable: ^6.13.1
   retrofit_generator: ^10.2.3
 

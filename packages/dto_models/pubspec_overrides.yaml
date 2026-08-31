@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: finance_models
-dependency_overrides:
-  finance_models:
-    path: ..\\finance_models

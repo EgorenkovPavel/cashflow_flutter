@@ -10,7 +10,7 @@ class AccountServiceImpl implements AccountService {
 
   AccountServiceImpl(this._connector);
 
-  String get _path => 'user-groups/${_connector.user!.userGroup}/accounts';
+  String get _path => 'user-groups/${_connector.user!.groupId}/accounts';
 
   @override
   Future<BaseAccountResponse> getById(UuidValue id) =>
@@ -45,13 +45,13 @@ class AccountServiceImpl implements AccountService {
 
   @override
   Future<Balance> getTotalBalance() => _connector.get<Balance>(
-    'user-groups/${_connector.user!.userGroup}/balance',
+    'user-groups/${_connector.user!.groupId}/balance',
     (data) => data.map<Balance>((e) => Balance.fromJson(e)).toList(),
   );
 
   @override
   Future<int> getTotalBalanceInBaseCurrency() => _connector.get<int>(
-    'user-groups/${_connector.user!.userGroup}/balanceInBaseCurrency',
+    'user-groups/${_connector.user!.groupId}/balanceInBaseCurrency',
     (data) => data,
   );
 }

@@ -9,7 +9,7 @@ class OperationServiceImpl implements OperationService {
 
   OperationServiceImpl(this._connector);
 
-  String get _path => 'user-groups/${_connector.user!.userGroup}/operations';
+  String get _path => 'user-groups/${_connector.user!.groupId}/operations';
 
   @override
   Future<OperationResponse> getById(UuidValue id) => _connector.get<OperationResponse>(

@@ -9,7 +9,7 @@ class CategoryServiceImpl implements CategoryService {
 
   CategoryServiceImpl(this._connector);
 
-  String get _path => 'user-groups/${_connector.user!.userGroup}/categories';
+  String get _path => 'user-groups/${_connector.user!.groupId}/categories';
 
   @override
   Future<CategoryResponse> getById(UuidValue id) => _connector
