@@ -7,7 +7,7 @@ import 'package:money_tracker/src/ui/pages/reports/reports_bloc.dart';
 import 'package:money_tracker/src/utils/extensions.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-const double _FIRST_COLUMN_WIDTH = 100;
+// const double _FIRST_COLUMN_WIDTH = 100;
 const double _CELL_WIDTH = 100;
 const int YEAR = 2021;
 const double _CELL_HEIGHT = 32;

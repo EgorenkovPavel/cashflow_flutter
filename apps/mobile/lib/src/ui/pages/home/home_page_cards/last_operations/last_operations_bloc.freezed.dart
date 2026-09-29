@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'last_operations_bloc.dart';
@@ -9,6 +9,7 @@ part of 'last_operations_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$LastOperationsEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LastOperationsEvent()';
+    return 'LastOperationsEvent()';
 }
 
 
@@ -191,7 +192,7 @@ class _FetchLastOperationsEvent implements LastOperationsEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchLastOperationsEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchLastOperationsEvent);
 }
 
 
@@ -200,7 +201,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LastOperationsEvent.fetch()';
+    return 'LastOperationsEvent.fetch()';
 }
 
 
@@ -213,7 +214,7 @@ String toString() {
 
 
 class _ChangeOperationsLastOperationsEvent implements LastOperationsEvent {
-  const _ChangeOperationsLastOperationsEvent(final  List<OperationView> operations): _operations = operations;
+  const _ChangeOperationsLastOperationsEvent( List<OperationView> operations): _operations = operations;
   
 
  final  List<OperationView> _operations;
@@ -234,16 +235,18 @@ _$ChangeOperationsLastOperationsEventCopyWith<_ChangeOperationsLastOperationsEve
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsLastOperationsEvent&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsLastOperationsEvent&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'LastOperationsEvent.changeOperations(operations: $operations)';
+    return 'LastOperationsEvent.changeOperations(operations: $operations)';
 }
 
 
@@ -295,16 +298,21 @@ $LastOperationsStateCopyWith<LastOperationsState> get copyWith => _$LastOperatio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsState&&const DeepCollectionEquality().equals(other.operations, operations));
+  final _this = this as LastOperationsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LastOperationsState&&const DeepCollectionEquality().equals(other.operations, _this.operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(operations));
+int get hashCode {
+  final _this = this as LastOperationsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.operations));
+}
 
 @override
 String toString() {
-  return 'LastOperationsState(operations: $operations)';
+  final _this = this as LastOperationsState;
+  return 'LastOperationsState(operations: ${_this.operations})';
 }
 
 
@@ -333,7 +341,7 @@ class _$LastOperationsStateCopyWithImpl<$Res>
 /// Create a copy of LastOperationsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? operations = null,}) {
-  return _then(_self.copyWith(
+  return _then(LastOperationsState(
 operations: null == operations ? _self.operations : operations // ignore: cast_nullable_to_non_nullable
 as List<OperationView>,
   ));
@@ -476,7 +484,7 @@ return $default(_that.operations);case _:
 
 
 class _LastOperationsState implements LastOperationsState {
-  const _LastOperationsState({required final  List<OperationView> operations}): _operations = operations;
+  const _LastOperationsState({required  List<OperationView> operations}): _operations = operations;
   
 
  final  List<OperationView> _operations;
@@ -497,16 +505,18 @@ _$LastOperationsStateCopyWith<_LastOperationsState> get copyWith => __$LastOpera
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LastOperationsState&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LastOperationsState&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'LastOperationsState(operations: $operations)';
+    return 'LastOperationsState(operations: $operations)';
 }
 
 

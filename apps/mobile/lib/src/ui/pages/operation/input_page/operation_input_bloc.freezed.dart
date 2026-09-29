@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_input_bloc.dart';
@@ -9,6 +9,7 @@ part of 'operation_input_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$MasterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'MasterEvent()';
+    return 'MasterEvent()';
 }
 
 
@@ -233,7 +234,7 @@ class _StartMasterEvent implements MasterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StartMasterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _StartMasterEvent);
 }
 
 
@@ -242,7 +243,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'MasterEvent.start()';
+    return 'MasterEvent.start()';
 }
 
 
@@ -270,16 +271,18 @@ _$ChangeOperationTypeMasterEventCopyWith<_ChangeOperationTypeMasterEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationTypeMasterEvent&&(identical(other.operationType, operationType) || other.operationType == operationType));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationTypeMasterEvent&&(identical(other.operationType, operationType) || other.operationType == operationType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operationType);
+int get hashCode {
+    return Object.hash(runtimeType,operationType);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeOperationType(operationType: $operationType)';
+    return 'MasterEvent.changeOperationType(operationType: $operationType)';
 }
 
 
@@ -336,16 +339,18 @@ _$ChangeAccountMasterEventCopyWith<_ChangeAccountMasterEvent> get copyWith => __
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeAccountMasterEvent&&(identical(other.id, id) || other.id == id));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeAccountMasterEvent&&(identical(other.id, id) || other.id == id));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id);
+int get hashCode {
+    return Object.hash(runtimeType,id);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeAccount(id: $id)';
+    return 'MasterEvent.changeAccount(id: $id)';
 }
 
 
@@ -402,16 +407,18 @@ _$ChangeCategoryMasterEventCopyWith<_ChangeCategoryMasterEvent> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryMasterEvent&&(identical(other.id, id) || other.id == id));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryMasterEvent&&(identical(other.id, id) || other.id == id));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id);
+int get hashCode {
+    return Object.hash(runtimeType,id);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeCategory(id: $id)';
+    return 'MasterEvent.changeCategory(id: $id)';
 }
 
 
@@ -468,16 +475,18 @@ _$ChangeRecAccountMasterEventCopyWith<_ChangeRecAccountMasterEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecAccountMasterEvent&&(identical(other.id, id) || other.id == id));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecAccountMasterEvent&&(identical(other.id, id) || other.id == id));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id);
+int get hashCode {
+    return Object.hash(runtimeType,id);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeRecAccount(id: $id)';
+    return 'MasterEvent.changeRecAccount(id: $id)';
 }
 
 
@@ -534,16 +543,18 @@ _$ChangeSumMasterEventCopyWith<_ChangeSumMasterEvent> get copyWith => __$ChangeS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sum);
+int get hashCode {
+    return Object.hash(runtimeType,sum);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeSum(sum: $sum)';
+    return 'MasterEvent.changeSum(sum: $sum)';
 }
 
 
@@ -609,16 +620,18 @@ _$ChangeRecSumMasterEventCopyWith<_ChangeRecSumMasterEvent> get copyWith => __$C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumMasterEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sum);
+int get hashCode {
+    return Object.hash(runtimeType,sum);
+}
 
 @override
 String toString() {
-  return 'MasterEvent.changeRecSum(sum: $sum)';
+    return 'MasterEvent.changeRecSum(sum: $sum)';
 }
 
 
@@ -679,7 +692,7 @@ class _CancelOperationMasterEvent implements MasterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CancelOperationMasterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CancelOperationMasterEvent);
 }
 
 
@@ -688,7 +701,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'MasterEvent.cancelOperation()';
+    return 'MasterEvent.cancelOperation()';
 }
 
 
@@ -711,7 +724,7 @@ class _NextTapMasterEvent implements MasterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NextTapMasterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NextTapMasterEvent);
 }
 
 
@@ -720,7 +733,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'MasterEvent.nextTap()';
+    return 'MasterEvent.nextTap()';
 }
 
 
@@ -743,16 +756,21 @@ $MasterStateCopyWith<MasterState> get copyWith => _$MasterStateCopyWithImpl<Mast
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+  final _this = this as MasterState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MasterState&&(identical(other.accountId, _this.accountId) || other.accountId == _this.accountId)&&(identical(other.sum, _this.sum) || other.sum == _this.sum)&&(identical(other.operation, _this.operation) || other.operation == _this.operation)&&(identical(other.action, _this.action) || other.action == _this.action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,sum,operation,action);
+int get hashCode {
+  final _this = this as MasterState;
+  return Object.hash(runtimeType,_this.accountId,_this.sum,_this.operation,_this.action);
+}
 
 @override
 String toString() {
-  return 'MasterState(accountId: $accountId, sum: $sum, operation: $operation, action: $action)';
+  final _this = this as MasterState;
+  return 'MasterState(accountId: ${_this.accountId}, sum: ${_this.sum}, operation: ${_this.operation}, action: ${_this.action})';
 }
 
 
@@ -985,16 +1003,18 @@ _$InputMasterStateCopyWith<_InputMasterState> get copyWith => __$InputMasterStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
+}
 
 @override
 String toString() {
-  return 'MasterState.input(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
+    return 'MasterState.input(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
 }
 
 
@@ -1080,16 +1100,18 @@ _$OutputMasterStateCopyWith<_OutputMasterState> get copyWith => __$OutputMasterS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OutputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OutputMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,categoryId,sum,operation,action);
+}
 
 @override
 String toString() {
-  return 'MasterState.output(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
+    return 'MasterState.output(accountId: $accountId, categoryId: $categoryId, sum: $sum, operation: $operation, action: $action)';
 }
 
 
@@ -1175,16 +1197,18 @@ _$TransferMasterStateCopyWith<_TransferMasterState> get copyWith => __$TransferM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransferMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransferMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,recAccountId,sum,operation,action);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,recAccountId,sum,operation,action);
+}
 
 @override
 String toString() {
-  return 'MasterState.transfer(accountId: $accountId, recAccountId: $recAccountId, sum: $sum, operation: $operation, action: $action)';
+    return 'MasterState.transfer(accountId: $accountId, recAccountId: $recAccountId, sum: $sum, operation: $operation, action: $action)';
 }
 
 
@@ -1270,16 +1294,18 @@ _$ExchangeMasterStateCopyWith<_ExchangeMasterState> get copyWith => __$ExchangeM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExchangeMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExchangeMasterState&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.action, action) || other.action == action));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,sum,recSum,operation,action);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,sum,recSum,operation,action);
+}
 
 @override
 String toString() {
-  return 'MasterState.exchange(accountId: $accountId, sum: $sum, recSum: $recSum, operation: $operation, action: $action)';
+    return 'MasterState.exchange(accountId: $accountId, sum: $sum, recSum: $recSum, operation: $operation, action: $action)';
 }
 
 

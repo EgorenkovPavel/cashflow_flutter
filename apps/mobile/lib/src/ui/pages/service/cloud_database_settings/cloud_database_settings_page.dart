@@ -209,6 +209,7 @@ class AdminSettings extends StatelessWidget {
   }
 
   Future<void> _scanQrCode(BuildContext context) async {
+    await Future.pause();
     // String barcodeScanRes;
     // try {
     //   barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(

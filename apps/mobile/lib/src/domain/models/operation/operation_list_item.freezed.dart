@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_list_item.dart';
@@ -9,6 +9,7 @@ part of 'operation_list_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $OperationListItemCopyWith<OperationListItem> get copyWith => _$OperationListIte
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListItem&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.analyticTitle, analyticTitle) || other.analyticTitle == analyticTitle)&&(identical(other.user, user) || other.user == user));
+  final _this = this as OperationListItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListItem&&(identical(other.operation, _this.operation) || other.operation == _this.operation)&&(identical(other.accountTitle, _this.accountTitle) || other.accountTitle == _this.accountTitle)&&(identical(other.analyticTitle, _this.analyticTitle) || other.analyticTitle == _this.analyticTitle)&&(identical(other.user, _this.user) || other.user == _this.user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,accountTitle,analyticTitle,user);
+int get hashCode {
+  final _this = this as OperationListItem;
+  return Object.hash(runtimeType,_this.operation,_this.accountTitle,_this.analyticTitle,_this.user);
+}
 
 @override
 String toString() {
-  return 'OperationListItem(operation: $operation, accountTitle: $accountTitle, analyticTitle: $analyticTitle, user: $user)';
+  final _this = this as OperationListItem;
+  return 'OperationListItem(operation: ${_this.operation}, accountTitle: ${_this.accountTitle}, analyticTitle: ${_this.analyticTitle}, user: ${_this.user})';
 }
 
 
@@ -63,7 +69,7 @@ class _$OperationListItemCopyWithImpl<$Res>
 /// Create a copy of OperationListItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? operation = null,Object? accountTitle = null,Object? analyticTitle = null,Object? user = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(OperationListItem(
 operation: null == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation,accountTitle: null == accountTitle ? _self.accountTitle : accountTitle // ignore: cast_nullable_to_non_nullable
 as String,analyticTitle: null == analyticTitle ? _self.analyticTitle : analyticTitle // ignore: cast_nullable_to_non_nullable
@@ -248,16 +254,18 @@ _$OperationListItemCopyWith<_OperationListItem> get copyWith => __$OperationList
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationListItem&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.analyticTitle, analyticTitle) || other.analyticTitle == analyticTitle)&&(identical(other.user, user) || other.user == user));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationListItem&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.analyticTitle, analyticTitle) || other.analyticTitle == analyticTitle)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,accountTitle,analyticTitle,user);
+int get hashCode {
+    return Object.hash(runtimeType,operation,accountTitle,analyticTitle,user);
+}
 
 @override
 String toString() {
-  return 'OperationListItem(operation: $operation, accountTitle: $accountTitle, analyticTitle: $analyticTitle, user: $user)';
+    return 'OperationListItem(operation: $operation, accountTitle: $accountTitle, analyticTitle: $analyticTitle, user: $user)';
 }
 
 

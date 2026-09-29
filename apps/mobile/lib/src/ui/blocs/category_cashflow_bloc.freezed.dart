@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category_cashflow_bloc.dart';
@@ -9,6 +9,7 @@ part of 'category_cashflow_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CategoryCashflowEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashflowEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashflowEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CategoryCashflowEvent()';
+    return 'CategoryCashflowEvent()';
 }
 
 
@@ -181,7 +182,7 @@ return changeCategories(_that.categories);case _:
 
 
 class _ChangeCategoryCashFlowEvent implements CategoryCashflowEvent {
-  const _ChangeCategoryCashFlowEvent({required final  List<CategoryCashFlow> cashFlows}): _cashFlows = cashFlows;
+  const _ChangeCategoryCashFlowEvent({required  List<CategoryCashFlow> cashFlows}): _cashFlows = cashFlows;
   
 
  final  List<CategoryCashFlow> _cashFlows;
@@ -202,16 +203,18 @@ _$ChangeCategoryCashFlowEventCopyWith<_ChangeCategoryCashFlowEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCashFlowEvent&&const DeepCollectionEquality().equals(other._cashFlows, _cashFlows));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCashFlowEvent&&const DeepCollectionEquality().equals(other.cashFlows, _cashFlows));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashFlows));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashFlows));
+}
 
 @override
 String toString() {
-  return 'CategoryCashflowEvent.change(cashFlows: $cashFlows)';
+    return 'CategoryCashflowEvent.change(cashFlows: $cashFlows)';
 }
 
 
@@ -253,7 +256,7 @@ as List<CategoryCashFlow>,
 
 
 class _ChangeCategoriesCategoryCashflowEvent implements CategoryCashflowEvent {
-  const _ChangeCategoriesCategoryCashflowEvent({required final  List<Category> categories}): _categories = categories;
+  const _ChangeCategoriesCategoryCashflowEvent({required  List<Category> categories}): _categories = categories;
   
 
  final  List<Category> _categories;
@@ -274,16 +277,18 @@ _$ChangeCategoriesCategoryCashflowEventCopyWith<_ChangeCategoriesCategoryCashflo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoriesCategoryCashflowEvent&&const DeepCollectionEquality().equals(other._categories, _categories));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoriesCategoryCashflowEvent&&const DeepCollectionEquality().equals(other.categories, _categories));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories));
+}
 
 @override
 String toString() {
-  return 'CategoryCashflowEvent.changeCategories(categories: $categories)';
+    return 'CategoryCashflowEvent.changeCategories(categories: $categories)';
 }
 
 
@@ -335,16 +340,21 @@ $CategoryCashflowStateCopyWith<CategoryCashflowState> get copyWith => _$Category
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashflowState&&const DeepCollectionEquality().equals(other.cashflows, cashflows)&&const DeepCollectionEquality().equals(other.categories, categories));
+  final _this = this as CategoryCashflowState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashflowState&&const DeepCollectionEquality().equals(other.cashflows, _this.cashflows)&&const DeepCollectionEquality().equals(other.categories, _this.categories));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(cashflows),const DeepCollectionEquality().hash(categories));
+int get hashCode {
+  final _this = this as CategoryCashflowState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.cashflows),const DeepCollectionEquality().hash(_this.categories));
+}
 
 @override
 String toString() {
-  return 'CategoryCashflowState(cashflows: $cashflows, categories: $categories)';
+  final _this = this as CategoryCashflowState;
+  return 'CategoryCashflowState(cashflows: ${_this.cashflows}, categories: ${_this.categories})';
 }
 
 
@@ -373,7 +383,7 @@ class _$CategoryCashflowStateCopyWithImpl<$Res>
 /// Create a copy of CategoryCashflowState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? cashflows = null,Object? categories = null,}) {
-  return _then(_self.copyWith(
+  return _then(CategoryCashflowState(
 cashflows: null == cashflows ? _self.cashflows : cashflows // ignore: cast_nullable_to_non_nullable
 as List<CategoryCashFlow>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<Category>,
@@ -511,7 +521,7 @@ return $default(_that.cashflows,_that.categories);case _:
 
 
 class _CategoryCashflowState extends CategoryCashflowState {
-  const _CategoryCashflowState({required final  List<CategoryCashFlow> cashflows, required final  List<Category> categories}): _cashflows = cashflows,_categories = categories,super._();
+  const _CategoryCashflowState({required  List<CategoryCashFlow> cashflows, required  List<Category> categories}): _cashflows = cashflows,_categories = categories,super._();
   
 
  final  List<CategoryCashFlow> _cashflows;
@@ -539,16 +549,18 @@ _$CategoryCashflowStateCopyWith<_CategoryCashflowState> get copyWith => __$Categ
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashflowState&&const DeepCollectionEquality().equals(other._cashflows, _cashflows)&&const DeepCollectionEquality().equals(other._categories, _categories));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashflowState&&const DeepCollectionEquality().equals(other.cashflows, _cashflows)&&const DeepCollectionEquality().equals(other.categories, _categories));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashflows),const DeepCollectionEquality().hash(_categories));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_cashflows),const DeepCollectionEquality().hash(_categories));
+}
 
 @override
 String toString() {
-  return 'CategoryCashflowState(cashflows: $cashflows, categories: $categories)';
+    return 'CategoryCashflowState(cashflows: $cashflows, categories: $categories)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cloud_account.dart';
@@ -9,6 +9,7 @@ part of 'cloud_account.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CloudAccountCopyWith<CloudAccount> get copyWith => _$CloudAccountCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudAccount&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.userGoogleId, userGoogleId) || other.userGoogleId == userGoogleId));
+  final _this = this as CloudAccount;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudAccount&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.isDebt, _this.isDebt) || other.isDebt == _this.isDebt)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.userGoogleId, _this.userGoogleId) || other.userGoogleId == _this.userGoogleId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isDebt,deleted,userGoogleId);
+int get hashCode {
+  final _this = this as CloudAccount;
+  return Object.hash(runtimeType,_this.id,_this.title,_this.isDebt,_this.deleted,_this.userGoogleId);
+}
 
 @override
 String toString() {
-  return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, deleted: $deleted, userGoogleId: $userGoogleId)';
+  final _this = this as CloudAccount;
+  return 'CloudAccount(id: ${_this.id}, title: ${_this.title}, isDebt: ${_this.isDebt}, deleted: ${_this.deleted}, userGoogleId: ${_this.userGoogleId})';
 }
 
 
@@ -63,7 +69,7 @@ class _$CloudAccountCopyWithImpl<$Res>
 /// Create a copy of CloudAccount
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? isDebt = null,Object? deleted = null,Object? userGoogleId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CloudAccount(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDebt: null == isDebt ? _self.isDebt : isDebt // ignore: cast_nullable_to_non_nullable
@@ -229,16 +235,18 @@ _$CloudAccountCopyWith<_CloudAccount> get copyWith => __$CloudAccountCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudAccount&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.userGoogleId, userGoogleId) || other.userGoogleId == userGoogleId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudAccount&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.userGoogleId, userGoogleId) || other.userGoogleId == userGoogleId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isDebt,deleted,userGoogleId);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,isDebt,deleted,userGoogleId);
+}
 
 @override
 String toString() {
-  return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, deleted: $deleted, userGoogleId: $userGoogleId)';
+    return 'CloudAccount(id: $id, title: $title, isDebt: $isDebt, deleted: $deleted, userGoogleId: $userGoogleId)';
 }
 
 

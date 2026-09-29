@@ -5,7 +5,7 @@ class Dimensions {
 }
 
 const Color _primaryColor = Color(0xFF236F57);
-const Color _accentColor = Color(0xFFF15931);
+// const Color _accentColor = Color(0xFFF15931);
 
 ThemeData theme() {
   return ThemeData(

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:finance_api_client/finance_api_client.dart';
-import 'package:finance_api_client/models/models.dart';
+// import 'package:finance_api_client/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     imageUrl: user!.photoURL!,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
-                        Text(user?.displayName ?? 'Пользователь'.substring(0, 1).toUpperCase()),
+                        Text(user.displayName ?? 'Пользователь'.substring(0, 1).toUpperCase()),
                   ),
                 ),
               ),

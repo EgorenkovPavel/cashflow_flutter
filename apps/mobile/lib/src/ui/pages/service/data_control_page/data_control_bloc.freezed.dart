@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'data_control_bloc.dart';
@@ -9,6 +9,7 @@ part of 'data_control_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$DataControlEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DataControlEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DataControlEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlEvent()';
+    return 'DataControlEvent()';
 }
 
 
@@ -185,7 +186,7 @@ class _DeleteAllDataControlEvent implements DataControlEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteAllDataControlEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteAllDataControlEvent);
 }
 
 
@@ -194,7 +195,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlEvent.deleteAll()';
+    return 'DataControlEvent.deleteAll()';
 }
 
 
@@ -212,7 +213,7 @@ mixin _$DataControlState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DataControlState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DataControlState);
 }
 
 
@@ -221,7 +222,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlState()';
+    return 'DataControlState()';
 }
 
 
@@ -389,7 +390,7 @@ class _InitialDataControlState extends DataControlState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitialDataControlState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitialDataControlState);
 }
 
 
@@ -398,7 +399,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlState.initial()';
+    return 'DataControlState.initial()';
 }
 
 
@@ -421,7 +422,7 @@ class _InProgressDataControlState extends DataControlState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDataControlState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDataControlState);
 }
 
 
@@ -430,7 +431,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlState.inProgress()';
+    return 'DataControlState.inProgress()';
 }
 
 
@@ -453,7 +454,7 @@ class _SuccessDataControlState extends DataControlState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessDataControlState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessDataControlState);
 }
 
 
@@ -462,7 +463,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DataControlState.success()';
+    return 'DataControlState.success()';
 }
 
 

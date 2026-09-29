@@ -10,7 +10,7 @@ class ReportsBloc extends Cubit<ReportsState> {
 
   ReportsBloc() : super(InProgress());
 
-  Future getCashflow(int year) async {
+  void getCashflow(int year) {
     emit(Data());
   }
 }

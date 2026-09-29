@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'sync_bloc.dart';
@@ -9,6 +9,7 @@ part of 'sync_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent()';
+    return 'SyncEvent()';
 }
 
 
@@ -245,7 +246,7 @@ class _CreateCloudDatabaseSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCloudDatabaseSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCloudDatabaseSyncEvent);
 }
 
 
@@ -254,7 +255,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.createCloudDatabase()';
+    return 'SyncEvent.createCloudDatabase()';
 }
 
 
@@ -277,7 +278,7 @@ class _RefreshConnectionSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RefreshConnectionSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RefreshConnectionSyncEvent);
 }
 
 
@@ -286,7 +287,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.refreshConnection()';
+    return 'SyncEvent.refreshConnection()';
 }
 
 
@@ -309,7 +310,7 @@ class _SyncNowSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncNowSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncNowSyncEvent);
 }
 
 
@@ -318,7 +319,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.syncNow()';
+    return 'SyncEvent.syncNow()';
 }
 
 
@@ -341,7 +342,7 @@ class _SyncLastDaySyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLastDaySyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLastDaySyncEvent);
 }
 
 
@@ -350,7 +351,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.syncLastDay()';
+    return 'SyncEvent.syncLastDay()';
 }
 
 
@@ -373,7 +374,7 @@ class _SyncLastMonthSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLastMonthSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLastMonthSyncEvent);
 }
 
 
@@ -382,7 +383,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.syncLastMonth()';
+    return 'SyncEvent.syncLastMonth()';
 }
 
 
@@ -405,7 +406,7 @@ class _SyncAllSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncAllSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncAllSyncEvent);
 }
 
 
@@ -414,7 +415,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.syncAll()';
+    return 'SyncEvent.syncAll()';
 }
 
 
@@ -442,16 +443,18 @@ _$AddUserSyncEventCopyWith<_AddUserSyncEvent> get copyWith => __$AddUserSyncEven
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddUserSyncEvent&&(identical(other.user, user) || other.user == user));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddUserSyncEvent&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user);
+int get hashCode {
+    return Object.hash(runtimeType,user);
+}
 
 @override
 String toString() {
-  return 'SyncEvent.addUser(user: $user)';
+    return 'SyncEvent.addUser(user: $user)';
 }
 
 
@@ -512,7 +515,7 @@ class _AuthProgressSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthProgressSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthProgressSyncEvent);
 }
 
 
@@ -521,7 +524,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.authProgress()';
+    return 'SyncEvent.authProgress()';
 }
 
 
@@ -549,16 +552,18 @@ _$AuthAuthenticatedSyncEventCopyWith<_AuthAuthenticatedSyncEvent> get copyWith =
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthAuthenticatedSyncEvent&&(identical(other.user, user) || other.user == user));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthAuthenticatedSyncEvent&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user);
+int get hashCode {
+    return Object.hash(runtimeType,user);
+}
 
 @override
 String toString() {
-  return 'SyncEvent.authAuthenticated(user: $user)';
+    return 'SyncEvent.authAuthenticated(user: $user)';
 }
 
 
@@ -619,7 +624,7 @@ class _NotAuthSyncEvent extends SyncEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotAuthSyncEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotAuthSyncEvent);
 }
 
 
@@ -628,7 +633,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncEvent.notAuth()';
+    return 'SyncEvent.notAuth()';
 }
 
 
@@ -656,16 +661,18 @@ _$SyncDataSyncEventCopyWith<_SyncDataSyncEvent> get copyWith => __$SyncDataSyncE
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncDataSyncEvent&&(identical(other.syncDate, syncDate) || other.syncDate == syncDate));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncDataSyncEvent&&(identical(other.syncDate, syncDate) || other.syncDate == syncDate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,syncDate);
+int get hashCode {
+    return Object.hash(runtimeType,syncDate);
+}
 
 @override
 String toString() {
-  return 'SyncEvent.syncData(syncDate: $syncDate)';
+    return 'SyncEvent.syncData(syncDate: $syncDate)';
 }
 
 
@@ -712,7 +719,7 @@ mixin _$SyncState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncState);
 }
 
 
@@ -721,7 +728,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncState()';
+    return 'SyncState()';
 }
 
 
@@ -913,7 +920,7 @@ class _NoDBSyncState extends SyncState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NoDBSyncState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NoDBSyncState);
 }
 
 
@@ -922,7 +929,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncState.noDB()';
+    return 'SyncState.noDB()';
 }
 
 
@@ -950,16 +957,18 @@ _$NotSyncedSyncStateCopyWith<_NotSyncedSyncState> get copyWith => __$NotSyncedSy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotSyncedSyncState&&(identical(other.message, message) || other.message == message));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotSyncedSyncState&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message);
+int get hashCode {
+    return Object.hash(runtimeType,message);
+}
 
 @override
 String toString() {
-  return 'SyncState.notSynced(message: $message)';
+    return 'SyncState.notSynced(message: $message)';
 }
 
 
@@ -1018,16 +1027,18 @@ _$LoadingToCloudSyncStateCopyWith<_LoadingToCloudSyncState> get copyWith => __$L
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingToCloudSyncState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingToCloudSyncState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+int get hashCode {
+    return Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+}
 
 @override
 String toString() {
-  return 'SyncState.loadingToCloud(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
+    return 'SyncState.loadingToCloud(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
 }
 
 
@@ -1088,16 +1099,18 @@ _$LoadingFromCloudSyncStateCopyWith<_LoadingFromCloudSyncState> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingFromCloudSyncState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingFromCloudSyncState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+int get hashCode {
+    return Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+}
 
 @override
 String toString() {
-  return 'SyncState.loadingFromCloud(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
+    return 'SyncState.loadingFromCloud(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
 }
 
 
@@ -1157,16 +1170,18 @@ _$SyncedSyncStateCopyWith<_SyncedSyncState> get copyWith => __$SyncedSyncStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncedSyncState&&(identical(other.syncDate, syncDate) || other.syncDate == syncDate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncedSyncState&&(identical(other.syncDate, syncDate) || other.syncDate == syncDate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,syncDate,isAdmin);
+int get hashCode {
+    return Object.hash(runtimeType,syncDate,isAdmin);
+}
 
 @override
 String toString() {
-  return 'SyncState.synced(syncDate: $syncDate, isAdmin: $isAdmin)';
+    return 'SyncState.synced(syncDate: $syncDate, isAdmin: $isAdmin)';
 }
 
 
@@ -1219,7 +1234,7 @@ class _FailureSyncState extends SyncState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureSyncState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureSyncState);
 }
 
 
@@ -1228,7 +1243,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncState.failure()';
+    return 'SyncState.failure()';
 }
 
 
@@ -1251,7 +1266,7 @@ class _InProgressSyncState extends SyncState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressSyncState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressSyncState);
 }
 
 
@@ -1260,7 +1275,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SyncState.inProgress()';
+    return 'SyncState.inProgress()';
 }
 
 

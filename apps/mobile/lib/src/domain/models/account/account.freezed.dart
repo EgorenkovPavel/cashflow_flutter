@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account.dart';
@@ -9,6 +9,7 @@ part of 'account.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $BaseAccountCopyWith<BaseAccount> get copyWith => _$BaseAccountCopyWithImpl<Base
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseAccount&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+  final _this = this as BaseAccount;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseAccount&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.cloudId, _this.cloudId) || other.cloudId == _this.cloudId)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.userId, _this.userId) || other.userId == _this.userId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,title,userId);
+int get hashCode {
+  final _this = this as BaseAccount;
+  return Object.hash(runtimeType,_this.id,_this.cloudId,_this.title,_this.userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccount(id: $id, cloudId: $cloudId, title: $title, userId: $userId)';
+  final _this = this as BaseAccount;
+  return 'BaseAccount(id: ${_this.id}, cloudId: ${_this.cloudId}, title: ${_this.title}, userId: ${_this.userId})';
 }
 
 
@@ -227,16 +233,18 @@ $AccountCopyWith<Account> get copyWith => _$AccountCopyWithImpl<Account>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Account&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is Account&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,title,userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccount.account(id: $id, cloudId: $cloudId, title: $title, userId: $userId)';
+    return 'BaseAccount.account(id: $id, cloudId: $cloudId, title: $title, userId: $userId)';
 }
 
 
@@ -299,16 +307,18 @@ $DebtCopyWith<Debt> get copyWith => _$DebtCopyWithImpl<Debt>(this, _$identity);
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Debt&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is Debt&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,title,userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccount.debt(id: $id, cloudId: $cloudId, title: $title, userId: $userId)';
+    return 'BaseAccount.debt(id: $id, cloudId: $cloudId, title: $title, userId: $userId)';
 }
 
 

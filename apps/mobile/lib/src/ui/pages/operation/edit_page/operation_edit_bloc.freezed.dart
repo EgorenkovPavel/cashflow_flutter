@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_edit_bloc.dart';
@@ -9,6 +9,7 @@ part of 'operation_edit_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$OperationEditEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OperationEditEvent()';
+    return 'OperationEditEvent()';
 }
 
 
@@ -256,16 +257,18 @@ _$FetchOperationEditEventCopyWith<_FetchOperationEditEvent> get copyWith => __$F
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationEditEvent&&(identical(other.operationId, operationId) || other.operationId == operationId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationEditEvent&&(identical(other.operationId, operationId) || other.operationId == operationId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operationId);
+int get hashCode {
+    return Object.hash(runtimeType,operationId);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.fetch(operationId: $operationId)';
+    return 'OperationEditEvent.fetch(operationId: $operationId)';
 }
 
 
@@ -322,16 +325,18 @@ _$ChangeDateOperationEditEventCopyWith<_ChangeDateOperationEditEvent> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeDateOperationEditEvent&&(identical(other.date, date) || other.date == date));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeDateOperationEditEvent&&(identical(other.date, date) || other.date == date));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,date);
+int get hashCode {
+    return Object.hash(runtimeType,date);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeDate(date: $date)';
+    return 'OperationEditEvent.changeDate(date: $date)';
 }
 
 
@@ -388,16 +393,18 @@ _$ChangeTimeOperationEditEventCopyWith<_ChangeTimeOperationEditEvent> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTimeOperationEditEvent&&(identical(other.time, time) || other.time == time));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTimeOperationEditEvent&&(identical(other.time, time) || other.time == time));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,time);
+int get hashCode {
+    return Object.hash(runtimeType,time);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeTime(time: $time)';
+    return 'OperationEditEvent.changeTime(time: $time)';
 }
 
 
@@ -454,16 +461,18 @@ _$ChangeOperationTypeOperationEditEventCopyWith<_ChangeOperationTypeOperationEdi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationTypeOperationEditEvent&&(identical(other.operationType, operationType) || other.operationType == operationType));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationTypeOperationEditEvent&&(identical(other.operationType, operationType) || other.operationType == operationType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operationType);
+int get hashCode {
+    return Object.hash(runtimeType,operationType);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeOperationType(operationType: $operationType)';
+    return 'OperationEditEvent.changeOperationType(operationType: $operationType)';
 }
 
 
@@ -520,16 +529,18 @@ _$ChangeAccountOperationEditEventCopyWith<_ChangeAccountOperationEditEvent> get 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeAccountOperationEditEvent&&(identical(other.account, account) || other.account == account));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeAccountOperationEditEvent&&(identical(other.account, account) || other.account == account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,account);
+int get hashCode {
+    return Object.hash(runtimeType,account);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeAccount(account: $account)';
+    return 'OperationEditEvent.changeAccount(account: $account)';
 }
 
 
@@ -595,16 +606,18 @@ _$ChangeCategoryOperationEditEventCopyWith<_ChangeCategoryOperationEditEvent> ge
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryOperationEditEvent&&(identical(other.category, category) || other.category == category));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryOperationEditEvent&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category);
+int get hashCode {
+    return Object.hash(runtimeType,category);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeCategory(category: $category)';
+    return 'OperationEditEvent.changeCategory(category: $category)';
 }
 
 
@@ -670,16 +683,18 @@ _$ChangeRecAccountOperationEditEventCopyWith<_ChangeRecAccountOperationEditEvent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecAccountOperationEditEvent&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecAccountOperationEditEvent&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recAccount);
+int get hashCode {
+    return Object.hash(runtimeType,recAccount);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeRecAccount(recAccount: $recAccount)';
+    return 'OperationEditEvent.changeRecAccount(recAccount: $recAccount)';
 }
 
 
@@ -745,16 +760,18 @@ _$ChangeSumOperationEditEventCopyWith<_ChangeSumOperationEditEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sum);
+int get hashCode {
+    return Object.hash(runtimeType,sum);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeSum(sum: $sum)';
+    return 'OperationEditEvent.changeSum(sum: $sum)';
 }
 
 
@@ -811,16 +828,18 @@ _$ChangeRecSumOperationEditEventCopyWith<_ChangeRecSumOperationEditEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecSumOperationEditEvent&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sum);
+int get hashCode {
+    return Object.hash(runtimeType,sum);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeRecSum(sum: $sum)';
+    return 'OperationEditEvent.changeRecSum(sum: $sum)';
 }
 
 
@@ -877,16 +896,18 @@ _$ChangeCurrencyOperationEditEventCopyWith<_ChangeCurrencyOperationEditEvent> ge
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currency);
+int get hashCode {
+    return Object.hash(runtimeType,currency);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeCurrency(currency: $currency)';
+    return 'OperationEditEvent.changeCurrency(currency: $currency)';
 }
 
 
@@ -943,16 +964,18 @@ _$ChangeRecCurrencyOperationEditEventCopyWith<_ChangeRecCurrencyOperationEditEve
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeRecCurrencyOperationEditEvent&&(identical(other.currency, currency) || other.currency == currency));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currency);
+int get hashCode {
+    return Object.hash(runtimeType,currency);
+}
 
 @override
 String toString() {
-  return 'OperationEditEvent.changeRecCurrency(currency: $currency)';
+    return 'OperationEditEvent.changeRecCurrency(currency: $currency)';
 }
 
 
@@ -1004,7 +1027,7 @@ class _SaveOperationEditEvent implements OperationEditEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveOperationEditEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveOperationEditEvent);
 }
 
 
@@ -1013,7 +1036,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OperationEditEvent.save()';
+    return 'OperationEditEvent.save()';
 }
 
 
@@ -1036,16 +1059,21 @@ $OperationEditStateCopyWith<OperationEditState> get copyWith => _$OperationEditS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditState&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  final _this = this as OperationEditState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationEditState&&(identical(other.operation, _this.operation) || other.operation == _this.operation)&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.time, _this.time) || other.time == _this.time)&&(identical(other.operationType, _this.operationType) || other.operationType == _this.operationType)&&(identical(other.accountId, _this.accountId) || other.accountId == _this.accountId)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.recAccountId, _this.recAccountId) || other.recAccountId == _this.recAccountId)&&(identical(other.sum, _this.sum) || other.sum == _this.sum)&&(identical(other.recSum, _this.recSum) || other.recSum == _this.recSum)&&(identical(other.isSaved, _this.isSaved) || other.isSaved == _this.isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,date,time,operationType,accountId,categoryId,recAccountId,sum,recSum,isSaved);
+int get hashCode {
+  final _this = this as OperationEditState;
+  return Object.hash(runtimeType,_this.operation,_this.date,_this.time,_this.operationType,_this.accountId,_this.categoryId,_this.recAccountId,_this.sum,_this.recSum,_this.isSaved);
+}
 
 @override
 String toString() {
-  return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
+  final _this = this as OperationEditState;
+  return 'OperationEditState(operation: ${_this.operation}, date: ${_this.date}, time: ${_this.time}, operationType: ${_this.operationType}, accountId: ${_this.accountId}, categoryId: ${_this.categoryId}, recAccountId: ${_this.recAccountId}, sum: ${_this.sum}, recSum: ${_this.recSum}, isSaved: ${_this.isSaved})';
 }
 
 
@@ -1074,7 +1102,7 @@ class _$OperationEditStateCopyWithImpl<$Res>
 /// Create a copy of OperationEditState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? operation = freezed,Object? date = null,Object? time = null,Object? operationType = null,Object? accountId = freezed,Object? categoryId = freezed,Object? recAccountId = freezed,Object? sum = null,Object? recSum = null,Object? isSaved = null,}) {
-  return _then(_self.copyWith(
+  return _then(OperationEditState(
 operation: freezed == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as Operation?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
@@ -1280,16 +1308,18 @@ _$OperationEditStateCopyWith<_OperationEditState> get copyWith => __$OperationEd
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationEditState&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationEditState&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time)&&(identical(other.operationType, operationType) || other.operationType == operationType)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.recAccountId, recAccountId) || other.recAccountId == recAccountId)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,date,time,operationType,accountId,categoryId,recAccountId,sum,recSum,isSaved);
+int get hashCode {
+    return Object.hash(runtimeType,operation,date,time,operationType,accountId,categoryId,recAccountId,sum,recSum,isSaved);
+}
 
 @override
 String toString() {
-  return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
+    return 'OperationEditState(operation: $operation, date: $date, time: $time, operationType: $operationType, accountId: $accountId, categoryId: $categoryId, recAccountId: $recAccountId, sum: $sum, recSum: $recSum, isSaved: $isSaved)';
 }
 
 

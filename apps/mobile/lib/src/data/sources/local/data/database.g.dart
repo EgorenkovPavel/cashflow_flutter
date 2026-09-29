@@ -2766,20 +2766,18 @@ abstract class _$Database extends GeneratedDatabase {
   ];
 }
 
-typedef $$UsersTableCreateCompanionBuilder =
-    UsersCompanion Function({
-      Value<int> id,
-      required String googleId,
-      required String name,
-      required String photo,
-    });
-typedef $$UsersTableUpdateCompanionBuilder =
-    UsersCompanion Function({
-      Value<int> id,
-      Value<String> googleId,
-      Value<String> name,
-      Value<String> photo,
-    });
+typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
+  Value<int> id,
+  required String googleId,
+  required String name,
+  required String photo,
+});
+typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
+  Value<int> id,
+  Value<String> googleId,
+  Value<String> name,
+  Value<String> photo,
+});
 
 final class $$UsersTableReferences
     extends BaseReferences<_$Database, $UsersTable, UserDB> {
@@ -2788,7 +2786,7 @@ final class $$UsersTableReferences
   static MultiTypedResultKey<$AccountsTable, List<AccountDB>>
   _accountsRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.accounts,
-    aliasName: $_aliasNameGenerator(db.users.id, db.accounts.user),
+    aliasName: 'users__id__accounts__user',
   );
 
   $$AccountsTableProcessedTableManager get accountsRefs {
@@ -3029,31 +3027,29 @@ typedef $$UsersTableProcessedTableManager =
       UserDB,
       PrefetchHooks Function({bool accountsRefs})
     >;
-typedef $$AccountsTableCreateCompanionBuilder =
-    AccountsCompanion Function({
-      Value<int> id,
-      required String cloudId,
-      required String title,
-      Value<bool> isDebt,
-      Value<bool> synced,
-      Value<int?> user,
-    });
-typedef $$AccountsTableUpdateCompanionBuilder =
-    AccountsCompanion Function({
-      Value<int> id,
-      Value<String> cloudId,
-      Value<String> title,
-      Value<bool> isDebt,
-      Value<bool> synced,
-      Value<int?> user,
-    });
+typedef $$AccountsTableCreateCompanionBuilder = AccountsCompanion Function({
+  Value<int> id,
+  required String cloudId,
+  required String title,
+  Value<bool> isDebt,
+  Value<bool> synced,
+  Value<int?> user,
+});
+typedef $$AccountsTableUpdateCompanionBuilder = AccountsCompanion Function({
+  Value<int> id,
+  Value<String> cloudId,
+  Value<String> title,
+  Value<bool> isDebt,
+  Value<bool> synced,
+  Value<int?> user,
+});
 
 final class $$AccountsTableReferences
     extends BaseReferences<_$Database, $AccountsTable, AccountDB> {
   $$AccountsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $UsersTable _userTable(_$Database db) =>
-      db.users.createAlias($_aliasNameGenerator(db.accounts.user, db.users.id));
+      db.users.createAlias('accounts__user__users__id');
 
   $$UsersTableProcessedTableManager? get user {
     final $_column = $_itemColumn<int>('user');
@@ -3072,7 +3068,7 @@ final class $$AccountsTableReferences
   static MultiTypedResultKey<$BalancesTable, List<BalanceDB>>
   _balancesRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.balances,
-    aliasName: $_aliasNameGenerator(db.accounts.id, db.balances.account),
+    aliasName: 'accounts__id__balance__account',
   );
 
   $$BalancesTableProcessedTableManager get balancesRefs {
@@ -3389,17 +3385,16 @@ class $$AccountsTableTableManager
                     >
                   >(state) {
                     if (user) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.user,
-                                referencedTable: $$AccountsTableReferences
-                                    ._userTable(db),
-                                referencedColumn: $$AccountsTableReferences
-                                    ._userTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.user,
+                        referencedTable: $$AccountsTableReferences._userTable(
+                          db,
+                        ),
+                        referencedColumn: $$AccountsTableReferences
+                            ._userTable(db)
+                            .id,
+                      ) as T;
                     }
 
                     return state;
@@ -3443,39 +3438,35 @@ typedef $$AccountsTableProcessedTableManager =
       AccountDB,
       PrefetchHooks Function({bool user, bool balancesRefs})
     >;
-typedef $$CategoriesTableCreateCompanionBuilder =
-    CategoriesCompanion Function({
-      Value<int> id,
-      required String cloudId,
-      required String title,
-      required CategoryType operationType,
-      required BudgetType budgetType,
-      required int budget,
-      Value<bool> synced,
-      Value<bool> isGroup,
-      Value<int?> parent,
-    });
-typedef $$CategoriesTableUpdateCompanionBuilder =
-    CategoriesCompanion Function({
-      Value<int> id,
-      Value<String> cloudId,
-      Value<String> title,
-      Value<CategoryType> operationType,
-      Value<BudgetType> budgetType,
-      Value<int> budget,
-      Value<bool> synced,
-      Value<bool> isGroup,
-      Value<int?> parent,
-    });
+typedef $$CategoriesTableCreateCompanionBuilder = CategoriesCompanion Function({
+  Value<int> id,
+  required String cloudId,
+  required String title,
+  required CategoryType operationType,
+  required BudgetType budgetType,
+  required int budget,
+  Value<bool> synced,
+  Value<bool> isGroup,
+  Value<int?> parent,
+});
+typedef $$CategoriesTableUpdateCompanionBuilder = CategoriesCompanion Function({
+  Value<int> id,
+  Value<String> cloudId,
+  Value<String> title,
+  Value<CategoryType> operationType,
+  Value<BudgetType> budgetType,
+  Value<int> budget,
+  Value<bool> synced,
+  Value<bool> isGroup,
+  Value<int?> parent,
+});
 
 final class $$CategoriesTableReferences
     extends BaseReferences<_$Database, $CategoriesTable, CategoryDB> {
   $$CategoriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $CategoriesTable _parentTable(_$Database db) =>
-      db.categories.createAlias(
-        $_aliasNameGenerator(db.categories.parent, db.categories.id),
-      );
+      db.categories.createAlias('categories__parent__categories__id');
 
   $$CategoriesTableProcessedTableManager? get parent {
     final $_column = $_itemColumn<int>('parent');
@@ -3494,7 +3485,7 @@ final class $$CategoriesTableReferences
   static MultiTypedResultKey<$OperationsTable, List<OperationDB>>
   _operationsRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.operations,
-    aliasName: $_aliasNameGenerator(db.categories.id, db.operations.category),
+    aliasName: 'categories__id__operations__category',
   );
 
   $$OperationsTableProcessedTableManager get operationsRefs {
@@ -3512,7 +3503,7 @@ final class $$CategoriesTableReferences
   static MultiTypedResultKey<$CashflowsTable, List<CashflowDB>>
   _cashflowsRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.cashflows,
-    aliasName: $_aliasNameGenerator(db.categories.id, db.cashflows.category),
+    aliasName: 'categories__id__cashflow__category',
   );
 
   $$CashflowsTableProcessedTableManager get cashflowsRefs {
@@ -3950,18 +3941,15 @@ class $$CategoriesTableTableManager
                         >
                       >(state) {
                         if (parent) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.parent,
-                                    referencedTable: $$CategoriesTableReferences
-                                        ._parentTable(db),
-                                    referencedColumn:
-                                        $$CategoriesTableReferences
-                                            ._parentTable(db)
-                                            .id,
-                                  )
-                                  as T;
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.parent,
+                            referencedTable: $$CategoriesTableReferences
+                                ._parentTable(db),
+                            referencedColumn: $$CategoriesTableReferences
+                                ._parentTable(db)
+                                .id,
+                          ) as T;
                         }
 
                         return state;
@@ -4036,46 +4024,43 @@ typedef $$CategoriesTableProcessedTableManager =
         bool cashflowsRefs,
       })
     >;
-typedef $$OperationsTableCreateCompanionBuilder =
-    OperationsCompanion Function({
-      Value<int> id,
-      required String cloudId,
-      required DateTime date,
-      required OperationType operationType,
-      required int account,
-      Value<int?> category,
-      Value<int?> recAccount,
-      required int sum,
-      Value<int> recSum,
-      Value<bool> synced,
-      Value<bool> deleted,
-      Value<Currency> currencySent,
-      Value<Currency> currencyReceived,
-    });
-typedef $$OperationsTableUpdateCompanionBuilder =
-    OperationsCompanion Function({
-      Value<int> id,
-      Value<String> cloudId,
-      Value<DateTime> date,
-      Value<OperationType> operationType,
-      Value<int> account,
-      Value<int?> category,
-      Value<int?> recAccount,
-      Value<int> sum,
-      Value<int> recSum,
-      Value<bool> synced,
-      Value<bool> deleted,
-      Value<Currency> currencySent,
-      Value<Currency> currencyReceived,
-    });
+typedef $$OperationsTableCreateCompanionBuilder = OperationsCompanion Function({
+  Value<int> id,
+  required String cloudId,
+  required DateTime date,
+  required OperationType operationType,
+  required int account,
+  Value<int?> category,
+  Value<int?> recAccount,
+  required int sum,
+  Value<int> recSum,
+  Value<bool> synced,
+  Value<bool> deleted,
+  Value<Currency> currencySent,
+  Value<Currency> currencyReceived,
+});
+typedef $$OperationsTableUpdateCompanionBuilder = OperationsCompanion Function({
+  Value<int> id,
+  Value<String> cloudId,
+  Value<DateTime> date,
+  Value<OperationType> operationType,
+  Value<int> account,
+  Value<int?> category,
+  Value<int?> recAccount,
+  Value<int> sum,
+  Value<int> recSum,
+  Value<bool> synced,
+  Value<bool> deleted,
+  Value<Currency> currencySent,
+  Value<Currency> currencyReceived,
+});
 
 final class $$OperationsTableReferences
     extends BaseReferences<_$Database, $OperationsTable, OperationDB> {
   $$OperationsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $AccountsTable _accountTable(_$Database db) => db.accounts.createAlias(
-    $_aliasNameGenerator(db.operations.account, db.accounts.id),
-  );
+  static $AccountsTable _accountTable(_$Database db) =>
+      db.accounts.createAlias('operations__account__accounts__id');
 
   $$AccountsTableProcessedTableManager get account {
     final $_column = $_itemColumn<int>('account')!;
@@ -4092,9 +4077,7 @@ final class $$OperationsTableReferences
   }
 
   static $CategoriesTable _categoryTable(_$Database db) =>
-      db.categories.createAlias(
-        $_aliasNameGenerator(db.operations.category, db.categories.id),
-      );
+      db.categories.createAlias('operations__category__categories__id');
 
   $$CategoriesTableProcessedTableManager? get category {
     final $_column = $_itemColumn<int>('category');
@@ -4111,9 +4094,7 @@ final class $$OperationsTableReferences
   }
 
   static $AccountsTable _recAccountTable(_$Database db) =>
-      db.accounts.createAlias(
-        $_aliasNameGenerator(db.operations.recAccount, db.accounts.id),
-      );
+      db.accounts.createAlias('operations__rec_account__accounts__id');
 
   $$AccountsTableProcessedTableManager? get recAccount {
     final $_column = $_itemColumn<int>('rec_account');
@@ -4132,7 +4113,7 @@ final class $$OperationsTableReferences
   static MultiTypedResultKey<$BalancesTable, List<BalanceDB>>
   _balancesRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.balances,
-    aliasName: $_aliasNameGenerator(db.operations.id, db.balances.operation),
+    aliasName: 'operations__id__balance__operation',
   );
 
   $$BalancesTableProcessedTableManager get balancesRefs {
@@ -4150,7 +4131,7 @@ final class $$OperationsTableReferences
   static MultiTypedResultKey<$CashflowsTable, List<CashflowDB>>
   _cashflowsRefsTable(_$Database db) => MultiTypedResultKey.fromTable(
     db.cashflows,
-    aliasName: $_aliasNameGenerator(db.operations.id, db.cashflows.operation),
+    aliasName: 'operations__id__cashflow__operation',
   );
 
   $$CashflowsTableProcessedTableManager get cashflowsRefs {
@@ -4776,46 +4757,37 @@ class $$OperationsTableTableManager
                         >
                       >(state) {
                         if (account) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.account,
-                                    referencedTable: $$OperationsTableReferences
-                                        ._accountTable(db),
-                                    referencedColumn:
-                                        $$OperationsTableReferences
-                                            ._accountTable(db)
-                                            .id,
-                                  )
-                                  as T;
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.account,
+                            referencedTable: $$OperationsTableReferences
+                                ._accountTable(db),
+                            referencedColumn: $$OperationsTableReferences
+                                ._accountTable(db)
+                                .id,
+                          ) as T;
                         }
                         if (category) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.category,
-                                    referencedTable: $$OperationsTableReferences
-                                        ._categoryTable(db),
-                                    referencedColumn:
-                                        $$OperationsTableReferences
-                                            ._categoryTable(db)
-                                            .id,
-                                  )
-                                  as T;
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.category,
+                            referencedTable: $$OperationsTableReferences
+                                ._categoryTable(db),
+                            referencedColumn: $$OperationsTableReferences
+                                ._categoryTable(db)
+                                .id,
+                          ) as T;
                         }
                         if (recAccount) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.recAccount,
-                                    referencedTable: $$OperationsTableReferences
-                                        ._recAccountTable(db),
-                                    referencedColumn:
-                                        $$OperationsTableReferences
-                                            ._recAccountTable(db)
-                                            .id,
-                                  )
-                                  as T;
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.recAccount,
+                            referencedTable: $$OperationsTableReferences
+                                ._recAccountTable(db),
+                            referencedColumn: $$OperationsTableReferences
+                                ._recAccountTable(db)
+                                .id,
+                          ) as T;
                         }
 
                         return state;
@@ -4892,33 +4864,29 @@ typedef $$OperationsTableProcessedTableManager =
         bool cashflowsRefs,
       })
     >;
-typedef $$BalancesTableCreateCompanionBuilder =
-    BalancesCompanion Function({
-      required DateTime date,
-      required int operation,
-      required int account,
-      required int sum,
-      Value<Currency> currency,
-      Value<int> rowid,
-    });
-typedef $$BalancesTableUpdateCompanionBuilder =
-    BalancesCompanion Function({
-      Value<DateTime> date,
-      Value<int> operation,
-      Value<int> account,
-      Value<int> sum,
-      Value<Currency> currency,
-      Value<int> rowid,
-    });
+typedef $$BalancesTableCreateCompanionBuilder = BalancesCompanion Function({
+  required DateTime date,
+  required int operation,
+  required int account,
+  required int sum,
+  Value<Currency> currency,
+  Value<int> rowid,
+});
+typedef $$BalancesTableUpdateCompanionBuilder = BalancesCompanion Function({
+  Value<DateTime> date,
+  Value<int> operation,
+  Value<int> account,
+  Value<int> sum,
+  Value<Currency> currency,
+  Value<int> rowid,
+});
 
 final class $$BalancesTableReferences
     extends BaseReferences<_$Database, $BalancesTable, BalanceDB> {
   $$BalancesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $OperationsTable _operationTable(_$Database db) =>
-      db.operations.createAlias(
-        $_aliasNameGenerator(db.balances.operation, db.operations.id),
-      );
+      db.operations.createAlias('balance__operation__operations__id');
 
   $$OperationsTableProcessedTableManager get operation {
     final $_column = $_itemColumn<int>('operation')!;
@@ -4934,9 +4902,8 @@ final class $$BalancesTableReferences
     );
   }
 
-  static $AccountsTable _accountTable(_$Database db) => db.accounts.createAlias(
-    $_aliasNameGenerator(db.balances.account, db.accounts.id),
-  );
+  static $AccountsTable _accountTable(_$Database db) =>
+      db.accounts.createAlias('balance__account__accounts__id');
 
   $$AccountsTableProcessedTableManager get account {
     final $_column = $_itemColumn<int>('account')!;
@@ -5248,30 +5215,26 @@ class $$BalancesTableTableManager
                     >
                   >(state) {
                     if (operation) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.operation,
-                                referencedTable: $$BalancesTableReferences
-                                    ._operationTable(db),
-                                referencedColumn: $$BalancesTableReferences
-                                    ._operationTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.operation,
+                        referencedTable: $$BalancesTableReferences
+                            ._operationTable(db),
+                        referencedColumn: $$BalancesTableReferences
+                            ._operationTable(db)
+                            .id,
+                      ) as T;
                     }
                     if (account) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.account,
-                                referencedTable: $$BalancesTableReferences
-                                    ._accountTable(db),
-                                referencedColumn: $$BalancesTableReferences
-                                    ._accountTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.account,
+                        referencedTable: $$BalancesTableReferences
+                            ._accountTable(db),
+                        referencedColumn: $$BalancesTableReferences
+                            ._accountTable(db)
+                            .id,
+                      ) as T;
                     }
 
                     return state;
@@ -5299,33 +5262,29 @@ typedef $$BalancesTableProcessedTableManager =
       BalanceDB,
       PrefetchHooks Function({bool operation, bool account})
     >;
-typedef $$CashflowsTableCreateCompanionBuilder =
-    CashflowsCompanion Function({
-      required DateTime date,
-      required int operation,
-      required int category,
-      required int sum,
-      Value<Currency> currency,
-      Value<int> rowid,
-    });
-typedef $$CashflowsTableUpdateCompanionBuilder =
-    CashflowsCompanion Function({
-      Value<DateTime> date,
-      Value<int> operation,
-      Value<int> category,
-      Value<int> sum,
-      Value<Currency> currency,
-      Value<int> rowid,
-    });
+typedef $$CashflowsTableCreateCompanionBuilder = CashflowsCompanion Function({
+  required DateTime date,
+  required int operation,
+  required int category,
+  required int sum,
+  Value<Currency> currency,
+  Value<int> rowid,
+});
+typedef $$CashflowsTableUpdateCompanionBuilder = CashflowsCompanion Function({
+  Value<DateTime> date,
+  Value<int> operation,
+  Value<int> category,
+  Value<int> sum,
+  Value<Currency> currency,
+  Value<int> rowid,
+});
 
 final class $$CashflowsTableReferences
     extends BaseReferences<_$Database, $CashflowsTable, CashflowDB> {
   $$CashflowsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $OperationsTable _operationTable(_$Database db) =>
-      db.operations.createAlias(
-        $_aliasNameGenerator(db.cashflows.operation, db.operations.id),
-      );
+      db.operations.createAlias('cashflow__operation__operations__id');
 
   $$OperationsTableProcessedTableManager get operation {
     final $_column = $_itemColumn<int>('operation')!;
@@ -5342,9 +5301,7 @@ final class $$CashflowsTableReferences
   }
 
   static $CategoriesTable _categoryTable(_$Database db) =>
-      db.categories.createAlias(
-        $_aliasNameGenerator(db.cashflows.category, db.categories.id),
-      );
+      db.categories.createAlias('cashflow__category__categories__id');
 
   $$CategoriesTableProcessedTableManager get category {
     final $_column = $_itemColumn<int>('category')!;
@@ -5656,30 +5613,26 @@ class $$CashflowsTableTableManager
                     >
                   >(state) {
                     if (operation) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.operation,
-                                referencedTable: $$CashflowsTableReferences
-                                    ._operationTable(db),
-                                referencedColumn: $$CashflowsTableReferences
-                                    ._operationTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.operation,
+                        referencedTable: $$CashflowsTableReferences
+                            ._operationTable(db),
+                        referencedColumn: $$CashflowsTableReferences
+                            ._operationTable(db)
+                            .id,
+                      ) as T;
                     }
                     if (category) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.category,
-                                referencedTable: $$CashflowsTableReferences
-                                    ._categoryTable(db),
-                                referencedColumn: $$CashflowsTableReferences
-                                    ._categoryTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.category,
+                        referencedTable: $$CashflowsTableReferences
+                            ._categoryTable(db),
+                        referencedColumn: $$CashflowsTableReferences
+                            ._categoryTable(db)
+                            .id,
+                      ) as T;
                     }
 
                     return state;

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_list_filter.dart';
@@ -9,12 +9,13 @@ part of 'operation_list_filter.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OperationListFilter {
 
- DateTimeRange? get period; Set<int> get accountIds; Set<int> get categoryIds;
+ DateTimeRange<DateTime>? get period; Set<int> get accountIds; Set<int> get categoryIds;
 /// Create a copy of OperationListFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,21 @@ $OperationListFilterCopyWith<OperationListFilter> get copyWith => _$OperationLis
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListFilter&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.accountIds, accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, categoryIds));
+  final _this = this as OperationListFilter;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListFilter&&(identical(other.period, _this.period) || other.period == _this.period)&&const DeepCollectionEquality().equals(other.accountIds, _this.accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, _this.categoryIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,const DeepCollectionEquality().hash(accountIds),const DeepCollectionEquality().hash(categoryIds));
+int get hashCode {
+  final _this = this as OperationListFilter;
+  return Object.hash(runtimeType,_this.period,const DeepCollectionEquality().hash(_this.accountIds),const DeepCollectionEquality().hash(_this.categoryIds));
+}
 
 @override
 String toString() {
-  return 'OperationListFilter(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
+  final _this = this as OperationListFilter;
+  return 'OperationListFilter(period: ${_this.period}, accountIds: ${_this.accountIds}, categoryIds: ${_this.categoryIds})';
 }
 
 
@@ -45,7 +51,7 @@ abstract mixin class $OperationListFilterCopyWith<$Res>  {
   factory $OperationListFilterCopyWith(OperationListFilter value, $Res Function(OperationListFilter) _then) = _$OperationListFilterCopyWithImpl;
 @useResult
 $Res call({
- DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds
+ DateTimeRange<DateTime>? period, Set<int> accountIds, Set<int> categoryIds
 });
 
 
@@ -63,9 +69,9 @@ class _$OperationListFilterCopyWithImpl<$Res>
 /// Create a copy of OperationListFilter
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? period = freezed,Object? accountIds = null,Object? categoryIds = null,}) {
-  return _then(_self.copyWith(
+  return _then(OperationListFilter(
 period: freezed == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as DateTimeRange?,accountIds: null == accountIds ? _self.accountIds : accountIds // ignore: cast_nullable_to_non_nullable
+as DateTimeRange<DateTime>?,accountIds: null == accountIds ? _self.accountIds : accountIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,categoryIds: null == categoryIds ? _self.categoryIds : categoryIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,
   ));
@@ -152,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OperationListFilter() when $default != null:
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -173,7 +179,7 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)  $default,) {final _that = this;
 switch (_that) {
 case _OperationListFilter():
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -193,7 +199,7 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,) {final _that = this;
 switch (_that) {
 case _OperationListFilter() when $default != null:
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -208,10 +214,10 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 
 
 class _OperationListFilter implements OperationListFilter {
-  const _OperationListFilter({this.period, final  Set<int> accountIds = const {}, final  Set<int> categoryIds = const {}}): _accountIds = accountIds,_categoryIds = categoryIds;
+  const _OperationListFilter({this.period,  Set<int> accountIds = const {},  Set<int> categoryIds = const {}}): _accountIds = accountIds,_categoryIds = categoryIds;
   
 
-@override final  DateTimeRange? period;
+@override final  DateTimeRange<DateTime>? period;
  final  Set<int> _accountIds;
 @override@JsonKey() Set<int> get accountIds {
   if (_accountIds is EqualUnmodifiableSetView) return _accountIds;
@@ -237,16 +243,18 @@ _$OperationListFilterCopyWith<_OperationListFilter> get copyWith => __$Operation
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationListFilter&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other._accountIds, _accountIds)&&const DeepCollectionEquality().equals(other._categoryIds, _categoryIds));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationListFilter&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.accountIds, _accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, _categoryIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,const DeepCollectionEquality().hash(_accountIds),const DeepCollectionEquality().hash(_categoryIds));
+int get hashCode {
+    return Object.hash(runtimeType,period,const DeepCollectionEquality().hash(_accountIds),const DeepCollectionEquality().hash(_categoryIds));
+}
 
 @override
 String toString() {
-  return 'OperationListFilter(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
+    return 'OperationListFilter(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
 }
 
 
@@ -257,7 +265,7 @@ abstract mixin class _$OperationListFilterCopyWith<$Res> implements $OperationLi
   factory _$OperationListFilterCopyWith(_OperationListFilter value, $Res Function(_OperationListFilter) _then) = __$OperationListFilterCopyWithImpl;
 @override @useResult
 $Res call({
- DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds
+ DateTimeRange<DateTime>? period, Set<int> accountIds, Set<int> categoryIds
 });
 
 
@@ -277,7 +285,7 @@ class __$OperationListFilterCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? period = freezed,Object? accountIds = null,Object? categoryIds = null,}) {
   return _then(_OperationListFilter(
 period: freezed == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as DateTimeRange?,accountIds: null == accountIds ? _self._accountIds : accountIds // ignore: cast_nullable_to_non_nullable
+as DateTimeRange<DateTime>?,accountIds: null == accountIds ? _self._accountIds : accountIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,categoryIds: null == categoryIds ? _self._categoryIds : categoryIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,
   ));

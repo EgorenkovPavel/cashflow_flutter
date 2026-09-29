@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cloud_category.dart';
@@ -9,6 +9,7 @@ part of 'cloud_category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CloudCategoryCopyWith<CloudCategory> get copyWith => _$CloudCategoryCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudCategory&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+  final _this = this as CloudCategory;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudCategory&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.budgetType, _this.budgetType) || other.budgetType == _this.budgetType)&&(identical(other.budget, _this.budget) || other.budget == _this.budget)&&(identical(other.isGroup, _this.isGroup) || other.isGroup == _this.isGroup)&&(identical(other.parentId, _this.parentId) || other.parentId == _this.parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,type,budgetType,budget,isGroup,parentId);
+int get hashCode {
+  final _this = this as CloudCategory;
+  return Object.hash(runtimeType,_this.id,_this.title,_this.type,_this.budgetType,_this.budget,_this.isGroup,_this.parentId);
+}
 
 @override
 String toString() {
-  return 'CloudCategory(id: $id, title: $title, type: $type, budgetType: $budgetType, budget: $budget, isGroup: $isGroup, parentId: $parentId)';
+  final _this = this as CloudCategory;
+  return 'CloudCategory(id: ${_this.id}, title: ${_this.title}, type: ${_this.type}, budgetType: ${_this.budgetType}, budget: ${_this.budget}, isGroup: ${_this.isGroup}, parentId: ${_this.parentId})';
 }
 
 
@@ -63,7 +69,7 @@ class _$CloudCategoryCopyWithImpl<$Res>
 /// Create a copy of CloudCategory
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? type = null,Object? budgetType = null,Object? budget = null,Object? isGroup = null,Object? parentId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CloudCategory(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ _$CloudCategoryCopyWith<_CloudCategory> get copyWith => __$CloudCategoryCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudCategory&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudCategory&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,type,budgetType,budget,isGroup,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,type,budgetType,budget,isGroup,parentId);
+}
 
 @override
 String toString() {
-  return 'CloudCategory(id: $id, title: $title, type: $type, budgetType: $budgetType, budget: $budget, isGroup: $isGroup, parentId: $parentId)';
+    return 'CloudCategory(id: $id, title: $title, type: $type, budgetType: $budgetType, budget: $budget, isGroup: $isGroup, parentId: $parentId)';
 }
 
 

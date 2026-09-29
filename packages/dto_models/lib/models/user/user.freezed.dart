@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user.dart';
@@ -9,6 +9,7 @@ part of 'user.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $UserResponceCopyWith<UserResponce> get copyWith => _$UserResponceCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.email, email) || other.email == email)&&(identical(other.groupId, groupId) || other.groupId == groupId));
+  final _this = this as UserResponce;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserResponce&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.googleId, _this.googleId) || other.googleId == _this.googleId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.photo, _this.photo) || other.photo == _this.photo)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,email,groupId);
+int get hashCode {
+  final _this = this as UserResponce;
+  return Object.hash(runtimeType,_this.id,_this.googleId,_this.name,_this.photo,_this.email,_this.groupId);
+}
 
 @override
 String toString() {
-  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, email: $email, groupId: $groupId)';
+  final _this = this as UserResponce;
+  return 'UserResponce(id: ${_this.id}, googleId: ${_this.googleId}, name: ${_this.name}, photo: ${_this.photo}, email: ${_this.email}, groupId: ${_this.groupId})';
 }
 
 
@@ -66,7 +72,7 @@ class _$UserResponceCopyWithImpl<$Res>
 /// Create a copy of UserResponce
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? googleId = null,Object? name = null,Object? photo = null,Object? email = null,Object? groupId = null,}) {
-  return _then(_self.copyWith(
+  return _then(UserResponce(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as UuidValue,googleId: null == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.email, email) || other.email == email)&&(identical(other.groupId, groupId) || other.groupId == groupId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserResponce&&(identical(other.id, id) || other.id == id)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.email, email) || other.email == email)&&(identical(other.groupId, groupId) || other.groupId == groupId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,googleId,name,photo,email,groupId);
+int get hashCode {
+    return Object.hash(runtimeType,id,googleId,name,photo,email,groupId);
+}
 
 @override
 String toString() {
-  return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, email: $email, groupId: $groupId)';
+    return 'UserResponce(id: $id, googleId: $googleId, name: $name, photo: $photo, email: $email, groupId: $groupId)';
 }
 
 

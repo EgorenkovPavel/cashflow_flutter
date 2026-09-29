@@ -60,7 +60,7 @@ class _EmptyCard extends StatelessWidget {
 class _InfoCard extends StatelessWidget {
   final int accountId;
 
-  const _InfoCard({super.key, required this.accountId});
+  const _InfoCard({required this.accountId});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,6 @@ class _InfoCard extends StatelessWidget {
 
 class _AccountDialog extends StatelessWidget {
   const _AccountDialog({
-    super.key,
     required this.onChangeAccount,
     required this.balanceCurrency,
   });
@@ -124,7 +123,6 @@ class _AccountDialog extends StatelessWidget {
 
 class _AccountItem extends StatelessWidget {
   const _AccountItem({
-    super.key,
     required this.onChangeAccount,
     required this.balanceCurrency,
     required this.account,

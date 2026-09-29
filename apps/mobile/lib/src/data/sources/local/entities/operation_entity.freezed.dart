@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_entity.dart';
@@ -9,6 +9,7 @@ part of 'operation_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $OperationDbEntityCopyWith<OperationDbEntity> get copyWith => _$OperationDbEntit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationDbEntity&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
+  final _this = this as OperationDbEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationDbEntity&&(identical(other.operation, _this.operation) || other.operation == _this.operation)&&(identical(other.account, _this.account) || other.account == _this.account)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.recAccount, _this.recAccount) || other.recAccount == _this.recAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,account,category,recAccount);
+int get hashCode {
+  final _this = this as OperationDbEntity;
+  return Object.hash(runtimeType,_this.operation,_this.account,_this.category,_this.recAccount);
+}
 
 @override
 String toString() {
-  return 'OperationDbEntity(operation: $operation, account: $account, category: $category, recAccount: $recAccount)';
+  final _this = this as OperationDbEntity;
+  return 'OperationDbEntity(operation: ${_this.operation}, account: ${_this.account}, category: ${_this.category}, recAccount: ${_this.recAccount})';
 }
 
 
@@ -63,7 +69,7 @@ class _$OperationDbEntityCopyWithImpl<$Res>
 /// Create a copy of OperationDbEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? operation = null,Object? account = null,Object? category = freezed,Object? recAccount = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(OperationDbEntity(
 operation: null == operation ? _self.operation : operation // ignore: cast_nullable_to_non_nullable
 as OperationDB,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as AccountDB,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$OperationDbEntityCopyWith<_OperationDbEntity> get copyWith => __$OperationDbEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationDbEntity&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationDbEntity&&(identical(other.operation, operation) || other.operation == operation)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operation,account,category,recAccount);
+int get hashCode {
+    return Object.hash(runtimeType,operation,account,category,recAccount);
+}
 
 @override
 String toString() {
-  return 'OperationDbEntity(operation: $operation, account: $account, category: $category, recAccount: $recAccount)';
+    return 'OperationDbEntity(operation: $operation, account: $account, category: $category, recAccount: $recAccount)';
 }
 
 

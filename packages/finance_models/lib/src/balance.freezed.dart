@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'balance.dart';
@@ -9,6 +9,7 @@ part of 'balance.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $BalanceCopyWith<Balance> get copyWith => _$BalanceCopyWithImpl<Balance>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Balance&&const DeepCollectionEquality().equals(other.sums, sums));
+  final _this = this as Balance;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Balance&&const DeepCollectionEquality().equals(other.sums, _this.sums));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(sums));
+int get hashCode {
+  final _this = this as Balance;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.sums));
+}
 
 @override
 String toString() {
-  return 'Balance(sums: $sums)';
+  final _this = this as Balance;
+  return 'Balance(sums: ${_this.sums})';
 }
 
 
@@ -66,8 +72,8 @@ class _$BalanceCopyWithImpl<$Res>
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sums = null,}) {
-  return _then(_self.copyWith(
-sums: null == sums ? _self.sums : sums // ignore: cast_nullable_to_non_nullable
+  return _then(Balance(
+null == sums ? _self.sums : sums // ignore: cast_nullable_to_non_nullable
 as List<Money>,
   ));
 }
@@ -209,7 +215,7 @@ return $default(_that.sums);case _:
 @JsonSerializable()
 
 class _Balance extends Balance {
-  const _Balance([final  List<Money> sums = const []]): _sums = sums,super._();
+  const _Balance([ List<Money> sums = const []]): _sums = sums,super._();
   factory _Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);
 
  final  List<Money> _sums;
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Balance&&const DeepCollectionEquality().equals(other._sums, _sums));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Balance&&const DeepCollectionEquality().equals(other.sums, _sums));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_sums));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_sums));
+}
 
 @override
 String toString() {
-  return 'Balance(sums: $sums)';
+    return 'Balance(sums: $sums)';
 }
 
 

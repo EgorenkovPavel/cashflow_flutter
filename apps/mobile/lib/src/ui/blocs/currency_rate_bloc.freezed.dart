@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'currency_rate_bloc.dart';
@@ -9,6 +9,7 @@ part of 'currency_rate_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CurrencyRateEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrencyRateEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrencyRateEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CurrencyRateEvent()';
+    return 'CurrencyRateEvent()';
 }
 
 
@@ -185,7 +186,7 @@ class _FetchCurrencyRateEvent implements CurrencyRateEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchCurrencyRateEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchCurrencyRateEvent);
 }
 
 
@@ -194,7 +195,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CurrencyRateEvent.fetch()';
+    return 'CurrencyRateEvent.fetch()';
 }
 
 
@@ -223,16 +224,18 @@ _$ChangeCurrencyRateEventCopyWith<_ChangeCurrencyRateEvent> get copyWith => __$C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCurrencyRateEvent&&(identical(other.usd, usd) || other.usd == usd)&&(identical(other.eur, eur) || other.eur == eur));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCurrencyRateEvent&&(identical(other.usd, usd) || other.usd == usd)&&(identical(other.eur, eur) || other.eur == eur));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,usd,eur);
+int get hashCode {
+    return Object.hash(runtimeType,usd,eur);
+}
 
 @override
 String toString() {
-  return 'CurrencyRateEvent.change(usd: $usd, eur: $eur)';
+    return 'CurrencyRateEvent.change(usd: $usd, eur: $eur)';
 }
 
 
@@ -285,16 +288,21 @@ $CurrencyRateStateCopyWith<CurrencyRateState> get copyWith => _$CurrencyRateStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrencyRateState&&(identical(other.usd, usd) || other.usd == usd)&&(identical(other.eur, eur) || other.eur == eur));
+  final _this = this as CurrencyRateState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrencyRateState&&(identical(other.usd, _this.usd) || other.usd == _this.usd)&&(identical(other.eur, _this.eur) || other.eur == _this.eur));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,usd,eur);
+int get hashCode {
+  final _this = this as CurrencyRateState;
+  return Object.hash(runtimeType,_this.usd,_this.eur);
+}
 
 @override
 String toString() {
-  return 'CurrencyRateState(usd: $usd, eur: $eur)';
+  final _this = this as CurrencyRateState;
+  return 'CurrencyRateState(usd: ${_this.usd}, eur: ${_this.eur})';
 }
 
 
@@ -323,7 +331,7 @@ class _$CurrencyRateStateCopyWithImpl<$Res>
 /// Create a copy of CurrencyRateState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? usd = null,Object? eur = null,}) {
-  return _then(_self.copyWith(
+  return _then(CurrencyRateState(
 usd: null == usd ? _self.usd : usd // ignore: cast_nullable_to_non_nullable
 as double,eur: null == eur ? _self.eur : eur // ignore: cast_nullable_to_non_nullable
 as double,
@@ -483,16 +491,18 @@ _$CurrencyRateStateCopyWith<_CurrencyRateState> get copyWith => __$CurrencyRateS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CurrencyRateState&&(identical(other.usd, usd) || other.usd == usd)&&(identical(other.eur, eur) || other.eur == eur));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CurrencyRateState&&(identical(other.usd, usd) || other.usd == usd)&&(identical(other.eur, eur) || other.eur == eur));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,usd,eur);
+int get hashCode {
+    return Object.hash(runtimeType,usd,eur);
+}
 
 @override
 String toString() {
-  return 'CurrencyRateState(usd: $usd, eur: $eur)';
+    return 'CurrencyRateState(usd: $usd, eur: $eur)';
 }
 
 

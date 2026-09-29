@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'budget_bar_chart_bloc.dart';
@@ -9,6 +9,7 @@ part of 'budget_bar_chart_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$BudgetBarChartEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetBarChartEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetBarChartEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BudgetBarChartEvent()';
+    return 'BudgetBarChartEvent()';
 }
 
 
@@ -191,16 +192,18 @@ _$FetchBudgetBarChartEventCopyWith<_FetchBudgetBarChartEvent> get copyWith => __
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchBudgetBarChartEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.amount, amount) || other.amount == amount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchBudgetBarChartEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.amount, amount) || other.amount == amount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,amount);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId,amount);
+}
 
 @override
 String toString() {
-  return 'BudgetBarChartEvent.fetch(categoryId: $categoryId, amount: $amount)';
+    return 'BudgetBarChartEvent.fetch(categoryId: $categoryId, amount: $amount)';
 }
 
 
@@ -243,7 +246,7 @@ as int,
 
 
 class _ChangeBudgetBarChartEvent implements BudgetBarChartEvent {
-  const _ChangeBudgetBarChartEvent({required final  Map<DateTime, Balance> data}): _data = data;
+  const _ChangeBudgetBarChartEvent({required  Map<DateTime, Balance> data}): _data = data;
   
 
  final  Map<DateTime, Balance> _data;
@@ -264,16 +267,18 @@ _$ChangeBudgetBarChartEventCopyWith<_ChangeBudgetBarChartEvent> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetBarChartEvent&&const DeepCollectionEquality().equals(other._data, _data));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetBarChartEvent&&const DeepCollectionEquality().equals(other.data, _data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+}
 
 @override
 String toString() {
-  return 'BudgetBarChartEvent.change(data: $data)';
+    return 'BudgetBarChartEvent.change(data: $data)';
 }
 
 
@@ -325,16 +330,21 @@ $BudgetBarChartStateCopyWith<BudgetBarChartState> get copyWith => _$BudgetBarCha
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetBarChartState&&const DeepCollectionEquality().equals(other.data, data));
+  final _this = this as BudgetBarChartState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetBarChartState&&const DeepCollectionEquality().equals(other.data, _this.data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
+int get hashCode {
+  final _this = this as BudgetBarChartState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.data));
+}
 
 @override
 String toString() {
-  return 'BudgetBarChartState(data: $data)';
+  final _this = this as BudgetBarChartState;
+  return 'BudgetBarChartState(data: ${_this.data})';
 }
 
 
@@ -363,7 +373,7 @@ class _$BudgetBarChartStateCopyWithImpl<$Res>
 /// Create a copy of BudgetBarChartState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? data = null,}) {
-  return _then(_self.copyWith(
+  return _then(BudgetBarChartState(
 data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as Map<DateTime, Balance>,
   ));
@@ -506,7 +516,7 @@ return $default(_that.data);case _:
 
 
 class _BudgetBarChartState implements BudgetBarChartState {
-  const _BudgetBarChartState({required final  Map<DateTime, Balance> data}): _data = data;
+  const _BudgetBarChartState({required  Map<DateTime, Balance> data}): _data = data;
   
 
  final  Map<DateTime, Balance> _data;
@@ -527,16 +537,18 @@ _$BudgetBarChartStateCopyWith<_BudgetBarChartState> get copyWith => __$BudgetBar
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BudgetBarChartState&&const DeepCollectionEquality().equals(other._data, _data));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BudgetBarChartState&&const DeepCollectionEquality().equals(other.data, _data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+}
 
 @override
 String toString() {
-  return 'BudgetBarChartState(data: $data)';
+    return 'BudgetBarChartState(data: $data)';
 }
 
 

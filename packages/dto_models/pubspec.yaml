@@ -7,21 +7,21 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.4
 
 dependencies:
 
   finance_models: any
 
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.11.0
+  json_annotation: ^4.12.0
   uuid: ^4.5.3
 
 dev_dependencies:
 
   lints: ^6.1.0
   test: ^1.25.6
-  build_runner: ^2.13.1
-  freezed: ^4.0.0
+  build_runner: ^2.16.1
+  freezed: ^4.0.2
   json_serializable: ^6.13.1
 

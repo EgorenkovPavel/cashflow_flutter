@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category.dart';
@@ -9,6 +9,7 @@ part of 'category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CategoryCopyWith<Category> get copyWith => _$CategoryCopyWithImpl<Category>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+  final _this = this as Category;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.cloudId, _this.cloudId) || other.cloudId == _this.cloudId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.title, _this.title) || other.title == _this.title));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,type,title);
+int get hashCode {
+  final _this = this as Category;
+  return Object.hash(runtimeType,_this.id,_this.cloudId,_this.type,_this.title);
+}
 
 @override
 String toString() {
-  return 'Category(id: $id, cloudId: $cloudId, type: $type, title: $title)';
+  final _this = this as Category;
+  return 'Category(id: ${_this.id}, cloudId: ${_this.cloudId}, type: ${_this.type}, title: ${_this.title})';
 }
 
 
@@ -227,16 +233,18 @@ $CategoryGroupCopyWith<CategoryGroup> get copyWith => _$CategoryGroupCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,type,title);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,type,title);
+}
 
 @override
 String toString() {
-  return 'Category.group(id: $id, cloudId: $cloudId, type: $type, title: $title)';
+    return 'Category.group(id: $id, cloudId: $cloudId, type: $type, title: $title)';
 }
 
 
@@ -302,16 +310,18 @@ $CategoryItemCopyWith<CategoryItem> get copyWith => _$CategoryItemCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,type,title,budget,budgetType,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,type,title,budget,budgetType,parentId);
+}
 
 @override
 String toString() {
-  return 'Category.item(id: $id, cloudId: $cloudId, type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
+    return 'Category.item(id: $id, cloudId: $cloudId, type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
 }
 
 

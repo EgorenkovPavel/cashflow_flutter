@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'google_drive_file.dart';
@@ -9,6 +9,7 @@ part of 'google_drive_file.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $DriveFileCopyWith<DriveFile> get copyWith => _$DriveFileCopyWithImpl<DriveFile>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveFile&&(identical(other.title, title) || other.title == title)&&(identical(other.id, id) || other.id == id)&&(identical(other.isFolder, isFolder) || other.isFolder == isFolder)&&(identical(other.lastChanges, lastChanges) || other.lastChanges == lastChanges)&&(identical(other.enabled, enabled) || other.enabled == enabled));
+  final _this = this as DriveFile;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveFile&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.isFolder, _this.isFolder) || other.isFolder == _this.isFolder)&&(identical(other.lastChanges, _this.lastChanges) || other.lastChanges == _this.lastChanges)&&(identical(other.enabled, _this.enabled) || other.enabled == _this.enabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,id,isFolder,lastChanges,enabled);
+int get hashCode {
+  final _this = this as DriveFile;
+  return Object.hash(runtimeType,_this.title,_this.id,_this.isFolder,_this.lastChanges,_this.enabled);
+}
 
 @override
 String toString() {
-  return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
+  final _this = this as DriveFile;
+  return 'DriveFile(title: ${_this.title}, id: ${_this.id}, isFolder: ${_this.isFolder}, lastChanges: ${_this.lastChanges}, enabled: ${_this.enabled})';
 }
 
 
@@ -63,7 +69,7 @@ class _$DriveFileCopyWithImpl<$Res>
 /// Create a copy of DriveFile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? id = null,Object? isFolder = null,Object? lastChanges = null,Object? enabled = null,}) {
-  return _then(_self.copyWith(
+  return _then(DriveFile(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,isFolder: null == isFolder ? _self.isFolder : isFolder // ignore: cast_nullable_to_non_nullable
@@ -229,16 +235,18 @@ _$DriveFileCopyWith<_DriveFile> get copyWith => __$DriveFileCopyWithImpl<_DriveF
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DriveFile&&(identical(other.title, title) || other.title == title)&&(identical(other.id, id) || other.id == id)&&(identical(other.isFolder, isFolder) || other.isFolder == isFolder)&&(identical(other.lastChanges, lastChanges) || other.lastChanges == lastChanges)&&(identical(other.enabled, enabled) || other.enabled == enabled));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DriveFile&&(identical(other.title, title) || other.title == title)&&(identical(other.id, id) || other.id == id)&&(identical(other.isFolder, isFolder) || other.isFolder == isFolder)&&(identical(other.lastChanges, lastChanges) || other.lastChanges == lastChanges)&&(identical(other.enabled, enabled) || other.enabled == enabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,id,isFolder,lastChanges,enabled);
+int get hashCode {
+    return Object.hash(runtimeType,title,id,isFolder,lastChanges,enabled);
+}
 
 @override
 String toString() {
-  return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
+    return 'DriveFile(title: $title, id: $id, isFolder: $isFolder, lastChanges: $lastChanges, enabled: $enabled)';
 }
 
 

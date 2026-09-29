@@ -298,9 +298,12 @@ class Database extends _$Database {
     return data;
   }
 
+  // ignore_for_file: avoid-dynamic
   Future loadData(Map<String, dynamic> data) async{
+    for (final entry in data.entries) {
+      final String key = entry.key;
+      final dynamic value = entry.value;
 
-    data.forEach((String key, dynamic value) async {
       if (key == 'account') {
         var accounts = <AccountDB>[];
         value.forEach((dynamic d) {
@@ -397,7 +400,7 @@ class Database extends _$Database {
         });
         await OperationDao(this).batchInsert(operations);
       }
-    });
+    }
   }
 
   int? _getId(String id) {

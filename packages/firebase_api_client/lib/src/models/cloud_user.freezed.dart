@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cloud_user.dart';
@@ -9,6 +9,7 @@ part of 'cloud_user.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CloudUserCopyWith<CloudUser> get copyWith => _$CloudUserCopyWithImpl<CloudUser>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudUser&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo));
+  final _this = this as CloudUser;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CloudUser&&(identical(other.googleId, _this.googleId) || other.googleId == _this.googleId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.photo, _this.photo) || other.photo == _this.photo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,googleId,name,photo);
+int get hashCode {
+  final _this = this as CloudUser;
+  return Object.hash(runtimeType,_this.googleId,_this.name,_this.photo);
+}
 
 @override
 String toString() {
-  return 'CloudUser(googleId: $googleId, name: $name, photo: $photo)';
+  final _this = this as CloudUser;
+  return 'CloudUser(googleId: ${_this.googleId}, name: ${_this.name}, photo: ${_this.photo})';
 }
 
 
@@ -63,7 +69,7 @@ class _$CloudUserCopyWithImpl<$Res>
 /// Create a copy of CloudUser
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? googleId = null,Object? name = null,Object? photo = null,}) {
-  return _then(_self.copyWith(
+  return _then(CloudUser(
 googleId: null == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
@@ -225,16 +231,18 @@ _$CloudUserCopyWith<_CloudUser> get copyWith => __$CloudUserCopyWithImpl<_CloudU
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudUser&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CloudUser&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.name, name) || other.name == name)&&(identical(other.photo, photo) || other.photo == photo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,googleId,name,photo);
+int get hashCode {
+    return Object.hash(runtimeType,googleId,name,photo);
+}
 
 @override
 String toString() {
-  return 'CloudUser(googleId: $googleId, name: $name, photo: $photo)';
+    return 'CloudUser(googleId: $googleId, name: $name, photo: $photo)';
 }
 
 

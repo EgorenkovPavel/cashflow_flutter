@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_list_bloc.dart';
@@ -9,6 +9,7 @@ part of 'operation_list_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$OperationListEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationListEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OperationListEvent()';
+    return 'OperationListEvent()';
 }
 
 
@@ -190,16 +191,18 @@ _$FetchOperationListEventCopyWith<_FetchOperationListEvent> get copyWith => __$F
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationListEvent&&(identical(other.filter, filter) || other.filter == filter));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationListEvent&&(identical(other.filter, filter) || other.filter == filter));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filter);
+int get hashCode {
+    return Object.hash(runtimeType,filter);
+}
 
 @override
 String toString() {
-  return 'OperationListEvent.fetch(filter: $filter)';
+    return 'OperationListEvent.fetch(filter: $filter)';
 }
 
 
@@ -250,7 +253,7 @@ $OperationListFilterCopyWith<$Res> get filter {
 
 
 class _ChangeOperationsOperationListEvent implements OperationListEvent {
-  const _ChangeOperationsOperationListEvent({required final  List<OperationView> operations}): _operations = operations;
+  const _ChangeOperationsOperationListEvent({required  List<OperationView> operations}): _operations = operations;
   
 
  final  List<OperationView> _operations;
@@ -271,16 +274,18 @@ _$ChangeOperationsOperationListEventCopyWith<_ChangeOperationsOperationListEvent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsOperationListEvent&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsOperationListEvent&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'OperationListEvent.changeOperations(operations: $operations)';
+    return 'OperationListEvent.changeOperations(operations: $operations)';
 }
 
 

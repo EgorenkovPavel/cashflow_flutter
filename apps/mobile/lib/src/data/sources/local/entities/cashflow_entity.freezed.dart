@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cashflow_entity.dart';
@@ -9,6 +9,7 @@ part of 'cashflow_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CashflowEntityCopyWith<CashflowEntity> get copyWith => _$CashflowEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashflowEntity&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum));
+  final _this = this as CashflowEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashflowEntity&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.sum, _this.sum) || other.sum == _this.sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,sum);
+int get hashCode {
+  final _this = this as CashflowEntity;
+  return Object.hash(runtimeType,_this.categoryId,_this.sum);
+}
 
 @override
 String toString() {
-  return 'CashflowEntity(categoryId: $categoryId, sum: $sum)';
+  final _this = this as CashflowEntity;
+  return 'CashflowEntity(categoryId: ${_this.categoryId}, sum: ${_this.sum})';
 }
 
 
@@ -63,7 +69,7 @@ class _$CashflowEntityCopyWithImpl<$Res>
 /// Create a copy of CashflowEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? categoryId = null,Object? sum = null,}) {
-  return _then(_self.copyWith(
+  return _then(CashflowEntity(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
 as Money,
@@ -232,16 +238,18 @@ _$CashflowEntityCopyWith<_CashflowEntity> get copyWith => __$CashflowEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashflowEntity&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashflowEntity&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,sum);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId,sum);
+}
 
 @override
 String toString() {
-  return 'CashflowEntity(categoryId: $categoryId, sum: $sum)';
+    return 'CashflowEntity(categoryId: $categoryId, sum: $sum)';
 }
 
 

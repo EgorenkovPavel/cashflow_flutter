@@ -117,7 +117,7 @@
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///C:/Users/Pavel/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner-2.16.0",
+      "rootUri": "file:///C:/Users/Pavel/AppData/Local/Pub/Cache/hosted/pub.dev/build_runner-2.16.1",
       "packageUri": "lib/",
       "languageVersion": "3.11"
     },
@@ -1343,49 +1343,49 @@
       "name": "cashflow_workspace",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "money_tracker",
       "rootUri": "../apps/mobile",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "cashflow_server",
       "rootUri": "../apps/server",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "web_analytic",
       "rootUri": "../apps/web_analytic",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "dto_models",
       "rootUri": "../packages/dto_models",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "finance_api_client",
       "rootUri": "../packages/finance_api_client",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "finance_models",
       "rootUri": "../packages/finance_models",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "firebase_api_client",
       "rootUri": "../packages/firebase_api_client",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     }
   ],
   "generator": "pub",

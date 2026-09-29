@@ -1,5 +1,5 @@
 class DateUtil{
-  static int daysInMonth(final int monthNum, final int year) {
+  static int daysInMonth(int monthNum, int year) {
     var monthLength = List<int>.filled(12, 0);
 
     monthLength[0] = 31;

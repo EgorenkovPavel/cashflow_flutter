@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category.dart';
@@ -9,6 +9,7 @@ part of 'category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 CategoryResponse _$CategoryResponseFromJson(
@@ -51,16 +52,21 @@ $CategoryResponseCopyWith<CategoryResponse> get copyWith => _$CategoryResponseCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+  final _this = this as CategoryResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryResponse&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.title, _this.title) || other.title == _this.title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title);
+int get hashCode {
+  final _this = this as CategoryResponse;
+  return Object.hash(runtimeType,_this.id,_this.type,_this.title);
+}
 
 @override
 String toString() {
-  return 'CategoryResponse(id: $id, type: $type, title: $title)';
+  final _this = this as CategoryResponse;
+  return 'CategoryResponse(id: ${_this.id}, type: ${_this.type}, title: ${_this.title})';
 }
 
 
@@ -234,7 +240,7 @@ return item(_that.id,_that.type,_that.title,_that.budget,_that.budgetType,_that.
 @JsonSerializable()
 
 class CategoryGroupResponse extends CategoryResponse {
-  const CategoryGroupResponse({@UuidValueConverter() required this.id, required this.type, required this.title, final  String? $type}): $type = $type ?? 'group',super._();
+  const CategoryGroupResponse({@UuidValueConverter() required this.id, required this.type, required this.title,  String? $type}): $type = $type ?? 'group',super._();
   factory CategoryGroupResponse.fromJson(Map<String, dynamic> json) => _$CategoryGroupResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -258,16 +264,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryGroupResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryGroupResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title);
+int get hashCode {
+    return Object.hash(runtimeType,id,type,title);
+}
 
 @override
 String toString() {
-  return 'CategoryResponse.group(id: $id, type: $type, title: $title)';
+    return 'CategoryResponse.group(id: $id, type: $type, title: $title)';
 }
 
 
@@ -311,7 +319,7 @@ as String,
 @JsonSerializable()
 
 class CategoryItemResponse extends CategoryResponse {
-  const CategoryItemResponse({@UuidValueConverter() required this.id, required this.type, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId, final  String? $type}): $type = $type ?? 'item',super._();
+  const CategoryItemResponse({@UuidValueConverter() required this.id, required this.type, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId,  String? $type}): $type = $type ?? 'item',super._();
   factory CategoryItemResponse.fromJson(Map<String, dynamic> json) => _$CategoryItemResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -338,16 +346,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryItemResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryItemResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,budget,budgetType,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,id,type,title,budget,budgetType,parentId);
+}
 
 @override
 String toString() {
-  return 'CategoryResponse.item(id: $id, type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
+    return 'CategoryResponse.item(id: $id, type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
 }
 
 
@@ -430,16 +440,21 @@ $CreateCategoryRequestCopyWith<CreateCategoryRequest> get copyWith => _$CreateCa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCategoryRequest&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+  final _this = this as CreateCategoryRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCategoryRequest&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.title, _this.title) || other.title == _this.title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,title);
+int get hashCode {
+  final _this = this as CreateCategoryRequest;
+  return Object.hash(runtimeType,_this.type,_this.title);
+}
 
 @override
 String toString() {
-  return 'CreateCategoryRequest(type: $type, title: $title)';
+  final _this = this as CreateCategoryRequest;
+  return 'CreateCategoryRequest(type: ${_this.type}, title: ${_this.title})';
 }
 
 
@@ -612,7 +627,7 @@ return group(_that.type,_that.title);case _:
 @JsonSerializable()
 
 class ItemCreateCategoryRequest implements CreateCategoryRequest {
-  const ItemCreateCategoryRequest({required this.type, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId, final  String? $type}): $type = $type ?? 'item';
+  const ItemCreateCategoryRequest({required this.type, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId,  String? $type}): $type = $type ?? 'item';
   factory ItemCreateCategoryRequest.fromJson(Map<String, dynamic> json) => _$ItemCreateCategoryRequestFromJson(json);
 
 @override final  CategoryType type;
@@ -638,16 +653,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemCreateCategoryRequest&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemCreateCategoryRequest&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,title,budget,budgetType,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,type,title,budget,budgetType,parentId);
+}
 
 @override
 String toString() {
-  return 'CreateCategoryRequest.item(type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
+    return 'CreateCategoryRequest.item(type: $type, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
 }
 
 
@@ -693,7 +710,7 @@ as UuidValue?,
 @JsonSerializable()
 
 class GroupCreateCategoryRequest implements CreateCategoryRequest {
-  const GroupCreateCategoryRequest({required this.type, required this.title, final  String? $type}): $type = $type ?? 'group';
+  const GroupCreateCategoryRequest({required this.type, required this.title,  String? $type}): $type = $type ?? 'group';
   factory GroupCreateCategoryRequest.fromJson(Map<String, dynamic> json) => _$GroupCreateCategoryRequestFromJson(json);
 
 @override final  CategoryType type;
@@ -716,16 +733,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GroupCreateCategoryRequest&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GroupCreateCategoryRequest&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,title);
+int get hashCode {
+    return Object.hash(runtimeType,type,title);
+}
 
 @override
 String toString() {
-  return 'CreateCategoryRequest.group(type: $type, title: $title)';
+    return 'CreateCategoryRequest.group(type: $type, title: $title)';
 }
 
 
@@ -804,16 +823,21 @@ $UpdateCategoryRequestCopyWith<UpdateCategoryRequest> get copyWith => _$UpdateCa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCategoryRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title));
+  final _this = this as UpdateCategoryRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCategoryRequest&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.title, _this.title) || other.title == _this.title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title);
+int get hashCode {
+  final _this = this as UpdateCategoryRequest;
+  return Object.hash(runtimeType,_this.id,_this.title);
+}
 
 @override
 String toString() {
-  return 'UpdateCategoryRequest(id: $id, title: $title)';
+  final _this = this as UpdateCategoryRequest;
+  return 'UpdateCategoryRequest(id: ${_this.id}, title: ${_this.title})';
 }
 
 
@@ -986,7 +1010,7 @@ return group(_that.id,_that.title);case _:
 @JsonSerializable()
 
 class ItemUpdateCategoryRequest implements UpdateCategoryRequest {
-  const ItemUpdateCategoryRequest({@UuidValueConverter() required this.id, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId, final  String? $type}): $type = $type ?? 'item';
+  const ItemUpdateCategoryRequest({@UuidValueConverter() required this.id, required this.title, required this.budget, required this.budgetType, @UuidValueConverter() required this.parentId,  String? $type}): $type = $type ?? 'item';
   factory ItemUpdateCategoryRequest.fromJson(Map<String, dynamic> json) => _$ItemUpdateCategoryRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1012,16 +1036,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemUpdateCategoryRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemUpdateCategoryRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,budget,budgetType,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,budget,budgetType,parentId);
+}
 
 @override
 String toString() {
-  return 'UpdateCategoryRequest.item(id: $id, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
+    return 'UpdateCategoryRequest.item(id: $id, title: $title, budget: $budget, budgetType: $budgetType, parentId: $parentId)';
 }
 
 
@@ -1067,7 +1093,7 @@ as UuidValue?,
 @JsonSerializable()
 
 class GroupUpdateCategoryRequest implements UpdateCategoryRequest {
-  const GroupUpdateCategoryRequest({@UuidValueConverter() required this.id, required this.title, final  String? $type}): $type = $type ?? 'group';
+  const GroupUpdateCategoryRequest({@UuidValueConverter() required this.id, required this.title,  String? $type}): $type = $type ?? 'group';
   factory GroupUpdateCategoryRequest.fromJson(Map<String, dynamic> json) => _$GroupUpdateCategoryRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1090,16 +1116,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GroupUpdateCategoryRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GroupUpdateCategoryRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title);
+int get hashCode {
+    return Object.hash(runtimeType,id,title);
+}
 
 @override
 String toString() {
-  return 'UpdateCategoryRequest.group(id: $id, title: $title)';
+    return 'UpdateCategoryRequest.group(id: $id, title: $title)';
 }
 
 

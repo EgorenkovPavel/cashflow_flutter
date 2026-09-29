@@ -46,7 +46,7 @@ class CategoryCard extends StatelessWidget {
 }
 
 class _EmptyCard extends StatelessWidget {
-  const _EmptyCard({super.key});
+  const _EmptyCard();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _EmptyCard extends StatelessWidget {
 class _InfoCard extends StatelessWidget {
   final int categoryId;
 
-  const _InfoCard({super.key, required this.categoryId});
+  const _InfoCard({required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,6 @@ class _CategoryDialogState extends State<CategoryDialog> {
 
 class _CategoryItem extends StatelessWidget {
   const _CategoryItem({
-    super.key,
     required this.category,
     required this.onChangeCategory,
   });

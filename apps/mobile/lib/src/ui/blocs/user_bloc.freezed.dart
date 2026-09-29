@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_bloc.dart';
@@ -9,6 +9,7 @@ part of 'user_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $UserEventCopyWith<UserEvent> get copyWith => _$UserEventCopyWithImpl<UserEvent>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEvent&&const DeepCollectionEquality().equals(other.users, users));
+  final _this = this as UserEvent;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEvent&&const DeepCollectionEquality().equals(other.users, _this.users));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(users));
+int get hashCode {
+  final _this = this as UserEvent;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.users));
+}
 
 @override
 String toString() {
-  return 'UserEvent(users: $users)';
+  final _this = this as UserEvent;
+  return 'UserEvent(users: ${_this.users})';
 }
 
 
@@ -63,7 +69,7 @@ class _$UserEventCopyWithImpl<$Res>
 /// Create a copy of UserEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? users = null,}) {
-  return _then(_self.copyWith(
+  return _then(UserEvent.changeUsers(
 users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
 as List<User>,
   ));
@@ -200,7 +206,7 @@ return changeUsers(_that.users);case _:
 
 
 class _ChangeUsersUserEvent implements UserEvent {
-  const _ChangeUsersUserEvent({required final  List<User> users}): _users = users;
+  const _ChangeUsersUserEvent({required  List<User> users}): _users = users;
   
 
  final  List<User> _users;
@@ -221,16 +227,18 @@ _$ChangeUsersUserEventCopyWith<_ChangeUsersUserEvent> get copyWith => __$ChangeU
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeUsersUserEvent&&const DeepCollectionEquality().equals(other._users, _users));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeUsersUserEvent&&const DeepCollectionEquality().equals(other.users, _users));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_users));
+}
 
 @override
 String toString() {
-  return 'UserEvent.changeUsers(users: $users)';
+    return 'UserEvent.changeUsers(users: $users)';
 }
 
 
@@ -282,16 +290,21 @@ $UserStateCopyWith<UserState> get copyWith => _$UserStateCopyWithImpl<UserState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&const DeepCollectionEquality().equals(other.users, users));
+  final _this = this as UserState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&const DeepCollectionEquality().equals(other.users, _this.users));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(users));
+int get hashCode {
+  final _this = this as UserState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.users));
+}
 
 @override
 String toString() {
-  return 'UserState(users: $users)';
+  final _this = this as UserState;
+  return 'UserState(users: ${_this.users})';
 }
 
 
@@ -320,7 +333,7 @@ class _$UserStateCopyWithImpl<$Res>
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? users = null,}) {
-  return _then(_self.copyWith(
+  return _then(UserState(
 users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
 as List<User>,
   ));
@@ -463,7 +476,7 @@ return $default(_that.users);case _:
 
 
 class _UserState extends UserState {
-  const _UserState({required final  List<User> users}): _users = users,super._();
+  const _UserState({required  List<User> users}): _users = users,super._();
   
 
  final  List<User> _users;
@@ -484,16 +497,18 @@ _$UserStateCopyWith<_UserState> get copyWith => __$UserStateCopyWithImpl<_UserSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&const DeepCollectionEquality().equals(other._users, _users));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&const DeepCollectionEquality().equals(other.users, _users));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_users));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_users));
+}
 
 @override
 String toString() {
-  return 'UserState(users: $users)';
+    return 'UserState(users: $users)';
 }
 
 

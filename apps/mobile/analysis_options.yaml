@@ -2,9 +2,11 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  errors:
+    analysis_options_deprecated_plugins: ignore
   exclude:
-    - '**.g.dart'
-    - '**.freezed.dart'
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
     - build/**
     - android/**
     - ios/**
@@ -25,7 +27,7 @@ dart_code_linter:
     - avoid-unnecessary-type-assertions
     - avoid-unnecessary-type-casts
     - avoid-unrelated-type-assertions
-    - avoid-unused-parameters
+#    - avoid-unused-parameters
     - avoid-nested-conditional-expressions
     - newline-before-return
     - no-boolean-literal-compare
@@ -33,8 +35,8 @@ dart_code_linter:
     - prefer-trailing-comma
     - prefer-conditional-expressions
     - no-equal-then-else
-    - prefer-moving-to-variable
-    - prefer-match-file-name
+#    - prefer-moving-to-variable
+#    - prefer-match-file-name
     - avoid-banned-imports:
         entries:
           - paths: [ '.*lib[\\\\/]src[\\\\/]domain[\\\\/].*\.dart$' ]

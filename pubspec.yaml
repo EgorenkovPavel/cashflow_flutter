@@ -2,7 +2,7 @@ name: cashflow_workspace
 publish_to: none
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.4
 
 workspace:
   - apps/mobile

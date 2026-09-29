@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_input_bloc.dart';
@@ -9,6 +9,7 @@ part of 'account_input_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$AccountInputEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AccountInputEvent()';
+    return 'AccountInputEvent()';
 }
 
 
@@ -208,16 +209,18 @@ _$FetchAccountInputEventCopyWith<_FetchAccountInputEvent> get copyWith => __$Fet
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchAccountInputEvent&&(identical(other.accountId, accountId) || other.accountId == accountId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchAccountInputEvent&&(identical(other.accountId, accountId) || other.accountId == accountId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId);
+int get hashCode {
+    return Object.hash(runtimeType,accountId);
+}
 
 @override
 String toString() {
-  return 'AccountInputEvent.fetch(accountId: $accountId)';
+    return 'AccountInputEvent.fetch(accountId: $accountId)';
 }
 
 
@@ -274,16 +277,18 @@ _$InputAccountInputEventCopyWith<_InputAccountInputEvent> get copyWith => __$Inp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputAccountInputEvent&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InputAccountInputEvent&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isDebt);
+int get hashCode {
+    return Object.hash(runtimeType,isDebt);
+}
 
 @override
 String toString() {
-  return 'AccountInputEvent.input(isDebt: $isDebt)';
+    return 'AccountInputEvent.input(isDebt: $isDebt)';
 }
 
 
@@ -340,16 +345,18 @@ _$ChangeTitleAccountInputEventCopyWith<_ChangeTitleAccountInputEvent> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTitleAccountInputEvent&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTitleAccountInputEvent&&(identical(other.title, title) || other.title == title));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title);
+int get hashCode {
+    return Object.hash(runtimeType,title);
+}
 
 @override
 String toString() {
-  return 'AccountInputEvent.changeTitle(title: $title)';
+    return 'AccountInputEvent.changeTitle(title: $title)';
 }
 
 
@@ -406,16 +413,18 @@ _$ChangeUserAccountInputEventCopyWith<_ChangeUserAccountInputEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeUserAccountInputEvent&&(identical(other.user, user) || other.user == user));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeUserAccountInputEvent&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user);
+int get hashCode {
+    return Object.hash(runtimeType,user);
+}
 
 @override
 String toString() {
-  return 'AccountInputEvent.changeUser(user: $user)';
+    return 'AccountInputEvent.changeUser(user: $user)';
 }
 
 
@@ -479,7 +488,7 @@ class _SaveAccountInputEvent implements AccountInputEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveAccountInputEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveAccountInputEvent);
 }
 
 
@@ -488,7 +497,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AccountInputEvent.save()';
+    return 'AccountInputEvent.save()';
 }
 
 
@@ -511,16 +520,21 @@ $AccountInputStateCopyWith<AccountInputState> get copyWith => _$AccountInputStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.users, users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  final _this = this as AccountInputState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountInputState&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.isDebt, _this.isDebt) || other.isDebt == _this.isDebt)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&const DeepCollectionEquality().equals(other.users, _this.users)&&(identical(other.account, _this.account) || other.account == _this.account)&&(identical(other.isSaved, _this.isSaved) || other.isSaved == _this.isSaved)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(users),account,isSaved,error,isLoading);
+int get hashCode {
+  final _this = this as AccountInputState;
+  return Object.hash(runtimeType,_this.title,_this.isDebt,_this.userId,const DeepCollectionEquality().hash(_this.users),_this.account,_this.isSaved,_this.error,_this.isLoading);
+}
 
 @override
 String toString() {
-  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved, error: $error, isLoading: $isLoading)';
+  final _this = this as AccountInputState;
+  return 'AccountInputState(title: ${_this.title}, isDebt: ${_this.isDebt}, userId: ${_this.userId}, users: ${_this.users}, account: ${_this.account}, isSaved: ${_this.isSaved}, error: ${_this.error}, isLoading: ${_this.isLoading})';
 }
 
 
@@ -549,7 +563,7 @@ class _$AccountInputStateCopyWithImpl<$Res>
 /// Create a copy of AccountInputState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? isDebt = null,Object? userId = freezed,Object? users = null,Object? account = freezed,Object? isSaved = null,Object? error = freezed,Object? isLoading = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountInputState(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDebt: null == isDebt ? _self.isDebt : isDebt // ignore: cast_nullable_to_non_nullable
 as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -711,7 +725,7 @@ return $default(_that.title,_that.isDebt,_that.userId,_that.users,_that.account,
 
 
 class _AccountInputState implements AccountInputState {
-  const _AccountInputState({required this.title, required this.isDebt, required this.userId, required final  List<User> users, this.account, required this.isSaved, this.error, this.isLoading = false}): _users = users;
+  const _AccountInputState({required this.title, required this.isDebt, required this.userId, required  List<User> users, this.account, required this.isSaved, this.error, this.isLoading = false}): _users = users;
   
 
 @override final  String title;
@@ -739,16 +753,18 @@ _$AccountInputStateCopyWith<_AccountInputState> get copyWith => __$AccountInputS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other._users, _users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountInputState&&(identical(other.title, title) || other.title == title)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.users, _users)&&(identical(other.account, account) || other.account == account)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(_users),account,isSaved,error,isLoading);
+int get hashCode {
+    return Object.hash(runtimeType,title,isDebt,userId,const DeepCollectionEquality().hash(_users),account,isSaved,error,isLoading);
+}
 
 @override
 String toString() {
-  return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved, error: $error, isLoading: $isLoading)';
+    return 'AccountInputState(title: $title, isDebt: $isDebt, userId: $userId, users: $users, account: $account, isSaved: $isSaved, error: $error, isLoading: $isLoading)';
 }
 
 

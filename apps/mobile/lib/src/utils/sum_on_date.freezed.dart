@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'sum_on_date.dart';
@@ -9,6 +9,7 @@ part of 'sum_on_date.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $SumOnDateCopyWith<SumOnDate> get copyWith => _$SumOnDateCopyWithImpl<SumOnDate>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SumOnDate&&(identical(other.date, date) || other.date == date)&&(identical(other.sum, sum) || other.sum == sum));
+  final _this = this as SumOnDate;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SumOnDate&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.sum, _this.sum) || other.sum == _this.sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,date,sum);
+int get hashCode {
+  final _this = this as SumOnDate;
+  return Object.hash(runtimeType,_this.date,_this.sum);
+}
 
 @override
 String toString() {
-  return 'SumOnDate(date: $date, sum: $sum)';
+  final _this = this as SumOnDate;
+  return 'SumOnDate(date: ${_this.date}, sum: ${_this.sum})';
 }
 
 
@@ -63,9 +69,9 @@ class _$SumOnDateCopyWithImpl<$Res>
 /// Create a copy of SumOnDate
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? sum = null,}) {
-  return _then(_self.copyWith(
-date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
-as DateTime,sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+  return _then(SumOnDate(
+null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -223,16 +229,18 @@ _$SumOnDateCopyWith<_SumOnDate> get copyWith => __$SumOnDateCopyWithImpl<_SumOnD
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SumOnDate&&(identical(other.date, date) || other.date == date)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SumOnDate&&(identical(other.date, date) || other.date == date)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,date,sum);
+int get hashCode {
+    return Object.hash(runtimeType,date,sum);
+}
 
 @override
 String toString() {
-  return 'SumOnDate(date: $date, sum: $sum)';
+    return 'SumOnDate(date: $date, sum: $sum)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'loading_state.dart';
@@ -9,6 +9,7 @@ part of 'loading_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $LoadingStateCopyWith<LoadingState> get copyWith => _$LoadingStateCopyWithImpl<L
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadingState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
+  final _this = this as LoadingState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadingState&&(identical(other.accountCount, _this.accountCount) || other.accountCount == _this.accountCount)&&(identical(other.categoryCount, _this.categoryCount) || other.categoryCount == _this.categoryCount)&&(identical(other.operationCount, _this.operationCount) || other.operationCount == _this.operationCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+int get hashCode {
+  final _this = this as LoadingState;
+  return Object.hash(runtimeType,_this.accountCount,_this.categoryCount,_this.operationCount);
+}
 
 @override
 String toString() {
-  return 'LoadingState(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
+  final _this = this as LoadingState;
+  return 'LoadingState(accountCount: ${_this.accountCount}, categoryCount: ${_this.categoryCount}, operationCount: ${_this.operationCount})';
 }
 
 
@@ -63,7 +69,7 @@ class _$LoadingStateCopyWithImpl<$Res>
 /// Create a copy of LoadingState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accountCount = null,Object? categoryCount = null,Object? operationCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(LoadingState(
 accountCount: null == accountCount ? _self.accountCount : accountCount // ignore: cast_nullable_to_non_nullable
 as int,categoryCount: null == categoryCount ? _self.categoryCount : categoryCount // ignore: cast_nullable_to_non_nullable
 as int,operationCount: null == operationCount ? _self.operationCount : operationCount // ignore: cast_nullable_to_non_nullable
@@ -225,16 +231,18 @@ _$LoadingStateCopyWith<_LoadingState> get copyWith => __$LoadingStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingState&&(identical(other.accountCount, accountCount) || other.accountCount == accountCount)&&(identical(other.categoryCount, categoryCount) || other.categoryCount == categoryCount)&&(identical(other.operationCount, operationCount) || other.operationCount == operationCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+int get hashCode {
+    return Object.hash(runtimeType,accountCount,categoryCount,operationCount);
+}
 
 @override
 String toString() {
-  return 'LoadingState(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
+    return 'LoadingState(accountCount: $accountCount, categoryCount: $categoryCount, operationCount: $operationCount)';
 }
 
 

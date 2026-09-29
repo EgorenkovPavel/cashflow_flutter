@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation.dart';
@@ -9,6 +9,7 @@ part of 'operation.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 OperationResponse _$OperationResponseFromJson(
@@ -59,16 +60,21 @@ $OperationResponseCopyWith<OperationResponse> get copyWith => _$OperationRespons
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum));
+  final _this = this as OperationResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationResponse&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.account, _this.account) || other.account == _this.account)&&(identical(other.sum, _this.sum) || other.sum == _this.sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,sum);
+int get hashCode {
+  final _this = this as OperationResponse;
+  return Object.hash(runtimeType,_this.id,_this.deleted,_this.date,_this.account,_this.sum);
+}
 
 @override
 String toString() {
-  return 'OperationResponse(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum)';
+  final _this = this as OperationResponse;
+  return 'OperationResponse(id: ${_this.id}, deleted: ${_this.deleted}, date: ${_this.date}, account: ${_this.account}, sum: ${_this.sum})';
 }
 
 
@@ -265,7 +271,7 @@ return exchange(_that.id,_that.deleted,_that.date,_that.account,_that.sum,_that.
 @JsonSerializable()
 
 class InputOperationResponse extends OperationResponse {
-  const InputOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'input',super._();
+  const InputOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'input',super._();
   factory InputOperationResponse.fromJson(Map<String, dynamic> json) => _$InputOperationResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -292,16 +298,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'OperationResponse.input(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'OperationResponse.input(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -357,7 +365,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class OutputOperationResponse extends OperationResponse {
-  const OutputOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'output',super._();
+  const OutputOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'output',super._();
   factory OutputOperationResponse.fromJson(Map<String, dynamic> json) => _$OutputOperationResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -384,16 +392,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'OperationResponse.output(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'OperationResponse.output(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -449,7 +459,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class TransferOperationResponse extends OperationResponse {
-  const TransferOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum, final  String? $type}): $type = $type ?? 'transfer',super._();
+  const TransferOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum,  String? $type}): $type = $type ?? 'transfer',super._();
   factory TransferOperationResponse.fromJson(Map<String, dynamic> json) => _$TransferOperationResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -476,16 +486,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,recAccount,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,recAccount,sum);
+}
 
 @override
 String toString() {
-  return 'OperationResponse.transfer(id: $id, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
+    return 'OperationResponse.transfer(id: $id, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
 }
 
 
@@ -541,7 +553,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class ExchangeOperationResponse extends OperationResponse {
-  const ExchangeOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum, final  String? $type}): $type = $type ?? 'exchange',super._();
+  const ExchangeOperationResponse({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum,  String? $type}): $type = $type ?? 'exchange',super._();
   factory ExchangeOperationResponse.fromJson(Map<String, dynamic> json) => _$ExchangeOperationResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -568,16 +580,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,sum,recSum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,sum,recSum);
+}
 
 @override
 String toString() {
-  return 'OperationResponse.exchange(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum, recSum: $recSum)';
+    return 'OperationResponse.exchange(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum, recSum: $recSum)';
 }
 
 
@@ -686,16 +700,21 @@ $CreateOperationRequestCopyWith<CreateOperationRequest> get copyWith => _$Create
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum));
+  final _this = this as CreateOperationRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateOperationRequest&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.account, _this.account) || other.account == _this.account)&&(identical(other.sum, _this.sum) || other.sum == _this.sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,account,sum);
+int get hashCode {
+  final _this = this as CreateOperationRequest;
+  return Object.hash(runtimeType,_this.date,_this.account,_this.sum);
+}
 
 @override
 String toString() {
-  return 'CreateOperationRequest(date: $date, account: $account, sum: $sum)';
+  final _this = this as CreateOperationRequest;
+  return 'CreateOperationRequest(date: ${_this.date}, account: ${_this.account}, sum: ${_this.sum})';
 }
 
 
@@ -890,7 +909,7 @@ return exchange(_that.date,_that.account,_that.sum,_that.recSum);case _:
 @JsonSerializable()
 
 class InputCreateOperationRequest implements CreateOperationRequest {
-  const InputCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'input';
+  const InputCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'input';
   factory InputCreateOperationRequest.fromJson(Map<String, dynamic> json) => _$InputCreateOperationRequestFromJson(json);
 
 @override final  DateTime date;
@@ -915,16 +934,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InputCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InputCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'CreateOperationRequest.input(date: $date, account: $account, category: $category, sum: $sum)';
+    return 'CreateOperationRequest.input(date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -978,7 +999,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class OutputCreateOperationRequest implements CreateOperationRequest {
-  const OutputCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'output';
+  const OutputCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'output';
   factory OutputCreateOperationRequest.fromJson(Map<String, dynamic> json) => _$OutputCreateOperationRequestFromJson(json);
 
 @override final  DateTime date;
@@ -1003,16 +1024,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'CreateOperationRequest.output(date: $date, account: $account, category: $category, sum: $sum)';
+    return 'CreateOperationRequest.output(date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -1066,7 +1089,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class TransferCreateOperationRequest implements CreateOperationRequest {
-  const TransferCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum, final  String? $type}): $type = $type ?? 'transfer';
+  const TransferCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum,  String? $type}): $type = $type ?? 'transfer';
   factory TransferCreateOperationRequest.fromJson(Map<String, dynamic> json) => _$TransferCreateOperationRequestFromJson(json);
 
 @override final  DateTime date;
@@ -1091,16 +1114,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,account,recAccount,sum);
+int get hashCode {
+    return Object.hash(runtimeType,date,account,recAccount,sum);
+}
 
 @override
 String toString() {
-  return 'CreateOperationRequest.transfer(date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
+    return 'CreateOperationRequest.transfer(date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
 }
 
 
@@ -1154,7 +1179,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class ExchangeCreateOperationRequest implements CreateOperationRequest {
-  const ExchangeCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum, final  String? $type}): $type = $type ?? 'exchange';
+  const ExchangeCreateOperationRequest({required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum,  String? $type}): $type = $type ?? 'exchange';
   factory ExchangeCreateOperationRequest.fromJson(Map<String, dynamic> json) => _$ExchangeCreateOperationRequestFromJson(json);
 
 @override final  DateTime date;
@@ -1179,16 +1204,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeCreateOperationRequest&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,account,sum,recSum);
+int get hashCode {
+    return Object.hash(runtimeType,date,account,sum,recSum);
+}
 
 @override
 String toString() {
-  return 'CreateOperationRequest.exchange(date: $date, account: $account, sum: $sum, recSum: $recSum)';
+    return 'CreateOperationRequest.exchange(date: $date, account: $account, sum: $sum, recSum: $recSum)';
 }
 
 
@@ -1295,16 +1322,21 @@ $UpdateOperationRequestCopyWith<UpdateOperationRequest> get copyWith => _$Update
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum));
+  final _this = this as UpdateOperationRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateOperationRequest&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.account, _this.account) || other.account == _this.account)&&(identical(other.sum, _this.sum) || other.sum == _this.sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,sum);
+int get hashCode {
+  final _this = this as UpdateOperationRequest;
+  return Object.hash(runtimeType,_this.id,_this.deleted,_this.date,_this.account,_this.sum);
+}
 
 @override
 String toString() {
-  return 'UpdateOperationRequest(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum)';
+  final _this = this as UpdateOperationRequest;
+  return 'UpdateOperationRequest(id: ${_this.id}, deleted: ${_this.deleted}, date: ${_this.date}, account: ${_this.account}, sum: ${_this.sum})';
 }
 
 
@@ -1501,7 +1533,7 @@ return exchange(_that.id,_that.deleted,_that.date,_that.account,_that.sum,_that.
 @JsonSerializable()
 
 class InputUpdateOperationRequest extends UpdateOperationRequest {
-  const InputUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'input',super._();
+  const InputUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'input',super._();
   factory InputUpdateOperationRequest.fromJson(Map<String, dynamic> json) => _$InputUpdateOperationRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1528,16 +1560,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InputUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InputUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'UpdateOperationRequest.input(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'UpdateOperationRequest.input(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -1593,7 +1627,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class OutputUpdateOperationRequest extends UpdateOperationRequest {
-  const OutputUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum, final  String? $type}): $type = $type ?? 'output',super._();
+  const OutputUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.category, required this.sum,  String? $type}): $type = $type ?? 'output',super._();
   factory OutputUpdateOperationRequest.fromJson(Map<String, dynamic> json) => _$OutputUpdateOperationRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1620,16 +1654,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'UpdateOperationRequest.output(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'UpdateOperationRequest.output(id: $id, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -1685,7 +1721,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class TransferUpdateOperationRequest extends UpdateOperationRequest {
-  const TransferUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum, final  String? $type}): $type = $type ?? 'transfer',super._();
+  const TransferUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, @UuidValueConverter() required this.recAccount, required this.sum,  String? $type}): $type = $type ?? 'transfer',super._();
   factory TransferUpdateOperationRequest.fromJson(Map<String, dynamic> json) => _$TransferUpdateOperationRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1712,16 +1748,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,recAccount,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,recAccount,sum);
+}
 
 @override
 String toString() {
-  return 'UpdateOperationRequest.transfer(id: $id, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
+    return 'UpdateOperationRequest.transfer(id: $id, deleted: $deleted, date: $date, account: $account, recAccount: $recAccount, sum: $sum)';
 }
 
 
@@ -1777,7 +1815,7 @@ $MoneyCopyWith<$Res> get sum {
 @JsonSerializable()
 
 class ExchangeUpdateOperationRequest extends UpdateOperationRequest {
-  const ExchangeUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum, final  String? $type}): $type = $type ?? 'exchange',super._();
+  const ExchangeUpdateOperationRequest({@UuidValueConverter() required this.id, this.deleted = false, required this.date, @UuidValueConverter() required this.account, required this.sum, required this.recSum,  String? $type}): $type = $type ?? 'exchange',super._();
   factory ExchangeUpdateOperationRequest.fromJson(Map<String, dynamic> json) => _$ExchangeUpdateOperationRequestFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -1804,16 +1842,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeUpdateOperationRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.recSum, recSum) || other.recSum == recSum));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deleted,date,account,sum,recSum);
+int get hashCode {
+    return Object.hash(runtimeType,id,deleted,date,account,sum,recSum);
+}
 
 @override
 String toString() {
-  return 'UpdateOperationRequest.exchange(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum, recSum: $recSum)';
+    return 'UpdateOperationRequest.exchange(id: $id, deleted: $deleted, date: $date, account: $account, sum: $sum, recSum: $recSum)';
 }
 
 

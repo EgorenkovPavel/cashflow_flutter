@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_filter_bloc.dart';
@@ -9,6 +9,7 @@ part of 'operation_filter_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$OperationFilterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationFilterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationFilterEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OperationFilterEvent()';
+    return 'OperationFilterEvent()';
 }
 
 
@@ -137,7 +138,7 @@ return removeCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( OperationListFilter filter)?  init,TResult Function()?  resetPeriod,TResult Function( DateTimeRange period)?  setPeriod,TResult Function( AccountView account)?  addAccount,TResult Function( AccountView account)?  removeAccount,TResult Function( CategoryView category)?  addCategory,TResult Function( CategoryView category)?  removeCategory,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( OperationListFilter filter)?  init,TResult Function()?  resetPeriod,TResult Function( DateTimeRange<DateTime> period)?  setPeriod,TResult Function( AccountView account)?  addAccount,TResult Function( AccountView account)?  removeAccount,TResult Function( CategoryView category)?  addCategory,TResult Function( CategoryView category)?  removeCategory,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InitPeriodOperationFilterEvent() when init != null:
 return init(_that.filter);case _ResetPeriodOperationFilterEvent() when resetPeriod != null:
@@ -164,7 +165,7 @@ return removeCategory(_that.category);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( OperationListFilter filter)  init,required TResult Function()  resetPeriod,required TResult Function( DateTimeRange period)  setPeriod,required TResult Function( AccountView account)  addAccount,required TResult Function( AccountView account)  removeAccount,required TResult Function( CategoryView category)  addCategory,required TResult Function( CategoryView category)  removeCategory,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( OperationListFilter filter)  init,required TResult Function()  resetPeriod,required TResult Function( DateTimeRange<DateTime> period)  setPeriod,required TResult Function( AccountView account)  addAccount,required TResult Function( AccountView account)  removeAccount,required TResult Function( CategoryView category)  addCategory,required TResult Function( CategoryView category)  removeCategory,}) {final _that = this;
 switch (_that) {
 case _InitPeriodOperationFilterEvent():
 return init(_that.filter);case _ResetPeriodOperationFilterEvent():
@@ -190,7 +191,7 @@ return removeCategory(_that.category);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( OperationListFilter filter)?  init,TResult? Function()?  resetPeriod,TResult? Function( DateTimeRange period)?  setPeriod,TResult? Function( AccountView account)?  addAccount,TResult? Function( AccountView account)?  removeAccount,TResult? Function( CategoryView category)?  addCategory,TResult? Function( CategoryView category)?  removeCategory,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( OperationListFilter filter)?  init,TResult? Function()?  resetPeriod,TResult? Function( DateTimeRange<DateTime> period)?  setPeriod,TResult? Function( AccountView account)?  addAccount,TResult? Function( AccountView account)?  removeAccount,TResult? Function( CategoryView category)?  addCategory,TResult? Function( CategoryView category)?  removeCategory,}) {final _that = this;
 switch (_that) {
 case _InitPeriodOperationFilterEvent() when init != null:
 return init(_that.filter);case _ResetPeriodOperationFilterEvent() when resetPeriod != null:
@@ -226,16 +227,18 @@ _$InitPeriodOperationFilterEventCopyWith<_InitPeriodOperationFilterEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitPeriodOperationFilterEvent&&(identical(other.filter, filter) || other.filter == filter));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitPeriodOperationFilterEvent&&(identical(other.filter, filter) || other.filter == filter));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filter);
+int get hashCode {
+    return Object.hash(runtimeType,filter);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.init(filter: $filter)';
+    return 'OperationFilterEvent.init(filter: $filter)';
 }
 
 
@@ -296,7 +299,7 @@ class _ResetPeriodOperationFilterEvent implements OperationFilterEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResetPeriodOperationFilterEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResetPeriodOperationFilterEvent);
 }
 
 
@@ -305,7 +308,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OperationFilterEvent.resetPeriod()';
+    return 'OperationFilterEvent.resetPeriod()';
 }
 
 
@@ -321,7 +324,7 @@ class _SetPeriodOperationFilterEvent implements OperationFilterEvent {
   const _SetPeriodOperationFilterEvent({required this.period});
   
 
- final  DateTimeRange period;
+ final  DateTimeRange<DateTime> period;
 
 /// Create a copy of OperationFilterEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -333,16 +336,18 @@ _$SetPeriodOperationFilterEventCopyWith<_SetPeriodOperationFilterEvent> get copy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetPeriodOperationFilterEvent&&(identical(other.period, period) || other.period == period));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetPeriodOperationFilterEvent&&(identical(other.period, period) || other.period == period));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period);
+int get hashCode {
+    return Object.hash(runtimeType,period);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.setPeriod(period: $period)';
+    return 'OperationFilterEvent.setPeriod(period: $period)';
 }
 
 
@@ -353,7 +358,7 @@ abstract mixin class _$SetPeriodOperationFilterEventCopyWith<$Res> implements $O
   factory _$SetPeriodOperationFilterEventCopyWith(_SetPeriodOperationFilterEvent value, $Res Function(_SetPeriodOperationFilterEvent) _then) = __$SetPeriodOperationFilterEventCopyWithImpl;
 @useResult
 $Res call({
- DateTimeRange period
+ DateTimeRange<DateTime> period
 });
 
 
@@ -373,7 +378,7 @@ class __$SetPeriodOperationFilterEventCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? period = null,}) {
   return _then(_SetPeriodOperationFilterEvent(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as DateTimeRange,
+as DateTimeRange<DateTime>,
   ));
 }
 
@@ -399,16 +404,18 @@ _$AddAccountOperationFilterEventCopyWith<_AddAccountOperationFilterEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddAccountOperationFilterEvent&&(identical(other.account, account) || other.account == account));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddAccountOperationFilterEvent&&(identical(other.account, account) || other.account == account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,account);
+int get hashCode {
+    return Object.hash(runtimeType,account);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.addAccount(account: $account)';
+    return 'OperationFilterEvent.addAccount(account: $account)';
 }
 
 
@@ -474,16 +481,18 @@ _$RemoveAccountOperationFilterEventCopyWith<_RemoveAccountOperationFilterEvent> 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveAccountOperationFilterEvent&&(identical(other.account, account) || other.account == account));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveAccountOperationFilterEvent&&(identical(other.account, account) || other.account == account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,account);
+int get hashCode {
+    return Object.hash(runtimeType,account);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.removeAccount(account: $account)';
+    return 'OperationFilterEvent.removeAccount(account: $account)';
 }
 
 
@@ -549,16 +558,18 @@ _$AddCategoryOperationFilterEventCopyWith<_AddCategoryOperationFilterEvent> get 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddCategoryOperationFilterEvent&&(identical(other.category, category) || other.category == category));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddCategoryOperationFilterEvent&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category);
+int get hashCode {
+    return Object.hash(runtimeType,category);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.addCategory(category: $category)';
+    return 'OperationFilterEvent.addCategory(category: $category)';
 }
 
 
@@ -624,16 +635,18 @@ _$RemoveCategoryOperationFilterEventCopyWith<_RemoveCategoryOperationFilterEvent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveCategoryOperationFilterEvent&&(identical(other.category, category) || other.category == category));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveCategoryOperationFilterEvent&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category);
+int get hashCode {
+    return Object.hash(runtimeType,category);
+}
 
 @override
 String toString() {
-  return 'OperationFilterEvent.removeCategory(category: $category)';
+    return 'OperationFilterEvent.removeCategory(category: $category)';
 }
 
 
@@ -683,7 +696,7 @@ $CategoryViewCopyWith<$Res> get category {
 /// @nodoc
 mixin _$OperationFilterState {
 
- DateTimeRange? get period; Set<int> get accountIds; Set<int> get categoryIds;
+ DateTimeRange<DateTime>? get period; Set<int> get accountIds; Set<int> get categoryIds;
 /// Create a copy of OperationFilterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -694,16 +707,21 @@ $OperationFilterStateCopyWith<OperationFilterState> get copyWith => _$OperationF
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationFilterState&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.accountIds, accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, categoryIds));
+  final _this = this as OperationFilterState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationFilterState&&(identical(other.period, _this.period) || other.period == _this.period)&&const DeepCollectionEquality().equals(other.accountIds, _this.accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, _this.categoryIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,const DeepCollectionEquality().hash(accountIds),const DeepCollectionEquality().hash(categoryIds));
+int get hashCode {
+  final _this = this as OperationFilterState;
+  return Object.hash(runtimeType,_this.period,const DeepCollectionEquality().hash(_this.accountIds),const DeepCollectionEquality().hash(_this.categoryIds));
+}
 
 @override
 String toString() {
-  return 'OperationFilterState(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
+  final _this = this as OperationFilterState;
+  return 'OperationFilterState(period: ${_this.period}, accountIds: ${_this.accountIds}, categoryIds: ${_this.categoryIds})';
 }
 
 
@@ -714,7 +732,7 @@ abstract mixin class $OperationFilterStateCopyWith<$Res>  {
   factory $OperationFilterStateCopyWith(OperationFilterState value, $Res Function(OperationFilterState) _then) = _$OperationFilterStateCopyWithImpl;
 @useResult
 $Res call({
- DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds
+ DateTimeRange<DateTime>? period, Set<int> accountIds, Set<int> categoryIds
 });
 
 
@@ -732,9 +750,9 @@ class _$OperationFilterStateCopyWithImpl<$Res>
 /// Create a copy of OperationFilterState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? period = freezed,Object? accountIds = null,Object? categoryIds = null,}) {
-  return _then(_self.copyWith(
+  return _then(OperationFilterState(
 period: freezed == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as DateTimeRange?,accountIds: null == accountIds ? _self.accountIds : accountIds // ignore: cast_nullable_to_non_nullable
+as DateTimeRange<DateTime>?,accountIds: null == accountIds ? _self.accountIds : accountIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,categoryIds: null == categoryIds ? _self.categoryIds : categoryIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,
   ));
@@ -821,7 +839,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OperationFilterState() when $default != null:
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -842,7 +860,7 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)  $default,) {final _that = this;
 switch (_that) {
 case _OperationFilterState():
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -862,7 +880,7 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTimeRange? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTimeRange<DateTime>? period,  Set<int> accountIds,  Set<int> categoryIds)?  $default,) {final _that = this;
 switch (_that) {
 case _OperationFilterState() when $default != null:
 return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
@@ -877,10 +895,10 @@ return $default(_that.period,_that.accountIds,_that.categoryIds);case _:
 
 
 class _OperationFilterState extends OperationFilterState {
-  const _OperationFilterState({this.period, final  Set<int> accountIds = const {}, final  Set<int> categoryIds = const {}}): _accountIds = accountIds,_categoryIds = categoryIds,super._();
+  const _OperationFilterState({this.period,  Set<int> accountIds = const {},  Set<int> categoryIds = const {}}): _accountIds = accountIds,_categoryIds = categoryIds,super._();
   
 
-@override final  DateTimeRange? period;
+@override final  DateTimeRange<DateTime>? period;
  final  Set<int> _accountIds;
 @override@JsonKey() Set<int> get accountIds {
   if (_accountIds is EqualUnmodifiableSetView) return _accountIds;
@@ -906,16 +924,18 @@ _$OperationFilterStateCopyWith<_OperationFilterState> get copyWith => __$Operati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationFilterState&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other._accountIds, _accountIds)&&const DeepCollectionEquality().equals(other._categoryIds, _categoryIds));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationFilterState&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.accountIds, _accountIds)&&const DeepCollectionEquality().equals(other.categoryIds, _categoryIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,const DeepCollectionEquality().hash(_accountIds),const DeepCollectionEquality().hash(_categoryIds));
+int get hashCode {
+    return Object.hash(runtimeType,period,const DeepCollectionEquality().hash(_accountIds),const DeepCollectionEquality().hash(_categoryIds));
+}
 
 @override
 String toString() {
-  return 'OperationFilterState(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
+    return 'OperationFilterState(period: $period, accountIds: $accountIds, categoryIds: $categoryIds)';
 }
 
 
@@ -926,7 +946,7 @@ abstract mixin class _$OperationFilterStateCopyWith<$Res> implements $OperationF
   factory _$OperationFilterStateCopyWith(_OperationFilterState value, $Res Function(_OperationFilterState) _then) = __$OperationFilterStateCopyWithImpl;
 @override @useResult
 $Res call({
- DateTimeRange? period, Set<int> accountIds, Set<int> categoryIds
+ DateTimeRange<DateTime>? period, Set<int> accountIds, Set<int> categoryIds
 });
 
 
@@ -946,7 +966,7 @@ class __$OperationFilterStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? period = freezed,Object? accountIds = null,Object? categoryIds = null,}) {
   return _then(_OperationFilterState(
 period: freezed == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as DateTimeRange?,accountIds: null == accountIds ? _self._accountIds : accountIds // ignore: cast_nullable_to_non_nullable
+as DateTimeRange<DateTime>?,accountIds: null == accountIds ? _self._accountIds : accountIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,categoryIds: null == categoryIds ? _self._categoryIds : categoryIds // ignore: cast_nullable_to_non_nullable
 as Set<int>,
   ));

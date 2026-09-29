@@ -122,7 +122,6 @@ class _UserChooser extends StatelessWidget {
   final void Function(User?) onChange;
 
   const _UserChooser({
-    super.key,
     this.initialId,
     required this.users,
     required this.onChange,

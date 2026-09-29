@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation.dart';
@@ -9,6 +9,7 @@ part of 'operation.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $OperationCopyWith<Operation> get copyWith => _$OperationCopyWithImpl<Operation>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Operation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date));
+  final _this = this as Operation;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Operation&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.cloudId, _this.cloudId) || other.cloudId == _this.cloudId)&&(identical(other.synced, _this.synced) || other.synced == _this.synced)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.date, _this.date) || other.date == _this.date));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,synced,deleted,date);
+int get hashCode {
+  final _this = this as Operation;
+  return Object.hash(runtimeType,_this.id,_this.cloudId,_this.synced,_this.deleted,_this.date);
+}
 
 @override
 String toString() {
-  return 'Operation(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date)';
+  final _this = this as Operation;
+  return 'Operation(id: ${_this.id}, cloudId: ${_this.cloudId}, synced: ${_this.synced}, deleted: ${_this.deleted}, date: ${_this.date})';
 }
 
 
@@ -244,16 +250,18 @@ $InputOperationCopyWith<InputOperation> get copyWith => _$InputOperationCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'Operation.input(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'Operation.input(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -333,16 +341,18 @@ $OutputOperationCopyWith<OutputOperation> get copyWith => _$OutputOperationCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'Operation.output(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
+    return 'Operation.output(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -422,16 +432,18 @@ $TransferOperationCopyWith<TransferOperation> get copyWith => _$TransferOperatio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.accountSend, accountSend) || other.accountSend == accountSend)&&(identical(other.accountReceived, accountReceived) || other.accountReceived == accountReceived)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.accountSend, accountSend) || other.accountSend == accountSend)&&(identical(other.accountReceived, accountReceived) || other.accountReceived == accountReceived)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,synced,deleted,date,accountSend,accountReceived,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,synced,deleted,date,accountSend,accountReceived,sum);
+}
 
 @override
 String toString() {
-  return 'Operation.transfer(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, accountSend: $accountSend, accountReceived: $accountReceived, sum: $sum)';
+    return 'Operation.transfer(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, accountSend: $accountSend, accountReceived: $accountReceived, sum: $sum)';
 }
 
 
@@ -511,16 +523,18 @@ $ExchangeOperationCopyWith<ExchangeOperation> get copyWith => _$ExchangeOperatio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sumSend, sumSend) || other.sumSend == sumSend)&&(identical(other.sumReceived, sumReceived) || other.sumReceived == sumReceived));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperation&&(identical(other.id, id) || other.id == id)&&(identical(other.cloudId, cloudId) || other.cloudId == cloudId)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.date, date) || other.date == date)&&(identical(other.account, account) || other.account == account)&&(identical(other.sumSend, sumSend) || other.sumSend == sumSend)&&(identical(other.sumReceived, sumReceived) || other.sumReceived == sumReceived));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,sumSend,sumReceived);
+int get hashCode {
+    return Object.hash(runtimeType,id,cloudId,synced,deleted,date,account,sumSend,sumReceived);
+}
 
 @override
 String toString() {
-  return 'Operation.exchange(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, sumSend: $sumSend, sumReceived: $sumReceived)';
+    return 'Operation.exchange(id: $id, cloudId: $cloudId, synced: $synced, deleted: $deleted, date: $date, account: $account, sumSend: $sumSend, sumReceived: $sumReceived)';
 }
 
 

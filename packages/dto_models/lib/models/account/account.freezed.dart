@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account.dart';
@@ -9,6 +9,7 @@ part of 'account.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 BaseAccountResponse _$BaseAccountResponseFromJson(
@@ -51,16 +52,21 @@ $BaseAccountResponseCopyWith<BaseAccountResponse> get copyWith => _$BaseAccountR
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseAccountResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+  final _this = this as BaseAccountResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseAccountResponse&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.userId, _this.userId) || other.userId == _this.userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,userId);
+int get hashCode {
+  final _this = this as BaseAccountResponse;
+  return Object.hash(runtimeType,_this.id,_this.title,_this.userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccountResponse(id: $id, title: $title, userId: $userId)';
+  final _this = this as BaseAccountResponse;
+  return 'BaseAccountResponse(id: ${_this.id}, title: ${_this.title}, userId: ${_this.userId})';
 }
 
 
@@ -234,7 +240,7 @@ return debt(_that.id,_that.title,_that.userId);case _:
 @JsonSerializable()
 
 class AccountResponse implements BaseAccountResponse {
-  const AccountResponse({@UuidValueConverter() required this.id, required this.title, @UuidValueConverter() required this.userId, final  String? $type}): $type = $type ?? 'account';
+  const AccountResponse({@UuidValueConverter() required this.id, required this.title, @UuidValueConverter() required this.userId,  String? $type}): $type = $type ?? 'account';
   factory AccountResponse.fromJson(Map<String, dynamic> json) => _$AccountResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -258,16 +264,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccountResponse.account(id: $id, title: $title, userId: $userId)';
+    return 'BaseAccountResponse.account(id: $id, title: $title, userId: $userId)';
 }
 
 
@@ -311,7 +319,7 @@ as UuidValue,
 @JsonSerializable()
 
 class DebtResponse implements BaseAccountResponse {
-  const DebtResponse({@UuidValueConverter() required this.id, required this.title, @UuidValueConverter() required this.userId, final  String? $type}): $type = $type ?? 'debt';
+  const DebtResponse({@UuidValueConverter() required this.id, required this.title, @UuidValueConverter() required this.userId,  String? $type}): $type = $type ?? 'debt';
   factory DebtResponse.fromJson(Map<String, dynamic> json) => _$DebtResponseFromJson(json);
 
 @override@UuidValueConverter() final  UuidValue id;
@@ -335,16 +343,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DebtResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DebtResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,userId);
+}
 
 @override
 String toString() {
-  return 'BaseAccountResponse.debt(id: $id, title: $title, userId: $userId)';
+    return 'BaseAccountResponse.debt(id: $id, title: $title, userId: $userId)';
 }
 
 
@@ -424,16 +434,21 @@ $CreateBaseAccountRequestCopyWith<CreateBaseAccountRequest> get copyWith => _$Cr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateBaseAccountRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+  final _this = this as CreateBaseAccountRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateBaseAccountRequest&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.userId, _this.userId) || other.userId == _this.userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,userId);
+int get hashCode {
+  final _this = this as CreateBaseAccountRequest;
+  return Object.hash(runtimeType,_this.title,_this.userId);
+}
 
 @override
 String toString() {
-  return 'CreateBaseAccountRequest(title: $title, userId: $userId)';
+  final _this = this as CreateBaseAccountRequest;
+  return 'CreateBaseAccountRequest(title: ${_this.title}, userId: ${_this.userId})';
 }
 
 
@@ -606,7 +621,7 @@ return debt(_that.title,_that.userId);case _:
 @JsonSerializable()
 
 class CreateAccountRequest implements CreateBaseAccountRequest {
-  const CreateAccountRequest({required this.title, @UuidValueConverter() required this.userId, final  String? $type}): $type = $type ?? 'account';
+  const CreateAccountRequest({required this.title, @UuidValueConverter() required this.userId,  String? $type}): $type = $type ?? 'account';
   factory CreateAccountRequest.fromJson(Map<String, dynamic> json) => _$CreateAccountRequestFromJson(json);
 
 @override final  String title;
@@ -629,16 +644,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateAccountRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateAccountRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,title,userId);
+}
 
 @override
 String toString() {
-  return 'CreateBaseAccountRequest.account(title: $title, userId: $userId)';
+    return 'CreateBaseAccountRequest.account(title: $title, userId: $userId)';
 }
 
 
@@ -681,7 +698,7 @@ as UuidValue,
 @JsonSerializable()
 
 class CreateDebtRequest implements CreateBaseAccountRequest {
-  const CreateDebtRequest({required this.title, @UuidValueConverter() required this.userId, final  String? $type}): $type = $type ?? 'debt';
+  const CreateDebtRequest({required this.title, @UuidValueConverter() required this.userId,  String? $type}): $type = $type ?? 'debt';
   factory CreateDebtRequest.fromJson(Map<String, dynamic> json) => _$CreateDebtRequestFromJson(json);
 
 @override final  String title;
@@ -704,16 +721,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDebtRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDebtRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,userId);
+int get hashCode {
+    return Object.hash(runtimeType,title,userId);
+}
 
 @override
 String toString() {
-  return 'CreateBaseAccountRequest.debt(title: $title, userId: $userId)';
+    return 'CreateBaseAccountRequest.debt(title: $title, userId: $userId)';
 }
 
 
@@ -769,16 +788,21 @@ $UpdateBaseAccountRequestCopyWith<UpdateBaseAccountRequest> get copyWith => _$Up
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBaseAccountRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  final _this = this as UpdateBaseAccountRequest;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBaseAccountRequest&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode {
+  final _this = this as UpdateBaseAccountRequest;
+  return Object.hash(runtimeType,_this.id,_this.name);
+}
 
 @override
 String toString() {
-  return 'UpdateBaseAccountRequest(id: $id, name: $name)';
+  final _this = this as UpdateBaseAccountRequest;
+  return 'UpdateBaseAccountRequest(id: ${_this.id}, name: ${_this.name})';
 }
 
 
@@ -807,7 +831,7 @@ class _$UpdateBaseAccountRequestCopyWithImpl<$Res>
 /// Create a copy of UpdateBaseAccountRequest
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
-  return _then(_self.copyWith(
+  return _then(UpdateBaseAccountRequest(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as UuidValue,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,
@@ -970,16 +994,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateBaseAccountRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateBaseAccountRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode {
+    return Object.hash(runtimeType,id,name);
+}
 
 @override
 String toString() {
-  return 'UpdateBaseAccountRequest(id: $id, name: $name)';
+    return 'UpdateBaseAccountRequest(id: $id, name: $name)';
 }
 
 

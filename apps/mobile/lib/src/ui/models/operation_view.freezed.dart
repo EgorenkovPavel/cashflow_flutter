@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'operation_view.dart';
@@ -9,6 +9,7 @@ part of 'operation_view.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $OperationViewCopyWith<OperationView> get copyWith => _$OperationViewCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account));
+  final _this = this as OperationView;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OperationView&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&(identical(other.synced, _this.synced) || other.synced == _this.synced)&&(identical(other.userPhotoUrl, _this.userPhotoUrl) || other.userPhotoUrl == _this.userPhotoUrl)&&(identical(other.userName, _this.userName) || other.userName == _this.userName)&&(identical(other.account, _this.account) || other.account == _this.account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account);
+int get hashCode {
+  final _this = this as OperationView;
+  return Object.hash(runtimeType,_this.id,_this.date,_this.deleted,_this.synced,_this.userPhotoUrl,_this.userName,_this.account);
+}
 
 @override
 String toString() {
-  return 'OperationView(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account)';
+  final _this = this as OperationView;
+  return 'OperationView(id: ${_this.id}, date: ${_this.date}, deleted: ${_this.deleted}, synced: ${_this.synced}, userPhotoUrl: ${_this.userPhotoUrl}, userName: ${_this.userName}, account: ${_this.account})';
 }
 
 
@@ -247,16 +253,18 @@ $InputOperationViewCopyWith<InputOperationView> get copyWith => _$InputOperation
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InputOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'OperationView.input(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, category: $category, sum: $sum)';
+    return 'OperationView.input(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -338,16 +346,18 @@ $OutputOperationViewCopyWith<OutputOperationView> get copyWith => _$OutputOperat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is OutputOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.category, category) || other.category == category)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,category,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,category,sum);
+}
 
 @override
 String toString() {
-  return 'OperationView.output(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, category: $category, sum: $sum)';
+    return 'OperationView.output(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, category: $category, sum: $sum)';
 }
 
 
@@ -429,16 +439,18 @@ $TransferOperationViewCopyWith<TransferOperationView> get copyWith => _$Transfer
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is TransferOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.recAccount, recAccount) || other.recAccount == recAccount)&&(identical(other.sum, sum) || other.sum == sum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,recAccount,sum);
+int get hashCode {
+    return Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,recAccount,sum);
+}
 
 @override
 String toString() {
-  return 'OperationView.transfer(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, recAccount: $recAccount, sum: $sum)';
+    return 'OperationView.transfer(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, recAccount: $recAccount, sum: $sum)';
 }
 
 
@@ -520,16 +532,18 @@ $ExchangeOperationViewCopyWith<ExchangeOperationView> get copyWith => _$Exchange
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.sendSum, sendSum) || other.sendSum == sendSum)&&(identical(other.receivedSum, receivedSum) || other.receivedSum == receivedSum));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ExchangeOperationView&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.account, account) || other.account == account)&&(identical(other.sendSum, sendSum) || other.sendSum == sendSum)&&(identical(other.receivedSum, receivedSum) || other.receivedSum == receivedSum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,sendSum,receivedSum);
+int get hashCode {
+    return Object.hash(runtimeType,id,date,deleted,synced,userPhotoUrl,userName,account,sendSum,receivedSum);
+}
 
 @override
 String toString() {
-  return 'OperationView.exchange(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, sendSum: $sendSum, receivedSum: $receivedSum)';
+    return 'OperationView.exchange(id: $id, date: $date, deleted: $deleted, synced: $synced, userPhotoUrl: $userPhotoUrl, userName: $userName, account: $account, sendSum: $sendSum, receivedSum: $receivedSum)';
 }
 
 

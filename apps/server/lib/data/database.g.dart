@@ -1008,10 +1008,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ];
 }
 
-typedef $$UserGroupsTableCreateCompanionBuilder =
-    UserGroupsCompanion Function({Value<UuidValue> id, Value<int> rowid});
-typedef $$UserGroupsTableUpdateCompanionBuilder =
-    UserGroupsCompanion Function({Value<UuidValue> id, Value<int> rowid});
+typedef $$UserGroupsTableCreateCompanionBuilder = UserGroupsCompanion Function({
+  Value<UuidValue> id,
+  Value<int> rowid,
+});
+typedef $$UserGroupsTableUpdateCompanionBuilder = UserGroupsCompanion Function({
+  Value<UuidValue> id,
+  Value<int> rowid,
+});
 
 final class $$UserGroupsTableReferences
     extends BaseReferences<_$AppDatabase, $UserGroupsTable, user_group> {
@@ -1021,7 +1025,7 @@ final class $$UserGroupsTableReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.users,
-    aliasName: $_aliasNameGenerator(db.userGroups.id, db.users.userGroupId),
+    aliasName: 'user_groups__id__users__user_group_id',
   );
 
   $$UsersTableProcessedTableManager get usersRefs {
@@ -1040,7 +1044,7 @@ final class $$UserGroupsTableReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.accounts,
-    aliasName: $_aliasNameGenerator(db.userGroups.id, db.accounts.userGroupId),
+    aliasName: 'user_groups__id__accounts__user_group_id',
   );
 
   $$AccountsTableProcessedTableManager get accountsRefs {
@@ -1225,16 +1229,14 @@ class $$UserGroupsTableTableManager
               $$UserGroupsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$UserGroupsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<UuidValue> id = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => UserGroupsCompanion(id: id, rowid: rowid),
-          createCompanionCallback:
-              ({
-                Value<UuidValue> id = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => UserGroupsCompanion.insert(id: id, rowid: rowid),
+          updateCompanionCallback: ({
+            Value<UuidValue> id = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => UserGroupsCompanion(id: id, rowid: rowid),
+          createCompanionCallback: ({
+            Value<UuidValue> id = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => UserGroupsCompanion.insert(id: id, rowid: rowid),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
@@ -1313,35 +1315,31 @@ typedef $$UserGroupsTableProcessedTableManager =
       user_group,
       PrefetchHooks Function({bool usersRefs, bool accountsRefs})
     >;
-typedef $$UsersTableCreateCompanionBuilder =
-    UsersCompanion Function({
-      Value<UuidValue> id,
-      required String name,
-      required String googleId,
-      required String email,
-      required String photo,
-      required UuidValue userGroupId,
-      Value<int> rowid,
-    });
-typedef $$UsersTableUpdateCompanionBuilder =
-    UsersCompanion Function({
-      Value<UuidValue> id,
-      Value<String> name,
-      Value<String> googleId,
-      Value<String> email,
-      Value<String> photo,
-      Value<UuidValue> userGroupId,
-      Value<int> rowid,
-    });
+typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
+  Value<UuidValue> id,
+  required String name,
+  required String googleId,
+  required String email,
+  required String photo,
+  required UuidValue userGroupId,
+  Value<int> rowid,
+});
+typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
+  Value<UuidValue> id,
+  Value<String> name,
+  Value<String> googleId,
+  Value<String> email,
+  Value<String> photo,
+  Value<UuidValue> userGroupId,
+  Value<int> rowid,
+});
 
 final class $$UsersTableReferences
     extends BaseReferences<_$AppDatabase, $UsersTable, user> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $UserGroupsTable _userGroupIdTable(_$AppDatabase db) =>
-      db.userGroups.createAlias(
-        $_aliasNameGenerator(db.users.userGroupId, db.userGroups.id),
-      );
+      db.userGroups.createAlias('users__user_group_id__user_groups__id');
 
   $$UserGroupsTableProcessedTableManager get userGroupId {
     final $_column = $_itemColumn<UuidValue>('user_group_id')!;
@@ -1361,7 +1359,7 @@ final class $$UsersTableReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.accounts,
-    aliasName: $_aliasNameGenerator(db.users.id, db.accounts.userId),
+    aliasName: 'users__id__accounts__user_id',
   );
 
   $$AccountsTableProcessedTableManager get accountsRefs {
@@ -1679,17 +1677,15 @@ class $$UsersTableTableManager
                     >
                   >(state) {
                     if (userGroupId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.userGroupId,
-                                referencedTable: $$UsersTableReferences
-                                    ._userGroupIdTable(db),
-                                referencedColumn: $$UsersTableReferences
-                                    ._userGroupIdTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.userGroupId,
+                        referencedTable: $$UsersTableReferences
+                            ._userGroupIdTable(db),
+                        referencedColumn: $$UsersTableReferences
+                            ._userGroupIdTable(db)
+                            .id,
+                      ) as T;
                     }
 
                     return state;
@@ -1729,34 +1725,31 @@ typedef $$UsersTableProcessedTableManager =
       user,
       PrefetchHooks Function({bool userGroupId, bool accountsRefs})
     >;
-typedef $$AccountsTableCreateCompanionBuilder =
-    AccountsCompanion Function({
-      Value<UuidValue> id,
-      required String name,
-      required UuidValue userId,
-      required bool isDebt,
-      required UuidValue userGroupId,
-      required PgDateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$AccountsTableUpdateCompanionBuilder =
-    AccountsCompanion Function({
-      Value<UuidValue> id,
-      Value<String> name,
-      Value<UuidValue> userId,
-      Value<bool> isDebt,
-      Value<UuidValue> userGroupId,
-      Value<PgDateTime> updatedAt,
-      Value<int> rowid,
-    });
+typedef $$AccountsTableCreateCompanionBuilder = AccountsCompanion Function({
+  Value<UuidValue> id,
+  required String name,
+  required UuidValue userId,
+  required bool isDebt,
+  required UuidValue userGroupId,
+  required PgDateTime updatedAt,
+  Value<int> rowid,
+});
+typedef $$AccountsTableUpdateCompanionBuilder = AccountsCompanion Function({
+  Value<UuidValue> id,
+  Value<String> name,
+  Value<UuidValue> userId,
+  Value<bool> isDebt,
+  Value<UuidValue> userGroupId,
+  Value<PgDateTime> updatedAt,
+  Value<int> rowid,
+});
 
 final class $$AccountsTableReferences
     extends BaseReferences<_$AppDatabase, $AccountsTable, account> {
   $$AccountsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
-    $_aliasNameGenerator(db.accounts.userId, db.users.id),
-  );
+  static $UsersTable _userIdTable(_$AppDatabase db) =>
+      db.users.createAlias('accounts__user_id__users__id');
 
   $$UsersTableProcessedTableManager get userId {
     final $_column = $_itemColumn<UuidValue>('user_id')!;
@@ -1773,9 +1766,7 @@ final class $$AccountsTableReferences
   }
 
   static $UserGroupsTable _userGroupIdTable(_$AppDatabase db) =>
-      db.userGroups.createAlias(
-        $_aliasNameGenerator(db.accounts.userGroupId, db.userGroups.id),
-      );
+      db.userGroups.createAlias('accounts__user_group_id__user_groups__id');
 
   $$UserGroupsTableProcessedTableManager get userGroupId {
     final $_column = $_itemColumn<UuidValue>('user_group_id')!;
@@ -2103,30 +2094,27 @@ class $$AccountsTableTableManager
                     >
                   >(state) {
                     if (userId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.userId,
-                                referencedTable: $$AccountsTableReferences
-                                    ._userIdTable(db),
-                                referencedColumn: $$AccountsTableReferences
-                                    ._userIdTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.userId,
+                        referencedTable: $$AccountsTableReferences._userIdTable(
+                          db,
+                        ),
+                        referencedColumn: $$AccountsTableReferences
+                            ._userIdTable(db)
+                            .id,
+                      ) as T;
                     }
                     if (userGroupId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.userGroupId,
-                                referencedTable: $$AccountsTableReferences
-                                    ._userGroupIdTable(db),
-                                referencedColumn: $$AccountsTableReferences
-                                    ._userGroupIdTable(db)
-                                    .id,
-                              )
-                              as T;
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.userGroupId,
+                        referencedTable: $$AccountsTableReferences
+                            ._userGroupIdTable(db),
+                        referencedColumn: $$AccountsTableReferences
+                            ._userGroupIdTable(db)
+                            .id,
+                      ) as T;
                     }
 
                     return state;

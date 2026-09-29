@@ -116,7 +116,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _authProgress(
-    _AuthProgressSyncEvent event,
+    _AuthProgressSyncEvent _,
     Emitter<SyncState> emit,
   ) {
     emit(const SyncState.inProgress());
@@ -141,7 +141,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
   }
 
-  FutureOr<void> _notAuth(_NotAuthSyncEvent event, Emitter<SyncState> emit) {
+  FutureOr<void> _notAuth(_NotAuthSyncEvent _, Emitter<SyncState> emit) {
     emit(const SyncState.notSynced(message: 'Not authenticated'));
   }
 
@@ -192,7 +192,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   }
 
   FutureOr<void> _createCloudDatabase(
-    _CreateCloudDatabaseSyncEvent event,
+    _CreateCloudDatabaseSyncEvent _,
     Emitter<SyncState> emit,
   ) async {
     final user = _authBloc.state.user;

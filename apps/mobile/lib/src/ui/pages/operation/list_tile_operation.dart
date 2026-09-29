@@ -79,7 +79,6 @@ class ListTileOperation extends StatelessWidget {
 
 class _OperationTile extends StatelessWidget {
   const _OperationTile({
-    super.key,
     required this.operation,
     required this.onTap,
     required this.onLongPress,

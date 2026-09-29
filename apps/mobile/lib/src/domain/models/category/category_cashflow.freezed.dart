@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category_cashflow.dart';
@@ -9,6 +9,7 @@ part of 'category_cashflow.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $CategoryCashFlowCopyWith<CategoryCashFlow> get copyWith => _$CategoryCashFlowCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+  final _this = this as CategoryCashFlow;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryCashFlow&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.categoryTitle, _this.categoryTitle) || other.categoryTitle == _this.categoryTitle)&&(identical(other.budgetType, _this.budgetType) || other.budgetType == _this.budgetType)&&(identical(other.budget, _this.budget) || other.budget == _this.budget)&&(identical(other.monthCashFlow, _this.monthCashFlow) || other.monthCashFlow == _this.monthCashFlow)&&(identical(other.yearCashFlow, _this.yearCashFlow) || other.yearCashFlow == _this.yearCashFlow)&&(identical(other.parentId, _this.parentId) || other.parentId == _this.parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow,parentId);
+int get hashCode {
+  final _this = this as CategoryCashFlow;
+  return Object.hash(runtimeType,_this.categoryId,_this.type,_this.categoryTitle,_this.budgetType,_this.budget,_this.monthCashFlow,_this.yearCashFlow,_this.parentId);
+}
 
 @override
 String toString() {
-  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow, parentId: $parentId)';
+  final _this = this as CategoryCashFlow;
+  return 'CategoryCashFlow(categoryId: ${_this.categoryId}, type: ${_this.type}, categoryTitle: ${_this.categoryTitle}, budgetType: ${_this.budgetType}, budget: ${_this.budget}, monthCashFlow: ${_this.monthCashFlow}, yearCashFlow: ${_this.yearCashFlow}, parentId: ${_this.parentId})';
 }
 
 
@@ -63,7 +69,7 @@ class _$CategoryCashFlowCopyWithImpl<$Res>
 /// Create a copy of CategoryCashFlow
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? categoryId = null,Object? type = null,Object? categoryTitle = null,Object? budgetType = null,Object? budget = null,Object? monthCashFlow = null,Object? yearCashFlow = null,Object? parentId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CategoryCashFlow(
 categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as CategoryType,categoryTitle: null == categoryTitle ? _self.categoryTitle : categoryTitle // ignore: cast_nullable_to_non_nullable
@@ -253,16 +259,18 @@ _$CategoryCashFlowCopyWith<_CategoryCashFlow> get copyWith => __$CategoryCashFlo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow)&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryCashFlow&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryTitle, categoryTitle) || other.categoryTitle == categoryTitle)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.monthCashFlow, monthCashFlow) || other.monthCashFlow == monthCashFlow)&&(identical(other.yearCashFlow, yearCashFlow) || other.yearCashFlow == yearCashFlow)&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId,type,categoryTitle,budgetType,budget,monthCashFlow,yearCashFlow,parentId);
+}
 
 @override
 String toString() {
-  return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow, parentId: $parentId)';
+    return 'CategoryCashFlow(categoryId: $categoryId, type: $type, categoryTitle: $categoryTitle, budgetType: $budgetType, budget: $budget, monthCashFlow: $monthCashFlow, yearCashFlow: $yearCashFlow, parentId: $parentId)';
 }
 
 

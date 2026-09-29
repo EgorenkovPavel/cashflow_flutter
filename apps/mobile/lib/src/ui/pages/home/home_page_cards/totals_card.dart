@@ -92,7 +92,7 @@ class SumText extends StatelessWidget {
 class _UserAccounts extends StatelessWidget {
   final User? user;
 
-  const _UserAccounts({super.key, required this.user});
+  const _UserAccounts({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class _UserAccounts extends StatelessWidget {
 }
 
 class _Debts extends StatelessWidget {
-  const _Debts({super.key});
+  const _Debts();
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +167,7 @@ class _Header extends StatelessWidget {
   final String title;
   final Money sum;
 
-  const _Header(this.title, this.sum, {super.key});
+  const _Header(this.title, this.sum,);
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +185,7 @@ class _Title extends StatelessWidget {
   final String title;
   final Money sum;
 
-  const _Title(this.title, this.sum, {super.key});
+  const _Title(this.title, this.sum,);
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +203,7 @@ class _SubTitle extends StatelessWidget {
   final String title;
   final Money sum;
 
-  const _SubTitle(this.title, this.sum, {super.key});
+  const _SubTitle(this.title, this.sum,);
 
   @override
   Widget build(BuildContext context) {

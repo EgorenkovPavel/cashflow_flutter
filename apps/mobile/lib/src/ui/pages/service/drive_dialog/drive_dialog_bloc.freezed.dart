@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'drive_dialog_bloc.dart';
@@ -9,6 +9,7 @@ part of 'drive_dialog_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$DialogDriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DialogDriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DialogDriveEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveEvent()';
+    return 'DialogDriveEvent()';
 }
 
 
@@ -209,7 +210,7 @@ class _InitDialogDriveEvent implements DialogDriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitDialogDriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitDialogDriveEvent);
 }
 
 
@@ -218,7 +219,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveEvent.init()';
+    return 'DialogDriveEvent.init()';
 }
 
 
@@ -241,7 +242,7 @@ class _LoadFoldersDialogDriveEvent implements DialogDriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadFoldersDialogDriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadFoldersDialogDriveEvent);
 }
 
 
@@ -250,7 +251,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveEvent.loadFolders()';
+    return 'DialogDriveEvent.loadFolders()';
 }
 
 
@@ -278,16 +279,18 @@ _$OnFileTapDialogDriveEventCopyWith<_OnFileTapDialogDriveEvent> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnFileTapDialogDriveEvent&&(identical(other.file, file) || other.file == file));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnFileTapDialogDriveEvent&&(identical(other.file, file) || other.file == file));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,file);
+int get hashCode {
+    return Object.hash(runtimeType,file);
+}
 
 @override
 String toString() {
-  return 'DialogDriveEvent.onFileTap(file: $file)';
+    return 'DialogDriveEvent.onFileTap(file: $file)';
 }
 
 
@@ -348,7 +351,7 @@ class _BackPressedDialogDriveEvent implements DialogDriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackPressedDialogDriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackPressedDialogDriveEvent);
 }
 
 
@@ -357,7 +360,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveEvent.backPressed()';
+    return 'DialogDriveEvent.backPressed()';
 }
 
 
@@ -380,7 +383,7 @@ class _ChooseDialogDriveEvent implements DialogDriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChooseDialogDriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChooseDialogDriveEvent);
 }
 
 
@@ -389,7 +392,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveEvent.choose()';
+    return 'DialogDriveEvent.choose()';
 }
 
 
@@ -407,7 +410,7 @@ mixin _$DialogDriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DialogDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DialogDriveState);
 }
 
 
@@ -416,7 +419,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveState()';
+    return 'DialogDriveState()';
 }
 
 
@@ -574,7 +577,7 @@ return inProgress();case _:
 
 
 class _SuccessDialogDriveState implements DialogDriveState {
-  const _SuccessDialogDriveState({this.result, required this.action, required final  List<DriveFile> folderList}): _folderList = folderList;
+  const _SuccessDialogDriveState({this.result, required this.action, required  List<DriveFile> folderList}): _folderList = folderList;
   
 
  final  DriveFile? result;
@@ -597,16 +600,18 @@ _$SuccessDialogDriveStateCopyWith<_SuccessDialogDriveState> get copyWith => __$S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessDialogDriveState&&(identical(other.result, result) || other.result == result)&&(identical(other.action, action) || other.action == action)&&const DeepCollectionEquality().equals(other._folderList, _folderList));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessDialogDriveState&&(identical(other.result, result) || other.result == result)&&(identical(other.action, action) || other.action == action)&&const DeepCollectionEquality().equals(other.folderList, _folderList));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,result,action,const DeepCollectionEquality().hash(_folderList));
+int get hashCode {
+    return Object.hash(runtimeType,result,action,const DeepCollectionEquality().hash(_folderList));
+}
 
 @override
 String toString() {
-  return 'DialogDriveState.success(result: $result, action: $action, folderList: $folderList)';
+    return 'DialogDriveState.success(result: $result, action: $action, folderList: $folderList)';
 }
 
 
@@ -672,7 +677,7 @@ class _FailureDialogDriveState implements DialogDriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureDialogDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureDialogDriveState);
 }
 
 
@@ -681,7 +686,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveState.failure()';
+    return 'DialogDriveState.failure()';
 }
 
 
@@ -704,7 +709,7 @@ class _InProgressDialogDriveState implements DialogDriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDialogDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDialogDriveState);
 }
 
 
@@ -713,7 +718,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DialogDriveState.inProgress()';
+    return 'DialogDriveState.inProgress()';
 }
 
 

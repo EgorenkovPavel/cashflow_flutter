@@ -1,8 +1,6 @@
 import 'package:drift_postgres/drift_postgres.dart';
 import 'package:dto_models/dto_models.dart';
 
-part 'user.g.dart';
-
 class User {
 
   User({

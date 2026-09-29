@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_balance_bloc.dart';
@@ -9,6 +9,7 @@ part of 'account_balance_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountBalanceEventCopyWith<AccountBalanceEvent> get copyWith => _$AccountBalan
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEvent&&const DeepCollectionEquality().equals(other.accounts, accounts));
+  final _this = this as AccountBalanceEvent;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEvent&&const DeepCollectionEquality().equals(other.accounts, _this.accounts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(accounts));
+int get hashCode {
+  final _this = this as AccountBalanceEvent;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.accounts));
+}
 
 @override
 String toString() {
-  return 'AccountBalanceEvent(accounts: $accounts)';
+  final _this = this as AccountBalanceEvent;
+  return 'AccountBalanceEvent(accounts: ${_this.accounts})';
 }
 
 
@@ -63,7 +69,7 @@ class _$AccountBalanceEventCopyWithImpl<$Res>
 /// Create a copy of AccountBalanceEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accounts = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountBalanceEvent.changeBalance(
 accounts: null == accounts ? _self.accounts : accounts // ignore: cast_nullable_to_non_nullable
 as List<AccountBalanceView>,
   ));
@@ -200,7 +206,7 @@ return changeBalance(_that.accounts);case _:
 
 
 class _ChangeBalanceAccountBalanceEvent implements AccountBalanceEvent {
-  const _ChangeBalanceAccountBalanceEvent({required final  List<AccountBalanceView> accounts}): _accounts = accounts;
+  const _ChangeBalanceAccountBalanceEvent({required  List<AccountBalanceView> accounts}): _accounts = accounts;
   
 
  final  List<AccountBalanceView> _accounts;
@@ -221,16 +227,18 @@ _$ChangeBalanceAccountBalanceEventCopyWith<_ChangeBalanceAccountBalanceEvent> ge
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBalanceAccountBalanceEvent&&const DeepCollectionEquality().equals(other._accounts, _accounts));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBalanceAccountBalanceEvent&&const DeepCollectionEquality().equals(other.accounts, _accounts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_accounts));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_accounts));
+}
 
 @override
 String toString() {
-  return 'AccountBalanceEvent.changeBalance(accounts: $accounts)';
+    return 'AccountBalanceEvent.changeBalance(accounts: $accounts)';
 }
 
 
@@ -282,16 +290,21 @@ $AccountBalanceStateCopyWith<AccountBalanceState> get copyWith => _$AccountBalan
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceState&&const DeepCollectionEquality().equals(other.balances, balances));
+  final _this = this as AccountBalanceState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceState&&const DeepCollectionEquality().equals(other.balances, _this.balances));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(balances));
+int get hashCode {
+  final _this = this as AccountBalanceState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.balances));
+}
 
 @override
 String toString() {
-  return 'AccountBalanceState(balances: $balances)';
+  final _this = this as AccountBalanceState;
+  return 'AccountBalanceState(balances: ${_this.balances})';
 }
 
 
@@ -320,7 +333,7 @@ class _$AccountBalanceStateCopyWithImpl<$Res>
 /// Create a copy of AccountBalanceState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? balances = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountBalanceState(
 balances: null == balances ? _self.balances : balances // ignore: cast_nullable_to_non_nullable
 as List<AccountBalanceView>,
   ));
@@ -463,7 +476,7 @@ return $default(_that.balances);case _:
 
 
 class _AccountBalanceState extends AccountBalanceState {
-  const _AccountBalanceState({required final  List<AccountBalanceView> balances}): _balances = balances,super._();
+  const _AccountBalanceState({required  List<AccountBalanceView> balances}): _balances = balances,super._();
   
 
  final  List<AccountBalanceView> _balances;
@@ -484,16 +497,18 @@ _$AccountBalanceStateCopyWith<_AccountBalanceState> get copyWith => __$AccountBa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceState&&const DeepCollectionEquality().equals(other._balances, _balances));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceState&&const DeepCollectionEquality().equals(other.balances, _balances));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_balances));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_balances));
+}
 
 @override
 String toString() {
-  return 'AccountBalanceState(balances: $balances)';
+    return 'AccountBalanceState(balances: $balances)';
 }
 
 

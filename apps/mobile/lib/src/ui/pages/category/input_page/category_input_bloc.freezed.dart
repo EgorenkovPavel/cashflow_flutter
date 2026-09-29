@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category_input_bloc.dart';
@@ -9,6 +9,7 @@ part of 'category_input_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CategoryInputEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CategoryInputEvent()';
+    return 'CategoryInputEvent()';
 }
 
 
@@ -227,16 +228,18 @@ _$InitByTypeCategoryInputEventCopyWith<_InitByTypeCategoryInputEvent> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitByTypeCategoryInputEvent&&(identical(other.type, type) || other.type == type)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitByTypeCategoryInputEvent&&(identical(other.type, type) || other.type == type)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,isGroup);
+int get hashCode {
+    return Object.hash(runtimeType,type,isGroup);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.initByType(type: $type, isGroup: $isGroup)';
+    return 'CategoryInputEvent.initByType(type: $type, isGroup: $isGroup)';
 }
 
 
@@ -294,16 +297,18 @@ _$InitByIdCategoryInputEventCopyWith<_InitByIdCategoryInputEvent> get copyWith =
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitByIdCategoryInputEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitByIdCategoryInputEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.initById(categoryId: $categoryId)';
+    return 'CategoryInputEvent.initById(categoryId: $categoryId)';
 }
 
 
@@ -360,16 +365,18 @@ _$ChangeTitleCategoryInputEventCopyWith<_ChangeTitleCategoryInputEvent> get copy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTitleCategoryInputEvent&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTitleCategoryInputEvent&&(identical(other.title, title) || other.title == title));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title);
+int get hashCode {
+    return Object.hash(runtimeType,title);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.changeTitle(title: $title)';
+    return 'CategoryInputEvent.changeTitle(title: $title)';
 }
 
 
@@ -426,16 +433,18 @@ _$ChangeBudgetCategoryInputEventCopyWith<_ChangeBudgetCategoryInputEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetCategoryInputEvent&&(identical(other.budget, budget) || other.budget == budget));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetCategoryInputEvent&&(identical(other.budget, budget) || other.budget == budget));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,budget);
+int get hashCode {
+    return Object.hash(runtimeType,budget);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.changeBudget(budget: $budget)';
+    return 'CategoryInputEvent.changeBudget(budget: $budget)';
 }
 
 
@@ -492,16 +501,18 @@ _$ChangeBudgetTypeCategoryInputEventCopyWith<_ChangeBudgetTypeCategoryInputEvent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetTypeCategoryInputEvent&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeBudgetTypeCategoryInputEvent&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,budgetType);
+int get hashCode {
+    return Object.hash(runtimeType,budgetType);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.changeBudgetType(budgetType: $budgetType)';
+    return 'CategoryInputEvent.changeBudgetType(budgetType: $budgetType)';
 }
 
 
@@ -558,16 +569,18 @@ _$ChangeParentCategoryInputEventCopyWith<_ChangeParentCategoryInputEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeParentCategoryInputEvent&&(identical(other.parentId, parentId) || other.parentId == parentId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeParentCategoryInputEvent&&(identical(other.parentId, parentId) || other.parentId == parentId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,parentId);
+int get hashCode {
+    return Object.hash(runtimeType,parentId);
+}
 
 @override
 String toString() {
-  return 'CategoryInputEvent.changeParent(parentId: $parentId)';
+    return 'CategoryInputEvent.changeParent(parentId: $parentId)';
 }
 
 
@@ -619,7 +632,7 @@ class _SaveCategoryInputEvent implements CategoryInputEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveCategoryInputEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveCategoryInputEvent);
 }
 
 
@@ -628,7 +641,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CategoryInputEvent.save()';
+    return 'CategoryInputEvent.save()';
 }
 
 
@@ -651,16 +664,21 @@ $CategoryInputStateCopyWith<CategoryInputState> get copyWith => _$CategoryInputS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+  final _this = this as CategoryInputState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryInputState&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.isSaved, _this.isSaved) || other.isSaved == _this.isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,type,title,isSaved);
+int get hashCode {
+  final _this = this as CategoryInputState;
+  return Object.hash(runtimeType,_this.category,_this.type,_this.title,_this.isSaved);
+}
 
 @override
 String toString() {
-  return 'CategoryInputState(category: $category, type: $type, title: $title, isSaved: $isSaved)';
+  final _this = this as CategoryInputState;
+  return 'CategoryInputState(category: ${_this.category}, type: ${_this.type}, title: ${_this.title}, isSaved: ${_this.isSaved})';
 }
 
 
@@ -868,16 +886,18 @@ _$ItemCategoryInputStateCopyWith<_ItemCategoryInputState> get copyWith => __$Ite
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.type, type) || other.type == type)&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,type,budgetType,title,budget,parent,isSaved);
+int get hashCode {
+    return Object.hash(runtimeType,category,type,budgetType,title,budget,parent,isSaved);
+}
 
 @override
 String toString() {
-  return 'CategoryInputState.item(category: $category, type: $type, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
+    return 'CategoryInputState.item(category: $category, type: $type, budgetType: $budgetType, title: $title, budget: $budget, parent: $parent, isSaved: $isSaved)';
 }
 
 
@@ -955,16 +975,18 @@ _$GroupCategoryInputStateCopyWith<_GroupCategoryInputState> get copyWith => __$G
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GroupCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GroupCategoryInputState&&(identical(other.category, category) || other.category == category)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.isSaved, isSaved) || other.isSaved == isSaved));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category,type,title,isSaved);
+int get hashCode {
+    return Object.hash(runtimeType,category,type,title,isSaved);
+}
 
 @override
 String toString() {
-  return 'CategoryInputState.group(category: $category, type: $type, title: $title, isSaved: $isSaved)';
+    return 'CategoryInputState.group(category: $category, type: $type, title: $title, isSaved: $isSaved)';
 }
 
 

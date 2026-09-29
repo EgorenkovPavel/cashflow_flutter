@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/src/common_blocs/auth/auth_bloc.dart';
-import 'package:money_tracker/src/domain/models.dart' as model;
+// import 'package:money_tracker/src/domain/models.dart' as model;
 
-import '../../../../domain/models.dart';
+// import '../../../../domain/models.dart';
 
 class SpringPage extends StatelessWidget {
   const SpringPage({super.key});
 
   Future<void> _upload(String idToken) async {
+    await Future.pause();
     // if (idToken.isEmpty) {
     //   return;
     // }
@@ -107,11 +108,11 @@ class SpringPage extends StatelessWidget {
     // }
   }
 
-  Currency _mapCurrency(model.Currency currency) => switch (currency) {
-        model.Currency.RUB => Currency.RUB,
-        model.Currency.USD => Currency.USD,
-        model.Currency.EUR => Currency.EUR,
-      };
+  // Currency _mapCurrency(model.Currency currency) => switch (currency) {
+  //       model.Currency.RUB => Currency.RUB,
+  //       model.Currency.USD => Currency.USD,
+  //       model.Currency.EUR => Currency.EUR,
+  //     };
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +123,7 @@ class SpringPage extends StatelessWidget {
       body: Column(
         children: [
           ElevatedButton(
+            // ignore: avoid-passing-async-when-sync-expected
               onPressed: () async {
                 final user = context.read<AuthBloc>().state.user;
                 if (user == null) {

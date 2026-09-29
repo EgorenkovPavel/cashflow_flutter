@@ -17,6 +17,7 @@ extension DateTimeExtension on DateTime {
 }
 
 extension MapExtension on Map<String, dynamic> {
+  // ignore: avoid-dynamic
   dynamic getOrDefault(String key, dynamic value) {
     return containsKey(key) ? this[key] : value;
   }

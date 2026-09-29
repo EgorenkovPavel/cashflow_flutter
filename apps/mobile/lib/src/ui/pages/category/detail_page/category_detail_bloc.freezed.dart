@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category_detail_bloc.dart';
@@ -9,6 +9,7 @@ part of 'category_detail_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CategoryDetailEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryDetailEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryDetailEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CategoryDetailEvent()';
+    return 'CategoryDetailEvent()';
 }
 
 
@@ -196,16 +197,18 @@ _$FetchCategoryDetailEventCopyWith<_FetchCategoryDetailEvent> get copyWith => __
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchCategoryDetailEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchCategoryDetailEvent&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId);
+}
 
 @override
 String toString() {
-  return 'CategoryDetailEvent.fetch(categoryId: $categoryId)';
+    return 'CategoryDetailEvent.fetch(categoryId: $categoryId)';
 }
 
 
@@ -262,16 +265,18 @@ _$ChangeCategoryCategoryDetailEventCopyWith<_ChangeCategoryCategoryDetailEvent> 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCategoryDetailEvent&&(identical(other.category, category) || other.category == category));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeCategoryCategoryDetailEvent&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,category);
+int get hashCode {
+    return Object.hash(runtimeType,category);
+}
 
 @override
 String toString() {
-  return 'CategoryDetailEvent.changeCategory(category: $category)';
+    return 'CategoryDetailEvent.changeCategory(category: $category)';
 }
 
 
@@ -322,7 +327,7 @@ $CategoryCopyWith<$Res> get category {
 
 
 class _ChangeOperationsCategoryDetailEvent implements CategoryDetailEvent {
-  const _ChangeOperationsCategoryDetailEvent(final  List<OperationView> operations): _operations = operations;
+  const _ChangeOperationsCategoryDetailEvent( List<OperationView> operations): _operations = operations;
   
 
  final  List<OperationView> _operations;
@@ -343,16 +348,18 @@ _$ChangeOperationsCategoryDetailEventCopyWith<_ChangeOperationsCategoryDetailEve
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsCategoryDetailEvent&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeOperationsCategoryDetailEvent&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'CategoryDetailEvent.changeOperations(operations: $operations)';
+    return 'CategoryDetailEvent.changeOperations(operations: $operations)';
 }
 
 
@@ -404,16 +411,21 @@ $CategoryDetailStateCopyWith<CategoryDetailState> get copyWith => _$CategoryDeta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryDetailState&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&const DeepCollectionEquality().equals(other.operations, operations));
+  final _this = this as CategoryDetailState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryDetailState&&(identical(other.budgetType, _this.budgetType) || other.budgetType == _this.budgetType)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.budget, _this.budget) || other.budget == _this.budget)&&const DeepCollectionEquality().equals(other.operations, _this.operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,budgetType,title,budget,const DeepCollectionEquality().hash(operations));
+int get hashCode {
+  final _this = this as CategoryDetailState;
+  return Object.hash(runtimeType,_this.budgetType,_this.title,_this.budget,const DeepCollectionEquality().hash(_this.operations));
+}
 
 @override
 String toString() {
-  return 'CategoryDetailState(budgetType: $budgetType, title: $title, budget: $budget, operations: $operations)';
+  final _this = this as CategoryDetailState;
+  return 'CategoryDetailState(budgetType: ${_this.budgetType}, title: ${_this.title}, budget: ${_this.budget}, operations: ${_this.operations})';
 }
 
 
@@ -442,7 +454,7 @@ class _$CategoryDetailStateCopyWithImpl<$Res>
 /// Create a copy of CategoryDetailState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? budgetType = null,Object? title = null,Object? budget = null,Object? operations = null,}) {
-  return _then(_self.copyWith(
+  return _then(CategoryDetailState(
 budgetType: null == budgetType ? _self.budgetType : budgetType // ignore: cast_nullable_to_non_nullable
 as BudgetType,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,budget: null == budget ? _self.budget : budget // ignore: cast_nullable_to_non_nullable
@@ -588,7 +600,7 @@ return $default(_that.budgetType,_that.title,_that.budget,_that.operations);case
 
 
 class _CategoryDetailState implements CategoryDetailState {
-  const _CategoryDetailState({required this.budgetType, required this.title, required this.budget, required final  List<OperationView> operations}): _operations = operations;
+  const _CategoryDetailState({required this.budgetType, required this.title, required this.budget, required  List<OperationView> operations}): _operations = operations;
   
 
 @override final  BudgetType budgetType;
@@ -612,16 +624,18 @@ _$CategoryDetailStateCopyWith<_CategoryDetailState> get copyWith => __$CategoryD
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryDetailState&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryDetailState&&(identical(other.budgetType, budgetType) || other.budgetType == budgetType)&&(identical(other.title, title) || other.title == title)&&(identical(other.budget, budget) || other.budget == budget)&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,budgetType,title,budget,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,budgetType,title,budget,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'CategoryDetailState(budgetType: $budgetType, title: $title, budget: $budget, operations: $operations)';
+    return 'CategoryDetailState(budgetType: $budgetType, title: $title, budget: $budget, operations: $operations)';
 }
 
 

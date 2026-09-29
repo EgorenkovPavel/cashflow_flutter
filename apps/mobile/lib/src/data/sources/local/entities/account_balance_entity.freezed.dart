@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_balance_entity.dart';
@@ -9,6 +9,7 @@ part of 'account_balance_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountBalanceEntityCopyWith<AccountBalanceEntity> get copyWith => _$AccountBal
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.balance, balance) || other.balance == balance));
+  final _this = this as AccountBalanceEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceEntity&&(identical(other.accountId, _this.accountId) || other.accountId == _this.accountId)&&(identical(other.balance, _this.balance) || other.balance == _this.balance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,balance);
+int get hashCode {
+  final _this = this as AccountBalanceEntity;
+  return Object.hash(runtimeType,_this.accountId,_this.balance);
+}
 
 @override
 String toString() {
-  return 'AccountBalanceEntity(accountId: $accountId, balance: $balance)';
+  final _this = this as AccountBalanceEntity;
+  return 'AccountBalanceEntity(accountId: ${_this.accountId}, balance: ${_this.balance})';
 }
 
 
@@ -63,7 +69,7 @@ class _$AccountBalanceEntityCopyWithImpl<$Res>
 /// Create a copy of AccountBalanceEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? balance = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountBalanceEntity(
 accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
 as Balance,
@@ -232,16 +238,18 @@ _$AccountBalanceEntityCopyWith<_AccountBalanceEntity> get copyWith => __$Account
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.balance, balance) || other.balance == balance));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceEntity&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.balance, balance) || other.balance == balance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,balance);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,balance);
+}
 
 @override
 String toString() {
-  return 'AccountBalanceEntity(accountId: $accountId, balance: $balance)';
+    return 'AccountBalanceEntity(accountId: $accountId, balance: $balance)';
 }
 
 

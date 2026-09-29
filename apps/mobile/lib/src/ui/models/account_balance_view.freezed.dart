@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_balance_view.dart';
@@ -9,6 +9,7 @@ part of 'account_balance_view.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountBalanceViewCopyWith<AccountBalanceView> get copyWith => _$AccountBalance
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceView&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+  final _this = this as AccountBalanceView;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalanceView&&(identical(other.accountId, _this.accountId) || other.accountId == _this.accountId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.accountTitle, _this.accountTitle) || other.accountTitle == _this.accountTitle)&&(identical(other.userName, _this.userName) || other.userName == _this.userName)&&(identical(other.userPhoto, _this.userPhoto) || other.userPhoto == _this.userPhoto)&&(identical(other.balance, _this.balance) || other.balance == _this.balance)&&(identical(other.isDebt, _this.isDebt) || other.isDebt == _this.isDebt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,userId,accountTitle,userName,userPhoto,balance,isDebt);
+int get hashCode {
+  final _this = this as AccountBalanceView;
+  return Object.hash(runtimeType,_this.accountId,_this.userId,_this.accountTitle,_this.userName,_this.userPhoto,_this.balance,_this.isDebt);
+}
 
 @override
 String toString() {
-  return 'AccountBalanceView(accountId: $accountId, userId: $userId, accountTitle: $accountTitle, userName: $userName, userPhoto: $userPhoto, balance: $balance, isDebt: $isDebt)';
+  final _this = this as AccountBalanceView;
+  return 'AccountBalanceView(accountId: ${_this.accountId}, userId: ${_this.userId}, accountTitle: ${_this.accountTitle}, userName: ${_this.userName}, userPhoto: ${_this.userPhoto}, balance: ${_this.balance}, isDebt: ${_this.isDebt})';
 }
 
 
@@ -63,7 +69,7 @@ class _$AccountBalanceViewCopyWithImpl<$Res>
 /// Create a copy of AccountBalanceView
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? userId = freezed,Object? accountTitle = null,Object? userName = null,Object? userPhoto = null,Object? balance = null,Object? isDebt = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountBalanceView(
 accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
 as int,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int?,accountTitle: null == accountTitle ? _self.accountTitle : accountTitle // ignore: cast_nullable_to_non_nullable
@@ -242,16 +248,18 @@ _$AccountBalanceViewCopyWith<_AccountBalanceView> get copyWith => __$AccountBala
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceView&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalanceView&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.accountTitle, accountTitle) || other.accountTitle == accountTitle)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.isDebt, isDebt) || other.isDebt == isDebt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId,userId,accountTitle,userName,userPhoto,balance,isDebt);
+int get hashCode {
+    return Object.hash(runtimeType,accountId,userId,accountTitle,userName,userPhoto,balance,isDebt);
+}
 
 @override
 String toString() {
-  return 'AccountBalanceView(accountId: $accountId, userId: $userId, accountTitle: $accountTitle, userName: $userName, userPhoto: $userPhoto, balance: $balance, isDebt: $isDebt)';
+    return 'AccountBalanceView(accountId: $accountId, userId: $userId, accountTitle: $accountTitle, userName: $userName, userPhoto: $userPhoto, balance: $balance, isDebt: $isDebt)';
 }
 
 

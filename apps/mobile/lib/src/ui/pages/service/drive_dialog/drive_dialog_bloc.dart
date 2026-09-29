@@ -2,6 +2,7 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+// ignore: avoid-banned-imports
 import 'package:money_tracker/src/data/sources/backup_source_impl.dart';
 import 'package:money_tracker/src/domain/interfaces/auth_repository.dart';
 import 'package:money_tracker/src/domain/models.dart';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'money.dart';
@@ -9,6 +9,7 @@ part of 'money.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MoneyCopyWith<Money> get copyWith => _$MoneyCopyWithImpl<Money>(this as Money, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Money&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
+  final _this = this as Money;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Money&&(identical(other.sum, _this.sum) || other.sum == _this.sum)&&(identical(other.currency, _this.currency) || other.currency == _this.currency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sum,currency);
+int get hashCode {
+  final _this = this as Money;
+  return Object.hash(runtimeType,_this.sum,_this.currency);
+}
 
 @override
 String toString() {
-  return 'Money(sum: $sum, currency: $currency)';
+  final _this = this as Money;
+  return 'Money(sum: ${_this.sum}, currency: ${_this.currency})';
 }
 
 
@@ -66,9 +72,9 @@ class _$MoneyCopyWithImpl<$Res>
 /// Create a copy of Money
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sum = null,Object? currency = null,}) {
-  return _then(_self.copyWith(
-sum: null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
-as int,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+  return _then(Money(
+null == sum ? _self.sum : sum // ignore: cast_nullable_to_non_nullable
+as int,null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
 as Currency,
   ));
 }
@@ -229,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Money&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Money&&(identical(other.sum, sum) || other.sum == sum)&&(identical(other.currency, currency) || other.currency == currency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sum,currency);
+int get hashCode {
+    return Object.hash(runtimeType,sum,currency);
+}
 
 @override
 String toString() {
-  return 'Money(sum: $sum, currency: $currency)';
+    return 'Money(sum: $sum, currency: $currency)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'google_drive_settings_bloc.dart';
@@ -9,6 +9,7 @@ part of 'google_drive_settings_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$DriveEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveEvent()';
+    return 'DriveEvent()';
 }
 
 
@@ -197,16 +198,18 @@ _$BackupDriveEventCopyWith<_BackupDriveEvent> get copyWith => __$BackupDriveEven
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackupDriveEvent&&(identical(other.catalogId, catalogId) || other.catalogId == catalogId)&&(identical(other.fileName, fileName) || other.fileName == fileName));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackupDriveEvent&&(identical(other.catalogId, catalogId) || other.catalogId == catalogId)&&(identical(other.fileName, fileName) || other.fileName == fileName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,catalogId,fileName);
+int get hashCode {
+    return Object.hash(runtimeType,catalogId,fileName);
+}
 
 @override
 String toString() {
-  return 'DriveEvent.backup(catalogId: $catalogId, fileName: $fileName)';
+    return 'DriveEvent.backup(catalogId: $catalogId, fileName: $fileName)';
 }
 
 
@@ -264,16 +267,18 @@ _$RestoreDriveEventCopyWith<_RestoreDriveEvent> get copyWith => __$RestoreDriveE
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RestoreDriveEvent&&(identical(other.fileId, fileId) || other.fileId == fileId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RestoreDriveEvent&&(identical(other.fileId, fileId) || other.fileId == fileId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fileId);
+int get hashCode {
+    return Object.hash(runtimeType,fileId);
+}
 
 @override
 String toString() {
-  return 'DriveEvent.restore(fileId: $fileId)';
+    return 'DriveEvent.restore(fileId: $fileId)';
 }
 
 
@@ -320,7 +325,7 @@ mixin _$DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DriveState);
 }
 
 
@@ -329,7 +334,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState()';
+    return 'DriveState()';
 }
 
 
@@ -509,7 +514,7 @@ class _InitialDriveState extends DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitialDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitialDriveState);
 }
 
 
@@ -518,7 +523,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState.initial()';
+    return 'DriveState.initial()';
 }
 
 
@@ -541,7 +546,7 @@ class _InProgressDriveState extends DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InProgressDriveState);
 }
 
 
@@ -550,7 +555,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState.inProgress()';
+    return 'DriveState.inProgress()';
 }
 
 
@@ -573,7 +578,7 @@ class _FailureDriveState extends DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureDriveState);
 }
 
 
@@ -582,7 +587,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState.failure()';
+    return 'DriveState.failure()';
 }
 
 
@@ -605,7 +610,7 @@ class _SuccessBackupDriveState extends DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessBackupDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessBackupDriveState);
 }
 
 
@@ -614,7 +619,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState.successBackup()';
+    return 'DriveState.successBackup()';
 }
 
 
@@ -637,7 +642,7 @@ class SuccessRestoreDriveState extends DriveState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SuccessRestoreDriveState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SuccessRestoreDriveState);
 }
 
 
@@ -646,7 +651,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DriveState.successRestore()';
+    return 'DriveState.successRestore()';
 }
 
 

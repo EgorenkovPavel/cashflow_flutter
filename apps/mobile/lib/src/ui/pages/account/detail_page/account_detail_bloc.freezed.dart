@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_detail_bloc.dart';
@@ -9,6 +9,7 @@ part of 'account_detail_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$AccountDetailEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountDetailEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountDetailEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AccountDetailEvent()';
+    return 'AccountDetailEvent()';
 }
 
 
@@ -196,16 +197,18 @@ _$FetchAccountDetailEventCopyWith<_FetchAccountDetailEvent> get copyWith => __$F
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchAccountDetailEvent&&(identical(other.accountId, accountId) || other.accountId == accountId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchAccountDetailEvent&&(identical(other.accountId, accountId) || other.accountId == accountId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountId);
+int get hashCode {
+    return Object.hash(runtimeType,accountId);
+}
 
 @override
 String toString() {
-  return 'AccountDetailEvent.fetch(accountId: $accountId)';
+    return 'AccountDetailEvent.fetch(accountId: $accountId)';
 }
 
 
@@ -262,16 +265,18 @@ _$TitleChangedAccountDetailEventCopyWith<_TitleChangedAccountDetailEvent> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TitleChangedAccountDetailEvent&&(identical(other.title, title) || other.title == title));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TitleChangedAccountDetailEvent&&(identical(other.title, title) || other.title == title));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title);
+int get hashCode {
+    return Object.hash(runtimeType,title);
+}
 
 @override
 String toString() {
-  return 'AccountDetailEvent.titleChanged(title: $title)';
+    return 'AccountDetailEvent.titleChanged(title: $title)';
 }
 
 
@@ -313,7 +318,7 @@ as String,
 
 
 class _OperationsChangedAccountDetailEvent implements AccountDetailEvent {
-  const _OperationsChangedAccountDetailEvent(final  List<OperationView> operations): _operations = operations;
+  const _OperationsChangedAccountDetailEvent( List<OperationView> operations): _operations = operations;
   
 
  final  List<OperationView> _operations;
@@ -334,16 +339,18 @@ _$OperationsChangedAccountDetailEventCopyWith<_OperationsChangedAccountDetailEve
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationsChangedAccountDetailEvent&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _OperationsChangedAccountDetailEvent&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'AccountDetailEvent.operationsChanged(operations: $operations)';
+    return 'AccountDetailEvent.operationsChanged(operations: $operations)';
 }
 
 
@@ -395,16 +402,21 @@ $AccountDetailStateCopyWith<AccountDetailState> get copyWith => _$AccountDetailS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountDetailState&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.operations, operations));
+  final _this = this as AccountDetailState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountDetailState&&(identical(other.title, _this.title) || other.title == _this.title)&&const DeepCollectionEquality().equals(other.operations, _this.operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,const DeepCollectionEquality().hash(operations));
+int get hashCode {
+  final _this = this as AccountDetailState;
+  return Object.hash(runtimeType,_this.title,const DeepCollectionEquality().hash(_this.operations));
+}
 
 @override
 String toString() {
-  return 'AccountDetailState(title: $title, operations: $operations)';
+  final _this = this as AccountDetailState;
+  return 'AccountDetailState(title: ${_this.title}, operations: ${_this.operations})';
 }
 
 
@@ -433,7 +445,7 @@ class _$AccountDetailStateCopyWithImpl<$Res>
 /// Create a copy of AccountDetailState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? operations = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountDetailState(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,operations: null == operations ? _self.operations : operations // ignore: cast_nullable_to_non_nullable
 as List<OperationView>,
@@ -577,7 +589,7 @@ return $default(_that.title,_that.operations);case _:
 
 
 class _AccountDetailState implements AccountDetailState {
-  const _AccountDetailState({required this.title, required final  List<OperationView> operations}): _operations = operations;
+  const _AccountDetailState({required this.title, required  List<OperationView> operations}): _operations = operations;
   
 
 @override final  String title;
@@ -599,16 +611,18 @@ _$AccountDetailStateCopyWith<_AccountDetailState> get copyWith => __$AccountDeta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountDetailState&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._operations, _operations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountDetailState&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.operations, _operations));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,const DeepCollectionEquality().hash(_operations));
+int get hashCode {
+    return Object.hash(runtimeType,title,const DeepCollectionEquality().hash(_operations));
+}
 
 @override
 String toString() {
-  return 'AccountDetailState(title: $title, operations: $operations)';
+    return 'AccountDetailState(title: $title, operations: $operations)';
 }
 
 
