@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 // ignore: avoid-banned-imports
 import 'package:money_tracker/src/data/interfaces/settings_source.dart';
 import 'package:money_tracker/src/domain/models/google_drive_file.dart';

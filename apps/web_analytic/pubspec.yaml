@@ -47,6 +47,8 @@ dependencies:
   firebase_api_client: any
   finance_api_client: any
 
+  material_ui: any
+  cloud_firestore: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

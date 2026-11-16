@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:money_tracker/src/ui/pages/account/list_page/account_list_page.dart';
 import 'package:money_tracker/src/ui/pages/category/list_page/category_groups_list_page.dart';

@@ -66,6 +66,9 @@ dependencies:
   finance_api_client: any
   firebase_api_client: any
 
+  material_ui: any
+  cupertino_ui: any
+  collection: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -79,6 +82,8 @@ dev_dependencies:
   dart_code_linter: ^4.0.2
 
 
+  firebase_auth_platform_interface: any
+  google_sign_in_platform_interface: any
 flutter:
   generate: true
   uses-material-design: true

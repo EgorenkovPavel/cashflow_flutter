@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:web_analytic/src/injection_container.dart';
 import 'package:web_analytic/src/ui/home_screen.dart';
 import 'package:web_analytic/src/ui/sign_in_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:money_tracker/src/ui/app.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_divider_operation.dart';
 import 'package:money_tracker/src/ui/pages/operation/list_tile_operation.dart';

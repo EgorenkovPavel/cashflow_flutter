@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:finance_api_client/finance_api_client.dart';
 // import 'package:finance_api_client/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../injection_container.dart';
 
